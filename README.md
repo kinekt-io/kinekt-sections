@@ -152,9 +152,9 @@ pnpm dev:catalog
 
 ## Component catalogue
 
-GitHub Pages publishes the generated catalogue at [kinekt-io.github.io/kinekt-sections](https://kinekt-io.github.io/kinekt-sections/). It inventories every public Astro, Payload, and type entrypoint and uses each component's `README.md` title and first paragraph for its description.
+The workflow targets [kinekt-io.github.io/kinekt-sections](https://kinekt-io.github.io/kinekt-sections/) and deploys after a push to `main`. Run **Actions → Deploy component catalogue → Run workflow** to deploy the current `main` revision manually.
 
-The catalogue deploys after a push to `main`. Run **Actions → Deploy component catalogue → Run workflow** to deploy the current `main` revision manually.
+GitHub Pages MUST be available for private repositories on the organization plan before the deployment can succeed. If it is unavailable, run `pnpm build:catalog` or `pnpm dev:catalog` locally; neither command requires GitHub Pages.
 
 ## Publish a release
 
