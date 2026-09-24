@@ -32,7 +32,7 @@ The renderer requires an image URL, alt text, and positive width and height. It 
 
 ## Figma
 
-No approved Figma link has been recorded for this component. Add the approved `https://www.figma.com/...` URL on its own line when it is available. The catalogue reads that URL during its build and shows an **Open Figma design** link.
+https://www.figma.com/design/nysBrgsDUulJAWpQ8G6n0C/KI-51-Kinekt-strategy--identity--website-and-marketing?node-id=2069-11170&t=PsKz3ufuSrw4ho5z-4
 
 ## Payload block
 
