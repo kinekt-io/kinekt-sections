@@ -43,28 +43,40 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
 
           <ul class="components">
             {components.map((component) => (
-              <li class="component">
-                <div class="component__header">
-                  <p class="component__category">{component.category} / {component.role ?? 'component'}</p>
-                  <h3>{component.title}</h3>
-                  <p>{component.description}</p>
-                </div>
-                <dl class="component__meta">
-                  <div><dt>Variation</dt><dd>{component.variation ?? '—'}</dd></div>
-                  <div><dt>Folder</dt><dd><code>src/{component.id}</code></dd></div>
-                </dl>
-                <div class="component__imports">
-                  <h4>Public imports</h4>
-                  <ul>
-                    {Object.entries(component.entries).map(([kind, entrypoint]) => (
-                      <li><span>{kind}</span><code>{entrypoint}</code></li>
-                    ))}
-                  </ul>
+              <li class:list={['component', { 'component--preview': Boolean(component.previewSource) }]}>
+                <div class="component__details">
+                  <div class="component__header">
+                    <p class="component__category">{component.category} / {component.role ?? 'component'}</p>
+                    <h3>{component.title}</h3>
+                    <p>{component.description}</p>
+                  </div>
+                  <dl class="component__meta">
+                    <div><dt>Variation</dt><dd>{component.variation ?? '—'}</dd></div>
+                    <div><dt>Folder</dt><dd><code>src/{component.id}</code></dd></div>
+                  </dl>
+                  <div class="component__imports">
+                    <h4>Public imports</h4>
+                    <ul>
+                      {Object.entries(component.entries).map(([kind, entrypoint]) => (
+                        <li><span>{kind}</span><code>{entrypoint}</code></li>
+                      ))}
+                    </ul>
+                  </div>
+                  {component.previewSource && (
+                    <a class="component__preview" href={`components/${component.id}/`}>
+                      Open full preview <span aria-hidden="true">→</span>
+                    </a>
+                  )}
                 </div>
                 {component.previewSource && (
-                  <a class="component__preview" href={`components/${component.id}/`}>
-                    View live preview <span aria-hidden="true">→</span>
-                  </a>
+                  <div class="component__thumbnail">
+                    <iframe
+                      title={`Scaled preview of ${component.title}`}
+                      src={`components/embed/${component.id}/`}
+                      loading="lazy"
+                      tabindex="-1"
+                    ></iframe>
+                  </div>
                 )}
               </li>
             ))}
@@ -95,8 +107,10 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
   .catalogue__heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 2rem; }
   .catalogue__heading a { color: inherit; font-weight: 600; }
   .catalogue h2 { margin: 0.5rem 0 0; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -0.05em; }
-  .components { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
+  .components { display: grid; gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
   .component { display: grid; gap: 1.75rem; padding: clamp(1.5rem, 3vw, 2.25rem); border: 1px solid #c6d2ce; background: #fff; }
+  .component--preview { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; padding: 0; overflow: hidden; }
+  .component__details { display: grid; align-content: start; gap: 1.75rem; padding: clamp(1.5rem, 3vw, 2.25rem); }
   .component__header p:not(.component__category) { margin: 1rem 0 0; color: #46656a; line-height: 1.5; }
   .component h3 { margin: 0.5rem 0 0; font-size: 1.75rem; letter-spacing: -0.045em; }
   .component__meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0; padding-block: 1rem; border-block: 1px solid #dce4df; }
@@ -107,5 +121,8 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
   .component__imports span { color: #46656a; font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; }
   .component__imports code { overflow-wrap: anywhere; font-size: 0.75rem; }
   .component__preview { display: flex; justify-content: space-between; gap: 1rem; padding-top: 1rem; border-top: 1px solid #dce4df; color: #12363a; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+  .component__thumbnail { position: relative; min-height: 32rem; overflow: hidden; background: #003d47; }
+  .component__thumbnail iframe { position: absolute; inset: 0; width: 200%; height: 200%; border: 0; pointer-events: none; transform: scale(0.5); transform-origin: top left; }
+  @media (max-width: 52rem) { .component--preview { grid-template-columns: 1fr; } .component__thumbnail { min-height: 24rem; } }
   @media (max-width: 40rem) { .catalogue__heading { align-items: start; flex-direction: column; } .component__meta { grid-template-columns: 1fr; } }
 </style>

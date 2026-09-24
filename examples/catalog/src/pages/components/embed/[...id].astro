@@ -1,0 +1,32 @@
+---
+import components from '../../../generated/components.json'
+
+const previewModules = import.meta.glob('@package-src/**/*.preview.astro', { eager: true })
+
+export function getStaticPaths() {
+  return components
+    .filter((component) => component.previewSource)
+    .map((component) => ({ params: { id: component.id }, props: { component } }))
+}
+
+const { component } = Astro.props
+const previewModule = Object.entries(previewModules).find(([path]) => path.endsWith(component.previewSource))?.[1]
+if (!previewModule) throw new Error(`No preview module found for ${component.id}.`)
+const Preview = (previewModule as { default: any }).default
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{component.title} preview</title>
+  </head>
+  <body>
+    <Preview />
+  </body>
+</html>
+
+<style>
+  body { margin: 0; }
+</style>
