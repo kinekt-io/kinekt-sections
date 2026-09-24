@@ -61,6 +61,11 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
                     ))}
                   </ul>
                 </div>
+                {component.previewSource && (
+                  <a class="component__preview" href={`components/${component.id}/`}>
+                    View live preview <span aria-hidden="true">→</span>
+                  </a>
+                )}
               </li>
             ))}
           </ul>
@@ -101,5 +106,6 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
   .component__imports li { display: grid; grid-template-columns: 4.75rem minmax(0, 1fr); gap: 0.75rem; align-items: baseline; }
   .component__imports span { color: #46656a; font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; }
   .component__imports code { overflow-wrap: anywhere; font-size: 0.75rem; }
+  .component__preview { display: flex; justify-content: space-between; gap: 1rem; padding-top: 1rem; border-top: 1px solid #dce4df; color: #12363a; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
   @media (max-width: 40rem) { .catalogue__heading { align-items: start; flex-direction: column; } .component__meta { grid-template-columns: 1fr; } }
 </style>

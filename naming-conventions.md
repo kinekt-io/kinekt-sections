@@ -34,8 +34,10 @@ src/
 └── sections/
     └── hero/
         └── allentown/
+            ├── README.md
             ├── hero-allentown.astro
             ├── hero-allentown.payload.ts
+            ├── hero-allentown.preview.astro
             └── hero-allentown.types.ts
 ```
 
@@ -88,6 +90,12 @@ Use PascalCase for the `interfaceName`. Keep the slug stable after content exist
 4. Put the component name in the README heading and a one-paragraph description directly below it. The generated catalogue uses both.
 5. Run `pnpm build`.
 6. Add a real rendering example before publishing when the component has required props or runtime behaviour.
+
+## Catalogue previews
+
+Add an optional `<name>.preview.astro` beside a component when it has representative, static preview content. The GitHub Pages catalogue makes its card clickable and renders this file on a generated detail page.
+
+Preview files are not package exports. They MAY contain component-specific example props, but MUST NOT use production credentials, customer data, or CMS connections. Do not add a preview that invents required props; leave the component listed without a preview until a real example exists.
 
 The build discovers `.astro`, `.payload.ts`, and `.types.ts` files beneath `src/` and generates `package.json` exports. Do not edit `exports` by hand. Two files that produce the same public import path stop the build.
 

@@ -26,6 +26,10 @@ The title accepts line breaks. The renderer splits `title` on `\n` and renders e
 
 The renderer requires an image URL, alt text, and positive width and height. It rejects unsafe CTA and image URLs. The mobile image is selected at `767px` and below.
 
+## Catalogue preview
+
+`hero-allentown.preview.astro` provides representative static content for the GitHub Pages catalogue. It imports and renders the component directly; it is not a package entrypoint or a production page.
+
 ## Payload block
 
 `createHeroBlock()` registers the `hero-allentown` block. The editor can set localized text, CTA label, CTA URL, a required image, and an optional mobile image.

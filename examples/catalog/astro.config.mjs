@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'astro/config'
 
 export default defineConfig({
@@ -5,4 +6,11 @@ export default defineConfig({
   site: 'https://kinekt-io.github.io',
   base: '/kinekt-sections',
   devToolbar: { enabled: false },
+  vite: {
+    resolve: {
+      alias: {
+        '@package-src': fileURLToPath(new URL('../../src', import.meta.url)),
+      },
+    },
+  },
 })

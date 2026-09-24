@@ -1,0 +1,57 @@
+---
+import components from '../../generated/components.json'
+
+const previewModules = import.meta.glob('@package-src/**/*.preview.astro', { eager: true })
+
+export function getStaticPaths() {
+  return components
+    .filter((component) => component.previewSource)
+    .map((component) => ({ params: { id: component.id }, props: { component } }))
+}
+
+const { component } = Astro.props
+const previewModule = Object.entries(previewModules).find(([path]) => path.endsWith(component.previewSource))?.[1]
+if (!previewModule) throw new Error(`No preview module found for ${component.id}.`)
+const Preview = (previewModule as { default: any }).default
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={`Preview of ${component.title}.`} />
+    <title>{component.title} · Kinekt components</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="bar">
+      <a href={import.meta.env.BASE_URL}>← Component catalogue</a>
+      <p>{component.category} / {component.role ?? 'component'} / {component.variation ?? component.title}</p>
+    </header>
+    <main>
+      <div class="intro">
+        <p>Live component preview</p>
+        <h1>{component.title}</h1>
+        <span>Representative content from <code>src/{component.previewSource}</code></span>
+      </div>
+      <Preview />
+    </main>
+  </body>
+</html>
+
+<style>
+  :root { color: #12363a; background: #fff; font-family: Urbanist, sans-serif; }
+  body { margin: 0; }
+  code { font-family: 'DM Mono', monospace; font-size: 0.875em; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem clamp(1.25rem, 4vw, 3rem); border-bottom: 1px solid #dce4df; }
+  .bar a { color: inherit; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+  .bar p { margin: 0; color: #46656a; font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+  .intro { width: min(calc(100% - 3rem), 76rem); margin: 0 auto; padding: clamp(2.5rem, 5vw, 4.5rem) 0 2rem; }
+  .intro p { margin: 0 0 0.75rem; color: #ff5f7e; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  .intro h1 { margin: 0 0 0.75rem; font-size: clamp(2.25rem, 5vw, 4rem); letter-spacing: -0.055em; }
+  .intro span { color: #46656a; }
+  @media (max-width: 40rem) { .bar { align-items: start; flex-direction: column; } }
+</style>

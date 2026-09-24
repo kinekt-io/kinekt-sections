@@ -29,6 +29,7 @@ test('discovers nested paired sections and standalone components without exporti
   await f.add('sections/hero/allentown/hero-allentown.astro')
   await f.add('sections/hero/allentown/hero-allentown.payload.ts')
   await f.add('sections/hero/allentown/hero-allentown.types.ts')
+  await f.add('sections/hero/allentown/hero-allentown.preview.astro')
   await f.add('sections/hero/allentown/README.md', '# Hero Allentown\n\nA documented hero variant.\n')
   await f.add('sections/hero/allentown/helpers.ts')
   await f.add('controls/button/button.astro')
@@ -53,6 +54,7 @@ test('discovers nested paired sections and standalone components without exporti
       variation: null,
       title: 'button',
       description: 'No component README.md yet.',
+      previewSource: null,
       entries: { astro: '@test/components/controls/button.astro' },
     },
     {
@@ -62,6 +64,7 @@ test('discovers nested paired sections and standalone components without exporti
       variation: 'allentown',
       title: 'Hero Allentown',
       description: 'A documented hero variant.',
+      previewSource: 'sections/hero/allentown/hero-allentown.preview.astro',
       entries: {
         astro: '@test/components/sections/hero-allentown.astro',
         payload: '@test/components/sections/hero-allentown.payload',
