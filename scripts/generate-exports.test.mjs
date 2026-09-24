@@ -30,7 +30,7 @@ test('discovers nested paired sections and standalone components without exporti
   await f.add('sections/hero/allentown/hero-allentown.payload.ts')
   await f.add('sections/hero/allentown/hero-allentown.types.ts')
   await f.add('sections/hero/allentown/hero-allentown.preview.astro')
-  await f.add('sections/hero/allentown/README.md', '# Hero Allentown\n\nA documented hero variant.\n')
+  await f.add('sections/hero/allentown/README.md', '# Hero Allentown\n\nA documented hero variant.\n\n## Figma\n\nhttps://www.figma.com/design/hero-allentown\n')
   await f.add('sections/hero/allentown/helpers.ts')
   await f.add('controls/button/button.astro')
   f.run()
@@ -54,6 +54,7 @@ test('discovers nested paired sections and standalone components without exporti
       variation: null,
       title: 'button',
       description: 'No component README.md yet.',
+      figmaUrl: null,
       previewSource: null,
       entries: { astro: '@test/components/controls/button.astro' },
     },
@@ -64,6 +65,7 @@ test('discovers nested paired sections and standalone components without exporti
       variation: 'allentown',
       title: 'Hero Allentown',
       description: 'A documented hero variant.',
+      figmaUrl: 'https://www.figma.com/design/hero-allentown',
       previewSource: 'sections/hero/allentown/hero-allentown.preview.astro',
       entries: {
         astro: '@test/components/sections/hero-allentown.astro',

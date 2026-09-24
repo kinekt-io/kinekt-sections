@@ -97,6 +97,18 @@ Add an optional `<name>.preview.astro` beside a component when it has representa
 
 Preview files are not package exports. They MAY contain component-specific example props, but MUST NOT use production credentials, customer data, or CMS connections. Do not add a preview that invents required props; leave the component listed without a preview until a real example exists.
 
+## Figma links
+
+Add an optional design link in the component `README.md` when the design is approved:
+
+```md
+## Figma
+
+https://www.figma.com/design/your-file
+```
+
+The build reads the first HTTPS URL under `## Figma` when it points to `figma.com`. It places that value in generated catalogue metadata, and the catalogue renders an **Open Figma design** link. It does not expose a link when the section or valid URL is absent.
+
 The build discovers `.astro`, `.payload.ts`, and `.types.ts` files beneath `src/` and generates `package.json` exports. Do not edit `exports` by hand. Two files that produce the same public import path stop the build.
 
 ## Reserved variation names

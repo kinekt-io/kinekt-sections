@@ -62,10 +62,19 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
                       ))}
                     </ul>
                   </div>
-                  {component.previewSource && (
-                    <a class="component__preview" href={`components/${component.id}/`}>
-                      Open full preview <span aria-hidden="true">→</span>
-                    </a>
+                  {(component.figmaUrl || component.previewSource) && (
+                    <div class="component__actions">
+                      {component.figmaUrl && (
+                        <a class="component__action" href={component.figmaUrl} target="_blank" rel="noreferrer">
+                          Open Figma design <span aria-hidden="true">↗</span>
+                        </a>
+                      )}
+                      {component.previewSource && (
+                        <a class="component__action" href={`components/${component.id}/`}>
+                          Open full preview <span aria-hidden="true">→</span>
+                        </a>
+                      )}
+                    </div>
                   )}
                 </div>
                 {component.previewSource && (
@@ -120,7 +129,8 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
   .component__imports li { display: grid; grid-template-columns: 4.75rem minmax(0, 1fr); gap: 0.75rem; align-items: baseline; }
   .component__imports span { color: #46656a; font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; }
   .component__imports code { overflow-wrap: anywhere; font-size: 0.75rem; }
-  .component__preview { display: flex; justify-content: space-between; gap: 1rem; padding-top: 1rem; border-top: 1px solid #dce4df; color: #12363a; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+  .component__actions { display: grid; gap: 0.75rem; padding-top: 1rem; border-top: 1px solid #dce4df; }
+  .component__action { display: flex; justify-content: space-between; gap: 1rem; color: #12363a; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
   .component__thumbnail { position: relative; min-height: 32rem; overflow: hidden; background: #003d47; }
   .component__thumbnail iframe { position: absolute; inset: 0; width: 200%; height: 200%; border: 0; pointer-events: none; transform: scale(0.5); transform-origin: top left; }
   @media (max-width: 52rem) { .component--preview { grid-template-columns: 1fr; } .component__thumbnail { min-height: 24rem; } }

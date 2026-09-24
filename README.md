@@ -128,9 +128,10 @@ See [`naming-conventions.md`](./naming-conventions.md) for the naming scheme and
 1. Add `<name>.astro`, `<name>.payload.ts`, `<name>.types.ts`, and `README.md` below `src/<category>/`.
 2. Use the same base name for the three source files and for the Payload slug.
 3. Describe the component in its `README.md`. The first heading and paragraph appear in the generated catalogue.
-4. Add `<name>.preview.astro` when the component can be rendered with representative static content. The catalogue links to this page but does not publish it as a package entrypoint.
-5. Run the checks below.
-6. Increase `version` in `package.json` before publishing a release.
+4. Add `## Figma` and place an approved `https://www.figma.com/...` URL on the next line when a design exists. The catalogue reads it and creates an external design link.
+5. Add `<name>.preview.astro` when the component can be rendered with representative static content. The catalogue links to this page but does not publish it as a package entrypoint.
+6. Run the checks below.
+7. Increase `version` in `package.json` before publishing a release.
 
 The build discovers the three filenames and rewrites `package.json` `exports`. Do not add exports manually. The generator stops on duplicate public import paths.
 

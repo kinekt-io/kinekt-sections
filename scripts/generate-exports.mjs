@@ -61,11 +61,19 @@ async function componentDescription(directory) {
   try {
     const markdown = await readFile(path.join(source, directory, 'README.md'), 'utf8')
     const lines = markdown.split(/\r?\n/).map((line) => line.trim())
-    const title = lines.find((line) => /^#\s+/.test(line))?.replace(/^#\s+/, '')
-    const description = lines.slice(lines.findIndex((line) => /^#\s+/.test(line)) + 1).find(
+    const titleIndex = lines.findIndex((line) => /^#\s+/.test(line))
+    const title = lines[titleIndex]?.replace(/^#\s+/, '')
+    const description = lines.slice(titleIndex + 1).find(
       (line) => line && !line.startsWith('#') && !line.startsWith('```'),
     )
-    return { title, description }
+    const figmaIndex = lines.findIndex((line) => /^##\s+Figma\s*$/i.test(line))
+    const figmaSection = figmaIndex === -1 ? [] : lines.slice(figmaIndex + 1)
+    const nextHeading = figmaSection.findIndex((line) => /^##\s+/.test(line))
+    const figmaLine = figmaSection
+      .slice(0, nextHeading === -1 ? undefined : nextHeading)
+      .find((line) => /^(?:\[[^\]]+\]\()?(https:\/\/(?:www\.)?figma\.com\/[^\s)<]+)\)?$/i.test(line))
+    const figmaUrl = figmaLine?.match(/https:\/\/(?:www\.)?figma\.com\/[^\s)<]+/i)?.[0] ?? null
+    return { title, description, figmaUrl }
   } catch (error) {
     if (error?.code === 'ENOENT') return {}
     throw error
@@ -94,6 +102,7 @@ for (const component of [...components.values()].sort((a, b) => a.directory.loca
     variation: parts.slice(2).join('-') || null,
     title: metadata.title ?? component.directory.split('/').at(-1),
     description: metadata.description ?? 'No component README.md yet.',
+    figmaUrl: metadata.figmaUrl ?? null,
     previewSource: component.previewSource ?? null,
     entries: Object.fromEntries(Object.entries(component.entries).map(([kind, entry]) => [kind, `${manifest.name}/${entry.importPath}`])),
   })

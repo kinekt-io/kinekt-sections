@@ -30,6 +30,10 @@ The renderer requires an image URL, alt text, and positive width and height. It 
 
 `hero-allentown.preview.astro` provides representative static content for the GitHub Pages catalogue. It imports and renders the component directly; it is not a package entrypoint or a production page.
 
+## Figma
+
+No approved Figma link has been recorded for this component. Add the approved `https://www.figma.com/...` URL on its own line when it is available. The catalogue reads that URL during its build and shows an **Open Figma design** link.
+
 ## Payload block
 
 `createHeroBlock()` registers the `hero-allentown` block. The editor can set localized text, CTA label, CTA URL, a required image, and an optional mobile image.
