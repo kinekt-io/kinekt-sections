@@ -1,0 +1,45 @@
+name: Publish private package
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+jobs:
+  publish:
+    if: github.event.repository.private == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.18.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://npm.pkg.github.com
+          scope: '@kinekt-io'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build && pnpm check && pnpm build:example
+      - run: pnpm publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify private visibility
+        run: |
+          VISIBILITY=$(gh api /orgs/kinekt-io/packages/npm/sections --jq .visibility)
+          test "$VISIBILITY" = private
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify registry installation
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          mkdir "$RUNNER_TEMP/package-consumer"
+          cd "$RUNNER_TEMP/package-consumer"
+          npm init -y
+          npm install --ignore-scripts "@kinekt-io/sections@$VERSION" astro@7.1.3
+          node --input-type=module -e "import { createHeroBlock, heroToProps } from '@kinekt-io/sections/payload'; if (createHeroBlock().slug !== 'hero' || typeof heroToProps !== 'function') throw new Error('Invalid published exports'); console.log(import.meta.resolve('@kinekt-io/sections/astro/Hero.astro'))"
+          node --input-type=module -e "import fs from 'node:fs'; fs.mkdirSync('src/pages', {recursive:true}); fs.writeFileSync('src/pages/index.astro', '---\nimport Hero from \"@kinekt-io/sections/astro/Hero.astro\"\n---\n<Hero eyebrow=\"Smoke\" title=\"Published hero\" description=\"Registry installation\" cta={{label:\"Visit\",href:\"/\"}} image={{url:\"/hero.png\",alt:\"Hero\",width:960,height:800}} />');"
+          npx astro build
+          node --input-type=module -e "import fs from 'node:fs'; if (!fs.readFileSync('dist/index.html','utf8').includes('Published hero')) throw new Error('Published Astro component failed to render');"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

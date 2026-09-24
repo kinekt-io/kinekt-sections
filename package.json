@@ -1,0 +1,70 @@
+{
+  "name": "@kinekt-io/sections",
+  "version": "0.1.0",
+  "description": "Paired Astro sections and Payload blocks for Kinekt websites",
+  "type": "module",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kinekt-io/kinekt-sections.git"
+  },
+  "packageManager": "pnpm@10.18.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "dist",
+    "src/astro",
+    "src/types.ts",
+    "src/urls.ts"
+  ],
+  "exports": {
+    "./astro/Hero.astro": "./src/astro/Hero.astro",
+    "./payload": {
+      "types": "./dist/payload.d.ts",
+      "import": "./dist/payload.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check": "astro check --root examples/astro",
+    "dev": "astro dev --root examples/astro --host 127.0.0.1",
+    "build:example": "astro build --root examples/astro",
+    "prepack": "pnpm build"
+  },
+  "peerDependencies": {
+    "astro": "^7.1.3",
+    "payload": "^3.86.0"
+  },
+  "peerDependenciesMeta": {
+    "astro": {
+      "optional": true
+    },
+    "payload": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "astro": "7.1.3",
+    "payload": "3.86.0",
+    "@payloadcms/db-sqlite": "3.86.0",
+    "@astrojs/check": "0.9.9",
+    "typescript": "5.9.3",
+    "tsx": "4.22.4",
+    "sharp": "0.35.3",
+    "@types/node": "22.18.12"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+---
+import Hero from '@kinekt-io/sections/astro/Hero.astro'
+import { hero } from '../data/hero'
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex" />
+    <title>Kinekt hero package preview</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600&display=swap" />
+  </head>
+  <body><main><Hero {...hero} /></main></body>
+</html>
+<style is:global>
+  @font-face { font-family: Brockmann; src: url('https://kinekt.io/wp-content/uploads/brockmann-medium-webfont.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+  @font-face { font-family: Brockmann; src: url('https://kinekt.io/wp-content/uploads/brockmann-semibold-webfont.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+  body { margin: 0; background: #003d47; }
+</style>
