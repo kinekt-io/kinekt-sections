@@ -1,0 +1,105 @@
+---
+import components from '../generated/components.json'
+
+const repositoryUrl = 'https://github.com/kinekt-io/kinekt-sections'
+const roles = new Set(components.map((component) => component.role).filter(Boolean))
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Private Kinekt component package catalogue." />
+    <title>Kinekt components</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <main>
+      <header class="masthead">
+        <div class="masthead__inner">
+          <p class="masthead__label">Private package catalogue</p>
+          <h1>Kinekt components</h1>
+          <p class="masthead__intro">Every public Astro, Payload and shared-type entrypoint generated from the current <code>src/</code> tree.</p>
+          <dl class="stats" aria-label="Catalogue summary">
+            <div><dt>Components</dt><dd>{components.length}</dd></div>
+            <div><dt>Roles</dt><dd>{roles.size}</dd></div>
+            <div><dt>Package</dt><dd><code>@kinekt-io/components</code></dd></div>
+          </dl>
+        </div>
+      </header>
+
+      <section class="catalogue" aria-labelledby="catalogue-title">
+        <div class="catalogue__inner">
+          <div class="catalogue__heading">
+            <div>
+              <p class="catalogue__label">Generated inventory</p>
+              <h2 id="catalogue-title">Available components</h2>
+            </div>
+            <a href={repositoryUrl}>View source on GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+
+          <ul class="components">
+            {components.map((component) => (
+              <li class="component">
+                <div class="component__header">
+                  <p class="component__category">{component.category} / {component.role ?? 'component'}</p>
+                  <h3>{component.title}</h3>
+                  <p>{component.description}</p>
+                </div>
+                <dl class="component__meta">
+                  <div><dt>Variation</dt><dd>{component.variation ?? '—'}</dd></div>
+                  <div><dt>Folder</dt><dd><code>src/{component.id}</code></dd></div>
+                </dl>
+                <div class="component__imports">
+                  <h4>Public imports</h4>
+                  <ul>
+                    {Object.entries(component.entries).map(([kind, entrypoint]) => (
+                      <li><span>{kind}</span><code>{entrypoint}</code></li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  :root { color: #e8f2f1; background: #003d47; font-family: Urbanist, sans-serif; }
+  body { margin: 0; }
+  code { font-family: 'DM Mono', monospace; font-size: 0.875em; }
+  .masthead { border-bottom: 1px solid rgb(255 255 255 / 16%); background: #003d47; }
+  .masthead__inner, .catalogue__inner { width: min(calc(100% - 3rem), 76rem); margin-inline: auto; }
+  .masthead__inner { padding-block: clamp(4.5rem, 12vw, 9rem); }
+  .masthead__label, .catalogue__label, .component__category { margin: 0; color: #ff5f7e; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  h1, h2, h3, h4, p { margin-top: 0; }
+  h1 { max-width: 48rem; margin-bottom: 1.25rem; font-size: clamp(3rem, 8vw, 6.5rem); line-height: 0.9; letter-spacing: -0.065em; }
+  .masthead__intro { max-width: 38rem; margin-bottom: 2.5rem; color: #c8d8d6; font-size: clamp(1.125rem, 2vw, 1.375rem); line-height: 1.5; }
+  .stats { display: flex; flex-wrap: wrap; gap: 1px; margin: 0; background: rgb(255 255 255 / 16%); }
+  .stats div { min-width: 9rem; padding: 1rem 1.25rem; background: #003d47; }
+  .stats dt, .component__meta dt { color: #a7c0bc; font-size: 0.8125rem; }
+  .stats dd, .component__meta dd { margin: 0.25rem 0 0; font-size: 1.125rem; font-weight: 600; }
+  .catalogue { min-height: 50vh; color: #12363a; background: #f3f3ee; }
+  .catalogue__inner { padding-block: clamp(3.5rem, 8vw, 7rem); }
+  .catalogue__heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 2rem; }
+  .catalogue__heading a { color: inherit; font-weight: 600; }
+  .catalogue h2 { margin: 0.5rem 0 0; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -0.05em; }
+  .components { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
+  .component { display: grid; gap: 1.75rem; padding: clamp(1.5rem, 3vw, 2.25rem); border: 1px solid #c6d2ce; background: #fff; }
+  .component__header p:not(.component__category) { margin: 1rem 0 0; color: #46656a; line-height: 1.5; }
+  .component h3 { margin: 0.5rem 0 0; font-size: 1.75rem; letter-spacing: -0.045em; }
+  .component__meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0; padding-block: 1rem; border-block: 1px solid #dce4df; }
+  .component__meta dd { overflow-wrap: anywhere; font-size: 0.9rem; }
+  .component__imports h4 { margin-bottom: 0.75rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .component__imports ul { display: grid; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+  .component__imports li { display: grid; grid-template-columns: 4.75rem minmax(0, 1fr); gap: 0.75rem; align-items: baseline; }
+  .component__imports span { color: #46656a; font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; }
+  .component__imports code { overflow-wrap: anywhere; font-size: 0.75rem; }
+  @media (max-width: 40rem) { .catalogue__heading { align-items: start; flex-direction: column; } .component__meta { grid-template-columns: 1fr; } }
+</style>

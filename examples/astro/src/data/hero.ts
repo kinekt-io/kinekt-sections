@@ -1,4 +1,4 @@
-import type { HeroContent } from '../../../../src/types.js'
+import type { HeroContent } from '@kinekt-io/components/sections/hero-allentown.types'
 
 // Snapshot of kinekt.io's hero. Production sites supply their own CMS content.
 export const hero = {

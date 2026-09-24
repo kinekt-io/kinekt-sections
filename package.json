@@ -1,5 +1,5 @@
 {
-  "name": "@kinekt-io/sections",
+  "name": "@kinekt-io/components",
   "version": "0.1.0",
   "description": "Paired Astro sections and Payload blocks for Kinekt websites",
   "type": "module",
@@ -17,26 +17,28 @@
   },
   "files": [
     "dist",
-    "src/astro",
-    "src/types.ts",
-    "src/urls.ts"
+    "src"
   ],
   "exports": {
-    "./astro/Hero.astro": "./src/astro/Hero.astro",
-    "./payload": {
-      "types": "./dist/payload.d.ts",
-      "import": "./dist/payload.js"
+    "./sections/hero-allentown.astro": "./src/sections/hero/allentown/hero-allentown.astro",
+    "./sections/hero-allentown.payload": {
+      "types": "./dist/sections/hero/allentown/hero-allentown.payload.d.ts",
+      "import": "./dist/sections/hero/allentown/hero-allentown.payload.js"
     },
-    "./types": {
-      "types": "./dist/types.d.ts",
-      "import": "./dist/types.js"
+    "./sections/hero-allentown.types": {
+      "types": "./dist/sections/hero/allentown/hero-allentown.types.d.ts",
+      "import": "./dist/sections/hero/allentown/hero-allentown.types.js"
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "check": "astro check --root examples/astro",
-    "dev": "astro dev --root examples/astro --host 127.0.0.1",
+    "exports:generate": "node scripts/generate-exports.mjs",
+    "test": "node --test scripts/*.test.mjs",
+    "build": "pnpm exports:generate && node --input-type=module -e \"import { rmSync } from 'node:fs'; rmSync('dist', { recursive: true, force: true })\" && tsc -p tsconfig.build.json",
+    "check": "pnpm exports:generate && astro check --root examples/astro && astro check --root examples/catalog",
+    "dev": "pnpm build && astro dev --root examples/astro --host 127.0.0.1",
     "build:example": "astro build --root examples/astro",
+    "build:catalog": "pnpm exports:generate && astro build --root examples/catalog",
+    "dev:catalog": "pnpm exports:generate && astro dev --root examples/catalog --host 127.0.0.1",
     "prepack": "pnpm build"
   },
   "peerDependencies": {

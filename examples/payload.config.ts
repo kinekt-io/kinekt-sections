@@ -1,7 +1,7 @@
 import { buildConfig, type Access } from 'payload'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import sharp from 'sharp'
-import { createHeroBlock } from '@kinekt-io/sections/payload'
+import { createHeroBlock } from '@kinekt-io/components/sections/hero-allentown.payload'
 
 const authenticated: Access = ({ req }) => Boolean(req.user)
 

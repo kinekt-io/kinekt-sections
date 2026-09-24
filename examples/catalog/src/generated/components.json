@@ -1,0 +1,15 @@
+[
+  {
+    "id": "sections/hero/allentown",
+    "category": "sections",
+    "role": "hero",
+    "variation": "allentown",
+    "title": "Hero Allentown",
+    "description": "A two-column Kinekt homepage hero with a coral highlighted phrase, CTA, and separate desktop and mobile image fields. It is the first hero variation in this package.",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/hero-allentown.astro",
+      "payload": "@kinekt-io/components/sections/hero-allentown.payload",
+      "types": "@kinekt-io/components/sections/hero-allentown.types"
+    }
+  }
+]

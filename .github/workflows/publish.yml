@@ -20,26 +20,26 @@ jobs:
           scope: '@kinekt-io'
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build && pnpm check && pnpm build:example
+      - run: pnpm test && pnpm build && pnpm check && pnpm build:example && pnpm build:catalog
       - run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Verify private visibility
         run: |
-          VISIBILITY=$(gh api /orgs/kinekt-io/packages/npm/sections --jq .visibility)
+          VISIBILITY=$(gh api /orgs/kinekt-io/packages/npm/components --jq .visibility)
           test "$VISIBILITY" = private
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Verify registry installation
         run: |
+          NAME=$(node -p "require('./package.json').name")
           VERSION=$(node -p "require('./package.json').version")
-          mkdir "$RUNNER_TEMP/package-consumer"
-          cd "$RUNNER_TEMP/package-consumer"
+          ASTRO_VERSION=$(node -p "require('./package.json').devDependencies.astro")
+          PAYLOAD_VERSION=$(node -p "require('./package.json').devDependencies.payload")
+          CONSUMER=$(mktemp -d "$RUNNER_TEMP/package-consumer.XXXXXX")
+          cd "$CONSUMER"
           npm init -y
-          npm install --ignore-scripts "@kinekt-io/sections@$VERSION" astro@7.1.3
-          node --input-type=module -e "import { createHeroBlock, heroToProps } from '@kinekt-io/sections/payload'; if (createHeroBlock().slug !== 'hero' || typeof heroToProps !== 'function') throw new Error('Invalid published exports'); console.log(import.meta.resolve('@kinekt-io/sections/astro/Hero.astro'))"
-          node --input-type=module -e "import fs from 'node:fs'; fs.mkdirSync('src/pages', {recursive:true}); fs.writeFileSync('src/pages/index.astro', '---\nimport Hero from \"@kinekt-io/sections/astro/Hero.astro\"\n---\n<Hero eyebrow=\"Smoke\" title=\"Published hero\" description=\"Registry installation\" cta={{label:\"Visit\",href:\"/\"}} image={{url:\"/hero.png\",alt:\"Hero\",width:960,height:800}} />');"
-          npx astro build
-          node --input-type=module -e "import fs from 'node:fs'; if (!fs.readFileSync('dist/index.html','utf8').includes('Published hero')) throw new Error('Published Astro component failed to render');"
+          npm install --ignore-scripts "$NAME@$VERSION" "astro@$ASTRO_VERSION" "payload@$PAYLOAD_VERSION"
+          node "$GITHUB_WORKSPACE/scripts/verify-package.mjs" "$CONSUMER"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

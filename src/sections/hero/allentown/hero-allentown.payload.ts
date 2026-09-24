@@ -1,7 +1,7 @@
 import type { Block, CollectionSlug } from 'payload'
 
-import type { HeroContent, HeroImage } from './types.js'
-import { isSafeWebUrl } from './urls.js'
+import type { HeroContent, HeroImage, PayloadHeroDocument, PayloadHeroMedia } from './hero-allentown.types.js'
+import { isSafeWebUrl } from '../../../urls.js'
 
 export interface CreateHeroBlockOptions {
   /** The Payload upload collection used for the hero images. Defaults to `media`. */
@@ -16,33 +16,6 @@ export interface HeroToPropsOptions {
   mediaBaseUrl?: string
 }
 
-type PayloadID = string | number
-
-type PayloadHeroMedia = {
-  id?: PayloadID
-  url?: string | null
-  alt?: string | null
-  width?: number | null
-  height?: number | null
-}
-
-/** Structural shape accepted from a generated Payload hero block type. */
-export interface PayloadHeroDocument {
-  id?: PayloadID
-  blockName?: string | null
-  blockType?: string
-  eyebrow?: string | null
-  title?: string | null
-  highlight?: string | null
-  titleSuffix?: string | null
-  description?: string | null
-  cta?: {
-    label?: string | null
-    href?: string | null
-  } | null
-  image?: PayloadHeroMedia | PayloadID | null
-  mobileImage?: PayloadHeroMedia | PayloadID | null
-}
 
 const ctaHrefValidationMessage = 'Enter an absolute HTTP(S) URL or a site-root-relative path.'
 const requiredTextValidationMessage = 'Enter non-empty text.'
@@ -50,11 +23,11 @@ const requiredTextValidationMessage = 'Enter non-empty text.'
 /** Creates a localized Hero block backed by a Payload upload collection. */
 export function createHeroBlock({ mediaCollection = 'media' }: CreateHeroBlockOptions = {}): Block {
   return {
-    slug: 'hero',
-    interfaceName: 'Hero',
+    slug: 'hero-allentown',
+    interfaceName: 'HeroAllentown',
     labels: {
-      singular: 'Hero',
-      plural: 'Heroes',
+      singular: 'Hero Allentown',
+      plural: 'Hero Allentown blocks',
     },
     fields: [
       {
