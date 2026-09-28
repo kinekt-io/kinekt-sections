@@ -53,7 +53,7 @@ unset NODE_AUTH_TOKEN
 Run this in the Astro application and again in the separate Payload application:
 
 ```bash
-pnpm add --save-exact @kinekt-io/components@0.1.0
+pnpm add --save-exact @kinekt-io/components@26.9.25
 ```
 
 Use a concrete version. A site updates only when you deliberately change this dependency and rebuild it.

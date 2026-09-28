@@ -38,12 +38,14 @@ test('discovers nested paired sections and standalone components without exporti
     './controls/button.astro': './src/controls/button/button.astro',
     './sections/hero-allentown.astro': './src/sections/hero/allentown/hero-allentown.astro',
     './sections/hero-allentown.payload': {
-      types: './dist/sections/hero/allentown/hero-allentown.payload.d.ts',
+      default: './dist/sections/hero/allentown/hero-allentown.payload.js',
       import: './dist/sections/hero/allentown/hero-allentown.payload.js',
+      types: './dist/sections/hero/allentown/hero-allentown.payload.d.ts',
     },
     './sections/hero-allentown.types': {
-      types: './dist/sections/hero/allentown/hero-allentown.types.d.ts',
+      default: './dist/sections/hero/allentown/hero-allentown.types.js',
       import: './dist/sections/hero/allentown/hero-allentown.types.js',
+      types: './dist/sections/hero/allentown/hero-allentown.types.d.ts',
     },
   })
   assert.deepEqual(await f.catalogue(), [

@@ -49,8 +49,9 @@ async function discover(directory) {
     if (component.entries[kind]) throw new Error(`Multiple ${kind} entrypoints in ${component.directory}. Use one component per folder.`)
 
     const target = kind === 'astro' ? `./src/${relative}` : {
-      types: `./dist/${relative.slice(0, -3)}.d.ts`,
+      default: `./dist/${relative.slice(0, -3)}.js`,
       import: `./dist/${relative.slice(0, -3)}.js`,
+      types: `./dist/${relative.slice(0, -3)}.d.ts`,
     }
     entries.set(key, { source: relative, target })
     component.entries[kind] = { importPath: key.slice(2), source: relative }

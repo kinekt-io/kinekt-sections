@@ -6,7 +6,7 @@
     "variation": "allentown",
     "title": "Hero Allentown",
     "description": "A two-column Kinekt homepage hero with a coral highlighted phrase, CTA, and separate desktop and mobile image fields. It is the first hero variation in this package.",
-    "figmaUrl": null,
+    "figmaUrl": "https://www.figma.com/design/nysBrgsDUulJAWpQ8G6n0C/KI-51-Kinekt-strategy--identity--website-and-marketing?node-id=2069-11170&t=PsKz3ufuSrw4ho5z-4",
     "previewSource": "sections/hero/allentown/hero-allentown.preview.astro",
     "entries": {
       "astro": "@kinekt-io/components/sections/hero-allentown.astro",
