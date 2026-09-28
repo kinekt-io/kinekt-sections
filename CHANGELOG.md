@@ -1,5 +1,11 @@
 # Changelog
 
+## 26.9.26 — 2026-09-28
+
+### Added
+
+- A `prepare` build for consumers installing the package directly from the pinned public GitHub repository.
+
 ## 26.9.25 — 2026-09-28
 
 ### Added

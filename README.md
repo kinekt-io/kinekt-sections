@@ -1,10 +1,10 @@
 # Kinekt components
 
-`@kinekt-io/components` is a private GitHub Packages library of paired Astro renderers and Payload block definitions. Each component implementation has separate public Astro, Payload, and type entrypoints.
+`@kinekt-io/components` contains paired Astro renderers and Payload block definitions. Each component implementation has separate public Astro, Payload, and type entrypoints.
 
-Current source package: [`kinekt-io/kinekt-sections`](https://github.com/kinekt-io/kinekt-sections).
+Source repository: [`kinekt-io/kinekt-sections`](https://github.com/kinekt-io/kinekt-sections).
 
-## Install the private package
+## Install a fixed GitHub release
 
 Install the package in each separate consumer application:
 
@@ -16,47 +16,22 @@ Install the package in each separate consumer application:
 
 - Node.js `>=22.12.0`.
 - pnpm `10.18.0`.
-- GitHub access to the private `@kinekt-io/components` package.
-- A GitHub Personal Access Token (classic) with `read:packages` for local installation. Do not commit or paste this token into a project file.
 
-For GitHub Actions, grant the site repository read access in the package's **Manage Actions access** settings. The workflow can then use its `GITHUB_TOKEN` with `packages: read`.
+### Install
 
-### Configure the registry
-
-Create `.npmrc` in the root of each consumer application:
-
-```ini
-@kinekt-io:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
-```
-
-The file maps only the `@kinekt-io` scope to GitHub Packages. Other dependencies still use the default npm registry. Commit this configuration, but never replace `${NODE_AUTH_TOKEN}` with a token value.
-
-### Authenticate locally
-
-Load a new read-only GitHub token into the current terminal session:
-
-```zsh
-read -s "NODE_AUTH_TOKEN?GitHub package token: "
-echo
-export NODE_AUTH_TOKEN
-```
-
-The token remains only in that terminal session. Remove it after installation if you no longer need it:
-
-```zsh
-unset NODE_AUTH_TOKEN
-```
-
-### Install a fixed release
-
-Run this in the Astro application and again in the separate Payload application:
+The public repository is the distribution source. Pin a release tag; never depend on `main`.
 
 ```bash
-pnpm add --save-exact @kinekt-io/components@26.9.25
+pnpm add github:kinekt-io/kinekt-sections#components-v26.9.26
 ```
 
-Use a concrete version. A site updates only when you deliberately change this dependency and rebuild it.
+The installed package remains named `@kinekt-io/components`, so imports are stable:
+
+```ts
+import { createHeroBlock } from '@kinekt-io/components/sections/hero-allentown.payload'
+```
+
+Commit both `package.json` and `pnpm-lock.yaml`. A site updates only when its Git dependency is deliberately changed to a new release tag.
 
 ## Use a component
 
