@@ -30,6 +30,17 @@
       "default": "./dist/sections/hero/allentown/hero-allentown.types.js",
       "import": "./dist/sections/hero/allentown/hero-allentown.types.js",
       "types": "./dist/sections/hero/allentown/hero-allentown.types.d.ts"
+    },
+    "./sections/hero-trinity.astro": "./src/sections/hero/trinity/hero-trinity.astro",
+    "./sections/hero-trinity.payload": {
+      "default": "./dist/sections/hero/trinity/hero-trinity.payload.js",
+      "import": "./dist/sections/hero/trinity/hero-trinity.payload.js",
+      "types": "./dist/sections/hero/trinity/hero-trinity.payload.d.ts"
+    },
+    "./sections/hero-trinity.types": {
+      "default": "./dist/sections/hero/trinity/hero-trinity.types.js",
+      "import": "./dist/sections/hero/trinity/hero-trinity.types.js",
+      "types": "./dist/sections/hero/trinity/hero-trinity.types.d.ts"
     }
   },
   "scripts": {

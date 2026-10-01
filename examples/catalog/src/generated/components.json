@@ -13,5 +13,20 @@
       "payload": "@kinekt-io/components/sections/hero-allentown.payload",
       "types": "@kinekt-io/components/sections/hero-allentown.types"
     }
+  },
+  {
+    "id": "sections/hero/trinity",
+    "category": "sections",
+    "role": "hero",
+    "variation": "trinity",
+    "title": "Hero Trinity",
+    "description": "A high-density Tulip hero with a 16:9 media panel, localized eyebrow, title, description, and responsive image.",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4754-91818&m=dev",
+    "previewSource": "sections/hero/trinity/hero-trinity.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/hero-trinity.astro",
+      "payload": "@kinekt-io/components/sections/hero-trinity.payload",
+      "types": "@kinekt-io/components/sections/hero-trinity.types"
+    }
   }
 ]

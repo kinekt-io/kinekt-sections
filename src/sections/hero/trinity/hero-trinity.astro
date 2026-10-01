@@ -1,0 +1,229 @@
+---
+import type { HeroContent, HeroImage } from './hero-trinity.types.js'
+import { isSafeWebUrl } from '../../../urls.js'
+ 
+
+interface Props extends HeroContent {
+  id?: string
+  headingLevel?: 'h1' | 'h2'
+}
+
+function assertSafeImage(image: HeroImage, name: string): void {
+  if (!isSafeWebUrl(image.url)) {
+    throw new Error(`${name}.url must be an HTTP(S) or root-relative URL.`)
+  }
+
+  if (!Number.isSafeInteger(image.width) || image.width <= 0) {
+    throw new Error(`${name}.width must be a positive integer.`)
+  }
+
+  if (!Number.isSafeInteger(image.height) || image.height <= 0) {
+    throw new Error(`${name}.height must be a positive integer.`)
+  }
+}
+
+const {
+  id,
+  headingLevel = 'h1',
+  eyebrow,
+  title,
+  highlight,
+  titleSuffix,
+  description,
+  image,
+  mobileImage,
+} = Astro.props
+
+ 
+
+assertSafeImage(image, 'image')
+
+if (mobileImage) {
+  assertSafeImage(mobileImage, 'mobileImage')
+}
+
+const Heading = headingLevel
+const titleLines = title.split('\n')
+---
+
+<section class="hero-trinity" id={id}>
+  <div class="hero-trinity__container">
+    <div class="hero-trinity__content">
+      <div class="hero-trinity__header-block">
+        <p class="hero-trinity__accent-heading">
+          <span class="hero-trinity__accent-heading-arrow" aria-hidden="true">/</span>
+          {eyebrow}
+        </p>
+
+        <Heading class="hero-trinity__title">
+          {titleLines.map((line, index) => (
+            <Fragment>
+              {index > 0 && <br />}
+              {line}
+            </Fragment>
+          ))}
+          {highlight && <> {highlight}</>}
+          {titleSuffix}
+        </Heading>
+      </div>
+
+      <p class="hero-trinity__description">{description}</p>
+    </div>
+
+    <picture class="hero-trinity__media">
+      {mobileImage && <source media="(max-width: 767px)" srcset={mobileImage.url} width={mobileImage.width} height={mobileImage.height} />}
+      <img
+        class="hero-trinity__image"
+        src={image.url}
+        alt={image.alt}
+        width={image.width}
+        height={image.height}
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
+  </div>
+</section>
+
+<style>
+  @layer ki-sections-wireframe {
+    .hero-trinity {
+      --hero-trinity-surface: #032120;
+      --hero-trinity-content-surface: #585858;
+      --hero-trinity-accent: #49e38e;
+      --hero-trinity-heading-color: #ffffff;
+      --hero-trinity-body-color: #cdd3d2;
+      --hero-trinity-section-inline: clamp(1.5rem, 2.56vw, 2.56rem);
+      --hero-trinity-section-block-end: 4rem;
+      --hero-trinity-content-block-start: 5rem;
+      --hero-trinity-content-block-end: 6.25rem;
+      --hero-trinity-content-width: 90rem;
+      --hero-trinity-copy-width: 48.75rem;
+      --hero-trinity-content-radius: 0.499875rem;
+      --hero-trinity-heading-gap: 0.75rem;
+      --hero-trinity-copy-gap: 1rem;
+      --hero-trinity-eyebrow-size: 1.125rem;
+      --hero-trinity-title-size: 3.5rem;
+      --hero-trinity-description-size: 1.25rem;
+      --hero-trinity-eyebrow-tracking: 0.05em;
+      --hero-trinity-title-leading: 1.1;
+      --hero-trinity-body-leading: 1.5;
+      --hero-trinity-media-size: 25rem;
+      --hero-trinity-media-inline-offset: 25rem;
+      --hero-trinity-media-block-offset: 3.768125rem;
+      --hero-trinity-heading-font: var(--kinekt-sections-heading-font-family, 'Aeonik Pro', sans-serif);
+      --hero-trinity-body-font: var(--kinekt-sections-body-font-family, 'Aeonik Pro', sans-serif);
+
+      box-sizing: border-box;
+      padding-inline: var(--hero-trinity-section-inline);
+      padding-block-end: var(--hero-trinity-section-block-end);
+      background-color: var(--hero-trinity-surface);
+    }
+
+    .hero-trinity__container {
+      position: relative;
+      display: flex;
+      box-sizing: border-box;
+      align-items: flex-end;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      padding: var(--hero-trinity-content-block-start) var(--hero-trinity-section-inline) var(--hero-trinity-content-block-end);
+      border-radius: var(--hero-trinity-content-radius);
+      background-color: var(--hero-trinity-content-surface);
+    }
+
+    .hero-trinity__content {
+      z-index: 1;
+      display: flex;
+      width: min(100%, var(--hero-trinity-content-width));
+      margin-inline: auto;
+      flex-direction: column;
+      gap: var(--hero-trinity-copy-gap);
+    }
+
+    .hero-trinity__header-block {
+      display: flex;
+      width: min(100%, var(--hero-trinity-copy-width));
+      flex-direction: column;
+      gap: var(--hero-trinity-heading-gap);
+    }
+
+    .hero-trinity__accent-heading {
+      display: inline-flex;
+      gap: var(--hero-trinity-heading-gap);
+      margin: 0;
+      color: var(--hero-trinity-accent);
+      font-family: var(--hero-trinity-heading-font);
+      font-size: var(--hero-trinity-eyebrow-size);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: var(--hero-trinity-eyebrow-tracking);
+      text-transform: uppercase;
+    }
+
+    .hero-trinity__accent-heading-arrow {
+      font: inherit;
+    }
+
+    .hero-trinity__title {
+      margin: 0;
+      color: var(--hero-trinity-heading-color);
+      font-family: var(--hero-trinity-heading-font);
+      font-size: var(--hero-trinity-title-size);
+      font-weight: 500;
+      line-height: var(--hero-trinity-title-leading);
+    }
+
+    .hero-trinity__description {
+      width: min(100%, var(--hero-trinity-copy-width));
+      margin: 0;
+      color: var(--hero-trinity-body-color);
+      font-family: var(--hero-trinity-body-font);
+      font-size: var(--hero-trinity-description-size);
+      font-weight: 400;
+      line-height: var(--hero-trinity-body-leading);
+      opacity: 0.8;
+    }
+
+    .hero-trinity__media {
+      position: absolute;
+      top: calc(50% + var(--hero-trinity-media-block-offset));
+      left: calc(50% + var(--hero-trinity-media-inline-offset));
+      display: block;
+      width: var(--hero-trinity-media-size);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+    }
+
+    .hero-trinity__image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 47.9375rem) {
+      .hero-trinity__container {
+        min-block-size: 100svh;
+        aspect-ratio: auto;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: var(--hero-trinity-content-block-start) var(--hero-trinity-section-inline) var(--hero-trinity-content-block-end);
+      }
+
+      .hero-trinity__content {
+        width: 100%;
+        margin: 0;
+      }
+
+      .hero-trinity__media {
+        position: static;
+        align-self: center;
+        width: min(100%, var(--hero-trinity-media-size));
+        margin-block-start: var(--hero-trinity-copy-gap);
+        transform: none;
+      }
+    }
+  }
+</style>
