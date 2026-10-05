@@ -88,6 +88,7 @@ const titleLines = title.split('\n')
         width={image.width}
         height={image.height}
         data-fallback-url={image.fallbackUrl}
+        data-mobile-fallback-url={mobileImage?.fallbackUrl}
         loading="eager"
         fetchpriority="high"
         decoding="async"
@@ -100,11 +101,17 @@ const titleLines = title.split('\n')
     const image = event.target
     if (!(image instanceof HTMLImageElement)) return
 
-    const fallbackURL = image.dataset.fallbackUrl
+    const picture = image.closest('picture')
+    const mobileSource = picture?.querySelector('source')
+    const mobileFallbackURL = mobileSource instanceof HTMLSourceElement
+      && window.matchMedia(mobileSource.media).matches
+      ? image.dataset.mobileFallbackUrl
+      : undefined
+    const fallbackURL = mobileFallbackURL ?? image.dataset.fallbackUrl
     if (!fallbackURL || image.dataset.usingFallback === 'true') return
 
     image.dataset.usingFallback = 'true'
-    image.closest('picture')?.querySelectorAll('source').forEach((source) => source.removeAttribute('srcset'))
+    picture?.querySelectorAll('source').forEach((source) => source.removeAttribute('srcset'))
     image.src = fallbackURL
   }, true)
 </script>
