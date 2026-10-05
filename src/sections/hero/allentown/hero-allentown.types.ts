@@ -3,6 +3,8 @@ export interface HeroImage {
   alt: string
   width: number
   height: number
+  /** Static release-local replacement used only when the primary media URL fails. */
+  fallbackUrl?: string
 }
 
 export interface HeroContent {

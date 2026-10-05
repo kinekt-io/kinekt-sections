@@ -1,7 +1,7 @@
 ---
 import type { HeroContent, HeroImage } from './hero-allentown.types.js'
 import { isSafeWebUrl } from '../../../urls.js'
-import { Image } from 'astro:assets'
+
 
 interface Props extends HeroContent {
   id?: string
@@ -11,6 +11,10 @@ interface Props extends HeroContent {
 function assertSafeImage(image: HeroImage, name: string): void {
   if (!isSafeWebUrl(image.url)) {
     throw new Error(`${name}.url must be an HTTP(S) or root-relative URL.`)
+  }
+
+  if (image.fallbackUrl !== undefined && !isSafeWebUrl(image.fallbackUrl)) {
+    throw new Error(`${name}.fallbackUrl must be an HTTP(S) or root-relative URL.`)
   }
 
   if (!Number.isSafeInteger(image.width) || image.width <= 0) {
@@ -77,12 +81,13 @@ const titleLines = title.split('\n')
 
     <picture class="hero-allentown__media">
       {mobileImage && <source media="(max-width: 767px)" srcset={mobileImage.url} width={mobileImage.width} height={mobileImage.height} />}
-      <Image
+      <img
         class="hero-allentown__image"
         src={image.url}
         alt={image.alt}
         width={image.width}
         height={image.height}
+        data-fallback-url={image.fallbackUrl}
         loading="eager"
         fetchpriority="high"
         decoding="async"
@@ -90,6 +95,20 @@ const titleLines = title.split('\n')
     </picture>
   </div>
 </section>
+<script>
+  document.addEventListener('error', (event) => {
+    const image = event.target
+    if (!(image instanceof HTMLImageElement)) return
+
+    const fallbackURL = image.dataset.fallbackUrl
+    if (!fallbackURL || image.dataset.usingFallback === 'true') return
+
+    image.dataset.usingFallback = 'true'
+    image.closest('picture')?.querySelectorAll('source').forEach((source) => source.removeAttribute('srcset'))
+    image.src = fallbackURL
+  }, true)
+</script>
+
 
 <style>
   @layer ki-sections-wireframe{

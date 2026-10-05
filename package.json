@@ -1,6 +1,6 @@
 {
   "name": "@kinekt-io/components",
-  "version": "26.9.26",
+  "version": "26.9.28",
   "description": "Paired Astro sections and Payload blocks for Kinekt websites",
   "type": "module",
   "license": "UNLICENSED",
