@@ -91,25 +91,6 @@ const titleLines = title.split('\n')
     </picture>
   </div>
 </section>
-<script>
-  document.addEventListener('error', (event) => {
-    const image = event.target
-    if (!(image instanceof HTMLImageElement)) return
-
-    const picture = image.closest('picture')
-    const mobileSource = picture?.querySelector('source')
-    const mobileFallbackURL = mobileSource instanceof HTMLSourceElement
-      && window.matchMedia(mobileSource.media).matches
-      ? image.dataset.mobileFallbackUrl
-      : undefined
-    const fallbackURL = mobileFallbackURL ?? image.dataset.fallbackUrl
-    if (!fallbackURL || image.dataset.usingFallback === 'true') return
-
-    image.dataset.usingFallback = 'true'
-    picture?.querySelectorAll('source').forEach((source) => source.removeAttribute('srcset'))
-    image.src = fallbackURL
-  }, true)
-</script>
 
 
 <style>
