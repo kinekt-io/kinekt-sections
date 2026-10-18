@@ -1,5 +1,33 @@
 [
   {
+    "id": "primitives/section-intro",
+    "category": "primitives",
+    "role": "section-intro",
+    "variation": null,
+    "title": "section-intro",
+    "description": "No component README.md yet.",
+    "figmaUrl": null,
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/primitives/section-intro.astro"
+    }
+  },
+  {
+    "id": "sections/compatibility-specifications/allentown",
+    "category": "sections",
+    "role": "compatibility-specifications",
+    "variation": "allentown",
+    "title": "allentown",
+    "description": "No component README.md yet.",
+    "figmaUrl": null,
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/sections/compatibility-specifications-allentown.astro",
+      "payload": "@kinekt-io/components/sections/compatibility-specifications-allentown.payload",
+      "types": "@kinekt-io/components/sections/compatibility-specifications-allentown.types"
+    }
+  },
+  {
     "id": "sections/hero/allentown",
     "category": "sections",
     "role": "hero",
@@ -27,6 +55,51 @@
       "astro": "@kinekt-io/components/sections/hero-trinity.astro",
       "payload": "@kinekt-io/components/sections/hero-trinity.payload",
       "types": "@kinekt-io/components/sections/hero-trinity.types"
+    }
+  },
+  {
+    "id": "sections/media-feature-list/allentown",
+    "category": "sections",
+    "role": "media-feature-list",
+    "variation": "allentown",
+    "title": "allentown",
+    "description": "No component README.md yet.",
+    "figmaUrl": null,
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/sections/media-feature-list-allentown.astro",
+      "payload": "@kinekt-io/components/sections/media-feature-list-allentown.payload",
+      "types": "@kinekt-io/components/sections/media-feature-list-allentown.types"
+    }
+  },
+  {
+    "id": "sections/output-card-grid/allentown",
+    "category": "sections",
+    "role": "output-card-grid",
+    "variation": "allentown",
+    "title": "allentown",
+    "description": "No component README.md yet.",
+    "figmaUrl": null,
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/sections/output-card-grid-allentown.astro",
+      "payload": "@kinekt-io/components/sections/output-card-grid-allentown.payload",
+      "types": "@kinekt-io/components/sections/output-card-grid-allentown.types"
+    }
+  },
+  {
+    "id": "sections/read-more/allentown",
+    "category": "sections",
+    "role": "read-more",
+    "variation": "allentown",
+    "title": "allentown",
+    "description": "No component README.md yet.",
+    "figmaUrl": null,
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/sections/read-more-allentown.astro",
+      "payload": "@kinekt-io/components/sections/read-more-allentown.payload",
+      "types": "@kinekt-io/components/sections/read-more-allentown.types"
     }
   }
 ]

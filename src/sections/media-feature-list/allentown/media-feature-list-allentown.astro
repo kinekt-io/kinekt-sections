@@ -1,0 +1,7 @@
+---
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { MediaFeatureListContent } from './media-feature-list-allentown.types.js'
+interface Props extends MediaFeatureListContent { headingLevel?: 'h1'|'h2'|'h3' }
+const {theme,direction,intro,label,media,features,headingLevel='h2'}=Astro.props
+---
+<section class:list={['media-feature-list','media-feature-list--allentown',`media-feature-list--${direction}`]} data-kinekt-theme={theme} data-kinekt-direction={direction}><div class="media-feature-list__copy"><SectionIntro intro={intro} headingLevel={headingLevel}/>{label&&<p class="media-feature-list__label">{label.icon&&<span aria-hidden="true">{label.icon}</span>}{label.text}</p>}<ul class="media-feature-list__features">{features.map(feature=><li class="media-feature-list__feature"><h3 class="media-feature-list__feature-title">{feature.title}</h3><div class="media-feature-list__feature-description" set:html={feature.description.html}/></li>)}</ul></div>{media&&<div class="media-feature-list__media"><img class="media-feature-list__image" src={media.url} alt={media.alt} width={media.width} height={media.height} loading="lazy"/></div>}</section>

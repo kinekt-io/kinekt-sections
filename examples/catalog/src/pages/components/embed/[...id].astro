@@ -10,7 +10,7 @@ export function getStaticPaths() {
 }
 
 const { component } = Astro.props
-const previewModule = Object.entries(previewModules).find(([path]) => path.endsWith(component.previewSource))?.[1]
+const previewModule = Object.entries(previewModules).find(([path]) => path.endsWith(component.previewSource!))?.[1]
 if (!previewModule) throw new Error(`No preview module found for ${component.id}.`)
 const Preview = (previewModule as { default: any }).default
 ---

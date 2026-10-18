@@ -1,6 +1,6 @@
 {
   "name": "@kinekt-io/components",
-  "version": "26.10.1",
+  "version": "26.10.2-beta.1",
   "description": "Paired Astro sections and Payload blocks for Kinekt websites",
   "type": "module",
   "license": "UNLICENSED",
@@ -20,6 +20,18 @@
     "src"
   ],
   "exports": {
+    "./primitives/section-intro.astro": "./src/primitives/section-intro/section-intro.astro",
+    "./sections/compatibility-specifications-allentown.astro": "./src/sections/compatibility-specifications/allentown/compatibility-specifications-allentown.astro",
+    "./sections/compatibility-specifications-allentown.payload": {
+      "default": "./dist/sections/compatibility-specifications/allentown/compatibility-specifications-allentown.payload.js",
+      "import": "./dist/sections/compatibility-specifications/allentown/compatibility-specifications-allentown.payload.js",
+      "types": "./dist/sections/compatibility-specifications/allentown/compatibility-specifications-allentown.payload.d.ts"
+    },
+    "./sections/compatibility-specifications-allentown.types": {
+      "default": "./dist/sections/compatibility-specifications/allentown/compatibility-specifications-allentown.types.js",
+      "import": "./dist/sections/compatibility-specifications/allentown/compatibility-specifications-allentown.types.js",
+      "types": "./dist/sections/compatibility-specifications/allentown/compatibility-specifications-allentown.types.d.ts"
+    },
     "./sections/hero-allentown.astro": "./src/sections/hero/allentown/hero-allentown.astro",
     "./sections/hero-allentown.payload": {
       "default": "./dist/sections/hero/allentown/hero-allentown.payload.js",
@@ -41,6 +53,39 @@
       "default": "./dist/sections/hero/trinity/hero-trinity.types.js",
       "import": "./dist/sections/hero/trinity/hero-trinity.types.js",
       "types": "./dist/sections/hero/trinity/hero-trinity.types.d.ts"
+    },
+    "./sections/media-feature-list-allentown.astro": "./src/sections/media-feature-list/allentown/media-feature-list-allentown.astro",
+    "./sections/media-feature-list-allentown.payload": {
+      "default": "./dist/sections/media-feature-list/allentown/media-feature-list-allentown.payload.js",
+      "import": "./dist/sections/media-feature-list/allentown/media-feature-list-allentown.payload.js",
+      "types": "./dist/sections/media-feature-list/allentown/media-feature-list-allentown.payload.d.ts"
+    },
+    "./sections/media-feature-list-allentown.types": {
+      "default": "./dist/sections/media-feature-list/allentown/media-feature-list-allentown.types.js",
+      "import": "./dist/sections/media-feature-list/allentown/media-feature-list-allentown.types.js",
+      "types": "./dist/sections/media-feature-list/allentown/media-feature-list-allentown.types.d.ts"
+    },
+    "./sections/output-card-grid-allentown.astro": "./src/sections/output-card-grid/allentown/output-card-grid-allentown.astro",
+    "./sections/output-card-grid-allentown.payload": {
+      "default": "./dist/sections/output-card-grid/allentown/output-card-grid-allentown.payload.js",
+      "import": "./dist/sections/output-card-grid/allentown/output-card-grid-allentown.payload.js",
+      "types": "./dist/sections/output-card-grid/allentown/output-card-grid-allentown.payload.d.ts"
+    },
+    "./sections/output-card-grid-allentown.types": {
+      "default": "./dist/sections/output-card-grid/allentown/output-card-grid-allentown.types.js",
+      "import": "./dist/sections/output-card-grid/allentown/output-card-grid-allentown.types.js",
+      "types": "./dist/sections/output-card-grid/allentown/output-card-grid-allentown.types.d.ts"
+    },
+    "./sections/read-more-allentown.astro": "./src/sections/read-more/allentown/read-more-allentown.astro",
+    "./sections/read-more-allentown.payload": {
+      "default": "./dist/sections/read-more/allentown/read-more-allentown.payload.js",
+      "import": "./dist/sections/read-more/allentown/read-more-allentown.payload.js",
+      "types": "./dist/sections/read-more/allentown/read-more-allentown.payload.d.ts"
+    },
+    "./sections/read-more-allentown.types": {
+      "default": "./dist/sections/read-more/allentown/read-more-allentown.types.js",
+      "import": "./dist/sections/read-more/allentown/read-more-allentown.types.js",
+      "types": "./dist/sections/read-more/allentown/read-more-allentown.types.d.ts"
     }
   },
   "scripts": {
