@@ -4,4 +4,13 @@ import type { ReadMoreContent } from './read-more-allentown.types.js'
 interface Props extends ReadMoreContent { headingLevel?: 'h1' | 'h2' | 'h3' }
 const { theme, intro, ctas, media, headingLevel = 'h2' } = Astro.props
 ---
-<section class="read-more read-more--allentown" data-kinekt-theme={theme}><div class="read-more__content"><SectionIntro intro={intro} headingLevel={headingLevel} /><nav class="read-more__actions" aria-label="Related links">{ctas.primary && <a class="read-more__action read-more__action--primary" href={ctas.primary.href}>{ctas.primary.label}</a>}{ctas.secondary && <a class="read-more__action read-more__action--secondary" href={ctas.secondary.href}>{ctas.secondary.label}</a>}</nav></div><div class="read-more__media"><img class="read-more__image" src={media.url} alt={media.alt} width={media.width} height={media.height} loading="lazy" style={`max-width:${media.width}px;max-height:${media.height}px`} /></div></section>
+<section class="read-more read-more--allentown" data-kinekt-theme={theme}>
+  <header class="read-more__content">
+    <SectionIntro intro={intro} headingLevel={headingLevel} />
+    {(ctas.primary || ctas.secondary) && <div class="read-more__actions">
+      {ctas.primary && <a class="read-more__action read-more__action--primary" href={ctas.primary.href}>{ctas.primary.label}</a>}
+      {ctas.secondary && <a class="read-more__action read-more__action--secondary" href={ctas.secondary.href}>{ctas.secondary.label}</a>}
+    </div>}
+  </header>
+  <img class="read-more__image" src={media.url} alt={media.alt} width={media.width} height={media.height} data-fallback-url={media.fallbackUrl} loading="lazy" style={`max-width:${media.width}px;max-height:${media.height}px`} />
+</section>

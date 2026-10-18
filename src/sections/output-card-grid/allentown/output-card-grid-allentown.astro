@@ -4,4 +4,15 @@ import type { OutputCardGridContent } from './output-card-grid-allentown.types.j
 interface Props extends OutputCardGridContent {headingLevel?:'h1'|'h2'|'h3'}
 const {theme,intro,ctas,cards,headingLevel='h2'}=Astro.props
 ---
-<section class="output-card-grid output-card-grid--allentown" data-kinekt-theme={theme}><div class="output-card-grid__header"><SectionIntro intro={intro} headingLevel={headingLevel}/>{ctas&&<nav class="output-card-grid__actions" aria-label="Related links">{ctas.primary&&<a class="output-card-grid__action output-card-grid__action--primary" href={ctas.primary.href}>{ctas.primary.label}</a>}{ctas.secondary&&<a class="output-card-grid__action output-card-grid__action--secondary" href={ctas.secondary.href}>{ctas.secondary.label}</a>}</nav>}</div><ul class="output-card-grid__cards">{cards.map(card=><li class="output-card-grid__card"><p class="output-card-grid__label">{card.label.text}</p><h3 class="output-card-grid__title">{card.title}</h3><div class="output-card-grid__description" set:html={card.description.html}/></li>)}</ul></section>
+<section class="output-card-grid output-card-grid--allentown" data-kinekt-theme={theme}>
+  <header class="output-card-grid__header">
+    <SectionIntro intro={intro} headingLevel={headingLevel} />
+    {(ctas?.primary || ctas?.secondary) && <div class="output-card-grid__actions">
+      {ctas.primary && <a class="output-card-grid__action output-card-grid__action--primary" href={ctas.primary.href}>{ctas.primary.label}</a>}
+      {ctas.secondary && <a class="output-card-grid__action output-card-grid__action--secondary" href={ctas.secondary.href}>{ctas.secondary.label}</a>}
+    </div>}
+  </header>
+  <ul class="output-card-grid__cards">
+    {cards.map((card) => <li class="output-card-grid__card"><p class="output-card-grid__label">{card.label.text}</p><h3 class="output-card-grid__title">{card.title}</h3><div class="output-card-grid__description" set:html={card.description.html} /></li>)}
+  </ul>
+</section>
