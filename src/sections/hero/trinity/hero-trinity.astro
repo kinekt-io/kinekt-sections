@@ -75,7 +75,8 @@ const titleLines = title.split('\n')
     </div>
 
     <picture class="hero-trinity__media">
-      {mobileImage && <source media="(max-width: 767px)" srcset={mobileImage.url} width={mobileImage.width} height={mobileImage.height} />}
+      {mobileImage && <source media="(max-width: 767px)" type="image/avif" srcset={mobileImage.sources?.map((source) => `${source.url} ${source.width}w`).join(', ') ?? mobileImage.url} sizes={mobileImage.sizes} />}
+      {image.sources?.length && <source type="image/avif" srcset={image.sources.map((source) => `${source.url} ${source.width}w`).join(', ')} sizes={image.sizes} />}
       <img
         class="hero-trinity__image"
         src={image.url}

@@ -1,8 +1,8 @@
 ---
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { ReadMoreContent } from './read-more-allentown.types.js'
-interface Props extends ReadMoreContent { headingLevel?: 'h1' | 'h2' | 'h3' }
-const { theme, intro, ctas, media, headingLevel = 'h2' } = Astro.props
+interface Props extends ReadMoreContent { headingLevel?: 'h1' | 'h2' | 'h3'; mediaLoading?: 'eager' | 'lazy' }
+const { theme, intro, ctas, media, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 ---
 <section class="read-more read-more--allentown" data-kinekt-theme={theme}>
   <header class="read-more__content">
@@ -12,5 +12,8 @@ const { theme, intro, ctas, media, headingLevel = 'h2' } = Astro.props
       {ctas.secondary && <a class="read-more__action read-more__action--secondary" href={ctas.secondary.href}>{ctas.secondary.label}</a>}
     </div>}
   </header>
-  <img class="read-more__image" src={media.url} alt={media.alt} width={media.width} height={media.height} data-fallback-url={media.fallbackUrl} loading="lazy" style={`max-width:${media.width}px;max-height:${media.height}px`} />
+  <picture class="read-more__media">
+    {media.sources?.length && <source type="image/avif" srcset={media.sources.map((source) => `${source.url} ${source.width}w`).join(', ')} sizes={media.sizes} />}
+    <img class="read-more__image" src={media.url} alt={media.alt} width={media.width} height={media.height} data-fallback-url={media.fallbackUrl} loading={mediaLoading} decoding="async" style={`max-width:${media.width}px;max-height:${media.height}px`} />
+  </picture>
 </section>
