@@ -1,7 +1,26 @@
 import { isSafeWebUrl } from '../urls.js'
-type Node = { type?: unknown; text?: unknown; tag?: unknown; url?: unknown; children?: unknown }
+type Node = { type?: unknown; text?: unknown; tag?: unknown; url?: unknown; listType?: unknown; children?: unknown }
 const escapeHtml = (value: string): string => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;')
 const childrenOf = (node: Node): Node[] => Array.isArray(node.children) ? node.children.filter((child): child is Node => typeof child === 'object' && child !== null && !Array.isArray(child)) : []
 const renderChildren = (node: Node): string => childrenOf(node).map(renderNode).join('')
-const renderNode = (node: Node): string => { if (node.type === 'text') return typeof node.text === 'string' ? escapeHtml(node.text) : ''; if (node.type === 'linebreak') return '<br>'; if (node.type === 'paragraph') return `<p>${renderChildren(node)}</p>`; if (node.type === 'list') return `<ul>${renderChildren(node)}</ul>`; if (node.type === 'listitem') return `<li>${renderChildren(node)}</li>`; if (node.type === 'quote') return `<blockquote>${renderChildren(node)}</blockquote>`; if (node.type === 'heading') { const tag = typeof node.tag === 'string' && /^h[2-6]$/.test(node.tag) ? node.tag : 'h2'; return `<${tag}>${renderChildren(node)}</${tag}>` }; if (node.type === 'link') { const href = typeof node.url === 'string' && isSafeWebUrl(node.url) ? node.url : undefined; return href ? `<a href="${escapeHtml(href)}">${renderChildren(node)}</a>` : renderChildren(node) }; return renderChildren(node) }
+const renderNode = (node: Node): string => {
+  if (node.type === 'text') return typeof node.text === 'string' ? escapeHtml(node.text) : ''
+  if (node.type === 'linebreak') return '<br>'
+  if (node.type === 'paragraph') return `<p>${renderChildren(node)}</p>`
+  if (node.type === 'list') {
+    const tag = node.listType === 'number' || node.listType === 'ordered' ? 'ol' : 'ul'
+    return `<${tag}>${renderChildren(node)}</${tag}>`
+  }
+  if (node.type === 'listitem') return `<li>${renderChildren(node)}</li>`
+  if (node.type === 'quote') return `<blockquote>${renderChildren(node)}</blockquote>`
+  if (node.type === 'heading') {
+    const tag = typeof node.tag === 'string' && /^h[2-6]$/.test(node.tag) ? node.tag : 'h2'
+    return `<${tag}>${renderChildren(node)}</${tag}>`
+  }
+  if (node.type === 'link') {
+    const href = typeof node.url === 'string' && isSafeWebUrl(node.url) ? node.url : undefined
+    return href ? `<a href="${escapeHtml(href)}">${renderChildren(node)}</a>` : renderChildren(node)
+  }
+  return renderChildren(node)
+}
 export function richTextToHtml(value: unknown, field: string): string { if (typeof value === 'string') return `<p>${escapeHtml(value)}</p>`; if (typeof value !== 'object' || value === null || Array.isArray(value)) throw new Error(`${field} must be rich text.`); const root = 'root' in value ? value.root : value; if (typeof root !== 'object' || root === null || Array.isArray(root)) throw new Error(`${field} must have a rich-text root.`); const html = renderNode(root as Node); if (!html) throw new Error(`${field} must not be empty.`); return html }
