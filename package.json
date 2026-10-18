@@ -1,6 +1,6 @@
 {
   "name": "@kinekt-io/components",
-  "version": "26.10.2-beta.2",
+  "version": "26.10.2-beta.3",
   "description": "Paired Astro sections and Payload blocks for Kinekt websites",
   "type": "module",
   "license": "UNLICENSED",
@@ -97,7 +97,7 @@
     "build:example": "astro build --root examples/astro",
     "build:catalog": "pnpm exports:generate && astro build --root examples/catalog",
     "dev:catalog": "pnpm exports:generate && astro dev --root examples/catalog --host 127.0.0.1",
-    "prepack": "pnpm install --prod=false --ignore-scripts && pnpm build",
+    "prepack": "pnpm exports:generate",
     "prepare": "pnpm build"
   },
   "peerDependencies": {
