@@ -207,7 +207,7 @@
   },
   {
     "id": "sections/case-studies/allentown",
-    "version": "26.10.1",
+    "version": "26.10.1-beta.0",
     "slug": "case-studies-allentown",
     "category": "sections",
     "tags": [
@@ -219,7 +219,7 @@
     "variation": "allentown",
     "title": "Case Studies Allentown",
     "description": "A reusable case studies section with an introduction, optional labelled divider, carousel and optional overview action.",
-    "status": "released",
+    "status": "planned",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411424&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1344,7 +1344,7 @@
     "variation": "allentown",
     "title": "Hero Allentown",
     "description": "A structural side-media hero with a localized introduction, optional CTA group, and responsive media.",
-    "status": "released",
+    "status": "planned",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411811&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1491,7 +1491,7 @@
     "variation": "trinity",
     "title": "Hero Trinity",
     "description": "A structural hero with a localized introduction, responsive media, and an optional primary and secondary CTA group.",
-    "status": "released",
+    "status": "planned",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4754-91818&m=dev",
     "variants": {},
     "fields": {

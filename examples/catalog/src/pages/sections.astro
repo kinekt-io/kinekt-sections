@@ -9,7 +9,7 @@ const sections = components
     if (!previewSource) throw new Error(`No preview source configured for ${component.id}.`)
     const module = Object.entries(previewModules).find(([path]) => path.endsWith(previewSource))?.[1]
     if (!module) throw new Error(`No preview module found for ${component.id}.`)
-    return { component, Preview: (module as { default: any }).default }
+    return { component, Preview: (module as { default: any }).default, reviewStatus: component.status === 'planned' ? 'beta' : component.status }
   })
 ---
 
@@ -29,10 +29,10 @@ const sections = components
       <p>{sections.length} reusable section contracts rendered in catalogue order.</p>
     </header>
     <main>
-      {sections.map(({ component, Preview }) => (
+      {sections.map(({ component, Preview, reviewStatus }) => (
         <article class="section-preview" id={component.slug}>
           <header class="section-preview__meta">
-            <p>{component.status} / {component.slug}</p>
+            <p>{reviewStatus} / {component.slug}</p>
             <h2>{component.title}</h2>
             <div class="section-preview__tools">
               <div class="theme-switch" aria-label={`Preview theme for ${component.title}`}>
