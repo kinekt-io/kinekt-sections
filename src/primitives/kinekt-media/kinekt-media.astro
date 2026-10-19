@@ -1,0 +1,26 @@
+---
+import type { Media } from '../../shared/content'
+
+interface Props {
+  media: Media
+  mobileMedia?: Media | null
+  class?: string
+  imageClass?: string
+  loading?: 'eager' | 'lazy'
+  fetchpriority?: 'high' | 'low' | 'auto'
+}
+
+const { media, mobileMedia, class: className, imageClass, loading = 'lazy', fetchpriority } = Astro.props
+const srcset = (value: Media): string | undefined => value.sources?.map((source) => `${source.url} ${source.width}w`).join(', ')
+const fallback = media.fallbackUrl ? `background-image:url(&quot;${media.fallbackUrl}&quot;);` : ''
+---
+
+<picture class={className} style={fallback}>
+  {mobileMedia && <source media="(max-width: 767px)" type="image/avif" srcset={srcset(mobileMedia) ?? mobileMedia.url} sizes={mobileMedia.sizes} />}
+  {media.sources?.length && <source type="image/avif" srcset={srcset(media)} sizes={media.sizes} />}
+  <img class={imageClass} src={media.url} alt={media.alt} width={media.width} height={media.height} data-fallback-url={media.fallbackUrl} data-mobile-fallback-url={mobileMedia?.fallbackUrl} loading={loading} fetchpriority={fetchpriority} decoding="async" />
+</picture>
+
+<style>
+  picture { background-color: var(--kinekt-media-preview-color, transparent); background-position:center; background-repeat:no-repeat; background-size:cover; }
+</style>

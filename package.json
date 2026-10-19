@@ -1,6 +1,6 @@
 {
   "name": "@kinekt-io/components",
-  "version": "26.10.2-beta.7",
+  "version": "26.10.2-beta.8",
   "description": "Paired Astro sections and Payload blocks for Kinekt websites",
   "type": "module",
   "license": "UNLICENSED",
@@ -20,6 +20,7 @@
     "src"
   ],
   "exports": {
+    "./primitives/kinekt-media.astro": "./src/primitives/kinekt-media/kinekt-media.astro",
     "./primitives/section-intro.astro": "./src/primitives/section-intro/section-intro.astro",
     "./sections/compatibility-specifications-allentown.astro": "./src/sections/compatibility-specifications/allentown/compatibility-specifications-allentown.astro",
     "./sections/compatibility-specifications-allentown.payload": {
