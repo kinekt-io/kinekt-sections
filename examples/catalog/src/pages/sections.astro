@@ -11,6 +11,7 @@ const sections = components
     if (!module) throw new Error(`No preview module found for ${component.id}.`)
     return { component, Preview: (module as { default: any }).default, reviewStatus: component.status === 'planned' ? 'beta' : component.status }
   })
+const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
 ---
 
 <!doctype html>
@@ -41,7 +42,7 @@ const sections = components
                 <button type="button" data-kinekt-preview-theme="semi-dark" aria-pressed="false">Semi-dark</button>
                 <button type="button" data-kinekt-preview-theme="dark" aria-pressed="false">Dark</button>
               </div>
-              <a href={`components/${component.id}/`}>Open isolated preview →</a>
+              <a href={`${catalogueBase}components/${component.id}/`}>Open isolated preview →</a>
             </div>
           </header>
           <Preview />
