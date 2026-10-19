@@ -12,9 +12,6 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content="Private Kinekt component package catalogue." />
     <title>Kinekt components</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <main>
@@ -98,9 +95,9 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
 </html>
 
 <style>
-  :root { color: #e8f2f1; background: #003d47; font-family: Urbanist, sans-serif; }
+  :root { color: #e8f2f1; background: #003d47; font-family: system-ui, sans-serif; }
   body { margin: 0; }
-  code { font-family: 'DM Mono', monospace; font-size: 0.875em; }
+  code { font-family: ui-monospace, monospace; font-size: 0.875em; }
   .masthead { border-bottom: 1px solid rgb(255 255 255 / 16%); background: #003d47; }
   .masthead__inner, .catalogue__inner { width: min(calc(100% - 3rem), 76rem); margin-inline: auto; }
   .masthead__inner { padding-block: clamp(4.5rem, 12vw, 9rem); }

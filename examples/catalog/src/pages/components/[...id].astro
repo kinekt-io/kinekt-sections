@@ -22,9 +22,6 @@ const Preview = (previewModule as { default: any }).default
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={`Preview of ${component.title}.`} />
     <title>{component.title} · Kinekt components</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <header class="bar">
@@ -43,9 +40,9 @@ const Preview = (previewModule as { default: any }).default
 </html>
 
 <style>
-  :root { color: #12363a; background: #fff; font-family: Urbanist, sans-serif; }
+  :root { color: #12363a; background: #fff; font-family: system-ui, sans-serif; }
   body { margin: 0; }
-  code { font-family: 'DM Mono', monospace; font-size: 0.875em; }
+  code { font-family: ui-monospace, monospace; font-size: 0.875em; }
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem clamp(1.25rem, 4vw, 3rem); border-bottom: 1px solid #dce4df; }
   .bar a { color: inherit; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
   .bar p { margin: 0; color: #46656a; font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
