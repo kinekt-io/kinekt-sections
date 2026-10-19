@@ -167,6 +167,54 @@
   background: var(--kinekt-component-surface);
 }
 
+:where([data-kinekt-section]) [class$='__cards'] {
+  gap: 1px;
+  background: var(--kinekt-component-line);
+}
+
+:where([data-kinekt-section]) [class$='__cards'] > li > article {
+  min-height: 100%;
+  padding: 1.5rem;
+  border: 0;
+  border-radius: 0;
+  background: var(--kinekt-component-canvas);
+}
+
+:where([data-kinekt-section]) [class$='__features'] {
+  gap: 0;
+  margin-top: 2rem;
+}
+
+:where([data-kinekt-section]) [class$='__features'] > li > article {
+  padding: 1rem 0;
+  border-width: var(--kinekt-component-border-width) 0 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+:where([data-kinekt-section]) dl > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where([data-kinekt-section]) dl > div:first-child {
+  border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where([data-kinekt-section]) :is(dt, dd) { margin: 0; }
+:where([data-kinekt-section]) dd { font-weight: 600; }
+
+:where([data-kinekt-section]) aside {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: var(--kinekt-component-surface);
+}
+
 :where([data-kinekt-section]) table {
   width: 100%;
   border-collapse: collapse;
@@ -220,6 +268,24 @@
 
   :where([data-kinekt-section]) [class$='__cards'] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  :where([data-kinekt-section]) > [class$='__container']:has(> [class$='__cards']):not(:has(> [class$='__media'])) {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(3rem, 9vw, 9rem);
+  }
+
+  :where([data-kinekt-section]) > [class$='__container'] > [class$='__cards'] {
+    grid-column: 1 / -1;
+  }
+
+  :where([data-kinekt-section]) > [class$='__container']:has(> dl) {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(3rem, 9vw, 9rem);
+  }
+
+  :where([data-kinekt-section]) > [class$='__container']:has(> dl) > :is([class$='__header'], [class$='__intro']) {
+    grid-row: span 2;
   }
 }
 
