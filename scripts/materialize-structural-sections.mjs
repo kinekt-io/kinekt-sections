@@ -132,7 +132,7 @@ function caseStudiesPreview() {
         logo: { url: `https://placehold.co/180x48/png?text=Partner+${index + 1}`, alt: `Partner ${index + 1} logo`, width: 180, height: 48 },
         title: study.title,
         description: study.description,
-        image: { url: '../../../../placeholders/case-study-observatory.webp', alt: 'Observatory dome used as a technical case-study placeholder', width: 680, height: 544 },
+        image: { url: 'catalogue-placeholder:case-study-observatory.webp', alt: 'Observatory dome used as a technical case-study placeholder', width: 680, height: 544 },
         results: study.results.map(([label, text]) => ({ label, value: { text } })),
         quote: {
           quote: study.quote,
@@ -147,7 +147,55 @@ function caseStudiesPreview() {
   }
 }
 
+function heroPreview(manifest) {
+  const hero = {
+    'hero-allentown': {
+      theme: 'light',
+      accentHeading: '/ Built for demanding systems',
+      heading: 'Powering the next generation of electric mobility',
+      description: 'A high-density battery platform for teams that need reliable performance, clear integration data and room to scale.',
+      image: 'catalogue-placeholder:hero-allentown-buses.webp',
+      alt: 'Electric buses used as a mobility placeholder',
+    },
+    'hero-todos-santos': {
+      theme: 'light',
+      accentHeading: '/ Configurable by design',
+      heading: 'Energy storage, made application-ready',
+      description: 'Start from proven modules and configure the system around your application, operating environment and delivery plan.',
+      image: 'catalogue-placeholder:hero-todos-santos-towers.webp',
+      alt: 'Urban towers used as an infrastructure placeholder',
+      featureHeading: 'Designed for real-world operation',
+      features: [
+        { label: 'Voltage range', value: '24–800 V' },
+        { label: 'Operating temperature', value: '−20 to 55 °C' },
+        { label: 'Integration support', value: 'From prototype to production' },
+      ],
+    },
+    'hero-trinity': {
+      theme: 'dark',
+      accentHeading: '/ High-density energy',
+      heading: 'Engineered to keep critical systems moving',
+      description: 'Battery systems for applications where performance, robustness and traceable engineering decisions are non-negotiable.',
+      image: 'catalogue-placeholder:hero-trinity-street.webp',
+      alt: 'Urban infrastructure used as a field-operations placeholder',
+    },
+  }[manifest.slug]
+
+  if (!hero) return null
+  const media = { url: hero.image, alt: hero.alt, width: 1600, height: 900 }
+  return {
+    theme: hero.theme,
+    intro: { accentHeading: hero.accentHeading, heading: hero.heading, description: hero.description },
+    ctas: { primary: { label: 'Talk to an expert', href: '#' }, secondary: { label: 'Explore the platform', href: '#' } },
+    image: media,
+    ...(manifest.slug !== 'hero-todos-santos' && { mobileImage: media }),
+    ...('featureHeading' in hero && { featureHeading: hero.featureHeading, features: hero.features }),
+  }
+}
+
 function sampleContent(manifest, depth = 0, index = 0) {
+  const hero = depth === 0 && heroPreview(manifest)
+  if (hero) return hero
   if (depth === 0 && manifest.slug === 'case-studies-allentown') return caseStudiesPreview()
   return Object.fromEntries(Object.entries(manifest.fields).map(([key, field]) => [key, sampleField(field, key, depth, index)]))
 }
@@ -190,10 +238,35 @@ for (const directory of await manifestDirectories(sections)) {
   const fields = previewFields(manifest)
   const previewIntro = previewContent.intro ?? { accentHeading: 'Beta section', heading: manifest.title, description: 'Representative catalogue content.' }
   const previewCtas = previewContent.ctas ?? previewContent.ctaGroup
-  const previewMedia = previewContent.media ?? previewContent.image ?? previewContent.heroMedia
+  const previewMedia = previewContent.media
 
   await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\nconst fields = ${JSON.stringify(fields, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(`beta-${manifest.slug}`)} fields={fields} {...props} />\n`)
   await materialize(path.join(directory, `${base}.types.ts`), `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`)
   await materialize(path.join(directory, `${base}.payload.ts`), `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`)
-  await materialize(path.join(directory, `${base}.preview.astro`), `---\n// @generated structural section preview.\nimport StructuralSection from '${importAstro}'\n\nconst content = ${JSON.stringify(previewContent, null, 2)}\nconst fields = ${JSON.stringify(fields, null, 2)}\nconst intro = ${JSON.stringify(previewIntro, null, 2)}\nconst ctas = ${JSON.stringify(previewCtas, null, 2)}\nconst media = ${JSON.stringify(previewMedia, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(`beta-${manifest.slug}`)} intro={intro} ctas={ctas} media={media} content={content} fields={fields} />\n`)
+  const previewSource = `---
+// @generated structural section preview.
+import StructuralSection from '${importAstro}'
+
+const content = ${JSON.stringify(previewContent, null, 2)}
+const fields = ${JSON.stringify(fields, null, 2)}
+const intro = ${JSON.stringify(previewIntro, null, 2)}
+const ctas = ${JSON.stringify(previewCtas, null, 2)}
+const media = ${JSON.stringify(previewMedia, null, 2)}
+const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : \`\${import.meta.env.BASE_URL}/\`
+
+function resolveCatalogueAssets(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
+  if (!value || typeof value !== 'object') return value
+  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
+  if (typeof record.url === 'string' && record.url.startsWith('catalogue-placeholder:')) {
+    record.url = \`\${catalogueBase}placeholders/\${record.url.slice('catalogue-placeholder:'.length)}\`
+  }
+  return record
+}
+
+const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
+---
+<StructuralSection block=${JSON.stringify(`beta-${manifest.slug}`)} intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+`
+  await materialize(path.join(directory, `${base}.preview.astro`), previewSource)
 }

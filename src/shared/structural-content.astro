@@ -13,11 +13,13 @@ interface Props {
   fields: Record<string, Field>
   pagefindUrl?: string
   pagefindFilters?: Record<string, unknown>
+  carouselControlStyle?: 'text' | 'icon'
+  carouselAxis?: 'x' | 'y'
   omit?: string[]
   level?: 2 | 3 | 4
 }
 
-const { block, instanceId, content, fields, pagefindUrl = '/pagefind/pagefind.js', pagefindFilters, omit = [], level = 2 } = Astro.props
+const { block, instanceId, content, fields, pagefindUrl = '/pagefind/pagefind.js', pagefindFilters, carouselControlStyle = 'text', carouselAxis = 'x', omit = [], level = 2 } = Astro.props
 const entries = Object.entries(fields).filter(([key]) => key in content && !omit.includes(key))
 const Heading = `h${Math.min(level, 4)}` as 'h2' | 'h3' | 'h4'
 const comparison = fields.columns?.kind === 'infoItems' && fields.rows?.kind === 'componentList'
@@ -65,17 +67,20 @@ function identifier(value: string) {
   if (field.kind === 'component' && field.role === 'case-study-carousel' && isRecord(value)) {
     const items = Array.isArray(value.items) ? value.items : []
     const itemFields = field.fields?.items?.fields ?? {}
-    return <div class={className} data-kinekt-carousel role="region" aria-label="Case studies carousel">
+    return <div class={className} data-kinekt-carousel data-kinekt-carousel-axis={carouselAxis} role="region" aria-label="Case studies carousel">
       <div class={`${className}-viewport`} data-kinekt-carousel-viewport>
         <ul class={`${className}-slides`} data-kinekt-carousel-container>
           {items.map((item, index) => <li class={`${className}-slide`} data-kinekt-carousel-slide><article><Astro.self block={block} instanceId={`${instanceId}-${key}-${index}`} content={item as Record<string, unknown>} fields={itemFields} omit={['image', 'results', 'quote', 'cta']} level={Math.min(level + 1, 4) as 2 | 3 | 4} /><div class={`${className}-slide-content`}><Astro.self block={block} instanceId={`${instanceId}-${key}-${index}-image`} content={item as Record<string, unknown>} fields={itemFields} omit={['logo', 'title', 'description', 'results', 'quote', 'cta']} level={Math.min(level + 1, 4) as 2 | 3 | 4} /><div class={`${className}-slide-details`}><Astro.self block={block} instanceId={`${instanceId}-${key}-${index}-details`} content={item as Record<string, unknown>} fields={itemFields} omit={['logo', 'title', 'description', 'image']} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></div></div></article></li>)}
         </ul>
       </div>
-      <div class={`${className}-controls`}>
-        <button type="button" data-kinekt-carousel-previous aria-label="Previous case study">Previous</button>
+      <div class={`${className}-controls`} data-kinekt-carousel-control-style={carouselControlStyle}>
+        <button type="button" data-kinekt-carousel-previous aria-label="Previous case study">{carouselControlStyle === 'icon' ? <span aria-hidden="true">←</span> : 'Previous'}</button>
         <p data-kinekt-carousel-status aria-live="polite"></p>
-        <button type="button" data-kinekt-carousel-next aria-label="Next case study">Next</button>
+        <button type="button" data-kinekt-carousel-next aria-label="Next case study">{carouselControlStyle === 'icon' ? <span aria-hidden="true">→</span> : 'Next'}</button>
       </div>
+      <nav class={`${className}-dots`} data-kinekt-carousel-dots aria-label="Case study pagination">
+        {items.map((_, index) => <button type="button" data-kinekt-carousel-dot data-kinekt-carousel-index={index} aria-label={`Go to case study ${index + 1}`} aria-current={index === 0 ? 'true' : undefined}></button>)}
+      </nav>
     </div>
   }
 

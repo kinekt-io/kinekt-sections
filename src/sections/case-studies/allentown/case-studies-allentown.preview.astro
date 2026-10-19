@@ -21,7 +21,7 @@ const content = {
         "title": "Avy’s Long Range VTOL Drone",
         "description": "Avy’s Aera carries emergency medical cargo for EU health services. A 35 Ah smart pack with DroneCAN integration doubled flight time to two hours, with state-of-charge and state-of-power prediction on board.",
         "image": {
-          "url": "../../../../placeholders/case-study-observatory.webp",
+          "url": "catalogue-placeholder:case-study-observatory.webp",
           "alt": "Observatory dome used as a technical case-study placeholder",
           "width": 680,
           "height": 544
@@ -68,7 +68,7 @@ const content = {
         "title": "Electric flight without compromise",
         "description": "A compact high-density battery platform enabled a lighter airframe while maintaining the telemetry and service access needed by the operations team.",
         "image": {
-          "url": "../../../../placeholders/case-study-observatory.webp",
+          "url": "catalogue-placeholder:case-study-observatory.webp",
           "alt": "Observatory dome used as a technical case-study placeholder",
           "width": 680,
           "height": 544
@@ -115,7 +115,7 @@ const content = {
         "title": "Reliable power for autonomous missions",
         "description": "The system was configured for repeatable performance across seasonal temperature changes and demanding charge cycles.",
         "image": {
-          "url": "../../../../placeholders/case-study-observatory.webp",
+          "url": "catalogue-placeholder:case-study-observatory.webp",
           "alt": "Observatory dome used as a technical case-study placeholder",
           "width": 680,
           "height": 544
@@ -162,7 +162,7 @@ const content = {
         "title": "A battery system built around the mission",
         "description": "The final pack combines application-specific enclosure geometry with an integration path that remains maintainable after deployment.",
         "image": {
-          "url": "../../../../placeholders/case-study-observatory.webp",
+          "url": "catalogue-placeholder:case-study-observatory.webp",
           "alt": "Observatory dome used as a technical case-study placeholder",
           "width": 680,
           "height": 544
@@ -324,5 +324,18 @@ const intro = {
 }
 const ctas = undefined
 const media = undefined
+const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
+
+function resolveCatalogueAssets(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
+  if (!value || typeof value !== 'object') return value
+  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
+  if (typeof record.url === 'string' && record.url.startsWith('catalogue-placeholder:')) {
+    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-placeholder:'.length)}`
+  }
+  return record
+}
+
+const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block="beta-case-studies-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />
+<StructuralSection block="beta-case-studies-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />

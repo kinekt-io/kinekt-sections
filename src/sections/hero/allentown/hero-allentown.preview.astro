@@ -1,27 +1,23 @@
 ---
 import HeroAllentown from './hero-allentown.astro'
+
+const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
 ---
 
 <HeroAllentown
   intro={{
-    accentHeading: 'B2B marketing for complex technology',
-    heading: 'Ready to give your product the',
-    description: 'You take your product seriously. We give your marketing the same attention: understanding what works, deciding what to build and making everything work together to help you sell.',
+    accentHeading: '/ Built for demanding systems',
+    heading: 'Powering the next generation of electric mobility',
+    description: 'Modular battery systems designed around the performance, lifecycle and integration requirements of your application.',
   }}
-  theme="light"
-  highlight="market it deserves"
-  titleSuffix="?"
-  cta={{ label: 'See how we do it', href: 'https://kinekt.io/our-methods/' }}
+  ctas={{
+    primary: { label: 'Talk to an expert', href: '/' },
+    secondary: { label: 'Explore the platform', href: '/' },
+  }}
   image={{
-    url: 'https://kinekt.io/wp-content/uploads/260918_kinekt_keyvisual_home-960x800.png',
-    alt: 'Man viewing marketing growth metrics on smartphone',
-    width: 960,
-    height: 800,
-  }}
-  mobileImage={{
-    url: 'https://kinekt.io/wp-content/uploads/260918_kinekt_keyvisual_home_mobile-960x850.png',
-    alt: 'Man viewing marketing growth metrics on smartphone',
-    width: 960,
-    height: 850,
+    url: `${catalogueBase}placeholders/hero-allentown-buses.webp`,
+    alt: 'Electric buses used as a mobility placeholder',
+    width: 1600,
+    height: 900,
   }}
 />

@@ -32,12 +32,41 @@ const sections = components
           <header class="section-preview__meta">
             <p>beta-{component.slug}</p>
             <h2>{component.title}</h2>
-            <a href={`components/${component.id}/`}>Open isolated preview →</a>
+            <div class="section-preview__tools">
+              <div class="theme-switch" aria-label={`Preview theme for ${component.title}`}>
+                <button type="button" data-kinekt-preview-theme="light" aria-pressed="true">Light</button>
+                <button type="button" data-kinekt-preview-theme="dark" aria-pressed="false">Dark</button>
+              </div>
+              <a href={`components/${component.id}/`}>Open isolated preview →</a>
+            </div>
           </header>
           <Preview />
         </article>
       ))}
     </main>
+    <script>
+      function setPreviewTheme(preview: HTMLElement, theme: 'light' | 'dark') {
+        const section = preview.querySelector<HTMLElement>('[data-kinekt-section]')
+        if (!section) return
+        section.dataset.kinektTheme = theme
+        preview.querySelectorAll<HTMLButtonElement>('[data-kinekt-preview-theme]').forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.kinektPreviewTheme === theme))
+        })
+      }
+
+      document.querySelectorAll<HTMLElement>('.section-preview').forEach((preview) => {
+        const section = preview.querySelector<HTMLElement>('[data-kinekt-section]')
+        setPreviewTheme(preview, section?.dataset.kinektTheme === 'dark' ? 'dark' : 'light')
+      })
+
+      document.addEventListener('click', (event) => {
+        const button = (event.target as Element).closest<HTMLButtonElement>('[data-kinekt-preview-theme]')
+        const preview = button?.closest<HTMLElement>('.section-preview')
+        const theme = button?.dataset.kinektPreviewTheme
+        if (!preview || (theme !== 'light' && theme !== 'dark')) return
+        setPreviewTheme(preview, theme)
+      })
+    </script>
   </body>
 </html>
 
@@ -53,5 +82,10 @@ const sections = components
   .section-preview__meta { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem 2rem; margin-bottom: 2rem; border-bottom: 1px solid #dce4df; }
   .section-preview__meta p { margin: 0; color: #46656a; font: 600 0.75rem/1.2 ui-monospace, monospace; }
   .section-preview__meta h2 { flex-basis: 100%; order: -1; margin: 0; font-size: clamp(1.75rem, 4vw, 3rem); letter-spacing: -0.05em; }
+  .section-preview__tools { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+  .theme-switch { display: flex; padding: 0.1875rem; border: 1px solid #dce4df; border-radius: 999px; }
+  .theme-switch button { min-height: 2rem; padding: 0.25rem 0.75rem; border: 0; border-radius: 999px; color: #12363a; background: transparent; font: inherit; font-size: 0.8125rem; font-weight: 700; cursor: pointer; }
+  .theme-switch button[aria-pressed='true'] { color: #fff; background: #12363a; }
+  .theme-switch button:focus-visible { outline: 2px solid #ff5f7e; outline-offset: 2px; }
   .section-preview__meta a { color: inherit; font-weight: 700; }
 </style>

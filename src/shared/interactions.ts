@@ -78,19 +78,26 @@ async function initializeCarousel(carousel: Element) {
   const previous = carousel.querySelector<HTMLButtonElement>('[data-kinekt-carousel-previous]')
   const next = carousel.querySelector<HTMLButtonElement>('[data-kinekt-carousel-next]')
   const status = carousel.querySelector<HTMLElement>('[data-kinekt-carousel-status]')
+  const dots = Array.from(carousel.querySelectorAll<HTMLButtonElement>('[data-kinekt-carousel-dot]'))
+  const axis = carousel.getAttribute('data-kinekt-carousel-axis') === 'y' ? 'y' : 'x'
   if (!viewport || !previous || !next || !status) return
 
-  const api = EmblaCarousel(viewport, { align: 'start', containScroll: 'trimSnaps', loop: false })
+  const api = EmblaCarousel(viewport, { align: 'start', axis, containScroll: 'trimSnaps', loop: false })
   const update = () => {
     const selected = api.selectedScrollSnap()
     const count = api.scrollSnapList().length
     previous.disabled = !api.canScrollPrev()
     next.disabled = !api.canScrollNext()
+    dots.forEach((dot, index) => {
+      if (index === selected) dot.setAttribute('aria-current', 'true')
+      else dot.removeAttribute('aria-current')
+    })
     status.textContent = `Slide ${selected + 1} of ${count}`
   }
 
   previous.addEventListener('click', () => api.scrollPrev())
   next.addEventListener('click', () => api.scrollNext())
+  dots.forEach((dot, index) => dot.addEventListener('click', () => api.scrollTo(index)))
   api.on('select', update).on('reInit', update)
   update()
 }

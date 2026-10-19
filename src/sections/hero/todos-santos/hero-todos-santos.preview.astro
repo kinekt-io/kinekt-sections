@@ -5,41 +5,41 @@ import StructuralSection from '../../../shared/structural-section.astro'
 const content = {
   "theme": "light",
   "intro": {
-    "accentHeading": "Engineering energy storage for demanding applications",
-    "heading": "Engineering energy storage for demanding applications",
-    "description": "A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content."
+    "accentHeading": "/ Configurable by design",
+    "heading": "Energy storage, made application-ready",
+    "description": "Start from proven modules and configure the system around your application, operating environment and delivery plan."
   },
-  "featureHeading": "Engineering energy storage for demanding applications",
-  "features": [
-    {
-      "label": "Battery systems",
-      "value": "A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content."
-    },
-    {
-      "label": "Built for the field",
-      "value": "Use this space to explain the decision, the technical context and the next step without reducing the layout to placeholder labels."
-    },
-    {
-      "label": "From cell to system",
-      "value": "Every example uses realistic-length content so hierarchy, reading rhythm and responsive behaviour are visible before site-specific styling is applied."
-    }
-  ],
   "ctas": {
     "primary": {
       "label": "Talk to an expert",
       "href": "#"
     },
     "secondary": {
-      "label": "View technical details",
+      "label": "Explore the platform",
       "href": "#"
     }
   },
   "image": {
-    "url": "https://placehold.co/1600x900/png?text=Image",
-    "alt": "Battery module and electrical interface",
+    "url": "catalogue-placeholder:hero-todos-santos-towers.webp",
+    "alt": "Urban towers used as an infrastructure placeholder",
     "width": 1600,
     "height": 900
-  }
+  },
+  "featureHeading": "Designed for real-world operation",
+  "features": [
+    {
+      "label": "Voltage range",
+      "value": "24–800 V"
+    },
+    {
+      "label": "Operating temperature",
+      "value": "−20 to 55 °C"
+    },
+    {
+      "label": "Integration support",
+      "value": "From prototype to production"
+    }
+  ]
 }
 const fields = {
   "theme": {
@@ -85,9 +85,9 @@ const fields = {
   }
 }
 const intro = {
-  "accentHeading": "Engineering energy storage for demanding applications",
-  "heading": "Engineering energy storage for demanding applications",
-  "description": "A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content."
+  "accentHeading": "/ Configurable by design",
+  "heading": "Energy storage, made application-ready",
+  "description": "Start from proven modules and configure the system around your application, operating environment and delivery plan."
 }
 const ctas = {
   "primary": {
@@ -95,15 +95,23 @@ const ctas = {
     "href": "#"
   },
   "secondary": {
-    "label": "View technical details",
+    "label": "Explore the platform",
     "href": "#"
   }
 }
-const media = {
-  "url": "https://placehold.co/1600x900/png?text=Image",
-  "alt": "Battery module and electrical interface",
-  "width": 1600,
-  "height": 900
+const media = undefined
+const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
+
+function resolveCatalogueAssets(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
+  if (!value || typeof value !== 'object') return value
+  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
+  if (typeof record.url === 'string' && record.url.startsWith('catalogue-placeholder:')) {
+    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-placeholder:'.length)}`
+  }
+  return record
 }
+
+const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block="beta-hero-todos-santos" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />
+<StructuralSection block="beta-hero-todos-santos" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
