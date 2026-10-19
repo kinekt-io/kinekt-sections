@@ -2,14 +2,65 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "ctas": {
+    "primary": {
+      "label": "Primary action",
+      "href": "#"
+    },
+    "secondary": {
+      "label": "Secondary action",
+      "href": "#"
+    }
+  },
+  "cards": [
+    {
+      "title": "Title 1",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "label": {
+        "text": "Representative text that demonstrates the complete content contract for this section.",
+        "icon": "Example Icon 1"
+      }
+    },
+    {
+      "title": "Title 2",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "label": {
+        "text": "Representative text that demonstrates the complete content contract for this section.",
+        "icon": "Example Icon 2"
+      }
+    },
+    {
+      "title": "Title 3",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "label": {
+        "text": "Representative text that demonstrates the complete content contract for this section.",
+        "icon": "Example Icon 3"
+      }
+    }
+  ]
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Output Card Grid Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
 const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
+  "primary": {
+    "label": "Primary action",
+    "href": "#"
+  },
+  "secondary": {
+    "label": "Secondary action",
+    "href": "#"
+  }
 }
+const media = undefined
 ---
-<StructuralSection block="beta-output-card-grid-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-output-card-grid-allentown" intro={intro} ctas={ctas} media={media} content={content} />

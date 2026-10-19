@@ -2,14 +2,98 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "options": [
+    {
+      "image": {
+        "url": "https://placehold.co/1600x900/png?text=Image",
+        "alt": "Example image",
+        "width": 1600,
+        "height": 900
+      },
+      "title": "Title 1",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "benefits": [
+        {
+          "title": "Benefits 1",
+          "description": "Representative description that demonstrates the complete content contract for this section."
+        },
+        {
+          "title": "Benefits 2",
+          "description": "Representative description that demonstrates the complete content contract for this section."
+        },
+        {
+          "title": "Benefits 3",
+          "description": "Representative description that demonstrates the complete content contract for this section."
+        }
+      ]
+    },
+    {
+      "image": {
+        "url": "https://placehold.co/1600x900/png?text=Image",
+        "alt": "Example image",
+        "width": 1600,
+        "height": 900
+      },
+      "title": "Title 2",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "benefits": [
+        {
+          "title": "Benefits 1",
+          "description": "Representative description that demonstrates the complete content contract for this section."
+        },
+        {
+          "title": "Benefits 2",
+          "description": "Representative description that demonstrates the complete content contract for this section."
+        },
+        {
+          "title": "Benefits 3",
+          "description": "Representative description that demonstrates the complete content contract for this section."
+        }
+      ]
+    },
+    {
+      "image": {
+        "url": "https://placehold.co/1600x900/png?text=Image",
+        "alt": "Example image",
+        "width": 1600,
+        "height": 900
+      },
+      "title": "Title 3",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "benefits": [
+        {
+          "title": "Benefits 1",
+          "description": "Representative description that demonstrates the complete content contract for this section."
+        },
+        {
+          "title": "Benefits 2",
+          "description": "Representative description that demonstrates the complete content contract for this section."
+        },
+        {
+          "title": "Benefits 3",
+          "description": "Representative description that demonstrates the complete content contract for this section."
+        }
+      ]
+    }
+  ],
+  "form": {
+    "name": "Example contact form",
+    "description": "A centrally governed form reference with its own questions and validation."
+  }
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Product Options Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
-const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
-}
+const ctas = undefined
+const media = undefined
 ---
-<StructuralSection block="beta-product-options-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-product-options-allentown" intro={intro} ctas={ctas} media={media} content={content} />

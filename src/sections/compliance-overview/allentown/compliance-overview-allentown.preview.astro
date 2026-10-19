@@ -2,14 +2,51 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "checklistTitle": "Checklist Title 1",
+  "checklistItems": [
+    {
+      "text": "Representative text that demonstrates the complete content contract for this section."
+    },
+    {
+      "text": "Representative text that demonstrates the complete content contract for this section."
+    },
+    {
+      "text": "Representative text that demonstrates the complete content contract for this section."
+    }
+  ],
+  "ctaGroup": {
+    "primaryButton": {
+      "label": "Explore primary button",
+      "href": "#"
+    },
+    "secondaryButton": {
+      "label": "Explore secondary button",
+      "href": "#"
+    }
+  }
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Compliance Overview Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
 const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
+  "primaryButton": {
+    "label": "Explore primary button",
+    "href": "#"
+  },
+  "secondaryButton": {
+    "label": "Explore secondary button",
+    "href": "#"
+  }
 }
+const media = undefined
 ---
-<StructuralSection block="beta-compliance-overview-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-compliance-overview-allentown" intro={intro} ctas={ctas} media={media} content={content} />

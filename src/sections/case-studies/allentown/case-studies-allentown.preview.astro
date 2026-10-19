@@ -2,14 +2,205 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "carousel": {
+    "items": [
+      {
+        "logo": {
+          "url": "https://placehold.co/1600x900/png?text=Logo",
+          "alt": "Example logo",
+          "width": 1600,
+          "height": 900
+        },
+        "title": "Title 1",
+        "description": "Representative description that demonstrates the complete content contract for this section.",
+        "image": {
+          "url": "https://placehold.co/1600x900/png?text=Image",
+          "alt": "Example image",
+          "width": 1600,
+          "height": 900
+        },
+        "results": [
+          {
+            "label": "Example Label",
+            "value": {
+              "text": "Representative text that demonstrates the complete content contract for this section.",
+              "icon": "Example Icon 1"
+            }
+          },
+          {
+            "label": "Example Label",
+            "value": {
+              "text": "Representative text that demonstrates the complete content contract for this section.",
+              "icon": "Example Icon 2"
+            }
+          },
+          {
+            "label": "Example Label",
+            "value": {
+              "text": "Representative text that demonstrates the complete content contract for this section.",
+              "icon": "Example Icon 3"
+            }
+          }
+        ],
+        "quote": {
+          "quote": "Representative quote that demonstrates the complete content contract for this section.",
+          "authorName": "Author Name 1",
+          "authorRole": "Example Author Role 1",
+          "avatar": {
+            "url": "https://placehold.co/1600x900/png?text=Avatar",
+            "alt": "Example avatar",
+            "width": 1600,
+            "height": 900
+          }
+        },
+        "cta": {
+          "cta": {
+            "label": "Explore cta",
+            "href": "#"
+          }
+        }
+      },
+      {
+        "logo": {
+          "url": "https://placehold.co/1600x900/png?text=Logo",
+          "alt": "Example logo",
+          "width": 1600,
+          "height": 900
+        },
+        "title": "Title 2",
+        "description": "Representative description that demonstrates the complete content contract for this section.",
+        "image": {
+          "url": "https://placehold.co/1600x900/png?text=Image",
+          "alt": "Example image",
+          "width": 1600,
+          "height": 900
+        },
+        "results": [
+          {
+            "label": "Example Label",
+            "value": {
+              "text": "Representative text that demonstrates the complete content contract for this section.",
+              "icon": "Example Icon 1"
+            }
+          },
+          {
+            "label": "Example Label",
+            "value": {
+              "text": "Representative text that demonstrates the complete content contract for this section.",
+              "icon": "Example Icon 2"
+            }
+          },
+          {
+            "label": "Example Label",
+            "value": {
+              "text": "Representative text that demonstrates the complete content contract for this section.",
+              "icon": "Example Icon 3"
+            }
+          }
+        ],
+        "quote": {
+          "quote": "Representative quote that demonstrates the complete content contract for this section.",
+          "authorName": "Author Name 2",
+          "authorRole": "Example Author Role 2",
+          "avatar": {
+            "url": "https://placehold.co/1600x900/png?text=Avatar",
+            "alt": "Example avatar",
+            "width": 1600,
+            "height": 900
+          }
+        },
+        "cta": {
+          "cta": {
+            "label": "Explore cta",
+            "href": "#"
+          }
+        }
+      },
+      {
+        "logo": {
+          "url": "https://placehold.co/1600x900/png?text=Logo",
+          "alt": "Example logo",
+          "width": 1600,
+          "height": 900
+        },
+        "title": "Title 3",
+        "description": "Representative description that demonstrates the complete content contract for this section.",
+        "image": {
+          "url": "https://placehold.co/1600x900/png?text=Image",
+          "alt": "Example image",
+          "width": 1600,
+          "height": 900
+        },
+        "results": [
+          {
+            "label": "Example Label",
+            "value": {
+              "text": "Representative text that demonstrates the complete content contract for this section.",
+              "icon": "Example Icon 1"
+            }
+          },
+          {
+            "label": "Example Label",
+            "value": {
+              "text": "Representative text that demonstrates the complete content contract for this section.",
+              "icon": "Example Icon 2"
+            }
+          },
+          {
+            "label": "Example Label",
+            "value": {
+              "text": "Representative text that demonstrates the complete content contract for this section.",
+              "icon": "Example Icon 3"
+            }
+          }
+        ],
+        "quote": {
+          "quote": "Representative quote that demonstrates the complete content contract for this section.",
+          "authorName": "Author Name 3",
+          "authorRole": "Example Author Role 3",
+          "avatar": {
+            "url": "https://placehold.co/1600x900/png?text=Avatar",
+            "alt": "Example avatar",
+            "width": 1600,
+            "height": 900
+          }
+        },
+        "cta": {
+          "cta": {
+            "label": "Explore cta",
+            "href": "#"
+          }
+        }
+      }
+    ]
+  },
+  "cta": {
+    "cta": {
+      "label": "Explore cta",
+      "href": "#"
+    }
+  }
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Case Studies Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
 const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
+  "primary": {
+    "cta": {
+      "label": "Explore cta",
+      "href": "#"
+    }
+  }
 }
+const media = undefined
 ---
-<StructuralSection block="beta-case-studies-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-case-studies-allentown" intro={intro} ctas={ctas} media={media} content={content} />

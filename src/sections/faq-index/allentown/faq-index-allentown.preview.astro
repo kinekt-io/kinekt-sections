@@ -2,14 +2,33 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "callout": {
+    "intro": {
+      "accentHeading": "Accent Heading 1",
+      "heading": "Heading 1",
+      "description": "Representative description that demonstrates the complete content contract for this section."
+    },
+    "cta": {
+      "cta": {
+        "label": "Explore cta",
+        "href": "#"
+      }
+    }
+  }
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "FAQ Index Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
-const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
-}
+const ctas = undefined
+const media = undefined
 ---
-<StructuralSection block="beta-faq-index-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-faq-index-allentown" intro={intro} ctas={ctas} media={media} content={content} />

@@ -2,14 +2,37 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "stepsHeading": "Steps Heading 1",
+  "steps": [
+    {
+      "text": "Representative text that demonstrates the complete content contract for this section."
+    },
+    {
+      "text": "Representative text that demonstrates the complete content contract for this section."
+    },
+    {
+      "text": "Representative text that demonstrates the complete content contract for this section."
+    }
+  ],
+  "formHeading": "Form Heading 1",
+  "form": {
+    "name": "Example contact form",
+    "description": "A centrally governed form reference with its own questions and validation."
+  }
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Intake Form Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
-const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
-}
+const ctas = undefined
+const media = undefined
 ---
-<StructuralSection block="beta-intake-form-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-intake-form-allentown" intro={intro} ctas={ctas} media={media} content={content} />

@@ -2,14 +2,45 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "checklist": [
+    {
+      "text": "Representative text that demonstrates the complete content contract for this section."
+    },
+    {
+      "text": "Representative text that demonstrates the complete content contract for this section."
+    },
+    {
+      "text": "Representative text that demonstrates the complete content contract for this section."
+    }
+  ],
+  "features": [
+    {
+      "title": "Title 1",
+      "description": "Representative description that demonstrates the complete content contract for this section."
+    },
+    {
+      "title": "Title 2",
+      "description": "Representative description that demonstrates the complete content contract for this section."
+    },
+    {
+      "title": "Title 3",
+      "description": "Representative description that demonstrates the complete content contract for this section."
+    }
+  ]
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Checklist Feature List Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
-const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
-}
+const ctas = undefined
+const media = undefined
 ---
-<StructuralSection block="beta-checklist-feature-list-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-checklist-feature-list-allentown" intro={intro} ctas={ctas} media={media} content={content} />

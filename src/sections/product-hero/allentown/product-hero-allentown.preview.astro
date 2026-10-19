@@ -2,14 +2,71 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "featureListTitle": "Feature List Title 1",
+  "featurePairs": [
+    {
+      "label": "Example Label",
+      "value": "Example Value 1"
+    },
+    {
+      "label": "Example Label",
+      "value": "Example Value 2"
+    },
+    {
+      "label": "Example Label",
+      "value": "Example Value 3"
+    }
+  ],
+  "ctaGroup": {
+    "primaryButton": {
+      "label": "Explore primary button",
+      "href": "#"
+    },
+    "secondaryButton": {
+      "label": "Explore secondary button",
+      "href": "#"
+    }
+  },
+  "media": {
+    "url": "https://placehold.co/1600x900/png?text=Media",
+    "alt": "Example media",
+    "width": 1600,
+    "height": 900
+  },
+  "mobileMedia": {
+    "url": "https://placehold.co/1600x900/png?text=Mobile%20Media",
+    "alt": "Example mobile media",
+    "width": 1600,
+    "height": 900
+  }
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Product Hero Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
 const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
+  "primaryButton": {
+    "label": "Explore primary button",
+    "href": "#"
+  },
+  "secondaryButton": {
+    "label": "Explore secondary button",
+    "href": "#"
+  }
+}
+const media = {
+  "url": "https://placehold.co/1600x900/png?text=Media",
+  "alt": "Example media",
+  "width": 1600,
+  "height": 900
 }
 ---
-<StructuralSection block="beta-product-hero-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-product-hero-allentown" intro={intro} ctas={ctas} media={media} content={content} />

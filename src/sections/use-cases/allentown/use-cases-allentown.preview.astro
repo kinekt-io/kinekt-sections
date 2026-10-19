@@ -2,14 +2,80 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "advantageHeading": "Advantage Heading 1",
+  "advantages": [
+    {
+      "text": "Representative text that demonstrates the complete content contract for this section.",
+      "icon": "Example Icon 1"
+    },
+    {
+      "text": "Representative text that demonstrates the complete content contract for this section.",
+      "icon": "Example Icon 2"
+    },
+    {
+      "text": "Representative text that demonstrates the complete content contract for this section.",
+      "icon": "Example Icon 3"
+    }
+  ],
+  "gridHeading": "Grid Heading 1",
+  "items": [
+    {
+      "title": "Title 1",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "ctaGroup": {
+        "primaryButton": {
+          "label": "Explore primary button",
+          "href": "#"
+        },
+        "secondaryButton": {
+          "label": "Explore secondary button",
+          "href": "#"
+        }
+      }
+    },
+    {
+      "title": "Title 2",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "ctaGroup": {
+        "primaryButton": {
+          "label": "Explore primary button",
+          "href": "#"
+        },
+        "secondaryButton": {
+          "label": "Explore secondary button",
+          "href": "#"
+        }
+      }
+    },
+    {
+      "title": "Title 3",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "ctaGroup": {
+        "primaryButton": {
+          "label": "Explore primary button",
+          "href": "#"
+        },
+        "secondaryButton": {
+          "label": "Explore secondary button",
+          "href": "#"
+        }
+      }
+    }
+  ]
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Use Cases Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
-const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
-}
+const ctas = undefined
+const media = undefined
 ---
-<StructuralSection block="beta-use-cases-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-use-cases-allentown" intro={intro} ctas={ctas} media={media} content={content} />

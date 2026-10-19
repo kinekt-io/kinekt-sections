@@ -2,14 +2,48 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
-const intro = {
-  accentHeading: 'Beta section',
-  heading: "Process Story Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "image": {
+    "url": "https://placehold.co/1600x900/png?text=Image",
+    "alt": "Example image",
+    "width": 1600,
+    "height": 900
+  },
+  "items": [
+    {
+      "label": "Example Label",
+      "title": "Title 1",
+      "description": "Representative description that demonstrates the complete content contract for this section."
+    },
+    {
+      "label": "Example Label",
+      "title": "Title 2",
+      "description": "Representative description that demonstrates the complete content contract for this section."
+    },
+    {
+      "label": "Example Label",
+      "title": "Title 3",
+      "description": "Representative description that demonstrates the complete content contract for this section."
+    }
+  ]
 }
-const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
+const intro = {
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
+}
+const ctas = undefined
+const media = {
+  "url": "https://placehold.co/1600x900/png?text=Image",
+  "alt": "Example image",
+  "width": 1600,
+  "height": 900
 }
 ---
-<StructuralSection block="beta-process-story-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-process-story-allentown" intro={intro} ctas={ctas} media={media} content={content} />

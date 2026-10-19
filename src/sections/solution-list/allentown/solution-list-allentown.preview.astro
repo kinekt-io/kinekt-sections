@@ -2,14 +2,98 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "items": [
+    {
+      "image": {
+        "url": "https://placehold.co/1600x900/png?text=Image",
+        "alt": "Example image",
+        "width": 1600,
+        "height": 900
+      },
+      "accentHeading": "Accent Heading 1",
+      "heading": "Heading 1",
+      "label": {
+        "text": "Representative text that demonstrates the complete content contract for this section.",
+        "icon": "Example Icon 1"
+      },
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "cta": {
+        "cta": {
+          "label": "Explore cta",
+          "href": "#"
+        }
+      }
+    },
+    {
+      "image": {
+        "url": "https://placehold.co/1600x900/png?text=Image",
+        "alt": "Example image",
+        "width": 1600,
+        "height": 900
+      },
+      "accentHeading": "Accent Heading 2",
+      "heading": "Heading 2",
+      "label": {
+        "text": "Representative text that demonstrates the complete content contract for this section.",
+        "icon": "Example Icon 2"
+      },
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "cta": {
+        "cta": {
+          "label": "Explore cta",
+          "href": "#"
+        }
+      }
+    },
+    {
+      "image": {
+        "url": "https://placehold.co/1600x900/png?text=Image",
+        "alt": "Example image",
+        "width": 1600,
+        "height": 900
+      },
+      "accentHeading": "Accent Heading 3",
+      "heading": "Heading 3",
+      "label": {
+        "text": "Representative text that demonstrates the complete content contract for this section.",
+        "icon": "Example Icon 3"
+      },
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "cta": {
+        "cta": {
+          "label": "Explore cta",
+          "href": "#"
+        }
+      }
+    }
+  ],
+  "callout": {
+    "intro": {
+      "accentHeading": "Accent Heading 1",
+      "heading": "Heading 1",
+      "description": "Representative description that demonstrates the complete content contract for this section."
+    },
+    "cta": {
+      "cta": {
+        "label": "Explore cta",
+        "href": "#"
+      }
+    }
+  }
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Solution List Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
-const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
-}
+const ctas = undefined
+const media = undefined
 ---
-<StructuralSection block="beta-solution-list-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-solution-list-allentown" intro={intro} ctas={ctas} media={media} content={content} />

@@ -1,5 +1,6 @@
 ---
 import SectionIntro from '../primitives/section-intro/section-intro.astro'
+import StructuralContent from './structural-content.astro'
 
 interface Cta {
   label?: string
@@ -27,9 +28,10 @@ interface Props {
     secondary?: Cta
   }
   media?: Media
+  content?: Record<string, unknown>
 }
 
-const { block, id, headingLevel = 'h2', intro, ctas, media } = Astro.props
+const { block, id, headingLevel = 'h2', intro, ctas, media, content } = Astro.props
 const actions = [ctas?.primary, ctas?.secondary].filter((cta): cta is Cta => Boolean(cta?.label && cta.href))
 ---
 <section class={block} id={id}>
@@ -40,6 +42,7 @@ const actions = [ctas?.primary, ctas?.secondary].filter((cta): cta is Cta => Boo
         {actions.map((cta, index) => <a class={`${block}__action ${block}__action--${index === 0 ? 'primary' : 'secondary'}`} href={cta.href}>{cta.label}</a>)}
       </nav>
     )}
+    {content && <StructuralContent block={block} content={content} omit={['theme', 'intro', 'ctas', 'media']} />}
     {media?.url && (
       <picture class={`${block}__media`}>
         <img class={`${block}__image`} src={media.url} alt={media.alt ?? ''} width={media.width} height={media.height} />

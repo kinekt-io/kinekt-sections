@@ -2,14 +2,148 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "models": [
+    {
+      "image": {
+        "url": "https://placehold.co/1600x900/png?text=Image",
+        "alt": "Example image",
+        "width": 1600,
+        "height": 900
+      },
+      "title": "Title 1",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "specs": [
+        {
+          "label": "Example Label",
+          "value": "Example Value 1"
+        },
+        {
+          "label": "Example Label",
+          "value": "Example Value 2"
+        },
+        {
+          "label": "Example Label",
+          "value": "Example Value 3"
+        }
+      ]
+    },
+    {
+      "image": {
+        "url": "https://placehold.co/1600x900/png?text=Image",
+        "alt": "Example image",
+        "width": 1600,
+        "height": 900
+      },
+      "title": "Title 2",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "specs": [
+        {
+          "label": "Example Label",
+          "value": "Example Value 1"
+        },
+        {
+          "label": "Example Label",
+          "value": "Example Value 2"
+        },
+        {
+          "label": "Example Label",
+          "value": "Example Value 3"
+        }
+      ]
+    },
+    {
+      "image": {
+        "url": "https://placehold.co/1600x900/png?text=Image",
+        "alt": "Example image",
+        "width": 1600,
+        "height": 900
+      },
+      "title": "Title 3",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "specs": [
+        {
+          "label": "Example Label",
+          "value": "Example Value 1"
+        },
+        {
+          "label": "Example Label",
+          "value": "Example Value 2"
+        },
+        {
+          "label": "Example Label",
+          "value": "Example Value 3"
+        }
+      ]
+    }
+  ],
+  "crossSell": {
+    "intro": {
+      "accentHeading": "Accent Heading 1",
+      "heading": "Heading 1",
+      "description": "Representative description that demonstrates the complete content contract for this section."
+    },
+    "items": [
+      {
+        "image": {
+          "url": "https://placehold.co/1600x900/png?text=Image",
+          "alt": "Example image",
+          "width": 1600,
+          "height": 900
+        },
+        "title": "Title 1",
+        "cta": {
+          "cta": {
+            "label": "Explore cta",
+            "href": "#"
+          }
+        }
+      },
+      {
+        "image": {
+          "url": "https://placehold.co/1600x900/png?text=Image",
+          "alt": "Example image",
+          "width": 1600,
+          "height": 900
+        },
+        "title": "Title 2",
+        "cta": {
+          "cta": {
+            "label": "Explore cta",
+            "href": "#"
+          }
+        }
+      },
+      {
+        "image": {
+          "url": "https://placehold.co/1600x900/png?text=Image",
+          "alt": "Example image",
+          "width": 1600,
+          "height": 900
+        },
+        "title": "Title 3",
+        "cta": {
+          "cta": {
+            "label": "Explore cta",
+            "href": "#"
+          }
+        }
+      }
+    ]
+  }
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Battery Models Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
-const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
-}
+const ctas = undefined
+const media = undefined
 ---
-<StructuralSection block="beta-battery-models-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-battery-models-allentown" intro={intro} ctas={ctas} media={media} content={content} />

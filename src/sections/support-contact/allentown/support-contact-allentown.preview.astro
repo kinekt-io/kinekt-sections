@@ -2,14 +2,43 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "contactHeading": "Contact Heading 1",
+  "contactMethods": [
+    {
+      "icon": "Example Icon 1",
+      "label": "Example Label",
+      "href": "Example Href 1"
+    },
+    {
+      "icon": "Example Icon 2",
+      "label": "Example Label",
+      "href": "Example Href 2"
+    },
+    {
+      "icon": "Example Icon 3",
+      "label": "Example Label",
+      "href": "Example Href 3"
+    }
+  ],
+  "formHeading": "Form Heading 1",
+  "form": {
+    "name": "Example contact form",
+    "description": "A centrally governed form reference with its own questions and validation."
+  }
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Support Contact Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
-const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
-}
+const ctas = undefined
+const media = undefined
 ---
-<StructuralSection block="beta-support-contact-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-support-contact-allentown" intro={intro} ctas={ctas} media={media} content={content} />

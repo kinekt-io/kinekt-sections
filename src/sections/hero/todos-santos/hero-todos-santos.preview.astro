@@ -2,14 +2,65 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "featureHeading": "Feature Heading 1",
+  "features": [
+    {
+      "label": "Example Label",
+      "value": "Example Value 1"
+    },
+    {
+      "label": "Example Label",
+      "value": "Example Value 2"
+    },
+    {
+      "label": "Example Label",
+      "value": "Example Value 3"
+    }
+  ],
+  "ctas": {
+    "primary": {
+      "label": "Primary action",
+      "href": "#"
+    },
+    "secondary": {
+      "label": "Secondary action",
+      "href": "#"
+    }
+  },
+  "image": {
+    "url": "https://placehold.co/1600x900/png?text=Image",
+    "alt": "Example image",
+    "width": 1600,
+    "height": 900
+  }
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Hero Todos Santos",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
 const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
+  "primary": {
+    "label": "Primary action",
+    "href": "#"
+  },
+  "secondary": {
+    "label": "Secondary action",
+    "href": "#"
+  }
+}
+const media = {
+  "url": "https://placehold.co/1600x900/png?text=Image",
+  "alt": "Example image",
+  "width": 1600,
+  "height": 900
 }
 ---
-<StructuralSection block="beta-hero-todos-santos" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-hero-todos-santos" intro={intro} ctas={ctas} media={media} content={content} />

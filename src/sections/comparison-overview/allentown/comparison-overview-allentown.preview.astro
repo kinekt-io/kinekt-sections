@@ -2,14 +2,126 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "introCta": {
+    "cta": {
+      "label": "Explore cta",
+      "href": "#"
+    }
+  },
+  "comparison": {
+    "columns": [
+      {
+        "title": "Columns 1",
+        "description": "Representative description that demonstrates the complete content contract for this section."
+      },
+      {
+        "title": "Columns 2",
+        "description": "Representative description that demonstrates the complete content contract for this section."
+      },
+      {
+        "title": "Columns 3",
+        "description": "Representative description that demonstrates the complete content contract for this section."
+      }
+    ],
+    "rows": [
+      {
+        "feature": "Example Feature 1",
+        "cells": [
+          {
+            "type": "text",
+            "text": "Representative text that demonstrates the complete content contract for this section.",
+            "status": "positive",
+            "icon": "Example Icon 1"
+          },
+          {
+            "type": "text",
+            "text": "Representative text that demonstrates the complete content contract for this section.",
+            "status": "positive",
+            "icon": "Example Icon 2"
+          },
+          {
+            "type": "text",
+            "text": "Representative text that demonstrates the complete content contract for this section.",
+            "status": "positive",
+            "icon": "Example Icon 3"
+          }
+        ]
+      },
+      {
+        "feature": "Example Feature 2",
+        "cells": [
+          {
+            "type": "text",
+            "text": "Representative text that demonstrates the complete content contract for this section.",
+            "status": "positive",
+            "icon": "Example Icon 1"
+          },
+          {
+            "type": "text",
+            "text": "Representative text that demonstrates the complete content contract for this section.",
+            "status": "positive",
+            "icon": "Example Icon 2"
+          },
+          {
+            "type": "text",
+            "text": "Representative text that demonstrates the complete content contract for this section.",
+            "status": "positive",
+            "icon": "Example Icon 3"
+          }
+        ]
+      },
+      {
+        "feature": "Example Feature 3",
+        "cells": [
+          {
+            "type": "text",
+            "text": "Representative text that demonstrates the complete content contract for this section.",
+            "status": "positive",
+            "icon": "Example Icon 1"
+          },
+          {
+            "type": "text",
+            "text": "Representative text that demonstrates the complete content contract for this section.",
+            "status": "positive",
+            "icon": "Example Icon 2"
+          },
+          {
+            "type": "text",
+            "text": "Representative text that demonstrates the complete content contract for this section.",
+            "status": "positive",
+            "icon": "Example Icon 3"
+          }
+        ]
+      }
+    ]
+  },
+  "callout": {
+    "intro": {
+      "accentHeading": "Accent Heading 1",
+      "heading": "Heading 1",
+      "description": "Representative description that demonstrates the complete content contract for this section."
+    },
+    "cta": {
+      "cta": {
+        "label": "Explore cta",
+        "href": "#"
+      }
+    }
+  }
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Comparison Overview Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
-const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
-}
+const ctas = undefined
+const media = undefined
 ---
-<StructuralSection block="beta-comparison-overview-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-comparison-overview-allentown" intro={intro} ctas={ctas} media={media} content={content} />

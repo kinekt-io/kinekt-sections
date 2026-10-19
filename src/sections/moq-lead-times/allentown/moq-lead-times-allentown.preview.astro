@@ -2,14 +2,67 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "cta": {
+    "cta": {
+      "label": "Explore cta",
+      "href": "#"
+    }
+  },
+  "moq": {
+    "title": "Title 1",
+    "description": "Representative description that demonstrates the complete content contract for this section.",
+    "value": {
+      "text": "Representative text that demonstrates the complete content contract for this section.",
+      "icon": "Example Icon 1"
+    }
+  },
+  "leadTimes": [
+    {
+      "title": "Title 1",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "value": {
+        "text": "Representative text that demonstrates the complete content contract for this section.",
+        "icon": "Example Icon 1"
+      }
+    },
+    {
+      "title": "Title 2",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "value": {
+        "text": "Representative text that demonstrates the complete content contract for this section.",
+        "icon": "Example Icon 2"
+      }
+    },
+    {
+      "title": "Title 3",
+      "description": "Representative description that demonstrates the complete content contract for this section.",
+      "value": {
+        "text": "Representative text that demonstrates the complete content contract for this section.",
+        "icon": "Example Icon 3"
+      }
+    }
+  ]
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "MOQ Lead Times Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
 const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
+  "primary": {
+    "cta": {
+      "label": "Explore cta",
+      "href": "#"
+    }
+  }
 }
+const media = undefined
 ---
-<StructuralSection block="beta-moq-lead-times-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-moq-lead-times-allentown" intro={intro} ctas={ctas} media={media} content={content} />

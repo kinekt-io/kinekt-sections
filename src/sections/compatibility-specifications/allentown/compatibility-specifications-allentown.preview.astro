@@ -2,14 +2,48 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "specifications": [
+    {
+      "label": "Example Label",
+      "value": "Example Value 1"
+    },
+    {
+      "label": "Example Label",
+      "value": "Example Value 2"
+    },
+    {
+      "label": "Example Label",
+      "value": "Example Value 3"
+    }
+  ],
+  "compatiblePlatforms": {
+    "heading": "Heading 1",
+    "items": [
+      {
+        "name": "Name 1"
+      },
+      {
+        "name": "Name 2"
+      },
+      {
+        "name": "Name 3"
+      }
+    ]
+  }
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Compatibility Specifications Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
-const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
-}
+const ctas = undefined
+const media = undefined
 ---
-<StructuralSection block="beta-compatibility-specifications-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-compatibility-specifications-allentown" intro={intro} ctas={ctas} media={media} content={content} />

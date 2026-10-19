@@ -2,14 +2,73 @@
 // @generated structural section preview.
 import StructuralSection from '../../../shared/structural-section.astro'
 
+const content = {
+  "theme": "light",
+  "intro": {
+    "accentHeading": "Accent Heading 1",
+    "heading": "Heading 1",
+    "description": "Representative description that demonstrates the complete content contract for this section."
+  },
+  "ctas": {
+    "primary": {
+      "label": "Primary action",
+      "href": "#"
+    },
+    "secondary": {
+      "label": "Secondary action",
+      "href": "#"
+    }
+  },
+  "media": {
+    "url": "https://placehold.co/1600x900/png?text=Media",
+    "alt": "Example media",
+    "width": 1600,
+    "height": 900
+  },
+  "items": [
+    {
+      "markerType": "none",
+      "icon": "Example Icon 1",
+      "title": "Title 1",
+      "subtitle": "Subtitle 1",
+      "description": "Representative description that demonstrates the complete content contract for this section."
+    },
+    {
+      "markerType": "none",
+      "icon": "Example Icon 2",
+      "title": "Title 2",
+      "subtitle": "Subtitle 2",
+      "description": "Representative description that demonstrates the complete content contract for this section."
+    },
+    {
+      "markerType": "none",
+      "icon": "Example Icon 3",
+      "title": "Title 3",
+      "subtitle": "Subtitle 3",
+      "description": "Representative description that demonstrates the complete content contract for this section."
+    }
+  ]
+}
 const intro = {
-  accentHeading: 'Beta section',
-  heading: "Media Accordion Allentown",
-  description: "Representative catalogue content. The manifest remains the authoritative editor contract.",
+  "accentHeading": "Accent Heading 1",
+  "heading": "Heading 1",
+  "description": "Representative description that demonstrates the complete content contract for this section."
 }
 const ctas = {
-  primary: { label: 'Primary action', href: '#' },
-  secondary: { label: 'Secondary action', href: '#' },
+  "primary": {
+    "label": "Primary action",
+    "href": "#"
+  },
+  "secondary": {
+    "label": "Secondary action",
+    "href": "#"
+  }
+}
+const media = {
+  "url": "https://placehold.co/1600x900/png?text=Media",
+  "alt": "Example media",
+  "width": 1600,
+  "height": 900
 }
 ---
-<StructuralSection block="beta-media-accordion-allentown" intro={intro} ctas={ctas} />
+<StructuralSection block="beta-media-accordion-allentown" intro={intro} ctas={ctas} media={media} content={content} />
