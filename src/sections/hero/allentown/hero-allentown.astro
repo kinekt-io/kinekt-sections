@@ -1,4 +1,5 @@
 ---
+import '../../../styles/wireframe.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import type { Media } from '../../../shared/content.js'
@@ -16,7 +17,7 @@ for (const cta of [ctas?.primary, ctas?.secondary]) if (cta && !isSafeWebUrl(cta
 assertSafeImage(image, 'image')
 if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 ---
-<section class="hero-allentown" id={id}>
+<section class="hero-allentown" id={id} data-kinekt-section>
   <div class="hero-allentown__container">
     <header class="hero-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />

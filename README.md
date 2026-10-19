@@ -96,6 +96,38 @@ if (!hero) throw new Error('The homepage has no Allentown hero block.')
 
 `heroToProps()` rejects missing editor-required fields, unresolved media IDs, unsafe URLs, invalid dimensions, and absent alt text. Do not bypass it by casting the CMS document to Astro props.
 
+## Wireframe styling and site token overrides
+
+Every public section root carries `data-kinekt-section`. The package imports its neutral wireframe stylesheet with each section renderer; consumers do not import a separate global stylesheet.
+
+The stylesheet has only black, white and grey fallbacks. It does not define site tokens, so a consuming site can set the generic token layer once and override a single component without selector specificity or `!important`:
+
+```css
+:root {
+  --kinekt-color-canvas: #ffffff;
+  --kinekt-color-surface: #f5f5f5;
+  --kinekt-color-ink: #111111;
+  --kinekt-color-muted: #666666;
+  --kinekt-color-line: #d4d4d4;
+  --kinekt-color-action: #111111;
+  --kinekt-color-action-text: #ffffff;
+  --kinekt-font-sans: system-ui, sans-serif;
+  --kinekt-font-mono: ui-monospace, monospace;
+  --kinekt-content-width: 80rem;
+  --kinekt-reading-width: 46rem;
+  --kinekt-space-inline: 2rem;
+  --kinekt-space-section: 6rem;
+  --kinekt-space-content: 1.5rem;
+}
+
+.hero-allentown {
+  --kinekt-section-canvas: #f5f5f5;
+  --kinekt-section-content-width: 90rem;
+}
+```
+
+Section-local tokens (`--kinekt-section-*`) resolve before generic site tokens (`--kinekt-*-*`). `data-kinekt-theme="dark"` switches only the component-local aliases; a site can still override those aliases on the section root.
+
 ## Add a component
 
 See [`naming-conventions.md`](./naming-conventions.md) for the naming scheme and folder layout.

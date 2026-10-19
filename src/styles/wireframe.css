@@ -1,0 +1,213 @@
+/*
+ * Public wireframe token contract
+ *
+ * The package assigns component-local aliases only. A consuming site can set
+ * the --kinekt-color-*, --kinekt-font-* and --kinekt-space-* tokens on :root,
+ * or override any --kinekt-section-* token on an individual section root.
+ * The neutral fallbacks keep the package useful without a site token layer.
+ */
+
+:where([data-kinekt-section]) {
+  --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kinekt-color-canvas, #ffffff));
+  --kinekt-component-surface: var(--kinekt-section-surface, var(--kinekt-color-surface, #f5f5f5));
+  --kinekt-component-ink: var(--kinekt-section-ink, var(--kinekt-color-ink, #111111));
+  --kinekt-component-muted: var(--kinekt-section-muted, var(--kinekt-color-muted, #666666));
+  --kinekt-component-line: var(--kinekt-section-line, var(--kinekt-color-line, #d4d4d4));
+  --kinekt-component-action: var(--kinekt-section-action, var(--kinekt-color-action, #111111));
+  --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kinekt-color-action-text, #ffffff));
+  --kinekt-component-font: var(--kinekt-section-font, var(--kinekt-font-sans, system-ui, sans-serif));
+  --kinekt-component-mono: var(--kinekt-section-mono, var(--kinekt-font-mono, ui-monospace, monospace));
+  --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kinekt-content-width, 80rem));
+  --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kinekt-reading-width, 46rem));
+  --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kinekt-space-inline, clamp(1rem, 3vw, 2rem)));
+  --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kinekt-space-section, clamp(3rem, 8vw, 7rem)));
+  --kinekt-component-gap: var(--kinekt-section-gap, var(--kinekt-space-content, clamp(1rem, 2vw, 1.5rem)));
+  --kinekt-component-radius: var(--kinekt-section-radius, var(--kinekt-radius, 0.25rem));
+  --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kinekt-border-width, 1px));
+  box-sizing: border-box;
+  padding-block: var(--kinekt-component-block-space);
+  color: var(--kinekt-component-ink);
+  background: var(--kinekt-component-canvas);
+  font-family: var(--kinekt-component-font);
+}
+
+:where([data-kinekt-section][data-kinekt-theme='dark']) {
+  --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kinekt-color-ink, #111111));
+  --kinekt-component-surface: var(--kinekt-section-surface, var(--kinekt-color-surface-dark, #242424));
+  --kinekt-component-ink: var(--kinekt-section-ink, var(--kinekt-color-canvas, #ffffff));
+  --kinekt-component-muted: var(--kinekt-section-muted, var(--kinekt-color-muted-on-dark, #c4c4c4));
+  --kinekt-component-line: var(--kinekt-section-line, var(--kinekt-color-line-on-dark, #555555));
+  --kinekt-component-action: var(--kinekt-section-action, var(--kinekt-color-canvas, #ffffff));
+  --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kinekt-color-ink, #111111));
+}
+
+:where([data-kinekt-section]) *,
+:where([data-kinekt-section]) *::before,
+:where([data-kinekt-section]) *::after {
+  box-sizing: border-box;
+}
+
+:where([data-kinekt-section]) > [class$='__container'] {
+  display: grid;
+  width: 100%;
+  max-width: var(--kinekt-component-content-width);
+  gap: var(--kinekt-component-gap);
+  margin-inline: auto;
+  padding-inline: var(--kinekt-component-inline-space);
+}
+
+:where([data-kinekt-section]) :is([class$='__header'], [class$='__intro'], [class$='__content']) {
+  max-width: var(--kinekt-component-reading-width);
+}
+
+:where([data-kinekt-section]) :is(h1, h2, h3, h4) {
+  max-width: var(--kinekt-component-reading-width);
+  margin-block: 0;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+:where([data-kinekt-section]) h1 { font-size: clamp(2.5rem, 6vw, 5rem); }
+:where([data-kinekt-section]) h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
+:where([data-kinekt-section]) h3 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
+:where([data-kinekt-section]) h4 { font-size: 1.125rem; }
+
+:where([data-kinekt-section]) :is(p, li, dd, td, th, label, input, textarea, button) {
+  font: inherit;
+  line-height: 1.55;
+}
+
+:where([data-kinekt-section]) :is(p, ul, ol, dl, table, form) {
+  margin-block: 0;
+}
+
+:where([data-kinekt-section]) :is([class$='__accent'], [class*='__label'], [class*='__category']) {
+  color: var(--kinekt-component-muted);
+  font-family: var(--kinekt-component-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:where([data-kinekt-section]) .section-intro__accent { margin-bottom: 0.75rem; }
+:where([data-kinekt-section]) .section-intro__heading { margin-bottom: 1rem; }
+:where([data-kinekt-section]) .section-intro__description { max-width: var(--kinekt-component-reading-width); color: var(--kinekt-component-muted); }
+:where([data-kinekt-section]) .section-intro__description > :first-child { margin-top: 0; }
+:where([data-kinekt-section]) .section-intro__description > :last-child { margin-bottom: 0; }
+
+:where([data-kinekt-section]) :is([class$='__actions'], [class*='__cta-group']) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+:where([data-kinekt-section]) :is([class*='__action'], [class*='__cta']) > a,
+:where([data-kinekt-section]) a[class*='__action'],
+:where([data-kinekt-section]) a[class*='__cta'] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.625rem 1rem;
+  border: var(--kinekt-component-border-width) solid var(--kinekt-component-action);
+  border-radius: var(--kinekt-component-radius);
+  color: var(--kinekt-component-action-text);
+  background: var(--kinekt-component-action);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+:where([data-kinekt-section]) :is([class*='--secondary'], [class*='__secondary']) {
+  color: var(--kinekt-component-ink);
+  background: transparent;
+}
+
+:where([data-kinekt-section]) :is([class$='__media'], [class*='__media-'], [class*='__image']) {
+  display: block;
+  max-width: 100%;
+}
+
+:where([data-kinekt-section]) picture { display: block; }
+:where([data-kinekt-section]) img { display: block; width: 100%; height: auto; border-radius: var(--kinekt-component-radius); }
+
+:where([data-kinekt-section]) :is(ul, ol)[class*='__'] {
+  display: grid;
+  gap: var(--kinekt-component-gap);
+  padding: 0;
+  list-style: none;
+}
+
+:where([data-kinekt-section]) :is(ul, ol)[class*='__'] > li {
+  min-width: 0;
+  padding: var(--kinekt-component-gap);
+  border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+  border-radius: var(--kinekt-component-radius);
+  background: var(--kinekt-component-surface);
+}
+
+:where([data-kinekt-section]) :is(ul, ol):not([class]) {
+  display: grid;
+  gap: 0.5rem;
+  padding-left: 1.25rem;
+}
+
+:where([data-kinekt-section]) :is([class$='__cards'], [class$='__insight-sources'], [class$='__items']) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+:where([data-kinekt-section]) article {
+  display: grid;
+  gap: 0.75rem;
+}
+
+:where([data-kinekt-section]) table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+  border-radius: var(--kinekt-component-radius);
+}
+
+:where([data-kinekt-section]) :is(th, td) {
+  padding: 0.75rem;
+  border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+  text-align: left;
+  vertical-align: top;
+}
+
+:where([data-kinekt-section]) th { font-weight: 700; background: var(--kinekt-component-surface); }
+
+:where([data-kinekt-section]) form[class*='__'] {
+  display: grid;
+  max-width: var(--kinekt-component-reading-width);
+  gap: 1rem;
+  padding: var(--kinekt-component-gap);
+  border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+  border-radius: var(--kinekt-component-radius);
+  background: var(--kinekt-component-surface);
+}
+
+:where([data-kinekt-section]) form label { display: grid; gap: 0.375rem; font-weight: 700; }
+:where([data-kinekt-section]) :is(input, textarea, button) { border-radius: var(--kinekt-component-radius); }
+:where([data-kinekt-section]) :is(input, textarea) { width: 100%; padding: 0.625rem; border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); }
+:where([data-kinekt-section]) textarea { min-height: 8rem; resize: vertical; }
+:where([data-kinekt-section]) button { width: fit-content; min-height: 2.75rem; padding: 0.625rem 1rem; border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-weight: 700; cursor: pointer; }
+
+:where([data-kinekt-section]) :is(a, button, input, textarea):focus-visible {
+  outline: 3px solid var(--kinekt-section-focus, var(--kinekt-color-focus, #111111));
+  outline-offset: 3px;
+}
+
+:where([data-kinekt-section]) a:not([class]) { color: inherit; font-weight: 700; text-underline-offset: 0.18em; }
+
+@media (min-width: 48rem) {
+  :where(.hero-allentown[data-kinekt-section], .hero-trinity[data-kinekt-section]) > [class$='__container'] {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+  }
+}

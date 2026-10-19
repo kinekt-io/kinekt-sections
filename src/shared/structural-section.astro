@@ -1,4 +1,5 @@
 ---
+import '../styles/wireframe.css'
 import SectionIntro from '../primitives/section-intro/section-intro.astro'
 import StructuralContent from './structural-content.astro'
 
@@ -38,11 +39,12 @@ interface Props {
 }
 
 const { block, id, headingLevel = 'h2', intro, ctas, media, content, fields } = Astro.props
+const theme = content?.theme === 'dark' ? 'dark' : 'light'
 const actions = [ctas?.primary, ctas?.secondary].filter((cta): cta is Cta => Boolean(cta?.label && cta.href))
 ---
-<section class={block} id={id}>
+<section class={block} id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class={`${block}__container`}>
-    {intro && <SectionIntro class={`${block}__header`} intro={intro} headingLevel={headingLevel} />}
+    {intro && <SectionIntro intro={intro} headingLevel={headingLevel} />}
     {actions.length > 0 && (
       <nav class={`${block}__actions`} aria-label="Section actions">
         {actions.map((cta, index) => <a class={`${block}__action ${block}__action--${index === 0 ? 'primary' : 'secondary'}`} href={cta.href}>{cta.label}</a>)}
