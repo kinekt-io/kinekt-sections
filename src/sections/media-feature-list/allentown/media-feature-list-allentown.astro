@@ -5,15 +5,17 @@ interface Props extends MediaFeatureListContent { headingLevel?: 'h1' | 'h2' | '
 const { theme, direction, intro, label, media, features, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 ---
 <section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-theme={theme} data-kinekt-direction={direction}>
-  <div class="media-feature-list__copy">
-    <header class="media-feature-list__header"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
-    {label && <p class="media-feature-list__label">{label.icon && <span aria-hidden="true">{label.icon}</span>}{label.text}</p>}
-    <ul class="media-feature-list__features">
-      {features.map((feature) => <li class="media-feature-list__feature"><h3 class="media-feature-list__feature-title">{feature.title}</h3><div class="media-feature-list__feature-description" set:html={feature.description.html} /></li>)}
-    </ul>
+  <div class="media-feature-list__container">
+    <div class="media-feature-list__copy">
+      <header class="media-feature-list__header"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
+      {label && <p class="media-feature-list__label">{label.icon && <span aria-hidden="true">{label.icon}</span>}{label.text}</p>}
+      <ul class="media-feature-list__features">
+        {features.map((feature) => <li class="media-feature-list__feature"><h3 class="media-feature-list__feature-title">{feature.title}</h3><div class="media-feature-list__feature-description" set:html={feature.description.html} /></li>)}
+      </ul>
+    </div>
+    {media && <picture class="media-feature-list__media">
+      {media.sources?.length && <source type="image/avif" srcset={media.sources.map((source) => `${source.url} ${source.width}w`).join(', ')} sizes={media.sizes} />}
+      <img class="media-feature-list__image" src={media.url} alt={media.alt} width={media.width} height={media.height} data-fallback-url={media.fallbackUrl} loading={mediaLoading} decoding="async" style={`max-width:${media.width}px;max-height:${media.height}px`} />
+    </picture>}
   </div>
-  {media && <picture class="media-feature-list__media">
-    {media.sources?.length && <source type="image/avif" srcset={media.sources.map((source) => `${source.url} ${source.width}w`).join(', ')} sizes={media.sizes} />}
-    <img class="media-feature-list__image" src={media.url} alt={media.alt} width={media.width} height={media.height} data-fallback-url={media.fallbackUrl} loading={mediaLoading} decoding="async" style={`max-width:${media.width}px;max-height:${media.height}px`} />
-  </picture>}
 </section>

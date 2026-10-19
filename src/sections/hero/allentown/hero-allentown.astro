@@ -17,7 +17,7 @@ assertSafeImage(image, 'image')
 if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 ---
 <section class="hero-allentown" id={id}>
-  <div class="hero-allentown__inner">
+  <div class="hero-allentown__container">
     <header class="hero-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
       {(ctas?.primary || ctas?.secondary) && <div class="hero-allentown__actions">
@@ -31,7 +31,7 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 <style>
 @layer ki-sections-wireframe {
 .hero-allentown { --hero-allentown-background:#6C6C6C; --hero-allentown-accent:#A4A4A4; --hero-allentown-accent-hover:color-mix(in srgb,var(--hero-allentown-accent),#000 30%); --hero-allentown-text:#000; --hero-allentown-cta-text:#000; --hero-allentown-heading-font:var(--kinekt-sections-heading-font-family,'Brockmann',sans-serif); --hero-allentown-body-font:var(--kinekt-sections-body-font-family,'Urbanist',sans-serif); background:var(--hero-allentown-background); color:var(--hero-allentown-text); }
-.hero-allentown__inner { display:grid; width:min(calc(100% - clamp(3rem,11.11vw,10rem)),80rem); margin-inline:auto; padding-block:3.5rem; gap:2.5rem; align-items:center; }
+.hero-allentown__container { display:grid; width:min(calc(100% - clamp(3rem,11.11vw,10rem)),80rem); margin-inline:auto; padding-block:3.5rem; gap:2.5rem; align-items:center; }
 .hero-allentown__content { max-width:34.375rem; }
 .hero-allentown .section-intro__accent { margin:0 0 .9375rem; font-family:var(--hero-allentown-body-font); font-size:1.125rem; font-weight:500; line-height:1.3; letter-spacing:.04em; }
 .hero-allentown .section-intro__accent::before { display:inline-block; margin-right:.5rem; color:var(--hero-allentown-accent); content:'→'; }
@@ -42,6 +42,6 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 .hero-allentown__action { display:inline-flex; box-sizing:border-box; align-items:center; gap:.625rem; min-height:3rem; padding:1.2rem 1.4rem; font-family:var(--hero-allentown-heading-font); font-size:1rem; font-weight:600; line-height:1; text-decoration:none; }
 .hero-allentown__action--primary { background:var(--hero-allentown-accent); color:var(--hero-allentown-cta-text); }.hero-allentown__action--primary:hover { background:var(--hero-allentown-accent-hover); }.hero-allentown__action--secondary { border:1px solid currentColor; color:var(--hero-allentown-text); }.hero-allentown__action:focus-visible { outline:3px solid var(--hero-allentown-text); outline-offset:4px; box-shadow:0 0 0 6px var(--hero-allentown-background); }
 .hero-allentown__media { display:block; }.hero-allentown__image { display:block; width:100%; height:auto; }
-@media (min-width:768px) { .hero-allentown__inner { grid-template-columns:repeat(2,minmax(0,1fr)); padding-block:4.375rem; gap:1.25rem; } }
+@media (min-width:768px) { .hero-allentown__container { grid-template-columns:repeat(2,minmax(0,1fr)); padding-block:4.375rem; gap:1.25rem; } }
 }
 </style>
