@@ -17,12 +17,12 @@
   --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kinekt-color-action-text, #ffffff));
   --kinekt-component-font: var(--kinekt-section-font, var(--kinekt-font-sans, system-ui, sans-serif));
   --kinekt-component-mono: var(--kinekt-section-mono, var(--kinekt-font-mono, ui-monospace, monospace));
-  --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kinekt-content-width, 80rem));
-  --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kinekt-reading-width, 46rem));
-  --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kinekt-space-inline, clamp(1rem, 3vw, 2rem)));
-  --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kinekt-space-section, clamp(3rem, 8vw, 7rem)));
-  --kinekt-component-gap: var(--kinekt-section-gap, var(--kinekt-space-content, clamp(1rem, 2vw, 1.5rem)));
-  --kinekt-component-radius: var(--kinekt-section-radius, var(--kinekt-radius, 0.25rem));
+  --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kinekt-content-width, 90rem));
+  --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kinekt-reading-width, 42rem));
+  --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kinekt-space-inline, clamp(1.25rem, 8vw, 9rem)));
+  --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kinekt-space-section, clamp(3.5rem, 8vw, 8rem)));
+  --kinekt-component-gap: var(--kinekt-section-gap, var(--kinekt-space-content, clamp(1.25rem, 3vw, 2rem)));
+  --kinekt-component-radius: var(--kinekt-section-radius, var(--kinekt-radius, 0));
   --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kinekt-border-width, 1px));
   box-sizing: border-box;
   padding-block: var(--kinekt-component-block-space);
@@ -65,15 +65,15 @@
   margin-block: 0;
   color: inherit;
   font: inherit;
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  line-height: 0.97;
+  letter-spacing: -0.045em;
   text-wrap: balance;
 }
 
-:where([data-kinekt-section]) h1 { font-size: clamp(2.5rem, 6vw, 5rem); }
-:where([data-kinekt-section]) h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
-:where([data-kinekt-section]) h3 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
+:where([data-kinekt-section]) h1,
+:where([data-kinekt-section]) h2 { font-size: clamp(2rem, 7vw, 4.75rem); }
+:where([data-kinekt-section]) h3 { font-size: clamp(1.2rem, 3vw, 1.8rem); }
 :where([data-kinekt-section]) h4 { font-size: 1.125rem; }
 
 :where([data-kinekt-section]) :is(p, li, dd, td, th, label, input, textarea, button) {
@@ -94,9 +94,9 @@
   text-transform: uppercase;
 }
 
-:where([data-kinekt-section]) .section-intro__accent { margin-bottom: 0.75rem; }
-:where([data-kinekt-section]) .section-intro__heading { margin-bottom: 1rem; }
-:where([data-kinekt-section]) .section-intro__description { max-width: var(--kinekt-component-reading-width); color: var(--kinekt-component-muted); }
+:where([data-kinekt-section]) .section-intro__accent { margin-bottom: 0.45rem; }
+:where([data-kinekt-section]) .section-intro__heading { margin-bottom: 0; }
+:where([data-kinekt-section]) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-top: 1.25rem; color: var(--kinekt-component-muted); font-size: 1.05rem; line-height: 1.45; }
 :where([data-kinekt-section]) .section-intro__description > :first-child { margin-top: 0; }
 :where([data-kinekt-section]) .section-intro__description > :last-child { margin-bottom: 0; }
 
@@ -104,6 +104,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+  margin-top: 1.75rem;
 }
 
 :where([data-kinekt-section]) :is([class*='__action'], [class*='__cta']) > a,
@@ -112,13 +113,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.75rem;
-  padding: 0.625rem 1rem;
+  min-height: 3rem;
+  padding: 0.8rem 1.15rem;
   border: var(--kinekt-component-border-width) solid var(--kinekt-component-action);
   border-radius: var(--kinekt-component-radius);
   color: var(--kinekt-component-action-text);
   background: var(--kinekt-component-action);
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 600;
   text-decoration: none;
 }
 
@@ -205,10 +207,19 @@
 
 :where([data-kinekt-section]) a:not([class]) { color: inherit; font-weight: 700; text-underline-offset: 0.18em; }
 
-@media (min-width: 48rem) {
-  :where(.hero-allentown[data-kinekt-section], .hero-trinity[data-kinekt-section]) > [class$='__container'] {
+@media (min-width: 50rem) {
+  :where([data-kinekt-section]) > [class$='__container']:has(> [class$='__media']) {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: center;
+    gap: clamp(3rem, 9vw, 9rem);
+  }
+
+  :where([data-kinekt-section][data-kinekt-direction='mediaRight']) > [class$='__container'] > [class$='__media'] {
+    order: 2;
+  }
+
+  :where([data-kinekt-section]) [class$='__cards'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

@@ -24,12 +24,42 @@ function labelFor(key) {
   return key.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[-_]/g, ' ').replace(/^./, (character) => character.toUpperCase())
 }
 
+const previewCopy = {
+  headings: [
+    'Engineering energy storage for demanding applications',
+    'Designed around the constraints that matter',
+    'Performance you can specify with confidence',
+  ],
+  accents: ['Battery systems', 'Built for the field', 'From cell to system'],
+  descriptions: [
+    'A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content.',
+    'Use this space to explain the decision, the technical context and the next step without reducing the layout to placeholder labels.',
+    'Every example uses realistic-length content so hierarchy, reading rhythm and responsive behaviour are visible before site-specific styling is applied.',
+  ],
+  questions: [
+    'Which operating conditions does this configuration support?',
+    'How is the system validated before delivery?',
+    'Can this solution be adapted to our application?',
+  ],
+  answers: [
+    'The final specification is validated against the intended operating range, integration constraints and relevant safety requirements.',
+    'Each build follows a documented test sequence with traceable measurements and an agreed acceptance threshold.',
+    'Yes. The component contract supports configurable content while keeping the published markup and interaction model consistent.',
+  ],
+}
+
+function from(values, index) {
+  return values[index % values.length]
+}
+
 function exampleText(key, index = 0) {
-  const label = labelFor(key)
-  if (/(heading|title|name)/i.test(key)) return `${label} ${index + 1}`
-  if (/(label|eyebrow|accent)/i.test(key)) return `Example ${label}`
-  if (/(description|text|summary|body|quote)/i.test(key)) return `Representative ${label.toLowerCase()} that demonstrates the complete content contract for this section.`
-  return `Example ${label} ${index + 1}`
+  if (/question/i.test(key)) return from(previewCopy.questions, index)
+  if (/answer/i.test(key)) return from(previewCopy.answers, index)
+  if (/(heading|title|name)/i.test(key)) return from(previewCopy.headings, index)
+  if (/(label|eyebrow|accent)/i.test(key)) return from(previewCopy.accents, index)
+  if (/quote/i.test(key)) return '“Clear interfaces and honest constraints make complex technical work easier to act on.”'
+  if (/(description|text|summary|body)/i.test(key)) return from(previewCopy.descriptions, index)
+  return from(previewCopy.descriptions, index)
 }
 
 const manifestDirectoriesList = await manifestDirectories(source)
@@ -44,14 +74,14 @@ function sampleField(field, key, depth = 0, index = 0) {
   if (field.kind === 'componentList' && child && depth < 4) return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => sampleContent(child, depth + 1, itemIndex))
   if (field.kind === 'text' || field.kind === 'textarea' || field.kind === 'richText') return exampleText(key, index)
   if (field.kind === 'select' || field.kind === 'theme') return field.options?.[0] ?? 'light'
-  if (field.kind === 'media' || field.kind === 'video') return { url: `https://placehold.co/1600x900/png?text=${encodeURIComponent(labelFor(key))}`, alt: `Example ${labelFor(key).toLowerCase()}`, width: 1600, height: 900 }
-  if (field.kind === 'mediaList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ url: `https://placehold.co/1200x800/png?text=${encodeURIComponent(`${labelFor(key)}+${itemIndex + 1}`)}`, alt: `Example ${labelFor(key).toLowerCase()} ${itemIndex + 1}`, width: 1200, height: 800 }))
-  if (field.kind === 'cta') return { label: `Explore ${labelFor(key).toLowerCase()}`, href: '#' }
-  if (field.kind === 'ctaGroup') return { primary: { label: 'Primary action', href: '#' }, secondary: { label: 'Secondary action', href: '#' } }
-  if (field.kind === 'formReference') return { name: 'Example contact form', description: 'A centrally governed form reference with its own questions and validation.' }
-  if (field.kind === 'infoItems' || field.kind === 'featureItems') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => `${labelFor(key)} ${itemIndex + 1}`)
-  if (field.kind === 'insightSourceList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: `Example insight ${itemIndex + 1}`, excerpt: 'Representative insight excerpt for this card.', href: '#', publishedAt: `2026-10-${String(itemIndex + 1).padStart(2, '0')}`, image: { url: `https://placehold.co/1200x800/png?text=Insight+${itemIndex + 1}`, alt: `Example insight ${itemIndex + 1}`, width: 1200, height: 800 } }))
-  return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: `${labelFor(key)} ${itemIndex + 1}`, description: exampleText('description', itemIndex) }))
+  if (field.kind === 'media' || field.kind === 'video') return { url: `https://placehold.co/1600x900/png?text=${encodeURIComponent(labelFor(key))}`, alt: 'Battery module and electrical interface', width: 1600, height: 900 }
+  if (field.kind === 'mediaList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ url: `https://placehold.co/1200x800/png?text=${encodeURIComponent(`${labelFor(key)}+${itemIndex + 1}`)}`, alt: from(['Battery enclosure on a workbench', 'Cell assembly detail', 'System integration test'], itemIndex), width: 1200, height: 800 }))
+  if (field.kind === 'cta') return { label: 'Explore the specification', href: '#' }
+  if (field.kind === 'ctaGroup') return { primary: { label: 'Talk to an expert', href: '#' }, secondary: { label: 'View technical details', href: '#' } }
+  if (field.kind === 'formReference') return { name: 'Project enquiry', description: 'A governed form reference for product, engineering and partnership enquiries.' }
+  if (field.kind === 'infoItems' || field.kind === 'featureItems') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => from(['Validated operating range', 'Traceable test data', 'Integration-ready documentation'], itemIndex))
+  if (field.kind === 'insightSourceList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: from(['How system constraints shape battery design', 'Making validation data useful for integration teams', 'A practical guide to energy-storage specifications'], itemIndex), excerpt: from(previewCopy.descriptions, itemIndex), href: '#', publishedAt: `2026-10-${String(itemIndex + 1).padStart(2, '0')}`, image: { url: `https://placehold.co/1200x800/png?text=Insight+${itemIndex + 1}`, alt: from(['Engineering team reviewing test data', 'Battery system integration', 'Technical documentation review'], itemIndex), width: 1200, height: 800 } }))
+  return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: from(previewCopy.headings, itemIndex), description: from(previewCopy.descriptions, itemIndex) }))
 }
 
 function sampleContent(manifest, depth = 0, index = 0) {
