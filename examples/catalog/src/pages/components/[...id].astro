@@ -75,7 +75,6 @@ const Preview = (previewModule as { default: any }).default
     </main>
     <script>
       const surface = document.querySelector<HTMLElement>('[data-kinekt-preview-surface]')
-      const previewOptions = document.querySelector<HTMLElement>('.preview-options')
       function toggleCtaIcons(links: NodeListOf<HTMLAnchorElement>, visible: boolean) {
         links.forEach((link) => {
           const icon = link.querySelector('[data-kinekt-cta-icon]')
@@ -95,7 +94,6 @@ const Preview = (previewModule as { default: any }).default
           if (input.name === 'theme') {
             const section = surface.querySelector<HTMLElement>('[data-kinekt-section]')
             if (section) section.dataset.kinektTheme = input.value
-            if (previewOptions) previewOptions.dataset.kinektTheme = input.value
           }
           if (input.name === 'carousel-controls') {
             const carousel = surface.querySelector<HTMLElement>('[data-kinekt-carousel]')
@@ -140,8 +138,6 @@ const Preview = (previewModule as { default: any }).default
   .intro h1 { margin: 0 0 0.75rem; font-size: clamp(2.25rem, 5vw, 4rem); letter-spacing: -0.055em; }
   .intro span { color: #46656a; }
   .preview-options { display: flex; flex-wrap: wrap; align-items: start; gap: 1rem 2rem; width: min(calc(100% - 3rem), 76rem); margin: 0 auto 2rem; padding: 1rem; border: 1px solid #dce4df; accent-color: light-dark(black, white); color-scheme: light; }
-  .preview-options[data-kinekt-theme='dark'] { color-scheme: dark; }
-  .preview-options > p { width: 100%; margin: 0; color: #46656a; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
   .preview-options fieldset { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; min-width: 0; margin: 0; padding: 0; border: 0; }
   .preview-options legend { width: 100%; margin-bottom: 0.5rem; font-size: 0.8125rem; font-weight: 700; }
   .preview-options label { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.875rem; }
