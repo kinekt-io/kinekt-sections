@@ -87,36 +87,36 @@ function sampleField(field, key, depth = 0, index = 0) {
 function caseStudiesPreview() {
   const studies = [
     {
-      title: 'Example long-range mission',
+      title: 'Long-range mission',
       description: 'This placeholder case demonstrates how a technical application can combine performance targets, system integration and measurable outcomes.',
-      results: [['Performance metric', 'Example result'], ['System metric', 'Example result']],
+      results: [['Performance metric', 'Representative result'], ['System metric', 'Representative result']],
       quote: '“This placeholder quote demonstrates the intended quote, author and attribution structure.”',
-      authorName: 'Example person 1',
-      authorRole: 'Example role',
+      authorName: 'Project contact 1',
+      authorRole: 'Programme lead',
     },
     {
-      title: 'Example product application',
+      title: 'Product application',
       description: 'Representative copy used to inspect the card hierarchy, responsive media treatment and the relationship between supporting content.',
-      results: [['Performance metric', 'Example result'], ['System metric', 'Example result']],
+      results: [['Performance metric', 'Representative result'], ['System metric', 'Representative result']],
       quote: '“This placeholder quote is only here to show the component’s expected content structure.”',
-      authorName: 'Example person 2',
-      authorRole: 'Example role',
+      authorName: 'Project contact 2',
+      authorRole: 'Engineering lead',
     },
     {
-      title: 'Example system scenario',
+      title: 'System scenario',
       description: 'A neutral content sample for validating the carousel, result cards and quote attribution without client-specific claims.',
-      results: [['Performance metric', 'Example result'], ['System metric', 'Example result']],
-      quote: '“This example shows how the attribution remains grouped with its quote.”',
-      authorName: 'Example person 3',
-      authorRole: 'Example role',
+      results: [['Performance metric', 'Representative result'], ['System metric', 'Representative result']],
+      quote: '“This placeholder shows how the attribution remains grouped with its quote.”',
+      authorName: 'Project contact 3',
+      authorRole: 'Integration lead',
     },
     {
-      title: 'Example integration case',
+      title: 'Integration case',
       description: 'Neutral preview copy for testing the information hierarchy and layout across a complete carousel item.',
-      results: [['Performance metric', 'Example result'], ['System metric', 'Example result']],
+      results: [['Performance metric', 'Representative result'], ['System metric', 'Representative result']],
       quote: '“This placeholder completes the final preview slide without representing a customer or product.”',
-      authorName: 'Example person 4',
-      authorRole: 'Example role',
+      authorName: 'Project contact 4',
+      authorRole: 'Operations lead',
     },
   ]
 
@@ -127,7 +127,6 @@ function caseStudiesPreview() {
       heading: 'Our client successes',
       description: 'Examples of high-density battery systems designed around the conditions, constraints and performance targets of each application.',
     },
-    sectionLabel: 'Case study',
     carousel: {
       items: studies.map((study, index) => ({
         logo: { url: `https://placehold.co/180x48/png?text=Partner+${index + 1}`, alt: `Partner ${index + 1} logo`, width: 180, height: 48 },
