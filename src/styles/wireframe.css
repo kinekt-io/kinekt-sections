@@ -107,7 +107,7 @@
   margin-top: 1.75rem;
 }
 
-:where([data-kinekt-section]) :is([class*='__action'], [class*='__cta']) > a,
+:where([data-kinekt-section]) :is([class$='__actions'], [class*='__cta-group'], [class*='__action'], [class*='__cta']) > a,
 :where([data-kinekt-section]) a[class*='__action'],
 :where([data-kinekt-section]) a[class*='__cta'] {
   display: inline-flex;
