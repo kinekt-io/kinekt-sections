@@ -1,4 +1,5 @@
 ---
+import Button from '../controls/button/allentown/button-allentown.astro'
 import '../styles/wireframe.css'
 import SectionIntro from '../primitives/section-intro/section-intro.astro'
 import StructuralContent from './structural-content.astro'
@@ -71,10 +72,10 @@ const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta']
       <header class={`${block}__header`}>
         {intro && <div class={`${block}__header-content`}><SectionIntro intro={intro} headingLevel={headingLevel} /></div>}
         {caseStudyAction ? (
-          <div class={`${block}__cta`}><a class={`${block}__cta`} href={caseStudyAction.href}>{caseStudyAction.label}</a></div>
+          <div class={`${block}__cta`}><Button class={`${block}__cta`} href={caseStudyAction.href} label={caseStudyAction.label} /></div>
         ) : actions.length > 0 && (
           <nav class={`${block}__actions`} aria-label="Section actions">
-            {actions.map((cta, index) => <a class={`${block}__action ${block}__action--${index === 0 ? 'primary' : 'secondary'}`} href={cta.href}>{cta.label}</a>)}
+            {actions.map((cta, index) => <Button class={`${block}__action ${block}__action--${index === 0 ? 'primary' : 'secondary'}`} href={cta.href} label={cta.label} style={index === 0 ? 'primary' : 'secondary'} />)}
           </nav>
         )}
       </header>

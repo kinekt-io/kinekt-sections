@@ -1,5 +1,6 @@
 ---
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
 import type { ReadMoreContent } from './read-more-allentown.types.js'
 interface Props extends ReadMoreContent { headingLevel?: 'h1' | 'h2' | 'h3'; mediaLoading?: 'eager' | 'lazy' }
 const { theme, intro, ctas, media, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
@@ -9,8 +10,8 @@ const { theme, intro, ctas, media, headingLevel = 'h2', mediaLoading = 'lazy' } 
     <header class="read-more__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
       {(ctas.primary || ctas.secondary) && <div class="read-more__actions">
-        {ctas.primary && <a class="read-more__action read-more__action--primary" href={ctas.primary.href}>{ctas.primary.label}</a>}
-        {ctas.secondary && <a class="read-more__action read-more__action--secondary" href={ctas.secondary.href}>{ctas.secondary.label}</a>}
+        {ctas.primary && <Button class="read-more__action read-more__action--primary" href={ctas.primary.href} label={ctas.primary.label} />}
+        {ctas.secondary && <Button class="read-more__action read-more__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="secondary" />}
       </div>}
     </header>
     <picture class="read-more__media">

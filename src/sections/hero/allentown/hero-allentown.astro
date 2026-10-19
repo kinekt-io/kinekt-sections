@@ -5,6 +5,7 @@ import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import type { Media } from '../../../shared/content.js'
 import type { HeroContent } from './hero-allentown.types.js'
 import { isSafeWebUrl } from '../../../urls.js'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
 interface Props extends HeroContent { id?: string; headingLevel?: 'h1' | 'h2' }
 function assertSafeImage(image: Media, name: string): void {
   if (!isSafeWebUrl(image.url)) throw new Error(`${name}.url must be an HTTP(S) or root-relative URL.`)
@@ -22,8 +23,8 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
     <header class="hero-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
       {(ctas?.primary || ctas?.secondary) && <div class="hero-allentown__actions">
-        {ctas.primary && <a class="hero-allentown__action hero-allentown__action--primary" href={ctas.primary.href}>{ctas.primary.label}<svg aria-hidden="true" width="11" height="18" viewBox="0 0 11 18" fill="none"><path d="m2 2 7 7-7 7" stroke="currentColor" stroke-width="2" /></svg></a>}
-        {ctas.secondary && <a class="hero-allentown__action hero-allentown__action--secondary" href={ctas.secondary.href}>{ctas.secondary.label}</a>}
+        {ctas.primary && <Button class="hero-allentown__action hero-allentown__action--primary" href={ctas.primary.href} label={ctas.primary.label}><svg aria-hidden="true" width="11" height="18" viewBox="0 0 11 18" fill="none"><path d="m2 2 7 7-7 7" stroke="currentColor" stroke-width="2" /></svg></Button>}
+        {ctas.secondary && <Button class="hero-allentown__action hero-allentown__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="secondary" />}
       </div>}
     </header>
     <KinektMedia class="hero-allentown__media" imageClass="hero-allentown__image" media={image} mobileMedia={mobileImage} loading="eager" fetchpriority="high" />

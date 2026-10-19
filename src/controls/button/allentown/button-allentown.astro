@@ -1,0 +1,13 @@
+---
+interface Props {
+  href: string
+  label: string
+  style?: 'primary' | 'secondary' | 'clear'
+  class?: string
+}
+
+const { href, label, style = 'primary', class: className } = Astro.props
+const classes = ['button', `button--${style}`, className].filter(Boolean).join(' ')
+---
+
+<a class={classes} href={href}>{label}<slot /></a>

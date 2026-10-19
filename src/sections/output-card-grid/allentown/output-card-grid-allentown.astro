@@ -1,5 +1,6 @@
 ---
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
 import type { OutputCardGridContent } from './output-card-grid-allentown.types.js'
 interface Props extends OutputCardGridContent {headingLevel?:'h1'|'h2'|'h3'}
 const {theme,intro,ctas,cards,headingLevel='h2'}=Astro.props
@@ -9,8 +10,8 @@ const {theme,intro,ctas,cards,headingLevel='h2'}=Astro.props
     <header class="output-card-grid__header">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
       {(ctas?.primary || ctas?.secondary) && <div class="output-card-grid__actions">
-        {ctas.primary && <a class="output-card-grid__action output-card-grid__action--primary" href={ctas.primary.href}>{ctas.primary.label}</a>}
-        {ctas.secondary && <a class="output-card-grid__action output-card-grid__action--secondary" href={ctas.secondary.href}>{ctas.secondary.label}</a>}
+        {ctas.primary && <Button class="output-card-grid__action output-card-grid__action--primary" href={ctas.primary.href} label={ctas.primary.label} />}
+        {ctas.secondary && <Button class="output-card-grid__action output-card-grid__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="secondary" />}
       </div>}
     </header>
     <ul class="output-card-grid__cards">

@@ -119,9 +119,7 @@
   margin-top: 1.75rem;
 }
 
-:where([data-kinekt-section]) :is([class$='__actions'], [class*='__cta-group'], [class*='__action'], [class*='__cta']) > a,
-:where([data-kinekt-section]) a[class*='__action'],
-:where([data-kinekt-section]) a[class*='__cta'] {
+:where([data-kinekt-section]) .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -134,10 +132,20 @@
   background: var(--kinekt-component-action);
   font-size: 0.85rem;
   font-weight: 600;
+  line-height: 1.2;
   text-decoration: none;
+  cursor: pointer;
 }
 
-:where([data-kinekt-section]) :is([class*='--secondary'], [class*='__secondary']) {
+:where([data-kinekt-section]) .button--secondary {
+  color: var(--kinekt-component-ink);
+  background: transparent;
+}
+
+:where([data-kinekt-section]) .button--clear {
+  min-height: auto;
+  padding: 0;
+  border-color: transparent;
   color: var(--kinekt-component-ink);
   background: transparent;
 }
