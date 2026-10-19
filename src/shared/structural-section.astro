@@ -36,7 +36,7 @@ interface Props {
   content?: Record<string, unknown>
   fields: Record<string, StructuralField>
   carouselControlStyle?: 'text' | 'icon'
-  carouselAxis?: 'x' | 'y'
+  carouselControls?: 'next' | 'previous-next'
 }
 
 function isCta(value: unknown): value is Required<Cta> {
@@ -55,7 +55,7 @@ function collectCtas(value: unknown): Required<Cta>[] {
   })
 }
 
-const { block, id, headingLevel = 'h2', intro, ctas, media, fields, content: explicitContent, pagefindUrl, pagefindFilters, carouselControlStyle = 'text', carouselAxis = 'x', ...implicitContent } = Astro.props
+const { block, id, headingLevel = 'h2', intro, ctas, media, fields, content: explicitContent, pagefindUrl, pagefindFilters, carouselControlStyle = 'icon', carouselControls = 'next', ...implicitContent } = Astro.props
 const content = explicitContent ?? implicitContent
 const theme = content.theme === 'dark' ? 'dark' : 'light'
 const actions = collectCtas(ctas)
@@ -68,7 +68,7 @@ const actions = collectCtas(ctas)
         {actions.map((cta, index) => <a class={`${block}__action ${block}__action--${index === 0 ? 'primary' : 'secondary'}`} href={cta.href}>{cta.label}</a>)}
       </nav>
     )}
-    <StructuralContent block={block} instanceId={id ?? block} content={content} fields={fields} pagefindUrl={pagefindUrl} pagefindFilters={pagefindFilters} carouselControlStyle={carouselControlStyle} carouselAxis={carouselAxis} omit={['theme', 'intro', 'ctas', 'media']} />
+    <StructuralContent block={block} instanceId={id ?? block} content={content} fields={fields} pagefindUrl={pagefindUrl} pagefindFilters={pagefindFilters} carouselControlStyle={carouselControlStyle} carouselControls={carouselControls} omit={['theme', 'intro', 'ctas', 'media']} />
     {media?.url && (
       <picture class={`${block}__media`}>
         <img class={`${block}__image`} src={media.url} alt={media.alt ?? ''} width={media.width} height={media.height} />
