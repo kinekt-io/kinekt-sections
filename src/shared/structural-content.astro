@@ -15,11 +15,12 @@ interface Props {
   pagefindFilters?: Record<string, unknown>
   carouselControlStyle?: 'text' | 'icon'
   carouselControls?: 'next' | 'previous-next'
+  carouselLoop?: boolean
   omit?: string[]
   level?: 2 | 3 | 4
 }
 
-const { block, instanceId, content, fields, pagefindUrl = '/pagefind/pagefind.js', pagefindFilters, carouselControlStyle = 'icon', carouselControls = 'previous-next', omit = [], level = 2 } = Astro.props
+const { block, instanceId, content, fields, pagefindUrl = '/pagefind/pagefind.js', pagefindFilters, carouselControlStyle = 'icon', carouselControls = 'previous-next', carouselLoop = false, omit = [], level = 2 } = Astro.props
 const entries = Object.entries(fields).filter(([key]) => key in content && !omit.includes(key))
 const Heading = `h${Math.min(level, 4)}` as 'h2' | 'h3' | 'h4'
 const comparison = fields.columns?.kind === 'infoItems' && fields.rows?.kind === 'componentList'
@@ -68,7 +69,7 @@ function identifier(value: string) {
     const items = Array.isArray(value.items) ? value.items : []
     const sectionLabel = text(content.sectionLabel)
     const itemFields = field.fields?.items?.fields ?? {}
-    return <div class={className} data-kinekt-carousel data-kinekt-carousel-controls={carouselControls} data-kinekt-carousel-control-style={carouselControlStyle} role="region" aria-label="Case studies carousel">
+    return <div class={className} data-kinekt-carousel data-kinekt-carousel-controls={carouselControls} data-kinekt-carousel-control-style={carouselControlStyle} data-kinekt-carousel-loop={carouselLoop ? 'true' : 'false'} role="region" aria-label="Case studies carousel">
       {sectionLabel && <div class={`${className}-label`} data-kinekt-carousel-label><p>{sectionLabel}</p><span aria-hidden="true"></span></div>}
       <div class={`${className}-viewport`} data-kinekt-carousel-viewport>
         <ul class={`${className}-slides`} data-kinekt-carousel-container>
