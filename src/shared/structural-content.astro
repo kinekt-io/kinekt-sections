@@ -189,9 +189,11 @@ function buttonStyle(value: Record<string, unknown>, key: string): 'primary' | '
   }
 
   if (field.kind === 'cta' && isRecord(value) && typeof value.href === 'string' && typeof value.label === 'string') {
-    return <Button class={className} href={value.href} label={value.label} style={buttonStyle(value, key)} />
+    const style = block.includes('case-studies') && instanceId.includes('-carousel-')
+      ? 'clear'
+      : buttonStyle(value, key)
+    return <Button class={className} href={value.href} label={value.label} style={style} />
   }
-
   if (field.kind === 'ctaGroup' && isRecord(value)) {
     return <nav class={className} aria-label="Section actions">{Object.entries(value).map(([style, cta]) => isRecord(cta) && typeof cta.href === 'string' && typeof cta.label === 'string' && <Button href={cta.href} label={cta.label} style={buttonStyle(cta, style)} />)}</nav>
   }
