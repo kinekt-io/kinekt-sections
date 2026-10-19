@@ -1,12 +1,12 @@
 import { isSafeWebUrl } from '../urls.js'
 import type { Cta, CtaGroup, Media } from './content.js'
-export type BetaTheme = 'light' | 'dark'
+export type BetaTheme = 'light' | 'semi-light' | 'dark' | 'semi-dark'
 export type PayloadAdapterOptions = { mediaBaseUrl?: string }
 export const requireObject = (value: unknown, field: string): Record<string, unknown> => { if (typeof value !== 'object' || value === null || Array.isArray(value)) throw new Error(`${field} must be an object.`); return value as Record<string, unknown> }
 export const requireArray = (value: unknown, field: string): unknown[] => { if (!Array.isArray(value) || value.length === 0) throw new Error(`${field} must contain at least one item.`); return value }
 export const requireText = (value: unknown, field: string): string => { if (typeof value !== 'string' || value.trim().length === 0) throw new Error(`${field} must be non-empty text.`); return value }
 export const optionalText = (value: unknown, field: string): string | undefined => value === undefined || value === null || value === '' ? undefined : requireText(value, field)
-export const requireTheme = (value: unknown, field = 'theme'): BetaTheme => { if (value === 'light' || value === 'dark') return value; throw new Error(`${field} must be light or dark.`) }
+export const requireTheme = (value: unknown, field = 'theme'): BetaTheme => { if (value === 'light' || value === 'semi-light' || value === 'dark' || value === 'semi-dark') return value; throw new Error(`${field} must be light, semi-light, dark, or semi-dark.`) }
 const withMediaBaseUrl = (url: string, mediaBaseUrl: string | undefined): string => { if (url.startsWith('/') && mediaBaseUrl) return new URL(url, mediaBaseUrl).toString(); if (!isSafeWebUrl(url)) throw new Error('Media URL must be an HTTP(S) or root-relative URL.'); return url }
 export const mediaToProps = (value: unknown, field: string, { mediaBaseUrl }: PayloadAdapterOptions = {}): Media => {
   const media = requireObject(value, field)

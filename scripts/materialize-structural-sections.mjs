@@ -26,15 +26,15 @@ function labelFor(key) {
 
 const previewCopy = {
   headings: [
-    'Engineering energy storage for demanding applications',
-    'Designed around the constraints that matter',
-    'Performance you can specify with confidence',
+    'Energy systems built around real operating conditions',
+    'Designed for the constraints that shape delivery',
+    'Performance data teams can use with confidence',
   ],
-  accents: ['Battery systems', 'Built for the field', 'From cell to system'],
+  accents: ['System engineering', 'Built for the field', 'From cell to system'],
   descriptions: [
-    'A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content.',
-    'Use this space to explain the decision, the technical context and the next step without reducing the layout to placeholder labels.',
-    'Every example uses realistic-length content so hierarchy, reading rhythm and responsive behaviour are visible before site-specific styling is applied.',
+    'Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.',
+    'The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.',
+    'Structured content keeps performance requirements, technical context and implementation choices easy to compare.',
   ],
   questions: [
     'Which operating conditions does this configuration support?',
@@ -52,7 +52,7 @@ function from(values, index) {
   return values[index % values.length]
 }
 
-function exampleText(key, index = 0) {
+function previewText(key, index = 0) {
   if (/question/i.test(key)) return from(previewCopy.questions, index)
   if (/answer/i.test(key)) return from(previewCopy.answers, index)
   if (/(heading|title|name)/i.test(key)) return from(previewCopy.headings, index)
@@ -72,7 +72,7 @@ function sampleField(field, key, depth = 0, index = 0) {
   const child = field.componentId ? manifests.get(field.componentId) : null
   if (field.kind === 'component' && child && depth < 4) return sampleContent(child, depth + 1, index)
   if (field.kind === 'componentList' && child && depth < 4) return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => sampleContent(child, depth + 1, itemIndex))
-  if (field.kind === 'text' || field.kind === 'textarea' || field.kind === 'richText') return exampleText(key, index)
+  if (field.kind === 'text' || field.kind === 'textarea' || field.kind === 'richText') return previewText(key, index)
   if (field.kind === 'select' || field.kind === 'theme') return field.options?.[0] ?? 'light'
   if (field.kind === 'media' || field.kind === 'video') return { url: `https://placehold.co/1600x900/png?text=${encodeURIComponent(labelFor(key))}`, alt: 'Battery module and electrical interface', width: 1600, height: 900 }
   if (field.kind === 'mediaList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ url: `https://placehold.co/1200x800/png?text=${encodeURIComponent(`${labelFor(key)}+${itemIndex + 1}`)}`, alt: from(['Battery enclosure on a workbench', 'Cell assembly detail', 'System integration test'], itemIndex), width: 1200, height: 800 }))
@@ -87,35 +87,35 @@ function sampleField(field, key, depth = 0, index = 0) {
 function caseStudiesPreview() {
   const studies = [
     {
-      title: 'Long-range mission',
-      description: 'This placeholder case demonstrates how a technical application can combine performance targets, system integration and measurable outcomes.',
-      results: [['Performance metric', 'Representative result'], ['System metric', 'Representative result']],
-      quote: '“This placeholder quote demonstrates the intended quote, author and attribution structure.”',
-      authorName: 'Project contact 1',
+      title: 'Remote inspection platform',
+      description: 'A compact battery system was configured for repeated field deployment, reliable charging windows and straightforward service access.',
+      results: [['Mission duration', '6.5 hours'], ['Charge cycles', '1,200+']],
+      quote: '“The system data gave our engineering team a practical basis for planning each operating window.”',
+      authorName: 'Mara Linden',
       authorRole: 'Programme lead',
     },
     {
-      title: 'Product application',
-      description: 'Representative copy used to inspect the card hierarchy, responsive media treatment and the relationship between supporting content.',
-      results: [['Performance metric', 'Representative result'], ['System metric', 'Representative result']],
-      quote: '“This placeholder quote is only here to show the component’s expected content structure.”',
-      authorName: 'Project contact 2',
+      title: 'Autonomous material handling',
+      description: 'The integration balanced peak power demand, thermal conditions and a mechanical envelope that could be serviced on site.',
+      results: [['Peak output', '42 kW'], ['Operating range', '−10 to 45 °C']],
+      quote: '“The technical choices were clear from the first review through to the final integration checks.”',
+      authorName: 'Jonas Vermeer',
       authorRole: 'Engineering lead',
     },
     {
-      title: 'System scenario',
-      description: 'A neutral content sample for validating the carousel, result cards and quote attribution without client-specific claims.',
-      results: [['Performance metric', 'Representative result'], ['System metric', 'Representative result']],
-      quote: '“This placeholder shows how the attribution remains grouped with its quote.”',
-      authorName: 'Project contact 3',
+      title: 'Mobile energy unit',
+      description: 'A modular pack combined predictable energy delivery with traceable test evidence for a changing operating profile.',
+      results: [['System voltage', '400 V'], ['Available energy', '86 kWh']],
+      quote: '“We could assess the trade-offs quickly because the specifications connected directly to the application.”',
+      authorName: 'Ari Dijkstra',
       authorRole: 'Integration lead',
     },
     {
-      title: 'Integration case',
-      description: 'Neutral preview copy for testing the information hierarchy and layout across a complete carousel item.',
-      results: [['Performance metric', 'Representative result'], ['System metric', 'Representative result']],
-      quote: '“This placeholder completes the final preview slide without representing a customer or product.”',
-      authorName: 'Project contact 4',
+      title: 'Coastal monitoring network',
+      description: 'The energy system was adapted for extended unattended operation, variable ambient temperatures and a tight maintenance cycle.',
+      results: [['Service interval', '12 months'], ['Deployment sites', '18']],
+      quote: '“The final configuration translates complex requirements into a system our operations team can maintain with confidence.”',
+      authorName: 'Elena Vos',
       authorRole: 'Operations lead',
     },
   ]
@@ -123,17 +123,17 @@ function caseStudiesPreview() {
   return {
     theme: 'light',
     intro: {
-      accentHeading: '/ Proven performance',
-      heading: 'Our client successes',
-      description: 'Examples of high-density battery systems designed around the conditions, constraints and performance targets of each application.',
+      accentHeading: '/ Applied engineering',
+      heading: 'Systems shaped by the work they do',
+      description: 'A collection of fictional engineering scenarios showing how duty cycles, integration constraints and measurable outcomes inform the system design.',
     },
-    sectionLabel: 'Case study',
+    sectionLabel: 'Field report',
     carousel: {
       items: studies.map((study, index) => ({
-        logo: { url: `https://placehold.co/180x48/png?text=Partner+${index + 1}`, alt: `Partner ${index + 1} logo`, width: 180, height: 48 },
+        logo: { url: `https://placehold.co/180x48/png?text=Organisation+${index + 1}`, alt: `Organisation ${index + 1} mark`, width: 180, height: 48 },
         title: study.title,
         description: study.description,
-        image: { url: 'catalogue-placeholder:case-study-observatory.webp', alt: 'Observatory dome used as a technical case-study placeholder', width: 680, height: 544 },
+        image: { url: 'catalogue-asset:case-study-observatory.webp', alt: 'Observatory dome supporting a field energy system', width: 680, height: 544 },
         results: study.results.map(([label, text]) => ({ label, value: { text } })),
         quote: {
           quote: study.quote,
@@ -141,10 +141,10 @@ function caseStudiesPreview() {
           authorRole: study.authorRole,
           avatar: { url: `https://placehold.co/96x96/png?text=${index + 1}`, alt: `${study.authorName} portrait`, width: 96, height: 96 },
         },
-        cta: { cta: { label: 'Read this case', href: '#' } },
+        cta: { cta: { label: 'Read the system brief', href: '#' } },
       })),
     },
-    cta: { cta: { label: 'View all cases', href: '#' } },
+    cta: { cta: { label: 'Browse field reports', href: '#' } },
   }
 }
 
@@ -155,16 +155,16 @@ function heroPreview(manifest) {
       accentHeading: '/ Built for demanding systems',
       heading: 'Powering the next generation of electric mobility',
       description: 'A high-density battery platform for teams that need reliable performance, clear integration data and room to scale.',
-      image: 'catalogue-placeholder:hero-allentown-buses.webp',
-      alt: 'Electric buses used as a mobility placeholder',
+      image: 'catalogue-asset:hero-allentown-buses.webp',
+      alt: 'Electric buses in an urban mobility depot',
     },
     'hero-todos-santos': {
       theme: 'light',
       accentHeading: '/ Configurable by design',
       heading: 'Energy storage, made application-ready',
       description: 'Start from proven modules and configure the system around your application, operating environment and delivery plan.',
-      image: 'catalogue-placeholder:hero-todos-santos-towers.webp',
-      alt: 'Urban towers used as an infrastructure placeholder',
+      image: 'catalogue-asset:hero-todos-santos-towers.webp',
+      alt: 'Urban towers supplied by an integrated energy system',
       featureHeading: 'Designed for real-world operation',
       features: [
         { label: 'Voltage range', value: '24–800 V' },
@@ -177,8 +177,8 @@ function heroPreview(manifest) {
       accentHeading: '/ High-density energy',
       heading: 'Engineered to keep critical systems moving',
       description: 'Battery systems for applications where performance, robustness and traceable engineering decisions are non-negotiable.',
-      image: 'catalogue-placeholder:hero-trinity-street.webp',
-      alt: 'Urban infrastructure used as a field-operations placeholder',
+      image: 'catalogue-asset:hero-trinity-street.webp',
+      alt: 'Urban infrastructure operating in a field environment',
     },
   }[manifest.slug]
 
@@ -233,17 +233,19 @@ for (const directory of await manifestDirectories(sections)) {
   const relativeAdapter = path.relative(directory, path.join(source, 'shared', 'manifest-block.js')).split(path.sep).join('/')
   const importAstro = relativeAstro.startsWith('.') ? relativeAstro : `./${relativeAstro}`
   const importAdapter = relativeAdapter.startsWith('.') ? relativeAdapter : `./${relativeAdapter}`
-  const name = pascalCase(`beta-${manifest.slug}`)
+  const prefix = manifest.status === 'released' ? '' : 'beta-'
+  const name = pascalCase(`${prefix}${manifest.slug}`)
   const base = manifest.slug
+  const block = `${prefix}${manifest.slug}`
   const previewContent = sampleContent(manifest)
   const fields = previewFields(manifest)
-  const previewIntro = previewContent.intro ?? { accentHeading: 'Beta section', heading: manifest.title, description: 'Representative catalogue content.' }
+  const previewIntro = previewContent.intro ?? { accentHeading: 'Section overview', heading: manifest.title, description: 'A reusable content structure for technical decisions.' }
   const previewCtas = previewContent.ctas ?? previewContent.ctaGroup
   const previewMedia = previewContent.media
 
-  await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\nconst fields = ${JSON.stringify(fields, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(`beta-${manifest.slug}`)} fields={fields} {...props} />\n`)
+  await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\nconst fields = ${JSON.stringify(fields, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(block)} fields={fields} {...props} />\n`)
   await materialize(path.join(directory, `${base}.types.ts`), `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`)
-  await materialize(path.join(directory, `${base}.payload.ts`), `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`)
+  await materialize(path.join(directory, `${base}.payload.ts`), `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`)
   const previewSource = `---
 // @generated structural section preview.
 import StructuralSection from '${importAstro}'
@@ -259,15 +261,15 @@ function resolveCatalogueAssets(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
   if (!value || typeof value !== 'object') return value
   const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-placeholder:')) {
-    record.url = \`\${catalogueBase}placeholders/\${record.url.slice('catalogue-placeholder:'.length)}\`
+  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
+    record.url = \`\${catalogueBase}placeholders/\${record.url.slice('catalogue-asset:'.length)}\`
   }
   return record
 }
 
 const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block=${JSON.stringify(`beta-${manifest.slug}`)} intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<StructuralSection block=${JSON.stringify(block)} intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
 `
   await materialize(path.join(directory, `${base}.preview.astro`), previewSource)
 }

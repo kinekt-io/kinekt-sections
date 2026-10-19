@@ -6,6 +6,7 @@ import type { BetaMoqLeadTimesAllentownContent, PayloadBetaMoqLeadTimesAllentown
 const manifest = {
   "slug": "moq-lead-times-allentown",
   "title": "MOQ Lead Times Allentown",
+  "status": "planned",
   "fields": {
     "theme": {
       "kind": "select",
@@ -13,7 +14,9 @@ const manifest = {
       "localized": false,
       "options": [
         "light",
-        "dark"
+        "semi-light",
+        "dark",
+        "semi-dark"
       ],
       "description": "CMS-selected presentation setting passed to the renderer."
     },

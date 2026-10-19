@@ -61,7 +61,7 @@ function collectCtas(value: unknown): Required<Cta>[] {
 
 const { block, id, headingLevel = 'h2', intro, ctas, media, fields, content: explicitContent, pagefindUrl, pagefindFilters, carouselControlStyle = 'icon', carouselControls = 'previous-next', carouselLoop = false, ...implicitContent } = Astro.props
 const content = (explicitContent ?? implicitContent) as Record<string, unknown>
-const theme = content.theme === 'dark' ? 'dark' : 'light'
+const theme = content.theme === 'dark' || content.theme === 'semi-dark' || content.theme === 'semi-light' ? content.theme : 'light'
 const actions = collectCtas(ctas)
 const caseStudyAction = block.includes('case-studies') ? collectCtas(content.cta)[0] : undefined
 const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta'] : ['theme', 'intro', 'ctas', 'media']

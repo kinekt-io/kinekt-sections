@@ -503,7 +503,7 @@
     "check": "pnpm exports:generate && astro check --root examples/astro && astro check --root examples/catalog",
     "dev": "pnpm build && astro dev --root examples/astro --host 127.0.0.1",
     "build:example": "astro build --root examples/astro",
-    "build:catalog": "pnpm exports:generate && astro build --root examples/catalog",
+    "build:catalog": "pnpm exports:generate && astro build --root examples/catalog && pagefind --site examples/catalog/dist",
     "dev:catalog": "pnpm exports:generate && astro dev --root examples/catalog --host 127.0.0.1",
     "prepack": "pnpm exports:generate",
     "prepare": "pnpm build"
@@ -526,6 +526,7 @@
     "@types/node": "22.18.12",
     "astro": "7.1.3",
     "happy-dom": "17.6.3",
+    "pagefind": "^1.5.2",
     "payload": "3.88.0",
     "sharp": "0.35.3",
     "tsx": "4.22.4",

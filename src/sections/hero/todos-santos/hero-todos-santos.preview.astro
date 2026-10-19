@@ -20,8 +20,8 @@ const content = {
     }
   },
   "image": {
-    "url": "catalogue-placeholder:hero-todos-santos-towers.webp",
-    "alt": "Urban towers used as an infrastructure placeholder",
+    "url": "catalogue-asset:hero-todos-santos-towers.webp",
+    "alt": "Urban towers supplied by an integrated energy system",
     "width": 1600,
     "height": 900
   },
@@ -106,8 +106,8 @@ function resolveCatalogueAssets(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
   if (!value || typeof value !== 'object') return value
   const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-placeholder:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-placeholder:'.length)}`
+  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
+    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
   }
   return record
 }

@@ -6,6 +6,7 @@ import type { BetaNotFoundHeroAllentownContent, PayloadBetaNotFoundHeroAllentown
 const manifest = {
   "slug": "not-found-hero-allentown",
   "title": "Not Found Hero Allentown",
+  "status": "planned",
   "fields": {
     "theme": {
       "kind": "select",
@@ -13,7 +14,9 @@ const manifest = {
       "localized": false,
       "options": [
         "light",
-        "dark"
+        "semi-light",
+        "dark",
+        "semi-dark"
       ],
       "description": "CMS-selected presentation setting passed to the renderer."
     },

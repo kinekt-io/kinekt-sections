@@ -5,30 +5,30 @@ import StructuralSection from '../../../shared/structural-section.astro'
 const content = {
   "theme": "light",
   "intro": {
-    "accentHeading": "Engineering energy storage for demanding applications",
-    "heading": "Engineering energy storage for demanding applications",
-    "description": "A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content."
+    "accentHeading": "Energy systems built around real operating conditions",
+    "heading": "Energy systems built around real operating conditions",
+    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
   },
   "metrics": [
     {
-      "label": "Battery systems",
+      "label": "System engineering",
       "value": {
-        "text": "A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content.",
-        "icon": "A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content."
+        "text": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
+        "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
       }
     },
     {
       "label": "Built for the field",
       "value": {
-        "text": "Use this space to explain the decision, the technical context and the next step without reducing the layout to placeholder labels.",
-        "icon": "Use this space to explain the decision, the technical context and the next step without reducing the layout to placeholder labels."
+        "text": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
+        "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
       }
     },
     {
       "label": "From cell to system",
       "value": {
-        "text": "Every example uses realistic-length content so hierarchy, reading rhythm and responsive behaviour are visible before site-specific styling is applied.",
-        "icon": "Every example uses realistic-length content so hierarchy, reading rhythm and responsive behaviour are visible before site-specific styling is applied."
+        "text": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
+        "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
       }
     }
   ],
@@ -40,9 +40,9 @@ const content = {
   },
   "callout": {
     "intro": {
-      "accentHeading": "Engineering energy storage for demanding applications",
-      "heading": "Engineering energy storage for demanding applications",
-      "description": "A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content."
+      "accentHeading": "Energy systems built around real operating conditions",
+      "heading": "Energy systems built around real operating conditions",
+      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
     },
     "cta": {
       "cta": {
@@ -133,9 +133,9 @@ const fields = {
   }
 }
 const intro = {
-  "accentHeading": "Engineering energy storage for demanding applications",
-  "heading": "Engineering energy storage for demanding applications",
-  "description": "A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content."
+  "accentHeading": "Energy systems built around real operating conditions",
+  "heading": "Energy systems built around real operating conditions",
+  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
 }
 const ctas = undefined
 const media = {
@@ -150,8 +150,8 @@ function resolveCatalogueAssets(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
   if (!value || typeof value !== 'object') return value
   const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-placeholder:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-placeholder:'.length)}`
+  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
+    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
   }
   return record
 }

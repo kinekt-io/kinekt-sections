@@ -96,8 +96,8 @@ async function componentManifest(directory) {
     if (metadata[field] !== value) throw new Error(`${manifestPath} ${field} must equal ${JSON.stringify(value)}.`)
   }
   requireString(metadata.version, 'version', manifestPath)
-  if (!/^\d{2}\.(?:0[1-9]|1[0-2])\.\d+-beta\.\d+$/.test(metadata.version)) {
-    throw new Error(`${manifestPath} version must use YY.MM.revision-beta.index CalVer.`)
+  if (!/^\d{2}\.(?:0[1-9]|1[0-2])\.\d+(?:-beta\.\d+)?$/.test(metadata.version)) {
+    throw new Error(`${manifestPath} version must use YY.MM.revision or YY.MM.revision-beta.index CalVer.`)
   }
   requireString(metadata.slug, 'slug', manifestPath)
   requireString(metadata.title, 'title', manifestPath)
@@ -110,6 +110,9 @@ async function componentManifest(directory) {
   }
   if (!metadata.fields || typeof metadata.fields !== 'object' || Array.isArray(metadata.fields)) {
     throw new Error(`${manifestPath} requires a fields object.`)
+  }
+  if (metadata.tags !== undefined && (!Array.isArray(metadata.tags) || metadata.tags.some((tag) => typeof tag !== 'string' || tag.trim() === ''))) {
+    throw new Error(`${manifestPath} tags must be an array of non-empty strings.`)
   }
   return metadata
 }
@@ -133,6 +136,7 @@ for (const component of [...components.values()].sort((a, b) => a.directory.loca
     version: metadata.version,
     slug: metadata.slug,
     category: metadata.category,
+    tags: metadata.tags ?? [],
     role: metadata.role,
     variation: metadata.variation,
     title: metadata.title,

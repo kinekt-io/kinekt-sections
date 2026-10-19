@@ -1,6 +1,8 @@
 import type { CtaGroup, Media, SectionIntro } from '../../../shared/content.js'
+import type { BetaTheme } from '../../../shared/payload.js'
 
 export interface HeroContent {
+  theme?: BetaTheme
   intro: SectionIntro
   ctas?: CtaGroup
   image: Media

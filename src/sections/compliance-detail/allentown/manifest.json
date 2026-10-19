@@ -6,7 +6,7 @@
   "slug": "compliance-detail-allentown",
   "title": "Compliance Detail Allentown",
   "description": "A reusable Tulip compliance content section with automatic certification-collage participation.",
-  "category": "sections",
+  "category": "sections","tags":["compliance","content"],
   "role": "compliance-detail",
   "variation": "allentown",
   "status": "planned",
@@ -19,7 +19,7 @@
       "kind": "select",
       "required": true,
       "localized": false,
-      "options": ["light", "dark"],
+      "options":["light","semi-light","dark","semi-dark"],
       "description": "CMS-selected presentation setting passed to the renderer."
     },
     "intro": {

@@ -5,9 +5,9 @@ import StructuralSection from '../../../shared/structural-section.astro'
 const content = {
   "theme": "light",
   "intro": {
-    "accentHeading": "Engineering energy storage for demanding applications",
-    "heading": "Engineering energy storage for demanding applications",
-    "description": "A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content."
+    "accentHeading": "Energy systems built around real operating conditions",
+    "heading": "Energy systems built around real operating conditions",
+    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
   },
   "ctas": {
     "primary": {
@@ -28,24 +28,24 @@ const content = {
   "items": [
     {
       "markerType": "none",
-      "icon": "A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content.",
-      "title": "Engineering energy storage for demanding applications",
-      "subtitle": "Engineering energy storage for demanding applications",
-      "description": "A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content."
+      "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
+      "title": "Energy systems built around real operating conditions",
+      "subtitle": "Energy systems built around real operating conditions",
+      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
     },
     {
       "markerType": "none",
-      "icon": "Use this space to explain the decision, the technical context and the next step without reducing the layout to placeholder labels.",
-      "title": "Designed around the constraints that matter",
-      "subtitle": "Designed around the constraints that matter",
-      "description": "Use this space to explain the decision, the technical context and the next step without reducing the layout to placeholder labels."
+      "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
+      "title": "Designed for the constraints that shape delivery",
+      "subtitle": "Designed for the constraints that shape delivery",
+      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
     },
     {
       "markerType": "none",
-      "icon": "Every example uses realistic-length content so hierarchy, reading rhythm and responsive behaviour are visible before site-specific styling is applied.",
-      "title": "Performance you can specify with confidence",
-      "subtitle": "Performance you can specify with confidence",
-      "description": "Every example uses realistic-length content so hierarchy, reading rhythm and responsive behaviour are visible before site-specific styling is applied."
+      "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
+      "title": "Performance data teams can use with confidence",
+      "subtitle": "Performance data teams can use with confidence",
+      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
     }
   ]
 }
@@ -99,9 +99,9 @@ const fields = {
   }
 }
 const intro = {
-  "accentHeading": "Engineering energy storage for demanding applications",
-  "heading": "Engineering energy storage for demanding applications",
-  "description": "A representative introduction that shows how longer copy, links and lists will behave once a component is connected to real content."
+  "accentHeading": "Energy systems built around real operating conditions",
+  "heading": "Energy systems built around real operating conditions",
+  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
 }
 const ctas = {
   "primary": {
@@ -125,8 +125,8 @@ function resolveCatalogueAssets(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
   if (!value || typeof value !== 'object') return value
   const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-placeholder:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-placeholder:'.length)}`
+  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
+    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
   }
   return record
 }

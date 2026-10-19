@@ -13,12 +13,12 @@ function assertSafeImage(image: Media, name: string): void {
   if (!Number.isSafeInteger(image.width) || image.width <= 0) throw new Error(`${name}.width must be a positive integer.`)
   if (!Number.isSafeInteger(image.height) || image.height <= 0) throw new Error(`${name}.height must be a positive integer.`)
 }
-const { id, headingLevel = 'h1', intro, ctas, image, mobileImage } = Astro.props
+const { id, theme = 'light', headingLevel = 'h1', intro, ctas, image, mobileImage } = Astro.props
 for (const cta of [ctas?.primary, ctas?.secondary]) if (cta && !isSafeWebUrl(cta.href)) throw new Error('ctas must use an HTTP(S) or root-relative URL.')
 assertSafeImage(image, 'image')
 if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 ---
-<section class="hero-allentown" id={id} data-kinekt-section>
+<section class="hero-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="hero-allentown__container">
     <header class="hero-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />

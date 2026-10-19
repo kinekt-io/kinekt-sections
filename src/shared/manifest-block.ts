@@ -13,6 +13,7 @@ interface ManifestField {
 interface SectionManifest {
   slug: string
   title: string
+  status: 'planned' | 'released' | 'deprecated'
   fields: Record<string, ManifestField>
 }
 
@@ -53,10 +54,14 @@ export function createManifestBlock(manifest: SectionManifest, input: CreateMani
     formCollection: input.formCollection ?? 'forms',
   }
 
+  const released = manifest.status === 'released'
+  const name = manifest.slug.split('-').map((part) => part[0]?.toUpperCase() + part.slice(1)).join('')
   return {
-    slug: `beta-${manifest.slug}`,
-    interfaceName: `Beta${manifest.slug.split('-').map((part) => part[0]?.toUpperCase() + part.slice(1)).join('')}`,
-    labels: { singular: `BETA — ${manifest.title}`, plural: `BETA — ${manifest.title} blocks` },
+    slug: `${released ? '' : 'beta-'}${manifest.slug}`,
+    interfaceName: `${released ? '' : 'Beta'}${name}`,
+    labels: released
+      ? { singular: manifest.title, plural: `${manifest.title} blocks` }
+      : { singular: `BETA — ${manifest.title}`, plural: `BETA — ${manifest.title} blocks` },
     fields: Object.entries(manifest.fields).map(([name, field]) => fieldFor(name, field, options)) as Block['fields'],
   }
 }

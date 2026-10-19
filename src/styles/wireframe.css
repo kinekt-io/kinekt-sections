@@ -35,6 +35,15 @@
   color-scheme: light;
 }
 
+:where([data-kinekt-section][data-kinekt-theme='semi-light']) {
+  --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kinekt-color-canvas-muted, #eeeeee));
+  --kinekt-component-surface: var(--kinekt-section-surface, var(--kinekt-color-surface, #ffffff));
+  --kinekt-component-ink: var(--kinekt-section-ink, var(--kinekt-color-ink, #111111));
+  --kinekt-component-muted: var(--kinekt-section-muted, var(--kinekt-color-muted, #5f5f5f));
+  --kinekt-component-line: var(--kinekt-section-line, var(--kinekt-color-line, #c7c7c7));
+  color-scheme: light;
+}
+
 :where([data-kinekt-section][data-kinekt-theme='dark']) {
   --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kinekt-color-ink, #111111));
   --kinekt-component-surface: var(--kinekt-section-surface, var(--kinekt-color-surface-dark, #242424));
@@ -45,7 +54,17 @@
   --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kinekt-color-ink, #111111));
 }
 
-:where([data-kinekt-section][data-kinekt-theme='dark']) {
+:where([data-kinekt-section][data-kinekt-theme='semi-dark']) {
+  --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kinekt-color-canvas-dark-muted, #2b2b2b));
+  --kinekt-component-surface: var(--kinekt-section-surface, var(--kinekt-color-surface-dark, #1f1f1f));
+  --kinekt-component-ink: var(--kinekt-section-ink, var(--kinekt-color-canvas, #ffffff));
+  --kinekt-component-muted: var(--kinekt-section-muted, var(--kinekt-color-muted-on-dark, #c8c8c8));
+  --kinekt-component-line: var(--kinekt-section-line, var(--kinekt-color-line-on-dark, #5e5e5e));
+  --kinekt-component-action: var(--kinekt-section-action, var(--kinekt-color-canvas, #ffffff));
+  --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kinekt-color-ink, #111111));
+}
+
+:where([data-kinekt-section][data-kinekt-theme='dark'], [data-kinekt-section][data-kinekt-theme='semi-dark']) {
   color-scheme: dark;
 }
 
@@ -374,7 +393,7 @@
  * section introduction, a single full-width featured case, then pagination.
  * Site tokens remain responsible for all colour and type choices.
  */
-:where(.beta-case-studies-allentown[data-kinekt-section]) {
+:where(.case-studies-allentown[data-kinekt-section]) {
   --kinekt-section-content-width: 90rem;
   --case-studies-intro-to-carousel: clamp(3.5rem, 7vw, 6.25rem);
   --case-studies-carousel-to-slide: clamp(2.5rem, 4vw, 4rem);
@@ -392,11 +411,11 @@
   --case-studies-results-gap: 1.5rem;
 }
 
-:where(.beta-case-studies-allentown) > .beta-case-studies-allentown__container {
+:where(.case-studies-allentown) > .case-studies-allentown__container {
   gap: 0;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__header {
+:where(.case-studies-allentown) .case-studies-allentown__header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -404,34 +423,34 @@
   gap: var(--case-studies-header-gap);
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel {
+:where(.case-studies-allentown) .case-studies-allentown__carousel {
   display: grid;
   gap: var(--case-studies-carousel-to-slide);
   margin-top: var(--case-studies-intro-to-carousel);
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel-label {
+:where(.case-studies-allentown) .case-studies-allentown__carousel-label {
   display: flex;
   align-items: center;
   gap: var(--case-studies-label-gap);
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel-label p {
+:where(.case-studies-allentown) .case-studies-allentown__carousel-label p {
   margin: 0;
   color: var(--kinekt-component-action);
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel-label span {
+:where(.case-studies-allentown) .case-studies-allentown__carousel-label span {
   flex: 1;
   height: var(--case-studies-label-line-size);
   background: var(--kinekt-component-action);
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel-slide {
+:where(.case-studies-allentown) .case-studies-allentown__carousel-slide {
   flex-basis: 100%;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel-slide > article {
+:where(.case-studies-allentown) .case-studies-allentown__carousel-slide > article {
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -440,50 +459,50 @@
   background: transparent;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel-slide-content,
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel-slide-details {
+:where(.case-studies-allentown) .case-studies-allentown__carousel-slide-content,
+:where(.case-studies-allentown) .case-studies-allentown__carousel-slide-details {
   display: flex;
   flex-direction: column;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__logo {
+:where(.case-studies-allentown) .case-studies-allentown__logo {
   width: min(100%, 5.625rem);
   margin-bottom: var(--case-studies-logo-to-title);
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__logo img {
+:where(.case-studies-allentown) .case-studies-allentown__logo img {
   height: 1.5rem;
   object-fit: contain;
   object-position: left center;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__title {
+:where(.case-studies-allentown) .case-studies-allentown__title {
   max-width: 54rem;
   margin-bottom: var(--case-studies-title-to-summary);
   font-size: clamp(1.5rem, 3vw, 2rem);
   line-height: 1.1;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__description {
+:where(.case-studies-allentown) .case-studies-allentown__description {
   max-width: 54rem;
   margin: 0;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel-slide-content {
+:where(.case-studies-allentown) .case-studies-allentown__carousel-slide-content {
   gap: var(--case-studies-summary-to-content);
   margin-top: var(--case-studies-summary-to-content);
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel-slide-details {
+:where(.case-studies-allentown) .case-studies-allentown__carousel-slide-details {
   gap: var(--case-studies-details-gap);
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__image img {
+:where(.case-studies-allentown) .case-studies-allentown__image img {
   aspect-ratio: 1.25;
   object-fit: cover;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__results {
+:where(.case-studies-allentown) .case-studies-allentown__results {
   display: flex;
   flex-wrap: wrap;
   gap: var(--case-studies-results-gap);
@@ -491,20 +510,20 @@
   margin: 0;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__results > li > article {
+:where(.case-studies-allentown) .case-studies-allentown__results > li > article {
   gap: 0.75rem;
   padding: 0;
   border: 0;
   background: transparent;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__value {
+:where(.case-studies-allentown) .case-studies-allentown__value {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__value :is([class$='__text'], [class$='__icon']) {
+:where(.case-studies-allentown) .case-studies-allentown__value :is([class$='__text'], [class$='__icon']) {
   margin: 0;
   padding: 0.625rem 0.75rem;
   border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
@@ -515,54 +534,54 @@
   line-height: 1.1;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote {
+:where(.case-studies-allentown) .case-studies-allentown__quote {
   margin: 0;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote blockquote {
+:where(.case-studies-allentown) .case-studies-allentown__quote blockquote {
   margin: 0 0 1.25rem;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote-text {
+:where(.case-studies-allentown) .case-studies-allentown__quote-text {
   margin: 0;
   color: var(--kinekt-component-action);
   font-size: clamp(1.125rem, 2vw, 1.5rem);
   line-height: 1.2;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote-attribution {
+:where(.case-studies-allentown) .case-studies-allentown__quote-attribution {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote-avatar {
+:where(.case-studies-allentown) .case-studies-allentown__quote-avatar {
   flex: 0 0 3rem;
   width: 3rem;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote-avatar img {
+:where(.case-studies-allentown) .case-studies-allentown__quote-avatar img {
   aspect-ratio: 1;
   border-radius: 50%;
   object-fit: cover;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote-author {
+:where(.case-studies-allentown) .case-studies-allentown__quote-author {
   display: grid;
   gap: 0.375rem;
 }
 
-:where(.beta-case-studies-allentown) :is(.beta-case-studies-allentown__quote-author-name, .beta-case-studies-allentown__quote-author-role) {
+:where(.case-studies-allentown) :is(.case-studies-allentown__quote-author-name, .case-studies-allentown__quote-author-role) {
   margin: 0;
   font-size: 0.875rem;
   line-height: 1.2;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote-author-role {
+:where(.case-studies-allentown) .case-studies-allentown__quote-author-role {
   color: var(--kinekt-component-muted);
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel-slide .beta-case-studies-allentown__cta > a {
+:where(.case-studies-allentown) .case-studies-allentown__carousel-slide .case-studies-allentown__cta > a {
   min-height: 0;
   padding: 0;
   border: 0;
@@ -570,11 +589,11 @@
   background: transparent;
 }
 
-:where(.beta-case-studies-allentown) [data-kinekt-carousel-pagination] {
+:where(.case-studies-allentown) [data-kinekt-carousel-pagination] {
   gap: var(--case-studies-pagination-gap, 1.25rem);
 }
 
-:where(.beta-case-studies-allentown) :is([data-kinekt-carousel-previous], [data-kinekt-carousel-next]) {
+:where(.case-studies-allentown) :is([data-kinekt-carousel-previous], [data-kinekt-carousel-next]) {
   min-height: 0;
   padding: 0;
   border: 0;
@@ -583,12 +602,12 @@
   font-size: var(--case-studies-pagination-icon-size, 1.375rem);
 }
 
-:where(.beta-case-studies-allentown) [data-kinekt-carousel-indicators] {
+:where(.case-studies-allentown) [data-kinekt-carousel-indicators] {
   gap: var(--case-studies-pagination-indicator-gap, 0.5rem);
 }
 
 @media (min-width: 50rem) {
-  :where(.beta-case-studies-allentown) .beta-case-studies-allentown__header {
+  :where(.case-studies-allentown) .case-studies-allentown__header {
     display: grid;
     grid-template-columns: minmax(0, var(--case-studies-header-content-width)) auto;
     align-items: end;
@@ -596,26 +615,282 @@
     justify-content: var(--case-studies-header-justify-content);
   }
 
-  :where(.beta-case-studies-allentown) .beta-case-studies-allentown__header-content {
+  :where(.case-studies-allentown) .case-studies-allentown__header-content {
     grid-column: 1;
   }
 
-  :where(.beta-case-studies-allentown) .beta-case-studies-allentown__header > .beta-case-studies-allentown__cta {
+  :where(.case-studies-allentown) .case-studies-allentown__header > .case-studies-allentown__cta {
     grid-column: 2;
     align-self: end;
   }
 
-  :where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel-slide-content {
+  :where(.case-studies-allentown) .case-studies-allentown__carousel-slide-content {
     flex-direction: row;
     align-items: flex-start;
     gap: var(--case-studies-media-to-details);
   }
 
-  :where(.beta-case-studies-allentown) .beta-case-studies-allentown__image {
+  :where(.case-studies-allentown) .case-studies-allentown__image {
     flex: 1.2 1 0;
   }
 
-  :where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel-slide-details {
+  :where(.case-studies-allentown) .case-studies-allentown__carousel-slide-details {
     flex: 1 1 0;
+  }
+}
+
+/*
+ * Neutral editorial composition shared by every section preview.
+ * Sites replace the --kinekt-wireframe-* aliases with their own tokens; these
+ * values deliberately establish hierarchy and rhythm without prescribing a brand.
+ */
+:where([data-kinekt-section]) {
+  --kinekt-wireframe-section-space: clamp(4rem, 9vw, 9rem);
+  --kinekt-wireframe-content-gap: clamp(1.25rem, 3vw, 2.25rem);
+  --kinekt-wireframe-editorial-gap: clamp(2.5rem, 7vw, 7rem);
+  --kinekt-wireframe-card-padding: clamp(1.25rem, 2.25vw, 2rem);
+  --kinekt-wireframe-media-ratio: 4 / 3;
+  --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kinekt-wireframe-section-space));
+  --kinekt-component-gap: var(--kinekt-section-gap, var(--kinekt-wireframe-content-gap));
+}
+
+:where([data-kinekt-section]) :is([class$='__header'], [class$='__intro']) {
+  max-width: none;
+}
+
+:where([data-kinekt-section]) [class$='__header'] {
+  display: grid;
+  align-items: end;
+  gap: var(--kinekt-component-gap);
+}
+
+:where([data-kinekt-section]) [class$='__header-content'] {
+  max-width: var(--kinekt-component-reading-width);
+}
+
+:where([data-kinekt-section]) [class$='__header'] > :is([class$='__actions'], [class$='__cta']) {
+  margin-top: 0;
+}
+
+:where([data-kinekt-section]) [class$='__media'] img,
+:where([data-kinekt-section]) [class$='__image'] {
+  aspect-ratio: var(--kinekt-section-media-ratio, var(--kinekt-wireframe-media-ratio));
+  object-fit: cover;
+}
+
+:where([data-kinekt-section]) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) > li > article {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  padding: var(--kinekt-wireframe-card-padding);
+  border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+  background: var(--kinekt-component-surface);
+}
+
+:where([data-kinekt-section]) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) > li > article > picture:first-child img {
+  aspect-ratio: var(--kinekt-section-card-media-ratio, 4 / 3);
+  object-fit: cover;
+}
+
+:where([data-kinekt-section]) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) > li > article :is(h3, h4) {
+  font-size: clamp(1.25rem, 2.2vw, 1.8rem);
+  line-height: 1.05;
+}
+
+:where([data-kinekt-section]) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) > li > article :is(p, [class*='__description']) {
+  color: var(--kinekt-component-muted);
+}
+
+:where([data-kinekt-section]) :is([class$='__features'], [class$='__checklist'], [class$='__specifications'], [class$='__facts'], [class$='__metrics']) {
+  border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where([data-kinekt-section]) :is([class$='__features'], [class$='__checklist'], [class$='__specifications'], [class$='__facts'], [class$='__metrics']) > li {
+  padding-block: 1.25rem;
+  border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where([data-kinekt-section]) :is([class$='__features'], [class$='__checklist'], [class$='__specifications'], [class$='__facts'], [class$='__metrics']) > li > article {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+:where([data-kinekt-section]) :is([class$='__highlight'], [class$='__callout'], [class$='__note']) {
+  max-width: var(--kinekt-component-reading-width);
+  padding: var(--kinekt-wireframe-card-padding);
+  border-left: 2px solid var(--kinekt-component-action);
+  background: var(--kinekt-component-surface);
+}
+
+:where(.hero-allentown, .hero-trinity, .hero-todos-santos, .product-hero-allentown, .featured-page-header-allentown, .thank-you-hero-allentown, .not-found-hero-allentown) {
+  --kinekt-section-media-ratio: 1 / 1.05;
+  --kinekt-section-reading-width: 36rem;
+}
+
+:where(.hero-allentown, .hero-trinity, .hero-todos-santos, .product-hero-allentown, .featured-page-header-allentown, .thank-you-hero-allentown, .not-found-hero-allentown) [class$='__container'] {
+  align-items: stretch;
+}
+
+:where(.hero-allentown, .hero-trinity, .hero-todos-santos, .product-hero-allentown, .featured-page-header-allentown, .thank-you-hero-allentown, .not-found-hero-allentown) [class$='__content'],
+:where(.hero-allentown, .hero-trinity, .hero-todos-santos, .product-hero-allentown, .featured-page-header-allentown, .thank-you-hero-allentown, .not-found-hero-allentown) [class$='__header'] {
+  align-content: center;
+  padding-block: clamp(1rem, 3vw, 3rem);
+}
+
+:where(.read-more, .media-feature-list, .media-accordion-allentown, .media-fact-grid-allentown, .media-metrics-allentown, .process-story-allentown, .product-details-allentown, .facilities-overview-allentown, .support-contact-allentown) {
+  --kinekt-section-media-ratio: 4 / 5;
+}
+
+:where(.read-more, .media-feature-list, .media-accordion-allentown, .media-fact-grid-allentown, .media-metrics-allentown, .process-story-allentown, .product-details-allentown, .facilities-overview-allentown, .support-contact-allentown) [class$='__media'] {
+  align-self: stretch;
+}
+
+:where(.output-card-grid, .featured-insights-allentown, .insight-index-allentown, .battery-models-allentown, .product-options-allentown, .use-cases-allentown, .facilities-overview-allentown) {
+  --kinekt-section-card-media-ratio: 3 / 2;
+}
+
+:where(.output-card-grid, .featured-insights-allentown, .insight-index-allentown, .battery-models-allentown, .product-options-allentown, .use-cases-allentown, .facilities-overview-allentown) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--kinekt-section-card-min-width, 17rem)), 1fr));
+}
+
+:where(.comparison-overview-allentown, .density-comparison-allentown, .compatibility-specifications) {
+  --kinekt-section-reading-width: 34rem;
+}
+
+:where(.comparison-overview-allentown, .density-comparison-allentown) [class$='__table'] {
+  font-size: clamp(0.8125rem, 1.4vw, 1rem);
+}
+
+:where(.faq-allentown, .faq-index-allentown, .media-accordion-allentown, .product-details-allentown) details {
+  border-width: 0 0 var(--kinekt-component-border-width);
+  border-radius: 0;
+  background: transparent;
+}
+
+:where(.faq-allentown, .faq-index-allentown, .media-accordion-allentown, .product-details-allentown) [class$='__items'] {
+  gap: 0;
+  border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+@media (min-width: 50rem) {
+  :where([data-kinekt-section]) [class$='__header']:has(> [class$='__header-content']):has(> :is([class$='__actions'], [class$='__cta'])) {
+    grid-template-columns: minmax(0, var(--kinekt-component-reading-width)) auto;
+    justify-content: space-between;
+    column-gap: var(--kinekt-wireframe-editorial-gap);
+  }
+
+  :where(.output-card-grid, .featured-insights-allentown, .insight-index-allentown, .battery-models-allentown, .product-options-allentown, .use-cases-allentown, .facilities-overview-allentown) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) {
+    grid-template-columns: repeat(var(--kinekt-section-card-columns, 3), minmax(0, 1fr));
+  }
+}
+
+/* Hand-authored Allentown sections share the same layout contract as structural sections. */
+:where(.output-card-grid--allentown) {
+  --output-card-grid-card-gap: 1px;
+  --output-card-grid-card-padding: var(--kinekt-wireframe-card-padding);
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__container {
+  gap: var(--kinekt-wireframe-editorial-gap);
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__cards {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--output-card-grid-card-gap);
+  background: var(--kinekt-component-line);
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__card {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  min-height: 100%;
+  padding: var(--output-card-grid-card-padding);
+  background: var(--kinekt-component-canvas);
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__title {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  line-height: 1.04;
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__description {
+  color: var(--kinekt-component-muted);
+}
+
+:where(.media-feature-list--allentown) {
+  --media-feature-list-media-ratio: 4 / 5;
+  --media-feature-list-feature-space: 1.25rem;
+}
+
+:where(.media-feature-list--allentown) .media-feature-list__container {
+  gap: var(--kinekt-wireframe-editorial-gap);
+}
+
+:where(.media-feature-list--allentown) .media-feature-list__image {
+  aspect-ratio: var(--media-feature-list-media-ratio);
+  object-fit: cover;
+}
+
+:where(.media-feature-list--allentown) .media-feature-list__features {
+  gap: 0;
+  margin-top: clamp(2rem, 5vw, 4rem);
+  border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where(.media-feature-list--allentown) .media-feature-list__feature {
+  padding-block: var(--media-feature-list-feature-space);
+  border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where(.media-feature-list--allentown) .media-feature-list__feature-title {
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  line-height: 1.1;
+}
+
+:where(.media-feature-list--allentown) .media-feature-list__feature-description {
+  color: var(--kinekt-component-muted);
+}
+
+:where(.read-more--allentown) {
+  --read-more-media-ratio: 4 / 5;
+}
+
+:where(.read-more--allentown) .read-more__container {
+  gap: var(--kinekt-wireframe-editorial-gap);
+}
+
+:where(.read-more--allentown) .read-more__image {
+  aspect-ratio: var(--read-more-media-ratio);
+  object-fit: cover;
+}
+
+:where(.compatibility-specifications--allentown) {
+  --compatibility-specifications-platform-padding: var(--kinekt-wireframe-card-padding);
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__container {
+  gap: var(--kinekt-wireframe-editorial-gap);
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__platforms {
+  margin-top: 0;
+  padding: var(--compatibility-specifications-platform-padding);
+  border-left: 2px solid var(--kinekt-component-action);
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__platforms ul {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 50rem) {
+  :where(.output-card-grid--allentown) .output-card-grid__cards {
+    grid-template-columns: repeat(var(--output-card-grid-columns, 3), minmax(0, 1fr));
   }
 }

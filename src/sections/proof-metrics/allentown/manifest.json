@@ -6,7 +6,7 @@
   "slug": "proof-metrics-allentown",
   "title": "Proof Metrics Allentown",
   "description": "A reusable evidence section with a localized introduction, one or more result metrics, optional proof media, and a CTA callout.",
-  "category": "sections",
+  "category": "sections","tags":["metrics","social-proof"],
   "role": "proof-metrics",
   "variation": "allentown",
   "status": "planned",
@@ -15,7 +15,7 @@
     "nodeId": "5240:412607"
   },
   "fields": {
-    "theme": {"kind":"select","required":true,"localized":false,"options":["light","dark"],"description":"CMS-selected presentation setting passed to the renderer."},
+    "theme": {"kind":"select","required":true,"localized":false,"options":["light","semi-light","dark","semi-dark"],"description":"CMS-selected presentation setting passed to the renderer."},
     "intro": {
       "kind": "component",
       "componentId": "components/intro/allentown",
