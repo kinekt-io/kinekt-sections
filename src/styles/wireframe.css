@@ -241,7 +241,7 @@
 :where([data-kinekt-section]) [role='tabpanel'] { padding: var(--kinekt-component-gap); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); }
 
 :where([data-kinekt-section]) [data-kinekt-carousel-viewport] { overflow: hidden; }
-:where([data-kinekt-section]) [data-kinekt-carousel-container] { display: flex; gap: var(--kinekt-component-gap); }
+:where([data-kinekt-section]) ul[data-kinekt-carousel-container] { display: flex; gap: var(--kinekt-component-gap); }
 :where([data-kinekt-section]) [data-kinekt-carousel-slide] { flex: 0 0 min(100%, 30rem); }
 :where([data-kinekt-section]) [class$='-controls'] { display: flex; align-items: center; gap: 0.75rem; }
 :where([data-kinekt-section]) [class$='-controls'] p { margin: 0; color: var(--kinekt-component-muted); }

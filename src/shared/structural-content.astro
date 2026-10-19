@@ -23,7 +23,7 @@ const Heading = `h${Math.min(level, 4)}` as 'h2' | 'h3' | 'h4'
 const comparison = fields.columns?.kind === 'infoItems' && fields.rows?.kind === 'componentList'
 const columns = Array.isArray(content.columns) ? content.columns : []
 const rows = Array.isArray(content.rows) ? content.rows : []
-const accordionRoles = new Set(['accordion-item', 'product-detail-item', 'step'])
+const accordionRoles = new Set(['accordion-item', 'faq-item', 'product-detail-item', 'step'])
 
 function classFor(key: string) {
   return `${block}__${key.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/[_\s]+/g, '-').toLowerCase()}`
