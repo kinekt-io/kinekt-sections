@@ -1,34 +1,23 @@
-export interface HeroImage {
-  url: string
-  alt: string
-  width: number
-  height: number
-  /** Static release-local replacement used only when the primary media URL fails. */
-  fallbackUrl?: string
-}
+import type { CtaGroup, Media, SectionIntro } from '../../../shared/content.js'
 
 export interface HeroContent {
-  eyebrow: string
-  title: string
-  highlight?: string | null
-  titleSuffix?: string | null
-  description: string
-  cta: { label: string; href: string }
-  image: HeroImage
-  mobileImage?: HeroImage | null
+  intro: SectionIntro
+  ctas?: CtaGroup
+  image: Media
+  mobileImage?: Media | null
 }
 
-// Payload drafts may omit fields or contain null; the field value types stay shared.
 type DraftFields<T> = { [Field in keyof T]?: T[Field] | null }
 type PayloadID = string | number
 
-export type PayloadHeroMedia = DraftFields<HeroImage> & { id?: PayloadID }
+export type PayloadHeroMedia = DraftFields<Media> & { id?: PayloadID }
 
-export interface PayloadHeroDocument extends DraftFields<Omit<HeroContent, 'cta' | 'image' | 'mobileImage'>> {
+export interface PayloadHeroDocument extends DraftFields<Omit<HeroContent, 'intro' | 'ctas' | 'image' | 'mobileImage'>> {
   id?: PayloadID
   blockName?: string | null
   blockType?: string
-  cta?: DraftFields<HeroContent['cta']> | null
+  intro?: { accentHeading?: string | null; heading?: string | null; description?: unknown } | null
+  ctas?: unknown
   image?: PayloadHeroMedia | PayloadID | null
   mobileImage?: PayloadHeroMedia | PayloadID | null
 }
