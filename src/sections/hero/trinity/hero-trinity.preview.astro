@@ -4,9 +4,12 @@ import HeroTrinity from './hero-trinity.astro'
 ---
 
 <HeroTrinity
-  eyebrow="Chapeau here"
-  title="About Tulip"
-  description="This is just placeholder text. Don’t be alarmed, this is just here to fill up space since your finalized copy isn’t ready yet. Once we have your content finalized."
+  intro={{
+    accentHeading: 'Chapeau here',
+    heading: 'About Tulip',
+    description: 'This is just placeholder text. Don’t be alarmed, this is just here to fill up space since your finalized copy isn’t ready yet. Once we have your content finalized.',
+  }}
+  theme="dark"
   image={{
     url: placeholder.src,
     alt: '',

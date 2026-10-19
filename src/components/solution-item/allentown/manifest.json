@@ -1,0 +1,27 @@
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "components/solution-item/allentown",
+  "slug": "solution-item-allentown",
+  "title": "Solution Item Allentown",
+  "description": "A reusable solution item with per-locale media, required copy, optional label and optional CTA.",
+  "category": "components",
+  "role": "solution-item",
+  "variation": "allentown",
+  "status": "planned",
+  "figma": {
+    "url": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4811-276485&t=mG3L6xlBzomA03GY-11",
+    "nodeId": "4811:276485"
+  },
+  "fields": {
+    "image": { "kind": "media", "required": true, "localized": true },
+    "accentHeading": { "kind": "text", "required": false, "localized": true },
+    "heading": { "kind": "text", "required": true, "localized": true },
+    "label": { "kind": "component", "componentId": "atoms/label/allentown", "required": false, "localized": true },
+    "description": { "kind": "textarea", "required": true, "localized": true },
+    "cta": { "kind": "component", "componentId": "controls/button/allentown", "required": false, "localized": true }
+  },
+  "runtimeProps": {
+    "headingLevel": { "kind": "headingLevel", "source": "renderer" }
+  }
+}

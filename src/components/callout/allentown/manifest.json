@@ -1,0 +1,20 @@
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "components/callout/allentown",
+  "slug": "callout-allentown",
+  "title": "Callout Allentown",
+  "description": "A reusable CTA callout that combines an Intro Block with one required action control.",
+  "category": "components",
+  "role": "callout",
+  "variation": "allentown",
+  "status": "planned",
+  "figma": {
+    "url": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4811-276523&t=mG3L6xlBzomA03GY-11",
+    "nodeId": "4811:276523"
+  },
+  "fields": {
+    "intro": { "kind": "component", "componentId": "components/intro/allentown", "required": true, "localized": true },
+    "cta": { "kind": "component", "componentId": "controls/button/allentown", "required": true, "localized": true }
+  }
+}

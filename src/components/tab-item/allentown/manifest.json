@@ -1,0 +1,31 @@
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "components/tab-item/allentown",
+  "slug": "tab-item-allentown",
+  "title": "Tab Item Allentown",
+  "description": "A localized tab with a label and at least a description or selected Form record.",
+  "category": "components",
+  "role": "tab-item",
+  "variation": "allentown",
+  "status": "planned",
+  "requiresAnyOf": ["description", "form"],
+  "fields": {
+    "label": {
+      "kind": "text",
+      "required": true,
+      "localized": true
+    },
+    "description": {
+      "kind": "richText",
+      "required": false,
+      "localized": true
+    },
+    "form": {
+      "kind": "formReference",
+      "required": false,
+      "localized": true,
+      "description": "The selected Form record owns actions, inputs, validation, submission, success behavior and optional footnote."
+    }
+  }
+}

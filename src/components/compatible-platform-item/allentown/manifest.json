@@ -1,0 +1,25 @@
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "components/compatible-platform-item/allentown",
+  "slug": "compatible-platform-item-allentown",
+  "title": "Compatible Platform Item Allentown",
+  "description": "A localized free-text platform name confirmed as compatible.",
+  "category": "components",
+  "role": "compatible-platform-item",
+  "variation": "allentown",
+  "status": "planned",
+  "fields": {
+    "name": {
+      "kind": "text",
+      "required": true,
+      "localized": true
+    }
+  },
+  "runtimeProps": {
+    "statusIcon": {
+      "kind": "checkmark",
+      "source": "renderer"
+    }
+  }
+}

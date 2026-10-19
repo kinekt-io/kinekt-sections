@@ -26,6 +26,8 @@ async function discover(directory) {
     const relative = path.relative(source, filename).split(path.sep).join('/')
     const parts = relative.split('/')
 
+    if (parts[0] === 'shared') continue
+
     if (entry.name.endsWith('.preview.astro')) {
       if (parts.length < 2) throw new Error(`Place ${relative} in a category folder inside src/.`)
       const component = componentFor(relative)
@@ -58,27 +60,52 @@ async function discover(directory) {
   }
 }
 
-async function componentDescription(directory) {
+function requireString(value, field, manifestPath) {
+  if (typeof value !== 'string' || !value) throw new Error(`${manifestPath} requires a non-empty ${field}.`)
+  return value
+}
+
+async function componentManifest(directory) {
+  const manifestPath = path.join(source, directory, 'manifest.json')
+  let metadata
   try {
-    const markdown = await readFile(path.join(source, directory, 'README.md'), 'utf8')
-    const lines = markdown.split(/\r?\n/).map((line) => line.trim())
-    const titleIndex = lines.findIndex((line) => /^#\s+/.test(line))
-    const title = lines[titleIndex]?.replace(/^#\s+/, '')
-    const description = lines.slice(titleIndex + 1).find(
-      (line) => line && !line.startsWith('#') && !line.startsWith('```'),
-    )
-    const figmaIndex = lines.findIndex((line) => /^##\s+Figma\s*$/i.test(line))
-    const figmaSection = figmaIndex === -1 ? [] : lines.slice(figmaIndex + 1)
-    const nextHeading = figmaSection.findIndex((line) => /^##\s+/.test(line))
-    const figmaLine = figmaSection
-      .slice(0, nextHeading === -1 ? undefined : nextHeading)
-      .find((line) => /^(?:\[[^\]]+\]\()?(https:\/\/(?:www\.)?figma\.com\/[^\s)<]+)\)?$/i.test(line))
-    const figmaUrl = figmaLine?.match(/https:\/\/(?:www\.)?figma\.com\/[^\s)<]+/i)?.[0] ?? null
-    return { title, description, figmaUrl }
+    metadata = JSON.parse(await readFile(manifestPath, 'utf8'))
   } catch (error) {
-    if (error?.code === 'ENOENT') return {}
+    if (error?.code === 'ENOENT') throw new Error(`Missing component manifest: ${manifestPath}`)
     throw error
   }
+
+  if (!metadata || typeof metadata !== 'object' || Array.isArray(metadata)) {
+    throw new Error(`${manifestPath} must contain a JSON object.`)
+  }
+  if (metadata.$schema !== 'https://kinekt.io/schemas/component-manifest.schema.json') {
+    throw new Error(`${manifestPath} must declare the component manifest schema.`)
+  }
+  if (metadata.schemaVersion !== 1) throw new Error(`${manifestPath} must declare schemaVersion 1.`)
+
+  const parts = directory.split('/')
+  const expected = {
+    id: directory,
+    category: parts[0],
+    role: parts[1] ?? null,
+    variation: parts.slice(2).join('-') || null,
+  }
+  for (const [field, value] of Object.entries(expected)) {
+    if (metadata[field] !== value) throw new Error(`${manifestPath} ${field} must equal ${JSON.stringify(value)}.`)
+  }
+  requireString(metadata.slug, 'slug', manifestPath)
+  requireString(metadata.title, 'title', manifestPath)
+  requireString(metadata.description, 'description', manifestPath)
+  if (!['planned', 'released', 'deprecated'].includes(metadata.status)) {
+    throw new Error(`${manifestPath} status must be planned, released, or deprecated.`)
+  }
+  if (!metadata.figma || typeof metadata.figma !== 'object' || !/^https:\/\/(?:www\.)?figma\.com\//.test(metadata.figma.url)) {
+    throw new Error(`${manifestPath} requires a Figma URL.`)
+  }
+  if (!metadata.fields || typeof metadata.fields !== 'object' || Array.isArray(metadata.fields)) {
+    throw new Error(`${manifestPath} requires a fields object.`)
+  }
+  return metadata
 }
 
 await discover(source)
@@ -94,16 +121,20 @@ if (updated !== original) await writeFile(manifestPath, updated)
 const catalogue = []
 for (const component of [...components.values()].sort((a, b) => a.directory.localeCompare(b.directory))) {
   if (!Object.keys(component.entries).length) continue
-  const parts = component.directory.split('/')
-  const metadata = await componentDescription(component.directory)
+  const metadata = await componentManifest(component.directory)
   catalogue.push({
-    id: component.directory,
-    category: parts[0],
-    role: parts[1] ?? null,
-    variation: parts.slice(2).join('-') || null,
-    title: metadata.title ?? component.directory.split('/').at(-1),
-    description: metadata.description ?? 'No component README.md yet.',
-    figmaUrl: metadata.figmaUrl ?? null,
+    id: metadata.id,
+    slug: metadata.slug,
+    category: metadata.category,
+    role: metadata.role,
+    variation: metadata.variation,
+    title: metadata.title,
+    description: metadata.description,
+    status: metadata.status,
+    figmaUrl: metadata.figma.url,
+    variants: metadata.variants ?? {},
+    fields: metadata.fields,
+    runtimeProps: metadata.runtimeProps ?? {},
     previewSource: component.previewSource ?? null,
     entries: Object.fromEntries(Object.entries(component.entries).map(([kind, entry]) => [kind, `${manifest.name}/${entry.importPath}`])),
   })

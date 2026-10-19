@@ -1,0 +1,30 @@
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "components/compatibility-specification-item/allentown",
+  "slug": "compatibility-specification-item-allentown",
+  "title": "Compatibility Specification Item Allentown",
+  "description": "A localized label and value pair for a compatibility specification.",
+  "category": "components",
+  "role": "compatibility-specification-item",
+  "variation": "allentown",
+  "status": "planned",
+  "fields": {
+    "label": {
+      "kind": "text",
+      "required": true,
+      "localized": true
+    },
+    "value": {
+      "kind": "text",
+      "required": true,
+      "localized": true
+    }
+  },
+  "runtimeProps": {
+    "alternatingRowStyle": {
+      "kind": "rendererDerived",
+      "source": "renderer"
+    }
+  }
+}

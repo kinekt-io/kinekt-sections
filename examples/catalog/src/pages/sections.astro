@@ -1,0 +1,57 @@
+---
+import components from '../generated/components.json'
+
+const previewModules = import.meta.glob('@package-src/**/*.preview.astro', { eager: true })
+const sections = components
+  .filter((component) => component.category === 'sections' && component.previewSource)
+  .map((component) => {
+    const module = Object.entries(previewModules).find(([path]) => path.endsWith(component.previewSource))?.[1]
+    if (!module) throw new Error(`No preview module found for ${component.id}.`)
+    return { component, Preview: (module as { default: any }).default }
+  })
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Rendered structural preview of every Kinekt section." />
+    <title>All sections · Kinekt components</title>
+  </head>
+  <body>
+    <header class="masthead">
+      <a href={import.meta.env.BASE_URL}>← Component catalogue</a>
+      <p>Structural beta preview</p>
+      <h1>All sections</h1>
+      <p>{sections.length} generic section contracts rendered in catalogue order. Tulip-only sections are intentionally absent.</p>
+    </header>
+    <main>
+      {sections.map(({ component, Preview }) => (
+        <article class="section-preview" id={component.slug}>
+          <header class="section-preview__meta">
+            <p>beta-{component.slug}</p>
+            <h2>{component.title}</h2>
+            <a href={`components/${component.id}/`}>Open isolated preview →</a>
+          </header>
+          <Preview />
+        </article>
+      ))}
+    </main>
+  </body>
+</html>
+
+<style>
+  :root { color: #12363a; background: #f3f3ee; font-family: system-ui, sans-serif; }
+  body { margin: 0; }
+  .masthead { padding: clamp(2rem, 6vw, 5rem); color: #e8f2f1; background: #003d47; }
+  .masthead a { color: inherit; font-weight: 700; }
+  .masthead p { max-width: 44rem; line-height: 1.5; }
+  .masthead h1 { margin: 1.25rem 0 0.75rem; font-size: clamp(2.5rem, 7vw, 5rem); letter-spacing: -0.06em; }
+  main { display: grid; gap: 1px; background: #c6d2ce; }
+  .section-preview { padding: clamp(1.5rem, 4vw, 3.5rem); background: #fff; }
+  .section-preview__meta { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem 2rem; margin-bottom: 2rem; border-bottom: 1px solid #dce4df; }
+  .section-preview__meta p { margin: 0; color: #46656a; font: 600 0.75rem/1.2 ui-monospace, monospace; }
+  .section-preview__meta h2 { flex-basis: 100%; order: -1; margin: 0; font-size: clamp(1.75rem, 4vw, 3rem); letter-spacing: -0.05em; }
+  .section-preview__meta a { color: inherit; font-weight: 700; }
+</style>

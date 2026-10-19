@@ -1,0 +1,22 @@
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "controls/button/allentown",
+  "slug": "button-allentown",
+  "title": "Button Allentown",
+  "description": "A reusable action control with localised CTA data and renderer-owned primary, secondary or text presentation.",
+  "category": "controls",
+  "role": "button",
+  "variation": "allentown",
+  "status": "planned",
+  "figma": {
+    "url": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4811-276496&t=mG3L6xlBzomA03GY-11",
+    "nodeId": "4811:276496"
+  },
+  "fields": {
+    "cta": { "kind": "cta", "required": true, "localized": true }
+  },
+  "runtimeProps": {
+    "style": { "kind": "buttonStyle", "source": "renderer" }
+  }
+}

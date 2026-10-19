@@ -1,0 +1,32 @@
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "components/compatible-platform-list/allentown",
+  "slug": "compatible-platform-list-allentown",
+  "title": "Compatible Platform List Allentown",
+  "description": "An optional localized compatible-platform block with its required heading and one or more platform names.",
+  "category": "components",
+  "role": "compatible-platform-list",
+  "variation": "allentown",
+  "status": "planned",
+  "fields": {
+    "heading": {
+      "kind": "text",
+      "required": true,
+      "localized": true
+    },
+    "items": {
+      "kind": "componentList",
+      "componentId": "components/compatible-platform-item/allentown",
+      "required": true,
+      "localized": true,
+      "minItems": 1
+    }
+  },
+  "runtimeProps": {
+    "flightPathDecoration": {
+      "kind": "rendererDerived",
+      "source": "renderer"
+    }
+  }
+}

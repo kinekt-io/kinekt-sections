@@ -1,0 +1,66 @@
+import type { Block, CollectionSlug } from 'payload'
+
+type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'insightSourceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
+
+interface ManifestField {
+  kind: FieldKind
+  required: boolean
+  localized: boolean
+  options?: readonly string[]
+  minItems?: number
+}
+
+interface SectionManifest {
+  slug: string
+  title: string
+  fields: Record<string, ManifestField>
+}
+
+export type ManifestSectionDocument = Record<string, unknown> & { id?: string }
+
+export interface CreateManifestBlockOptions {
+  mediaCollection?: CollectionSlug
+  formCollection?: CollectionSlug
+}
+
+function localized(field: ManifestField) {
+  return field.localized ? { localized: true } : {}
+}
+
+function fieldFor(name: string, field: ManifestField, options: Required<CreateManifestBlockOptions>) {
+  const common = { name, required: field.required, ...localized(field) }
+
+  switch (field.kind) {
+    case 'text': return { ...common, type: 'text' as const }
+    case 'textarea': return { ...common, type: 'textarea' as const }
+    case 'richText': return { ...common, type: 'richText' as const }
+    case 'dateTime': return { ...common, type: 'date' as const, admin: { date: { pickerAppearance: 'dayAndTime' as const } } }
+    case 'select':
+    case 'theme': return { ...common, type: 'select' as const, options: (field.options ?? ['light', 'dark']).map((value) => ({ label: value, value })) }
+    case 'media':
+    case 'video': return { ...common, type: 'upload' as const, relationTo: options.mediaCollection }
+    case 'mediaList': return { ...common, type: 'array' as const, minRows: field.minItems, fields: [{ name: 'media', type: 'upload' as const, relationTo: options.mediaCollection, required: true }] }
+    case 'cta': return { ...common, type: 'group' as const, fields: [{ name: 'label', type: 'text' as const, required: true }, { name: 'href', type: 'text' as const, required: true }] }
+    case 'ctaGroup': return { ...common, type: 'group' as const, fields: ['primary', 'secondary'].map((name) => ({ name, type: 'group' as const, fields: [{ name: 'label', type: 'text' as const }, { name: 'href', type: 'text' as const }] })) }
+    case 'formReference': return { ...common, type: 'relationship' as const, relationTo: options.formCollection }
+    default: return { ...common, type: 'json' as const }
+  }
+}
+
+export function createManifestBlock(manifest: SectionManifest, input: CreateManifestBlockOptions = {}): Block {
+  const options: Required<CreateManifestBlockOptions> = {
+    mediaCollection: input.mediaCollection ?? 'media',
+    formCollection: input.formCollection ?? 'forms',
+  }
+
+  return {
+    slug: `beta-${manifest.slug}`,
+    interfaceName: `Beta${manifest.slug.split('-').map((part) => part[0]?.toUpperCase() + part.slice(1)).join('')}`,
+    labels: { singular: `BETA — ${manifest.title}`, plural: `BETA — ${manifest.title} blocks` },
+    fields: Object.entries(manifest.fields).map(([name, field]) => fieldFor(name, field, options)) as Block['fields'],
+  }
+}
+
+export function manifestToProps<T extends ManifestSectionDocument>(data: T): T {
+  return data
+}

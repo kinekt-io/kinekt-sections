@@ -3,11 +3,14 @@ import HeroAllentown from './hero-allentown.astro'
 ---
 
 <HeroAllentown
-  eyebrow="B2B marketing for complex technology"
-  title={'Ready to give\nyour product the'}
+  intro={{
+    accentHeading: 'B2B marketing for complex technology',
+    heading: 'Ready to give your product the',
+    description: 'You take your product seriously. We give your marketing the same attention: understanding what works, deciding what to build and making everything work together to help you sell.',
+  }}
+  theme="light"
   highlight="market it deserves"
   titleSuffix="?"
-  description="You take your product seriously. We give your marketing the same attention: understanding what works, deciding what to build and making everything work together to help you sell."
   cta={{ label: 'See how we do it', href: 'https://kinekt.io/our-methods/' }}
   image={{
     url: 'https://kinekt.io/wp-content/uploads/260918_kinekt_keyvisual_home-960x800.png',
