@@ -55,7 +55,7 @@ function collectCtas(value: unknown): Required<Cta>[] {
   })
 }
 
-const { block, id, headingLevel = 'h2', intro, ctas, media, fields, content: explicitContent, pagefindUrl, pagefindFilters, carouselControlStyle = 'icon', carouselControls = 'next', ...implicitContent } = Astro.props
+const { block, id, headingLevel = 'h2', intro, ctas, media, fields, content: explicitContent, pagefindUrl, pagefindFilters, carouselControlStyle = 'icon', carouselControls = 'previous-next', ...implicitContent } = Astro.props
 const content = explicitContent ?? implicitContent
 const theme = content.theme === 'dark' ? 'dark' : 'light'
 const actions = collectCtas(ctas)
