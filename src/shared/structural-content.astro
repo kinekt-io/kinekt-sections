@@ -103,9 +103,11 @@ function identifier(value: string) {
     return <ul class={className} data-kinekt-disclosure-group>
       {value.map((item, index) => {
         const record = item as Record<string, unknown>
-        const title = text(record.title) || text(record.label) || `Item ${index + 1}`
+        const title = field.role === 'faq-item'
+          ? text(record.question)
+          : text(record.title) || text(record.label) || `Item ${index + 1}`
         const subtitle = text(record.subtitle)
-        return <li class={`${className}-item`}><details open={index === 0} data-kinekt-disclosure><summary><span class={`${className}-title`}>{title}</span>{subtitle && <span class={`${className}-subtitle`}>{subtitle}</span>}</summary><div class={`${className}-body`}><Astro.self block={block} instanceId={`${instanceId}-${key}-${index}`} content={record} fields={field.fields ?? {}} omit={['title', 'label', 'subtitle', 'marker', 'detailHeading']} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></div></details></li>
+        return <li class={`${className}-item`}><details open={index === 0} data-kinekt-disclosure><summary><span class={`${className}-title`}>{title}</span>{subtitle && <span class={`${className}-subtitle`}>{subtitle}</span>}</summary><div class={`${className}-body`}><Astro.self block={block} instanceId={`${instanceId}-${key}-${index}`} content={record} fields={field.fields ?? {}} omit={['title', 'label', 'subtitle', 'marker', 'detailHeading', 'question']} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></div></details></li>
       })}
     </ul>
   }

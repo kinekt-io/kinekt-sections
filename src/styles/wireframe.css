@@ -144,10 +144,6 @@
 
 :where([data-kinekt-section]) :is(ul, ol)[class*='__'] > li {
   min-width: 0;
-  padding: var(--kinekt-component-gap);
-  border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
-  border-radius: var(--kinekt-component-radius);
-  background: var(--kinekt-component-surface);
 }
 
 :where([data-kinekt-section]) :is(ul, ol):not([class]) {
@@ -156,13 +152,17 @@
   padding-left: 1.25rem;
 }
 
-:where([data-kinekt-section]) :is([class$='__cards'], [class$='__insight-sources'], [class$='__items']) {
+:where([data-kinekt-section]) :is([class$='__cards'], [class$='__insight-sources']) {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
 }
 
-:where([data-kinekt-section]) article {
+:where([data-kinekt-section]) li > article {
   display: grid;
   gap: 0.75rem;
+  padding: var(--kinekt-component-gap);
+  border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+  border-radius: var(--kinekt-component-radius);
+  background: var(--kinekt-component-surface);
 }
 
 :where([data-kinekt-section]) table {
