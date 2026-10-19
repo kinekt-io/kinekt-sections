@@ -1,23 +1,29 @@
 ---
 interface Field {
   kind: string
+  id?: string
+  role?: string | null
   fields?: Record<string, Field>
 }
 
 interface Props {
   block: string
+  instanceId: string
   content: Record<string, unknown>
   fields: Record<string, Field>
+  pagefindUrl?: string
+  pagefindFilters?: Record<string, unknown>
   omit?: string[]
   level?: 2 | 3 | 4
 }
 
-const { block, content, fields, omit = [], level = 2 } = Astro.props
+const { block, instanceId, content, fields, pagefindUrl = '/pagefind/pagefind.js', pagefindFilters, omit = [], level = 2 } = Astro.props
 const entries = Object.entries(fields).filter(([key]) => key in content && !omit.includes(key))
 const Heading = `h${Math.min(level, 4)}` as 'h2' | 'h3' | 'h4'
 const comparison = fields.columns?.kind === 'infoItems' && fields.rows?.kind === 'componentList'
 const columns = Array.isArray(content.columns) ? content.columns : []
 const rows = Array.isArray(content.rows) ? content.rows : []
+const accordionRoles = new Set(['accordion-item', 'product-detail-item', 'step'])
 
 function classFor(key: string) {
   return `${block}__${key.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/[_\s]+/g, '-').toLowerCase()}`
@@ -29,6 +35,18 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function isHeading(key: string) {
   return /(heading|title|name)$/i.test(key)
+}
+
+function text(value: unknown) {
+  return typeof value === 'string' || typeof value === 'number' ? String(value) : ''
+}
+
+function values(value: unknown) {
+  return Array.isArray(value) ? value.map(text).filter(Boolean) : text(value) ? [text(value)] : []
+}
+
+function identifier(value: string) {
+  return value.replace(/[^a-zA-Z0-9_-]/g, '-')
 }
 ---
 {comparison ? (
@@ -44,12 +62,56 @@ function isHeading(key: string) {
   const value = content[key]
   const className = classFor(key)
 
+  if (field.kind === 'component' && field.role === 'case-study-carousel' && isRecord(value)) {
+    const items = Array.isArray(value.items) ? value.items : []
+    const itemFields = field.fields?.items?.fields ?? {}
+    return <div class={className} data-kinekt-carousel role="region" aria-label="Case studies carousel">
+      <div class={`${className}-viewport`} data-kinekt-carousel-viewport>
+        <ul class={`${className}-slides`} data-kinekt-carousel-container>
+          {items.map((item, index) => <li class={`${className}-slide`} data-kinekt-carousel-slide><article><Astro.self block={block} instanceId={`${instanceId}-${key}-${index}`} content={item as Record<string, unknown>} fields={itemFields} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></article></li>)}
+        </ul>
+      </div>
+      <div class={`${className}-controls`}>
+        <button type="button" data-kinekt-carousel-previous aria-label="Previous case study">Previous</button>
+        <p data-kinekt-carousel-status aria-live="polite"></p>
+        <button type="button" data-kinekt-carousel-next aria-label="Next case study">Next</button>
+      </div>
+    </div>
+  }
+
   if (field.kind === 'component' && isRecord(value)) {
-    return <div class={className}><Astro.self block={block} content={value} fields={field.fields ?? {}} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></div>
+    return <div class={className}><Astro.self block={block} instanceId={`${instanceId}-${key}`} content={value} fields={field.fields ?? {}} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></div>
+  }
+
+  if (field.kind === 'componentList' && field.role === 'tab-item' && Array.isArray(value)) {
+    return <div class={className} data-kinekt-tabs>
+      <div class={`${className}-tablist`} role="tablist" aria-label="Section tabs">
+        {value.map((item, index) => {
+          const record = item as Record<string, unknown>
+          const id = `${identifier(instanceId)}-${key}-${index}`
+          return <button id={`${id}-tab`} class={`${className}-tab`} type="button" role="tab" aria-controls={`${id}-panel`} aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1}>{text(record.label) || `Tab ${index + 1}`}</button>
+        })}
+      </div>
+      {value.map((item, index) => {
+        const id = `${identifier(instanceId)}-${key}-${index}`
+        return <div id={`${id}-panel`} class={`${className}-panel`} role="tabpanel" aria-labelledby={`${id}-tab`} hidden={index !== 0}><Astro.self block={block} instanceId={`${id}-panel`} content={item as Record<string, unknown>} fields={field.fields ?? {}} omit={['label']} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></div>
+      })}
+    </div>
+  }
+
+  if (field.kind === 'componentList' && accordionRoles.has(field.role ?? '') && Array.isArray(value)) {
+    return <ul class={className} data-kinekt-disclosure-group>
+      {value.map((item, index) => {
+        const record = item as Record<string, unknown>
+        const title = text(record.title) || text(record.label) || `Item ${index + 1}`
+        const subtitle = text(record.subtitle)
+        return <li class={`${className}-item`}><details open={index === 0} data-kinekt-disclosure><summary><span class={`${className}-title`}>{title}</span>{subtitle && <span class={`${className}-subtitle`}>{subtitle}</span>}</summary><div class={`${className}-body`}><Astro.self block={block} instanceId={`${instanceId}-${key}-${index}`} content={record} fields={field.fields ?? {}} omit={['title', 'label', 'subtitle', 'marker', 'detailHeading']} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></div></details></li>
+      })}
+    </ul>
   }
 
   if (field.kind === 'componentList' && Array.isArray(value)) {
-    return <ul class={className}>{value.map((item) => <li class={`${className}-item`}><article><Astro.self block={block} content={item as Record<string, unknown>} fields={field.fields ?? {}} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></article></li>)}</ul>
+    return <ul class={className}>{value.map((item, index) => <li class={`${className}-item`}><article><Astro.self block={block} instanceId={`${instanceId}-${key}-${index}`} content={item as Record<string, unknown>} fields={field.fields ?? {}} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></article></li>)}</ul>
   }
 
   if ((field.kind === 'media' || field.kind === 'video') && isRecord(value) && typeof value.url === 'string') {
@@ -58,6 +120,28 @@ function isHeading(key: string) {
 
   if (field.kind === 'mediaList' && Array.isArray(value)) {
     return <ul class={className}>{value.map((media) => isRecord(media) && typeof media.url === 'string' && <li class={`${className}-item`}><picture><img src={media.url} alt={typeof media.alt === 'string' ? media.alt : ''} width={typeof media.width === 'number' ? media.width : undefined} height={typeof media.height === 'number' ? media.height : undefined} /></picture></li>)}</ul>
+  }
+
+  if (field.kind === 'insightSourceList' && Array.isArray(value) && block.includes('insight-index')) {
+    return <div class={className} data-kinekt-search-grid data-kinekt-pagefind-url={pagefindUrl} data-kinekt-pagefind-filters={pagefindFilters ? JSON.stringify(pagefindFilters) : undefined}>
+      <form class={`${className}-search`} role="search" data-kinekt-search-form>
+        <label>Search insights <input type="search" name="query" data-kinekt-search-query autocomplete="off" /></label>
+        <label>Type <select name="type" data-kinekt-search-facet="type"><option value="">All types</option>{[...new Set(value.map((item) => text((item as Record<string, unknown>).type) || 'Article'))].map((type) => <option value={type}>{type}</option>)}</select></label>
+        <label>Subject <select name="subject" data-kinekt-search-facet="subject"><option value="">All subjects</option>{[...new Set(value.flatMap((item) => values((item as Record<string, unknown>).subjects).length ? values((item as Record<string, unknown>).subjects) : ['General']))].map((subject) => <option value={subject}>{subject}</option>)}</select></label>
+        <button type="submit">Search</button>
+      </form>
+      <p class={`${className}-status`} data-kinekt-search-status aria-live="polite"></p>
+      <ul class={`${className}-results`} data-kinekt-search-results>
+        {value.map((insight) => {
+          const item = insight as Record<string, unknown>
+          const image = isRecord(item.image) ? item.image : null
+          const type = text(item.type) || 'Article'
+          const subjects = values(item.subjects).length ? values(item.subjects) : ['General']
+          const searchText = [item.title, item.excerpt, type, ...subjects].map(text).join(' ').toLowerCase()
+          return <li class={`${className}-item`} data-kinekt-search-item data-kinekt-search-text={searchText} data-kinekt-search-type={type} data-kinekt-search-subjects={subjects.join('|')}><article>{image && typeof image.url === 'string' && <picture><img src={image.url} alt={typeof image.alt === 'string' ? image.alt : ''} width={typeof image.width === 'number' ? image.width : undefined} height={typeof image.height === 'number' ? image.height : undefined} /></picture>}<p>{type} · {String(item.publishedAt ?? '')}</p><h3>{String(item.title ?? '')}</h3><p>{String(item.excerpt ?? '')}</p>{typeof item.href === 'string' && <a href={item.href}>Read insight</a>}</article></li>
+        })}
+      </ul>
+    </div>
   }
 
   if (field.kind === 'insightSourceList' && Array.isArray(value)) {
@@ -94,3 +178,9 @@ function isHeading(key: string) {
 
   return null
 })}
+
+<script>
+  import { initializeKinektInteractions } from './interactions'
+
+  initializeKinektInteractions()
+</script>

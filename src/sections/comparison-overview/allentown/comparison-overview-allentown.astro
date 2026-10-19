@@ -3,5 +3,108 @@
 import StructuralSection from '../../../shared/structural-section.astro'
 
 const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "introCta": {
+    "kind": "component",
+    "id": "controls/button/allentown",
+    "role": "button",
+    "fields": {
+      "cta": {
+        "kind": "cta"
+      }
+    }
+  },
+  "comparison": {
+    "kind": "component",
+    "id": "patterns/comparison-table/allentown",
+    "role": "comparison-table",
+    "fields": {
+      "columns": {
+        "kind": "infoItems"
+      },
+      "rows": {
+        "kind": "componentList",
+        "id": "components/comparison-row/allentown",
+        "role": "comparison-row",
+        "fields": {
+          "feature": {
+            "kind": "text"
+          },
+          "cells": {
+            "kind": "componentList",
+            "id": "components/comparison-cell/allentown",
+            "role": "comparison-cell",
+            "fields": {
+              "type": {
+                "kind": "select"
+              },
+              "text": {
+                "kind": "text"
+              },
+              "status": {
+                "kind": "select"
+              },
+              "icon": {
+                "kind": "text"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "callout": {
+    "kind": "component",
+    "id": "components/callout/allentown",
+    "role": "callout",
+    "fields": {
+      "intro": {
+        "kind": "component",
+        "id": "components/intro/allentown",
+        "role": "intro",
+        "fields": {
+          "accentHeading": {
+            "kind": "text"
+          },
+          "heading": {
+            "kind": "text"
+          },
+          "description": {
+            "kind": "richText"
+          }
+        }
+      },
+      "cta": {
+        "kind": "component",
+        "id": "controls/button/allentown",
+        "role": "button",
+        "fields": {
+          "cta": {
+            "kind": "cta"
+          }
+        }
+      }
+    }
+  }
+}
 ---
-<StructuralSection block="beta-comparison-overview-allentown" {...props} />
+<StructuralSection block="beta-comparison-overview-allentown" fields={fields} {...props} />

@@ -3,5 +3,59 @@
 import StructuralSection from '../../../shared/structural-section.astro'
 
 const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "callout": {
+    "kind": "component",
+    "id": "components/callout/allentown",
+    "role": "callout",
+    "fields": {
+      "intro": {
+        "kind": "component",
+        "id": "components/intro/allentown",
+        "role": "intro",
+        "fields": {
+          "accentHeading": {
+            "kind": "text"
+          },
+          "heading": {
+            "kind": "text"
+          },
+          "description": {
+            "kind": "richText"
+          }
+        }
+      },
+      "cta": {
+        "kind": "component",
+        "id": "controls/button/allentown",
+        "role": "button",
+        "fields": {
+          "cta": {
+            "kind": "cta"
+          }
+        }
+      }
+    }
+  }
+}
 ---
-<StructuralSection block="beta-faq-index-allentown" {...props} />
+<StructuralSection block="beta-faq-index-allentown" fields={fields} {...props} />

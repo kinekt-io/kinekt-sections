@@ -3,5 +3,54 @@
 import StructuralSection from '../../../shared/structural-section.astro'
 
 const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "ctas": {
+    "kind": "ctaGroup"
+  },
+  "media": {
+    "kind": "media"
+  },
+  "items": {
+    "kind": "componentList",
+    "id": "components/accordion-item/allentown",
+    "role": "accordion-item",
+    "fields": {
+      "markerType": {
+        "kind": "select"
+      },
+      "icon": {
+        "kind": "text"
+      },
+      "title": {
+        "kind": "text"
+      },
+      "subtitle": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  }
+}
 ---
-<StructuralSection block="beta-media-accordion-allentown" {...props} />
+<StructuralSection block="beta-media-accordion-allentown" fields={fields} {...props} />

@@ -63,7 +63,11 @@ function previewFields(manifest, depth = 0) {
     const child = field.componentId ? manifests.get(field.componentId) : null
     return [key, {
       kind: field.kind,
-      ...(child && depth < 4 ? { fields: previewFields(child, depth + 1) } : {}),
+      ...(child && {
+        id: child.id,
+        role: child.role,
+        ...(depth < 4 ? { fields: previewFields(child, depth + 1) } : {}),
+      }),
     }]
   }))
 }
@@ -94,7 +98,7 @@ for (const directory of await manifestDirectories(sections)) {
   const previewCtas = previewContent.ctas ?? previewContent.ctaGroup ?? (previewContent.cta ? { primary: previewContent.cta } : undefined)
   const previewMedia = previewContent.media ?? previewContent.image ?? previewContent.heroMedia
 
-  await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\n---\n<StructuralSection block=${JSON.stringify(`beta-${manifest.slug}`)} {...props} />\n`)
+  await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\nconst fields = ${JSON.stringify(fields, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(`beta-${manifest.slug}`)} fields={fields} {...props} />\n`)
   await materialize(path.join(directory, `${base}.types.ts`), `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`)
   await materialize(path.join(directory, `${base}.payload.ts`), `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`)
   await materialize(path.join(directory, `${base}.preview.astro`), `---\n// @generated structural section preview.\nimport StructuralSection from '${importAstro}'\n\nconst content = ${JSON.stringify(previewContent, null, 2)}\nconst fields = ${JSON.stringify(fields, null, 2)}\nconst intro = ${JSON.stringify(previewIntro, null, 2)}\nconst ctas = ${JSON.stringify(previewCtas, null, 2)}\nconst media = ${JSON.stringify(previewMedia, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(`beta-${manifest.slug}`)} intro={intro} ctas={ctas} media={media} content={content} fields={fields} />\n`)

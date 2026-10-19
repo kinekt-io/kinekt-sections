@@ -3,5 +3,101 @@
 import StructuralSection from '../../../shared/structural-section.astro'
 
 const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "models": {
+    "kind": "componentList",
+    "id": "components/battery-card/allentown",
+    "role": "battery-card",
+    "fields": {
+      "image": {
+        "kind": "media"
+      },
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      },
+      "specs": {
+        "kind": "componentList",
+        "id": "components/spec-pair/allentown",
+        "role": "spec-pair",
+        "fields": {
+          "label": {
+            "kind": "text"
+          },
+          "value": {
+            "kind": "text"
+          }
+        }
+      }
+    }
+  },
+  "crossSell": {
+    "kind": "component",
+    "id": "patterns/cross-sell/allentown",
+    "role": "cross-sell",
+    "fields": {
+      "intro": {
+        "kind": "component",
+        "id": "components/intro/allentown",
+        "role": "intro",
+        "fields": {
+          "accentHeading": {
+            "kind": "text"
+          },
+          "heading": {
+            "kind": "text"
+          },
+          "description": {
+            "kind": "richText"
+          }
+        }
+      },
+      "items": {
+        "kind": "componentList",
+        "id": "components/cross-sell-item/allentown",
+        "role": "cross-sell-item",
+        "fields": {
+          "image": {
+            "kind": "media"
+          },
+          "title": {
+            "kind": "text"
+          },
+          "cta": {
+            "kind": "component",
+            "id": "controls/button/allentown",
+            "role": "button",
+            "fields": {
+              "cta": {
+                "kind": "cta"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 ---
-<StructuralSection block="beta-battery-models-allentown" {...props} />
+<StructuralSection block="beta-battery-models-allentown" fields={fields} {...props} />

@@ -3,5 +3,88 @@
 import StructuralSection from '../../../shared/structural-section.astro'
 
 const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "cta": {
+    "kind": "component",
+    "id": "controls/button/allentown",
+    "role": "button",
+    "fields": {
+      "cta": {
+        "kind": "cta"
+      }
+    }
+  },
+  "moq": {
+    "kind": "component",
+    "id": "components/delivery-fact/allentown",
+    "role": "delivery-fact",
+    "fields": {
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "textarea"
+      },
+      "value": {
+        "kind": "component",
+        "id": "atoms/label/allentown",
+        "role": "label",
+        "fields": {
+          "text": {
+            "kind": "text"
+          },
+          "icon": {
+            "kind": "text"
+          }
+        }
+      }
+    }
+  },
+  "leadTimes": {
+    "kind": "componentList",
+    "id": "components/delivery-fact/allentown",
+    "role": "delivery-fact",
+    "fields": {
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "textarea"
+      },
+      "value": {
+        "kind": "component",
+        "id": "atoms/label/allentown",
+        "role": "label",
+        "fields": {
+          "text": {
+            "kind": "text"
+          },
+          "icon": {
+            "kind": "text"
+          }
+        }
+      }
+    }
+  }
+}
 ---
-<StructuralSection block="beta-moq-lead-times-allentown" {...props} />
+<StructuralSection block="beta-moq-lead-times-allentown" fields={fields} {...props} />

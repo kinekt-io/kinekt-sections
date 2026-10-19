@@ -3,5 +3,61 @@
 import StructuralSection from '../../../shared/structural-section.astro'
 
 const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "featureListTitle": {
+    "kind": "text"
+  },
+  "featurePairs": {
+    "kind": "componentList",
+    "id": "components/feature-pair/allentown",
+    "role": "feature-pair",
+    "fields": {
+      "label": {
+        "kind": "text"
+      },
+      "value": {
+        "kind": "text"
+      }
+    }
+  },
+  "ctaGroup": {
+    "kind": "component",
+    "id": "components/cta-group/allentown",
+    "role": "cta-group",
+    "fields": {
+      "primaryButton": {
+        "kind": "cta"
+      },
+      "secondaryButton": {
+        "kind": "cta"
+      }
+    }
+  },
+  "media": {
+    "kind": "media"
+  },
+  "mobileMedia": {
+    "kind": "media"
+  }
+}
 ---
-<StructuralSection block="beta-product-hero-allentown" {...props} />
+<StructuralSection block="beta-product-hero-allentown" fields={fields} {...props} />

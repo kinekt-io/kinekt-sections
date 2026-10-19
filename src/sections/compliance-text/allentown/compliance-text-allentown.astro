@@ -3,5 +3,42 @@
 import StructuralSection from '../../../shared/structural-section.astro'
 
 const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "checklistItems": {
+    "kind": "componentList",
+    "id": "components/checklist-item/allentown",
+    "role": "checklist-item",
+    "fields": {
+      "text": {
+        "kind": "text"
+      }
+    }
+  },
+  "closingText": {
+    "kind": "richText"
+  },
+  "certImage": {
+    "kind": "media"
+  }
+}
 ---
-<StructuralSection block="beta-compliance-text-allentown" {...props} />
+<StructuralSection block="beta-compliance-text-allentown" fields={fields} {...props} />

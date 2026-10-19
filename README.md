@@ -128,6 +128,27 @@ The stylesheet has only black, white and grey fallbacks. It does not define site
 
 Section-local tokens (`--kinekt-section-*`) resolve before generic site tokens (`--kinekt-*-*`). `data-kinekt-theme="dark"` switches only the component-local aliases; a site can still override those aliases on the section root.
 
+## Interactions
+
+The structural renderers now activate the renderer-owned behaviours recorded in their manifests:
+
+- Accordion Item, Product Detail Item and Step lists use native `<details>` disclosures. The first item is open server-side; a small enhancement keeps each declared group single-open.
+- Tabs use the WAI-ARIA tab pattern with mouse, arrow-key, `Home` and `End` navigation. The first panel remains visible without JavaScript.
+- Case Study Carousel uses [`embla-carousel`](https://www.embla-carousel.com/): touch/drag support, previous/next buttons, disabled endpoint controls and an announced slide position. Cards remain a readable list before JavaScript.
+- Insight Index uses Pagefind’s JavaScript API for static search, filtering and four-result pagination. Its server-rendered card list remains a usable fallback; when the Pagefind bundle is unavailable, the same query and Type/Subject filters work against the rendered list.
+
+The shared package includes Embla because its API controls the generated carousel. Pagefind is deliberately not bundled: it must index the consuming frontend’s completed static output. Add Pagefind after the Astro build and pass the actual bundle location when it differs from `/pagefind/pagefind.js`:
+
+```astro
+<InsightIndex
+  pagefindUrl="/pagefind/pagefind.js"
+  pagefindFilters={{ region: "eu", locale: "en" }}
+  {...insightIndexProps}
+/>
+```
+
+The consumer’s indexed article layouts must expose the governed metadata, for example `data-pagefind-filter="type:Case"` and `data-pagefind-filter="subject:Drone"`. `pagefindFilters` scopes this component to the active region and locale; its selected Type and Subject filters use the manifest’s OR behaviour.
+
 ## Add a component
 
 See [`naming-conventions.md`](./naming-conventions.md) for the naming scheme and folder layout.

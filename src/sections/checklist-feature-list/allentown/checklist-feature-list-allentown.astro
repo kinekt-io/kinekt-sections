@@ -3,5 +3,49 @@
 import StructuralSection from '../../../shared/structural-section.astro'
 
 const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "checklist": {
+    "kind": "componentList",
+    "id": "components/checklist-item/allentown",
+    "role": "checklist-item",
+    "fields": {
+      "text": {
+        "kind": "text"
+      }
+    }
+  },
+  "features": {
+    "kind": "componentList",
+    "id": "components/feature-item/allentown",
+    "role": "feature-item",
+    "fields": {
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  }
+}
 ---
-<StructuralSection block="beta-checklist-feature-list-allentown" {...props} />
+<StructuralSection block="beta-checklist-feature-list-allentown" fields={fields} {...props} />

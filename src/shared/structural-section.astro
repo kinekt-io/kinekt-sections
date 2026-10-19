@@ -17,6 +17,8 @@ interface Media {
 
 interface StructuralField {
   kind: string
+  id?: string
+  role?: string | null
   fields?: Record<string, StructuralField>
 }
 
@@ -29,18 +31,34 @@ interface Props {
     heading: string
     description?: string | { html: string }
   }
-  ctas?: {
-    primary?: Cta
-    secondary?: Cta
-  }
+  ctas?: Record<string, unknown>
   media?: Media
   content?: Record<string, unknown>
-  fields?: Record<string, StructuralField>
+  fields: Record<string, StructuralField>
+  pagefindUrl?: string
+  pagefindFilters?: Record<string, unknown>
 }
 
-const { block, id, headingLevel = 'h2', intro, ctas, media, content, fields } = Astro.props
-const theme = content?.theme === 'dark' ? 'dark' : 'light'
-const actions = [ctas?.primary, ctas?.secondary].filter((cta): cta is Cta => Boolean(cta?.label && cta.href))
+function isCta(value: unknown): value is Required<Cta> {
+  return typeof value === 'object'
+    && value !== null
+    && typeof (value as Cta).label === 'string'
+    && typeof (value as Cta).href === 'string'
+}
+
+function collectCtas(value: unknown): Required<Cta>[] {
+  if (!value || typeof value !== 'object') return []
+  return Object.values(value as Record<string, unknown>).flatMap((candidate) => {
+    if (isCta(candidate)) return [candidate]
+    if (!candidate || typeof candidate !== 'object') return []
+    return Object.values(candidate as Record<string, unknown>).filter(isCta)
+  })
+}
+
+const { block, id, headingLevel = 'h2', intro, ctas, media, fields, content: explicitContent, pagefindUrl, pagefindFilters, ...implicitContent } = Astro.props
+const content = explicitContent ?? implicitContent
+const theme = content.theme === 'dark' ? 'dark' : 'light'
+const actions = collectCtas(ctas)
 ---
 <section class={block} id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class={`${block}__container`}>
@@ -50,7 +68,7 @@ const actions = [ctas?.primary, ctas?.secondary].filter((cta): cta is Cta => Boo
         {actions.map((cta, index) => <a class={`${block}__action ${block}__action--${index === 0 ? 'primary' : 'secondary'}`} href={cta.href}>{cta.label}</a>)}
       </nav>
     )}
-    {content && fields && <StructuralContent block={block} content={content} fields={fields} omit={['theme', 'intro', 'ctas', 'media']} />}
+    <StructuralContent block={block} instanceId={id ?? block} content={content} fields={fields} pagefindUrl={pagefindUrl} pagefindFilters={pagefindFilters} omit={['theme', 'intro', 'ctas', 'media']} />
     {media?.url && (
       <picture class={`${block}__media`}>
         <img class={`${block}__image`} src={media.url} alt={media.alt ?? ''} width={media.width} height={media.height} />

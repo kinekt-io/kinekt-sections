@@ -3,5 +3,13 @@
 import StructuralSection from '../../../shared/structural-section.astro'
 
 const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "insightSources": {
+    "kind": "insightSourceList"
+  }
+}
 ---
-<StructuralSection block="beta-insight-index-allentown" {...props} />
+<StructuralSection block="beta-insight-index-allentown" fields={fields} {...props} />

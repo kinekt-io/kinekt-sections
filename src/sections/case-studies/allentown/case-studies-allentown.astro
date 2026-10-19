@@ -3,5 +3,114 @@
 import StructuralSection from '../../../shared/structural-section.astro'
 
 const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "carousel": {
+    "kind": "component",
+    "id": "patterns/case-study-carousel/allentown",
+    "role": "case-study-carousel",
+    "fields": {
+      "items": {
+        "kind": "componentList",
+        "id": "components/case-study/allentown",
+        "role": "case-study",
+        "fields": {
+          "logo": {
+            "kind": "media"
+          },
+          "title": {
+            "kind": "text"
+          },
+          "description": {
+            "kind": "textarea"
+          },
+          "image": {
+            "kind": "media"
+          },
+          "results": {
+            "kind": "componentList",
+            "id": "components/result-item/allentown",
+            "role": "result-item",
+            "fields": {
+              "label": {
+                "kind": "text"
+              },
+              "value": {
+                "kind": "component",
+                "id": "atoms/label/allentown",
+                "role": "label",
+                "fields": {
+                  "text": {
+                    "kind": "text"
+                  },
+                  "icon": {
+                    "kind": "text"
+                  }
+                }
+              }
+            }
+          },
+          "quote": {
+            "kind": "component",
+            "id": "components/quote/allentown",
+            "role": "quote",
+            "fields": {
+              "quote": {
+                "kind": "textarea"
+              },
+              "authorName": {
+                "kind": "text"
+              },
+              "authorRole": {
+                "kind": "text"
+              },
+              "avatar": {
+                "kind": "media"
+              }
+            }
+          },
+          "cta": {
+            "kind": "component",
+            "id": "controls/button/allentown",
+            "role": "button",
+            "fields": {
+              "cta": {
+                "kind": "cta"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "cta": {
+    "kind": "component",
+    "id": "controls/button/allentown",
+    "role": "button",
+    "fields": {
+      "cta": {
+        "kind": "cta"
+      }
+    }
+  }
+}
 ---
-<StructuralSection block="beta-case-studies-allentown" {...props} />
+<StructuralSection block="beta-case-studies-allentown" fields={fields} {...props} />

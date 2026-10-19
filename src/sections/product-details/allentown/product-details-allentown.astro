@@ -3,5 +3,64 @@
 import StructuralSection from '../../../shared/structural-section.astro'
 
 const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "image": {
+    "kind": "media"
+  },
+  "detailLabel": {
+    "kind": "text"
+  },
+  "items": {
+    "kind": "componentList",
+    "id": "components/product-detail-item/allentown",
+    "role": "product-detail-item",
+    "fields": {
+      "title": {
+        "kind": "text"
+      },
+      "subtitle": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "textarea"
+      },
+      "detailHeading": {
+        "kind": "text"
+      },
+      "details": {
+        "kind": "componentList",
+        "id": "atoms/label/allentown",
+        "role": "label",
+        "fields": {
+          "text": {
+            "kind": "text"
+          },
+          "icon": {
+            "kind": "text"
+          }
+        }
+      }
+    }
+  }
+}
 ---
-<StructuralSection block="beta-product-details-allentown" {...props} />
+<StructuralSection block="beta-product-details-allentown" fields={fields} {...props} />

@@ -91,6 +91,8 @@ const fields = {
   },
   "intro": {
     "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
     "fields": {
       "accentHeading": {
         "kind": "text"
@@ -105,18 +107,24 @@ const fields = {
   },
   "comparison": {
     "kind": "component",
+    "id": "patterns/comparison-table/trinity",
+    "role": "comparison-table",
     "fields": {
       "columns": {
         "kind": "infoItems"
       },
       "rows": {
         "kind": "componentList",
+        "id": "components/comparison-row/trinity",
+        "role": "comparison-row",
         "fields": {
           "feature": {
             "kind": "text"
           },
           "cells": {
             "kind": "componentList",
+            "id": "components/comparison-cell/trinity",
+            "role": "comparison-cell",
             "fields": {
               "text": {
                 "kind": "text"
@@ -135,6 +143,8 @@ const fields = {
   },
   "cta": {
     "kind": "component",
+    "id": "controls/button/allentown",
+    "role": "button",
     "fields": {
       "cta": {
         "kind": "cta"

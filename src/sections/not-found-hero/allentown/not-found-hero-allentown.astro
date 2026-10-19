@@ -3,5 +3,39 @@
 import StructuralSection from '../../../shared/structural-section.astro'
 
 const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "ctaGroup": {
+    "kind": "component",
+    "id": "components/cta-group/allentown",
+    "role": "cta-group",
+    "fields": {
+      "primaryButton": {
+        "kind": "cta"
+      },
+      "secondaryButton": {
+        "kind": "cta"
+      }
+    }
+  }
+}
 ---
-<StructuralSection block="beta-not-found-hero-allentown" {...props} />
+<StructuralSection block="beta-not-found-hero-allentown" fields={fields} {...props} />

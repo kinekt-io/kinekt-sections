@@ -3,5 +3,82 @@
 import StructuralSection from '../../../shared/structural-section.astro'
 
 const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "items": {
+    "kind": "componentList",
+    "id": "components/faq-item/allentown",
+    "role": "faq-item",
+    "fields": {
+      "question": {
+        "kind": "text"
+      },
+      "answer": {
+        "kind": "textarea"
+      }
+    }
+  },
+  "overviewCta": {
+    "kind": "component",
+    "id": "controls/button/allentown",
+    "role": "button",
+    "fields": {
+      "cta": {
+        "kind": "cta"
+      }
+    }
+  },
+  "callout": {
+    "kind": "component",
+    "id": "components/callout/allentown",
+    "role": "callout",
+    "fields": {
+      "intro": {
+        "kind": "component",
+        "id": "components/intro/allentown",
+        "role": "intro",
+        "fields": {
+          "accentHeading": {
+            "kind": "text"
+          },
+          "heading": {
+            "kind": "text"
+          },
+          "description": {
+            "kind": "richText"
+          }
+        }
+      },
+      "cta": {
+        "kind": "component",
+        "id": "controls/button/allentown",
+        "role": "button",
+        "fields": {
+          "cta": {
+            "kind": "cta"
+          }
+        }
+      }
+    }
+  }
+}
 ---
-<StructuralSection block="beta-faq-allentown" {...props} />
+<StructuralSection block="beta-faq-allentown" fields={fields} {...props} />

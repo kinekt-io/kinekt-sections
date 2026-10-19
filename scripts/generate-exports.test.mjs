@@ -26,12 +26,40 @@ async function fixture(t) {
 
 test('discovers nested paired sections and standalone components without exporting helpers', async (t) => {
   const f = await fixture(t)
+  await f.add('sections/hero/allentown/manifest.json', JSON.stringify({
+    $schema: 'https://kinekt.io/schemas/component-manifest.schema.json',
+    schemaVersion: 1,
+    id: 'sections/hero/allentown',
+    slug: 'hero-allentown',
+    title: 'Hero Allentown',
+    description: 'A documented hero variant.',
+    category: 'sections',
+    role: 'hero',
+    variation: 'allentown',
+    status: 'planned',
+    figma: { url: 'https://www.figma.com/design/hero-allentown' },
+    fields: {},
+  }))
   await f.add('sections/hero/allentown/hero-allentown.astro')
   await f.add('sections/hero/allentown/hero-allentown.payload.ts')
   await f.add('sections/hero/allentown/hero-allentown.types.ts')
   await f.add('sections/hero/allentown/hero-allentown.preview.astro')
   await f.add('sections/hero/allentown/README.md', '# Hero Allentown\n\nA documented hero variant.\n\n## Figma\n\nhttps://www.figma.com/design/hero-allentown\n')
   await f.add('sections/hero/allentown/helpers.ts')
+  await f.add('controls/button/manifest.json', JSON.stringify({
+    $schema: 'https://kinekt.io/schemas/component-manifest.schema.json',
+    schemaVersion: 1,
+    id: 'controls/button',
+    slug: 'button',
+    title: 'Button',
+    description: 'A documented button.',
+    category: 'controls',
+    role: 'button',
+    variation: null,
+    status: 'planned',
+    figma: { url: 'https://www.figma.com/design/button' },
+    fields: {},
+  }))
   await f.add('controls/button/button.astro')
   f.run()
   assert.deepEqual(await f.exports(), {
@@ -51,23 +79,33 @@ test('discovers nested paired sections and standalone components without exporti
   assert.deepEqual(await f.catalogue(), [
     {
       id: 'controls/button',
+      slug: 'button',
       category: 'controls',
       role: 'button',
       variation: null,
-      title: 'button',
-      description: 'No component README.md yet.',
-      figmaUrl: null,
+      title: 'Button',
+      description: 'A documented button.',
+      status: 'planned',
+      figmaUrl: 'https://www.figma.com/design/button',
+      variants: {},
+      fields: {},
+      runtimeProps: {},
       previewSource: null,
       entries: { astro: '@test/components/controls/button.astro' },
     },
     {
       id: 'sections/hero/allentown',
+      slug: 'hero-allentown',
       category: 'sections',
       role: 'hero',
       variation: 'allentown',
       title: 'Hero Allentown',
       description: 'A documented hero variant.',
+      status: 'planned',
       figmaUrl: 'https://www.figma.com/design/hero-allentown',
+      variants: {},
+      fields: {},
+      runtimeProps: {},
       previewSource: 'sections/hero/allentown/hero-allentown.preview.astro',
       entries: {
         astro: '@test/components/sections/hero-allentown.astro',

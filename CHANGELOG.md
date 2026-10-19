@@ -1,5 +1,17 @@
 # Changelog
 
+## 26.10.2-beta.14 — 2025-08-11
+
+### Added
+
+- Progressive-enhancement interactions for manifest-backed accordions, tabs, case-study carousels and the Insight Index.
+- Embla Carousel runtime with accessible controls and a no-JavaScript card-list fallback.
+- Pagefind adapter contract with local card-grid fallback for unavailable search indexes.
+
+### Changed
+
+- Generated Astro renderers now embed their manifest field maps and accept adapted component props directly.
+
 ## 26.9.26 — 2026-09-28
 
 ### Added
