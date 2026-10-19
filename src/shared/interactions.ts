@@ -84,7 +84,8 @@ async function initializeCarousel(carousel: Element) {
   if (!viewport || !next || !current || !total || !status) return
 
   const listeners = new AbortController()
-  const api = EmblaCarousel(viewport, { align: 'start', containScroll: 'trimSnaps', loop: carousel.getAttribute('data-kinekt-carousel-loop') === 'true' })
+  const loop = carousel.getAttribute('data-kinekt-carousel-loop') === 'true'
+  const api = EmblaCarousel(viewport, loop ? { align: 'start', loop: true } : { align: 'start', containScroll: 'trimSnaps' })
   const update = () => {
     const selected = api.selectedScrollSnap()
     const count = api.scrollSnapList().length
