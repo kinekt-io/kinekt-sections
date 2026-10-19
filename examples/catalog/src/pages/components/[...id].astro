@@ -34,8 +34,52 @@ const Preview = (previewModule as { default: any }).default
         <h1>{component.title}</h1>
         <span>Representative content from <code>src/{component.previewSource}</code></span>
       </div>
-      <Preview />
+      {component.category === 'sections' && (
+        <aside class="preview-options" aria-label="Preview options">
+          <p>Inspect options</p>
+          <fieldset>
+            <legend>Theme</legend>
+            <label><input type="radio" name="theme" value="light" checked /> Light</label>
+            <label><input type="radio" name="theme" value="dark" /> Dark</label>
+          </fieldset>
+          {component.id === 'sections/case-studies/allentown' && (
+            <>
+              <fieldset>
+                <legend>Carousel controls</legend>
+                <label><input type="radio" name="carousel-controls" value="previous-next" checked /> Previous + next</label>
+                <label><input type="radio" name="carousel-controls" value="next" /> Next only</label>
+              </fieldset>
+              <fieldset>
+                <legend>Control style</legend>
+                <label><input type="radio" name="carousel-control-style" value="icon" checked /> Icons</label>
+                <label><input type="radio" name="carousel-control-style" value="text" /> Text</label>
+              </fieldset>
+            </>
+          )}
+        </aside>
+      )}
+      <div data-kinekt-preview-surface><Preview /></div>
     </main>
+    <script>
+      const surface = document.querySelector('[data-kinekt-preview-surface]')
+      document.querySelectorAll('.preview-options input').forEach((input) => {
+        input.addEventListener('change', () => {
+          if (!input.checked || !surface) return
+          if (input.name === 'theme') {
+            const section = surface.querySelector('[data-kinekt-section]')
+            if (section) section.dataset.kinektTheme = input.value
+          }
+          if (input.name === 'carousel-controls') {
+            const carousel = surface.querySelector('[data-kinekt-carousel]')
+            if (carousel) carousel.dataset.kinektCarouselControls = input.value
+          }
+          if (input.name === 'carousel-control-style') {
+            const carousel = surface.querySelector('[data-kinekt-carousel]')
+            if (carousel) carousel.dataset.kinektCarouselControlStyle = input.value
+          }
+        })
+      })
+    </script>
   </body>
 </html>
 
@@ -50,5 +94,10 @@ const Preview = (previewModule as { default: any }).default
   .intro p { margin: 0 0 0.75rem; color: #ff5f7e; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
   .intro h1 { margin: 0 0 0.75rem; font-size: clamp(2.25rem, 5vw, 4rem); letter-spacing: -0.055em; }
   .intro span { color: #46656a; }
+  .preview-options { display: flex; flex-wrap: wrap; align-items: start; gap: 1rem 2rem; width: min(calc(100% - 3rem), 76rem); margin: 0 auto 2rem; padding: 1rem; border: 1px solid #dce4df; }
+  .preview-options > p { width: 100%; margin: 0; color: #46656a; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  .preview-options fieldset { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; min-width: 0; margin: 0; padding: 0; border: 0; }
+  .preview-options legend { width: 100%; margin-bottom: 0.5rem; font-size: 0.8125rem; font-weight: 700; }
+  .preview-options label { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.875rem; }
   @media (max-width: 40rem) { .bar { align-items: start; flex-direction: column; } }
 </style>
