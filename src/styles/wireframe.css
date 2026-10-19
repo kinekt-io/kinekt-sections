@@ -327,8 +327,9 @@
 :where([data-kinekt-section]) [data-kinekt-carousel-previous] { grid-area: previous; }
 :where([data-kinekt-section]) [data-kinekt-carousel-next] { grid-area: next; }
 :where([data-kinekt-section]) [data-kinekt-carousel-indicators] { grid-area: indicators; display: grid; grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr)); gap: 0.5rem; }
-:where([data-kinekt-section]) [data-kinekt-carousel-dot] { width: auto; min-height: var(--kinekt-carousel-indicator-size, 0.125rem); padding: 0; border: 0; border-radius: 0; color: transparent; background: var(--kinekt-component-line); }
-:where([data-kinekt-section]) [data-kinekt-carousel-dot][aria-current='true'] { background: var(--kinekt-component-action); }
+:where([data-kinekt-section]) [data-kinekt-carousel-dot] { position: relative; width: auto; min-height: var(--kinekt-carousel-indicator-hit-area, 2.75rem); padding: 0; border: 0; border-radius: 0; color: transparent; background: transparent; touch-action: manipulation; }
+:where([data-kinekt-section]) [data-kinekt-carousel-dot]::after { position: absolute; top: 50%; right: 0; left: 0; height: var(--kinekt-carousel-indicator-size, 0.125rem); transform: translateY(-50%); background: var(--kinekt-component-line); content: ''; }
+:where([data-kinekt-section]) [data-kinekt-carousel-dot][aria-current='true']::after { background: var(--kinekt-component-action); }
 :where([data-kinekt-section]) [data-kinekt-carousel-status] { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 :where([data-kinekt-section]) button:disabled { opacity: 0.45; cursor: not-allowed; }
 
