@@ -49,7 +49,8 @@ function sampleField(field, key, depth = 0, index = 0) {
   if (field.kind === 'cta') return { label: `Explore ${labelFor(key).toLowerCase()}`, href: '#' }
   if (field.kind === 'ctaGroup') return { primary: { label: 'Primary action', href: '#' }, secondary: { label: 'Secondary action', href: '#' } }
   if (field.kind === 'formReference') return { name: 'Example contact form', description: 'A centrally governed form reference with its own questions and validation.' }
-  if (field.kind === 'insightSourceList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: `Example insight ${itemIndex + 1}`, href: '#' }))
+  if (field.kind === 'infoItems' || field.kind === 'featureItems') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => `${labelFor(key)} ${itemIndex + 1}`)
+  if (field.kind === 'insightSourceList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: `Example insight ${itemIndex + 1}`, excerpt: 'Representative insight excerpt for this card.', href: '#', publishedAt: `2026-10-${String(itemIndex + 1).padStart(2, '0')}`, image: { url: `https://placehold.co/1200x800/png?text=Insight+${itemIndex + 1}`, alt: `Example insight ${itemIndex + 1}`, width: 1200, height: 800 } }))
   return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: `${labelFor(key)} ${itemIndex + 1}`, description: exampleText('description', itemIndex) }))
 }
 

@@ -15,6 +15,9 @@ interface Props {
 const { block, content, fields, omit = [], level = 2 } = Astro.props
 const entries = Object.entries(fields).filter(([key]) => key in content && !omit.includes(key))
 const Heading = `h${Math.min(level, 4)}` as 'h2' | 'h3' | 'h4'
+const comparison = fields.columns?.kind === 'infoItems' && fields.rows?.kind === 'componentList'
+const columns = Array.isArray(content.columns) ? content.columns : []
+const rows = Array.isArray(content.rows) ? content.rows : []
 
 function classFor(key: string) {
   return `${block}__${key.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/[_\s]+/g, '-').toLowerCase()}`
@@ -28,7 +31,16 @@ function isHeading(key: string) {
   return /(heading|title|name)$/i.test(key)
 }
 ---
-{entries.map(([key, field]) => {
+{comparison ? (
+  <table class={`${block}__table`}>
+    <thead><tr><th scope="col">Feature</th>{columns.map((column) => <th scope="col">{String(column)}</th>)}</tr></thead>
+    <tbody>{rows.map((row) => {
+      const record = row as Record<string, unknown>
+      const cells = Array.isArray(record.cells) ? record.cells : []
+      return <tr><th scope="row">{String(record.feature ?? '')}</th>{cells.map((cell) => <td>{isRecord(cell) ? String(cell.text ?? cell.status ?? '') : String(cell)}</td>)}</tr>
+    })}</tbody>
+  </table>
+) : entries.map(([key, field]) => {
   const value = content[key]
   const className = classFor(key)
 
@@ -48,6 +60,14 @@ function isHeading(key: string) {
     return <ul class={className}>{value.map((media) => isRecord(media) && typeof media.url === 'string' && <li class={`${className}-item`}><picture><img src={media.url} alt={typeof media.alt === 'string' ? media.alt : ''} width={typeof media.width === 'number' ? media.width : undefined} height={typeof media.height === 'number' ? media.height : undefined} /></picture></li>)}</ul>
   }
 
+  if (field.kind === 'insightSourceList' && Array.isArray(value)) {
+    return <ul class={className}>{value.map((insight) => {
+      const item = insight as Record<string, unknown>
+      const image = isRecord(item.image) ? item.image : null
+      return <li class={`${className}-item`}><article>{image && typeof image.url === 'string' && <picture><img src={image.url} alt={typeof image.alt === 'string' ? image.alt : ''} width={typeof image.width === 'number' ? image.width : undefined} height={typeof image.height === 'number' ? image.height : undefined} /></picture>}<p>{String(item.publishedAt ?? '')}</p><h3>{String(item.title ?? '')}</h3><p>{String(item.excerpt ?? '')}</p>{typeof item.href === 'string' && <a href={item.href}>Read insight</a>}</article></li>
+    })}</ul>
+  }
+
   if (field.kind === 'cta' && isRecord(value) && typeof value.href === 'string' && typeof value.label === 'string') {
     return <a class={className} href={value.href}>{value.label}</a>
   }
@@ -57,7 +77,11 @@ function isHeading(key: string) {
   }
 
   if (field.kind === 'formReference' && isRecord(value)) {
-    return <form class={className}><p>{typeof value.name === 'string' ? value.name : 'Example form'}</p><button type="button">Open form</button></form>
+    return <form class={className} action="#" method="get"><p>{typeof value.name === 'string' ? value.name : 'Example form'}</p><label>Name <input name="name" autocomplete="name" required /></label><label>Email <input name="email" type="email" autocomplete="email" required /></label><label>Message <textarea name="message" required></textarea></label><button type="submit">Submit test form</button></form>
+  }
+
+  if ((field.kind === 'infoItems' || field.kind === 'featureItems') && Array.isArray(value)) {
+    return <ul class={className}>{value.map((item) => <li class={`${className}-item`}>{String(item)}</li>)}</ul>
   }
 
   if (Array.isArray(value)) {
