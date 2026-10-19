@@ -59,20 +59,24 @@ const { block, id, headingLevel = 'h2', intro, ctas, media, fields, content: exp
 const content = explicitContent ?? implicitContent
 const theme = content.theme === 'dark' ? 'dark' : 'light'
 const actions = collectCtas(ctas)
+const caseStudyAction = block.includes('case-studies') ? collectCtas(content.cta)[0] : undefined
+const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta'] : ['theme', 'intro', 'ctas', 'media']
 ---
 <section class={block} id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class={`${block}__container`}>
-    {(intro || actions.length > 0) && (
+    {(intro || actions.length > 0 || caseStudyAction) && (
       <header class={`${block}__header`}>
         {intro && <div class={`${block}__header-content`}><SectionIntro intro={intro} headingLevel={headingLevel} /></div>}
-        {actions.length > 0 && (
+        {caseStudyAction ? (
+          <div class={`${block}__cta`}><a class={`${block}__cta`} href={caseStudyAction.href}>{caseStudyAction.label}</a></div>
+        ) : actions.length > 0 && (
           <nav class={`${block}__actions`} aria-label="Section actions">
             {actions.map((cta, index) => <a class={`${block}__action ${block}__action--${index === 0 ? 'primary' : 'secondary'}`} href={cta.href}>{cta.label}</a>)}
           </nav>
         )}
       </header>
     )}
-    <StructuralContent block={block} instanceId={id ?? block} content={content} fields={fields} pagefindUrl={pagefindUrl} pagefindFilters={pagefindFilters} carouselControlStyle={carouselControlStyle} carouselControls={carouselControls} omit={['theme', 'intro', 'ctas', 'media']} />
+    <StructuralContent block={block} instanceId={id ?? block} content={content} fields={fields} pagefindUrl={pagefindUrl} pagefindFilters={pagefindFilters} carouselControlStyle={carouselControlStyle} carouselControls={carouselControls} omit={contentOmit} />
     {media?.url && (
       <picture class={`${block}__media`}>
         <img class={`${block}__image`} src={media.url} alt={media.alt ?? ''} width={media.width} height={media.height} />
