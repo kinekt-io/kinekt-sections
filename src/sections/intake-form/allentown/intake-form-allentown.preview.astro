@@ -27,6 +27,42 @@ const content = {
     "description": "A centrally governed form reference with its own questions and validation."
   }
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "stepsHeading": {
+    "kind": "text"
+  },
+  "steps": {
+    "kind": "componentList",
+    "fields": {
+      "text": {
+        "kind": "text"
+      }
+    }
+  },
+  "formHeading": {
+    "kind": "text"
+  },
+  "form": {
+    "kind": "formReference"
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -35,4 +71,4 @@ const intro = {
 const ctas = undefined
 const media = undefined
 ---
-<StructuralSection block="beta-intake-form-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-intake-form-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

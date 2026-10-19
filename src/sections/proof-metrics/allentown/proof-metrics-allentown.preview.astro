@@ -52,6 +52,74 @@ const content = {
     }
   }
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "metrics": {
+    "kind": "componentList",
+    "fields": {
+      "label": {
+        "kind": "text"
+      },
+      "value": {
+        "kind": "component",
+        "fields": {
+          "text": {
+            "kind": "text"
+          },
+          "icon": {
+            "kind": "text"
+          }
+        }
+      }
+    }
+  },
+  "media": {
+    "kind": "media"
+  },
+  "callout": {
+    "kind": "component",
+    "fields": {
+      "intro": {
+        "kind": "component",
+        "fields": {
+          "accentHeading": {
+            "kind": "text"
+          },
+          "heading": {
+            "kind": "text"
+          },
+          "description": {
+            "kind": "richText"
+          }
+        }
+      },
+      "cta": {
+        "kind": "component",
+        "fields": {
+          "cta": {
+            "kind": "cta"
+          }
+        }
+      }
+    }
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -65,4 +133,4 @@ const media = {
   "height": 900
 }
 ---
-<StructuralSection block="beta-proof-metrics-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-proof-metrics-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

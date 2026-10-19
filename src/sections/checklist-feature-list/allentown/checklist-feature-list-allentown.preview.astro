@@ -35,6 +35,44 @@ const content = {
     }
   ]
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "checklist": {
+    "kind": "componentList",
+    "fields": {
+      "text": {
+        "kind": "text"
+      }
+    }
+  },
+  "features": {
+    "kind": "componentList",
+    "fields": {
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -43,4 +81,4 @@ const intro = {
 const ctas = undefined
 const media = undefined
 ---
-<StructuralSection block="beta-checklist-feature-list-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-checklist-feature-list-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

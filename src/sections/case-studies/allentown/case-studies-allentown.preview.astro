@@ -188,6 +188,99 @@ const content = {
     }
   }
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "carousel": {
+    "kind": "component",
+    "fields": {
+      "items": {
+        "kind": "componentList",
+        "fields": {
+          "logo": {
+            "kind": "media"
+          },
+          "title": {
+            "kind": "text"
+          },
+          "description": {
+            "kind": "textarea"
+          },
+          "image": {
+            "kind": "media"
+          },
+          "results": {
+            "kind": "componentList",
+            "fields": {
+              "label": {
+                "kind": "text"
+              },
+              "value": {
+                "kind": "component",
+                "fields": {
+                  "text": {
+                    "kind": "text"
+                  },
+                  "icon": {
+                    "kind": "text"
+                  }
+                }
+              }
+            }
+          },
+          "quote": {
+            "kind": "component",
+            "fields": {
+              "quote": {
+                "kind": "textarea"
+              },
+              "authorName": {
+                "kind": "text"
+              },
+              "authorRole": {
+                "kind": "text"
+              },
+              "avatar": {
+                "kind": "media"
+              }
+            }
+          },
+          "cta": {
+            "kind": "component",
+            "fields": {
+              "cta": {
+                "kind": "cta"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "cta": {
+    "kind": "component",
+    "fields": {
+      "cta": {
+        "kind": "cta"
+      }
+    }
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -203,4 +296,4 @@ const ctas = {
 }
 const media = undefined
 ---
-<StructuralSection block="beta-case-studies-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-case-studies-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

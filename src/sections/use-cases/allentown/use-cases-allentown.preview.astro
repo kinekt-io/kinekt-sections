@@ -70,6 +70,64 @@ const content = {
     }
   ]
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "advantageHeading": {
+    "kind": "text"
+  },
+  "advantages": {
+    "kind": "componentList",
+    "fields": {
+      "text": {
+        "kind": "text"
+      },
+      "icon": {
+        "kind": "text"
+      }
+    }
+  },
+  "gridHeading": {
+    "kind": "text"
+  },
+  "items": {
+    "kind": "componentList",
+    "fields": {
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      },
+      "ctaGroup": {
+        "kind": "component",
+        "fields": {
+          "primaryButton": {
+            "kind": "cta"
+          },
+          "secondaryButton": {
+            "kind": "cta"
+          }
+        }
+      }
+    }
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -78,4 +136,4 @@ const intro = {
 const ctas = undefined
 const media = undefined
 ---
-<StructuralSection block="beta-use-cases-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-use-cases-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

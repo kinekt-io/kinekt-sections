@@ -39,6 +39,47 @@ const content = {
     "height": 900
   }
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "metrics": {
+    "kind": "componentList",
+    "fields": {
+      "label": {
+        "kind": "text"
+      },
+      "value": {
+        "kind": "component",
+        "fields": {
+          "text": {
+            "kind": "text"
+          },
+          "icon": {
+            "kind": "text"
+          }
+        }
+      }
+    }
+  },
+  "media": {
+    "kind": "media"
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -52,4 +93,4 @@ const media = {
   "height": 900
 }
 ---
-<StructuralSection block="beta-media-metrics-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-media-metrics-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

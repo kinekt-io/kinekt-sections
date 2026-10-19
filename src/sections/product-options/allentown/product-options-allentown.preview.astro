@@ -88,6 +88,45 @@ const content = {
     "description": "A centrally governed form reference with its own questions and validation."
   }
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "options": {
+    "kind": "componentList",
+    "fields": {
+      "image": {
+        "kind": "media"
+      },
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "textarea"
+      },
+      "benefits": {
+        "kind": "featureItems"
+      }
+    }
+  },
+  "form": {
+    "kind": "formReference"
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -96,4 +135,4 @@ const intro = {
 const ctas = undefined
 const media = undefined
 ---
-<StructuralSection block="beta-product-options-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-product-options-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

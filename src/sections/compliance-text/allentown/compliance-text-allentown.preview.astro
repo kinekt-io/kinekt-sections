@@ -28,6 +28,39 @@ const content = {
     "height": 900
   }
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "checklistItems": {
+    "kind": "componentList",
+    "fields": {
+      "text": {
+        "kind": "text"
+      }
+    }
+  },
+  "closingText": {
+    "kind": "richText"
+  },
+  "certImage": {
+    "kind": "media"
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -36,4 +69,4 @@ const intro = {
 const ctas = undefined
 const media = undefined
 ---
-<StructuralSection block="beta-compliance-text-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-compliance-text-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

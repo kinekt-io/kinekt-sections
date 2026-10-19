@@ -38,6 +38,48 @@ const content = {
     }
   ]
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "image": {
+    "kind": "media"
+  },
+  "form": {
+    "kind": "formReference"
+  },
+  "contactHeading": {
+    "kind": "text"
+  },
+  "contactMethods": {
+    "kind": "componentList",
+    "fields": {
+      "icon": {
+        "kind": "text"
+      },
+      "label": {
+        "kind": "text"
+      },
+      "href": {
+        "kind": "text"
+      }
+    }
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -51,4 +93,4 @@ const media = {
   "height": 900
 }
 ---
-<StructuralSection block="beta-form-section-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-form-section-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

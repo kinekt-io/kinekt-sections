@@ -20,6 +20,36 @@ const content = {
     }
   }
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "ctaGroup": {
+    "kind": "component",
+    "fields": {
+      "primaryButton": {
+        "kind": "cta"
+      },
+      "secondaryButton": {
+        "kind": "cta"
+      }
+    }
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -37,4 +67,4 @@ const ctas = {
 }
 const media = undefined
 ---
-<StructuralSection block="beta-not-found-hero-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-not-found-hero-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

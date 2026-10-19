@@ -79,6 +79,59 @@ const content = {
     }
   ]
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "image": {
+    "kind": "media"
+  },
+  "detailLabel": {
+    "kind": "text"
+  },
+  "items": {
+    "kind": "componentList",
+    "fields": {
+      "title": {
+        "kind": "text"
+      },
+      "subtitle": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "textarea"
+      },
+      "detailHeading": {
+        "kind": "text"
+      },
+      "details": {
+        "kind": "componentList",
+        "fields": {
+          "text": {
+            "kind": "text"
+          },
+          "icon": {
+            "kind": "text"
+          }
+        }
+      }
+    }
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -92,4 +145,4 @@ const media = {
   "height": 900
 }
 ---
-<StructuralSection block="beta-product-details-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-product-details-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

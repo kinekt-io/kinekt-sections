@@ -88,6 +88,88 @@ const content = {
     }
   }
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "items": {
+    "kind": "componentList",
+    "fields": {
+      "image": {
+        "kind": "media"
+      },
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "label": {
+        "kind": "component",
+        "fields": {
+          "text": {
+            "kind": "text"
+          },
+          "icon": {
+            "kind": "text"
+          }
+        }
+      },
+      "description": {
+        "kind": "textarea"
+      },
+      "cta": {
+        "kind": "component",
+        "fields": {
+          "cta": {
+            "kind": "cta"
+          }
+        }
+      }
+    }
+  },
+  "callout": {
+    "kind": "component",
+    "fields": {
+      "intro": {
+        "kind": "component",
+        "fields": {
+          "accentHeading": {
+            "kind": "text"
+          },
+          "heading": {
+            "kind": "text"
+          },
+          "description": {
+            "kind": "richText"
+          }
+        }
+      },
+      "cta": {
+        "kind": "component",
+        "fields": {
+          "cta": {
+            "kind": "cta"
+          }
+        }
+      }
+    }
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -96,4 +178,4 @@ const intro = {
 const ctas = undefined
 const media = undefined
 ---
-<StructuralSection block="beta-solution-list-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-solution-list-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

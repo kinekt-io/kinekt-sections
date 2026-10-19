@@ -50,6 +50,77 @@ const content = {
     }
   ]
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "cta": {
+    "kind": "component",
+    "fields": {
+      "cta": {
+        "kind": "cta"
+      }
+    }
+  },
+  "moq": {
+    "kind": "component",
+    "fields": {
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "textarea"
+      },
+      "value": {
+        "kind": "component",
+        "fields": {
+          "text": {
+            "kind": "text"
+          },
+          "icon": {
+            "kind": "text"
+          }
+        }
+      }
+    }
+  },
+  "leadTimes": {
+    "kind": "componentList",
+    "fields": {
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "textarea"
+      },
+      "value": {
+        "kind": "component",
+        "fields": {
+          "text": {
+            "kind": "text"
+          },
+          "icon": {
+            "kind": "text"
+          }
+        }
+      }
+    }
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -65,4 +136,4 @@ const ctas = {
 }
 const media = undefined
 ---
-<StructuralSection block="beta-moq-lead-times-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-moq-lead-times-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

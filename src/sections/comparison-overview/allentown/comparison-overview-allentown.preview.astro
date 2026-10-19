@@ -116,6 +116,93 @@ const content = {
     }
   }
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "introCta": {
+    "kind": "component",
+    "fields": {
+      "cta": {
+        "kind": "cta"
+      }
+    }
+  },
+  "comparison": {
+    "kind": "component",
+    "fields": {
+      "columns": {
+        "kind": "infoItems"
+      },
+      "rows": {
+        "kind": "componentList",
+        "fields": {
+          "feature": {
+            "kind": "text"
+          },
+          "cells": {
+            "kind": "componentList",
+            "fields": {
+              "type": {
+                "kind": "select"
+              },
+              "text": {
+                "kind": "text"
+              },
+              "status": {
+                "kind": "select"
+              },
+              "icon": {
+                "kind": "text"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "callout": {
+    "kind": "component",
+    "fields": {
+      "intro": {
+        "kind": "component",
+        "fields": {
+          "accentHeading": {
+            "kind": "text"
+          },
+          "heading": {
+            "kind": "text"
+          },
+          "description": {
+            "kind": "richText"
+          }
+        }
+      },
+      "cta": {
+        "kind": "component",
+        "fields": {
+          "cta": {
+            "kind": "cta"
+          }
+        }
+      }
+    }
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -124,4 +211,4 @@ const intro = {
 const ctas = undefined
 const media = undefined
 ---
-<StructuralSection block="beta-comparison-overview-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-comparison-overview-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

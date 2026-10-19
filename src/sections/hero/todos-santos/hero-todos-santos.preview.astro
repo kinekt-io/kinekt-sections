@@ -41,6 +41,45 @@ const content = {
     "height": 900
   }
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "featureHeading": {
+    "kind": "text"
+  },
+  "features": {
+    "kind": "componentList",
+    "fields": {
+      "label": {
+        "kind": "text"
+      },
+      "value": {
+        "kind": "text"
+      }
+    }
+  },
+  "ctas": {
+    "kind": "ctaGroup"
+  },
+  "image": {
+    "kind": "media"
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -63,4 +102,4 @@ const media = {
   "height": 900
 }
 ---
-<StructuralSection block="beta-hero-todos-santos" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-hero-todos-santos" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

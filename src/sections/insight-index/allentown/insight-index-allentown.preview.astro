@@ -19,6 +19,14 @@ const content = {
     }
   ]
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "insightSources": {
+    "kind": "insightSourceList"
+  }
+}
 const intro = {
   "accentHeading": "Beta section",
   "heading": "Insight Index Allentown",
@@ -27,4 +35,4 @@ const intro = {
 const ctas = undefined
 const media = undefined
 ---
-<StructuralSection block="beta-insight-index-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-insight-index-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

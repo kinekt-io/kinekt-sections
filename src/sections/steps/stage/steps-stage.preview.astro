@@ -63,6 +63,53 @@ const content = {
     }
   ]
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "media": {
+    "kind": "media"
+  },
+  "steps": {
+    "kind": "componentList",
+    "fields": {
+      "stage": {
+        "kind": "text"
+      },
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "textarea"
+      },
+      "ctaGroup": {
+        "kind": "component",
+        "fields": {
+          "primaryButton": {
+            "kind": "cta"
+          },
+          "secondaryButton": {
+            "kind": "cta"
+          }
+        }
+      }
+    }
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -76,4 +123,4 @@ const media = {
   "height": 900
 }
 ---
-<StructuralSection block="beta-steps-stage" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-steps-stage" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

@@ -138,6 +138,88 @@ const content = {
     ]
   }
 }
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "intro": {
+    "kind": "component",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "models": {
+    "kind": "componentList",
+    "fields": {
+      "image": {
+        "kind": "media"
+      },
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      },
+      "specs": {
+        "kind": "componentList",
+        "fields": {
+          "label": {
+            "kind": "text"
+          },
+          "value": {
+            "kind": "text"
+          }
+        }
+      }
+    }
+  },
+  "crossSell": {
+    "kind": "component",
+    "fields": {
+      "intro": {
+        "kind": "component",
+        "fields": {
+          "accentHeading": {
+            "kind": "text"
+          },
+          "heading": {
+            "kind": "text"
+          },
+          "description": {
+            "kind": "richText"
+          }
+        }
+      },
+      "items": {
+        "kind": "componentList",
+        "fields": {
+          "image": {
+            "kind": "media"
+          },
+          "title": {
+            "kind": "text"
+          },
+          "cta": {
+            "kind": "component",
+            "fields": {
+              "cta": {
+                "kind": "cta"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 const intro = {
   "accentHeading": "Accent Heading 1",
   "heading": "Heading 1",
@@ -146,4 +228,4 @@ const intro = {
 const ctas = undefined
 const media = undefined
 ---
-<StructuralSection block="beta-battery-models-allentown" intro={intro} ctas={ctas} media={media} content={content} />
+<StructuralSection block="beta-battery-models-allentown" intro={intro} ctas={ctas} media={media} content={content} fields={fields} />

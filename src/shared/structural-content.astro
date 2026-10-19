@@ -1,44 +1,72 @@
 ---
+interface Field {
+  kind: string
+  fields?: Record<string, Field>
+}
+
 interface Props {
   block: string
   content: Record<string, unknown>
+  fields: Record<string, Field>
   omit?: string[]
+  level?: 2 | 3 | 4
 }
 
-const { block, content, omit = [] } = Astro.props
-const visibleEntries = Object.entries(content).filter(([key, value]) => value !== undefined && value !== null && !omit.includes(key))
+const { block, content, fields, omit = [], level = 2 } = Astro.props
+const entries = Object.entries(fields).filter(([key]) => key in content && !omit.includes(key))
+const Heading = `h${Math.min(level, 4)}` as 'h2' | 'h3' | 'h4'
 
-function labelFor(key: string) {
-  return key.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[-_]/g, ' ').replace(/^./, (character) => character.toUpperCase())
+function classFor(key: string) {
+  return `${block}__${key.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/[_\s]+/g, '-').toLowerCase()}`
 }
 
-function textFor(value: unknown) {
-  if (typeof value === 'string' || typeof value === 'number') return String(value)
-  return null
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+function isHeading(key: string) {
+  return /(heading|title|name)$/i.test(key)
 }
 ---
-{visibleEntries.length > 0 && (
-  <dl class={`${block}__details`}>
-    {visibleEntries.map(([key, value]) => (
-      <div class={`${block}__detail`}>
-        <dt>{labelFor(key)}</dt>
-        <dd>
-          {textFor(value) && <p>{textFor(value)}</p>}
-          {Array.isArray(value) && (
-            <ul class={`${block}__items`}>
-              {value.map((item) => (
-                <li class={`${block}__item`}>
-                  {textFor(item) && <p>{textFor(item)}</p>}
-                  {typeof item === 'object' && item && <Astro.self block={block} content={item as Record<string, unknown>} />}
-                </li>
-              ))}
-            </ul>
-          )}
-          {typeof value === 'object' && value && !Array.isArray(value) && (
-            <Astro.self block={block} content={value as Record<string, unknown>} />
-          )}
-        </dd>
-      </div>
-    ))}
-  </dl>
-)}
+{entries.map(([key, field]) => {
+  const value = content[key]
+  const className = classFor(key)
+
+  if (field.kind === 'component' && isRecord(value)) {
+    return <div class={className}><Astro.self block={block} content={value} fields={field.fields ?? {}} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></div>
+  }
+
+  if (field.kind === 'componentList' && Array.isArray(value)) {
+    return <ul class={className}>{value.map((item) => <li class={`${className}-item`}><article><Astro.self block={block} content={item as Record<string, unknown>} fields={field.fields ?? {}} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></article></li>)}</ul>
+  }
+
+  if ((field.kind === 'media' || field.kind === 'video') && isRecord(value) && typeof value.url === 'string') {
+    return <picture class={className}><img src={value.url} alt={typeof value.alt === 'string' ? value.alt : ''} width={typeof value.width === 'number' ? value.width : undefined} height={typeof value.height === 'number' ? value.height : undefined} /></picture>
+  }
+
+  if (field.kind === 'mediaList' && Array.isArray(value)) {
+    return <ul class={className}>{value.map((media) => isRecord(media) && typeof media.url === 'string' && <li class={`${className}-item`}><picture><img src={media.url} alt={typeof media.alt === 'string' ? media.alt : ''} width={typeof media.width === 'number' ? media.width : undefined} height={typeof media.height === 'number' ? media.height : undefined} /></picture></li>)}</ul>
+  }
+
+  if (field.kind === 'cta' && isRecord(value) && typeof value.href === 'string' && typeof value.label === 'string') {
+    return <a class={className} href={value.href}>{value.label}</a>
+  }
+
+  if (field.kind === 'ctaGroup' && isRecord(value)) {
+    return <nav class={className} aria-label="Section actions">{Object.values(value).map((cta) => isRecord(cta) && typeof cta.href === 'string' && typeof cta.label === 'string' && <a href={cta.href}>{cta.label}</a>)}</nav>
+  }
+
+  if (field.kind === 'formReference' && isRecord(value)) {
+    return <form class={className}><p>{typeof value.name === 'string' ? value.name : 'Example form'}</p><button type="button">Open form</button></form>
+  }
+
+  if (Array.isArray(value)) {
+    return <ul class={className}>{value.map((item) => <li class={`${className}-item`}>{typeof item === 'string' ? item : JSON.stringify(item)}</li>)}</ul>
+  }
+
+  if (typeof value === 'string' || typeof value === 'number') {
+    return isHeading(key) ? <Heading class={className}>{String(value)}</Heading> : <p class={className}>{String(value)}</p>
+  }
+
+  return null
+})}
