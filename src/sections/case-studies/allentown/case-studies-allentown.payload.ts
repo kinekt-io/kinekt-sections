@@ -1,12 +1,12 @@
 // @generated structural section — source manifest remains the contract.
 import type { Block, CollectionSlug } from 'payload'
 import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
-import type { BetaCaseStudiesAllentownContent, PayloadBetaCaseStudiesAllentownDocument } from './case-studies-allentown.types.js'
+import type { CaseStudiesAllentownContent, PayloadCaseStudiesAllentownDocument } from './case-studies-allentown.types.js'
 
 const manifest = {
   "slug": "case-studies-allentown",
   "title": "Case Studies Allentown",
-  "status": "planned",
+  "status": "released",
   "fields": {
     "theme": {
       "kind": "select",
@@ -47,12 +47,12 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaCaseStudiesAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateCaseStudiesAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
 
-export function createBetaCaseStudiesAllentownBlock(options: CreateBetaCaseStudiesAllentownBlockOptions = {}): Block {
+export function createCaseStudiesAllentownBlock(options: CreateCaseStudiesAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)
 }
 
-export function betaCaseStudiesAllentownToProps(data: PayloadBetaCaseStudiesAllentownDocument): BetaCaseStudiesAllentownContent {
+export function caseStudiesAllentownToProps(data: PayloadCaseStudiesAllentownDocument): CaseStudiesAllentownContent {
   return manifestToProps(data)
 }
