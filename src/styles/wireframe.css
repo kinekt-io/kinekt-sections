@@ -894,3 +894,256 @@
     grid-template-columns: repeat(var(--output-card-grid-columns, 3), minmax(0, 1fr));
   }
 }
+
+/*
+ * Result metrics in the Case Studies layout are labels with a single value
+ * field. The list item is structural, not a card; its outer box must remain
+ * visually absent.
+ */
+:where(.case-studies-allentown) .case-studies-allentown__results > li > article {
+  gap: 0.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+/*
+ * Section composition recipes
+ *
+ * Each selector targets the section root only, so beta-prefixed structural
+ * blocks and released blocks share the same contract. A consuming site can
+ * replace every --kinekt-section-* value on that root without fighting the
+ * wireframe selectors.
+ */
+:where([data-kinekt-section][class*='action-contact-allentown'],
+  [data-kinekt-section][class*='support-contact-allentown']) {
+  --kinekt-section-reading-width: 38rem;
+  --kinekt-section-gap: clamp(2rem, 5vw, 5rem);
+}
+
+:where([data-kinekt-section][class*='battery-models-allentown'],
+  [data-kinekt-section][class*='product-options-allentown'],
+  [data-kinekt-section][class*='use-cases-allentown'],
+  [data-kinekt-section][class*='featured-insights-allentown'],
+  [data-kinekt-section][class*='event-overview-allentown'],
+  [data-kinekt-section][class*='facilities-overview-allentown']) {
+  --kinekt-section-card-columns: 3;
+  --kinekt-section-card-min-width: 18rem;
+  --kinekt-section-card-media-ratio: 3 / 2;
+  --kinekt-section-gap: clamp(2.5rem, 6vw, 5.5rem);
+}
+
+:where([data-kinekt-section][class*='checklist-feature-list-allentown'],
+  [data-kinekt-section][class*='solution-list-allentown'],
+  [data-kinekt-section][class*='proof-metrics-allentown'],
+  [data-kinekt-section][class*='moq-lead-times-allentown']) {
+  --kinekt-section-reading-width: 44rem;
+  --kinekt-section-gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+:where([data-kinekt-section][class*='comparison-overview-allentown'],
+  [data-kinekt-section][class*='density-comparison-allentown']) {
+  --kinekt-section-content-width: 96rem;
+  --kinekt-section-reading-width: 40rem;
+  --kinekt-section-gap: clamp(2rem, 5vw, 4rem);
+}
+
+:where([data-kinekt-section][class*='compliance-detail-allentown'],
+  [data-kinekt-section][class*='compliance-overview-allentown'],
+  [data-kinekt-section][class*='compliance-text-allentown']) {
+  --kinekt-section-reading-width: 46rem;
+  --kinekt-section-gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+:where([data-kinekt-section][class*='faq-allentown'],
+  [data-kinekt-section][class*='faq-index-allentown'],
+  [data-kinekt-section][class*='product-details-allentown'],
+  [data-kinekt-section][class*='media-accordion-allentown']) {
+  --kinekt-section-reading-width: 52rem;
+  --kinekt-section-gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+:where([data-kinekt-section][class*='featured-event-allentown'],
+  [data-kinekt-section][class*='featured-page-header-allentown'],
+  [data-kinekt-section][class*='process-story-allentown'],
+  [data-kinekt-section][class*='media-fact-grid-allentown'],
+  [data-kinekt-section][class*='media-metrics-allentown']) {
+  --kinekt-section-media-ratio: 4 / 5;
+  --kinekt-section-gap: clamp(2.5rem, 7vw, 7rem);
+}
+
+:where([data-kinekt-section][class*='form-section-allentown'],
+  [data-kinekt-section][class*='intake-form-allentown'],
+  [data-kinekt-section][class*='product-finder-form-allentown']) {
+  --kinekt-section-reading-width: 42rem;
+  --kinekt-section-gap: clamp(2rem, 5vw, 4rem);
+}
+
+:where([data-kinekt-section][class*='hd-cells-engineering-allentown'],
+  [data-kinekt-section][class*='homepage-problem-solution-allentown']) {
+  --kinekt-section-content-width: 96rem;
+  --kinekt-section-reading-width: 38rem;
+  --kinekt-section-gap: clamp(3rem, 7vw, 7rem);
+}
+
+:where([data-kinekt-section][class*='hero-allentown'],
+  [data-kinekt-section][class*='hero-todos-santos'],
+  [data-kinekt-section][class*='hero-trinity'],
+  [data-kinekt-section][class*='product-hero-allentown'],
+  [data-kinekt-section][class*='thank-you-hero-allentown'],
+  [data-kinekt-section][class*='not-found-hero-allentown']) {
+  --kinekt-section-content-width: 100rem;
+  --kinekt-section-reading-width: 38rem;
+  --kinekt-section-media-ratio: 1 / 1;
+  --kinekt-section-gap: clamp(2rem, 7vw, 8rem);
+}
+
+:where([data-kinekt-section][class*='insight-index-allentown']) {
+  --kinekt-section-content-width: 96rem;
+  --kinekt-section-card-columns: 3;
+  --kinekt-section-card-min-width: 18rem;
+  --kinekt-section-gap: clamp(2rem, 5vw, 5rem);
+}
+
+:where([data-kinekt-section][class*='output-card-grid-allentown']) {
+  --kinekt-section-card-columns: 3;
+  --kinekt-section-card-min-width: 16rem;
+  --kinekt-section-gap: clamp(3rem, 7vw, 7rem);
+}
+
+:where([data-kinekt-section][class*='tabs-allentown']) {
+  --kinekt-section-reading-width: 58rem;
+  --kinekt-section-gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+:where([data-kinekt-section][class*='steps-stage']) {
+  --kinekt-section-reading-width: 48rem;
+  --kinekt-section-gap: clamp(2rem, 5vw, 5rem);
+}
+
+/* Editorial title/action row, including the manually-authored sections. */
+:where([data-kinekt-section]) [class$='__header']:has(> [class$='__header-content']) {
+  margin-bottom: var(--kinekt-section-header-to-content, clamp(1.5rem, 4vw, 3rem));
+}
+
+/* Structural metric and checklist lists are deliberately open, not cards. */
+:where([data-kinekt-section][class*='checklist-feature-list-allentown'],
+  [data-kinekt-section][class*='solution-list-allentown'],
+  [data-kinekt-section][class*='proof-metrics-allentown'],
+  [data-kinekt-section][class*='moq-lead-times-allentown'],
+  [data-kinekt-section][class*='hd-cells-engineering-allentown'])
+  :is([class$='__items'], [class$='__features'], [class$='__metrics'], [class$='__cell-items'], [class$='__engineering-topics']) {
+  gap: 0;
+  border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where([data-kinekt-section][class*='checklist-feature-list-allentown'],
+  [data-kinekt-section][class*='solution-list-allentown'],
+  [data-kinekt-section][class*='proof-metrics-allentown'],
+  [data-kinekt-section][class*='moq-lead-times-allentown'],
+  [data-kinekt-section][class*='hd-cells-engineering-allentown'])
+  :is([class$='__items'], [class$='__features'], [class$='__metrics'], [class$='__cell-items'], [class$='__engineering-topics']) > li > article {
+  padding: clamp(1.25rem, 2vw, 2rem) 0;
+  border-width: 0 0 var(--kinekt-component-border-width);
+  background: transparent;
+}
+
+/* Documentation-heavy and comparison sections keep a wide data surface. */
+:where([data-kinekt-section][class*='comparison-overview-allentown'],
+  [data-kinekt-section][class*='density-comparison-allentown']) [class$='__table'] {
+  margin-top: var(--kinekt-section-table-offset, clamp(1rem, 3vw, 2rem));
+}
+
+:where([data-kinekt-section][class*='compliance-detail-allentown'],
+  [data-kinekt-section][class*='compliance-overview-allentown'],
+  [data-kinekt-section][class*='compliance-text-allentown']) :is([class$='__items'], [class$='__details']) {
+  gap: 0;
+  border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where([data-kinekt-section][class*='compliance-detail-allentown'],
+  [data-kinekt-section][class*='compliance-overview-allentown'],
+  [data-kinekt-section][class*='compliance-text-allentown']) :is([class$='__items'], [class$='__details']) > li > article {
+  padding: clamp(1.25rem, 2.5vw, 2.5rem) 0;
+  border-width: 0 0 var(--kinekt-component-border-width);
+  background: transparent;
+}
+
+/* Dense catalogue sections use an editorial, full-bleed card grid. */
+:where([data-kinekt-section][class*='battery-models-allentown'],
+  [data-kinekt-section][class*='product-options-allentown'],
+  [data-kinekt-section][class*='use-cases-allentown'],
+  [data-kinekt-section][class*='featured-insights-allentown'],
+  [data-kinekt-section][class*='event-overview-allentown'],
+  [data-kinekt-section][class*='facilities-overview-allentown'],
+  [data-kinekt-section][class*='insight-index-allentown'])
+  :is([class$='__cards'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__results'], [class$='__insight-sources']) {
+  gap: 1px;
+  background: var(--kinekt-component-line);
+}
+
+:where([data-kinekt-section][class*='battery-models-allentown'],
+  [data-kinekt-section][class*='product-options-allentown'],
+  [data-kinekt-section][class*='use-cases-allentown'],
+  [data-kinekt-section][class*='featured-insights-allentown'],
+  [data-kinekt-section][class*='event-overview-allentown'],
+  [data-kinekt-section][class*='facilities-overview-allentown'],
+  [data-kinekt-section][class*='insight-index-allentown'])
+  :is([class$='__cards'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__results'], [class$='__insight-sources']) > li > article {
+  min-height: 100%;
+  padding: var(--kinekt-section-card-padding, clamp(1.25rem, 2.5vw, 2.25rem));
+  border: 0;
+  background: var(--kinekt-component-canvas);
+}
+
+/* Form sections remain a calm text/form split instead of a boxed card stack. */
+:where([data-kinekt-section][class*='form-section-allentown'],
+  [data-kinekt-section][class*='intake-form-allentown'],
+  [data-kinekt-section][class*='product-finder-form-allentown']) form[class*='__'] {
+  padding: var(--kinekt-section-form-padding, clamp(1.25rem, 3vw, 2.5rem));
+  border-radius: 0;
+}
+
+/* These media narratives receive an intentional tall editorial crop. */
+:where([data-kinekt-section][class*='featured-event-allentown'],
+  [data-kinekt-section][class*='featured-page-header-allentown'],
+  [data-kinekt-section][class*='process-story-allentown'],
+  [data-kinekt-section][class*='media-fact-grid-allentown'],
+  [data-kinekt-section][class*='media-metrics-allentown'])
+  :is([class$='__media'], [class$='__image']) img {
+  aspect-ratio: var(--kinekt-section-media-ratio);
+  object-fit: cover;
+}
+
+@media (min-width: 50rem) {
+  :where([data-kinekt-section][class*='form-section-allentown'],
+    [data-kinekt-section][class*='intake-form-allentown'],
+    [data-kinekt-section][class*='product-finder-form-allentown'])
+    > [class$='__container'] {
+    grid-template-columns: minmax(0, 0.8fr) minmax(20rem, 0.7fr);
+    align-items: start;
+  }
+
+  :where([data-kinekt-section][class*='hd-cells-engineering-allentown'],
+    [data-kinekt-section][class*='homepage-problem-solution-allentown'])
+    > [class$='__container'] {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+
+  :where([data-kinekt-section][class*='checklist-feature-list-allentown'],
+    [data-kinekt-section][class*='solution-list-allentown'],
+    [data-kinekt-section][class*='proof-metrics-allentown'],
+    [data-kinekt-section][class*='moq-lead-times-allentown'])
+    :is([class$='__items'], [class$='__features'], [class$='__metrics']) > li > article {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    column-gap: clamp(2rem, 5vw, 6rem);
+  }
+
+  :where([data-kinekt-section][class*='tabs-allentown']) [role='tablist'] {
+    gap: 0;
+  }
+
+  :where([data-kinekt-section][class*='tabs-allentown']) [role='tab'] {
+    padding-inline: clamp(1rem, 2vw, 2rem);
+  }
+}

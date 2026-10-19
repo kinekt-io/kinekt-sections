@@ -16,7 +16,7 @@ export function createHeroBlock({ mediaCollection = 'media' }: CreateHeroBlockOp
     slug: 'hero-allentown', interfaceName: 'HeroAllentown',
     labels: { singular: 'BETA — Hero Allentown', plural: 'BETA — Hero Allentown blocks' },
     fields: [
-      { name: 'theme', type: 'select', required: true, defaultValue: 'light', options: ['light', 'semi-light', 'dark', 'semi-dark'].map((value) => ({ label: value, value })) },
+      { name: 'theme', type: 'select', required: true, defaultValue: 'light', options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })) },
       { name: 'intro', type: 'group', label: 'Intro Block', localized: true, required: true, fields: [
         { name: 'accentHeading', type: 'text', label: 'Accent heading' },
         { name: 'heading', type: 'text', label: 'Heading', required: true, validate: (value: unknown) => hasText(value) || requiredTextValidationMessage },

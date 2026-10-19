@@ -15,8 +15,8 @@ const manifest = {
       "options": [
         "light",
         "semi-light",
-        "dark",
-        "semi-dark"
+        "semi-dark",
+        "dark"
       ],
       "description": "CMS-selected presentation setting passed to the renderer."
     },

@@ -15,7 +15,7 @@
     "nodeId": "5240:411675"
   },
   "fields": {
-    "theme": {"kind":"select","required":true,"localized":false,"options":["light","semi-light","dark","semi-dark"],"description":"CMS-selected presentation setting passed to the renderer."},
+    "theme": {"kind":"select","required":true,"localized":false,"options":["light", "semi-light", "semi-dark", "dark"],"description":"CMS-selected presentation setting passed to the renderer."},
     "insightSources": {
       "kind": "insightSourceList",
       "required": true,

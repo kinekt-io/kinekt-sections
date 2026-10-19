@@ -90,8 +90,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -172,8 +172,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -230,8 +230,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -292,8 +292,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -355,8 +355,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -417,8 +417,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ]
       },
       "intro": {
@@ -473,8 +473,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -552,8 +552,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -623,8 +623,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -694,8 +694,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -755,8 +755,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -816,8 +816,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -883,8 +883,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -946,8 +946,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1014,8 +1014,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1071,8 +1071,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1145,8 +1145,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1210,8 +1210,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1259,6 +1259,79 @@
     }
   },
   {
+    "id": "sections/hd-cells-engineering/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "hd-cells-engineering-allentown",
+    "category": "sections",
+    "tags": [
+      "engineering",
+      "product"
+    ],
+    "role": "hd-cells-engineering",
+    "variation": "allentown",
+    "title": "HD Cells Engineering Allentown",
+    "description": "A Tulip-specific interactive high-density cells and engineering section.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412556&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "semi-light",
+          "semi-dark",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "cellsIntro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "cellItems": {
+        "kind": "componentList",
+        "componentId": "components/hd-cell-item/allentown",
+        "minItems": 1,
+        "required": true,
+        "localized": true
+      },
+      "engineeringIntro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "engineeringTopics": {
+        "kind": "componentList",
+        "componentId": "components/hd-engineering-topic/allentown",
+        "minItems": 1,
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "activeEngineeringTopic": {
+        "kind": "firstListItem",
+        "source": "renderer"
+      },
+      "engineeringInteraction": {
+        "kind": "handImplementedTopicHotspotsAndTransitions",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/hd-cells-engineering/allentown/hd-cells-engineering-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/hd-cells-engineering-allentown.astro",
+      "payload": "@kinekt-io/components/sections/hd-cells-engineering-allentown.payload",
+      "types": "@kinekt-io/components/sections/hd-cells-engineering-allentown.types"
+    }
+  },
+  {
     "id": "sections/hero/allentown",
     "version": "26.10.0-beta.0",
     "slug": "hero-allentown",
@@ -1282,8 +1355,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1353,8 +1426,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1435,8 +1508,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1477,6 +1550,89 @@
     }
   },
   {
+    "id": "sections/homepage-problem-solution/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "homepage-problem-solution-allentown",
+    "category": "sections",
+    "tags": [
+      "conversion",
+      "content"
+    ],
+    "role": "homepage-problem-solution",
+    "variation": "allentown",
+    "title": "Homepage Problem Solution Allentown",
+    "description": "A Tulip-specific, hand-animated scroll section pairing problem and solution content.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411370&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "semi-light",
+          "semi-dark",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "problemIntro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "problemItems": {
+        "kind": "componentList",
+        "componentId": "components/homepage-problem-item/allentown",
+        "minItems": 1,
+        "required": true,
+        "localized": true
+      },
+      "solutionIntro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "solutionSteps": {
+        "kind": "componentList",
+        "componentId": "components/homepage-solution-step/allentown",
+        "minItems": 1,
+        "required": true,
+        "localized": true
+      },
+      "solutionCtaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "scrollAnimation": {
+        "kind": "handImplementedProblemSolutionScrollAnimation",
+        "source": "renderer"
+      },
+      "problemMedia": {
+        "kind": "fixedImplementationAsset",
+        "source": "renderer"
+      },
+      "solutionMedia": {
+        "kind": "fixedImplementationAsset",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/homepage-problem-solution/allentown/homepage-problem-solution-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/homepage-problem-solution-allentown.astro",
+      "payload": "@kinekt-io/components/sections/homepage-problem-solution-allentown.payload",
+      "types": "@kinekt-io/components/sections/homepage-problem-solution-allentown.types"
+    }
+  },
+  {
     "id": "sections/insight-index/allentown",
     "version": "26.10.0-beta.0",
     "slug": "insight-index-allentown",
@@ -1500,8 +1656,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1574,8 +1730,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1647,8 +1803,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1725,8 +1881,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1787,8 +1943,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ]
       },
       "direction": {
@@ -1858,8 +2014,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1920,8 +2076,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -1983,8 +2139,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -2042,8 +2198,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ]
       },
       "intro": {
@@ -2097,8 +2253,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -2158,8 +2314,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -2228,8 +2384,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -2283,8 +2439,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -2366,8 +2522,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -2423,8 +2579,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -2498,8 +2654,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ]
       },
       "intro": {
@@ -2551,8 +2707,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -2608,8 +2764,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -2673,8 +2829,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -2749,8 +2905,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -2809,8 +2965,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
@@ -2879,8 +3035,8 @@
         "options": [
           "light",
           "semi-light",
-          "dark",
-          "semi-dark"
+          "semi-dark",
+          "dark"
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },

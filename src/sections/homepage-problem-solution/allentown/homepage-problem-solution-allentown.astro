@@ -1,0 +1,89 @@
+---
+// @generated structural section — source manifest remains the contract.
+import StructuralSection from '../../../shared/structural-section.astro'
+
+const props = Astro.props
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "problemIntro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "problemItems": {
+    "kind": "componentList",
+    "id": "components/homepage-problem-item/allentown",
+    "role": "homepage-problem-item",
+    "fields": {
+      "icon": {
+        "kind": "text"
+      },
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "solutionIntro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "solutionSteps": {
+    "kind": "componentList",
+    "id": "components/homepage-solution-step/allentown",
+    "role": "homepage-solution-step",
+    "fields": {
+      "icon": {
+        "kind": "text"
+      },
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "solutionCtaGroup": {
+    "kind": "component",
+    "id": "components/cta-group/allentown",
+    "role": "cta-group",
+    "fields": {
+      "primaryButton": {
+        "kind": "cta"
+      },
+      "secondaryButton": {
+        "kind": "cta"
+      }
+    }
+  }
+}
+---
+<StructuralSection block="beta-homepage-problem-solution-allentown" fields={fields} {...props} />

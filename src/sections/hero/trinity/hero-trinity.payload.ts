@@ -16,7 +16,7 @@ export function createHeroBlock({ mediaCollection = 'media' }: CreateHeroBlockOp
     slug: 'hero-trinity', interfaceName: 'HeroTrinity',
     labels: { singular: 'BETA — Hero Trinity', plural: 'BETA — Hero Trinity blocks' },
     fields: [
-      { name: 'theme', type: 'select', required: true, defaultValue: 'dark', options: ['light', 'semi-light', 'dark', 'semi-dark'].map((value) => ({ label: value, value })) },
+      { name: 'theme', type: 'select', required: true, defaultValue: 'dark', options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })) },
       { name: 'intro', type: 'group', label: 'Intro Block', localized: true, required: true, fields: [
         { name: 'accentHeading', type: 'text', label: 'Accent heading' },
         { name: 'heading', type: 'text', label: 'Heading', required: true, validate: (value: unknown) => hasText(value) || requiredTextValidationMessage },

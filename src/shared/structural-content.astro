@@ -199,7 +199,7 @@ function buttonStyle(value: Record<string, unknown>, key: string): 'primary' | '
   }
 
   if (field.kind === 'formReference' && isRecord(value)) {
-    return <form class={className} action="#" method="get"><p>{typeof value.name === 'string' ? value.name : 'Example form'}</p><label>Name <input name="name" autocomplete="name" required /></label><label>Email <input name="email" type="email" autocomplete="email" required /></label><label>Message <textarea name="message" required></textarea></label><button class="button button--primary" type="submit">Submit test form</button></form>
+    return <form class={className} action="#" method="get"><p>{typeof value.name === 'string' ? value.name : 'Project enquiry'}</p><label>Name <input name="name" autocomplete="name" required /></label><label>Email <input name="email" type="email" autocomplete="email" required /></label><label>Message <textarea name="message" required></textarea></label><button class="button button--primary" type="submit">Send enquiry</button></form>
   }
 
   if ((field.kind === 'infoItems' || field.kind === 'featureItems') && Array.isArray(value)) {

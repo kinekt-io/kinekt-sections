@@ -1,0 +1,165 @@
+---
+// @generated structural section preview.
+import StructuralSection from '../../../shared/structural-section.astro'
+
+const content = {
+  "theme": "light",
+  "problemIntro": {
+    "accentHeading": "Energy systems built around real operating conditions",
+    "heading": "Energy systems built around real operating conditions",
+    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  },
+  "problemItems": [
+    {
+      "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
+      "title": "Energy systems built around real operating conditions",
+      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+    },
+    {
+      "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
+      "title": "Designed for the constraints that shape delivery",
+      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
+    },
+    {
+      "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
+      "title": "Performance data teams can use with confidence",
+      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
+    }
+  ],
+  "solutionIntro": {
+    "accentHeading": "Energy systems built around real operating conditions",
+    "heading": "Energy systems built around real operating conditions",
+    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  },
+  "solutionSteps": [
+    {
+      "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
+      "title": "Energy systems built around real operating conditions",
+      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+    },
+    {
+      "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
+      "title": "Designed for the constraints that shape delivery",
+      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
+    },
+    {
+      "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
+      "title": "Performance data teams can use with confidence",
+      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
+    }
+  ],
+  "solutionCtaGroup": {
+    "primaryButton": {
+      "label": "Explore the specification",
+      "href": "#"
+    },
+    "secondaryButton": {
+      "label": "Explore the specification",
+      "href": "#"
+    }
+  }
+}
+const fields = {
+  "theme": {
+    "kind": "select"
+  },
+  "problemIntro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "problemItems": {
+    "kind": "componentList",
+    "id": "components/homepage-problem-item/allentown",
+    "role": "homepage-problem-item",
+    "fields": {
+      "icon": {
+        "kind": "text"
+      },
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "solutionIntro": {
+    "kind": "component",
+    "id": "components/intro/allentown",
+    "role": "intro",
+    "fields": {
+      "accentHeading": {
+        "kind": "text"
+      },
+      "heading": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "solutionSteps": {
+    "kind": "componentList",
+    "id": "components/homepage-solution-step/allentown",
+    "role": "homepage-solution-step",
+    "fields": {
+      "icon": {
+        "kind": "text"
+      },
+      "title": {
+        "kind": "text"
+      },
+      "description": {
+        "kind": "richText"
+      }
+    }
+  },
+  "solutionCtaGroup": {
+    "kind": "component",
+    "id": "components/cta-group/allentown",
+    "role": "cta-group",
+    "fields": {
+      "primaryButton": {
+        "kind": "cta"
+      },
+      "secondaryButton": {
+        "kind": "cta"
+      }
+    }
+  }
+}
+const intro = {
+  "accentHeading": "Section overview",
+  "heading": "Homepage Problem Solution Allentown",
+  "description": "A reusable content structure for technical decisions."
+}
+const ctas = undefined
+const media = undefined
+const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
+
+function resolveCatalogueAssets(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
+  if (!value || typeof value !== 'object') return value
+  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
+  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
+    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
+  }
+  return record
+}
+
+const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
+---
+<StructuralSection block="beta-homepage-problem-solution-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />

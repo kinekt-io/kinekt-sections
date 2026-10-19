@@ -5,7 +5,6 @@ import { fileURLToPath } from 'node:url'
 const root = fileURLToPath(new URL('../', import.meta.url))
 const source = path.join(root, 'src')
 const sections = path.join(source, 'sections')
-const tulipOnlySlugs = new Set(['hd-cells-engineering-allentown', 'homepage-problem-solution-allentown'])
 
 async function manifestDirectories(directory, result = []) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -227,7 +226,6 @@ async function materialize(filename, source) {
 
 for (const directory of await manifestDirectories(sections)) {
   const manifest = JSON.parse(await readFile(path.join(directory, 'manifest.json'), 'utf8'))
-  if (tulipOnlySlugs.has(manifest.slug)) continue
 
   const relativeAstro = path.relative(directory, path.join(source, 'shared', 'structural-section.astro')).split(path.sep).join('/')
   const relativeAdapter = path.relative(directory, path.join(source, 'shared', 'manifest-block.js')).split(path.sep).join('/')
