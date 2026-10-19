@@ -85,6 +85,23 @@ function identifier(value: string) {
       </div>
     </div>
   }
+  if (field.kind === 'component' && field.role === 'quote' && isRecord(value)) {
+    const avatar = isRecord(value.avatar) ? value.avatar : null
+    const quote = text(value.quote)
+    const authorName = text(value.authorName)
+    const authorRole = text(value.authorRole)
+    return <figure class={className}>
+      {quote && <blockquote><p class={`${className}-text`}>{quote}</p></blockquote>}
+      {(avatar || authorName || authorRole) && <figcaption class={`${className}-attribution`}>
+        {avatar && typeof avatar.url === 'string' && <picture class={`${className}-avatar`}><img src={avatar.url} alt={typeof avatar.alt === 'string' ? avatar.alt : ''} width={typeof avatar.width === 'number' ? avatar.width : undefined} height={typeof avatar.height === 'number' ? avatar.height : undefined} /></picture>}
+        {(authorName || authorRole) && <div class={`${className}-author`}>
+          {authorName && <p class={`${className}-author-name`}>{authorName}</p>}
+          {authorRole && <p class={`${className}-author-role`}>{authorRole}</p>}
+        </div>}
+      </figcaption>}
+    </figure>
+  }
+
 
   if (field.kind === 'component' && isRecord(value)) {
     return <div class={className}><Astro.self block={block} instanceId={`${instanceId}-${key}`} content={value} fields={field.fields ?? {}} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></div>

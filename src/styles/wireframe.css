@@ -457,48 +457,49 @@
 }
 
 :where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 1rem;
-  row-gap: 0.375rem;
+  margin: 0;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote > .beta-case-studies-allentown__quote {
-  flex-basis: 100%;
-  margin: 0 0 0.75rem;
+:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote blockquote {
+  margin: 0 0 1.25rem;
+}
+
+:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote-text {
+  margin: 0;
   color: var(--kinekt-component-action);
   font-size: clamp(1.125rem, 2vw, 1.5rem);
   line-height: 1.2;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__avatar {
-  order: 2;
+:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote-attribution {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote-avatar {
   flex: 0 0 3rem;
   width: 3rem;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__avatar img {
+:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote-avatar img {
   aspect-ratio: 1;
   border-radius: 50%;
   object-fit: cover;
 }
 
-:where(.beta-case-studies-allentown) :is(.beta-case-studies-allentown__author-name, .beta-case-studies-allentown__author-role) {
+:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote-author {
+  display: grid;
+  gap: 0.375rem;
+}
+
+:where(.beta-case-studies-allentown) :is(.beta-case-studies-allentown__quote-author-name, .beta-case-studies-allentown__quote-author-role) {
   margin: 0;
   font-size: 0.875rem;
   line-height: 1.2;
 }
 
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__author-name {
-  order: 3;
-  flex: 1 0 calc(100% - 4rem);
-  align-self: end;
-}
-
-:where(.beta-case-studies-allentown) .beta-case-studies-allentown__author-role {
-  order: 4;
-  flex-basis: calc(100% - 4rem);
-  margin-left: 4rem;
+:where(.beta-case-studies-allentown) .beta-case-studies-allentown__quote-author-role {
   color: var(--kinekt-component-muted);
 }
 
