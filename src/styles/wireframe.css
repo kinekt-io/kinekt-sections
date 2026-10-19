@@ -348,6 +348,11 @@
   --kinekt-section-content-width: 90rem;
   --case-studies-intro-to-carousel: clamp(3.5rem, 7vw, 6.25rem);
   --case-studies-carousel-to-slide: clamp(2.5rem, 4vw, 4rem);
+  --case-studies-carousel-padding-block-start: clamp(2.5rem, 4vw, 3.25rem);
+  --case-studies-header-content-width: 54rem;
+  --case-studies-header-gap: 1.25rem;
+  --case-studies-header-column-gap: 2rem;
+  --case-studies-header-justify-content: space-between;
   --case-studies-logo-to-title: 1.25rem;
   --case-studies-title-to-summary: 1.25rem;
   --case-studies-summary-to-content: clamp(2rem, 4vw, 2.5rem);
@@ -360,11 +365,18 @@
   gap: 0;
 }
 
+:where(.beta-case-studies-allentown) .beta-case-studies-allentown__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--case-studies-header-gap);
+}
+
 :where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel {
   display: grid;
   gap: var(--case-studies-carousel-to-slide);
   margin-top: var(--case-studies-intro-to-carousel);
-  padding-top: clamp(2.5rem, 4vw, 3.25rem);
+  padding-top: var(--case-studies-carousel-padding-block-start);
   border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
 }
 
@@ -529,14 +541,22 @@
 }
 
 @media (min-width: 50rem) {
-  :where(.beta-case-studies-allentown) > .beta-case-studies-allentown__container {
-    position: relative;
+  :where(.beta-case-studies-allentown) .beta-case-studies-allentown__header {
+    display: grid;
+    grid-template-columns: minmax(0, var(--case-studies-header-content-width)) auto;
+    align-items: end;
+    column-gap: var(--case-studies-header-column-gap);
+    justify-content: var(--case-studies-header-justify-content);
   }
 
-  :where(.beta-case-studies-allentown) > .beta-case-studies-allentown__container > .beta-case-studies-allentown__cta {
-    position: absolute;
-    top: 0;
-    right: 0;
+  :where(.beta-case-studies-allentown) .beta-case-studies-allentown__header > :not(.beta-case-studies-allentown__actions) {
+    grid-column: 1;
+  }
+
+  :where(.beta-case-studies-allentown) .beta-case-studies-allentown__header > .beta-case-studies-allentown__actions {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    align-self: end;
   }
 
   :where(.beta-case-studies-allentown) .beta-case-studies-allentown__carousel-slide-content {

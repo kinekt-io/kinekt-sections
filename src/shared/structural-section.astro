@@ -62,11 +62,15 @@ const actions = collectCtas(ctas)
 ---
 <section class={block} id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class={`${block}__container`}>
-    {intro && <SectionIntro intro={intro} headingLevel={headingLevel} />}
-    {actions.length > 0 && (
-      <nav class={`${block}__actions`} aria-label="Section actions">
-        {actions.map((cta, index) => <a class={`${block}__action ${block}__action--${index === 0 ? 'primary' : 'secondary'}`} href={cta.href}>{cta.label}</a>)}
-      </nav>
+    {(intro || actions.length > 0) && (
+      <header class={`${block}__header`}>
+        {intro && <SectionIntro intro={intro} headingLevel={headingLevel} />}
+        {actions.length > 0 && (
+          <nav class={`${block}__actions`} aria-label="Section actions">
+            {actions.map((cta, index) => <a class={`${block}__action ${block}__action--${index === 0 ? 'primary' : 'secondary'}`} href={cta.href}>{cta.label}</a>)}
+          </nav>
+        )}
+      </header>
     )}
     <StructuralContent block={block} instanceId={id ?? block} content={content} fields={fields} pagefindUrl={pagefindUrl} pagefindFilters={pagefindFilters} carouselControlStyle={carouselControlStyle} carouselControls={carouselControls} omit={['theme', 'intro', 'ctas', 'media']} />
     {media?.url && (
