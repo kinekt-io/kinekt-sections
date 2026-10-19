@@ -15,7 +15,7 @@ const { theme, direction, intro, label, media, features, headingLevel = 'h2', me
     </div>
     {media && <picture class="media-feature-list__media">
       {media.sources?.length && <source type="image/avif" srcset={media.sources.map((source) => `${source.url} ${source.width}w`).join(', ')} sizes={media.sizes} />}
-      <img class="media-feature-list__image" src={media.url} alt={media.alt} width={media.width} height={media.height} data-fallback-url={media.fallbackUrl} loading={mediaLoading} decoding="async" style={`max-width:${media.width}px;max-height:${media.height}px`} />
+      <img class="media-feature-list__image" src={media.url} alt={media.alt} width={media.width} height={media.height} data-fallback-url={media.fallbackUrl} loading={mediaLoading} decoding="async" />
     </picture>}
   </div>
 </section>
