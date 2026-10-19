@@ -549,13 +549,12 @@
     justify-content: var(--case-studies-header-justify-content);
   }
 
-  :where(.beta-case-studies-allentown) .beta-case-studies-allentown__header > :not(.beta-case-studies-allentown__actions) {
+  :where(.beta-case-studies-allentown) .beta-case-studies-allentown__header-content {
     grid-column: 1;
   }
 
   :where(.beta-case-studies-allentown) .beta-case-studies-allentown__header > .beta-case-studies-allentown__actions {
     grid-column: 2;
-    grid-row: 1 / -1;
     align-self: end;
   }
 

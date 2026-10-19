@@ -64,7 +64,7 @@ const actions = collectCtas(ctas)
   <div class={`${block}__container`}>
     {(intro || actions.length > 0) && (
       <header class={`${block}__header`}>
-        {intro && <SectionIntro intro={intro} headingLevel={headingLevel} />}
+        {intro && <div class={`${block}__header-content`}><SectionIntro intro={intro} headingLevel={headingLevel} /></div>}
         {actions.length > 0 && (
           <nav class={`${block}__actions`} aria-label="Section actions">
             {actions.map((cta, index) => <a class={`${block}__action ${block}__action--${index === 0 ? 'primary' : 'secondary'}`} href={cta.href}>{cta.label}</a>)}
