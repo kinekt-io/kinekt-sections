@@ -55,6 +55,10 @@
   box-sizing: border-box;
 }
 
+:where([data-kinekt-section]) [hidden] {
+  display: none !important;
+}
+
 :where([data-kinekt-section]) > [class$='__container'] {
   display: grid;
   width: 100%;
@@ -121,6 +125,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.8ch;
   min-height: 3rem;
   padding: 0.8rem 1.15rem;
   border: var(--kinekt-component-border-width) solid var(--kinekt-component-action);
@@ -254,7 +259,7 @@
 :where([data-kinekt-section]) :is(input, textarea, button) { border-radius: var(--kinekt-component-radius); }
 :where([data-kinekt-section]) :is(input, textarea) { width: 100%; padding: 0.625rem; border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); }
 :where([data-kinekt-section]) textarea { min-height: 8rem; resize: vertical; }
-:where([data-kinekt-section]) button { width: fit-content; min-height: 2.75rem; padding: 0.625rem 1rem; border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-weight: 700; cursor: pointer; }
+:where([data-kinekt-section]) button { display: inline-flex; align-items: center; justify-content: center; gap: 0.8ch; width: fit-content; min-height: 2.75rem; padding: 0.625rem 1rem; border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-weight: 700; cursor: pointer; }
 
 :where([data-kinekt-section]) :is(a, button, input, textarea):focus-visible {
   outline: 3px solid var(--kinekt-section-focus, var(--kinekt-color-focus, #111111));

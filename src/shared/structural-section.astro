@@ -34,6 +34,8 @@ interface Props {
   ctas?: Record<string, unknown>
   media?: Media
   content?: Record<string, unknown>
+  pagefindUrl?: string
+  pagefindFilters?: Record<string, unknown>
   fields: Record<string, StructuralField>
   carouselControlStyle?: 'text' | 'icon'
   carouselControls?: 'next' | 'previous-next'
@@ -57,7 +59,7 @@ function collectCtas(value: unknown): Required<Cta>[] {
 }
 
 const { block, id, headingLevel = 'h2', intro, ctas, media, fields, content: explicitContent, pagefindUrl, pagefindFilters, carouselControlStyle = 'icon', carouselControls = 'previous-next', carouselLoop = false, ...implicitContent } = Astro.props
-const content = explicitContent ?? implicitContent
+const content = (explicitContent ?? implicitContent) as Record<string, unknown>
 const theme = content.theme === 'dark' ? 'dark' : 'light'
 const actions = collectCtas(ctas)
 const caseStudyAction = block.includes('case-studies') ? collectCtas(content.cta)[0] : undefined

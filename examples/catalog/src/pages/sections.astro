@@ -5,7 +5,9 @@ const previewModules = import.meta.glob('@package-src/**/*.preview.astro', { eag
 const sections = components
   .filter((component) => component.category === 'sections' && component.previewSource)
   .map((component) => {
-    const module = Object.entries(previewModules).find(([path]) => path.endsWith(component.previewSource))?.[1]
+    const previewSource = component.previewSource
+    if (!previewSource) throw new Error(`No preview source configured for ${component.id}.`)
+    const module = Object.entries(previewModules).find(([path]) => path.endsWith(previewSource))?.[1]
     if (!module) throw new Error(`No preview module found for ${component.id}.`)
     return { component, Preview: (module as { default: any }).default }
   })

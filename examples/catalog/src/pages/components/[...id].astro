@@ -74,9 +74,9 @@ const Preview = (previewModule as { default: any }).default
       <div data-kinekt-preview-surface><Preview /></div>
     </main>
     <script>
-      const surface = document.querySelector('[data-kinekt-preview-surface]')
-      const previewOptions = document.querySelector('.preview-options')
-      function toggleCtaIcons(links, visible) {
+      const surface = document.querySelector<HTMLElement>('[data-kinekt-preview-surface]')
+      const previewOptions = document.querySelector<HTMLElement>('.preview-options')
+      function toggleCtaIcons(links: NodeListOf<HTMLAnchorElement>, visible: boolean) {
         links.forEach((link) => {
           const icon = link.querySelector('[data-kinekt-cta-icon]')
           if (visible && !icon) {
@@ -89,38 +89,38 @@ const Preview = (previewModule as { default: any }).default
           if (!visible) icon?.remove()
         })
       }
-      document.querySelectorAll('.preview-options input').forEach((input) => {
+      document.querySelectorAll<HTMLInputElement>('.preview-options input').forEach((input) => {
         input.addEventListener('change', () => {
           if (!surface || (input.type === 'radio' && !input.checked)) return
           if (input.name === 'theme') {
-            const section = surface.querySelector('[data-kinekt-section]')
+            const section = surface.querySelector<HTMLElement>('[data-kinekt-section]')
             if (section) section.dataset.kinektTheme = input.value
             if (previewOptions) previewOptions.dataset.kinektTheme = input.value
           }
           if (input.name === 'carousel-controls') {
-            const carousel = surface.querySelector('[data-kinekt-carousel]')
+            const carousel = surface.querySelector<HTMLElement>('[data-kinekt-carousel]')
             if (carousel) carousel.dataset.kinektCarouselControls = input.value
           }
           if (input.name === 'carousel-control-style') {
-            const carousel = surface.querySelector('[data-kinekt-carousel]')
+            const carousel = surface.querySelector<HTMLElement>('[data-kinekt-carousel]')
             if (carousel) carousel.dataset.kinektCarouselControlStyle = input.value
           }
           if (input.name === 'carousel-label') {
-            const label = surface.querySelector('[data-kinekt-carousel-label]')
+            const label = surface.querySelector<HTMLElement>('[data-kinekt-carousel-label]')
             if (label) label.hidden = !input.checked
           }
           if (input.name === 'carousel-loop') {
-            const carousel = surface.querySelector('[data-kinekt-carousel]')
+            const carousel = surface.querySelector<HTMLElement>('[data-kinekt-carousel]')
             if (carousel) {
               carousel.dataset.kinektCarouselLoop = String(input.checked)
               carousel.dispatchEvent(new CustomEvent('kinekt:carousel-reinitialize'))
             }
           }
           if (input.name === 'case-action-icon') {
-            toggleCtaIcons(surface.querySelectorAll('a.beta-case-studies-allentown__cta'), input.checked)
+            toggleCtaIcons(surface.querySelectorAll<HTMLAnchorElement>('a.beta-case-studies-allentown__cta'), input.checked)
           }
           if (input.name === 'slide-action-icons') {
-            toggleCtaIcons(surface.querySelectorAll('[data-kinekt-carousel-slide] a[class*="__cta"]'), input.checked)
+            toggleCtaIcons(surface.querySelectorAll<HTMLAnchorElement>('[data-kinekt-carousel-slide] a[class*="__cta"]'), input.checked)
           }
         })
       })
