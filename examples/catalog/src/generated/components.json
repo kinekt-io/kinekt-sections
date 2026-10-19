@@ -1,26 +1,366 @@
 [
   {
     "id": "primitives/section-intro",
+    "slug": "section-intro",
     "category": "primitives",
     "role": "section-intro",
     "variation": null,
-    "title": "section-intro",
-    "description": "No component README.md yet.",
-    "figmaUrl": null,
+    "title": "Section Intro",
+    "description": "A structural section-header primitive.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415190&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "accentHeading": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "heading": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "richText",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
     "previewSource": null,
     "entries": {
       "astro": "@kinekt-io/components/primitives/section-intro.astro"
     }
   },
   {
+    "id": "sections/action-contact/allentown",
+    "slug": "action-contact-allentown",
+    "category": "sections",
+    "role": "action-contact",
+    "variation": "allentown",
+    "title": "Action Contact Allentown",
+    "description": "A reusable direct-action contact section with a CTA group and contact methods.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/FaeBt9V4p54cxRyUuCd8wB/%25E2%2599%25A5-Tulip-Tech-ACSS-%25E2%2599%25A5?node-id=4131-288&t=dfGgl2XVtpG1Ejai-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "image": {
+        "kind": "media",
+        "required": true,
+        "localized": true
+      },
+      "actionHeading": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "actions": {
+        "kind": "ctaGroup",
+        "required": true,
+        "localized": true,
+        "description": "One or more direct contact actions using Button Allentown controls."
+      },
+      "actionNote": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "contactHeading": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "contactMethods": {
+        "kind": "componentList",
+        "componentId": "components/contact-method/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      }
+    },
+    "runtimeProps": {
+      "decoration": {
+        "kind": "tulipRegionPatternSharp",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/action-contact/allentown/action-contact-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/action-contact-allentown.astro",
+      "payload": "@kinekt-io/components/sections/action-contact-allentown.payload",
+      "types": "@kinekt-io/components/sections/action-contact-allentown.types"
+    }
+  },
+  {
+    "id": "sections/battery-models/allentown",
+    "slug": "battery-models-allentown",
+    "category": "sections",
+    "role": "battery-models",
+    "variation": "allentown",
+    "title": "Battery Models Allentown",
+    "description": "A reusable product-model catalog with an optional cross-sell callout.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411513&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "models": {
+        "kind": "componentList",
+        "componentId": "components/battery-card/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      },
+      "crossSell": {
+        "kind": "component",
+        "componentId": "patterns/cross-sell/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": "sections/battery-models/allentown/battery-models-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/battery-models-allentown.astro",
+      "payload": "@kinekt-io/components/sections/battery-models-allentown.payload",
+      "types": "@kinekt-io/components/sections/battery-models-allentown.types"
+    }
+  },
+  {
+    "id": "sections/case-studies/allentown",
+    "slug": "case-studies-allentown",
+    "category": "sections",
+    "role": "case-studies",
+    "variation": "allentown",
+    "title": "Case Studies Allentown",
+    "description": "A reusable case studies section with an introduction, carousel and optional overview action.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411424&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "carousel": {
+        "kind": "component",
+        "componentId": "patterns/case-study-carousel/allentown",
+        "required": true,
+        "localized": true
+      },
+      "cta": {
+        "kind": "component",
+        "componentId": "controls/button/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": "sections/case-studies/allentown/case-studies-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/case-studies-allentown.astro",
+      "payload": "@kinekt-io/components/sections/case-studies-allentown.payload",
+      "types": "@kinekt-io/components/sections/case-studies-allentown.types"
+    }
+  },
+  {
+    "id": "sections/checklist-feature-list/allentown",
+    "slug": "checklist-feature-list-allentown",
+    "category": "sections",
+    "role": "checklist-feature-list",
+    "variation": "allentown",
+    "title": "Checklist Feature List Allentown",
+    "description": "A reusable two-column section with a localized introduction and checklist beside a visible feature list.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415190&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "checklist": {
+        "kind": "componentList",
+        "componentId": "components/checklist-item/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      },
+      "features": {
+        "kind": "componentList",
+        "componentId": "components/feature-item/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      }
+    },
+    "runtimeProps": {
+      "featureDividers": {
+        "kind": "renderer",
+        "source": "presentation"
+      }
+    },
+    "previewSource": "sections/checklist-feature-list/allentown/checklist-feature-list-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/checklist-feature-list-allentown.astro",
+      "payload": "@kinekt-io/components/sections/checklist-feature-list-allentown.payload",
+      "types": "@kinekt-io/components/sections/checklist-feature-list-allentown.types"
+    }
+  },
+  {
+    "id": "sections/comparison-overview/allentown",
+    "slug": "comparison-overview-allentown",
+    "category": "sections",
+    "role": "comparison-overview",
+    "variation": "allentown",
+    "title": "Comparison Overview Allentown",
+    "description": "A reusable comparison section with an optional overview action and technical callout.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411428&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "introCta": {
+        "kind": "component",
+        "componentId": "controls/button/allentown",
+        "required": false,
+        "localized": true
+      },
+      "comparison": {
+        "kind": "component",
+        "componentId": "patterns/comparison-table/allentown",
+        "required": true,
+        "localized": true
+      },
+      "callout": {
+        "kind": "component",
+        "componentId": "components/callout/allentown",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": "sections/comparison-overview/allentown/comparison-overview-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/comparison-overview-allentown.astro",
+      "payload": "@kinekt-io/components/sections/comparison-overview-allentown.payload",
+      "types": "@kinekt-io/components/sections/comparison-overview-allentown.types"
+    }
+  },
+  {
     "id": "sections/compatibility-specifications/allentown",
+    "slug": "compatibility-specifications-allentown",
     "category": "sections",
     "role": "compatibility-specifications",
     "variation": "allentown",
-    "title": "allentown",
-    "description": "No component README.md yet.",
-    "figmaUrl": null,
-    "previewSource": null,
+    "title": "Compatibility Specifications Allentown",
+    "description": "A localized compatibility section.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538029&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ]
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "specifications": {
+        "kind": "componentList",
+        "componentId": "components/compatibility-specification-item/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      },
+      "compatiblePlatforms": {
+        "kind": "component",
+        "componentId": "components/compatible-platform-list/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": "sections/compatibility-specifications/allentown/compatibility-specifications-allentown.preview.astro",
     "entries": {
       "astro": "@kinekt-io/components/sections/compatibility-specifications-allentown.astro",
       "payload": "@kinekt-io/components/sections/compatibility-specifications-allentown.payload",
@@ -28,13 +368,787 @@
     }
   },
   {
+    "id": "sections/compliance-detail/allentown",
+    "slug": "compliance-detail-allentown",
+    "category": "sections",
+    "role": "compliance-detail",
+    "variation": "allentown",
+    "title": "Compliance Detail Allentown",
+    "description": "A reusable Tulip compliance content section with automatic certification-collage participation.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-413470&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true,
+        "description": "The localized accent heading maps from the former section title; description remains optional."
+      },
+      "checklistItems": {
+        "kind": "componentList",
+        "componentId": "components/checklist-item/allentown",
+        "minItems": 1,
+        "required": true,
+        "localized": true
+      },
+      "ctaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": true,
+        "localized": true
+      },
+      "certImage": {
+        "kind": "media",
+        "required": true,
+        "localized": true,
+        "description": "The certification collage image for this in-page content section."
+      },
+      "media": {
+        "kind": "media",
+        "required": false,
+        "localized": true,
+        "description": "Optional supplementary main media; independent of certImage."
+      }
+    },
+    "runtimeProps": {
+      "sectionAnchor": {
+        "kind": "automaticStableSectionAnchor",
+        "source": "renderer"
+      },
+      "collageEligibility": {
+        "kind": "hasCertImage",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/compliance-detail/allentown/compliance-detail-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/compliance-detail-allentown.astro",
+      "payload": "@kinekt-io/components/sections/compliance-detail-allentown.payload",
+      "types": "@kinekt-io/components/sections/compliance-detail-allentown.types"
+    }
+  },
+  {
+    "id": "sections/compliance-overview/allentown",
+    "slug": "compliance-overview-allentown",
+    "category": "sections",
+    "role": "compliance-overview",
+    "variation": "allentown",
+    "title": "Compliance Overview Allentown",
+    "description": "A Tulip-specific compliance overview with an automatic in-page navigation collage.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-413425&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "checklistTitle": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "checklistItems": {
+        "kind": "componentList",
+        "componentId": "components/checklist-item/allentown",
+        "minItems": 1,
+        "required": true,
+        "localized": true
+      },
+      "ctaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "collageNavigation": {
+        "kind": "eligibleComplianceSectionsCertImageInPageOrder",
+        "source": "renderer"
+      },
+      "sectionAnchor": {
+        "kind": "automaticStableSectionAnchor",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/compliance-overview/allentown/compliance-overview-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/compliance-overview-allentown.astro",
+      "payload": "@kinekt-io/components/sections/compliance-overview-allentown.payload",
+      "types": "@kinekt-io/components/sections/compliance-overview-allentown.types"
+    }
+  },
+  {
+    "id": "sections/compliance-text/allentown",
+    "slug": "compliance-text-allentown",
+    "category": "sections",
+    "role": "compliance-text",
+    "variation": "allentown",
+    "title": "Compliance Text Allentown",
+    "description": "A reusable Tulip compliance text section with automatic certification-collage participation.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-413495&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "checklistItems": {
+        "kind": "componentList",
+        "componentId": "components/checklist-item/allentown",
+        "minItems": 1,
+        "required": true,
+        "localized": true
+      },
+      "closingText": {
+        "kind": "richText",
+        "required": true,
+        "localized": true
+      },
+      "certImage": {
+        "kind": "media",
+        "required": true,
+        "localized": true,
+        "description": "The certification collage image for this in-page content section."
+      }
+    },
+    "runtimeProps": {
+      "sectionAnchor": {
+        "kind": "automaticStableSectionAnchor",
+        "source": "renderer"
+      },
+      "collageEligibility": {
+        "kind": "hasCertImage",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/compliance-text/allentown/compliance-text-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/compliance-text-allentown.astro",
+      "payload": "@kinekt-io/components/sections/compliance-text-allentown.payload",
+      "types": "@kinekt-io/components/sections/compliance-text-allentown.types"
+    }
+  },
+  {
+    "id": "sections/density-comparison/allentown",
+    "slug": "density-comparison-allentown",
+    "category": "sections",
+    "role": "density-comparison",
+    "variation": "allentown",
+    "title": "Density Comparison Allentown",
+    "description": "A density comparison section using the strict Trinity table variant.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411489&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "comparison": {
+        "kind": "component",
+        "componentId": "patterns/comparison-table/trinity",
+        "required": true,
+        "localized": true
+      },
+      "cta": {
+        "kind": "component",
+        "componentId": "controls/button/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "decoration": {
+        "kind": "tulipRegionPatternSharp",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/density-comparison/allentown/density-comparison-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/density-comparison-allentown.astro",
+      "payload": "@kinekt-io/components/sections/density-comparison-allentown.payload",
+      "types": "@kinekt-io/components/sections/density-comparison-allentown.types"
+    }
+  },
+  {
+    "id": "sections/event-overview/allentown",
+    "slug": "event-overview-allentown",
+    "category": "sections",
+    "role": "event-overview",
+    "variation": "allentown",
+    "title": "Event Overview Allentown",
+    "description": "A reusable overview of upcoming localized Events in a responsive grid.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415963&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "eventSelection": {
+        "kind": "futurePublishedEvents",
+        "source": "activeRegionAndLocale"
+      },
+      "sort": {
+        "kind": "startDateTimeAscending",
+        "source": "renderer"
+      },
+      "card": {
+        "kind": "eventCardGrid",
+        "source": "components/event-card/allentown"
+      },
+      "pagination": {
+        "kind": "sixPerPageLoadMore",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/event-overview/allentown/event-overview-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/event-overview-allentown.astro",
+      "payload": "@kinekt-io/components/sections/event-overview-allentown.payload",
+      "types": "@kinekt-io/components/sections/event-overview-allentown.types"
+    }
+  },
+  {
+    "id": "sections/facilities-overview/allentown",
+    "slug": "facilities-overview-allentown",
+    "category": "sections",
+    "role": "facilities-overview",
+    "variation": "allentown",
+    "title": "Facilities Overview Allentown",
+    "description": "A reusable facilities overview and an alternative to the EU European Roots section.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-543714&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "label": {
+        "kind": "component",
+        "componentId": "atoms/label/allentown",
+        "required": false,
+        "localized": true
+      },
+      "facts": {
+        "kind": "componentList",
+        "componentId": "components/facility-fact/allentown",
+        "minItems": 1,
+        "required": true,
+        "localized": true
+      },
+      "media": {
+        "kind": "media",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "layout": {
+        "kind": "factsAndMedia",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/facilities-overview/allentown/facilities-overview-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/facilities-overview-allentown.astro",
+      "payload": "@kinekt-io/components/sections/facilities-overview-allentown.payload",
+      "types": "@kinekt-io/components/sections/facilities-overview-allentown.types"
+    }
+  },
+  {
+    "id": "sections/faq-index/allentown",
+    "slug": "faq-index-allentown",
+    "category": "sections",
+    "role": "faq-index",
+    "variation": "allentown",
+    "title": "FAQ Index Allentown",
+    "description": "A reusable filtered FAQ index backed by platform-managed FAQ records and subjects.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414308&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "callout": {
+        "kind": "component",
+        "componentId": "components/callout/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "faqSelection": {
+        "kind": "publishedFaqRecords",
+        "source": "activeRegionAndLocale"
+      },
+      "subjectFilters": {
+        "kind": "presentFaqSubjects",
+        "source": "activeRegionAndLocale"
+      },
+      "accordion": {
+        "kind": "firstOpenSingleOpen",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/faq-index/allentown/faq-index-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/faq-index-allentown.astro",
+      "payload": "@kinekt-io/components/sections/faq-index-allentown.payload",
+      "types": "@kinekt-io/components/sections/faq-index-allentown.types"
+    }
+  },
+  {
+    "id": "sections/faq/allentown",
+    "slug": "faq-allentown",
+    "category": "sections",
+    "role": "faq",
+    "variation": "allentown",
+    "title": "FAQ Allentown",
+    "description": "A reusable FAQ accordion with optional overview action and support callout.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4811-276546&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "items": {
+        "kind": "componentList",
+        "componentId": "components/faq-item/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      },
+      "overviewCta": {
+        "kind": "component",
+        "componentId": "controls/button/allentown",
+        "required": false,
+        "localized": true
+      },
+      "callout": {
+        "kind": "component",
+        "componentId": "components/callout/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "initialOpenItem": {
+        "kind": "fixedIndex",
+        "value": 0
+      }
+    },
+    "previewSource": "sections/faq/allentown/faq-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/faq-allentown.astro",
+      "payload": "@kinekt-io/components/sections/faq-allentown.payload",
+      "types": "@kinekt-io/components/sections/faq-allentown.types"
+    }
+  },
+  {
+    "id": "sections/featured-event/allentown",
+    "slug": "featured-event-allentown",
+    "category": "sections",
+    "role": "featured-event",
+    "variation": "allentown",
+    "title": "Featured Event Allentown",
+    "description": "A reusable section with a localized introduction and the newest published featured Event in the active region and locale.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415942&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "eventSelection": {
+        "kind": "newestFeaturedThenNewestPublished",
+        "source": "activeRegionAndLocale"
+      },
+      "eventMapping": {
+        "kind": "eventRecord",
+        "source": "title,media,location,startDateTime,endDateTime,description,button"
+      },
+      "eventStage": {
+        "kind": "flightPath",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/featured-event/allentown/featured-event-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/featured-event-allentown.astro",
+      "payload": "@kinekt-io/components/sections/featured-event-allentown.payload",
+      "types": "@kinekt-io/components/sections/featured-event-allentown.types"
+    }
+  },
+  {
+    "id": "sections/featured-insights/allentown",
+    "slug": "featured-insights-allentown",
+    "category": "sections",
+    "role": "featured-insights",
+    "variation": "allentown",
+    "title": "Featured Insights Allentown",
+    "description": "A hybrid insights section: one newest featured item and three newest recent items from selected platform-admin Insight Sources.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-425155&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "insightSources": {
+        "kind": "insightSourceList",
+        "required": true,
+        "localized": true,
+        "minItems": 1,
+        "description": "Multiple active platform-admin Insight Sources. Each source maps a collection or collection filter, such as Articles: Case or Certifications."
+      },
+      "cta": {
+        "kind": "component",
+        "componentId": "controls/button/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "featuredSelection": {
+        "kind": "newestFeaturedThenNewestPublishedOne",
+        "source": "renderer"
+      },
+      "recentSelection": {
+        "kind": "newestNonFeaturedThree",
+        "source": "renderer"
+      },
+      "featuredMedia": {
+        "kind": "required",
+        "source": "renderer"
+      },
+      "recentMedia": {
+        "kind": "hidden",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/featured-insights/allentown/featured-insights-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/featured-insights-allentown.astro",
+      "payload": "@kinekt-io/components/sections/featured-insights-allentown.payload",
+      "types": "@kinekt-io/components/sections/featured-insights-allentown.types"
+    }
+  },
+  {
+    "id": "sections/featured-page-header/allentown",
+    "slug": "featured-page-header-allentown",
+    "category": "sections",
+    "role": "featured-page-header",
+    "variation": "allentown",
+    "title": "Featured Page Header Allentown",
+    "description": "A reusable index-page header with a localized Intro and one renderer-selected featured insight from selected platform-managed sources.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411660&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true,
+        "description": "Use the optional Intro description only in a renderer variation that supports it."
+      },
+      "insightSources": {
+        "kind": "insightSourceList",
+        "required": true,
+        "localized": true,
+        "minItems": 1,
+        "description": "One or more active platform-managed Insight Sources."
+      }
+    },
+    "runtimeProps": {
+      "featuredSelection": {
+        "kind": "newestFeaturedThenNewestPublished",
+        "source": "renderer"
+      },
+      "contentScope": {
+        "kind": "activeRegionAndLocale",
+        "source": "renderer"
+      },
+      "featuredCardFields": {
+        "kind": "sourceMappingMediaTitleExcerptUrl",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/featured-page-header/allentown/featured-page-header-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/featured-page-header-allentown.astro",
+      "payload": "@kinekt-io/components/sections/featured-page-header-allentown.payload",
+      "types": "@kinekt-io/components/sections/featured-page-header-allentown.types"
+    }
+  },
+  {
+    "id": "sections/form-section/allentown",
+    "slug": "form-section-allentown",
+    "category": "sections",
+    "role": "form-section",
+    "variation": "allentown",
+    "title": "Form Section Allentown",
+    "description": "A reusable split form section with optional media and direct contact methods. The referenced active regional Form record owns its fields and submission flow.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/FaeBt9V4p54cxRyUuCd8wB/%25E2%2599%25A5-Tulip-Tech-ACSS-%25E2%2599%25A5?node-id=4079-5685&t=dfGgl2XVtpG1Ejai-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "image": {
+        "kind": "media",
+        "required": false,
+        "localized": true
+      },
+      "form": {
+        "kind": "formReference",
+        "required": true,
+        "localized": true,
+        "description": "Only active forms available to the current region are selectable."
+      },
+      "contactHeading": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "contactMethods": {
+        "kind": "componentList",
+        "componentId": "components/contact-method/allentown",
+        "required": false,
+        "localized": true,
+        "minItems": 1
+      }
+    },
+    "runtimeProps": {
+      "decoration": {
+        "kind": "tulipRegionPatternSharp",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/form-section/allentown/form-section-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/form-section-allentown.astro",
+      "payload": "@kinekt-io/components/sections/form-section-allentown.payload",
+      "types": "@kinekt-io/components/sections/form-section-allentown.types"
+    }
+  },
+  {
     "id": "sections/hero/allentown",
+    "slug": "hero-allentown",
     "category": "sections",
     "role": "hero",
     "variation": "allentown",
     "title": "Hero Allentown",
-    "description": "A two-column Kinekt homepage hero with a coral highlighted phrase, CTA, and separate desktop and mobile image fields. It is the first hero variation in this package.",
-    "figmaUrl": "https://www.figma.com/design/nysBrgsDUulJAWpQ8G6n0C/KI-51-Kinekt-strategy--identity--website-and-marketing?node-id=2069-11170&t=PsKz3ufuSrw4ho5z-4",
+    "description": "A structural side-media hero with a localized introduction, optional CTA group, and responsive media.",
+    "status": "released",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411811&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "ctas": {
+        "kind": "ctaGroup",
+        "required": false,
+        "localized": true,
+        "description": "Optional CTA group with an optional primary CTA and an optional secondary CTA."
+      },
+      "image": {
+        "kind": "media",
+        "required": true,
+        "localized": true,
+        "description": "Editor-selected, per-locale desktop media in the hero's aside container."
+      },
+      "mobileImage": {
+        "kind": "media",
+        "required": false,
+        "localized": true,
+        "description": "Optional editor-selected, per-locale mobile media."
+      }
+    },
+    "runtimeProps": {
+      "headingLevel": {
+        "kind": "headingLevel",
+        "source": "renderer"
+      },
+      "mediaPlacement": {
+        "kind": "aside",
+        "source": "renderer"
+      }
+    },
     "previewSource": "sections/hero/allentown/hero-allentown.preview.astro",
     "entries": {
       "astro": "@kinekt-io/components/sections/hero-allentown.astro",
@@ -43,13 +1157,131 @@
     }
   },
   {
+    "id": "sections/hero/todos-santos",
+    "slug": "hero-todos-santos",
+    "category": "sections",
+    "role": "hero",
+    "variation": "todos-santos",
+    "title": "Hero Todos Santos",
+    "description": "A reusable product hero with introduction, at-a-glance feature pairs, optional CTA group and media.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411511&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "featureHeading": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "features": {
+        "kind": "componentList",
+        "componentId": "components/feature-pair/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      },
+      "ctas": {
+        "kind": "ctaGroup",
+        "required": false,
+        "localized": true,
+        "description": "Optional primary and secondary actions."
+      },
+      "image": {
+        "kind": "media",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "mediaFit": {
+        "kind": "coverMedia",
+        "source": "renderer"
+      },
+      "theme": {
+        "kind": "productHeroDark",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/hero/todos-santos/hero-todos-santos.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/hero-todos-santos.astro",
+      "payload": "@kinekt-io/components/sections/hero-todos-santos.payload",
+      "types": "@kinekt-io/components/sections/hero-todos-santos.types"
+    }
+  },
+  {
     "id": "sections/hero/trinity",
+    "slug": "hero-trinity",
     "category": "sections",
     "role": "hero",
     "variation": "trinity",
     "title": "Hero Trinity",
-    "description": "A high-density Tulip hero with a 16:9 media panel, localized eyebrow, title, description, and responsive image.",
+    "description": "A structural hero with a localized introduction, responsive media, and an optional primary and secondary CTA group.",
+    "status": "released",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4754-91818&m=dev",
+    "variants": {},
+    "fields": {
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "ctas": {
+        "kind": "ctaGroup",
+        "required": false,
+        "localized": true,
+        "description": "Optional CTA group with an optional primary CTA and an optional secondary CTA."
+      },
+      "image": {
+        "kind": "media",
+        "required": true,
+        "localized": true,
+        "description": "Editor-selected, per-locale desktop hero media; the renderer fills the design container using cover."
+      },
+      "mobileImage": {
+        "kind": "media",
+        "required": false,
+        "localized": true,
+        "description": "Optional editor-selected, per-locale mobile hero media; the renderer fills the design container using cover."
+      }
+    },
+    "runtimeProps": {
+      "headingLevel": {
+        "kind": "headingLevel",
+        "source": "renderer"
+      },
+      "mediaFit": {
+        "kind": "coverMedia",
+        "source": "renderer"
+      }
+    },
     "previewSource": "sections/hero/trinity/hero-trinity.preview.astro",
     "entries": {
       "astro": "@kinekt-io/components/sections/hero-trinity.astro",
@@ -58,14 +1290,318 @@
     }
   },
   {
+    "id": "sections/insight-index/allentown",
+    "slug": "insight-index-allentown",
+    "category": "sections",
+    "role": "insight-index",
+    "variation": "allentown",
+    "title": "Insight Index Allentown",
+    "description": "A reusable searchable and facet-filtered insight card index backed by selected platform-managed Insight Sources.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411675&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "insightSources": {
+        "kind": "insightSourceList",
+        "required": true,
+        "localized": true,
+        "minItems": 1,
+        "description": "One or more active platform-managed Insight Sources to index."
+      }
+    },
+    "runtimeProps": {
+      "searchEngine": {
+        "kind": "pagefind",
+        "source": "renderer"
+      },
+      "searchFields": {
+        "kind": "titleExcerptBody",
+        "source": "renderer"
+      },
+      "facets": {
+        "kind": "mediaTypeAndInsightSubject",
+        "source": "renderer"
+      },
+      "facetMatching": {
+        "kind": "orWithinFacetAndAcrossFacets",
+        "source": "renderer"
+      },
+      "sorting": {
+        "kind": "publishedDateAndTitle",
+        "source": "renderer"
+      },
+      "pageSize": {
+        "kind": "four",
+        "source": "renderer"
+      },
+      "contentScope": {
+        "kind": "activeRegionAndLocale",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/insight-index/allentown/insight-index-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/insight-index-allentown.astro",
+      "payload": "@kinekt-io/components/sections/insight-index-allentown.payload",
+      "types": "@kinekt-io/components/sections/insight-index-allentown.types"
+    }
+  },
+  {
+    "id": "sections/intake-form/allentown",
+    "slug": "intake-form-allentown",
+    "category": "sections",
+    "role": "intake-form",
+    "variation": "allentown",
+    "title": "Intake Form Allentown",
+    "description": "A reusable intake section with a localized introduction, numbered process steps, and a governed intake form.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-416702&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "stepsHeading": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "steps": {
+        "kind": "componentList",
+        "componentId": "components/intake-step/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      },
+      "formHeading": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "form": {
+        "kind": "formReference",
+        "required": true,
+        "localized": true,
+        "description": "Only active Battery Intake forms available to the current region are selectable. The Form record owns fields, validation, scheduling and submission."
+      }
+    },
+    "runtimeProps": {
+      "decoration": {
+        "kind": "tulipRegionPatternSharp",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/intake-form/allentown/intake-form-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/intake-form-allentown.astro",
+      "payload": "@kinekt-io/components/sections/intake-form-allentown.payload",
+      "types": "@kinekt-io/components/sections/intake-form-allentown.types"
+    }
+  },
+  {
+    "id": "sections/media-accordion/allentown",
+    "slug": "media-accordion-allentown",
+    "category": "sections",
+    "role": "media-accordion",
+    "variation": "allentown",
+    "title": "Media Accordion Allentown",
+    "description": "A reusable topic section with a localized introduction, optional CTA group and media, and one or more accessible accordion items.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412609&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "ctas": {
+        "kind": "ctaGroup",
+        "required": false,
+        "localized": true,
+        "description": "Optional primary and secondary actions below the introduction."
+      },
+      "media": {
+        "kind": "media",
+        "required": false,
+        "localized": true,
+        "description": "Optional editor-selected media, localized per locale. The renderer removes the media column when absent."
+      },
+      "items": {
+        "kind": "componentList",
+        "componentId": "components/accordion-item/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1,
+        "description": "An unordered list of accessible accordion items."
+      }
+    },
+    "runtimeProps": {
+      "listSemantics": {
+        "kind": "unorderedList",
+        "source": "renderer"
+      },
+      "accordionMode": {
+        "kind": "singleOpen",
+        "source": "renderer"
+      },
+      "initialOpenItem": {
+        "kind": "firstItem",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/media-accordion/allentown/media-accordion-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/media-accordion-allentown.astro",
+      "payload": "@kinekt-io/components/sections/media-accordion-allentown.payload",
+      "types": "@kinekt-io/components/sections/media-accordion-allentown.types"
+    }
+  },
+  {
+    "id": "sections/media-fact-grid/allentown",
+    "slug": "media-fact-grid-allentown",
+    "category": "sections",
+    "role": "media-fact-grid",
+    "variation": "allentown",
+    "title": "Media Fact Grid Allentown",
+    "description": "A reusable evidence section with a localized introduction, optional aside media, and a responsive grid of fact cards.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414436&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "media": {
+        "kind": "media",
+        "required": false,
+        "localized": true
+      },
+      "facts": {
+        "kind": "componentList",
+        "componentId": "components/fact-card/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      }
+    },
+    "runtimeProps": {
+      "layout": {
+        "kind": "responsiveGrid",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/media-fact-grid/allentown/media-fact-grid-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/media-fact-grid-allentown.astro",
+      "payload": "@kinekt-io/components/sections/media-fact-grid-allentown.payload",
+      "types": "@kinekt-io/components/sections/media-fact-grid-allentown.types"
+    }
+  },
+  {
     "id": "sections/media-feature-list/allentown",
+    "slug": "media-feature-list-allentown",
     "category": "sections",
     "role": "media-feature-list",
     "variation": "allentown",
-    "title": "allentown",
-    "description": "No component README.md yet.",
-    "figmaUrl": null,
-    "previewSource": null,
+    "title": "Media Feature List Allentown",
+    "description": "A themed localized feature list.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414365&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ]
+      },
+      "direction": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "mediaLeft",
+          "mediaRight"
+        ]
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "label": {
+        "kind": "component",
+        "componentId": "atoms/label/allentown",
+        "required": false,
+        "localized": true
+      },
+      "media": {
+        "kind": "media",
+        "required": false,
+        "localized": true
+      },
+      "features": {
+        "kind": "componentList",
+        "componentId": "components/feature-item/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": "sections/media-feature-list/allentown/media-feature-list-allentown.preview.astro",
     "entries": {
       "astro": "@kinekt-io/components/sections/media-feature-list-allentown.astro",
       "payload": "@kinekt-io/components/sections/media-feature-list-allentown.payload",
@@ -73,14 +1609,210 @@
     }
   },
   {
+    "id": "sections/media-metrics/allentown",
+    "slug": "media-metrics-allentown",
+    "category": "sections",
+    "role": "media-metrics",
+    "variation": "allentown",
+    "title": "Media Metrics Allentown",
+    "description": "A reusable topic section with a localized introduction, one or more result metrics, and optional aside media.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414386&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "metrics": {
+        "kind": "componentList",
+        "componentId": "components/result-item/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      },
+      "media": {
+        "kind": "media",
+        "required": false,
+        "localized": true,
+        "description": "Optional editor-selected aside media, localized per locale."
+      }
+    },
+    "runtimeProps": {
+      "metricLayout": {
+        "kind": "responsiveGrid",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/media-metrics/allentown/media-metrics-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/media-metrics-allentown.astro",
+      "payload": "@kinekt-io/components/sections/media-metrics-allentown.payload",
+      "types": "@kinekt-io/components/sections/media-metrics-allentown.types"
+    }
+  },
+  {
+    "id": "sections/moq-lead-times/allentown",
+    "slug": "moq-lead-times-allentown",
+    "category": "sections",
+    "role": "moq-lead-times",
+    "variation": "allentown",
+    "title": "MOQ Lead Times Allentown",
+    "description": "A reusable ordering and delivery section with MOQ and lead-time facts.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4811-283011&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "cta": {
+        "kind": "component",
+        "componentId": "controls/button/allentown",
+        "required": false,
+        "localized": true
+      },
+      "moq": {
+        "kind": "component",
+        "componentId": "components/delivery-fact/allentown",
+        "required": true,
+        "localized": true
+      },
+      "leadTimes": {
+        "kind": "componentList",
+        "componentId": "components/delivery-fact/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": "sections/moq-lead-times/allentown/moq-lead-times-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/moq-lead-times-allentown.astro",
+      "payload": "@kinekt-io/components/sections/moq-lead-times-allentown.payload",
+      "types": "@kinekt-io/components/sections/moq-lead-times-allentown.types"
+    }
+  },
+  {
+    "id": "sections/not-found-hero/allentown",
+    "slug": "not-found-hero-allentown",
+    "category": "sections",
+    "role": "not-found-hero",
+    "variation": "allentown",
+    "title": "Not Found Hero Allentown",
+    "description": "A reusable not-found hero with a localized introduction and mandatory recovery CTA group.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-532807&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "ctaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "errorCode": {
+        "kind": "notFound404",
+        "source": "renderer"
+      },
+      "decoration": {
+        "kind": "tulipRegionPatternSharp",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/not-found-hero/allentown/not-found-hero-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/not-found-hero-allentown.astro",
+      "payload": "@kinekt-io/components/sections/not-found-hero-allentown.payload",
+      "types": "@kinekt-io/components/sections/not-found-hero-allentown.types"
+    }
+  },
+  {
     "id": "sections/output-card-grid/allentown",
+    "slug": "output-card-grid-allentown",
     "category": "sections",
     "role": "output-card-grid",
     "variation": "allentown",
-    "title": "allentown",
-    "description": "No component README.md yet.",
-    "figmaUrl": null,
-    "previewSource": null,
+    "title": "Output Card Grid Allentown",
+    "description": "A themed localized output card grid.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-537962&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ]
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "ctas": {
+        "kind": "ctaGroup",
+        "required": false,
+        "localized": true
+      },
+      "cards": {
+        "kind": "componentList",
+        "componentId": "components/output-card/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": "sections/output-card-grid/allentown/output-card-grid-allentown.preview.astro",
     "entries": {
       "astro": "@kinekt-io/components/sections/output-card-grid-allentown.astro",
       "payload": "@kinekt-io/components/sections/output-card-grid-allentown.payload",
@@ -88,18 +1820,766 @@
     }
   },
   {
+    "id": "sections/process-story/allentown",
+    "slug": "process-story-allentown",
+    "category": "sections",
+    "role": "process-story",
+    "variation": "allentown",
+    "title": "Process Story Allentown",
+    "description": "A reusable process-story section with optional media and labelled narrative items.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4817-416529&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "image": {
+        "kind": "media",
+        "required": false,
+        "localized": true
+      },
+      "items": {
+        "kind": "componentList",
+        "componentId": "components/process-item/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      }
+    },
+    "runtimeProps": {
+      "itemDecoration": {
+        "kind": "flightPath",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/process-story/allentown/process-story-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/process-story-allentown.astro",
+      "payload": "@kinekt-io/components/sections/process-story-allentown.payload",
+      "types": "@kinekt-io/components/sections/process-story-allentown.types"
+    }
+  },
+  {
+    "id": "sections/product-details/allentown",
+    "slug": "product-details-allentown",
+    "category": "sections",
+    "role": "product-details",
+    "variation": "allentown",
+    "title": "Product Details Allentown",
+    "description": "A reusable technical product-details section with optional media and an accordion.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411600&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "image": {
+        "kind": "media",
+        "required": false,
+        "localized": true
+      },
+      "detailLabel": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "items": {
+        "kind": "componentList",
+        "componentId": "components/product-detail-item/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      }
+    },
+    "runtimeProps": {
+      "initialOpenItem": {
+        "kind": "fixedIndex",
+        "value": 0
+      },
+      "itemDecoration": {
+        "kind": "flightPath",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/product-details/allentown/product-details-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/product-details-allentown.astro",
+      "payload": "@kinekt-io/components/sections/product-details-allentown.payload",
+      "types": "@kinekt-io/components/sections/product-details-allentown.types"
+    }
+  },
+  {
+    "id": "sections/product-finder-form/allentown",
+    "slug": "product-finder-form-allentown",
+    "category": "sections",
+    "role": "product-finder-form",
+    "variation": "allentown",
+    "title": "Product Finder Form Allentown",
+    "description": "A compact themed product-finder section with a localized introduction and selected localized Form record.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-537977&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "form": {
+        "kind": "formReference",
+        "required": true,
+        "localized": true,
+        "description": "The platform-managed localized Form record owns questions, choices, validation, submission and success behavior."
+      }
+    },
+    "runtimeProps": {
+      "layout": {
+        "kind": "centeredCompactForm",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/product-finder-form/allentown/product-finder-form-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/product-finder-form-allentown.astro",
+      "payload": "@kinekt-io/components/sections/product-finder-form-allentown.payload",
+      "types": "@kinekt-io/components/sections/product-finder-form-allentown.types"
+    }
+  },
+  {
+    "id": "sections/product-hero/allentown",
+    "slug": "product-hero-allentown",
+    "category": "sections",
+    "role": "product-hero",
+    "variation": "allentown",
+    "title": "Product Hero Allentown",
+    "description": "A reusable product hero with introductory content, product feature pairs, actions and responsive media.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411511&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "featureListTitle": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "featurePairs": {
+        "kind": "componentList",
+        "componentId": "components/feature-pair/allentown",
+        "minItems": 1,
+        "required": true,
+        "localized": true
+      },
+      "ctaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": true,
+        "localized": true
+      },
+      "media": {
+        "kind": "media",
+        "required": true,
+        "localized": true,
+        "description": "Desktop hero media."
+      },
+      "mobileMedia": {
+        "kind": "media",
+        "required": false,
+        "localized": true,
+        "description": "Optional mobile-specific hero media."
+      }
+    },
+    "runtimeProps": {
+      "headingLevel": {
+        "kind": "headingLevel",
+        "source": "renderer"
+      },
+      "mediaFit": {
+        "kind": "coverMedia",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/product-hero/allentown/product-hero-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/product-hero-allentown.astro",
+      "payload": "@kinekt-io/components/sections/product-hero-allentown.payload",
+      "types": "@kinekt-io/components/sections/product-hero-allentown.types"
+    }
+  },
+  {
+    "id": "sections/product-options/allentown",
+    "slug": "product-options-allentown",
+    "category": "sections",
+    "role": "product-options",
+    "variation": "allentown",
+    "title": "Product Options Allentown",
+    "description": "A reusable product-options grid with an optional region-filtered configurator form.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411550&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "options": {
+        "kind": "componentList",
+        "componentId": "components/option-card/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      },
+      "form": {
+        "kind": "formReference",
+        "required": false,
+        "localized": true,
+        "description": "Only active forms available to the current region are selectable."
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": "sections/product-options/allentown/product-options-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/product-options-allentown.astro",
+      "payload": "@kinekt-io/components/sections/product-options-allentown.payload",
+      "types": "@kinekt-io/components/sections/product-options-allentown.types"
+    }
+  },
+  {
+    "id": "sections/proof-metrics/allentown",
+    "slug": "proof-metrics-allentown",
+    "category": "sections",
+    "role": "proof-metrics",
+    "variation": "allentown",
+    "title": "Proof Metrics Allentown",
+    "description": "A reusable evidence section with a localized introduction, one or more result metrics, optional proof media, and a CTA callout.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412607&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "metrics": {
+        "kind": "componentList",
+        "componentId": "components/result-item/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1,
+        "description": "One or more named metrics; each metric has a required label and a localized Label value."
+      },
+      "media": {
+        "kind": "media",
+        "required": false,
+        "localized": true,
+        "description": "Optional editor-selected proof media, localized per locale."
+      },
+      "callout": {
+        "kind": "component",
+        "componentId": "components/callout/allentown",
+        "required": true,
+        "localized": true,
+        "description": "A localized action callout with a required Button component."
+      }
+    },
+    "runtimeProps": {
+      "metricLayout": {
+        "kind": "responsiveGrid",
+        "source": "renderer"
+      },
+      "calloutFlightPath": {
+        "kind": "flightPath",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/proof-metrics/allentown/proof-metrics-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/proof-metrics-allentown.astro",
+      "payload": "@kinekt-io/components/sections/proof-metrics-allentown.payload",
+      "types": "@kinekt-io/components/sections/proof-metrics-allentown.types"
+    }
+  },
+  {
     "id": "sections/read-more/allentown",
+    "slug": "read-more-allentown",
     "category": "sections",
     "role": "read-more",
     "variation": "allentown",
-    "title": "allentown",
-    "description": "No component README.md yet.",
-    "figmaUrl": null,
-    "previewSource": null,
+    "title": "Read More Allentown",
+    "description": "A localized editorial split section.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414455&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ]
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "ctas": {
+        "kind": "ctaGroup",
+        "required": true,
+        "localized": true
+      },
+      "media": {
+        "kind": "media",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": "sections/read-more/allentown/read-more-allentown.preview.astro",
     "entries": {
       "astro": "@kinekt-io/components/sections/read-more-allentown.astro",
       "payload": "@kinekt-io/components/sections/read-more-allentown.payload",
       "types": "@kinekt-io/components/sections/read-more-allentown.types"
+    }
+  },
+  {
+    "id": "sections/solution-list/allentown",
+    "slug": "solution-list-allentown",
+    "category": "sections",
+    "role": "solution-list",
+    "variation": "allentown",
+    "title": "Solution List Allentown",
+    "description": "A reusable section that composes an introduction, a list of two or more solution items and an optional CTA callout.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411423&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "items": {
+        "kind": "componentList",
+        "componentId": "components/solution-item/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 2
+      },
+      "callout": {
+        "kind": "component",
+        "componentId": "components/callout/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": "sections/solution-list/allentown/solution-list-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/solution-list-allentown.astro",
+      "payload": "@kinekt-io/components/sections/solution-list-allentown.payload",
+      "types": "@kinekt-io/components/sections/solution-list-allentown.types"
+    }
+  },
+  {
+    "id": "sections/steps/stage",
+    "slug": "steps-stage",
+    "category": "sections",
+    "role": "steps",
+    "variation": "stage",
+    "title": "Steps Stage",
+    "description": "A reusable two-column process section with a localized introduction, optional media, and fully visible staged process steps.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414399&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "media": {
+        "kind": "media",
+        "required": false,
+        "localized": true
+      },
+      "steps": {
+        "kind": "componentList",
+        "componentId": "components/step/stage",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      }
+    },
+    "runtimeProps": {
+      "numbering": {
+        "kind": "derived",
+        "source": "listPosition"
+      },
+      "presentation": {
+        "kind": "visibleStageList",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/steps/stage/steps-stage.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/steps-stage.astro",
+      "payload": "@kinekt-io/components/sections/steps-stage.payload",
+      "types": "@kinekt-io/components/sections/steps-stage.types"
+    }
+  },
+  {
+    "id": "sections/support-contact/allentown",
+    "slug": "support-contact-allentown",
+    "category": "sections",
+    "role": "support-contact",
+    "variation": "allentown",
+    "title": "Support Contact Allentown",
+    "description": "A reusable support section with localized introduction, optional direct channels, and a required governed support-request form.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414267&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "contactHeading": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "contactMethods": {
+        "kind": "componentList",
+        "componentId": "components/contact-method/allentown",
+        "required": false,
+        "localized": true,
+        "minItems": 1
+      },
+      "formHeading": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "form": {
+        "kind": "formReference",
+        "required": true,
+        "localized": true,
+        "description": "Only active Support Request forms available to the current region are selectable. The Form record owns conditional fields, managed dropdowns, uploads, validation and submission."
+      }
+    },
+    "runtimeProps": {
+      "decoration": {
+        "kind": "tulipRegionPatternSharp",
+        "source": "renderer"
+      },
+      "contactPresentation": {
+        "kind": "buttons",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/support-contact/allentown/support-contact-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/support-contact-allentown.astro",
+      "payload": "@kinekt-io/components/sections/support-contact-allentown.payload",
+      "types": "@kinekt-io/components/sections/support-contact-allentown.types"
+    }
+  },
+  {
+    "id": "sections/tabs/allentown",
+    "slug": "tabs-allentown",
+    "category": "sections",
+    "role": "tabs",
+    "variation": "allentown",
+    "title": "Tabs Allentown",
+    "description": "A reusable themed tabs section with a localized introduction and one or more localized tab items.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538861&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "tabs": {
+        "kind": "componentList",
+        "componentId": "components/tab-item/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      }
+    },
+    "runtimeProps": {
+      "initialActiveTab": {
+        "kind": "firstItem",
+        "source": "renderer"
+      },
+      "tabSemantics": {
+        "kind": "accessibleTabs",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/tabs/allentown/tabs-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/tabs-allentown.astro",
+      "payload": "@kinekt-io/components/sections/tabs-allentown.payload",
+      "types": "@kinekt-io/components/sections/tabs-allentown.types"
+    }
+  },
+  {
+    "id": "sections/thank-you-hero/allentown",
+    "slug": "thank-you-hero-allentown",
+    "category": "sections",
+    "role": "thank-you-hero",
+    "variation": "allentown",
+    "title": "Thank You Hero Allentown",
+    "description": "A reusable confirmation hero with localized introduction, optional media, and a numbered follow-up steps row.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-425110&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "media": {
+        "kind": "media",
+        "required": false,
+        "localized": true
+      },
+      "nextStepsHeading": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "nextSteps": {
+        "kind": "componentList",
+        "componentId": "components/next-step/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      }
+    },
+    "runtimeProps": {
+      "layout": {
+        "kind": "responsiveRow",
+        "source": "renderer"
+      },
+      "flightPath": {
+        "kind": "renderer",
+        "source": "presentation"
+      }
+    },
+    "previewSource": "sections/thank-you-hero/allentown/thank-you-hero-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/thank-you-hero-allentown.astro",
+      "payload": "@kinekt-io/components/sections/thank-you-hero-allentown.payload",
+      "types": "@kinekt-io/components/sections/thank-you-hero-allentown.types"
+    }
+  },
+  {
+    "id": "sections/use-cases/allentown",
+    "slug": "use-cases-allentown",
+    "category": "sections",
+    "role": "use-cases",
+    "variation": "allentown",
+    "title": "Use Cases Allentown",
+    "description": "A reusable use-cases section with advantage labels and an action-capable use-case grid.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5049-307816&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "light",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "advantageHeading": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "advantages": {
+        "kind": "componentList",
+        "componentId": "atoms/label/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      },
+      "gridHeading": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "items": {
+        "kind": "componentList",
+        "componentId": "components/use-case-item/allentown",
+        "required": true,
+        "localized": true,
+        "minItems": 1
+      }
+    },
+    "runtimeProps": {
+      "decoration": {
+        "kind": "tulipRegionPatternSharp",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/use-cases/allentown/use-cases-allentown.preview.astro",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/use-cases-allentown.astro",
+      "payload": "@kinekt-io/components/sections/use-cases-allentown.payload",
+      "types": "@kinekt-io/components/sections/use-cases-allentown.types"
     }
   }
 ]

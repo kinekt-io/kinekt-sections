@@ -28,6 +28,8 @@ async function discover(directory) {
 
     if (parts[0] === 'shared') continue
 
+    if (parts[0] === 'primitives' && parts[1] === 'kinekt-media') continue
+
     if (entry.name.endsWith('.preview.astro')) {
       if (parts.length < 2) throw new Error(`Place ${relative} in a category folder inside src/.`)
       const component = componentFor(relative)

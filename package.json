@@ -20,8 +20,62 @@
     "src"
   ],
   "exports": {
-    "./primitives/kinekt-media.astro": "./src/primitives/kinekt-media/kinekt-media.astro",
     "./primitives/section-intro.astro": "./src/primitives/section-intro/section-intro.astro",
+    "./sections/action-contact-allentown.astro": "./src/sections/action-contact/allentown/action-contact-allentown.astro",
+    "./sections/action-contact-allentown.payload": {
+      "default": "./dist/sections/action-contact/allentown/action-contact-allentown.payload.js",
+      "import": "./dist/sections/action-contact/allentown/action-contact-allentown.payload.js",
+      "types": "./dist/sections/action-contact/allentown/action-contact-allentown.payload.d.ts"
+    },
+    "./sections/action-contact-allentown.types": {
+      "default": "./dist/sections/action-contact/allentown/action-contact-allentown.types.js",
+      "import": "./dist/sections/action-contact/allentown/action-contact-allentown.types.js",
+      "types": "./dist/sections/action-contact/allentown/action-contact-allentown.types.d.ts"
+    },
+    "./sections/battery-models-allentown.astro": "./src/sections/battery-models/allentown/battery-models-allentown.astro",
+    "./sections/battery-models-allentown.payload": {
+      "default": "./dist/sections/battery-models/allentown/battery-models-allentown.payload.js",
+      "import": "./dist/sections/battery-models/allentown/battery-models-allentown.payload.js",
+      "types": "./dist/sections/battery-models/allentown/battery-models-allentown.payload.d.ts"
+    },
+    "./sections/battery-models-allentown.types": {
+      "default": "./dist/sections/battery-models/allentown/battery-models-allentown.types.js",
+      "import": "./dist/sections/battery-models/allentown/battery-models-allentown.types.js",
+      "types": "./dist/sections/battery-models/allentown/battery-models-allentown.types.d.ts"
+    },
+    "./sections/case-studies-allentown.astro": "./src/sections/case-studies/allentown/case-studies-allentown.astro",
+    "./sections/case-studies-allentown.payload": {
+      "default": "./dist/sections/case-studies/allentown/case-studies-allentown.payload.js",
+      "import": "./dist/sections/case-studies/allentown/case-studies-allentown.payload.js",
+      "types": "./dist/sections/case-studies/allentown/case-studies-allentown.payload.d.ts"
+    },
+    "./sections/case-studies-allentown.types": {
+      "default": "./dist/sections/case-studies/allentown/case-studies-allentown.types.js",
+      "import": "./dist/sections/case-studies/allentown/case-studies-allentown.types.js",
+      "types": "./dist/sections/case-studies/allentown/case-studies-allentown.types.d.ts"
+    },
+    "./sections/checklist-feature-list-allentown.astro": "./src/sections/checklist-feature-list/allentown/checklist-feature-list-allentown.astro",
+    "./sections/checklist-feature-list-allentown.payload": {
+      "default": "./dist/sections/checklist-feature-list/allentown/checklist-feature-list-allentown.payload.js",
+      "import": "./dist/sections/checklist-feature-list/allentown/checklist-feature-list-allentown.payload.js",
+      "types": "./dist/sections/checklist-feature-list/allentown/checklist-feature-list-allentown.payload.d.ts"
+    },
+    "./sections/checklist-feature-list-allentown.types": {
+      "default": "./dist/sections/checklist-feature-list/allentown/checklist-feature-list-allentown.types.js",
+      "import": "./dist/sections/checklist-feature-list/allentown/checklist-feature-list-allentown.types.js",
+      "types": "./dist/sections/checklist-feature-list/allentown/checklist-feature-list-allentown.types.d.ts"
+    },
+    "./sections/comparison-overview-allentown.astro": "./src/sections/comparison-overview/allentown/comparison-overview-allentown.astro",
+    "./sections/comparison-overview-allentown.payload": {
+      "default": "./dist/sections/comparison-overview/allentown/comparison-overview-allentown.payload.js",
+      "import": "./dist/sections/comparison-overview/allentown/comparison-overview-allentown.payload.js",
+      "types": "./dist/sections/comparison-overview/allentown/comparison-overview-allentown.payload.d.ts"
+    },
+    "./sections/comparison-overview-allentown.types": {
+      "default": "./dist/sections/comparison-overview/allentown/comparison-overview-allentown.types.js",
+      "import": "./dist/sections/comparison-overview/allentown/comparison-overview-allentown.types.js",
+      "types": "./dist/sections/comparison-overview/allentown/comparison-overview-allentown.types.d.ts"
+    },
     "./sections/compatibility-specifications-allentown.astro": "./src/sections/compatibility-specifications/allentown/compatibility-specifications-allentown.astro",
     "./sections/compatibility-specifications-allentown.payload": {
       "default": "./dist/sections/compatibility-specifications/allentown/compatibility-specifications-allentown.payload.js",
@@ -32,6 +86,138 @@
       "default": "./dist/sections/compatibility-specifications/allentown/compatibility-specifications-allentown.types.js",
       "import": "./dist/sections/compatibility-specifications/allentown/compatibility-specifications-allentown.types.js",
       "types": "./dist/sections/compatibility-specifications/allentown/compatibility-specifications-allentown.types.d.ts"
+    },
+    "./sections/compliance-detail-allentown.astro": "./src/sections/compliance-detail/allentown/compliance-detail-allentown.astro",
+    "./sections/compliance-detail-allentown.payload": {
+      "default": "./dist/sections/compliance-detail/allentown/compliance-detail-allentown.payload.js",
+      "import": "./dist/sections/compliance-detail/allentown/compliance-detail-allentown.payload.js",
+      "types": "./dist/sections/compliance-detail/allentown/compliance-detail-allentown.payload.d.ts"
+    },
+    "./sections/compliance-detail-allentown.types": {
+      "default": "./dist/sections/compliance-detail/allentown/compliance-detail-allentown.types.js",
+      "import": "./dist/sections/compliance-detail/allentown/compliance-detail-allentown.types.js",
+      "types": "./dist/sections/compliance-detail/allentown/compliance-detail-allentown.types.d.ts"
+    },
+    "./sections/compliance-overview-allentown.astro": "./src/sections/compliance-overview/allentown/compliance-overview-allentown.astro",
+    "./sections/compliance-overview-allentown.payload": {
+      "default": "./dist/sections/compliance-overview/allentown/compliance-overview-allentown.payload.js",
+      "import": "./dist/sections/compliance-overview/allentown/compliance-overview-allentown.payload.js",
+      "types": "./dist/sections/compliance-overview/allentown/compliance-overview-allentown.payload.d.ts"
+    },
+    "./sections/compliance-overview-allentown.types": {
+      "default": "./dist/sections/compliance-overview/allentown/compliance-overview-allentown.types.js",
+      "import": "./dist/sections/compliance-overview/allentown/compliance-overview-allentown.types.js",
+      "types": "./dist/sections/compliance-overview/allentown/compliance-overview-allentown.types.d.ts"
+    },
+    "./sections/compliance-text-allentown.astro": "./src/sections/compliance-text/allentown/compliance-text-allentown.astro",
+    "./sections/compliance-text-allentown.payload": {
+      "default": "./dist/sections/compliance-text/allentown/compliance-text-allentown.payload.js",
+      "import": "./dist/sections/compliance-text/allentown/compliance-text-allentown.payload.js",
+      "types": "./dist/sections/compliance-text/allentown/compliance-text-allentown.payload.d.ts"
+    },
+    "./sections/compliance-text-allentown.types": {
+      "default": "./dist/sections/compliance-text/allentown/compliance-text-allentown.types.js",
+      "import": "./dist/sections/compliance-text/allentown/compliance-text-allentown.types.js",
+      "types": "./dist/sections/compliance-text/allentown/compliance-text-allentown.types.d.ts"
+    },
+    "./sections/density-comparison-allentown.astro": "./src/sections/density-comparison/allentown/density-comparison-allentown.astro",
+    "./sections/density-comparison-allentown.payload": {
+      "default": "./dist/sections/density-comparison/allentown/density-comparison-allentown.payload.js",
+      "import": "./dist/sections/density-comparison/allentown/density-comparison-allentown.payload.js",
+      "types": "./dist/sections/density-comparison/allentown/density-comparison-allentown.payload.d.ts"
+    },
+    "./sections/density-comparison-allentown.types": {
+      "default": "./dist/sections/density-comparison/allentown/density-comparison-allentown.types.js",
+      "import": "./dist/sections/density-comparison/allentown/density-comparison-allentown.types.js",
+      "types": "./dist/sections/density-comparison/allentown/density-comparison-allentown.types.d.ts"
+    },
+    "./sections/event-overview-allentown.astro": "./src/sections/event-overview/allentown/event-overview-allentown.astro",
+    "./sections/event-overview-allentown.payload": {
+      "default": "./dist/sections/event-overview/allentown/event-overview-allentown.payload.js",
+      "import": "./dist/sections/event-overview/allentown/event-overview-allentown.payload.js",
+      "types": "./dist/sections/event-overview/allentown/event-overview-allentown.payload.d.ts"
+    },
+    "./sections/event-overview-allentown.types": {
+      "default": "./dist/sections/event-overview/allentown/event-overview-allentown.types.js",
+      "import": "./dist/sections/event-overview/allentown/event-overview-allentown.types.js",
+      "types": "./dist/sections/event-overview/allentown/event-overview-allentown.types.d.ts"
+    },
+    "./sections/facilities-overview-allentown.astro": "./src/sections/facilities-overview/allentown/facilities-overview-allentown.astro",
+    "./sections/facilities-overview-allentown.payload": {
+      "default": "./dist/sections/facilities-overview/allentown/facilities-overview-allentown.payload.js",
+      "import": "./dist/sections/facilities-overview/allentown/facilities-overview-allentown.payload.js",
+      "types": "./dist/sections/facilities-overview/allentown/facilities-overview-allentown.payload.d.ts"
+    },
+    "./sections/facilities-overview-allentown.types": {
+      "default": "./dist/sections/facilities-overview/allentown/facilities-overview-allentown.types.js",
+      "import": "./dist/sections/facilities-overview/allentown/facilities-overview-allentown.types.js",
+      "types": "./dist/sections/facilities-overview/allentown/facilities-overview-allentown.types.d.ts"
+    },
+    "./sections/faq-allentown.astro": "./src/sections/faq/allentown/faq-allentown.astro",
+    "./sections/faq-allentown.payload": {
+      "default": "./dist/sections/faq/allentown/faq-allentown.payload.js",
+      "import": "./dist/sections/faq/allentown/faq-allentown.payload.js",
+      "types": "./dist/sections/faq/allentown/faq-allentown.payload.d.ts"
+    },
+    "./sections/faq-allentown.types": {
+      "default": "./dist/sections/faq/allentown/faq-allentown.types.js",
+      "import": "./dist/sections/faq/allentown/faq-allentown.types.js",
+      "types": "./dist/sections/faq/allentown/faq-allentown.types.d.ts"
+    },
+    "./sections/faq-index-allentown.astro": "./src/sections/faq-index/allentown/faq-index-allentown.astro",
+    "./sections/faq-index-allentown.payload": {
+      "default": "./dist/sections/faq-index/allentown/faq-index-allentown.payload.js",
+      "import": "./dist/sections/faq-index/allentown/faq-index-allentown.payload.js",
+      "types": "./dist/sections/faq-index/allentown/faq-index-allentown.payload.d.ts"
+    },
+    "./sections/faq-index-allentown.types": {
+      "default": "./dist/sections/faq-index/allentown/faq-index-allentown.types.js",
+      "import": "./dist/sections/faq-index/allentown/faq-index-allentown.types.js",
+      "types": "./dist/sections/faq-index/allentown/faq-index-allentown.types.d.ts"
+    },
+    "./sections/featured-event-allentown.astro": "./src/sections/featured-event/allentown/featured-event-allentown.astro",
+    "./sections/featured-event-allentown.payload": {
+      "default": "./dist/sections/featured-event/allentown/featured-event-allentown.payload.js",
+      "import": "./dist/sections/featured-event/allentown/featured-event-allentown.payload.js",
+      "types": "./dist/sections/featured-event/allentown/featured-event-allentown.payload.d.ts"
+    },
+    "./sections/featured-event-allentown.types": {
+      "default": "./dist/sections/featured-event/allentown/featured-event-allentown.types.js",
+      "import": "./dist/sections/featured-event/allentown/featured-event-allentown.types.js",
+      "types": "./dist/sections/featured-event/allentown/featured-event-allentown.types.d.ts"
+    },
+    "./sections/featured-insights-allentown.astro": "./src/sections/featured-insights/allentown/featured-insights-allentown.astro",
+    "./sections/featured-insights-allentown.payload": {
+      "default": "./dist/sections/featured-insights/allentown/featured-insights-allentown.payload.js",
+      "import": "./dist/sections/featured-insights/allentown/featured-insights-allentown.payload.js",
+      "types": "./dist/sections/featured-insights/allentown/featured-insights-allentown.payload.d.ts"
+    },
+    "./sections/featured-insights-allentown.types": {
+      "default": "./dist/sections/featured-insights/allentown/featured-insights-allentown.types.js",
+      "import": "./dist/sections/featured-insights/allentown/featured-insights-allentown.types.js",
+      "types": "./dist/sections/featured-insights/allentown/featured-insights-allentown.types.d.ts"
+    },
+    "./sections/featured-page-header-allentown.astro": "./src/sections/featured-page-header/allentown/featured-page-header-allentown.astro",
+    "./sections/featured-page-header-allentown.payload": {
+      "default": "./dist/sections/featured-page-header/allentown/featured-page-header-allentown.payload.js",
+      "import": "./dist/sections/featured-page-header/allentown/featured-page-header-allentown.payload.js",
+      "types": "./dist/sections/featured-page-header/allentown/featured-page-header-allentown.payload.d.ts"
+    },
+    "./sections/featured-page-header-allentown.types": {
+      "default": "./dist/sections/featured-page-header/allentown/featured-page-header-allentown.types.js",
+      "import": "./dist/sections/featured-page-header/allentown/featured-page-header-allentown.types.js",
+      "types": "./dist/sections/featured-page-header/allentown/featured-page-header-allentown.types.d.ts"
+    },
+    "./sections/form-section-allentown.astro": "./src/sections/form-section/allentown/form-section-allentown.astro",
+    "./sections/form-section-allentown.payload": {
+      "default": "./dist/sections/form-section/allentown/form-section-allentown.payload.js",
+      "import": "./dist/sections/form-section/allentown/form-section-allentown.payload.js",
+      "types": "./dist/sections/form-section/allentown/form-section-allentown.payload.d.ts"
+    },
+    "./sections/form-section-allentown.types": {
+      "default": "./dist/sections/form-section/allentown/form-section-allentown.types.js",
+      "import": "./dist/sections/form-section/allentown/form-section-allentown.types.js",
+      "types": "./dist/sections/form-section/allentown/form-section-allentown.types.d.ts"
     },
     "./sections/hero-allentown.astro": "./src/sections/hero/allentown/hero-allentown.astro",
     "./sections/hero-allentown.payload": {
@@ -44,6 +230,17 @@
       "import": "./dist/sections/hero/allentown/hero-allentown.types.js",
       "types": "./dist/sections/hero/allentown/hero-allentown.types.d.ts"
     },
+    "./sections/hero-todos-santos.astro": "./src/sections/hero/todos-santos/hero-todos-santos.astro",
+    "./sections/hero-todos-santos.payload": {
+      "default": "./dist/sections/hero/todos-santos/hero-todos-santos.payload.js",
+      "import": "./dist/sections/hero/todos-santos/hero-todos-santos.payload.js",
+      "types": "./dist/sections/hero/todos-santos/hero-todos-santos.payload.d.ts"
+    },
+    "./sections/hero-todos-santos.types": {
+      "default": "./dist/sections/hero/todos-santos/hero-todos-santos.types.js",
+      "import": "./dist/sections/hero/todos-santos/hero-todos-santos.types.js",
+      "types": "./dist/sections/hero/todos-santos/hero-todos-santos.types.d.ts"
+    },
     "./sections/hero-trinity.astro": "./src/sections/hero/trinity/hero-trinity.astro",
     "./sections/hero-trinity.payload": {
       "default": "./dist/sections/hero/trinity/hero-trinity.payload.js",
@@ -54,6 +251,50 @@
       "default": "./dist/sections/hero/trinity/hero-trinity.types.js",
       "import": "./dist/sections/hero/trinity/hero-trinity.types.js",
       "types": "./dist/sections/hero/trinity/hero-trinity.types.d.ts"
+    },
+    "./sections/insight-index-allentown.astro": "./src/sections/insight-index/allentown/insight-index-allentown.astro",
+    "./sections/insight-index-allentown.payload": {
+      "default": "./dist/sections/insight-index/allentown/insight-index-allentown.payload.js",
+      "import": "./dist/sections/insight-index/allentown/insight-index-allentown.payload.js",
+      "types": "./dist/sections/insight-index/allentown/insight-index-allentown.payload.d.ts"
+    },
+    "./sections/insight-index-allentown.types": {
+      "default": "./dist/sections/insight-index/allentown/insight-index-allentown.types.js",
+      "import": "./dist/sections/insight-index/allentown/insight-index-allentown.types.js",
+      "types": "./dist/sections/insight-index/allentown/insight-index-allentown.types.d.ts"
+    },
+    "./sections/intake-form-allentown.astro": "./src/sections/intake-form/allentown/intake-form-allentown.astro",
+    "./sections/intake-form-allentown.payload": {
+      "default": "./dist/sections/intake-form/allentown/intake-form-allentown.payload.js",
+      "import": "./dist/sections/intake-form/allentown/intake-form-allentown.payload.js",
+      "types": "./dist/sections/intake-form/allentown/intake-form-allentown.payload.d.ts"
+    },
+    "./sections/intake-form-allentown.types": {
+      "default": "./dist/sections/intake-form/allentown/intake-form-allentown.types.js",
+      "import": "./dist/sections/intake-form/allentown/intake-form-allentown.types.js",
+      "types": "./dist/sections/intake-form/allentown/intake-form-allentown.types.d.ts"
+    },
+    "./sections/media-accordion-allentown.astro": "./src/sections/media-accordion/allentown/media-accordion-allentown.astro",
+    "./sections/media-accordion-allentown.payload": {
+      "default": "./dist/sections/media-accordion/allentown/media-accordion-allentown.payload.js",
+      "import": "./dist/sections/media-accordion/allentown/media-accordion-allentown.payload.js",
+      "types": "./dist/sections/media-accordion/allentown/media-accordion-allentown.payload.d.ts"
+    },
+    "./sections/media-accordion-allentown.types": {
+      "default": "./dist/sections/media-accordion/allentown/media-accordion-allentown.types.js",
+      "import": "./dist/sections/media-accordion/allentown/media-accordion-allentown.types.js",
+      "types": "./dist/sections/media-accordion/allentown/media-accordion-allentown.types.d.ts"
+    },
+    "./sections/media-fact-grid-allentown.astro": "./src/sections/media-fact-grid/allentown/media-fact-grid-allentown.astro",
+    "./sections/media-fact-grid-allentown.payload": {
+      "default": "./dist/sections/media-fact-grid/allentown/media-fact-grid-allentown.payload.js",
+      "import": "./dist/sections/media-fact-grid/allentown/media-fact-grid-allentown.payload.js",
+      "types": "./dist/sections/media-fact-grid/allentown/media-fact-grid-allentown.payload.d.ts"
+    },
+    "./sections/media-fact-grid-allentown.types": {
+      "default": "./dist/sections/media-fact-grid/allentown/media-fact-grid-allentown.types.js",
+      "import": "./dist/sections/media-fact-grid/allentown/media-fact-grid-allentown.types.js",
+      "types": "./dist/sections/media-fact-grid/allentown/media-fact-grid-allentown.types.d.ts"
     },
     "./sections/media-feature-list-allentown.astro": "./src/sections/media-feature-list/allentown/media-feature-list-allentown.astro",
     "./sections/media-feature-list-allentown.payload": {
@@ -66,6 +307,39 @@
       "import": "./dist/sections/media-feature-list/allentown/media-feature-list-allentown.types.js",
       "types": "./dist/sections/media-feature-list/allentown/media-feature-list-allentown.types.d.ts"
     },
+    "./sections/media-metrics-allentown.astro": "./src/sections/media-metrics/allentown/media-metrics-allentown.astro",
+    "./sections/media-metrics-allentown.payload": {
+      "default": "./dist/sections/media-metrics/allentown/media-metrics-allentown.payload.js",
+      "import": "./dist/sections/media-metrics/allentown/media-metrics-allentown.payload.js",
+      "types": "./dist/sections/media-metrics/allentown/media-metrics-allentown.payload.d.ts"
+    },
+    "./sections/media-metrics-allentown.types": {
+      "default": "./dist/sections/media-metrics/allentown/media-metrics-allentown.types.js",
+      "import": "./dist/sections/media-metrics/allentown/media-metrics-allentown.types.js",
+      "types": "./dist/sections/media-metrics/allentown/media-metrics-allentown.types.d.ts"
+    },
+    "./sections/moq-lead-times-allentown.astro": "./src/sections/moq-lead-times/allentown/moq-lead-times-allentown.astro",
+    "./sections/moq-lead-times-allentown.payload": {
+      "default": "./dist/sections/moq-lead-times/allentown/moq-lead-times-allentown.payload.js",
+      "import": "./dist/sections/moq-lead-times/allentown/moq-lead-times-allentown.payload.js",
+      "types": "./dist/sections/moq-lead-times/allentown/moq-lead-times-allentown.payload.d.ts"
+    },
+    "./sections/moq-lead-times-allentown.types": {
+      "default": "./dist/sections/moq-lead-times/allentown/moq-lead-times-allentown.types.js",
+      "import": "./dist/sections/moq-lead-times/allentown/moq-lead-times-allentown.types.js",
+      "types": "./dist/sections/moq-lead-times/allentown/moq-lead-times-allentown.types.d.ts"
+    },
+    "./sections/not-found-hero-allentown.astro": "./src/sections/not-found-hero/allentown/not-found-hero-allentown.astro",
+    "./sections/not-found-hero-allentown.payload": {
+      "default": "./dist/sections/not-found-hero/allentown/not-found-hero-allentown.payload.js",
+      "import": "./dist/sections/not-found-hero/allentown/not-found-hero-allentown.payload.js",
+      "types": "./dist/sections/not-found-hero/allentown/not-found-hero-allentown.payload.d.ts"
+    },
+    "./sections/not-found-hero-allentown.types": {
+      "default": "./dist/sections/not-found-hero/allentown/not-found-hero-allentown.types.js",
+      "import": "./dist/sections/not-found-hero/allentown/not-found-hero-allentown.types.js",
+      "types": "./dist/sections/not-found-hero/allentown/not-found-hero-allentown.types.d.ts"
+    },
     "./sections/output-card-grid-allentown.astro": "./src/sections/output-card-grid/allentown/output-card-grid-allentown.astro",
     "./sections/output-card-grid-allentown.payload": {
       "default": "./dist/sections/output-card-grid/allentown/output-card-grid-allentown.payload.js",
@@ -77,6 +351,72 @@
       "import": "./dist/sections/output-card-grid/allentown/output-card-grid-allentown.types.js",
       "types": "./dist/sections/output-card-grid/allentown/output-card-grid-allentown.types.d.ts"
     },
+    "./sections/process-story-allentown.astro": "./src/sections/process-story/allentown/process-story-allentown.astro",
+    "./sections/process-story-allentown.payload": {
+      "default": "./dist/sections/process-story/allentown/process-story-allentown.payload.js",
+      "import": "./dist/sections/process-story/allentown/process-story-allentown.payload.js",
+      "types": "./dist/sections/process-story/allentown/process-story-allentown.payload.d.ts"
+    },
+    "./sections/process-story-allentown.types": {
+      "default": "./dist/sections/process-story/allentown/process-story-allentown.types.js",
+      "import": "./dist/sections/process-story/allentown/process-story-allentown.types.js",
+      "types": "./dist/sections/process-story/allentown/process-story-allentown.types.d.ts"
+    },
+    "./sections/product-details-allentown.astro": "./src/sections/product-details/allentown/product-details-allentown.astro",
+    "./sections/product-details-allentown.payload": {
+      "default": "./dist/sections/product-details/allentown/product-details-allentown.payload.js",
+      "import": "./dist/sections/product-details/allentown/product-details-allentown.payload.js",
+      "types": "./dist/sections/product-details/allentown/product-details-allentown.payload.d.ts"
+    },
+    "./sections/product-details-allentown.types": {
+      "default": "./dist/sections/product-details/allentown/product-details-allentown.types.js",
+      "import": "./dist/sections/product-details/allentown/product-details-allentown.types.js",
+      "types": "./dist/sections/product-details/allentown/product-details-allentown.types.d.ts"
+    },
+    "./sections/product-finder-form-allentown.astro": "./src/sections/product-finder-form/allentown/product-finder-form-allentown.astro",
+    "./sections/product-finder-form-allentown.payload": {
+      "default": "./dist/sections/product-finder-form/allentown/product-finder-form-allentown.payload.js",
+      "import": "./dist/sections/product-finder-form/allentown/product-finder-form-allentown.payload.js",
+      "types": "./dist/sections/product-finder-form/allentown/product-finder-form-allentown.payload.d.ts"
+    },
+    "./sections/product-finder-form-allentown.types": {
+      "default": "./dist/sections/product-finder-form/allentown/product-finder-form-allentown.types.js",
+      "import": "./dist/sections/product-finder-form/allentown/product-finder-form-allentown.types.js",
+      "types": "./dist/sections/product-finder-form/allentown/product-finder-form-allentown.types.d.ts"
+    },
+    "./sections/product-hero-allentown.astro": "./src/sections/product-hero/allentown/product-hero-allentown.astro",
+    "./sections/product-hero-allentown.payload": {
+      "default": "./dist/sections/product-hero/allentown/product-hero-allentown.payload.js",
+      "import": "./dist/sections/product-hero/allentown/product-hero-allentown.payload.js",
+      "types": "./dist/sections/product-hero/allentown/product-hero-allentown.payload.d.ts"
+    },
+    "./sections/product-hero-allentown.types": {
+      "default": "./dist/sections/product-hero/allentown/product-hero-allentown.types.js",
+      "import": "./dist/sections/product-hero/allentown/product-hero-allentown.types.js",
+      "types": "./dist/sections/product-hero/allentown/product-hero-allentown.types.d.ts"
+    },
+    "./sections/product-options-allentown.astro": "./src/sections/product-options/allentown/product-options-allentown.astro",
+    "./sections/product-options-allentown.payload": {
+      "default": "./dist/sections/product-options/allentown/product-options-allentown.payload.js",
+      "import": "./dist/sections/product-options/allentown/product-options-allentown.payload.js",
+      "types": "./dist/sections/product-options/allentown/product-options-allentown.payload.d.ts"
+    },
+    "./sections/product-options-allentown.types": {
+      "default": "./dist/sections/product-options/allentown/product-options-allentown.types.js",
+      "import": "./dist/sections/product-options/allentown/product-options-allentown.types.js",
+      "types": "./dist/sections/product-options/allentown/product-options-allentown.types.d.ts"
+    },
+    "./sections/proof-metrics-allentown.astro": "./src/sections/proof-metrics/allentown/proof-metrics-allentown.astro",
+    "./sections/proof-metrics-allentown.payload": {
+      "default": "./dist/sections/proof-metrics/allentown/proof-metrics-allentown.payload.js",
+      "import": "./dist/sections/proof-metrics/allentown/proof-metrics-allentown.payload.js",
+      "types": "./dist/sections/proof-metrics/allentown/proof-metrics-allentown.payload.d.ts"
+    },
+    "./sections/proof-metrics-allentown.types": {
+      "default": "./dist/sections/proof-metrics/allentown/proof-metrics-allentown.types.js",
+      "import": "./dist/sections/proof-metrics/allentown/proof-metrics-allentown.types.js",
+      "types": "./dist/sections/proof-metrics/allentown/proof-metrics-allentown.types.d.ts"
+    },
     "./sections/read-more-allentown.astro": "./src/sections/read-more/allentown/read-more-allentown.astro",
     "./sections/read-more-allentown.payload": {
       "default": "./dist/sections/read-more/allentown/read-more-allentown.payload.js",
@@ -87,10 +427,76 @@
       "default": "./dist/sections/read-more/allentown/read-more-allentown.types.js",
       "import": "./dist/sections/read-more/allentown/read-more-allentown.types.js",
       "types": "./dist/sections/read-more/allentown/read-more-allentown.types.d.ts"
+    },
+    "./sections/solution-list-allentown.astro": "./src/sections/solution-list/allentown/solution-list-allentown.astro",
+    "./sections/solution-list-allentown.payload": {
+      "default": "./dist/sections/solution-list/allentown/solution-list-allentown.payload.js",
+      "import": "./dist/sections/solution-list/allentown/solution-list-allentown.payload.js",
+      "types": "./dist/sections/solution-list/allentown/solution-list-allentown.payload.d.ts"
+    },
+    "./sections/solution-list-allentown.types": {
+      "default": "./dist/sections/solution-list/allentown/solution-list-allentown.types.js",
+      "import": "./dist/sections/solution-list/allentown/solution-list-allentown.types.js",
+      "types": "./dist/sections/solution-list/allentown/solution-list-allentown.types.d.ts"
+    },
+    "./sections/steps-stage.astro": "./src/sections/steps/stage/steps-stage.astro",
+    "./sections/steps-stage.payload": {
+      "default": "./dist/sections/steps/stage/steps-stage.payload.js",
+      "import": "./dist/sections/steps/stage/steps-stage.payload.js",
+      "types": "./dist/sections/steps/stage/steps-stage.payload.d.ts"
+    },
+    "./sections/steps-stage.types": {
+      "default": "./dist/sections/steps/stage/steps-stage.types.js",
+      "import": "./dist/sections/steps/stage/steps-stage.types.js",
+      "types": "./dist/sections/steps/stage/steps-stage.types.d.ts"
+    },
+    "./sections/support-contact-allentown.astro": "./src/sections/support-contact/allentown/support-contact-allentown.astro",
+    "./sections/support-contact-allentown.payload": {
+      "default": "./dist/sections/support-contact/allentown/support-contact-allentown.payload.js",
+      "import": "./dist/sections/support-contact/allentown/support-contact-allentown.payload.js",
+      "types": "./dist/sections/support-contact/allentown/support-contact-allentown.payload.d.ts"
+    },
+    "./sections/support-contact-allentown.types": {
+      "default": "./dist/sections/support-contact/allentown/support-contact-allentown.types.js",
+      "import": "./dist/sections/support-contact/allentown/support-contact-allentown.types.js",
+      "types": "./dist/sections/support-contact/allentown/support-contact-allentown.types.d.ts"
+    },
+    "./sections/tabs-allentown.astro": "./src/sections/tabs/allentown/tabs-allentown.astro",
+    "./sections/tabs-allentown.payload": {
+      "default": "./dist/sections/tabs/allentown/tabs-allentown.payload.js",
+      "import": "./dist/sections/tabs/allentown/tabs-allentown.payload.js",
+      "types": "./dist/sections/tabs/allentown/tabs-allentown.payload.d.ts"
+    },
+    "./sections/tabs-allentown.types": {
+      "default": "./dist/sections/tabs/allentown/tabs-allentown.types.js",
+      "import": "./dist/sections/tabs/allentown/tabs-allentown.types.js",
+      "types": "./dist/sections/tabs/allentown/tabs-allentown.types.d.ts"
+    },
+    "./sections/thank-you-hero-allentown.astro": "./src/sections/thank-you-hero/allentown/thank-you-hero-allentown.astro",
+    "./sections/thank-you-hero-allentown.payload": {
+      "default": "./dist/sections/thank-you-hero/allentown/thank-you-hero-allentown.payload.js",
+      "import": "./dist/sections/thank-you-hero/allentown/thank-you-hero-allentown.payload.js",
+      "types": "./dist/sections/thank-you-hero/allentown/thank-you-hero-allentown.payload.d.ts"
+    },
+    "./sections/thank-you-hero-allentown.types": {
+      "default": "./dist/sections/thank-you-hero/allentown/thank-you-hero-allentown.types.js",
+      "import": "./dist/sections/thank-you-hero/allentown/thank-you-hero-allentown.types.js",
+      "types": "./dist/sections/thank-you-hero/allentown/thank-you-hero-allentown.types.d.ts"
+    },
+    "./sections/use-cases-allentown.astro": "./src/sections/use-cases/allentown/use-cases-allentown.astro",
+    "./sections/use-cases-allentown.payload": {
+      "default": "./dist/sections/use-cases/allentown/use-cases-allentown.payload.js",
+      "import": "./dist/sections/use-cases/allentown/use-cases-allentown.payload.js",
+      "types": "./dist/sections/use-cases/allentown/use-cases-allentown.payload.d.ts"
+    },
+    "./sections/use-cases-allentown.types": {
+      "default": "./dist/sections/use-cases/allentown/use-cases-allentown.types.js",
+      "import": "./dist/sections/use-cases/allentown/use-cases-allentown.types.js",
+      "types": "./dist/sections/use-cases/allentown/use-cases-allentown.types.d.ts"
     }
   },
   "scripts": {
-    "exports:generate": "node scripts/generate-exports.mjs",
+    "exports:generate": "node scripts/materialize-structural-sections.mjs && node scripts/generate-exports.mjs",
     "test": "node --test scripts/*.test.mjs",
     "build": "pnpm exports:generate && node --input-type=module -e \"import { rmSync } from 'node:fs'; rmSync('dist', { recursive: true, force: true })\" && tsc -p tsconfig.build.json",
     "check": "pnpm exports:generate && astro check --root examples/astro && astro check --root examples/catalog",
