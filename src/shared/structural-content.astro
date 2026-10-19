@@ -68,7 +68,7 @@ function identifier(value: string) {
     return <div class={className} data-kinekt-carousel role="region" aria-label="Case studies carousel">
       <div class={`${className}-viewport`} data-kinekt-carousel-viewport>
         <ul class={`${className}-slides`} data-kinekt-carousel-container>
-          {items.map((item, index) => <li class={`${className}-slide`} data-kinekt-carousel-slide><article><Astro.self block={block} instanceId={`${instanceId}-${key}-${index}`} content={item as Record<string, unknown>} fields={itemFields} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></article></li>)}
+          {items.map((item, index) => <li class={`${className}-slide`} data-kinekt-carousel-slide><article><Astro.self block={block} instanceId={`${instanceId}-${key}-${index}`} content={item as Record<string, unknown>} fields={itemFields} omit={['image', 'results', 'quote', 'cta']} level={Math.min(level + 1, 4) as 2 | 3 | 4} /><div class={`${className}-slide-content`}><Astro.self block={block} instanceId={`${instanceId}-${key}-${index}-image`} content={item as Record<string, unknown>} fields={itemFields} omit={['logo', 'title', 'description', 'results', 'quote', 'cta']} level={Math.min(level + 1, 4) as 2 | 3 | 4} /><div class={`${className}-slide-details`}><Astro.self block={block} instanceId={`${instanceId}-${key}-${index}-details`} content={item as Record<string, unknown>} fields={itemFields} omit={['logo', 'title', 'description', 'image']} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></div></div></article></li>)}
         </ul>
       </div>
       <div class={`${className}-controls`}>
