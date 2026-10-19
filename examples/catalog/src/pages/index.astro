@@ -48,7 +48,7 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
 
           <ul class="components">
             {components.map((component) => (
-              <li class:list={['component', { 'component--preview': Boolean(component.previewSource) }]} data-catalogue-component data-tags={component.tags.join(' ')} data-search={[component.title, component.description, component.category, component.role, component.variation, component.id, ...component.tags].filter(Boolean).join(' ').toLowerCase()}>
+              <li class:list={['component', { 'component--preview': Boolean(component.previewSource) }]} data-catalogue-component data-catalogue-id={component.id} data-tags={component.tags.join(' ')} data-search={[component.title, component.description, component.category, component.role, component.variation, component.id, ...component.tags].filter(Boolean).join(' ').toLowerCase()}>
                 <div class="component__details">
                   <div class="component__header">
                     <p class="component__category">{component.category} / {component.role ?? 'component'}</p>
@@ -114,8 +114,10 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
       const status = document.querySelector<HTMLElement>('[data-catalogue-search-status]')
       const cards = [...document.querySelectorAll<HTMLElement>('[data-catalogue-component]')]
       let pagefind: Promise<PagefindModule> | undefined
+      let pagefindSearchGeneration = 0
 
       function filterCards() {
+        pagefindSearchGeneration += 1
         const terms = query?.value.trim().toLowerCase() ?? ''
         const selectedCategory = category?.value ?? ''
         let matches = 0
@@ -127,15 +129,36 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
         if (status) status.textContent = `${matches} component${matches === 1 ? '' : 's'} shown.`
       }
 
+      function componentIdFromPagefindUrl(url: string) {
+        const pathname = new URL(url, window.location.href).pathname
+        const componentPath = pathname.split('/components/')[1]
+        return componentPath
+          ? decodeURIComponent(componentPath).replace(/\/index\.html$/, '').replace(/\/$/, '')
+          : undefined
+      }
+
       async function searchPagefind() {
         const terms = query?.value.trim()
         if (!terms || !status) return
+        const generation = ++pagefindSearchGeneration
         try {
           pagefind ??= import(/* @vite-ignore */ new URL('pagefind/pagefind.js', window.location.href).toString()) as Promise<PagefindModule>
           const engine = await pagefind
           await engine.init()
           const result = await engine.search(terms, category?.value ? { filters: { category: category.value } } : undefined)
-          status.textContent = `${cards.filter((card) => !card.hidden).length} component${cards.filter((card) => !card.hidden).length === 1 ? '' : 's'} shown. ${result.results.length} indexed page${result.results.length === 1 ? '' : 's'} found.`
+          const matchedIds = new Set(
+            (await Promise.all(result.results.map((entry) => entry.data())))
+              .map((entry) => componentIdFromPagefindUrl(entry.url))
+              .filter((id): id is string => Boolean(id)),
+          )
+          if (generation !== pagefindSearchGeneration) return
+          let matches = 0
+          cards.forEach((card) => {
+            const visible = matchedIds.has(card.dataset.catalogueId ?? '')
+            card.hidden = !visible
+            if (visible) matches += 1
+          })
+          status.textContent = `${matches} component${matches === 1 ? '' : 's'} shown. ${result.results.length} indexed page${result.results.length === 1 ? '' : 's'} found.`
         } catch {
           // The local filter remains fully usable when the static Pagefind bundle is absent.
         }
