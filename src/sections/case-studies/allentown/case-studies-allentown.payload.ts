@@ -23,6 +23,12 @@ const manifest = {
       "required": true,
       "localized": true
     },
+    "sectionLabel": {
+      "kind": "text",
+      "required": false,
+      "localized": true,
+      "description": "Optional label displayed before the case carousel with a decorative line."
+    },
     "carousel": {
       "kind": "component",
       "componentId": "patterns/case-study-carousel/allentown",

@@ -54,6 +54,10 @@ const Preview = (previewModule as { default: any }).default
                 <label><input type="radio" name="carousel-control-style" value="icon" checked /> Icons</label>
                 <label><input type="radio" name="carousel-control-style" value="text" /> Text</label>
               </fieldset>
+              <fieldset>
+                <legend>Carousel label</legend>
+                <label><input type="checkbox" name="carousel-label" checked /> Show label and line</label>
+              </fieldset>
             </>
           )}
         </aside>
@@ -64,7 +68,7 @@ const Preview = (previewModule as { default: any }).default
       const surface = document.querySelector('[data-kinekt-preview-surface]')
       document.querySelectorAll('.preview-options input').forEach((input) => {
         input.addEventListener('change', () => {
-          if (!input.checked || !surface) return
+          if (!surface || (input.type === 'radio' && !input.checked)) return
           if (input.name === 'theme') {
             const section = surface.querySelector('[data-kinekt-section]')
             if (section) section.dataset.kinektTheme = input.value
@@ -76,6 +80,10 @@ const Preview = (previewModule as { default: any }).default
           if (input.name === 'carousel-control-style') {
             const carousel = surface.querySelector('[data-kinekt-carousel]')
             if (carousel) carousel.dataset.kinektCarouselControlStyle = input.value
+          }
+          if (input.name === 'carousel-label') {
+            const label = surface.querySelector('[data-kinekt-carousel-label]')
+            if (label) label.hidden = !input.checked
           }
         })
       })
