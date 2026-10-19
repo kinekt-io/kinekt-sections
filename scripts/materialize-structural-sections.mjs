@@ -84,7 +84,71 @@ function sampleField(field, key, depth = 0, index = 0) {
   return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: from(previewCopy.headings, itemIndex), description: from(previewCopy.descriptions, itemIndex) }))
 }
 
+function caseStudiesPreview() {
+  const studies = [
+    {
+      title: 'Avy’s Long Range VTOL Drone',
+      description: 'Avy’s Aera carries emergency medical cargo for EU health services. A 35 Ah smart pack with DroneCAN integration doubled flight time to two hours, with state-of-charge and state-of-power prediction on board.',
+      results: [['Battery life', '60% longer'], ['Drone size', '0% increase']],
+      quote: '“The battery is the single most important engineering component for our drones, and with Tulip Tech we know we have the best possible option.”',
+      authorName: 'Grant Keller',
+      authorRole: 'CTO, Vanguard UAS',
+    },
+    {
+      title: 'Electric flight without compromise',
+      description: 'A compact high-density battery platform enabled a lighter airframe while maintaining the telemetry and service access needed by the operations team.',
+      results: [['Flight time', '2 hours'], ['Pack weight', '18% lower']],
+      quote: '“The integration process was clear from the first prototype through to field validation.”',
+      authorName: 'Mara Klein',
+      authorRole: 'Head of engineering',
+    },
+    {
+      title: 'Reliable power for autonomous missions',
+      description: 'The system was configured for repeatable performance across seasonal temperature changes and demanding charge cycles.',
+      results: [['Mission range', '45 km'], ['Charge cycles', '1,000+']],
+      quote: '“We now have the performance data to plan operations with confidence.”',
+      authorName: 'Elias Vermeer',
+      authorRole: 'Systems lead',
+    },
+    {
+      title: 'A battery system built around the mission',
+      description: 'The final pack combines application-specific enclosure geometry with an integration path that remains maintainable after deployment.',
+      results: [['Integration time', '30% faster'], ['Service access', 'Tool-free']],
+      quote: '“The system feels purpose-built because the engineering decisions were made with our use case in view.”',
+      authorName: 'Noor Janssen',
+      authorRole: 'Product director',
+    },
+  ]
+
+  return {
+    theme: 'light',
+    intro: {
+      accentHeading: '/ Proven performance',
+      heading: 'Our client successes',
+      description: 'Examples of high-density battery systems designed around the conditions, constraints and performance targets of each application.',
+    },
+    carousel: {
+      items: studies.map((study, index) => ({
+        logo: { url: `https://placehold.co/180x48/png?text=Partner+${index + 1}`, alt: `Partner ${index + 1} logo`, width: 180, height: 48 },
+        title: study.title,
+        description: study.description,
+        image: { url: '../../../../placeholders/case-study-observatory.webp', alt: 'Observatory dome used as a technical case-study placeholder', width: 680, height: 544 },
+        results: study.results.map(([label, text]) => ({ label, value: { text } })),
+        quote: {
+          quote: study.quote,
+          authorName: study.authorName,
+          authorRole: study.authorRole,
+          avatar: { url: `https://placehold.co/96x96/png?text=${index + 1}`, alt: `${study.authorName} portrait`, width: 96, height: 96 },
+        },
+        cta: { cta: { label: 'Read this case', href: '#' } },
+      })),
+    },
+    cta: { cta: { label: 'View all cases', href: '#' } },
+  }
+}
+
 function sampleContent(manifest, depth = 0, index = 0) {
+  if (depth === 0 && manifest.slug === 'case-studies-allentown') return caseStudiesPreview()
   return Object.fromEntries(Object.entries(manifest.fields).map(([key, field]) => [key, sampleField(field, key, depth, index)]))
 }
 
@@ -125,7 +189,7 @@ for (const directory of await manifestDirectories(sections)) {
   const previewContent = sampleContent(manifest)
   const fields = previewFields(manifest)
   const previewIntro = previewContent.intro ?? { accentHeading: 'Beta section', heading: manifest.title, description: 'Representative catalogue content.' }
-  const previewCtas = previewContent.ctas ?? previewContent.ctaGroup ?? (previewContent.cta ? { primary: previewContent.cta } : undefined)
+  const previewCtas = previewContent.ctas ?? previewContent.ctaGroup
   const previewMedia = previewContent.media ?? previewContent.image ?? previewContent.heroMedia
 
   await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\nconst fields = ${JSON.stringify(fields, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(`beta-${manifest.slug}`)} fields={fields} {...props} />\n`)
