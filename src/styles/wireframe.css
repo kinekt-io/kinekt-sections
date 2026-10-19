@@ -1147,3 +1147,8 @@
     padding-inline: clamp(1rem, 2vw, 2rem);
   }
 }
+
+/* The carousel owns the header-to-content rhythm for Case Studies. */
+:where(.case-studies-allentown) .case-studies-allentown__header {
+  margin-bottom: 0;
+}

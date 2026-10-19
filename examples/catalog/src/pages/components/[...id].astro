@@ -118,7 +118,8 @@ const Preview = (previewModule as { default: any }).default
             }
           }
           if (input.name === 'case-action-icon') {
-            toggleCtaIcons(surface.querySelectorAll<HTMLAnchorElement>('a.case-studies-allentown__cta'), input.checked)
+            const headerAction = surface.querySelector<HTMLElement>('.case-studies-allentown__header > .case-studies-allentown__cta')
+            if (headerAction) toggleCtaIcons(headerAction.querySelectorAll<HTMLAnchorElement>('a'), input.checked)
           }
           if (input.name === 'slide-action-icons') {
             toggleCtaIcons(surface.querySelectorAll<HTMLAnchorElement>('[data-kinekt-carousel-slide] a[class*="__cta"]'), input.checked)
