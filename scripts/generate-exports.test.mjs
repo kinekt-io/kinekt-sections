@@ -29,6 +29,7 @@ test('discovers nested paired sections and standalone components without exporti
   await f.add('sections/hero/allentown/manifest.json', JSON.stringify({
     $schema: 'https://kinekt.io/schemas/component-manifest.schema.json',
     schemaVersion: 1,
+    version: '26.10.0-beta.0',
     id: 'sections/hero/allentown',
     slug: 'hero-allentown',
     title: 'Hero Allentown',
@@ -49,6 +50,7 @@ test('discovers nested paired sections and standalone components without exporti
   await f.add('controls/button/manifest.json', JSON.stringify({
     $schema: 'https://kinekt.io/schemas/component-manifest.schema.json',
     schemaVersion: 1,
+    version: '26.10.0-beta.0',
     id: 'controls/button',
     slug: 'button',
     title: 'Button',
@@ -79,6 +81,7 @@ test('discovers nested paired sections and standalone components without exporti
   assert.deepEqual(await f.catalogue(), [
     {
       id: 'controls/button',
+      version: '26.10.0-beta.0',
       slug: 'button',
       category: 'controls',
       role: 'button',
@@ -95,6 +98,7 @@ test('discovers nested paired sections and standalone components without exporti
     },
     {
       id: 'sections/hero/allentown',
+      version: '26.10.0-beta.0',
       slug: 'hero-allentown',
       category: 'sections',
       role: 'hero',

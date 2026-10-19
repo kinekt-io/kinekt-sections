@@ -95,6 +95,10 @@ async function componentManifest(directory) {
   for (const [field, value] of Object.entries(expected)) {
     if (metadata[field] !== value) throw new Error(`${manifestPath} ${field} must equal ${JSON.stringify(value)}.`)
   }
+  requireString(metadata.version, 'version', manifestPath)
+  if (!/^\d{2}\.(?:0[1-9]|1[0-2])\.\d+-beta\.\d+$/.test(metadata.version)) {
+    throw new Error(`${manifestPath} version must use YY.MM.revision-beta.index CalVer.`)
+  }
   requireString(metadata.slug, 'slug', manifestPath)
   requireString(metadata.title, 'title', manifestPath)
   requireString(metadata.description, 'description', manifestPath)
@@ -126,6 +130,7 @@ for (const component of [...components.values()].sort((a, b) => a.directory.loca
   const metadata = await componentManifest(component.directory)
   catalogue.push({
     id: metadata.id,
+    version: metadata.version,
     slug: metadata.slug,
     category: metadata.category,
     role: metadata.role,

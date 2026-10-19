@@ -1,6 +1,7 @@
 {
   "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
   "schemaVersion": 1,
+  "version": "26.10.0-beta.0",
   "id": "components/feature-item/allentown",
   "slug": "feature-item-allentown",
   "title": "Feature Item Allentown",

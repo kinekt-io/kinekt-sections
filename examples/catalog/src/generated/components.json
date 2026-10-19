@@ -1,6 +1,7 @@
 [
   {
     "id": "controls/button/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "button-allentown",
     "category": "controls",
     "role": "button",
@@ -30,6 +31,7 @@
   },
   {
     "id": "primitives/section-intro",
+    "version": "26.10.0-beta.0",
     "slug": "section-intro",
     "category": "primitives",
     "role": "section-intro",
@@ -64,6 +66,7 @@
   },
   {
     "id": "sections/action-contact/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "action-contact-allentown",
     "category": "sections",
     "role": "action-contact",
@@ -139,6 +142,7 @@
   },
   {
     "id": "sections/battery-models/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "battery-models-allentown",
     "category": "sections",
     "role": "battery-models",
@@ -189,6 +193,7 @@
   },
   {
     "id": "sections/case-studies/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "case-studies-allentown",
     "category": "sections",
     "role": "case-studies",
@@ -244,6 +249,7 @@
   },
   {
     "id": "sections/checklist-feature-list/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "checklist-feature-list-allentown",
     "category": "sections",
     "role": "checklist-feature-list",
@@ -300,6 +306,7 @@
   },
   {
     "id": "sections/comparison-overview/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "comparison-overview-allentown",
     "category": "sections",
     "role": "comparison-overview",
@@ -355,6 +362,7 @@
   },
   {
     "id": "sections/compatibility-specifications/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "compatibility-specifications-allentown",
     "category": "sections",
     "role": "compatibility-specifications",
@@ -404,6 +412,7 @@
   },
   {
     "id": "sections/compliance-detail/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "compliance-detail-allentown",
     "category": "sections",
     "role": "compliance-detail",
@@ -476,6 +485,7 @@
   },
   {
     "id": "sections/compliance-overview/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "compliance-overview-allentown",
     "category": "sections",
     "role": "compliance-overview",
@@ -540,6 +550,7 @@
   },
   {
     "id": "sections/compliance-text/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "compliance-text-allentown",
     "category": "sections",
     "role": "compliance-text",
@@ -604,6 +615,7 @@
   },
   {
     "id": "sections/density-comparison/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "density-comparison-allentown",
     "category": "sections",
     "role": "density-comparison",
@@ -658,6 +670,7 @@
   },
   {
     "id": "sections/event-overview/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "event-overview-allentown",
     "category": "sections",
     "role": "event-overview",
@@ -712,6 +725,7 @@
   },
   {
     "id": "sections/facilities-overview/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "facilities-overview-allentown",
     "category": "sections",
     "role": "facilities-overview",
@@ -772,6 +786,7 @@
   },
   {
     "id": "sections/faq-index/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "faq-index-allentown",
     "category": "sections",
     "role": "faq-index",
@@ -828,6 +843,7 @@
   },
   {
     "id": "sections/faq/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "faq-allentown",
     "category": "sections",
     "role": "faq",
@@ -889,6 +905,7 @@
   },
   {
     "id": "sections/featured-event/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "featured-event-allentown",
     "category": "sections",
     "role": "featured-event",
@@ -939,6 +956,7 @@
   },
   {
     "id": "sections/featured-insights/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "featured-insights-allentown",
     "category": "sections",
     "role": "featured-insights",
@@ -1006,6 +1024,7 @@
   },
   {
     "id": "sections/featured-page-header/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "featured-page-header-allentown",
     "category": "sections",
     "role": "featured-page-header",
@@ -1064,6 +1083,7 @@
   },
   {
     "id": "sections/form-section/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "form-section-allentown",
     "category": "sections",
     "role": "form-section",
@@ -1129,6 +1149,7 @@
   },
   {
     "id": "sections/hero/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "hero-allentown",
     "category": "sections",
     "role": "hero",
@@ -1193,6 +1214,7 @@
   },
   {
     "id": "sections/hero/todos-santos",
+    "version": "26.10.0-beta.0",
     "slug": "hero-todos-santos",
     "category": "sections",
     "role": "hero",
@@ -1262,6 +1284,7 @@
   },
   {
     "id": "sections/hero/trinity",
+    "version": "26.10.0-beta.0",
     "slug": "hero-trinity",
     "category": "sections",
     "role": "hero",
@@ -1326,6 +1349,7 @@
   },
   {
     "id": "sections/insight-index/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "insight-index-allentown",
     "category": "sections",
     "role": "insight-index",
@@ -1393,6 +1417,7 @@
   },
   {
     "id": "sections/intake-form/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "intake-form-allentown",
     "category": "sections",
     "role": "intake-form",
@@ -1458,6 +1483,7 @@
   },
   {
     "id": "sections/media-accordion/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "media-accordion-allentown",
     "category": "sections",
     "role": "media-accordion",
@@ -1528,6 +1554,7 @@
   },
   {
     "id": "sections/media-fact-grid/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "media-fact-grid-allentown",
     "category": "sections",
     "role": "media-fact-grid",
@@ -1582,6 +1609,7 @@
   },
   {
     "id": "sections/media-feature-list/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "media-feature-list-allentown",
     "category": "sections",
     "role": "media-feature-list",
@@ -1645,6 +1673,7 @@
   },
   {
     "id": "sections/media-metrics/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "media-metrics-allentown",
     "category": "sections",
     "role": "media-metrics",
@@ -1700,6 +1729,7 @@
   },
   {
     "id": "sections/moq-lead-times/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "moq-lead-times-allentown",
     "category": "sections",
     "role": "moq-lead-times",
@@ -1756,6 +1786,7 @@
   },
   {
     "id": "sections/not-found-hero/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "not-found-hero-allentown",
     "category": "sections",
     "role": "not-found-hero",
@@ -1808,6 +1839,7 @@
   },
   {
     "id": "sections/output-card-grid/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "output-card-grid-allentown",
     "category": "sections",
     "role": "output-card-grid",
@@ -1856,6 +1888,7 @@
   },
   {
     "id": "sections/process-story/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "process-story-allentown",
     "category": "sections",
     "role": "process-story",
@@ -1910,6 +1943,7 @@
   },
   {
     "id": "sections/product-details/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "product-details-allentown",
     "category": "sections",
     "role": "product-details",
@@ -1973,6 +2007,7 @@
   },
   {
     "id": "sections/product-finder-form/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "product-finder-form-allentown",
     "category": "sections",
     "role": "product-finder-form",
@@ -2021,6 +2056,7 @@
   },
   {
     "id": "sections/product-hero/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "product-hero-allentown",
     "category": "sections",
     "role": "product-hero",
@@ -2097,6 +2133,7 @@
   },
   {
     "id": "sections/product-options/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "product-options-allentown",
     "category": "sections",
     "role": "product-options",
@@ -2147,6 +2184,7 @@
   },
   {
     "id": "sections/proof-metrics/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "proof-metrics-allentown",
     "category": "sections",
     "role": "proof-metrics",
@@ -2214,6 +2252,7 @@
   },
   {
     "id": "sections/read-more/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "read-more-allentown",
     "category": "sections",
     "role": "read-more",
@@ -2260,6 +2299,7 @@
   },
   {
     "id": "sections/solution-list/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "solution-list-allentown",
     "category": "sections",
     "role": "solution-list",
@@ -2310,6 +2350,7 @@
   },
   {
     "id": "sections/steps/stage",
+    "version": "26.10.0-beta.0",
     "slug": "steps-stage",
     "category": "sections",
     "role": "steps",
@@ -2368,6 +2409,7 @@
   },
   {
     "id": "sections/support-contact/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "support-contact-allentown",
     "category": "sections",
     "role": "support-contact",
@@ -2437,6 +2479,7 @@
   },
   {
     "id": "sections/tabs/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "tabs-allentown",
     "category": "sections",
     "role": "tabs",
@@ -2490,6 +2533,7 @@
   },
   {
     "id": "sections/thank-you-hero/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "thank-you-hero-allentown",
     "category": "sections",
     "role": "thank-you-hero",
@@ -2553,6 +2597,7 @@
   },
   {
     "id": "sections/use-cases/allentown",
+    "version": "26.10.0-beta.0",
     "slug": "use-cases-allentown",
     "category": "sections",
     "role": "use-cases",

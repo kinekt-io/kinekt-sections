@@ -342,7 +342,7 @@
 :where([data-kinekt-section]) [data-kinekt-carousel] { --kinekt-carousel-gap: var(--kinekt-section-carousel-gap, var(--kinekt-space-carousel, 1rem)); }
 :where([data-kinekt-section]) ul[data-kinekt-carousel-container] { display: flex; gap: var(--kinekt-carousel-gap); }
 :where([data-kinekt-section]) [data-kinekt-carousel-slide] { flex: 0 0 var(--kinekt-carousel-slide-basis, 100%); }
-:where([data-kinekt-section]) [data-kinekt-carousel-loop='true'] ul[data-kinekt-carousel-container] { gap: 0; margin-inline-start: calc(var(--kinekt-carousel-gap) * -1); }
+:where([data-kinekt-section]) [data-kinekt-carousel-loop='true'] ul[data-kinekt-carousel-container] { gap: 0; }
 :where([data-kinekt-section]) [data-kinekt-carousel-loop='true'] [data-kinekt-carousel-slide] { margin-inline-start: var(--kinekt-carousel-gap); }
 :where([data-kinekt-section]) [data-kinekt-carousel-pagination] { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'counter next' 'indicators indicators'; align-items: center; gap: 1.25rem; }
 :where([data-kinekt-section]) [data-kinekt-carousel-controls='previous-next'] [data-kinekt-carousel-pagination] { grid-template-columns: minmax(0, 1fr) auto auto; grid-template-areas: 'counter previous next' 'indicators indicators indicators'; }
