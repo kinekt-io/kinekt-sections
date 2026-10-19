@@ -58,6 +58,10 @@ const Preview = (previewModule as { default: any }).default
                 <legend>Carousel label</legend>
                 <label><input type="checkbox" name="carousel-label" checked /> Show label and line</label>
               </fieldset>
+              <fieldset>
+                <legend>Carousel behaviour</legend>
+                <label><input type="checkbox" name="carousel-loop" /> Loop infinitely</label>
+              </fieldset>
             </>
           )}
         </aside>
@@ -86,6 +90,13 @@ const Preview = (previewModule as { default: any }).default
           if (input.name === 'carousel-label') {
             const label = surface.querySelector('[data-kinekt-carousel-label]')
             if (label) label.hidden = !input.checked
+          }
+          if (input.name === 'carousel-loop') {
+            const carousel = surface.querySelector('[data-kinekt-carousel]')
+            if (carousel) {
+              carousel.dataset.kinektCarouselLoop = String(input.checked)
+              carousel.dispatchEvent(new CustomEvent('kinekt:carousel-reinitialize'))
+            }
           }
         })
       })

@@ -83,6 +83,7 @@ async function initializeCarousel(carousel: Element) {
   const dots = Array.from(carousel.querySelectorAll<HTMLButtonElement>('[data-kinekt-carousel-dot]'))
   if (!viewport || !next || !current || !total || !status) return
 
+  const listeners = new AbortController()
   const api = EmblaCarousel(viewport, { align: 'start', containScroll: 'trimSnaps', loop: carousel.getAttribute('data-kinekt-carousel-loop') === 'true' })
   const update = () => {
     const selected = api.selectedScrollSnap()
@@ -98,9 +99,15 @@ async function initializeCarousel(carousel: Element) {
     status.textContent = `Slide ${selected + 1} of ${count}`
   }
 
-  previous?.addEventListener('click', () => api.scrollPrev())
-  next.addEventListener('click', () => api.scrollNext())
-  dots.forEach((dot, index) => dot.addEventListener('click', () => api.scrollTo(index)))
+  previous?.addEventListener('click', () => api.scrollPrev(), { signal: listeners.signal })
+  next.addEventListener('click', () => api.scrollNext(), { signal: listeners.signal })
+  dots.forEach((dot, index) => dot.addEventListener('click', () => api.scrollTo(index), { signal: listeners.signal }))
+  carousel.addEventListener('kinekt:carousel-reinitialize', () => {
+    listeners.abort()
+    api.destroy()
+    carousel.removeAttribute('data-kinekt-carousel-initialized')
+    void initializeCarousel(carousel)
+  }, { once: true, signal: listeners.signal })
   api.on('select', update).on('reInit', update)
   update()
 }
