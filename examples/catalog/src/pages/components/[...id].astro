@@ -50,7 +50,7 @@ const Preview = (previewModule as { default: any }).default
                 <label><input type="radio" name="carousel-controls" value="next" /> Next only</label>
               </fieldset>
               <fieldset>
-                <legend>Control style</legend>
+                <legend>Pagination controls</legend>
                 <label><input type="radio" name="carousel-control-style" value="icon" checked /> Icons</label>
                 <label><input type="radio" name="carousel-control-style" value="text" /> Text</label>
               </fieldset>
@@ -62,6 +62,11 @@ const Preview = (previewModule as { default: any }).default
                 <legend>Carousel behaviour</legend>
                 <label><input type="checkbox" name="carousel-loop" /> Loop infinitely</label>
               </fieldset>
+              <fieldset>
+                <legend>Call-to-action icons</legend>
+                <label><input type="checkbox" name="case-action-icon" /> View all cases</label>
+                <label><input type="checkbox" name="slide-action-icons" /> Read case</label>
+              </fieldset>
             </>
           )}
         </aside>
@@ -71,6 +76,19 @@ const Preview = (previewModule as { default: any }).default
     <script>
       const surface = document.querySelector('[data-kinekt-preview-surface]')
       const previewOptions = document.querySelector('.preview-options')
+      function toggleCtaIcons(links, visible) {
+        links.forEach((link) => {
+          const icon = link.querySelector('[data-kinekt-cta-icon]')
+          if (visible && !icon) {
+            const nextIcon = document.createElement('span')
+            nextIcon.setAttribute('data-kinekt-cta-icon', '')
+            nextIcon.setAttribute('aria-hidden', 'true')
+            nextIcon.textContent = '→'
+            link.append(nextIcon)
+          }
+          if (!visible) icon?.remove()
+        })
+      }
       document.querySelectorAll('.preview-options input').forEach((input) => {
         input.addEventListener('change', () => {
           if (!surface || (input.type === 'radio' && !input.checked)) return
@@ -98,6 +116,12 @@ const Preview = (previewModule as { default: any }).default
               carousel.dispatchEvent(new CustomEvent('kinekt:carousel-reinitialize'))
             }
           }
+          if (input.name === 'case-action-icon') {
+            toggleCtaIcons(surface.querySelectorAll('a.beta-case-studies-allentown__cta'), input.checked)
+          }
+          if (input.name === 'slide-action-icons') {
+            toggleCtaIcons(surface.querySelectorAll('[data-kinekt-carousel-slide] a[class*="__cta"]'), input.checked)
+          }
         })
       })
     </script>
@@ -121,5 +145,6 @@ const Preview = (previewModule as { default: any }).default
   .preview-options fieldset { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; min-width: 0; margin: 0; padding: 0; border: 0; }
   .preview-options legend { width: 100%; margin-bottom: 0.5rem; font-size: 0.8125rem; font-weight: 700; }
   .preview-options label { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.875rem; }
+  .preview-options [data-kinekt-cta-icon] { margin-inline-start: 0.5em; }
   @media (max-width: 40rem) { .bar { align-items: start; flex-direction: column; } }
 </style>

@@ -127,6 +127,7 @@ function caseStudiesPreview() {
       heading: 'Our client successes',
       description: 'Examples of high-density battery systems designed around the conditions, constraints and performance targets of each application.',
     },
+    sectionLabel: 'Case study',
     carousel: {
       items: studies.map((study, index) => ({
         logo: { url: `https://placehold.co/180x48/png?text=Partner+${index + 1}`, alt: `Partner ${index + 1} logo`, width: 180, height: 48 },
