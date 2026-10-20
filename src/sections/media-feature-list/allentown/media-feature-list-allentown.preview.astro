@@ -1,117 +1,47 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import MediaFeatureList from './media-feature-list-allentown.astro'
+import type { MediaFeatureListContent } from './media-feature-list-allentown.types.js'
 
-const content = {
-  "theme": "light",
-  "direction": "mediaLeft",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+const content: MediaFeatureListContent = {
+  theme: 'dark',
+  direction: 'mediaLeft',
+  intro: {
+    accentHeading: 'Engineered energy systems',
+    heading: 'Energy systems built around real operating conditions',
+    description: {
+      html: '<p>Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.</p>',
+    },
   },
-  "label": {
-    "text": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-    "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  label: {
+    text: 'Validated for demanding deployments',
+    icon: '↗',
   },
-  "media": {
-    "url": "https://placehold.co/1600x900/png?text=Media",
-    "alt": "Battery module and electrical interface",
-    "width": 1600,
-    "height": 900
+  media: {
+    url: 'https://placehold.co/1376x812/png?text=Media',
+    alt: 'Battery module and electrical interface',
+    width: 1376,
+    height: 812,
   },
-  "features": [
+  features: [
     {
-      "title": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+      title: 'Designed for the constraints that shape delivery',
+      description: {
+        html: '<p>The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.</p>',
+      },
     },
     {
-      "title": "Designed for the constraints that shape delivery",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
+      title: 'Performance data teams can use with confidence',
+      description: {
+        html: '<p>Structured content keeps performance requirements, technical context and implementation choices easy to compare.</p>',
+      },
     },
     {
-      "title": "Performance data teams can use with confidence",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-    }
-  ]
-}
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "direction": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
+      title: 'Support from specification to integration',
+      description: {
+        html: '<p>Expert input connects technical decisions with the evidence and documentation each project needs.</p>',
       },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "label": {
-    "kind": "component",
-    "id": "atoms/label/allentown",
-    "role": "label",
-    "fields": {
-      "text": {
-        "kind": "text"
-      },
-      "icon": {
-        "kind": "text"
-      }
-    }
-  },
-  "media": {
-    "kind": "media"
-  },
-  "features": {
-    "kind": "componentList",
-    "id": "components/feature-item/allentown",
-    "role": "feature-item",
-    "fields": {
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  }
+    },
+  ],
 }
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = {
-  "url": "https://placehold.co/1600x900/png?text=Media",
-  "alt": "Battery module and electrical interface",
-  "width": 1600,
-  "height": 900
-}
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block="beta-media-feature-list-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<MediaFeatureList {...content} />

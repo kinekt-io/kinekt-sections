@@ -1,22 +1,38 @@
 ---
 import '../../../styles/wireframe.css'
-import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import type { MediaFeatureListContent } from './media-feature-list-allentown.types.js'
-interface Props extends MediaFeatureListContent { headingLevel?: 'h1' | 'h2' | 'h3'; mediaLoading?: 'eager' | 'lazy' }
+
+interface Props extends MediaFeatureListContent {
+  headingLevel?: 'h1' | 'h2' | 'h3'
+  mediaLoading?: 'eager' | 'lazy'
+}
+
 const { theme, direction, intro, label, media, features, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
+const Heading = headingLevel
 ---
 <section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-section data-kinekt-theme={theme} data-kinekt-direction={direction}>
   <div class="media-feature-list__container">
-    <div class="media-feature-list__content">
-      <header class="media-feature-list__header"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
-      {label && <p class="media-feature-list__label">{label.icon && <span aria-hidden="true">{label.icon}</span>}{label.text}</p>}
+    <header class="media-feature-list__header">
+      <div class="media-feature-list__heading-stack">
+        {intro.accentHeading && <p class="media-feature-list__accent">{intro.accentHeading}</p>}
+        <Heading class="media-feature-list__heading">{intro.heading}</Heading>
+      </div>
+      {label && <p class="media-feature-list__label">{label.icon && <span class="media-feature-list__label-icon" aria-hidden="true">{label.icon}</span>}{label.text}</p>}
+      {typeof intro.description === 'string' && <p class="media-feature-list__description">{intro.description}</p>}
+      {typeof intro.description === 'object' && <div class="media-feature-list__description" set:html={intro.description.html} />}
+    </header>
+
+    <div class="media-feature-list__body">
+      {media && <KinektMedia media={media} class="media-feature-list__media" imageClass="media-feature-list__image" loading={mediaLoading} />}
       <ul class="media-feature-list__features">
-        {features.map((feature) => <li class="media-feature-list__feature"><h3 class="media-feature-list__feature-title">{feature.title}</h3><div class="media-feature-list__feature-description" set:html={feature.description.html} /></li>)}
+        {features.map((feature) => (
+          <li class="media-feature-list__feature">
+            <h4 class="media-feature-list__feature-title">{feature.title}</h4>
+            <div class="media-feature-list__feature-description" set:html={feature.description.html} />
+          </li>
+        ))}
       </ul>
     </div>
-    {media && <picture class="media-feature-list__media">
-      {media.sources?.length && <source type="image/avif" srcset={media.sources.map((source) => `${source.url} ${source.width}w`).join(', ')} sizes={media.sizes} />}
-      <img class="media-feature-list__image" src={media.url} alt={media.alt} width={media.width} height={media.height} data-fallback-url={media.fallbackUrl} loading={mediaLoading} decoding="async" />
-    </picture>}
   </div>
 </section>
