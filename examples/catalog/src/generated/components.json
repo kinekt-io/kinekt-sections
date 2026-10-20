@@ -188,13 +188,13 @@
     "tags": [
       "product",
       "catalogue",
-      "alpha"
+      "beta"
     ],
     "role": "battery-models",
     "variation": "allentown",
     "title": "Battery Models Allentown",
     "description": "A reusable product-model catalog with an optional cross-sell callout.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411513&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -247,13 +247,13 @@
       "insights",
       "social-proof",
       "carousel",
-      "prerelease"
+      "beta"
     ],
     "role": "case-studies",
     "variation": "allentown",
     "title": "Case Studies Allentown",
     "description": "A reusable case studies section with an introduction, optional labelled divider, carousel and optional overview action.",
-    "status": "released",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411424&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -310,13 +310,13 @@
     "tags": [
       "content",
       "features",
-      "alpha"
+      "beta"
     ],
     "role": "checklist-feature-list",
     "variation": "allentown",
     "title": "Checklist Feature List Allentown",
     "description": "A reusable two-column section with a localized introduction and checklist beside a visible feature list.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415190&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -374,13 +374,13 @@
     "tags": [
       "comparison",
       "data",
-      "alpha"
+      "beta"
     ],
     "role": "comparison-overview",
     "variation": "allentown",
     "title": "Comparison Overview Allentown",
     "description": "A reusable comparison section with an optional overview action and technical callout.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411428&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -437,13 +437,13 @@
     "tags": [
       "product",
       "specifications",
-      "alpha"
+      "beta"
     ],
     "role": "compatibility-specifications",
     "variation": "allentown",
     "title": "Compatibility Specifications Allentown",
     "description": "A localized compatibility section.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538029&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -494,13 +494,13 @@
     "tags": [
       "compliance",
       "content",
-      "alpha"
+      "beta"
     ],
     "role": "compliance-detail",
     "variation": "allentown",
     "title": "Compliance Detail Allentown",
-    "description": "A reusable Tulip compliance content section with automatic certification-collage participation.",
-    "status": "planned",
+    "description": "A reusable compliance content section with automatic certification-collage participation.",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-413470&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -574,13 +574,13 @@
     "tags": [
       "compliance",
       "content",
-      "alpha"
+      "beta"
     ],
     "role": "compliance-overview",
     "variation": "allentown",
     "title": "Compliance Overview Allentown",
-    "description": "A Tulip-specific compliance overview with an automatic in-page navigation collage.",
-    "status": "planned",
+    "description": "A reusable compliance overview with an automatic in-page navigation collage.",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-413425&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -646,13 +646,13 @@
     "tags": [
       "compliance",
       "content",
-      "alpha"
+      "beta"
     ],
     "role": "compliance-text",
     "variation": "allentown",
     "title": "Compliance Text Allentown",
-    "description": "A reusable Tulip compliance text section with automatic certification-collage participation.",
-    "status": "planned",
+    "description": "A reusable compliance text section with automatic certification-collage participation.",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-413495&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -718,13 +718,13 @@
     "tags": [
       "comparison",
       "data",
-      "alpha"
+      "beta"
     ],
     "role": "density-comparison",
     "variation": "allentown",
     "title": "Density Comparison Allentown",
     "description": "A density comparison section using the strict Trinity table variant.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411489&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -780,13 +780,13 @@
     "tags": [
       "events",
       "listing",
-      "alpha"
+      "beta"
     ],
     "role": "event-overview",
     "variation": "allentown",
     "title": "Event Overview Allentown",
     "description": "A reusable overview of upcoming localized Events in a responsive grid.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415963&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -842,13 +842,13 @@
     "tags": [
       "company",
       "locations",
-      "alpha"
+      "beta"
     ],
     "role": "facilities-overview",
     "variation": "allentown",
     "title": "Facilities Overview Allentown",
     "description": "A reusable facilities overview and an alternative to the EU European Roots section.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-543714&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -910,13 +910,13 @@
     "tags": [
       "faq",
       "support",
-      "alpha"
+      "beta"
     ],
     "role": "faq-index",
     "variation": "allentown",
     "title": "FAQ Index Allentown",
     "description": "A reusable filtered FAQ index backed by platform-managed FAQ records and subjects.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414308&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -974,13 +974,13 @@
     "tags": [
       "faq",
       "support",
-      "alpha"
+      "beta"
     ],
     "role": "faq",
     "variation": "allentown",
     "title": "FAQ Allentown",
     "description": "A reusable FAQ accordion with optional overview action and support callout.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4811-276546&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1043,13 +1043,13 @@
     "tags": [
       "events",
       "featured",
-      "alpha"
+      "beta"
     ],
     "role": "featured-event",
     "variation": "allentown",
     "title": "Featured Event Allentown",
     "description": "A reusable section with a localized introduction and the newest published featured Event in the active region and locale.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415942&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1101,13 +1101,13 @@
     "tags": [
       "insights",
       "featured",
-      "alpha"
+      "beta"
     ],
     "role": "featured-insights",
     "variation": "allentown",
     "title": "Featured Insights Allentown",
     "description": "A hybrid insights section: one newest featured item and three newest recent items from selected platform-admin Insight Sources.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-425155&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1176,13 +1176,13 @@
     "tags": [
       "page-header",
       "content",
-      "alpha"
+      "beta"
     ],
     "role": "featured-page-header",
     "variation": "allentown",
     "title": "Featured Page Header Allentown",
     "description": "A reusable index-page header with a localized Intro and one renderer-selected featured insight from selected platform-managed sources.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411660&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1315,13 +1315,13 @@
     "tags": [
       "engineering",
       "product",
-      "alpha"
+      "beta"
     ],
     "role": "hd-cells-engineering",
     "variation": "allentown",
     "title": "HD Cells Engineering Allentown",
-    "description": "A Tulip-specific interactive high-density cells and engineering section.",
-    "status": "planned",
+    "description": "A reusable interactive high-density component and engineering section.",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412556&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1389,13 +1389,13 @@
     "tags": [
       "hero",
       "content",
-      "prerelease"
+      "beta"
     ],
     "role": "hero",
     "variation": "allentown",
     "title": "Hero Allentown",
     "description": "A structural side-media hero with a localized introduction, optional CTA group, and responsive media.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411811&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1461,13 +1461,13 @@
     "tags": [
       "hero",
       "content",
-      "prerelease"
+      "beta"
     ],
     "role": "hero",
     "variation": "todos-santos",
     "title": "Hero Todos Santos",
     "description": "A reusable product hero with introduction, at-a-glance feature pairs, optional CTA group and media.",
-    "status": "prerelease",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411511&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1538,13 +1538,13 @@
     "tags": [
       "hero",
       "content",
-      "prerelease"
+      "beta"
     ],
     "role": "hero",
     "variation": "trinity",
     "title": "Hero Trinity",
     "description": "A structural hero with a localized introduction, responsive media, and an optional primary and secondary CTA group.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4754-91818&m=dev",
     "variants": {},
     "fields": {
@@ -1610,13 +1610,13 @@
     "tags": [
       "conversion",
       "content",
-      "alpha"
+      "beta"
     ],
     "role": "homepage-problem-solution",
     "variation": "allentown",
     "title": "Homepage Problem Solution Allentown",
-    "description": "A Tulip-specific, hand-animated scroll section pairing problem and solution content.",
-    "status": "planned",
+    "description": "A reusable, hand-animated scroll section pairing problem and solution content.",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411370&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1694,13 +1694,13 @@
     "tags": [
       "insights",
       "listing",
-      "alpha"
+      "beta"
     ],
     "role": "insight-index",
     "variation": "allentown",
     "title": "Insight Index Allentown",
     "description": "A reusable searchable and facet-filtered insight card index backed by selected platform-managed Insight Sources.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411675&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1769,13 +1769,13 @@
     "tags": [
       "conversion",
       "form",
-      "alpha"
+      "beta"
     ],
     "role": "intake-form",
     "variation": "allentown",
     "title": "Intake Form Allentown",
     "description": "A reusable intake section with a localized introduction, numbered process steps, and a governed intake form.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-416702&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1843,13 +1843,13 @@
       "content",
       "media",
       "faq",
-      "alpha"
+      "beta"
     ],
     "role": "media-accordion",
     "variation": "allentown",
     "title": "Media Accordion Allentown",
     "description": "A reusable topic section with a localized introduction, optional CTA group and media, and one or more accessible accordion items.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412609&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1922,13 +1922,13 @@
       "content",
       "media",
       "metrics",
-      "alpha"
+      "beta"
     ],
     "role": "media-fact-grid",
     "variation": "allentown",
     "title": "Media Fact Grid Allentown",
     "description": "A reusable evidence section with a localized introduction, optional aside media, and a responsive grid of fact cards.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414436&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1985,13 +1985,13 @@
       "content",
       "media",
       "features",
-      "alpha"
+      "beta"
     ],
     "role": "media-feature-list",
     "variation": "allentown",
     "title": "Media Feature List Allentown",
     "description": "A themed localized feature list.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414365&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -2057,13 +2057,13 @@
       "content",
       "media",
       "metrics",
-      "alpha"
+      "beta"
     ],
     "role": "media-metrics",
     "variation": "allentown",
     "title": "Media Metrics Allentown",
     "description": "A reusable topic section with a localized introduction, one or more result metrics, and optional aside media.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414386&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -2184,13 +2184,13 @@
     "tags": [
       "utility",
       "hero",
-      "alpha"
+      "beta"
     ],
     "role": "not-found-hero",
     "variation": "allentown",
     "title": "Not Found Hero Allentown",
     "description": "A reusable not-found hero with a localized introduction and mandatory recovery CTA group.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-532807&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -2244,13 +2244,13 @@
     "tags": [
       "content",
       "metrics",
-      "alpha"
+      "beta"
     ],
     "role": "output-card-grid",
     "variation": "allentown",
     "title": "Output Card Grid Allentown",
     "description": "A themed localized output card grid.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-537962&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -2300,13 +2300,13 @@
     "tags": [
       "content",
       "process",
-      "alpha"
+      "beta"
     ],
     "role": "process-story",
     "variation": "allentown",
     "title": "Process Story Allentown",
     "description": "A reusable process-story section with optional media and labelled narrative items.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4817-416529&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -2362,13 +2362,13 @@
     "tags": [
       "product",
       "specifications",
-      "alpha"
+      "beta"
     ],
     "role": "product-details",
     "variation": "allentown",
     "title": "Product Details Allentown",
     "description": "A reusable technical product-details section with optional media and an accordion.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411600&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -2433,13 +2433,13 @@
     "tags": [
       "product",
       "form",
-      "alpha"
+      "beta"
     ],
     "role": "product-finder-form",
     "variation": "allentown",
     "title": "Product Finder Form Allentown",
     "description": "A compact themed product-finder section with a localized introduction and selected localized Form record.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-537977&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -2489,13 +2489,13 @@
     "tags": [
       "product",
       "hero",
-      "alpha"
+      "beta"
     ],
     "role": "product-hero",
     "variation": "allentown",
     "title": "Product Hero Allentown",
     "description": "A reusable product hero with introductory content, product feature pairs, actions and responsive media.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411511&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -2573,13 +2573,13 @@
     "tags": [
       "product",
       "catalogue",
-      "alpha"
+      "beta"
     ],
     "role": "product-options",
     "variation": "allentown",
     "title": "Product Options Allentown",
     "description": "A reusable product-options grid with an optional region-filtered configurator form.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411550&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -2631,13 +2631,13 @@
     "tags": [
       "metrics",
       "social-proof",
-      "alpha"
+      "beta"
     ],
     "role": "proof-metrics",
     "variation": "allentown",
     "title": "Proof Metrics Allentown",
     "description": "A reusable evidence section with a localized introduction, one or more result metrics, optional proof media, and a CTA callout.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412607&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -2707,13 +2707,13 @@
       "content",
       "media",
       "conversion",
-      "alpha"
+      "beta"
     ],
     "role": "read-more",
     "variation": "allentown",
     "title": "Read More Allentown",
     "description": "A localized editorial split section.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414455&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -2761,13 +2761,13 @@
     "tags": [
       "solutions",
       "product",
-      "alpha"
+      "beta"
     ],
     "role": "solution-list",
     "variation": "allentown",
     "title": "Solution List Allentown",
     "description": "A reusable section that composes an introduction, a list of two or more solution items and an optional CTA callout.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411423&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -2819,13 +2819,13 @@
     "tags": [
       "content",
       "process",
-      "alpha"
+      "beta"
     ],
     "role": "steps",
     "variation": "stage",
     "title": "Steps Stage",
     "description": "A reusable two-column process section with a localized introduction, optional media, and fully visible staged process steps.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414399&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -2885,13 +2885,13 @@
     "tags": [
       "support",
       "contact",
-      "prerelease"
+      "beta"
     ],
     "role": "support-contact",
     "variation": "allentown",
     "title": "Support Contact Allentown",
     "description": "A reusable support section with localized introduction, optional direct channels, and a required governed support-request form.",
-    "status": "prerelease",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414267&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -3023,13 +3023,13 @@
     "tags": [
       "utility",
       "hero",
-      "alpha"
+      "beta"
     ],
     "role": "thank-you-hero",
     "variation": "allentown",
     "title": "Thank You Hero Allentown",
     "description": "A reusable confirmation hero with localized introduction, optional media, and a numbered follow-up steps row.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-425110&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
