@@ -1279,7 +1279,7 @@
   --action-contact-media-ratio: 4 / 5;
   --kinekt-wireframe-action-contact-d-media-width: 26.4375rem;
   --action-contact-media-width: var(--kinekt-section-media-width, clamp(var(--kinekt-wireframe-layout-m-content-width), 100%, var(--kinekt-wireframe-action-contact-d-media-width)));
-  --action-contact-content-width: var(--kinekt-section-content-width, var(--kinekt-wireframe-layout-width-m));
+  --action-contact-content-width: var(--kinekt-section-content-width, clamp(var(--kinekt-wireframe-layout-m-content-width), 100%, var(--kinekt-wireframe-layout-d-width-m)));
   --action-contact-column-gap: var(--kinekt-section-column-gap, var(--kinekt-wireframe-section-space-l));
   --action-contact-content-gap: var(--kinekt-section-content-gap, var(--kinekt-wireframe-space-xl));
   --action-contact-header-gap: var(--kinekt-section-header-gap, var(--kinekt-wireframe-space-m));
