@@ -72,6 +72,11 @@ const Preview = (previewModule as { default: any }).default
           {component.id === 'sections/case-studies/allentown' && (
             <>
               <fieldset>
+                <legend>Case study display</legend>
+                <label><input type="radio" name="case-study-display" value="carousel" checked /> Carousel</label>
+                <label><input type="radio" name="case-study-display" value="single" /> One static case</label>
+              </fieldset>
+              <fieldset>
                 <legend>Carousel controls</legend>
                 <label><input type="radio" name="carousel-controls" value="previous-next" checked /> Previous + next</label>
                 <label><input type="radio" name="carousel-controls" value="next" /> Next only</label>
@@ -101,6 +106,8 @@ const Preview = (previewModule as { default: any }).default
       <div data-kinekt-preview-surface><Preview /></div>
     </main>
     <script>
+      import { initializeKinektInteractions } from '@package-src/shared/interactions'
+
       const surface = document.querySelector<HTMLElement>('[data-kinekt-preview-surface]')
       const initialTheme = surface?.querySelector<HTMLElement>('[data-kinekt-section]')?.dataset.kinektTheme
       const initialThemeControl = Array.from(document.querySelectorAll<HTMLInputElement>('.preview-options input[name="theme"]'))
@@ -135,6 +142,24 @@ const Preview = (previewModule as { default: any }).default
           if (!visible) icon?.remove()
         })
       }
+      function setCaseStudyDisplay(display: 'carousel' | 'single') {
+        const carousel = surface?.querySelector<HTMLElement>('.case-studies-allentown__carousel')
+        if (!carousel) return
+        const isSingle = display === 'single'
+        carousel.dataset.kinektCarouselStatic = String(isSingle)
+        carousel.querySelectorAll<HTMLElement>('[data-kinekt-carousel-slide]').forEach((slide, index) => {
+          slide.hidden = isSingle && index > 0
+        })
+        carousel.querySelector<HTMLElement>('[data-kinekt-carousel-pagination]')?.toggleAttribute('hidden', isSingle)
+        if (isSingle) {
+          carousel.dispatchEvent(new CustomEvent('kinekt:carousel-reinitialize'))
+          carousel.removeAttribute('data-kinekt-carousel')
+          return
+        }
+        carousel.setAttribute('data-kinekt-carousel', '')
+        initializeKinektInteractions(carousel.parentElement ?? document)
+      }
+
       document.querySelectorAll<HTMLInputElement>('.preview-options input').forEach((input) => {
         input.addEventListener('change', () => {
           if (!surface || (input.type === 'radio' && !input.checked)) return
@@ -154,6 +179,9 @@ const Preview = (previewModule as { default: any }).default
           if (input.name === 'hero-primary-icon' || input.name === 'hero-secondary-icon') {
             const action = surface.querySelector<HTMLElement>(input.name === 'hero-primary-icon' ? '.hero-allentown__action--primary' : '.hero-allentown__action--secondary')
             action?.querySelector<HTMLElement>('[data-kinekt-hero-cta-icon]')?.toggleAttribute('hidden', !input.checked)
+          }
+          if (input.name === 'case-study-display' && (input.value === 'carousel' || input.value === 'single')) {
+            setCaseStudyDisplay(input.value)
           }
           if (input.name === 'carousel-controls') {
             const carousel = surface.querySelector<HTMLElement>('[data-kinekt-carousel]')

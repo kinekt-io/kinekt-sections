@@ -73,7 +73,7 @@ function initializeTabs(tabsRoot: Element) {
 }
 
 async function initializeCarousel(carousel: Element) {
-  if (!once(carousel, 'carousel')) return
+  if (carousel.getAttribute('data-kinekt-carousel-static') === 'true' || !once(carousel, 'carousel')) return
   const viewport = carousel.querySelector<HTMLElement>('[data-kinekt-carousel-viewport]')
   const previous = carousel.querySelector<HTMLButtonElement>('[data-kinekt-carousel-previous]')
   const next = carousel.querySelector<HTMLButtonElement>('[data-kinekt-carousel-next]')
@@ -107,7 +107,7 @@ async function initializeCarousel(carousel: Element) {
     listeners.abort()
     api.destroy()
     carousel.removeAttribute('data-kinekt-carousel-initialized')
-    void initializeCarousel(carousel)
+    if (carousel.getAttribute('data-kinekt-carousel-static') !== 'true') void initializeCarousel(carousel)
   }, { once: true, signal: listeners.signal })
   api.on('select', update).on('reInit', update)
   update()
