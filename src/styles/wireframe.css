@@ -872,7 +872,11 @@
   );
   --hero-trinity-frame-radius: var(--kinekt-section-hero-trinity-frame-radius, var(--kinekt-radius, 0.5rem));
   --hero-trinity-copy-width: var(--kinekt-section-hero-trinity-copy-width, min(100%, 48.75rem));
-  padding-block: 0;
+  padding: 0;
+  padding-block-end: var(
+    --kinekt-section-hero-trinity-block-end-space,
+    var(--kinekt-wireframe-section-space-m)
+  );
 }
 
 :where(.hero-trinity) .hero-trinity__container {
