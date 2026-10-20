@@ -2,7 +2,7 @@
 import components from '../generated/components.json'
 
 const repositoryUrl = 'https://github.com/kinekt-io/kinekt-sections'
-const tags = [...new Set(components.flatMap((component) => component.tags))].sort()
+const tags = [...new Set(['alpha', 'beta', 'prerelease', 'release', ...components.flatMap((component) => component.tags)])].sort()
 const roles = new Set(components.map((component) => component.role).filter(Boolean))
 ---
 
@@ -41,7 +41,7 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
           </div>
           <form class="catalogue-search" role="search" data-catalogue-search>
             <label>Search components <input type="search" name="query" autocomplete="off" data-catalogue-search-query /></label>
-            <label>Category <select name="category" data-catalogue-category><option value="">All categories</option>{tags.map((tag) => <option value={tag}>{tag}</option>)}</select></label>
+            <label>Tag <select name="category" data-catalogue-category><option value="">All tags</option>{tags.map((tag) => <option value={tag}>{tag}</option>)}</select></label>
             <button type="submit">Search</button>
           </form>
           <p class="catalogue-search__status" data-catalogue-search-status aria-live="polite"></p>

@@ -35,6 +35,9 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
           <header class="section-preview__meta">
             <p>{reviewStatus} / {component.slug}</p>
             <h2>{component.title}</h2>
+            <ul class="section-preview__tags" aria-label={`${component.title} tags`}>
+              {component.tags.map((tag) => <li>{tag}</li>)}
+            </ul>
             <div class="section-preview__tools">
               <div class="theme-switch" aria-label={`Preview theme for ${component.title}`}>
                 <button type="button" data-kinekt-preview-theme="light" aria-pressed="true">Light</button>
@@ -89,6 +92,8 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
   .section-preview__meta { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem 2rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #bdbdbd; }
   .section-preview__meta p { margin: 0; color: #5e5e5e; font: 600 0.75rem/1.2 ui-monospace, monospace; }
   .section-preview__meta h2 { flex-basis: 100%; order: -1; margin: 0; font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 400; letter-spacing: -0.05em; text-wrap: balance; }
+  .section-preview__tags { display: flex; flex-basis: 100%; flex-wrap: wrap; gap: 0.5rem; order: -1; margin: 0; padding: 0; list-style: none; }
+  .section-preview__tags li { padding: 0.3rem 0.5rem; border: 1px solid #bdbdbd; color: #4f4f4f; font: 700 0.6875rem/1 ui-monospace, monospace; letter-spacing: 0.06em; text-transform: uppercase; }
   .section-preview__tools { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
   .theme-switch { display: flex; flex-wrap: wrap; padding: 0.1875rem; border: 1px solid #777; border-radius: 0; }
   .theme-switch button { min-height: 2rem; padding: 0.25rem 0.75rem; border: 0; border-radius: 0; color: #111; background: transparent; font: inherit; font-size: 0.8125rem; font-weight: 700; cursor: pointer; }

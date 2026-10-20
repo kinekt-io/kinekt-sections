@@ -33,6 +33,9 @@ const Preview = (previewModule as { default: any }).default
         <p>Live wireframe preview</p>
         <h1>{component.title}</h1>
         <span>Representative content from <code>src/{component.previewSource}</code></span>
+        <ul class="component-tags" aria-label="Component tags">
+          {component.tags.map((tag) => <li>{tag}</li>)}
+        </ul>
       </div>
       <div class="pagefind-tags" aria-hidden="true">{component.tags.map((tag) => <span data-pagefind-filter="category">{tag}</span>)}</div>
       {component.category === 'sections' && (
@@ -145,6 +148,8 @@ const Preview = (previewModule as { default: any }).default
   .intro p { margin: 0 0 0.75rem; color: #5e5e5e; font: 700 0.75rem/1.2 ui-monospace, monospace; letter-spacing: 0.12em; text-transform: uppercase; }
   .intro h1 { margin: 0 0 0.75rem; font-size: clamp(2.25rem, 5vw, 4rem); font-weight: 400; letter-spacing: -0.055em; text-wrap: balance; }
   .intro span { color: #5e5e5e; }
+  .component-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.75rem 0 0; padding: 0; list-style: none; }
+  .component-tags li { padding: 0.3rem 0.5rem; border: 1px solid #bdbdbd; color: #4f4f4f; font: 700 0.6875rem/1 ui-monospace, monospace; letter-spacing: 0.06em; text-transform: uppercase; }
   .pagefind-tags { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   .preview-options { display: flex; flex-wrap: wrap; align-items: start; gap: 1rem 2rem; width: min(calc(100% - 3rem), 90rem); margin: 0 auto 2rem; padding: 1rem; border: 1px solid #bdbdbd; accent-color: light-dark(black, white); color-scheme: light; }
   .preview-options > p { flex-basis: 100%; margin: 0; color: #5e5e5e; font: 700 0.75rem/1.2 ui-monospace, monospace; letter-spacing: 0.12em; text-transform: uppercase; }
