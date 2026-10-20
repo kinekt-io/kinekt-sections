@@ -46,14 +46,12 @@ const actionList = Object.values(actions).filter((action): action is Cta => Bool
 ---
 <section class="beta-action-contact-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="beta-action-contact-allentown__container">
-    <header class="beta-action-contact-allentown__header">
-      <SectionIntro intro={intro} headingLevel={headingLevel} />
-    </header>
-
     <div class="beta-action-contact-allentown__body">
-      <KinektMedia class="beta-action-contact-allentown__media" imageClass="beta-action-contact-allentown__image" media={image} />
-
       <div class="beta-action-contact-allentown__content">
+        <header class="beta-action-contact-allentown__header">
+          <SectionIntro intro={intro} headingLevel={headingLevel} />
+        </header>
+
         <section class="beta-action-contact-allentown__action">
           <h3 class="beta-action-contact-allentown__action-heading">{actionHeading}</h3>
           {actionList.length > 0 && (
@@ -81,6 +79,8 @@ const actionList = Object.values(actions).filter((action): action is Cta => Bool
           </ul>
         </section>
       </div>
+
+      <KinektMedia class="beta-action-contact-allentown__media" imageClass="beta-action-contact-allentown__image" media={image} />
     </div>
   </div>
 </section>

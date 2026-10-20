@@ -1203,7 +1203,7 @@
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__header {
   max-width: var(--kinekt-component-reading-width);
-  margin-bottom: var(--kinekt-wireframe-editorial-gap);
+  margin: 0;
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__body {
@@ -1263,8 +1263,9 @@
   border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
 }
 
-:where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-methods {
+:where(.beta-action-contact-allentown) ul.beta-action-contact-allentown__contact-methods {
   display: block;
+  gap: 0;
   width: 100%;
   margin: 0;
   border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
@@ -1298,5 +1299,9 @@
   :where(.beta-action-contact-allentown) .beta-action-contact-allentown__body {
     flex-direction: row;
     align-items: flex-start;
+  }
+
+  :where(.beta-action-contact-allentown) .beta-action-contact-allentown__media {
+    order: -1;
   }
 }
