@@ -5,7 +5,7 @@
   "id": "components/output-card/allentown",
   "slug": "output-card-allentown",
   "title": "Output Card Allentown",
-  "description": "A localized output card with a title, Markdown rich-text description, and label.",
+  "description": "A localized output card with square media, title, and rich-text description.",
   "category": "components",
   "role": "output-card",
   "variation": "allentown",
@@ -15,6 +15,11 @@
     "nodeId": "5255:537970"
   },
   "fields": {
+    "image": {
+      "kind": "media",
+      "required": true,
+      "localized": true
+    },
     "title": {
       "kind": "text",
       "required": true,
@@ -22,12 +27,6 @@
     },
     "description": {
       "kind": "richText",
-      "required": true,
-      "localized": true
-    },
-    "label": {
-      "kind": "component",
-      "componentId": "atoms/label/allentown",
       "required": true,
       "localized": true
     }

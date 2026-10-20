@@ -1140,38 +1140,120 @@
   }
 }
 
-/* Hand-authored Allentown sections share the same layout contract as structural sections. */
+/* Verified Figma layout: Section - Customized Batteries (5255:537962). */
 :where(.output-card-grid--allentown) {
-  --output-card-grid-card-gap: 1px;
-  --output-card-grid-card-padding: var(--kinekt-wireframe-card-padding);
+  --kinekt-section-output-card-grid-block-space: 8.75rem;
+  --kinekt-section-output-card-grid-content-width: 81rem;
+  --kinekt-section-output-card-grid-major-gap: 5rem;
+  --kinekt-section-output-card-grid-grid-column-gap: 4rem;
+  --kinekt-section-output-card-grid-grid-row-gap: 1.5625rem;
+  --kinekt-section-output-card-grid-label-to-grid-gap: 3.1875rem;
+  --kinekt-section-output-card-grid-card-media-size: 9rem;
+  --kinekt-section-output-card-grid-card-content-gap: 1.5625rem;
+  --kinekt-section-output-card-grid-card-heading-size: 2rem;
+  --kinekt-component-block-space: var(--kinekt-section-output-card-grid-block-space);
+  --kinekt-component-content-width: var(--kinekt-section-output-card-grid-content-width);
 }
 
 :where(.output-card-grid--allentown) .output-card-grid__container {
-  gap: var(--kinekt-wireframe-editorial-gap);
+  gap: var(--kinekt-section-output-card-grid-major-gap);
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__header {
+  display: grid;
+  gap: var(--kinekt-section-output-card-grid-major-gap);
+  margin-bottom: 0;
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__header-content {
+  max-width: 54rem;
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kinekt-wireframe-space-m);
+  align-self: end;
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__content {
+  display: grid;
+  gap: var(--kinekt-section-output-card-grid-label-to-grid-gap);
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__label {
+  display: flex;
+  align-items: center;
+  gap: var(--kinekt-wireframe-space-m);
+  margin: 0;
+  color: var(--kinekt-component-muted);
+  font-family: var(--kinekt-component-mono);
+  font-size: var(--kinekt-component-text-xs-size);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__label::after {
+  flex: 1;
+  min-width: 2rem;
+  border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+  content: '';
 }
 
 :where(.output-card-grid--allentown) .output-card-grid__cards {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-  gap: var(--output-card-grid-card-gap);
-  background: var(--kinekt-component-line);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--kinekt-section-output-card-grid-grid-row-gap) var(--kinekt-section-output-card-grid-grid-column-gap);
 }
 
 :where(.output-card-grid--allentown) .output-card-grid__card {
+  display: flex;
+  gap: var(--kinekt-section-output-card-grid-card-content-gap);
+  min-width: 0;
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__media {
+  display: block;
+  flex: 0 0 var(--kinekt-section-output-card-grid-card-media-size);
+  width: var(--kinekt-section-output-card-grid-card-media-size);
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+:where(.output-card-grid--allentown) .output-card-grid__card-content {
   display: grid;
   align-content: start;
-  gap: 1rem;
-  min-height: 100%;
-  padding: var(--output-card-grid-card-padding);
-  background: var(--kinekt-component-canvas);
+  gap: var(--kinekt-section-output-card-grid-card-content-gap);
+  min-width: 0;
 }
 
 :where(.output-card-grid--allentown) .output-card-grid__title {
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
-  line-height: 1.04;
+  font-size: var(--kinekt-section-output-card-grid-card-heading-size);
+  line-height: 1;
 }
 
 :where(.output-card-grid--allentown) .output-card-grid__description {
   color: var(--kinekt-component-muted);
+  font-size: var(--kinekt-component-text-l-size);
+  line-height: var(--kinekt-component-text-l-line-height);
+}
+
+@media (min-width: 50rem) {
+  :where(.output-card-grid--allentown) .output-card-grid__header {
+    grid-template-columns: minmax(0, 54rem) auto;
+    justify-content: space-between;
+  }
+
+  :where(.output-card-grid--allentown) .output-card-grid__cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 :where(.media-feature-list--allentown) {
@@ -1334,11 +1416,6 @@
   }
 }
 
-@media (min-width: 50rem) {
-  :where(.output-card-grid--allentown) .output-card-grid__cards {
-    grid-template-columns: repeat(var(--output-card-grid-columns, 3), minmax(0, 1fr));
-  }
-}
 
 /*
  * Result metrics in the Case Studies layout are labels with a single value
@@ -1449,11 +1526,6 @@
   --kinekt-section-gap: clamp(2rem, 5vw, 5rem);
 }
 
-:where([data-kinekt-section][class*='output-card-grid-allentown']) {
-  --kinekt-section-card-columns: 3;
-  --kinekt-section-card-min-width: 16rem;
-  --kinekt-section-gap: clamp(3rem, 7vw, 7rem);
-}
 
 :where([data-kinekt-section][class*='tabs-allentown']) {
   --kinekt-section-reading-width: 58rem;

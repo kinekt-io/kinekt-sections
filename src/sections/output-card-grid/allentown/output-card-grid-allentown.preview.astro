@@ -1,129 +1,33 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import OutputCardGrid from './output-card-grid-allentown.astro'
+
+const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
+const placeholder = (name: string, alt: string) => ({
+  url: `${catalogueBase}placeholders/${name}`,
+  alt,
+  width: 144,
+  height: 144,
+})
 
 const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  theme: 'semi-light' as const,
+  intro: {
+    accentHeading: 'System overview',
+    heading: 'Explore the capabilities that support your project.',
+    description: 'Use this section to introduce a focused set of services, features, or technical considerations.',
   },
-  "ctas": {
-    "primary": {
-      "label": "Talk to an expert",
-      "href": "#"
-    },
-    "secondary": {
-      "label": "View technical details",
-      "href": "#"
-    }
+  ctas: {
+    primary: { label: 'Start a conversation', href: '#' },
   },
-  "cards": [
-    {
-      "title": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "label": {
-        "text": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-        "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-      }
-    },
-    {
-      "title": "Designed for the constraints that shape delivery",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "label": {
-        "text": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-        "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-      }
-    },
-    {
-      "title": "Performance data teams can use with confidence",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "label": {
-        "text": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-        "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-      }
-    }
-  ]
+  label: 'Explore capabilities',
+  cards: [
+    { image: placeholder('case-study-observatory.webp', 'Abstract technical placeholder'), title: 'Capability one', description: { html: '<p>A concise summary of the first capability or outcome.</p>' } },
+    { image: placeholder('case-study-towers.webp', 'Abstract technical placeholder'), title: 'Capability two', description: { html: '<p>A concise summary of the second capability or outcome.</p>' } },
+    { image: placeholder('case-study-buses.webp', 'Abstract technical placeholder'), title: 'Capability three', description: { html: '<p>A concise summary of the third capability or outcome.</p>' } },
+    { image: placeholder('case-study-motorcycle.webp', 'Abstract technical placeholder'), title: 'Capability four', description: { html: '<p>A concise summary of the fourth capability or outcome.</p>' } },
+    { image: placeholder('hero-trinity-street.webp', 'Abstract technical placeholder'), title: 'Capability five', description: { html: '<p>A concise summary of the fifth capability or outcome.</p>' } },
+    { image: placeholder('pexels-industrial-building.webp', 'Abstract technical placeholder'), title: 'Capability six', description: { html: '<p>A concise summary of the sixth capability or outcome.</p>' } },
+  ],
 }
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "ctas": {
-    "kind": "ctaGroup"
-  },
-  "cards": {
-    "kind": "componentList",
-    "id": "components/output-card/allentown",
-    "role": "output-card",
-    "fields": {
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      },
-      "label": {
-        "kind": "component",
-        "id": "atoms/label/allentown",
-        "role": "label",
-        "fields": {
-          "text": {
-            "kind": "text"
-          },
-          "icon": {
-            "kind": "text"
-          }
-        }
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = {
-  "primary": {
-    "label": "Talk to an expert",
-    "href": "#"
-  },
-  "secondary": {
-    "label": "View technical details",
-    "href": "#"
-  }
-}
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block="beta-output-card-grid-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<OutputCardGrid {...content} />
