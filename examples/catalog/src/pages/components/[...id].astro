@@ -78,6 +78,10 @@ const Preview = (previewModule as { default: any }).default
     </main>
     <script>
       const surface = document.querySelector<HTMLElement>('[data-kinekt-preview-surface]')
+      const initialTheme = surface?.querySelector<HTMLElement>('[data-kinekt-section]')?.dataset.kinektTheme
+      const initialThemeControl = Array.from(document.querySelectorAll<HTMLInputElement>('.preview-options input[name="theme"]'))
+        .find((input) => input.value === initialTheme)
+      if (initialThemeControl) initialThemeControl.checked = true
       function toggleCtaIcons(links: NodeListOf<HTMLAnchorElement>, visible: boolean) {
         links.forEach((link) => {
           const icon = link.querySelector('[data-kinekt-cta-icon]')
