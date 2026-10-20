@@ -873,10 +873,6 @@
   --hero-trinity-frame-radius: var(--kinekt-section-hero-trinity-frame-radius, var(--kinekt-radius, 0.5rem));
   --hero-trinity-copy-width: var(--kinekt-section-hero-trinity-copy-width, min(100%, 48.75rem));
   padding: 0;
-  padding-block-end: var(
-    --kinekt-section-hero-trinity-block-end-space,
-    var(--kinekt-wireframe-section-space-m)
-  );
 }
 
 :where(.hero-trinity) .hero-trinity__container {
@@ -934,7 +930,14 @@
   margin-block-start: var(--kinekt-wireframe-space-xl);
 }
 
-@media (min-width: 90rem) {
+@media (min-width: 90.0625rem) {
+  :where(.hero-trinity) {
+    padding-block-end: var(
+      --kinekt-section-hero-trinity-block-end-space,
+      var(--kinekt-wireframe-section-space-m)
+    );
+  }
+
   :where(.hero-trinity) .hero-trinity__container {
     border-end-start-radius: var(--hero-trinity-frame-radius);
     border-end-end-radius: var(--hero-trinity-frame-radius);
