@@ -516,21 +516,21 @@
  * Site tokens remain responsible for all colour and type choices.
  */
 :where(.case-studies-allentown[data-kinekt-section]) {
-  --kinekt-section-content-width: 90rem;
-  --case-studies-intro-to-carousel: clamp(3.5rem, 7vw, 6.25rem);
-  --case-studies-carousel-to-slide: clamp(2.5rem, 4vw, 4rem);
-  --case-studies-label-gap: 1rem;
-  --case-studies-label-line-size: 1px;
-  --case-studies-header-content-width: 54rem;
-  --case-studies-header-gap: 1.25rem;
-  --case-studies-header-column-gap: 2rem;
+  --kinekt-section-content-width: var(--kinekt-wireframe-layout-content-width);
+  --case-studies-intro-to-carousel: clamp(var(--kinekt-wireframe-section-space-m), 7vw, var(--kinekt-wireframe-section-space-xl));
+  --case-studies-carousel-to-slide: clamp(var(--kinekt-wireframe-section-space-s), 4vw, var(--kinekt-wireframe-section-space-m));
+  --case-studies-label-gap: var(--kinekt-wireframe-space-s);
+  --case-studies-label-line-size: var(--kinekt-component-border-width);
+  --case-studies-header-content-width: var(--kinekt-wireframe-layout-width-l);
+  --case-studies-header-gap: var(--kinekt-wireframe-space-m);
+  --case-studies-header-column-gap: var(--kinekt-wireframe-space-xl);
   --case-studies-header-justify-content: space-between;
-  --case-studies-logo-to-title: 1.25rem;
-  --case-studies-title-to-summary: 1.25rem;
-  --case-studies-summary-to-content: clamp(2rem, 4vw, 2.5rem);
-  --case-studies-media-to-details: clamp(2.5rem, 5.5vw, 5rem);
-  --case-studies-details-gap: clamp(1.5rem, 3vw, 2.5rem);
-  --case-studies-results-gap: 1.5rem;
+  --case-studies-logo-to-title: var(--kinekt-wireframe-space-m);
+  --case-studies-title-to-summary: var(--kinekt-wireframe-space-m);
+  --case-studies-summary-to-content: var(--kinekt-wireframe-section-space-xs);
+  --case-studies-media-to-details: clamp(var(--kinekt-wireframe-section-space-s), 5.5vw, var(--kinekt-wireframe-section-space-l));
+  --case-studies-details-gap: clamp(var(--kinekt-wireframe-space-xl), 3vw, var(--kinekt-wireframe-section-space-xs));
+  --case-studies-results-gap: var(--kinekt-wireframe-space-l);
 }
 
 :where(.case-studies-allentown) > .case-studies-allentown__container {
@@ -1277,15 +1277,16 @@
  */
 :where(.beta-action-contact-allentown[data-kinekt-section]) {
   --action-contact-media-ratio: 4 / 5;
-  --action-contact-media-width: var(--kinekt-section-media-width, 26.4375rem);
-  --action-contact-content-width: var(--kinekt-section-content-width, 36rem);
-  --action-contact-column-gap: var(--kinekt-section-column-gap, var(--section-l, 5rem));
-  --action-contact-content-gap: var(--kinekt-section-content-gap, var(--space-xl, 1.953rem));
-  --action-contact-header-gap: var(--kinekt-section-header-gap, var(--space-m, 1.25rem));
-  --action-contact-accent-gap: var(--kinekt-section-accent-gap, var(--space-xs, 0.56rem));
-  --action-contact-detail-gap: var(--kinekt-section-detail-gap, var(--space-xxl, 2.441rem));
-  --action-contact-action-gap: var(--kinekt-section-action-gap, var(--space-l, 1.5625rem));
-  --action-contact-control-gap: var(--kinekt-section-control-gap, var(--space-s, 1rem));
+  --kinekt-wireframe-action-contact-d-media-width: 26.4375rem;
+  --action-contact-media-width: var(--kinekt-section-media-width, clamp(var(--kinekt-wireframe-layout-m-content-width), 100%, var(--kinekt-wireframe-action-contact-d-media-width)));
+  --action-contact-content-width: var(--kinekt-section-content-width, var(--kinekt-wireframe-layout-width-m));
+  --action-contact-column-gap: var(--kinekt-section-column-gap, var(--kinekt-wireframe-section-space-l));
+  --action-contact-content-gap: var(--kinekt-section-content-gap, var(--kinekt-wireframe-space-xl));
+  --action-contact-header-gap: var(--kinekt-section-header-gap, var(--kinekt-wireframe-space-m));
+  --action-contact-accent-gap: var(--kinekt-section-accent-gap, var(--kinekt-wireframe-space-xxs));
+  --action-contact-detail-gap: var(--kinekt-section-detail-gap, var(--kinekt-wireframe-space-xxl));
+  --action-contact-action-gap: var(--kinekt-section-action-gap, var(--kinekt-wireframe-space-l));
+  --action-contact-control-gap: var(--kinekt-section-control-gap, var(--kinekt-wireframe-space-s));
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__container {
