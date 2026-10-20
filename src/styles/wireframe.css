@@ -1198,17 +1198,22 @@
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__container {
-  gap: var(--kinekt-wireframe-editorial-gap);
+  display: block;
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__header {
   max-width: var(--kinekt-component-reading-width);
-  margin-bottom: 0;
+  margin-bottom: var(--kinekt-wireframe-editorial-gap);
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__body {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--action-contact-content-gap);
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__media {
+  flex: 1 1 0;
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__image {
@@ -1217,13 +1222,17 @@
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__content {
-  display: grid;
-  align-content: start;
+  display: flex;
+  flex: 0.8 1 0;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--action-contact-rail-space);
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__action {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 1.25rem;
 }
 
@@ -1245,14 +1254,18 @@
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 1.25rem;
+  width: 100%;
   padding-top: var(--action-contact-rail-space);
   border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-methods {
-  gap: 0;
+  display: block;
+  width: 100%;
   margin: 0;
   border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
 }
@@ -1262,8 +1275,7 @@
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-method a {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  display: flex;
   align-items: center;
   gap: 0.8ch;
   min-height: 3.25rem;
@@ -1273,6 +1285,10 @@
   text-decoration: none;
 }
 
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-method a > :last-child {
+  margin-left: auto;
+}
+
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-icon {
   color: var(--kinekt-component-muted);
   font-family: var(--kinekt-component-mono);
@@ -1280,7 +1296,7 @@
 
 @media (min-width: 50rem) {
   :where(.beta-action-contact-allentown) .beta-action-contact-allentown__body {
-    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.8fr);
-    align-items: start;
+    flex-direction: row;
+    align-items: flex-start;
   }
 }
