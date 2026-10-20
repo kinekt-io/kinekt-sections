@@ -55,6 +55,20 @@ const Preview = (previewModule as { default: any }).default
             <label><input type="radio" name="intro-heading-level" value="h3" /> H3</label>
             <label><input type="radio" name="intro-heading-level" value="h4" /> H4</label>
           </fieldset>
+          {component.id === 'sections/hero/allentown' && (
+            <>
+              <fieldset>
+                <legend>Call-to-action buttons</legend>
+                <label><input type="checkbox" name="hero-primary-cta" checked /> Primary</label>
+                <label><input type="checkbox" name="hero-secondary-cta" checked /> Clear</label>
+              </fieldset>
+              <fieldset>
+                <legend>Call-to-action icons</legend>
+                <label><input type="checkbox" name="hero-primary-icon" checked /> Primary icon</label>
+                <label><input type="checkbox" name="hero-secondary-icon" checked /> Clear icon</label>
+              </fieldset>
+            </>
+          )}
           {component.id === 'sections/case-studies/allentown' && (
             <>
               <fieldset>
@@ -130,6 +144,16 @@ const Preview = (previewModule as { default: any }).default
           }
           if (input.name === 'intro-heading-level' && (input.value === 'h1' || input.value === 'h2' || input.value === 'h3' || input.value === 'h4')) {
             setIntroHeadingLevel(input.value)
+          }
+          if (input.name === 'hero-primary-cta' || input.name === 'hero-secondary-cta') {
+            const action = surface.querySelector<HTMLElement>(input.name === 'hero-primary-cta' ? '.hero-allentown__action--primary' : '.hero-allentown__action--secondary')
+            if (action) action.hidden = !input.checked
+            const actions = surface.querySelector<HTMLElement>('.hero-allentown__actions')
+            if (actions) actions.hidden = !Array.from(actions.children).some((child) => !((child as HTMLElement).hidden))
+          }
+          if (input.name === 'hero-primary-icon' || input.name === 'hero-secondary-icon') {
+            const action = surface.querySelector<HTMLElement>(input.name === 'hero-primary-icon' ? '.hero-allentown__action--primary' : '.hero-allentown__action--secondary')
+            action?.querySelector<HTMLElement>('[data-kinekt-hero-cta-icon]')?.toggleAttribute('hidden', !input.checked)
           }
           if (input.name === 'carousel-controls') {
             const carousel = surface.querySelector<HTMLElement>('[data-kinekt-carousel]')

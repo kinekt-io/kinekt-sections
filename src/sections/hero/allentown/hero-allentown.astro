@@ -29,8 +29,8 @@ const secondaryIcon = ctas?.secondary?.icon ? ctaIconPaths[ctas.secondary.icon] 
     <header class="hero-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
       {(ctas?.primary || ctas?.secondary) && <div class="hero-allentown__actions">
-        {ctas.primary && <Button class="hero-allentown__action hero-allentown__action--primary" href={ctas.primary.href} label={ctas.primary.label}>{primaryIcon && <svg aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
-        {ctas.secondary && <Button class="hero-allentown__action hero-allentown__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="clear">{secondaryIcon && <svg aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+        {ctas.primary && <Button class="hero-allentown__action hero-allentown__action--primary" href={ctas.primary.href} label={ctas.primary.label}>{primaryIcon && <svg data-kinekt-hero-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+        {ctas.secondary && <Button class="hero-allentown__action hero-allentown__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="clear">{secondaryIcon && <svg data-kinekt-hero-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
       </div>}
     </header>
     <KinektMedia class="hero-allentown__media" imageClass="hero-allentown__image" media={image} mobileMedia={mobileImage} loading="eager" fetchpriority="high" />
