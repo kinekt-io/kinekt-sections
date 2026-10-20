@@ -124,6 +124,13 @@ function caseStudiesPreview() {
     'case-study-quote-ari.webp',
     'case-study-quote-elena.webp',
   ]
+  const images = [
+    { url: 'catalogue-asset:case-study-observatory.webp', alt: 'Observatory dome supporting a field energy system' },
+    { url: 'catalogue-asset:case-study-towers.webp', alt: 'High-rise buildings in a dense urban district' },
+    { url: 'catalogue-asset:case-study-buses.webp', alt: 'City buses parked in a depot' },
+    { url: 'catalogue-asset:case-study-motorcycle.webp', alt: 'Motorcycle parked beside street signage' },
+  ]
+
 
 
   return {
@@ -139,7 +146,7 @@ function caseStudiesPreview() {
         logo: { url: `https://placehold.co/180x48/png?text=Organisation+${index + 1}`, alt: `Organisation ${index + 1} mark`, width: 180, height: 48 },
         title: study.title,
         description: study.description,
-        image: { url: 'catalogue-asset:case-study-observatory.webp', alt: 'Observatory dome supporting a field energy system', width: 680, height: 544 },
+        image: { ...images[index], width: 680, height: 544 },
         results: study.results.map(([label, text]) => ({ label, value: { text } })),
         quote: {
           quote: study.quote,

@@ -90,6 +90,18 @@
   --kinekt-wireframe-heading-3-size: clamp(1.75rem, 2.5vw, 2.25rem);
   --kinekt-wireframe-heading-4-size: clamp(1.25rem, 1.75vw, 1.5rem);
   --kinekt-wireframe-heading-line-height: 0.97;
+  --kinekt-wireframe-text-xs-size: 0.75rem;
+  --kinekt-wireframe-text-xs-line-height: 1.5;
+  --kinekt-wireframe-text-s-size: 0.875rem;
+  --kinekt-wireframe-text-s-line-height: 1.5;
+  --kinekt-wireframe-text-m-size: 1rem;
+  --kinekt-wireframe-text-m-line-height: 1.5;
+  --kinekt-wireframe-text-l-size: 1.125rem;
+  --kinekt-wireframe-text-l-line-height: 1.5;
+  --kinekt-wireframe-text-xl-size: 1.25rem;
+  --kinekt-wireframe-text-xl-line-height: 1.5;
+  --kinekt-wireframe-text-xxl-size: 1.375rem;
+  --kinekt-wireframe-text-xxl-line-height: 1.5;
   --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kinekt-color-canvas, #ffffff));
   --kinekt-component-surface: var(--kinekt-section-surface, var(--kinekt-color-surface, #f5f5f5));
   --kinekt-component-ink: var(--kinekt-section-ink, var(--kinekt-color-ink, #111111));
@@ -115,6 +127,18 @@
   --kinekt-component-heading-3-size: var(--kinekt-section-heading-3-size, var(--kinekt-heading-3-size, var(--kinekt-wireframe-heading-3-size)));
   --kinekt-component-heading-4-size: var(--kinekt-section-heading-4-size, var(--kinekt-heading-4-size, var(--kinekt-wireframe-heading-4-size)));
   --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kinekt-heading-line-height, var(--kinekt-wireframe-heading-line-height)));
+  --kinekt-component-text-xs-size: var(--kinekt-section-text-xs-size, var(--kinekt-text-xs-size, var(--kinekt-wireframe-text-xs-size)));
+  --kinekt-component-text-xs-line-height: var(--kinekt-section-text-xs-line-height, var(--kinekt-text-xs-line-height, var(--kinekt-wireframe-text-xs-line-height)));
+  --kinekt-component-text-s-size: var(--kinekt-section-text-s-size, var(--kinekt-text-s-size, var(--kinekt-wireframe-text-s-size)));
+  --kinekt-component-text-s-line-height: var(--kinekt-section-text-s-line-height, var(--kinekt-text-s-line-height, var(--kinekt-wireframe-text-s-line-height)));
+  --kinekt-component-text-m-size: var(--kinekt-section-text-m-size, var(--kinekt-text-m-size, var(--kinekt-wireframe-text-m-size)));
+  --kinekt-component-text-m-line-height: var(--kinekt-section-text-m-line-height, var(--kinekt-text-m-line-height, var(--kinekt-wireframe-text-m-line-height)));
+  --kinekt-component-text-l-size: var(--kinekt-section-text-l-size, var(--kinekt-text-l-size, var(--kinekt-wireframe-text-l-size)));
+  --kinekt-component-text-l-line-height: var(--kinekt-section-text-l-line-height, var(--kinekt-text-l-line-height, var(--kinekt-wireframe-text-l-line-height)));
+  --kinekt-component-text-xl-size: var(--kinekt-section-text-xl-size, var(--kinekt-text-xl-size, var(--kinekt-wireframe-text-xl-size)));
+  --kinekt-component-text-xl-line-height: var(--kinekt-section-text-xl-line-height, var(--kinekt-text-xl-line-height, var(--kinekt-wireframe-text-xl-line-height)));
+  --kinekt-component-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kinekt-text-xxl-size, var(--kinekt-wireframe-text-xxl-size)));
+  --kinekt-component-text-xxl-line-height: var(--kinekt-section-text-xxl-line-height, var(--kinekt-text-xxl-line-height, var(--kinekt-wireframe-text-xxl-line-height)));
   box-sizing: border-box;
   padding-block: var(--kinekt-component-block-space);
   color: var(--kinekt-component-ink);
@@ -971,7 +995,7 @@
     var(--kinekt-wireframe-section-space-xs)
   );
   --hero-todos-santos-feature-gap: var(--kinekt-section-hero-todos-santos-feature-gap, var(--kinekt-wireframe-space-s));
-  --hero-todos-santos-feature-heading-size: var(--kinekt-section-hero-todos-santos-feature-heading-size, 1rem);
+  --hero-todos-santos-feature-heading-size: var(--kinekt-section-hero-todos-santos-feature-heading-size, var(--kinekt-component-text-m-size));
   --hero-todos-santos-feature-row-gap: var(
     --kinekt-section-hero-todos-santos-feature-row-gap,
     var(--kinekt-wireframe-space-xs)

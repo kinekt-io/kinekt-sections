@@ -116,6 +116,40 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
       let pagefind: Promise<PagefindModule> | undefined
       let pagefindSearchGeneration = 0
 
+      function syncSearchUrl() {
+        const url = new URL(window.location.href)
+        const terms = query?.value.trim() ?? ''
+        const selectedCategory = category?.value ?? ''
+        if (terms) url.searchParams.set('q', terms)
+        else url.searchParams.delete('q')
+        if (selectedCategory) url.searchParams.set('category', selectedCategory)
+        else url.searchParams.delete('category')
+        window.history.replaceState(null, '', url)
+      }
+
+      function restoreSearchUrl() {
+        const parameters = new URLSearchParams(window.location.search)
+        if (query) query.value = parameters.get('q') ?? ''
+        if (category) category.value = parameters.get('category') ?? ''
+      }
+
+      function syncSearchUrl() {
+        const url = new URL(window.location.href)
+        const terms = query?.value.trim() ?? ''
+        const selectedCategory = category?.value ?? ''
+        if (terms) url.searchParams.set('q', terms)
+        else url.searchParams.delete('q')
+        if (selectedCategory) url.searchParams.set('category', selectedCategory)
+        else url.searchParams.delete('category')
+        window.history.replaceState(null, '', url)
+      }
+
+      function restoreSearchUrl() {
+        const parameters = new URLSearchParams(window.location.search)
+        if (query) query.value = parameters.get('q') ?? ''
+        if (category) category.value = parameters.get('category') ?? ''
+      }
+
       function filterCards() {
         pagefindSearchGeneration += 1
         const terms = query?.value.trim().toLowerCase() ?? ''
@@ -166,12 +200,26 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
 
       form?.addEventListener('submit', (event) => {
         event.preventDefault()
+        syncSearchUrl()
+        filterCards()
+        void searchPagefind()
+      }
+      query?.addEventListener('input', () => {
+        syncSearchUrl()
+        filterCards()
+      })
+      category?.addEventListener('change', () => {
+        syncSearchUrl()
+        filterCards()
+      })
+      window.addEventListener('popstate', () => {
+        restoreSearchUrl()
         filterCards()
         void searchPagefind()
       })
-      query?.addEventListener('input', filterCards)
-      category?.addEventListener('change', filterCards)
+      restoreSearchUrl()
       filterCards()
+      if (query?.value.trim()) void searchPagefind()
     </script>
   </body>
 </html>
