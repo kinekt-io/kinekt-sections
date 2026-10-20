@@ -102,8 +102,8 @@ async function componentManifest(directory) {
   requireString(metadata.slug, 'slug', manifestPath)
   requireString(metadata.title, 'title', manifestPath)
   requireString(metadata.description, 'description', manifestPath)
-  if (!['planned', 'released', 'deprecated'].includes(metadata.status)) {
-    throw new Error(`${manifestPath} status must be planned, released, or deprecated.`)
+  if (!['planned', 'alpha', 'beta', 'prerelease', 'release', 'released', 'deprecated'].includes(metadata.status)) {
+    throw new Error(`${manifestPath} status must be planned, alpha, beta, prerelease, release, released, or deprecated.`)
   }
   if (!metadata.figma || typeof metadata.figma !== 'object' || !/^https:\/\/(?:www\.)?figma\.com\//.test(metadata.figma.url)) {
     throw new Error(`${manifestPath} requires a Figma URL.`)

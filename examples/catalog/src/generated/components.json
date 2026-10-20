@@ -31,6 +31,37 @@
     }
   },
   {
+    "id": "primitives/contact-icon",
+    "version": "26.10.0-beta.0",
+    "slug": "contact-icon",
+    "category": "primitives",
+    "tags": [],
+    "role": "contact-icon",
+    "variation": null,
+    "title": "Contact Icon",
+    "description": "An accessible inline Font Awesome Free SVG icon for a direct contact method.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/FaeBt9V4p54cxRyUuCd8wB/%25E2%2599%25A5-Tulip-Tech-ACSS-%25E2%2599%25A5?node-id=4079-5685&t=dfGgl2XVtpG1Ejai-11",
+    "variants": {},
+    "fields": {
+      "name": {
+        "kind": "select",
+        "required": true,
+        "localized": false,
+        "options": [
+          "whatsapp",
+          "phone",
+          "email"
+        ]
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/primitives/contact-icon.astro"
+    }
+  },
+  {
     "id": "primitives/section-intro",
     "version": "26.10.0-beta.0",
     "slug": "section-intro",
@@ -73,7 +104,8 @@
     "category": "sections",
     "tags": [
       "conversion",
-      "contact"
+      "contact",
+      "prerelease"
     ],
     "role": "action-contact",
     "variation": "allentown",
@@ -155,7 +187,8 @@
     "category": "sections",
     "tags": [
       "product",
-      "catalogue"
+      "catalogue",
+      "alpha"
     ],
     "role": "battery-models",
     "variation": "allentown",
@@ -213,7 +246,8 @@
     "tags": [
       "insights",
       "social-proof",
-      "carousel"
+      "carousel",
+      "prerelease"
     ],
     "role": "case-studies",
     "variation": "allentown",
@@ -275,7 +309,8 @@
     "category": "sections",
     "tags": [
       "content",
-      "features"
+      "features",
+      "alpha"
     ],
     "role": "checklist-feature-list",
     "variation": "allentown",
@@ -338,7 +373,8 @@
     "category": "sections",
     "tags": [
       "comparison",
-      "data"
+      "data",
+      "alpha"
     ],
     "role": "comparison-overview",
     "variation": "allentown",
@@ -400,7 +436,8 @@
     "category": "sections",
     "tags": [
       "product",
-      "specifications"
+      "specifications",
+      "alpha"
     ],
     "role": "compatibility-specifications",
     "variation": "allentown",
@@ -456,7 +493,8 @@
     "category": "sections",
     "tags": [
       "compliance",
-      "content"
+      "content",
+      "alpha"
     ],
     "role": "compliance-detail",
     "variation": "allentown",
@@ -535,7 +573,8 @@
     "category": "sections",
     "tags": [
       "compliance",
-      "content"
+      "content",
+      "alpha"
     ],
     "role": "compliance-overview",
     "variation": "allentown",
@@ -606,7 +645,8 @@
     "category": "sections",
     "tags": [
       "compliance",
-      "content"
+      "content",
+      "alpha"
     ],
     "role": "compliance-text",
     "variation": "allentown",
@@ -677,7 +717,8 @@
     "category": "sections",
     "tags": [
       "comparison",
-      "data"
+      "data",
+      "alpha"
     ],
     "role": "density-comparison",
     "variation": "allentown",
@@ -738,7 +779,8 @@
     "category": "sections",
     "tags": [
       "events",
-      "listing"
+      "listing",
+      "alpha"
     ],
     "role": "event-overview",
     "variation": "allentown",
@@ -799,7 +841,8 @@
     "category": "sections",
     "tags": [
       "company",
-      "locations"
+      "locations",
+      "alpha"
     ],
     "role": "facilities-overview",
     "variation": "allentown",
@@ -866,7 +909,8 @@
     "category": "sections",
     "tags": [
       "faq",
-      "support"
+      "support",
+      "alpha"
     ],
     "role": "faq-index",
     "variation": "allentown",
@@ -929,7 +973,8 @@
     "category": "sections",
     "tags": [
       "faq",
-      "support"
+      "support",
+      "alpha"
     ],
     "role": "faq",
     "variation": "allentown",
@@ -997,7 +1042,8 @@
     "category": "sections",
     "tags": [
       "events",
-      "featured"
+      "featured",
+      "alpha"
     ],
     "role": "featured-event",
     "variation": "allentown",
@@ -1054,7 +1100,8 @@
     "category": "sections",
     "tags": [
       "insights",
-      "featured"
+      "featured",
+      "alpha"
     ],
     "role": "featured-insights",
     "variation": "allentown",
@@ -1128,7 +1175,8 @@
     "category": "sections",
     "tags": [
       "page-header",
-      "content"
+      "content",
+      "alpha"
     ],
     "role": "featured-page-header",
     "variation": "allentown",
@@ -1193,7 +1241,8 @@
     "category": "sections",
     "tags": [
       "conversion",
-      "form"
+      "form",
+      "alpha"
     ],
     "role": "form-section",
     "variation": "allentown",
@@ -1265,7 +1314,8 @@
     "category": "sections",
     "tags": [
       "engineering",
-      "product"
+      "product",
+      "alpha"
     ],
     "role": "hd-cells-engineering",
     "variation": "allentown",
@@ -1338,7 +1388,8 @@
     "category": "sections",
     "tags": [
       "hero",
-      "content"
+      "content",
+      "prerelease"
     ],
     "role": "hero",
     "variation": "allentown",
@@ -1409,13 +1460,14 @@
     "category": "sections",
     "tags": [
       "hero",
-      "content"
+      "content",
+      "beta"
     ],
     "role": "hero",
     "variation": "todos-santos",
     "title": "Hero Todos Santos",
     "description": "A reusable product hero with introduction, at-a-glance feature pairs, optional CTA group and media.",
-    "status": "planned",
+    "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411511&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1485,7 +1537,8 @@
     "category": "sections",
     "tags": [
       "hero",
-      "content"
+      "content",
+      "prerelease"
     ],
     "role": "hero",
     "variation": "trinity",
@@ -1556,7 +1609,8 @@
     "category": "sections",
     "tags": [
       "conversion",
-      "content"
+      "content",
+      "alpha"
     ],
     "role": "homepage-problem-solution",
     "variation": "allentown",
@@ -1639,7 +1693,8 @@
     "category": "sections",
     "tags": [
       "insights",
-      "listing"
+      "listing",
+      "alpha"
     ],
     "role": "insight-index",
     "variation": "allentown",
@@ -1713,7 +1768,8 @@
     "category": "sections",
     "tags": [
       "conversion",
-      "form"
+      "form",
+      "alpha"
     ],
     "role": "intake-form",
     "variation": "allentown",
@@ -1786,7 +1842,8 @@
     "tags": [
       "content",
       "media",
-      "faq"
+      "faq",
+      "alpha"
     ],
     "role": "media-accordion",
     "variation": "allentown",
@@ -1864,7 +1921,8 @@
     "tags": [
       "content",
       "media",
-      "metrics"
+      "metrics",
+      "alpha"
     ],
     "role": "media-fact-grid",
     "variation": "allentown",
@@ -1926,7 +1984,8 @@
     "tags": [
       "content",
       "media",
-      "features"
+      "features",
+      "alpha"
     ],
     "role": "media-feature-list",
     "variation": "allentown",
@@ -1997,7 +2056,8 @@
     "tags": [
       "content",
       "media",
-      "metrics"
+      "metrics",
+      "alpha"
     ],
     "role": "media-metrics",
     "variation": "allentown",
@@ -2059,7 +2119,8 @@
     "category": "sections",
     "tags": [
       "product",
-      "logistics"
+      "logistics",
+      "alpha"
     ],
     "role": "moq-lead-times",
     "variation": "allentown",
@@ -2122,7 +2183,8 @@
     "category": "sections",
     "tags": [
       "utility",
-      "hero"
+      "hero",
+      "alpha"
     ],
     "role": "not-found-hero",
     "variation": "allentown",
@@ -2181,7 +2243,8 @@
     "category": "sections",
     "tags": [
       "content",
-      "metrics"
+      "metrics",
+      "alpha"
     ],
     "role": "output-card-grid",
     "variation": "allentown",
@@ -2236,7 +2299,8 @@
     "category": "sections",
     "tags": [
       "content",
-      "process"
+      "process",
+      "alpha"
     ],
     "role": "process-story",
     "variation": "allentown",
@@ -2297,7 +2361,8 @@
     "category": "sections",
     "tags": [
       "product",
-      "specifications"
+      "specifications",
+      "alpha"
     ],
     "role": "product-details",
     "variation": "allentown",
@@ -2367,7 +2432,8 @@
     "category": "sections",
     "tags": [
       "product",
-      "form"
+      "form",
+      "alpha"
     ],
     "role": "product-finder-form",
     "variation": "allentown",
@@ -2422,7 +2488,8 @@
     "category": "sections",
     "tags": [
       "product",
-      "hero"
+      "hero",
+      "alpha"
     ],
     "role": "product-hero",
     "variation": "allentown",
@@ -2505,7 +2572,8 @@
     "category": "sections",
     "tags": [
       "product",
-      "catalogue"
+      "catalogue",
+      "alpha"
     ],
     "role": "product-options",
     "variation": "allentown",
@@ -2562,7 +2630,8 @@
     "category": "sections",
     "tags": [
       "metrics",
-      "social-proof"
+      "social-proof",
+      "alpha"
     ],
     "role": "proof-metrics",
     "variation": "allentown",
@@ -2637,7 +2706,8 @@
     "tags": [
       "content",
       "media",
-      "conversion"
+      "conversion",
+      "alpha"
     ],
     "role": "read-more",
     "variation": "allentown",
@@ -2690,7 +2760,8 @@
     "category": "sections",
     "tags": [
       "solutions",
-      "product"
+      "product",
+      "alpha"
     ],
     "role": "solution-list",
     "variation": "allentown",
@@ -2747,7 +2818,8 @@
     "category": "sections",
     "tags": [
       "content",
-      "process"
+      "process",
+      "alpha"
     ],
     "role": "steps",
     "variation": "stage",
@@ -2812,7 +2884,8 @@
     "category": "sections",
     "tags": [
       "support",
-      "contact"
+      "contact",
+      "alpha"
     ],
     "role": "support-contact",
     "variation": "allentown",
@@ -2888,7 +2961,8 @@
     "category": "sections",
     "tags": [
       "content",
-      "navigation"
+      "navigation",
+      "alpha"
     ],
     "role": "tabs",
     "variation": "allentown",
@@ -2948,7 +3022,8 @@
     "category": "sections",
     "tags": [
       "utility",
-      "hero"
+      "hero",
+      "alpha"
     ],
     "role": "thank-you-hero",
     "variation": "allentown",
@@ -3018,7 +3093,8 @@
     "category": "sections",
     "tags": [
       "solutions",
-      "product"
+      "product",
+      "alpha"
     ],
     "role": "use-cases",
     "variation": "allentown",
