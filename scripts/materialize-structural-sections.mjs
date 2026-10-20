@@ -118,6 +118,13 @@ function caseStudiesPreview() {
       authorRole: 'Operations lead',
     },
   ]
+  const avatars = [
+    'case-study-quote-mara.webp',
+    'case-study-quote-jonas.webp',
+    'case-study-quote-ari.webp',
+    'case-study-quote-elena.webp',
+  ]
+
 
   return {
     theme: 'light',
@@ -138,7 +145,7 @@ function caseStudiesPreview() {
           quote: study.quote,
           authorName: study.authorName,
           authorRole: study.authorRole,
-          avatar: { url: `https://placehold.co/96x96/png?text=${index + 1}`, alt: `${study.authorName} portrait`, width: 96, height: 96 },
+          avatar: { url: `catalogue-asset:${avatars[index]}`, alt: 'Black-and-white placeholder portrait', width: 96, height: 96 },
         },
         cta: { cta: { label: 'Read the system brief', href: '#' } },
       })),
