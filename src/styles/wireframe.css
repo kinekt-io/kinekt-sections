@@ -970,10 +970,8 @@
     --kinekt-section-hero-todos-santos-intro-gap,
     var(--kinekt-wireframe-section-space-xs)
   );
-  --hero-todos-santos-feature-gap: var(
-    --kinekt-section-hero-todos-santos-feature-gap,
-    var(--kinekt-wireframe-space-xl)
-  );
+  --hero-todos-santos-feature-gap: var(--kinekt-section-hero-todos-santos-feature-gap, var(--kinekt-wireframe-space-s));
+  --hero-todos-santos-feature-heading-size: var(--kinekt-section-hero-todos-santos-feature-heading-size, 1rem);
   --hero-todos-santos-feature-row-gap: var(
     --kinekt-section-hero-todos-santos-feature-row-gap,
     var(--kinekt-wireframe-space-xs)
@@ -1016,7 +1014,7 @@
 :where(.hero-todos-santos) .hero-todos-santos__feature-table caption {
   margin-block-end: var(--hero-todos-santos-feature-gap);
   color: inherit;
-  font-size: var(--kinekt-component-heading-4-size);
+  font-size: var(--hero-todos-santos-feature-heading-size);
   font-weight: 700;
   letter-spacing: -0.025em;
   text-align: start;
