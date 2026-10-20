@@ -247,13 +247,13 @@
       "insights",
       "social-proof",
       "carousel",
-      "beta"
+      "prerelease"
     ],
     "role": "case-studies",
     "variation": "allentown",
     "title": "Case Studies Allentown",
     "description": "A reusable case studies section with an introduction, optional labelled divider, carousel and optional overview action.",
-    "status": "beta",
+    "status": "released",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411424&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1389,13 +1389,13 @@
     "tags": [
       "hero",
       "content",
-      "beta"
+      "prerelease"
     ],
     "role": "hero",
     "variation": "allentown",
     "title": "Hero Allentown",
     "description": "A structural side-media hero with a localized introduction, optional CTA group, and responsive media.",
-    "status": "beta",
+    "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411811&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1461,13 +1461,13 @@
     "tags": [
       "hero",
       "content",
-      "beta"
+      "prerelease"
     ],
     "role": "hero",
     "variation": "todos-santos",
     "title": "Hero Todos Santos",
     "description": "A reusable product hero with introduction, at-a-glance feature pairs, optional CTA group and media.",
-    "status": "beta",
+    "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411511&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
@@ -1538,13 +1538,13 @@
     "tags": [
       "hero",
       "content",
-      "beta"
+      "prerelease"
     ],
     "role": "hero",
     "variation": "trinity",
     "title": "Hero Trinity",
     "description": "A structural hero with a localized introduction, responsive media, and an optional primary and secondary CTA group.",
-    "status": "beta",
+    "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4754-91818&m=dev",
     "variants": {},
     "fields": {

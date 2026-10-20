@@ -6,7 +6,7 @@ import type { BetaHeroTodosSantosContent, PayloadBetaHeroTodosSantosDocument } f
 const manifest = {
   "slug": "hero-todos-santos",
   "title": "Hero Todos Santos",
-  "status": "beta",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",
