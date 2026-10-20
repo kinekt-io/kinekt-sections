@@ -1822,9 +1822,9 @@
 :where(.beta-support-contact-allentown) .beta-support-contact-allentown__form label {
   display: grid;
   gap: var(--support-contact-control-gap);
-  font-size: var(--kinekt-component-text-s-size);
-  font-weight: 700;
-  line-height: var(--kinekt-component-text-s-line-height);
+  font-size: var(--kinekt-component-text-l-size);
+  font-weight: 500;
+  line-height: var(--kinekt-component-text-l-line-height);
 }
 
 :where(.beta-support-contact-allentown) .beta-support-contact-allentown__form :is(input, select, textarea) {
@@ -1835,7 +1835,10 @@
   border-radius: 0;
   color: var(--kinekt-component-ink);
   background: var(--kinekt-component-surface);
-  font: inherit;
+  font-family: inherit;
+  font-size: var(--kinekt-component-text-l-size);
+  font-weight: 400;
+  line-height: var(--kinekt-component-text-l-line-height);
 }
 
 :where(.beta-support-contact-allentown) .beta-support-contact-allentown__form textarea {
@@ -1845,6 +1848,11 @@
 
 :where(.beta-support-contact-allentown) .beta-support-contact-allentown__form .button {
   justify-self: start;
+}
+
+:where(.beta-support-contact-allentown) .beta-support-contact-allentown__form .button {
+  font-size: var(--kinekt-component-text-l-size);
+  font-weight: 500;
 }
 
 @media (min-width: 50rem) {
