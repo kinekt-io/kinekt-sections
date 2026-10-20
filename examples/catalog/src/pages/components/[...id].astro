@@ -106,7 +106,7 @@ const Preview = (previewModule as { default: any }).default
       <div data-kinekt-preview-surface><Preview /></div>
     </main>
     <script>
-      import { initializeKinektInteractions } from '@package-src/shared/interactions'
+      import { initializeKinektInteractions } from '../../../../../src/shared/interactions'
 
       const surface = document.querySelector<HTMLElement>('[data-kinekt-preview-surface]')
       const initialTheme = surface?.querySelector<HTMLElement>('[data-kinekt-section]')?.dataset.kinektTheme
