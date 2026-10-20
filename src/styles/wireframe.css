@@ -107,6 +107,7 @@
   --kinekt-component-gap: var(--kinekt-section-gap, var(--kinekt-space-content, var(--kinekt-wireframe-space-m)));
   --kinekt-component-radius: var(--kinekt-section-radius, var(--kinekt-radius, 0));
   --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kinekt-border-width, 1px));
+  --kinekt-component-media-filter: var(--kinekt-section-media-filter, grayscale(1));
   --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kinekt-wireframe-space-xxs));
   --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kinekt-wireframe-space-m));
   --kinekt-component-heading-1-size: var(--kinekt-section-heading-1-size, var(--kinekt-heading-1-size, var(--kinekt-wireframe-heading-1-size)));
@@ -265,7 +266,7 @@
 }
 
 :where([data-kinekt-section]) picture { display: block; }
-:where([data-kinekt-section]) img { display: block; width: 100%; height: auto; border-radius: var(--kinekt-component-radius); }
+:where([data-kinekt-section]) img { display: block; width: 100%; height: auto; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
 
 :where([data-kinekt-section]) :is(ul, ol)[class*='__'] {
   display: grid;
