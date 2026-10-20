@@ -52,32 +52,34 @@ const actionList = Object.values(actions).filter((action): action is Cta => Bool
           <SectionIntro intro={intro} headingLevel={headingLevel} />
         </header>
 
-        <section class="beta-action-contact-allentown__action">
-          <h3 class="beta-action-contact-allentown__action-heading">{actionHeading}</h3>
-          {actionList.length > 0 && (
-            <nav class="beta-action-contact-allentown__actions" aria-label="Contact actions">
-              {actionList.map((action, index) => (
-                <Button href={action.href} label={action.label} style={index === 0 ? 'primary' : 'secondary'} />
-              ))}
-            </nav>
-          )}
-          {actionNote && <p class="beta-action-contact-allentown__action-note">{actionNote}</p>}
-        </section>
+        <div class="beta-action-contact-allentown__details">
+          <section class="beta-action-contact-allentown__action">
+            <h3 class="beta-action-contact-allentown__action-heading">{actionHeading}</h3>
+            {actionList.length > 0 && (
+              <nav class="beta-action-contact-allentown__actions" aria-label="Contact actions">
+                {actionList.map((action, index) => (
+                  <Button href={action.href} label={action.label} style={index === 0 ? 'primary' : 'secondary'} />
+                ))}
+              </nav>
+            )}
+            {actionNote && <p class="beta-action-contact-allentown__action-note">{actionNote}</p>}
+          </section>
 
-        <section class="beta-action-contact-allentown__contact">
-          <h3 class="beta-action-contact-allentown__contact-heading">{contactHeading}</h3>
-          <ul class="beta-action-contact-allentown__contact-methods">
-            {contactMethods.map((method) => (
-              <li class="beta-action-contact-allentown__contact-method">
-                <a href={method.href}>
-                  {method.icon && <span class="beta-action-contact-allentown__contact-icon" aria-hidden="true">{method.icon}</span>}
-                  <span>{method.label}</span>
-                  <span aria-hidden="true">→</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
+          <section class="beta-action-contact-allentown__contact">
+            <h3 class="beta-action-contact-allentown__contact-heading">{contactHeading}</h3>
+            <ul class="beta-action-contact-allentown__contact-methods">
+              {contactMethods.map((method) => (
+                <li class="beta-action-contact-allentown__contact-method">
+                  <a href={method.href}>
+                    {method.icon && <span class="beta-action-contact-allentown__contact-icon" aria-hidden="true">{method.icon}</span>}
+                    <span>{method.label}</span>
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
       </div>
 
       <KinektMedia class="beta-action-contact-allentown__media" imageClass="beta-action-contact-allentown__image" media={image} />

@@ -1191,29 +1191,31 @@
  * direct-contact rail give each decision one clear next step.
  */
 :where(.beta-action-contact-allentown[data-kinekt-section]) {
-  --action-contact-media-ratio: 4 / 5;
-  --action-contact-content-gap: clamp(2rem, 5vw, 5rem);
-  --action-contact-rail-space: clamp(1.5rem, 3vw, 2.5rem);
-  --action-contact-method-space: 1rem;
+  --action-contact-media-ratio: 3 / 4;
+  --action-contact-media-width: var(--kinekt-section-media-width, 26.4375rem);
+  --action-contact-content-width: var(--kinekt-section-content-width, 36rem);
+  --action-contact-column-gap: var(--kinekt-section-column-gap, var(--section-l, 5rem));
+  --action-contact-content-gap: var(--kinekt-section-content-gap, var(--space-xxl, 2.441rem));
+  --action-contact-header-gap: var(--kinekt-section-header-gap, var(--space-m, 1.25rem));
+  --action-contact-accent-gap: var(--kinekt-section-accent-gap, var(--space-xs, 0.56rem));
+  --action-contact-detail-gap: var(--kinekt-section-detail-gap, var(--space-xl, 1.953rem));
+  --action-contact-action-gap: var(--kinekt-section-action-gap, var(--space-l, 1.5625rem));
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__container {
   display: block;
 }
 
-:where(.beta-action-contact-allentown) .beta-action-contact-allentown__header {
-  max-width: var(--kinekt-component-reading-width);
-  margin: 0;
-}
-
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__body {
   display: flex;
   flex-direction: column;
-  gap: var(--action-contact-content-gap);
+  gap: var(--action-contact-column-gap);
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__media {
-  flex: 1 1 0;
+  flex: 0 1 var(--action-contact-media-width);
+  width: 100%;
+  max-width: var(--action-contact-media-width);
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__image {
@@ -1223,24 +1225,60 @@
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__content {
   display: flex;
-  flex: 0.8 1 0;
+  flex: 0 1 var(--action-contact-content-width);
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--action-contact-rail-space);
+  width: 100%;
+  max-width: var(--action-contact-content-width);
+  gap: var(--action-contact-content-gap);
 }
 
-:where(.beta-action-contact-allentown) .beta-action-contact-allentown__action {
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__header {
+  max-width: none;
+  margin: 0;
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__header .section-intro__accent {
+  margin: 0 0 var(--action-contact-accent-gap);
+  font-size: 1rem;
+  line-height: 1.1;
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__header .section-intro__heading {
+  max-width: none;
+  font-size: clamp(2rem, 2.5vw, 2.25rem);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__header .section-intro__description {
+  max-width: none;
+  margin-top: var(--action-contact-header-gap);
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__details,
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__action,
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1.25rem;
+  width: 100%;
 }
 
-:where(.beta-action-contact-allentown) .beta-action-contact-allentown__action-heading,
-:where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-heading {
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__details {
+  gap: var(--action-contact-detail-gap);
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__action {
+  gap: var(--action-contact-action-gap);
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__action-heading {
   max-width: 22ch;
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
-  line-height: 1.05;
+  font-size: 1.25rem;
+  line-height: 1.2;
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__actions {
@@ -1254,13 +1292,15 @@
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.25rem;
-  width: 100%;
-  padding-top: var(--action-contact-rail-space);
+  gap: var(--action-contact-action-gap);
+  padding-top: var(--action-contact-detail-gap);
   border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-heading {
+  max-width: 22ch;
+  font-size: 1.125rem;
+  line-height: 1.2;
 }
 
 :where(.beta-action-contact-allentown) ul.beta-action-contact-allentown__contact-methods {
@@ -1268,21 +1308,22 @@
   gap: 0;
   width: 100%;
   margin: 0;
-  border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+  border: 0;
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-method {
-  border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+  border: 0;
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-method a {
   display: flex;
   align-items: center;
   gap: 0.8ch;
-  min-height: 3.25rem;
-  padding-block: var(--action-contact-method-space);
+  min-height: 0;
+  padding: 0;
   color: var(--kinekt-component-ink);
-  font-weight: 600;
+  font-weight: 400;
+  line-height: 1.2;
   text-decoration: none;
 }
 
@@ -1298,7 +1339,8 @@
 @media (min-width: 50rem) {
   :where(.beta-action-contact-allentown) .beta-action-contact-allentown__body {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
+    max-width: calc(var(--action-contact-media-width) + var(--action-contact-content-width) + var(--action-contact-column-gap));
   }
 
   :where(.beta-action-contact-allentown) .beta-action-contact-allentown__media {
