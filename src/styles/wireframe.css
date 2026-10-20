@@ -1223,25 +1223,115 @@
 }
 
 :where(.compatibility-specifications--allentown) {
-  --compatibility-specifications-platform-padding: var(--kinekt-wireframe-card-padding);
+  --kinekt-section-compatibility-specifications-container-width: 72rem;
+  --kinekt-section-compatibility-specifications-section-padding: 8.75rem;
+  --kinekt-section-compatibility-specifications-major-gap: 5rem;
+  --kinekt-section-compatibility-specifications-intro-list-gap: 3.2rem;
+  --kinekt-section-compatibility-specifications-list-row-gap: 1.25rem;
+  --kinekt-section-compatibility-specifications-list-padding-block: 1.25rem;
+  --kinekt-section-compatibility-specifications-list-padding-inline-start: 4rem;
+  --kinekt-section-compatibility-specifications-list-padding-inline-end: 2.4375rem;
+  --kinekt-section-compatibility-specifications-value-width: 18rem;
+  --kinekt-section-compatibility-specifications-platform-gap: 6.25rem;
+  --kinekt-section-compatibility-specifications-label-line-width: 5rem;
+  --kinekt-section-block-space: var(--kinekt-section-compatibility-specifications-section-padding);
+  --kinekt-section-content-width: var(--kinekt-section-compatibility-specifications-container-width);
+  --kinekt-section-gap: var(--kinekt-section-compatibility-specifications-major-gap);
 }
 
 :where(.compatibility-specifications--allentown) .compatibility-specifications__container {
-  gap: var(--kinekt-wireframe-editorial-gap);
+  gap: var(--kinekt-section-compatibility-specifications-major-gap);
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__specifications-group {
+  display: grid;
+  gap: var(--kinekt-section-compatibility-specifications-intro-list-gap);
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__intro {
+  max-width: 54rem;
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__list {
+  display: grid;
+  gap: var(--kinekt-section-compatibility-specifications-list-row-gap);
+  margin: 0;
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__item {
+  display: grid;
+  gap: var(--kinekt-wireframe-space-l);
+  margin: 0;
+  padding: var(--kinekt-section-compatibility-specifications-list-padding-block) var(--kinekt-wireframe-space-l);
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__item:nth-child(odd) {
+  background: var(--kinekt-component-surface);
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__item :is(dt, dd) {
+  margin: 0;
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__item dt {
+  font-size: 1.25rem;
+  line-height: 1.3;
 }
 
 :where(.compatibility-specifications--allentown) .compatibility-specifications__platforms {
-  margin-top: 0;
-  padding: var(--compatibility-specifications-platform-padding);
-  border-left: 2px solid var(--kinekt-component-action);
+  display: grid;
+  gap: var(--kinekt-wireframe-space-l);
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__platforms-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--kinekt-wireframe-space-m);
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__platforms-heading::after {
+  width: var(--kinekt-section-compatibility-specifications-label-line-width);
+  height: var(--kinekt-component-border-width);
+  content: '';
+  background: currentColor;
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__platforms h3 {
+  margin: 0;
+  color: var(--kinekt-component-muted);
+  font-family: var(--kinekt-component-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
 }
 
 :where(.compatibility-specifications--allentown) .compatibility-specifications__platforms ul {
-  display: grid;
-  gap: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kinekt-wireframe-space-l) var(--kinekt-section-compatibility-specifications-platform-gap);
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__platforms li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__platforms li span {
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
+@media (min-width: 50rem) {
+  :where(.compatibility-specifications--allentown) .compatibility-specifications__item {
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--kinekt-section-compatibility-specifications-value-width));
+    padding: var(--kinekt-section-compatibility-specifications-list-padding-block) var(--kinekt-section-compatibility-specifications-list-padding-inline-end) var(--kinekt-section-compatibility-specifications-list-padding-block) var(--kinekt-section-compatibility-specifications-list-padding-inline-start);
+  }
 }
 
 @media (min-width: 50rem) {
@@ -2258,27 +2348,6 @@
   margin-inline: auto;
 }
 
-:where(.compatibility-specifications--allentown) .compatibility-specifications__list {
-  display: grid;
-  gap: 0;
-  margin: 0;
-}
-
-:where(.compatibility-specifications--allentown) .compatibility-specifications__item {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(10rem, 1fr);
-  gap: var(--kinekt-wireframe-space-l);
-  margin: 0;
-  padding: var(--kinekt-wireframe-space-m) var(--kinekt-wireframe-space-xl);
-}
-
-:where(.compatibility-specifications--allentown) .compatibility-specifications__item:nth-child(odd) {
-  background: var(--kinekt-component-surface);
-}
-
-:where(.compatibility-specifications--allentown) .compatibility-specifications__item :is(dt, dd) {
-  margin: 0;
-}
 
 :where(.beta-facilities-overview-allentown) .beta-facilities-overview-allentown__container {
   gap: var(--kinekt-wireframe-section-space-l);

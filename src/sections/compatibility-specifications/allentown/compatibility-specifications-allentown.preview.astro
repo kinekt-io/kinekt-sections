@@ -1,116 +1,23 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import CompatibilitySpecifications from './compatibility-specifications-allentown.astro'
 
 const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  theme: 'semi-light',
+  intro: {
+    accentHeading: 'System compatibility',
+    heading: 'Technical fit, made clear',
+    description: 'Review the interfaces, environmental limits and software requirements that determine whether a system can be deployed with confidence.',
   },
-  "specifications": [
-    {
-      "label": "System engineering",
-      "value": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-    },
-    {
-      "label": "Built for the field",
-      "value": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-    },
-    {
-      "label": "From cell to system",
-      "value": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-    }
+  specifications: [
+    { label: 'Integration interface', value: 'Standardized electrical and data connections' },
+    { label: 'Operating environment', value: 'Validated for defined temperature and ingress ranges' },
+    { label: 'Control protocol', value: 'Documented API and telemetry support' },
+    { label: 'Service access', value: 'Field-replaceable modules and diagnostic tooling' },
   ],
-  "compatiblePlatforms": {
-    "heading": "Energy systems built around real operating conditions",
-    "items": [
-      {
-        "name": "Energy systems built around real operating conditions"
-      },
-      {
-        "name": "Designed for the constraints that shape delivery"
-      },
-      {
-        "name": "Performance data teams can use with confidence"
-      }
-    ]
-  }
-}
-const fields = {
-  "theme": {
-    "kind": "select"
+  compatiblePlatforms: {
+    heading: 'Compatible platforms',
+    items: ['Embedded control systems', 'Remote monitoring environments', 'Service and diagnostic tools'],
   },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "specifications": {
-    "kind": "componentList",
-    "id": "components/compatibility-specification-item/allentown",
-    "role": "compatibility-specification-item",
-    "fields": {
-      "label": {
-        "kind": "text"
-      },
-      "value": {
-        "kind": "text"
-      }
-    }
-  },
-  "compatiblePlatforms": {
-    "kind": "component",
-    "id": "components/compatible-platform-list/allentown",
-    "role": "compatible-platform-list",
-    "fields": {
-      "heading": {
-        "kind": "text"
-      },
-      "items": {
-        "kind": "componentList",
-        "id": "components/compatible-platform-item/allentown",
-        "role": "compatible-platform-item",
-        "fields": {
-          "name": {
-            "kind": "text"
-          }
-        }
-      }
-    }
-  }
 }
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block="beta-compatibility-specifications-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<CompatibilitySpecifications {...content} />

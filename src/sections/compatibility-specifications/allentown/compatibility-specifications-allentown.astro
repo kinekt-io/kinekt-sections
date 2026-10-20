@@ -2,15 +2,35 @@
 import '../../../styles/wireframe.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type {CompatibilitySpecificationsContent} from './compatibility-specifications-allentown.types.js'
-interface Props extends CompatibilitySpecificationsContent {headingLevel?:'h1'|'h2'|'h3'}
-const {theme,intro,specifications,compatiblePlatforms,headingLevel='h2'}=Astro.props
+interface Props extends CompatibilitySpecificationsContent { headingLevel?: 'h1' | 'h2' | 'h3' }
+const { theme, intro, specifications, compatiblePlatforms, headingLevel = 'h2' } = Astro.props
 ---
 <section class="compatibility-specifications compatibility-specifications--allentown" data-kinekt-section data-kinekt-theme={theme}>
   <div class="compatibility-specifications__container">
-    <header class="compatibility-specifications__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
-    <dl class="compatibility-specifications__list">
-      {specifications.map((specification) => <div class="compatibility-specifications__item"><dt>{specification.label}</dt><dd>{specification.value}</dd></div>)}
-    </dl>
-    {compatiblePlatforms && <aside class="compatibility-specifications__platforms"><h3>{compatiblePlatforms.heading}</h3><ul>{compatiblePlatforms.items.map((item) => <li>{item}</li>)}</ul></aside>}
+    <div class="compatibility-specifications__specifications-group">
+      <header class="compatibility-specifications__intro">
+        <SectionIntro intro={intro} headingLevel={headingLevel} />
+      </header>
+      <dl class="compatibility-specifications__list">
+        {specifications.map((specification) => (
+          <div class="compatibility-specifications__item">
+            <dt>{specification.label}</dt>
+            <dd>{specification.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+    {compatiblePlatforms && (
+      <section class="compatibility-specifications__platforms" aria-labelledby={compatiblePlatforms.heading ? 'compatibility-platforms-heading' : undefined}>
+        {compatiblePlatforms.heading && (
+          <div class="compatibility-specifications__platforms-heading">
+            <h3 id="compatibility-platforms-heading">{compatiblePlatforms.heading}</h3>
+          </div>
+        )}
+        <ul>
+          {compatiblePlatforms.items.map((item) => <li><span aria-hidden="true">✓</span>{item}</li>)}
+        </ul>
+      </section>
+    )}
   </div>
 </section>
