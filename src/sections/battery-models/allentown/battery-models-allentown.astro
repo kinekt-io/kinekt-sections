@@ -1,103 +1,102 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe.css'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { Cta, CtaGroup, Media, RichText, SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "models": {
-    "kind": "componentList",
-    "id": "components/battery-card/allentown",
-    "role": "battery-card",
-    "fields": {
-      "image": {
-        "kind": "media"
-      },
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      },
-      "specs": {
-        "kind": "componentList",
-        "id": "components/spec-pair/allentown",
-        "role": "spec-pair",
-        "fields": {
-          "label": {
-            "kind": "text"
-          },
-          "value": {
-            "kind": "text"
-          }
-        }
-      }
-    }
-  },
-  "crossSell": {
-    "kind": "component",
-    "id": "patterns/cross-sell/allentown",
-    "role": "cross-sell",
-    "fields": {
-      "intro": {
-        "kind": "component",
-        "id": "components/intro/allentown",
-        "role": "intro",
-        "fields": {
-          "accentHeading": {
-            "kind": "text"
-          },
-          "heading": {
-            "kind": "text"
-          },
-          "description": {
-            "kind": "richText"
-          }
-        }
-      },
-      "items": {
-        "kind": "componentList",
-        "id": "components/cross-sell-item/allentown",
-        "role": "cross-sell-item",
-        "fields": {
-          "image": {
-            "kind": "media"
-          },
-          "title": {
-            "kind": "text"
-          },
-          "cta": {
-            "kind": "component",
-            "id": "controls/button/allentown",
-            "role": "button",
-            "fields": {
-              "cta": {
-                "kind": "cta"
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+interface BatteryModel {
+  image: Media
+  title: string
+  description: string | RichText
+  specs: Array<{ label: string; value: string }>
 }
+
+interface CrossSellItem {
+  image: Media
+  title: string
+  cta: { cta: Cta }
+}
+
+interface Props {
+  id?: string
+  theme?: SectionTheme
+  intro: SectionIntroContent
+  ctas?: CtaGroup
+  models: BatteryModel[]
+  crossSell?: { label?: string; intro: SectionIntroContent; items: CrossSellItem[] } | null
+  headingLevel?: 'h1' | 'h2' | 'h3'
+}
+
+const {
+  id,
+  theme = 'light',
+  intro,
+  ctas,
+  models,
+  crossSell,
+  headingLevel = 'h2',
+} = Astro.props as Props
 ---
-<StructuralSection block="beta-battery-models-allentown" fields={fields} {...props} />
+
+<section class="beta-battery-models-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="beta-battery-models-allentown__container">
+    <header class="beta-battery-models-allentown__intro">
+      <SectionIntro intro={intro} headingLevel={headingLevel} />
+      {(ctas?.primary || ctas?.secondary) && (
+        <nav class="beta-battery-models-allentown__actions" aria-label="Section actions">
+          {ctas.primary && <Button class="beta-battery-models-allentown__action beta-battery-models-allentown__action--primary" href={ctas.primary.href} label={ctas.primary.label} />}
+          {ctas.secondary && <Button class="beta-battery-models-allentown__action beta-battery-models-allentown__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="secondary" />}
+        </nav>
+      )}
+    </header>
+
+    <ul class="beta-battery-models-allentown__models">
+      {models.map((model) => (
+        <li class="beta-battery-models-allentown__model">
+          <article>
+            <KinektMedia class="beta-battery-models-allentown__model-media" imageClass="beta-battery-models-allentown__model-image" media={model.image} />
+            <div class="beta-battery-models-allentown__model-content">
+              <h4 class="beta-battery-models-allentown__model-title">{model.title}</h4>
+              {typeof model.description === 'string'
+                ? <p class="beta-battery-models-allentown__model-description">{model.description}</p>
+                : <div class="beta-battery-models-allentown__model-description" set:html={model.description.html} />}
+            </div>
+            {model.specs.length > 0 && (
+              <dl class="beta-battery-models-allentown__specifications">
+                {model.specs.map((specification) => (
+                  <div>
+                    <dt>{specification.label}</dt>
+                    <dd>{specification.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+          </article>
+        </li>
+      ))}
+    </ul>
+
+    {crossSell && crossSell.items.length > 0 && (
+      <section class="beta-battery-models-allentown__cross-sell">
+        <div class="beta-battery-models-allentown__cross-sell-intro">
+          {crossSell.label && <p class="beta-battery-models-allentown__cross-sell-label">{crossSell.label}</p>}
+          <SectionIntro intro={crossSell.intro} headingLevel="h2" />
+        </div>
+        <ul class="beta-battery-models-allentown__cross-sell-items">
+          {crossSell.items.map((item) => (
+            <li>
+              <article class="beta-battery-models-allentown__cross-sell-item">
+                <KinektMedia class="beta-battery-models-allentown__cross-sell-media" imageClass="beta-battery-models-allentown__cross-sell-image" media={item.image} />
+                <div class="beta-battery-models-allentown__cross-sell-content">
+                  <h3 class="beta-battery-models-allentown__cross-sell-title">{item.title}</h3>
+                  <Button class="beta-battery-models-allentown__cross-sell-action" href={item.cta.cta.href} label={item.cta.cta.label} style="clear" />
+                </div>
+              </article>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </div>
+</section>

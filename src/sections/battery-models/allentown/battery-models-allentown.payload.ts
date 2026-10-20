@@ -26,6 +26,12 @@ const manifest = {
       "required": true,
       "localized": true
     },
+    "ctas": {
+      "kind": "ctaGroup",
+      "required": false,
+      "localized": true,
+      "description": "Optional primary and secondary actions below the introduction."
+    },
     "models": {
       "kind": "componentList",
       "componentId": "components/battery-card/allentown",

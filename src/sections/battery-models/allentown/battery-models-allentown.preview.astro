@@ -1,258 +1,77 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
-
-const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-  },
-  "models": [
-    {
-      "image": {
-        "url": "https://placehold.co/1600x900/png?text=Image",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "title": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "specs": [
-        {
-          "label": "System engineering",
-          "value": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-        },
-        {
-          "label": "Built for the field",
-          "value": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-        },
-        {
-          "label": "From cell to system",
-          "value": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-        }
-      ]
-    },
-    {
-      "image": {
-        "url": "https://placehold.co/1600x900/png?text=Image",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "title": "Designed for the constraints that shape delivery",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "specs": [
-        {
-          "label": "System engineering",
-          "value": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-        },
-        {
-          "label": "Built for the field",
-          "value": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-        },
-        {
-          "label": "From cell to system",
-          "value": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-        }
-      ]
-    },
-    {
-      "image": {
-        "url": "https://placehold.co/1600x900/png?text=Image",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "title": "Performance data teams can use with confidence",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "specs": [
-        {
-          "label": "System engineering",
-          "value": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-        },
-        {
-          "label": "Built for the field",
-          "value": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-        },
-        {
-          "label": "From cell to system",
-          "value": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-        }
-      ]
-    }
-  ],
-  "crossSell": {
-    "intro": {
-      "accentHeading": "Energy systems built around real operating conditions",
-      "heading": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-    },
-    "items": [
-      {
-        "image": {
-          "url": "https://placehold.co/1600x900/png?text=Image",
-          "alt": "Battery module and electrical interface",
-          "width": 1600,
-          "height": 900
-        },
-        "title": "Energy systems built around real operating conditions",
-        "cta": {
-          "cta": {
-            "label": "Explore the specification",
-            "href": "#"
-          }
-        }
-      },
-      {
-        "image": {
-          "url": "https://placehold.co/1600x900/png?text=Image",
-          "alt": "Battery module and electrical interface",
-          "width": 1600,
-          "height": 900
-        },
-        "title": "Designed for the constraints that shape delivery",
-        "cta": {
-          "cta": {
-            "label": "Explore the specification",
-            "href": "#"
-          }
-        }
-      },
-      {
-        "image": {
-          "url": "https://placehold.co/1600x900/png?text=Image",
-          "alt": "Battery module and electrical interface",
-          "width": 1600,
-          "height": 900
-        },
-        "title": "Performance data teams can use with confidence",
-        "cta": {
-          "cta": {
-            "label": "Explore the specification",
-            "href": "#"
-          }
-        }
-      }
-    ]
-  }
-}
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "models": {
-    "kind": "componentList",
-    "id": "components/battery-card/allentown",
-    "role": "battery-card",
-    "fields": {
-      "image": {
-        "kind": "media"
-      },
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      },
-      "specs": {
-        "kind": "componentList",
-        "id": "components/spec-pair/allentown",
-        "role": "spec-pair",
-        "fields": {
-          "label": {
-            "kind": "text"
-          },
-          "value": {
-            "kind": "text"
-          }
-        }
-      }
-    }
-  },
-  "crossSell": {
-    "kind": "component",
-    "id": "patterns/cross-sell/allentown",
-    "role": "cross-sell",
-    "fields": {
-      "intro": {
-        "kind": "component",
-        "id": "components/intro/allentown",
-        "role": "intro",
-        "fields": {
-          "accentHeading": {
-            "kind": "text"
-          },
-          "heading": {
-            "kind": "text"
-          },
-          "description": {
-            "kind": "richText"
-          }
-        }
-      },
-      "items": {
-        "kind": "componentList",
-        "id": "components/cross-sell-item/allentown",
-        "role": "cross-sell-item",
-        "fields": {
-          "image": {
-            "kind": "media"
-          },
-          "title": {
-            "kind": "text"
-          },
-          "cta": {
-            "kind": "component",
-            "id": "controls/button/allentown",
-            "role": "button",
-            "fields": {
-              "cta": {
-                "kind": "cta"
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
+import BatteryModelsAllentown from './battery-models-allentown.astro'
 ---
-<StructuralSection block="beta-battery-models-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+
+<BatteryModelsAllentown
+  theme="semi-light"
+  intro={{
+    accentHeading: 'Modular battery systems',
+    heading: 'Choose a proven starting point for your application',
+    description: 'Compare practical system formats, then work with our engineering team to configure the performance, integration and delivery details that matter.',
+  }}
+  ctas={{
+    primary: { label: 'Discuss your application', href: '/' },
+    secondary: { label: 'Compare specifications', href: '/' },
+  }}
+  models={[
+    {
+      image: { url: 'https://placehold.co/1600x900/png?text=Model+01', alt: 'Neutral wireframe placeholder for a compact battery module', width: 1600, height: 900 },
+      title: 'Compact module',
+      description: 'A space-conscious module for early integration work and applications with a tightly defined enclosure.',
+      specs: [
+        { label: 'Nominal voltage', value: '48 V' },
+        { label: 'Usable energy', value: '2.4 kWh' },
+        { label: 'Mass', value: '18 kg' },
+      ],
+    },
+    {
+      image: { url: 'https://placehold.co/1600x900/png?text=Model+02', alt: 'Neutral wireframe placeholder for a standard battery module', width: 1600, height: 900 },
+      title: 'Standard module',
+      description: 'A balanced format for teams that need repeatable energy delivery and straightforward mechanical integration.',
+      specs: [
+        { label: 'Nominal voltage', value: '96 V' },
+        { label: 'Usable energy', value: '5.1 kWh' },
+        { label: 'Mass', value: '34 kg' },
+      ],
+    },
+    {
+      image: { url: 'https://placehold.co/1600x900/png?text=Model+03', alt: 'Neutral wireframe placeholder for a high-capacity battery module', width: 1600, height: 900 },
+      title: 'High-capacity module',
+      description: 'A higher-energy option for systems that need longer operating windows without changing the integration approach.',
+      specs: [
+        { label: 'Nominal voltage', value: '144 V' },
+        { label: 'Usable energy', value: '9.8 kWh' },
+        { label: 'Mass', value: '58 kg' },
+      ],
+    },
+    {
+      image: { url: 'https://placehold.co/1600x900/png?text=Model+04', alt: 'Neutral wireframe placeholder for a scalable battery module', width: 1600, height: 900 },
+      title: 'Scalable platform',
+      description: 'A configurable foundation for applications moving from validated prototypes into repeatable deployment.',
+      specs: [
+        { label: 'Nominal voltage', value: '400 V' },
+        { label: 'Usable energy', value: '24 kWh' },
+        { label: 'Mass', value: '142 kg' },
+      ],
+    },
+  ]}
+  crossSell={{
+    label: 'Related options',
+    intro: {
+      heading: 'Find the support that fits your next decision',
+      description: 'Use these routes when you need deeper engineering input or a clearer path from a proven module to a configured system.',
+    },
+    items: [
+      {
+        image: { url: 'https://placehold.co/200x200/png?text=Support', alt: 'Neutral wireframe placeholder for engineering support', width: 200, height: 200 },
+        title: 'Engineering support',
+        cta: { cta: { label: 'Explore support', href: '/' } },
+      },
+      {
+        image: { url: 'https://placehold.co/200x200/png?text=Systems', alt: 'Neutral wireframe placeholder for configured energy systems', width: 200, height: 200 },
+        title: 'Configured systems',
+        cta: { cta: { label: 'Explore systems', href: '/' } },
+      },
+    ],
+  }}
+/>
