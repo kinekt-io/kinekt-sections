@@ -1,122 +1,31 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import ActionContactAllentown from './action-contact-allentown.astro'
 
-const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-  },
-  "image": {
-    "url": "https://placehold.co/1600x900/png?text=Image",
-    "alt": "Battery module and electrical interface",
-    "width": 1600,
-    "height": 900
-  },
-  "actionHeading": "Energy systems built around real operating conditions",
-  "actions": {
-    "primary": {
-      "label": "Talk to an expert",
-      "href": "#"
-    },
-    "secondary": {
-      "label": "View technical details",
-      "href": "#"
-    }
-  },
-  "actionNote": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-  "contactHeading": "Energy systems built around real operating conditions",
-  "contactMethods": [
-    {
-      "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "label": "System engineering",
-      "href": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-    },
-    {
-      "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "label": "Built for the field",
-      "href": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-    },
-    {
-      "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "label": "From cell to system",
-      "href": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-    }
-  ]
-}
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "image": {
-    "kind": "media"
-  },
-  "actionHeading": {
-    "kind": "text"
-  },
-  "actions": {
-    "kind": "ctaGroup"
-  },
-  "actionNote": {
-    "kind": "text"
-  },
-  "contactHeading": {
-    "kind": "text"
-  },
-  "contactMethods": {
-    "kind": "componentList",
-    "id": "components/contact-method/allentown",
-    "role": "contact-method",
-    "fields": {
-      "icon": {
-        "kind": "text"
-      },
-      "label": {
-        "kind": "text"
-      },
-      "href": {
-        "kind": "text"
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = undefined
 const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block="beta-action-contact-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<ActionContactAllentown
+  theme="light"
+  intro={{
+    accentHeading: '/ Engineering partnership',
+    heading: 'Turn an operating brief into a battery-system plan',
+    description: 'Bring the application, duty cycle and integration constraints. We will help turn them into a clear technical starting point.',
+  }}
+  image={{
+    url: `${catalogueBase}placeholders/case-study-observatory.webp`,
+    alt: 'Observatory dome supporting a field energy system',
+    width: 680,
+    height: 544,
+  }}
+  actionHeading="Start with a focused conversation"
+  actions={{
+    primary: { label: 'Talk to an engineer', href: '#' },
+    secondary: { label: 'Share a project brief', href: '#' },
+  }}
+  actionNote="We use the first call to understand the operating conditions, delivery window and technical questions that matter most."
+  contactHeading="Reach the right team directly"
+  contactMethods={[
+    { icon: '↗', label: 'Engineering enquiries', href: 'mailto:engineering@example.test' },
+    { icon: '↗', label: 'Project discussions', href: 'mailto:projects@example.test' },
+    { icon: '↗', label: 'Partnerships', href: 'mailto:partners@example.test' },
+  ]}
+/>

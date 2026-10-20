@@ -1,59 +1,86 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe.css'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "image": {
-    "kind": "media"
-  },
-  "actionHeading": {
-    "kind": "text"
-  },
-  "actions": {
-    "kind": "ctaGroup"
-  },
-  "actionNote": {
-    "kind": "text"
-  },
-  "contactHeading": {
-    "kind": "text"
-  },
-  "contactMethods": {
-    "kind": "componentList",
-    "id": "components/contact-method/allentown",
-    "role": "contact-method",
-    "fields": {
-      "icon": {
-        "kind": "text"
-      },
-      "label": {
-        "kind": "text"
-      },
-      "href": {
-        "kind": "text"
-      }
-    }
-  }
+interface Cta {
+  label: string
+  href: string
 }
+
+interface ContactMethod {
+  icon?: string
+  label: string
+  href: string
+}
+
+interface Props {
+  id?: string
+  theme?: 'light' | 'semi-light' | 'semi-dark' | 'dark'
+  intro: SectionIntroContent
+  image: Media
+  actionHeading: string
+  actions: Record<string, Cta | undefined>
+  actionNote?: string
+  contactHeading: string
+  contactMethods: ContactMethod[]
+  headingLevel?: 'h1' | 'h2' | 'h3'
+}
+
+const {
+  id,
+  theme = 'light',
+  intro,
+  image,
+  actionHeading,
+  actions,
+  actionNote,
+  contactHeading,
+  contactMethods,
+  headingLevel = 'h2',
+} = Astro.props as Props
+
+const actionList = Object.values(actions).filter((action): action is Cta => Boolean(action?.label && action.href))
 ---
-<StructuralSection block="beta-action-contact-allentown" fields={fields} {...props} />
+<section class="beta-action-contact-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="beta-action-contact-allentown__container">
+    <header class="beta-action-contact-allentown__header">
+      <SectionIntro intro={intro} headingLevel={headingLevel} />
+    </header>
+
+    <div class="beta-action-contact-allentown__body">
+      <KinektMedia class="beta-action-contact-allentown__media" imageClass="beta-action-contact-allentown__image" media={image} />
+
+      <div class="beta-action-contact-allentown__content">
+        <section class="beta-action-contact-allentown__action">
+          <h3 class="beta-action-contact-allentown__action-heading">{actionHeading}</h3>
+          {actionList.length > 0 && (
+            <nav class="beta-action-contact-allentown__actions" aria-label="Contact actions">
+              {actionList.map((action, index) => (
+                <Button href={action.href} label={action.label} style={index === 0 ? 'primary' : 'secondary'} />
+              ))}
+            </nav>
+          )}
+          {actionNote && <p class="beta-action-contact-allentown__action-note">{actionNote}</p>}
+        </section>
+
+        <section class="beta-action-contact-allentown__contact">
+          <h3 class="beta-action-contact-allentown__contact-heading">{contactHeading}</h3>
+          <ul class="beta-action-contact-allentown__contact-methods">
+            {contactMethods.map((method) => (
+              <li class="beta-action-contact-allentown__contact-method">
+                <a href={method.href}>
+                  {method.icon && <span class="beta-action-contact-allentown__contact-icon" aria-hidden="true">{method.icon}</span>}
+                  <span>{method.label}</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>

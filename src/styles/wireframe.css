@@ -1184,3 +1184,103 @@
 :where(.case-studies-allentown) .case-studies-allentown__header {
   margin-bottom: 0;
 }
+
+/*
+ * Action Contact is a conversion section, not a generic sequence of CMS
+ * fields. Its image establishes the editorial half; the adjacent action and
+ * direct-contact rail give each decision one clear next step.
+ */
+:where(.beta-action-contact-allentown[data-kinekt-section]) {
+  --action-contact-media-ratio: 4 / 5;
+  --action-contact-content-gap: clamp(2rem, 5vw, 5rem);
+  --action-contact-rail-space: clamp(1.5rem, 3vw, 2.5rem);
+  --action-contact-method-space: 1rem;
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__container {
+  gap: var(--kinekt-wireframe-editorial-gap);
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__header {
+  max-width: var(--kinekt-component-reading-width);
+  margin-bottom: 0;
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__body {
+  display: grid;
+  gap: var(--action-contact-content-gap);
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__image {
+  aspect-ratio: var(--action-contact-media-ratio);
+  object-fit: cover;
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__content {
+  display: grid;
+  align-content: start;
+  gap: var(--action-contact-rail-space);
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__action {
+  display: grid;
+  gap: 1.25rem;
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__action-heading,
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-heading {
+  max-width: 22ch;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.05;
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__actions {
+  margin-top: 0;
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__action-note {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--kinekt-component-muted);
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact {
+  display: grid;
+  gap: 1.25rem;
+  padding-top: var(--action-contact-rail-space);
+  border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-methods {
+  gap: 0;
+  margin: 0;
+  border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-method {
+  border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-method a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.8ch;
+  min-height: 3.25rem;
+  padding-block: var(--action-contact-method-space);
+  color: var(--kinekt-component-ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-icon {
+  color: var(--kinekt-component-muted);
+  font-family: var(--kinekt-component-mono);
+}
+
+@media (min-width: 50rem) {
+  :where(.beta-action-contact-allentown) .beta-action-contact-allentown__body {
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.8fr);
+    align-items: start;
+  }
+}
