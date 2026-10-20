@@ -24,6 +24,8 @@
   --kinekt-component-gap: var(--kinekt-section-gap, var(--kinekt-space-content, clamp(1.25rem, 3vw, 2rem)));
   --kinekt-component-radius: var(--kinekt-section-radius, var(--kinekt-radius, 0));
   --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kinekt-border-width, 1px));
+  --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, 0.56rem);
+  --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, 1.25rem);
   box-sizing: border-box;
   padding-block: var(--kinekt-component-block-space);
   color: var(--kinekt-component-ink);
@@ -125,9 +127,9 @@
   text-transform: uppercase;
 }
 
-:where([data-kinekt-section]) .section-intro__accent { margin-bottom: 0.45rem; }
-:where([data-kinekt-section]) .section-intro__heading { margin-bottom: 0; }
-:where([data-kinekt-section]) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-top: 1.25rem; color: var(--kinekt-component-muted); font-size: 1.05rem; line-height: 1.45; }
+:where([data-kinekt-section]) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); }
+:where([data-kinekt-section]) .section-intro__heading { margin: 0; }
+:where([data-kinekt-section]) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: 1.05rem; line-height: 1.45; }
 :where([data-kinekt-section]) .section-intro__description > :first-child { margin-top: 0; }
 :where([data-kinekt-section]) .section-intro__description > :last-child { margin-bottom: 0; }
 
