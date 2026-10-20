@@ -259,11 +259,10 @@ function previewFields(manifest, depth = 0) {
     }]
   }))
 }
-
-async function materialize(filename, source) {
+async function materialize(filename, source, force = false) {
   try {
     const existing = await readFile(filename, 'utf8')
-    if (!existing.includes('@generated structural section')) return
+    if (!force && !existing.includes('@generated structural section')) return
   } catch (error) {
     if (error?.code !== 'ENOENT') throw error
   }
@@ -284,14 +283,87 @@ for (const directory of await manifestDirectories(sections)) {
   const previewContent = sampleContent(manifest)
   const fields = previewFields(manifest)
   const previewIntro = previewContent.intro ?? { accentHeading: 'Section overview', heading: manifest.title, description: 'A reusable content structure for technical decisions.' }
+  const mediaMetricsTypes = `import type { Media, SectionIntro } from '../../../shared/content.js'
+import type { BetaTheme } from '../../../shared/payload.js'
+
+export interface MediaMetric {
+  label: string
+  value: { text: string; icon?: string }
+}
+
+export interface MediaMetricsAllentownContent {
+  theme: BetaTheme
+  intro: SectionIntro
+  metrics: MediaMetric[]
+  media?: Media | null
+}
+
+type DraftFields<T> = { [Field in keyof T]?: T[Field] | null }
+type PayloadID = string | number
+
+export interface PayloadMediaMetricsAllentownDocument extends DraftFields<Omit<MediaMetricsAllentownContent, 'intro' | 'metrics' | 'media'>> {
+  blockType?: string
+  intro?: { accentHeading?: string | null; heading?: string | null; description?: unknown } | null
+  metrics?: Array<{ label?: string | null; value?: { text?: string | null; icon?: string | null } | null }> | null
+  media?: (DraftFields<Media> & { id?: PayloadID }) | PayloadID | null
+}
+`
+  const mediaMetricsPayload = `import type { Block, CollectionSlug } from 'payload'
+import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
+import type { MediaMetricsAllentownContent, PayloadMediaMetricsAllentownDocument } from './${base}.types.js'
+
+const manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const
+
+export interface CreateMediaMetricsAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+
+export function createMediaMetricsAllentownBlock(options: CreateMediaMetricsAllentownBlockOptions = {}): Block {
+  return createManifestBlock(manifest, options)
+}
+
+export function mediaMetricsAllentownToProps(data: PayloadMediaMetricsAllentownDocument): MediaMetricsAllentownContent {
+  return manifestToProps(data) as MediaMetricsAllentownContent
+}
+`
+  const mediaMetricsPreview = `---
+import MediaMetricsAllentown from './${base}.astro'
+
+const content = {
+  theme: 'light',
+  intro: {
+    accentHeading: 'Operational proof points',
+    heading: 'The figures that support the next technical decision',
+    description: 'A concise view of measurable outcomes, engineering context and the system evidence teams need to compare options.'
+  },
+  metrics: [
+    { label: 'Validated test plans', value: { text: '24' } },
+    { label: 'Configured systems', value: { text: '180+' } },
+    { label: 'Operating range', value: { text: '−20 to 55 °C' } },
+    { label: 'Engineering support', value: { text: 'From concept to release' } }
+  ],
+  media: {
+    url: 'https://placehold.co/688x406/png?text=Supporting+media',
+    alt: 'Abstract grayscale placeholder for supporting media',
+    width: 688,
+    height: 406
+  }
+}
+---
+<MediaMetricsAllentown {...content} />
+`
   const previewCtas = previewContent.ctas ?? previewContent.ctaGroup
   const previewMedia = previewContent.media
 
   await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\nconst fields = ${JSON.stringify(fields, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(block)} fields={fields} {...props} />\n`)
-  await materialize(path.join(directory, `${base}.types.ts`), `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`)
-  await materialize(path.join(directory, `${base}.payload.ts`), `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`)
-  const previewSource = manifest.slug === 'proof-metrics-allentown'
-    ? `---
+  await materialize(path.join(directory, `${base}.types.ts`), manifest.slug === 'media-metrics-allentown'
+    ? mediaMetricsTypes
+    : `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`, manifest.slug === 'media-metrics-allentown')
+  await materialize(path.join(directory, `${base}.payload.ts`), manifest.slug === 'media-metrics-allentown'
+    ? mediaMetricsPayload
+    : `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`, manifest.slug === 'media-metrics-allentown')
+  const previewSource = manifest.slug === 'media-metrics-allentown'
+    ? mediaMetricsPreview
+    : manifest.slug === 'proof-metrics-allentown'
+      ? `---
 import ProofMetricsAllentown from './${base}.astro'
 
 const content = ${JSON.stringify(previewContent, null, 2)}
@@ -323,5 +395,5 @@ const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknow
 ---
 <StructuralSection block=${JSON.stringify(block)} intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
 `
-  await materialize(path.join(directory, `${base}.preview.astro`), previewSource)
+  await materialize(path.join(directory, `${base}.preview.astro`), previewSource, manifest.slug === 'media-metrics-allentown')
 }

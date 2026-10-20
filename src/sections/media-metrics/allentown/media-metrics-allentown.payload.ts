@@ -1,7 +1,6 @@
-// @generated structural section — source manifest remains the contract.
 import type { Block, CollectionSlug } from 'payload'
 import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
-import type { BetaMediaMetricsAllentownContent, PayloadBetaMediaMetricsAllentownDocument } from './media-metrics-allentown.types.js'
+import type { MediaMetricsAllentownContent, PayloadMediaMetricsAllentownDocument } from './media-metrics-allentown.types.js'
 
 const manifest = {
   "slug": "media-metrics-allentown",
@@ -31,23 +30,25 @@ const manifest = {
       "componentId": "components/result-item/allentown",
       "required": true,
       "localized": true,
-      "minItems": 1
+      "minItems": 4,
+      "maxItems": 4,
+      "description": "Four named metrics; each item presents a Label value before its heading."
     },
     "media": {
       "kind": "media",
       "required": false,
       "localized": true,
-      "description": "Optional editor-selected aside media, localized per locale."
+      "description": "Optional editor-selected supporting media, localized per locale."
     }
   }
 } as const
 
-export interface CreateBetaMediaMetricsAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateMediaMetricsAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
 
-export function createBetaMediaMetricsAllentownBlock(options: CreateBetaMediaMetricsAllentownBlockOptions = {}): Block {
+export function createMediaMetricsAllentownBlock(options: CreateMediaMetricsAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)
 }
 
-export function betaMediaMetricsAllentownToProps(data: PayloadBetaMediaMetricsAllentownDocument): BetaMediaMetricsAllentownContent {
-  return manifestToProps(data)
+export function mediaMetricsAllentownToProps(data: PayloadMediaMetricsAllentownDocument): MediaMetricsAllentownContent {
+  return manifestToProps(data) as MediaMetricsAllentownContent
 }

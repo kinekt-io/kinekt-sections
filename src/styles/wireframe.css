@@ -3206,3 +3206,93 @@
     align-items: start;
   }
 }
+
+/*
+ * Media Metrics Allentown (5240:414386) keeps the source hierarchy: an
+ * editorial introduction followed by an unboxed metric matrix and a media
+ * counterpart. Public aliases retain the geometry without prescribing a brand.
+ */
+:where(.media-metrics-allentown[data-kinekt-section]) {
+  --kinekt-section-media-metrics-inline-space: var(--kinekt-section-inline-space, clamp(1rem, 3vw, 2rem));
+  --kinekt-section-media-metrics-section-space: var(--kinekt-section-block-space, clamp(4rem, 8vw, 8.75rem));
+  --kinekt-section-media-metrics-content-width: var(--kinekt-section-content-width, 90rem);
+  --kinekt-section-media-metrics-intro-width: var(--kinekt-section-media-metrics-intro-width, 54rem);
+  --kinekt-section-media-metrics-major-gap: var(--kinekt-section-media-metrics-gap, clamp(3rem, 6vw, 5rem));
+  --kinekt-section-media-metrics-column-gap: var(--kinekt-section-media-metrics-column-gap, 4rem);
+  --kinekt-section-media-metrics-metric-column-gap: var(--kinekt-section-media-metrics-metric-column-gap, 2.56rem);
+  --kinekt-section-media-metrics-metric-row-gap: var(--kinekt-section-media-metrics-metric-row-gap, 4rem);
+  --kinekt-section-media-metrics-metric-width: var(--kinekt-section-media-metrics-metric-width, 18rem);
+  --kinekt-section-media-metrics-value-gap: var(--kinekt-section-media-metrics-value-gap, .8rem);
+  --kinekt-section-media-metrics-media-ratio: var(--kinekt-section-media-metrics-media-ratio, 688 / 406);
+  padding-block: var(--kinekt-section-media-metrics-section-space);
+}
+
+:where(.media-metrics-allentown) .media-metrics-allentown__container {
+  display: grid;
+  max-width: var(--kinekt-section-media-metrics-content-width);
+  gap: var(--kinekt-section-media-metrics-major-gap);
+  padding-inline: var(--kinekt-section-media-metrics-inline-space);
+}
+
+:where(.media-metrics-allentown) .media-metrics-allentown__intro {
+  max-width: var(--kinekt-section-media-metrics-intro-width);
+}
+
+:where(.media-metrics-allentown) .media-metrics-allentown__content {
+  display: grid;
+  gap: var(--kinekt-section-media-metrics-column-gap);
+  align-items: center;
+}
+
+:where(.media-metrics-allentown) .media-metrics-allentown__metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, var(--kinekt-section-media-metrics-metric-width)));
+  gap: var(--kinekt-section-media-metrics-metric-row-gap) var(--kinekt-section-media-metrics-metric-column-gap);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+}
+
+:where(.media-metrics-allentown) .media-metrics-allentown__metric > article {
+  display: grid;
+  align-content: start;
+  gap: var(--kinekt-section-media-metrics-value-gap);
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+:where(.media-metrics-allentown) :is(.media-metrics-allentown__metric-value, .media-metrics-allentown__metric-label) {
+  margin: 0;
+}
+
+:where(.media-metrics-allentown) .media-metrics-allentown__metric-value {
+  color: var(--kinekt-component-action);
+  font: 700 clamp(1.5rem, 2.2vw, 2rem)/1 var(--kinekt-component-font);
+  letter-spacing: -.035em;
+}
+
+:where(.media-metrics-allentown) .media-metrics-allentown__metric-label {
+  color: var(--kinekt-component-ink);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+:where(.media-metrics-allentown) .media-metrics-allentown__media,
+:where(.media-metrics-allentown) .media-metrics-allentown__image {
+  display: block;
+  width: 100%;
+}
+
+:where(.media-metrics-allentown) .media-metrics-allentown__image {
+  aspect-ratio: var(--kinekt-section-media-metrics-media-ratio);
+  object-fit: cover;
+}
+
+@media (min-width: 50rem) {
+  :where(.media-metrics-allentown) .media-metrics-allentown__content {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}

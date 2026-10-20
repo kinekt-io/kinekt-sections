@@ -1,54 +1,34 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe.css'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { MediaMetricsAllentownContent } from './media-metrics-allentown.types.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "metrics": {
-    "kind": "componentList",
-    "id": "components/result-item/allentown",
-    "role": "result-item",
-    "fields": {
-      "label": {
-        "kind": "text"
-      },
-      "value": {
-        "kind": "component",
-        "id": "atoms/label/allentown",
-        "role": "label",
-        "fields": {
-          "text": {
-            "kind": "text"
-          },
-          "icon": {
-            "kind": "text"
-          }
-        }
-      }
-    }
-  },
-  "media": {
-    "kind": "media"
-  }
+interface Props extends MediaMetricsAllentownContent {
+  headingLevel?: 'h1' | 'h2' | 'h3'
 }
+
+const { theme, intro, metrics, media, headingLevel = 'h2' } = Astro.props as Props
 ---
-<StructuralSection block="beta-media-metrics-allentown" fields={fields} {...props} />
+<section class="media-metrics-allentown" data-kinekt-section data-kinekt-theme={theme}>
+  <div class="media-metrics-allentown__container">
+    <header class="media-metrics-allentown__intro">
+      <SectionIntro intro={intro} headingLevel={headingLevel} />
+    </header>
+
+    <div class="media-metrics-allentown__content">
+      <ul class="media-metrics-allentown__metrics" aria-label="Key metrics">
+        {metrics.map((metric) => (
+          <li class="media-metrics-allentown__metric">
+            <article>
+              <p class="media-metrics-allentown__metric-value">{metric.value.text}</p>
+              <h5 class="media-metrics-allentown__metric-label">{metric.label}</h5>
+            </article>
+          </li>
+        ))}
+      </ul>
+
+      {media && <KinektMedia class="media-metrics-allentown__media" imageClass="media-metrics-allentown__image" media={media} />}
+    </div>
+  </div>
+</section>
