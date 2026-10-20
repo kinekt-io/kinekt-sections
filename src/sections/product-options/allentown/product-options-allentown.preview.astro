@@ -1,128 +1,53 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import ProductOptionsAllentown from './product-options-allentown.astro'
+
+const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
+const placeholder = (name: string, alt: string) => ({
+  url: `${catalogueBase}placeholders/${name}`,
+  alt,
+  width: 144,
+  height: 144,
+})
 
 const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  theme: 'light' as const,
+  intro: {
+    accentHeading: 'Product options',
+    heading: 'Choose the configuration that fits your application.',
+    description: 'Compare the core options, then share your operating context to start a focused technical conversation.',
   },
-  "options": [
-    {
-      "image": {
-        "url": "https://placehold.co/1600x900/png?text=Image",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "title": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "benefits": [
-        "Validated operating range",
-        "Traceable test data",
-        "Integration-ready documentation"
-      ]
-    },
-    {
-      "image": {
-        "url": "https://placehold.co/1600x900/png?text=Image",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "title": "Designed for the constraints that shape delivery",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "benefits": [
-        "Validated operating range",
-        "Traceable test data",
-        "Integration-ready documentation"
-      ]
-    },
-    {
-      "image": {
-        "url": "https://placehold.co/1600x900/png?text=Image",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "title": "Performance data teams can use with confidence",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "benefits": [
-        "Validated operating range",
-        "Traceable test data",
-        "Integration-ready documentation"
-      ]
-    }
+  ctas: {
+    primary: { label: 'Discuss a project', href: '#' },
+    secondary: { label: 'View specifications', href: '#' },
+  },
+  options: [
+    { image: placeholder('case-study-observatory.webp', 'Abstract technical placeholder'), title: 'Energy capacity', description: 'Select a capacity range that supports the required operating window.', benefits: ['Defined usable energy', 'Clear duty-cycle fit', 'Documented assumptions'] },
+    { image: placeholder('case-study-towers.webp', 'Abstract technical placeholder'), title: 'Power delivery', description: 'Match peak and continuous output to the equipment and load profile.', benefits: ['Validated power range', 'Thermal considerations', 'Integration-ready data'] },
+    { image: placeholder('case-study-buses.webp', 'Abstract technical placeholder'), title: 'Mechanical format', description: 'Choose a proven enclosure approach for the available installation space.', benefits: ['Practical packaging', 'Serviceable layout', 'Environmental protection'] },
+    { image: placeholder('case-study-motorcycle.webp', 'Abstract technical placeholder'), title: 'Control interface', description: 'Connect the system to the controls and monitoring already in use.', benefits: ['Documented signals', 'Clear system status', 'Supported integration'] },
+    { image: placeholder('hero-trinity-street.webp', 'Abstract technical placeholder'), title: 'Operating environment', description: 'Adapt the specification for temperature, vibration, and duty conditions.', benefits: ['Defined limits', 'Relevant validation', 'Traceable evidence'] },
+    { image: placeholder('pexels-industrial-building.webp', 'Abstract technical placeholder'), title: 'Project support', description: 'Plan the reviews and documentation needed to make the next decision.', benefits: ['Focused technical review', 'Clear deliverables', 'Named next steps'] },
   ],
-  "form": {
-    "name": "Project enquiry",
-    "description": "A governed form reference for product, engineering and partnership enquiries."
-  }
+  form: { name: 'Project enquiry' },
 }
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "options": {
-    "kind": "componentList",
-    "id": "components/option-card/allentown",
-    "role": "option-card",
-    "fields": {
-      "image": {
-        "kind": "media"
-      },
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "textarea"
-      },
-      "benefits": {
-        "kind": "featureItems"
-      }
-    }
-  },
-  "form": {
-    "kind": "formReference"
-  }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block="beta-product-options-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<ProductOptionsAllentown {...content}>
+  <form slot="form" class="product-options-allentown__form" action="#" method="post">
+    <fieldset>
+      <legend>Project details</legend>
+      <label>
+        Name
+        <input name="name" autocomplete="name" required />
+      </label>
+      <label>
+        Work email
+        <input name="email" type="email" autocomplete="email" required />
+      </label>
+      <label>
+        Project summary
+        <textarea name="summary" rows="4"></textarea>
+      </label>
+    </fieldset>
+    <button type="submit">Send enquiry</button>
+  </form>
+</ProductOptionsAllentown>

@@ -1,7 +1,6 @@
-// @generated structural section — source manifest remains the contract.
 import type { Block, CollectionSlug } from 'payload'
 import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
-import type { BetaProductOptionsAllentownContent, PayloadBetaProductOptionsAllentownDocument } from './product-options-allentown.types.js'
+import type { ProductOptionsAllentownContent, PayloadProductOptionsAllentownDocument } from './product-options-allentown.types.js'
 
 const manifest = {
   "slug": "product-options-allentown",
@@ -26,6 +25,12 @@ const manifest = {
       "required": true,
       "localized": true
     },
+    "ctas": {
+      "kind": "ctaGroup",
+      "required": false,
+      "localized": true,
+      "description": "Optional primary and secondary actions below the introduction."
+    },
     "options": {
       "kind": "componentList",
       "componentId": "components/option-card/allentown",
@@ -48,6 +53,6 @@ export function createBetaProductOptionsAllentownBlock(options: CreateBetaProduc
   return createManifestBlock(manifest, options)
 }
 
-export function betaProductOptionsAllentownToProps(data: PayloadBetaProductOptionsAllentownDocument): BetaProductOptionsAllentownContent {
-  return manifestToProps(data)
+export function betaProductOptionsAllentownToProps(data: PayloadProductOptionsAllentownDocument): ProductOptionsAllentownContent {
+  return manifestToProps(data) as ProductOptionsAllentownContent
 }

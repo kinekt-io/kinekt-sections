@@ -2612,6 +2612,12 @@
         "required": true,
         "localized": true
       },
+      "ctas": {
+        "kind": "ctaGroup",
+        "required": false,
+        "localized": true,
+        "description": "Optional primary and secondary actions below the introduction."
+      },
       "options": {
         "kind": "componentList",
         "componentId": "components/option-card/allentown",
@@ -2647,7 +2653,7 @@
     "role": "proof-metrics",
     "variation": "allentown",
     "title": "Proof Metrics Allentown",
-    "description": "A reusable evidence section with a localized introduction, one or more result metrics, optional proof media, and a CTA callout.",
+    "description": "A reusable evidence section with an introduction, four proof values, wide proof media, and a labelled CTA callout.",
     "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412607&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -2675,8 +2681,9 @@
         "componentId": "components/result-item/allentown",
         "required": true,
         "localized": true,
-        "minItems": 1,
-        "description": "One or more named metrics; each metric has a required label and a localized Label value."
+        "minItems": 4,
+        "maxItems": 4,
+        "description": "Four named proof values; each metric has a required label and a localized Label value."
       },
       "media": {
         "kind": "media",

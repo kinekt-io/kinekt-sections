@@ -2978,3 +2978,231 @@
     justify-self: end;
   }
 }
+
+/*
+ * Product Options Allentown — Section - Product and cell options
+ * (5240:411550). The layout is intentionally open: cards are content groups,
+ * not boxed UI, and the selected form remains an external form embed.
+ */
+:where(.product-options-allentown[data-kinekt-section]) {
+  --kinekt-section-product-options-outer-space: var(--kinekt-wireframe-section-space-m-xl);
+  --kinekt-section-product-options-content-width: var(--kinekt-wireframe-layout-d-content-width);
+  --kinekt-section-product-options-inline-space: var(--kinekt-wireframe-layout-m-section-gutter);
+  --kinekt-section-product-options-intro-width: var(--kinekt-wireframe-layout-d-width-l);
+  --kinekt-section-product-options-major-gap: var(--kinekt-wireframe-section-space-m-xl);
+  --kinekt-section-product-options-action-gap: var(--kinekt-wireframe-space-m-xl);
+  --kinekt-section-product-options-grid-column-gap: var(--kinekt-wireframe-space-m-xl);
+  --kinekt-section-product-options-grid-row-gap: var(--kinekt-wireframe-section-space-m-l);
+  --kinekt-section-product-options-media-size: 7rem;
+  --kinekt-section-product-options-card-gap: var(--kinekt-wireframe-space-m-xl);
+  --kinekt-section-product-options-card-title-size: var(--kinekt-wireframe-heading-3-size);
+  --kinekt-section-product-options-card-description-size: var(--kinekt-wireframe-text-l-size);
+  --kinekt-section-product-options-benefit-gap: var(--kinekt-wireframe-space-m-s);
+  --kinekt-section-product-options-form-intro-width: var(--kinekt-wireframe-layout-d-width-m);
+  --kinekt-section-product-options-form-gap: var(--kinekt-wireframe-section-space-m-xl);
+  --kinekt-section-product-options-control-gap: var(--kinekt-wireframe-space-m-s);
+  --kinekt-section-product-options-control-padding: var(--kinekt-wireframe-space-m-s);
+  --kinekt-component-block-space: var(--kinekt-section-product-options-outer-space);
+  --kinekt-component-content-width: var(--kinekt-section-product-options-content-width);
+  --kinekt-component-inline-space: var(--kinekt-section-product-options-inline-space);
+  --kinekt-component-gap: var(--kinekt-section-product-options-major-gap);
+  --kinekt-component-reading-width: var(--kinekt-section-product-options-intro-width);
+}
+
+:where(.product-options-allentown) .product-options-allentown__container {
+  gap: var(--kinekt-section-product-options-major-gap);
+}
+
+:where(.product-options-allentown) .product-options-allentown__intro {
+  display: grid;
+  max-width: var(--kinekt-section-product-options-intro-width);
+}
+
+:where(.product-options-allentown) .product-options-allentown__intro .section-intro__description {
+  max-width: none;
+}
+
+:where(.product-options-allentown) .product-options-allentown__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kinekt-section-product-options-action-gap);
+  margin-block-start: var(--kinekt-section-product-options-action-gap);
+}
+
+:where(.product-options-allentown) .product-options-allentown__divider {
+  width: 100%;
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where(.product-options-allentown) .product-options-allentown__options {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--kinekt-section-product-options-grid-row-gap) var(--kinekt-section-product-options-grid-column-gap);
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  list-style: none;
+}
+
+:where(.product-options-allentown) .product-options-allentown__option > article {
+  display: grid;
+  gap: var(--kinekt-section-product-options-card-gap);
+  min-height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+:where(.product-options-allentown) .product-options-allentown__media {
+  width: var(--kinekt-section-product-options-media-size);
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+:where(.product-options-allentown) .product-options-allentown__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: var(--kinekt-component-media-filter);
+}
+
+:where(.product-options-allentown) .product-options-allentown__option-content {
+  display: grid;
+  align-content: start;
+  gap: var(--kinekt-section-product-options-card-gap);
+}
+
+:where(.product-options-allentown) .product-options-allentown__title {
+  font-size: var(--kinekt-section-product-options-card-title-size);
+}
+
+:where(.product-options-allentown) .product-options-allentown__description {
+  margin: 0;
+  color: var(--kinekt-component-muted);
+  font-size: var(--kinekt-section-product-options-card-description-size);
+  line-height: var(--kinekt-component-text-l-line-height);
+}
+
+:where(.product-options-allentown) .product-options-allentown__benefits {
+  display: grid;
+  gap: var(--kinekt-section-product-options-benefit-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.product-options-allentown) .product-options-allentown__benefits li {
+  display: grid;
+  grid-template-columns: 1em minmax(0, 1fr);
+  gap: var(--kinekt-section-product-options-benefit-gap);
+  color: var(--kinekt-component-muted);
+  font-size: var(--kinekt-component-text-m-size);
+  line-height: var(--kinekt-component-text-m-line-height);
+}
+
+:where(.product-options-allentown) .product-options-allentown__benefits li::before {
+  color: var(--kinekt-component-ink);
+  content: '✓';
+}
+
+:where(.product-options-allentown) .product-options-allentown__form-section {
+  display: grid;
+  gap: var(--kinekt-section-product-options-form-gap);
+}
+
+:where(.product-options-allentown) .product-options-allentown__form-intro {
+  display: grid;
+  gap: var(--kinekt-component-intro-description-gap);
+  max-width: var(--kinekt-section-product-options-form-intro-width);
+}
+
+:where(.product-options-allentown) .product-options-allentown__form-intro p {
+  margin: 0;
+  color: var(--kinekt-component-muted);
+  font-size: var(--kinekt-component-text-l-size);
+}
+
+:where(.product-options-allentown) .product-options-allentown__form-embed,
+:where(.product-options-allentown) .product-options-allentown__form,
+:where(.product-options-allentown) .product-options-allentown__form fieldset {
+  display: grid;
+  gap: var(--kinekt-section-product-options-control-gap);
+}
+
+:where(.product-options-allentown) .product-options-allentown__form fieldset {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+:where(.product-options-allentown) .product-options-allentown__form legend {
+  padding: 0;
+  font-size: var(--kinekt-component-text-l-size);
+  font-weight: 500;
+}
+
+:where(.product-options-allentown) .product-options-allentown__form label {
+  display: grid;
+  gap: var(--kinekt-section-product-options-control-gap);
+  font-size: var(--kinekt-component-text-m-size);
+}
+
+:where(.product-options-allentown) .product-options-allentown__form :is(input, textarea, select) {
+  width: 100%;
+  padding: var(--kinekt-section-product-options-control-padding);
+  border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+  border-radius: 0;
+  color: var(--kinekt-component-ink);
+  background: var(--kinekt-component-surface);
+}
+
+:where(.product-options-allentown) .product-options-allentown__form textarea {
+  min-height: var(--kinekt-wireframe-section-space-m);
+  resize: vertical;
+}
+
+:where(.product-options-allentown) .product-options-allentown__form button {
+  justify-self: start;
+  padding: var(--kinekt-section-product-options-control-padding) var(--kinekt-wireframe-space-m);
+  border: var(--kinekt-component-border-width) solid var(--kinekt-component-action);
+  border-radius: 0;
+  color: var(--kinekt-component-action-text);
+  background: var(--kinekt-component-action);
+}
+
+@media (min-width: 50rem) {
+  :where(.product-options-allentown[data-kinekt-section]) {
+    --kinekt-section-product-options-outer-space: var(--kinekt-wireframe-layout-d-section-gutter);
+    --kinekt-section-product-options-inline-space: 0;
+    --kinekt-section-product-options-major-gap: var(--kinekt-wireframe-section-space-d-xl);
+    --kinekt-section-product-options-action-gap: 2.56rem;
+    --kinekt-section-product-options-grid-column-gap: var(--kinekt-wireframe-space-d-xxl);
+    --kinekt-section-product-options-grid-row-gap: var(--kinekt-wireframe-section-space-d-l);
+    --kinekt-section-product-options-media-size: var(--kinekt-wireframe-layout-d-width-xs);
+    --kinekt-section-product-options-card-gap: var(--kinekt-wireframe-space-d-l);
+    --kinekt-section-product-options-card-title-size: 2rem;
+    --kinekt-section-product-options-card-description-size: var(--kinekt-wireframe-text-l-size);
+    --kinekt-section-product-options-benefit-gap: var(--kinekt-wireframe-space-d-s);
+    --kinekt-section-product-options-form-gap: var(--kinekt-wireframe-section-space-d-xl);
+    --kinekt-section-product-options-control-gap: var(--kinekt-wireframe-space-d-s);
+    --kinekt-section-product-options-control-padding: var(--kinekt-wireframe-space-d-s);
+  }
+
+  :where(.product-options-allentown) .product-options-allentown__options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  :where(.product-options-allentown) .product-options-allentown__option > article {
+    grid-template-columns: 1fr;
+  }
+
+  :where(.product-options-allentown) .product-options-allentown__form-section {
+    grid-template-columns: minmax(0, var(--kinekt-section-product-options-form-intro-width)) minmax(0, 1fr);
+    align-items: start;
+  }
+}
