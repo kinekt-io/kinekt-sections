@@ -1,10 +1,11 @@
 ---
+import '../../../styles/wireframe.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { MediaFeatureListContent } from './media-feature-list-allentown.types.js'
 interface Props extends MediaFeatureListContent { headingLevel?: 'h1' | 'h2' | 'h3'; mediaLoading?: 'eager' | 'lazy' }
 const { theme, direction, intro, label, media, features, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 ---
-<section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-theme={theme} data-kinekt-direction={direction}>
+<section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-section data-kinekt-theme={theme} data-kinekt-direction={direction}>
   <div class="media-feature-list__container">
     <div class="media-feature-list__content">
       <header class="media-feature-list__header"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>

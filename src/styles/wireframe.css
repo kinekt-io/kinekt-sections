@@ -306,6 +306,10 @@
     order: 2;
   }
 
+  :where([data-kinekt-section][data-kinekt-direction='mediaLeft']) > [class$='__container'] > [class$='__media'] {
+    order: -1;
+  }
+
   :where([data-kinekt-section]) [class$='__cards'] {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -326,6 +330,34 @@
 
   :where([data-kinekt-section]) > [class$='__container']:has(> dl) > :is([class$='__header'], [class$='__intro']) {
     grid-row: span 2;
+  }
+  /*
+   * Structural sections emit their editorial header, content and media as
+   * siblings. Keep the copy in one column and let the image occupy the
+   * opposing column; automatic placement would otherwise put the list beside
+   * the header and drop the image beneath it.
+   */
+  :where([data-kinekt-section]) > [class$='__container']:has(> [class$='__header']):has(> [class$='__media']) > [class$='__header'] {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  :where([data-kinekt-section]) > [class$='__container']:has(> [class$='__header']):has(> [class$='__media']) > :not([class$='__header'], [class$='__media']) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  :where([data-kinekt-section]) > [class$='__container']:has(> [class$='__header']):has(> [class$='__media']) > [class$='__media'] {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  :where([data-kinekt-section][data-kinekt-direction='mediaLeft']) > [class$='__container']:has(> [class$='__header']):has(> [class$='__media']) > [class$='__media'] {
+    grid-column: 1;
+  }
+
+  :where([data-kinekt-section][data-kinekt-direction='mediaLeft']) > [class$='__container']:has(> [class$='__header']):has(> [class$='__media']) > :not([class$='__media']) {
+    grid-column: 2;
   }
 }
 

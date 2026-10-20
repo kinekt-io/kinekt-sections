@@ -1,11 +1,12 @@
 ---
+import '../../../styles/wireframe.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import type { ReadMoreContent } from './read-more-allentown.types.js'
 interface Props extends ReadMoreContent { headingLevel?: 'h1' | 'h2' | 'h3'; mediaLoading?: 'eager' | 'lazy' }
 const { theme, intro, ctas, media, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 ---
-<section class="read-more read-more--allentown" data-kinekt-theme={theme}>
+<section class="read-more read-more--allentown" data-kinekt-section data-kinekt-theme={theme}>
   <div class="read-more__container">
     <header class="read-more__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />

@@ -1,11 +1,12 @@
 ---
+import '../../../styles/wireframe.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import type { OutputCardGridContent } from './output-card-grid-allentown.types.js'
 interface Props extends OutputCardGridContent {headingLevel?:'h1'|'h2'|'h3'}
 const {theme,intro,ctas,cards,headingLevel='h2'}=Astro.props
 ---
-<section class="output-card-grid output-card-grid--allentown" data-kinekt-theme={theme}>
+<section class="output-card-grid output-card-grid--allentown" data-kinekt-section data-kinekt-theme={theme}>
   <div class="output-card-grid__container">
     <header class="output-card-grid__header">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
