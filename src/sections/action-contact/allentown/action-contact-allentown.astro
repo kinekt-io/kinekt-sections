@@ -55,14 +55,18 @@ const actionList = Object.values(actions).filter((action): action is Cta => Bool
         <div class="beta-action-contact-allentown__details">
           <section class="beta-action-contact-allentown__action">
             <h3 class="beta-action-contact-allentown__action-heading">{actionHeading}</h3>
-            {actionList.length > 0 && (
-              <nav class="beta-action-contact-allentown__actions" aria-label="Contact actions">
-                {actionList.map((action, index) => (
-                  <Button href={action.href} label={action.label} style={index === 0 ? 'primary' : 'secondary'} />
-                ))}
-              </nav>
+            {(actionList.length > 0 || actionNote) && (
+              <div class="beta-action-contact-allentown__action-controls">
+                {actionList.length > 0 && (
+                  <nav class="beta-action-contact-allentown__actions" aria-label="Contact actions">
+                    {actionList.map((action, index) => (
+                      <Button href={action.href} label={action.label} style={index === 0 ? 'primary' : 'secondary'} />
+                    ))}
+                  </nav>
+                )}
+                {actionNote && <p class="beta-action-contact-allentown__action-note">{actionNote}</p>}
+              </div>
             )}
-            {actionNote && <p class="beta-action-contact-allentown__action-note">{actionNote}</p>}
           </section>
 
           <section class="beta-action-contact-allentown__contact">

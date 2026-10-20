@@ -1191,15 +1191,16 @@
  * direct-contact rail give each decision one clear next step.
  */
 :where(.beta-action-contact-allentown[data-kinekt-section]) {
-  --action-contact-media-ratio: 3 / 4;
+  --action-contact-media-ratio: 4 / 5;
   --action-contact-media-width: var(--kinekt-section-media-width, 26.4375rem);
   --action-contact-content-width: var(--kinekt-section-content-width, 36rem);
   --action-contact-column-gap: var(--kinekt-section-column-gap, var(--section-l, 5rem));
-  --action-contact-content-gap: var(--kinekt-section-content-gap, var(--space-xxl, 2.441rem));
+  --action-contact-content-gap: var(--kinekt-section-content-gap, var(--space-xl, 1.953rem));
   --action-contact-header-gap: var(--kinekt-section-header-gap, var(--space-m, 1.25rem));
   --action-contact-accent-gap: var(--kinekt-section-accent-gap, var(--space-xs, 0.56rem));
-  --action-contact-detail-gap: var(--kinekt-section-detail-gap, var(--space-xl, 1.953rem));
+  --action-contact-detail-gap: var(--kinekt-section-detail-gap, var(--space-xxl, 2.441rem));
   --action-contact-action-gap: var(--kinekt-section-action-gap, var(--space-l, 1.5625rem));
+  --action-contact-control-gap: var(--kinekt-section-control-gap, var(--space-s, 1rem));
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__container {
@@ -1275,6 +1276,13 @@
   gap: var(--action-contact-action-gap);
 }
 
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__action-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--action-contact-control-gap);
+}
+
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__action-heading {
   max-width: 22ch;
   font-size: 1.25rem;
@@ -1304,8 +1312,8 @@
 }
 
 :where(.beta-action-contact-allentown) ul.beta-action-contact-allentown__contact-methods {
-  display: block;
-  gap: 0;
+  display: grid;
+  gap: var(--action-contact-control-gap);
   width: 100%;
   margin: 0;
   border: 0;
