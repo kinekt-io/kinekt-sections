@@ -1,117 +1,29 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import HeroTodosSantos from './hero-todos-santos.astro'
 
-const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "/ Configurable by design",
-    "heading": "Energy storage, made application-ready",
-    "description": "Start from proven modules and configure the system around your application, operating environment and delivery plan."
-  },
-  "ctas": {
-    "primary": {
-      "label": "Talk to an expert",
-      "href": "#"
-    },
-    "secondary": {
-      "label": "Explore the platform",
-      "href": "#"
-    }
-  },
-  "image": {
-    "url": "catalogue-asset:hero-todos-santos-towers.webp",
-    "alt": "Urban towers supplied by an integrated energy system",
-    "width": 1600,
-    "height": 900
-  },
-  "featureHeading": "Designed for real-world operation",
-  "features": [
-    {
-      "label": "Voltage range",
-      "value": "24–800 V"
-    },
-    {
-      "label": "Operating temperature",
-      "value": "−20 to 55 °C"
-    },
-    {
-      "label": "Integration support",
-      "value": "From prototype to production"
-    }
-  ]
-}
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "featureHeading": {
-    "kind": "text"
-  },
-  "features": {
-    "kind": "componentList",
-    "id": "components/feature-pair/allentown",
-    "role": "feature-pair",
-    "fields": {
-      "label": {
-        "kind": "text"
-      },
-      "value": {
-        "kind": "text"
-      }
-    }
-  },
-  "ctas": {
-    "kind": "ctaGroup"
-  },
-  "image": {
-    "kind": "media"
-  }
-}
-const intro = {
-  "accentHeading": "/ Configurable by design",
-  "heading": "Energy storage, made application-ready",
-  "description": "Start from proven modules and configure the system around your application, operating environment and delivery plan."
-}
-const ctas = {
-  "primary": {
-    "label": "Talk to an expert",
-    "href": "#"
-  },
-  "secondary": {
-    "label": "Explore the platform",
-    "href": "#"
-  }
-}
-const media = undefined
 const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block="beta-hero-todos-santos" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<HeroTodosSantos
+  theme="dark"
+  intro={{
+    accentHeading: 'System catalogue',
+    heading: 'Energy storage, made application-ready',
+    description: 'A configurable energy platform for teams balancing electrical requirements, packaging constraints and production-ready integration.',
+  }}
+  featureHeading="Designed for real-world operation"
+  features={[
+    { label: 'Voltage range', value: '24–800 V' },
+    { label: 'Operating temperature', value: '−20 to 55 °C' },
+    { label: 'Integration support', value: 'From prototype to production' },
+  ]}
+  ctas={{
+    primary: { label: 'Review technical data', href: '/' },
+    secondary: { label: 'Explore configurations', href: '/' },
+  }}
+  image={{
+    url: `${catalogueBase}placeholders/hero-todos-santos-towers.webp`,
+    alt: 'Industrial energy system modules in an urban setting',
+    width: 1600,
+    height: 900,
+  }}
+/>

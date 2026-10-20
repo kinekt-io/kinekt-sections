@@ -1,50 +1,66 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe.css'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import type { Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { isSafeWebUrl } from '../../../urls.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "featureHeading": {
-    "kind": "text"
-  },
-  "features": {
-    "kind": "componentList",
-    "id": "components/feature-pair/allentown",
-    "role": "feature-pair",
-    "fields": {
-      "label": {
-        "kind": "text"
-      },
-      "value": {
-        "kind": "text"
-      }
-    }
-  },
-  "ctas": {
-    "kind": "ctaGroup"
-  },
-  "image": {
-    "kind": "media"
-  }
+interface Feature {
+  label: string
+  value: string
 }
+
+interface Cta {
+  label: string
+  href: string
+}
+
+interface Props {
+  id?: string
+  theme?: 'light' | 'semi-light' | 'semi-dark' | 'dark'
+  headingLevel?: 'h1' | 'h2'
+  intro: SectionIntroContent
+  featureHeading?: string
+  features?: Feature[]
+  ctas?: { primary?: Cta; secondary?: Cta }
+  image: Media
+  mobileImage?: Media
+}
+
+function assertSafeImage(image: Media, name: string): void {
+  if (!isSafeWebUrl(image.url)) throw new Error(`${name}.url must be an HTTP(S) or root-relative URL.`)
+  if (image.fallbackUrl !== undefined && !isSafeWebUrl(image.fallbackUrl)) throw new Error(`${name}.fallbackUrl must be an HTTP(S) or root-relative URL.`)
+  if (!Number.isSafeInteger(image.width) || image.width <= 0) throw new Error(`${name}.width must be a positive integer.`)
+  if (!Number.isSafeInteger(image.height) || image.height <= 0) throw new Error(`${name}.height must be a positive integer.`)
+}
+
+const { id, theme = 'dark', headingLevel = 'h1', intro, featureHeading, features = [], ctas, image, mobileImage } = Astro.props
+for (const cta of [ctas?.primary, ctas?.secondary]) if (cta && !isSafeWebUrl(cta.href)) throw new Error('ctas must use an HTTP(S) or root-relative URL.')
+assertSafeImage(image, 'image')
+if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 ---
-<StructuralSection block="beta-hero-todos-santos" fields={fields} {...props} />
+<section class="hero-todos-santos" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="hero-todos-santos__container">
+    <div class="hero-todos-santos__content">
+      <header class="hero-todos-santos__header">
+        <SectionIntro intro={intro} headingLevel={headingLevel} />
+      </header>
+      {featureHeading && features.length > 0 && (
+        <section class="hero-todos-santos__features" aria-labelledby={`${id ?? 'hero-todos-santos'}-features-heading`}>
+          <h2 class="hero-todos-santos__features-heading" id={`${id ?? 'hero-todos-santos'}-features-heading`}>{featureHeading}</h2>
+          <dl class="hero-todos-santos__feature-list">
+            {features.map((feature) => <div class="hero-todos-santos__feature"><dt>{feature.label}</dt><dd>{feature.value}</dd></div>)}
+          </dl>
+        </section>
+      )}
+      {(ctas?.primary || ctas?.secondary) && (
+        <nav class="hero-todos-santos__actions" aria-label="Hero actions">
+          {ctas.primary && <Button class="hero-todos-santos__action hero-todos-santos__action--primary" href={ctas.primary.href} label={ctas.primary.label} />}
+          {ctas.secondary && <Button class="hero-todos-santos__action hero-todos-santos__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="clear" />}
+        </nav>
+      )}
+    </div>
+    <KinektMedia class="hero-todos-santos__media" imageClass="hero-todos-santos__image" media={image} mobileMedia={mobileImage} loading="eager" fetchpriority="high" />
+  </div>
+</section>

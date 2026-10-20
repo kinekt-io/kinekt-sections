@@ -944,6 +944,130 @@
   }
 }
 
+:where(.hero-todos-santos) {
+  --hero-todos-santos-content-width: var(
+    --kinekt-section-hero-todos-santos-content-width,
+    clamp(
+      var(--kinekt-wireframe-layout-m-content-width),
+      100%,
+      var(--kinekt-wireframe-layout-d-width-m)
+    )
+  );
+  --hero-todos-santos-block-space: var(
+    --kinekt-section-hero-todos-santos-block-space,
+    clamp(
+      var(--kinekt-wireframe-section-space-m),
+      8.14vw,
+      var(--kinekt-component-inline-space)
+    )
+  );
+  --hero-todos-santos-content-gap: var(
+    --kinekt-section-hero-todos-santos-content-gap,
+    var(--kinekt-wireframe-section-space-m)
+  );
+  --hero-todos-santos-intro-gap: var(
+    --kinekt-section-hero-todos-santos-intro-gap,
+    var(--kinekt-wireframe-section-space-xs)
+  );
+  --hero-todos-santos-feature-gap: var(
+    --kinekt-section-hero-todos-santos-feature-gap,
+    var(--kinekt-wireframe-space-xl)
+  );
+  --hero-todos-santos-feature-row-gap: var(
+    --kinekt-section-hero-todos-santos-feature-row-gap,
+    var(--kinekt-wireframe-space-xs)
+  );
+  --hero-todos-santos-media-height: var(
+    --kinekt-section-hero-todos-santos-media-height,
+    38.4375rem
+  );
+  padding-block: var(--hero-todos-santos-block-space);
+}
+
+:where(.hero-todos-santos) .hero-todos-santos__container {
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--kinekt-wireframe-section-space-m);
+  max-inline-size: var(--kinekt-component-content-width);
+}
+
+:where(.hero-todos-santos) .hero-todos-santos__content {
+  display: grid;
+  gap: var(--hero-todos-santos-content-gap);
+  max-inline-size: var(--hero-todos-santos-content-width);
+  padding: 0;
+}
+
+:where(.hero-todos-santos) .hero-todos-santos__header {
+  max-inline-size: none;
+  padding: 0;
+}
+
+:where(.hero-todos-santos) .hero-todos-santos__features {
+  display: grid;
+  gap: var(--hero-todos-santos-feature-gap);
+}
+
+:where(.hero-todos-santos) .hero-todos-santos__features-heading {
+  font-size: var(--kinekt-component-heading-4-size);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+:where(.hero-todos-santos) .hero-todos-santos__feature-list {
+  display: grid;
+  gap: var(--hero-todos-santos-feature-row-gap);
+}
+
+:where(.hero-todos-santos) .hero-todos-santos__feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--kinekt-wireframe-space-xxs);
+  padding-block-end: var(--hero-todos-santos-feature-row-gap);
+  border-block-end: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where(.hero-todos-santos) .hero-todos-santos__feature :is(dt, dd) {
+  margin: 0;
+}
+
+:where(.hero-todos-santos) .hero-todos-santos__feature dd {
+  color: var(--kinekt-component-muted);
+}
+
+:where(.hero-todos-santos) .hero-todos-santos__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kinekt-wireframe-space-l);
+}
+
+:where(.hero-todos-santos) .hero-todos-santos__media {
+  align-self: stretch;
+}
+
+:where(.hero-todos-santos) .hero-todos-santos__image {
+  aspect-ratio: 4 / 3;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 50rem) {
+  :where(.hero-todos-santos) .hero-todos-santos__container {
+    grid-template-columns: minmax(0, var(--hero-todos-santos-content-width)) minmax(0, 1fr);
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--kinekt-wireframe-editorial-gap);
+  }
+
+  :where(.hero-todos-santos) .hero-todos-santos__feature {
+    grid-template-columns: minmax(0, 12.5rem) minmax(0, 1fr);
+    gap: var(--kinekt-wireframe-space-m);
+  }
+
+  :where(.hero-todos-santos) .hero-todos-santos__media {
+    block-size: var(--hero-todos-santos-media-height);
+  }
+}
+
 :where(.read-more, .media-feature-list, .media-accordion-allentown, .media-fact-grid-allentown, .media-metrics-allentown, .process-story-allentown, .product-details-allentown, .facilities-overview-allentown, .support-contact-allentown) {
   --kinekt-section-media-ratio: 4 / 5;
 }
