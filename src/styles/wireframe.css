@@ -1747,3 +1747,117 @@
     order: -1;
   }
 }
+
+/*
+ * Support Contact Allentown — two-column support entry point. The left column
+ * introduces the request; the right column keeps direct channels and the form
+ * in one readable, sequential landmark.
+ */
+:where(.beta-support-contact-allentown) {
+  --support-contact-column-gap: var(--kinekt-section-support-contact-column-gap, var(--kinekt-wireframe-section-space-xxl));
+  --support-contact-panel-gap: var(--kinekt-section-support-contact-panel-gap, var(--kinekt-wireframe-section-space-s));
+  --support-contact-group-gap: var(--kinekt-section-support-contact-group-gap, var(--kinekt-wireframe-space-xxl));
+  --support-contact-control-gap: var(--kinekt-section-support-contact-control-gap, var(--kinekt-wireframe-space-s));
+  --support-contact-control-padding-inline: var(--kinekt-section-support-contact-control-padding-inline, var(--kinekt-wireframe-space-m));
+  --support-contact-control-padding-block: var(--kinekt-section-support-contact-control-padding-block, var(--kinekt-wireframe-space-s));
+  --support-contact-textarea-size: var(--kinekt-section-support-contact-textarea-size, var(--kinekt-wireframe-section-space-xl));
+}
+
+:where(.beta-support-contact-allentown) .beta-support-contact-allentown__container {
+  gap: var(--support-contact-column-gap);
+}
+
+:where(.beta-support-contact-allentown) .beta-support-contact-allentown__intro {
+  align-self: start;
+  max-inline-size: var(--kinekt-component-reading-width);
+}
+
+:where(.beta-support-contact-allentown) .beta-support-contact-allentown__support,
+:where(.beta-support-contact-allentown) :is(.beta-support-contact-allentown__direct, .beta-support-contact-allentown__request) {
+  display: grid;
+  gap: var(--support-contact-group-gap);
+}
+
+:where(.beta-support-contact-allentown) .beta-support-contact-allentown__request {
+  padding-block-start: var(--support-contact-panel-gap);
+  border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where(.beta-support-contact-allentown) :is(.beta-support-contact-allentown__direct-heading, .beta-support-contact-allentown__request-heading) {
+  margin: 0;
+  font-size: var(--kinekt-component-text-l-size);
+  line-height: var(--kinekt-component-text-l-line-height);
+}
+
+:where(.beta-support-contact-allentown) ul.beta-support-contact-allentown__contact-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--support-contact-control-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.beta-support-contact-allentown) .beta-support-contact-allentown__contact-method a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8ch;
+  padding: var(--support-contact-control-padding-block) var(--support-contact-control-padding-inline);
+  color: var(--kinekt-component-ink);
+  background: var(--kinekt-component-surface);
+  text-decoration: none;
+}
+
+:where(.beta-support-contact-allentown) .beta-support-contact-allentown__contact-method svg {
+  flex: none;
+  color: var(--kinekt-component-muted);
+}
+
+:where(.beta-support-contact-allentown) .beta-support-contact-allentown__form,
+:where(.beta-support-contact-allentown) .beta-support-contact-allentown__form-row {
+  display: grid;
+  gap: var(--support-contact-control-gap);
+}
+
+:where(.beta-support-contact-allentown) .beta-support-contact-allentown__form label {
+  display: grid;
+  gap: var(--support-contact-control-gap);
+  font-size: var(--kinekt-component-text-s-size);
+  font-weight: 700;
+  line-height: var(--kinekt-component-text-s-line-height);
+}
+
+:where(.beta-support-contact-allentown) .beta-support-contact-allentown__form :is(input, select, textarea) {
+  box-sizing: border-box;
+  inline-size: 100%;
+  padding: var(--support-contact-control-padding-block) var(--support-contact-control-padding-inline);
+  border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+  border-radius: 0;
+  color: var(--kinekt-component-ink);
+  background: var(--kinekt-component-surface);
+  font: inherit;
+}
+
+:where(.beta-support-contact-allentown) .beta-support-contact-allentown__form textarea {
+  min-block-size: var(--support-contact-textarea-size);
+  resize: vertical;
+}
+
+:where(.beta-support-contact-allentown) .beta-support-contact-allentown__form .button {
+  justify-self: start;
+}
+
+@media (min-width: 50rem) {
+  :where(.beta-support-contact-allentown) .beta-support-contact-allentown__container {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: start;
+  }
+
+  :where(.beta-support-contact-allentown) .beta-support-contact-allentown__support {
+    padding-block-start: var(--kinekt-wireframe-space-xl);
+  }
+
+  :where(.beta-support-contact-allentown) .beta-support-contact-allentown__form-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,53 +1,81 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe.css'
+import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "contactHeading": {
-    "kind": "text"
-  },
-  "contactMethods": {
-    "kind": "componentList",
-    "id": "components/contact-method/allentown",
-    "role": "contact-method",
-    "fields": {
-      "icon": {
-        "kind": "text"
-      },
-      "label": {
-        "kind": "text"
-      },
-      "href": {
-        "kind": "text"
-      }
-    }
-  },
-  "formHeading": {
-    "kind": "text"
-  },
-  "form": {
-    "kind": "formReference"
-  }
+interface ContactMethod {
+  icon?: 'whatsapp' | 'phone' | 'email'
+  label: string
+  href: string
 }
+
+interface Props {
+  id?: string
+  theme?: 'light' | 'semi-light' | 'semi-dark' | 'dark'
+  intro: SectionIntroContent
+  contactHeading?: string
+  contactMethods?: ContactMethod[]
+  formHeading?: string
+  headingLevel?: 'h1' | 'h2' | 'h3'
+}
+
+const {
+  id,
+  theme = 'dark',
+  intro,
+  contactHeading,
+  contactMethods = [],
+  formHeading = 'Send a support request',
+  headingLevel = 'h2',
+} = Astro.props as Props
+
+const methods = contactMethods.filter((method) => method.label && method.href)
 ---
-<StructuralSection block="beta-support-contact-allentown" fields={fields} {...props} />
+
+<section class="beta-support-contact-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="beta-support-contact-allentown__container">
+    <header class="beta-support-contact-allentown__intro">
+      <SectionIntro intro={intro} headingLevel={headingLevel} />
+    </header>
+
+    <div class="beta-support-contact-allentown__support">
+      {methods.length > 0 && (
+        <section class="beta-support-contact-allentown__direct">
+          {contactHeading && <h3 class="beta-support-contact-allentown__direct-heading">{contactHeading}</h3>}
+          <ul class="beta-support-contact-allentown__contact-methods">
+            {methods.map((method) => (
+              <li class="beta-support-contact-allentown__contact-method">
+                <a href={method.href}>
+                  {method.icon && <ContactIcon name={method.icon} />}
+                  <span>{method.label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section class="beta-support-contact-allentown__request">
+        <h3 class="beta-support-contact-allentown__request-heading">{formHeading}</h3>
+        <form class="beta-support-contact-allentown__form" action="#" method="post">
+          <div class="beta-support-contact-allentown__form-row">
+            <label>First name <input name="given-name" autocomplete="given-name" required /></label>
+            <label>Last name <input name="family-name" autocomplete="family-name" required /></label>
+          </div>
+          <div class="beta-support-contact-allentown__form-row">
+            <label>Company name <input name="organization" autocomplete="organization" /></label>
+            <label>Email address <input name="email" type="email" autocomplete="email" required /></label>
+          </div>
+          <label>Subject <input name="subject" required /></label>
+          <div class="beta-support-contact-allentown__form-row">
+            <label>Type of battery <select name="battery-type"><option>Select type of battery</option></select></label>
+            <label>Support category <select name="support-category"><option>Choose a category</option></select></label>
+          </div>
+          <label>How can we help? <textarea name="message" required></textarea></label>
+          <button class="button button--primary" type="submit">Send request</button>
+        </form>
+      </section>
+    </div>
+  </div>
+</section>

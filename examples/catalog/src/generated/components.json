@@ -1461,13 +1461,13 @@
     "tags": [
       "hero",
       "content",
-      "beta"
+      "prerelease"
     ],
     "role": "hero",
     "variation": "todos-santos",
     "title": "Hero Todos Santos",
     "description": "A reusable product hero with introduction, at-a-glance feature pairs, optional CTA group and media.",
-    "status": "beta",
+    "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411511&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {

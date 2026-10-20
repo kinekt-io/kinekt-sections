@@ -1,103 +1,20 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import SupportContactAllentown from './support-contact-allentown.astro'
 
-const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-  },
-  "contactHeading": "Energy systems built around real operating conditions",
-  "contactMethods": [
-    {
-      "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "label": "System engineering",
-      "href": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-    },
-    {
-      "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "label": "Built for the field",
-      "href": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-    },
-    {
-      "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "label": "From cell to system",
-      "href": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-    }
-  ],
-  "formHeading": "Energy systems built around real operating conditions",
-  "form": {
-    "name": "Project enquiry",
-    "description": "A governed form reference for product, engineering and partnership enquiries."
-  }
-}
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "contactHeading": {
-    "kind": "text"
-  },
-  "contactMethods": {
-    "kind": "componentList",
-    "id": "components/contact-method/allentown",
-    "role": "contact-method",
-    "fields": {
-      "icon": {
-        "kind": "text"
-      },
-      "label": {
-        "kind": "text"
-      },
-      "href": {
-        "kind": "text"
-      }
-    }
-  },
-  "formHeading": {
-    "kind": "text"
-  },
-  "form": {
-    "kind": "formReference"
-  }
-}
 const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  accentHeading: 'Technical support',
+  heading: 'Get support from our team',
+  description: 'Need help with a battery, integration question or technical issue? Share the details with our team and we will connect you with the right person.',
 }
-const ctas = undefined
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block="beta-support-contact-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+
+<SupportContactAllentown
+  theme="dark"
+  intro={intro}
+  contactHeading="Get in touch with us directly"
+  contactMethods={[
+    { icon: 'email', label: 'support@tulip.tech', href: 'mailto:support@tulip.tech' },
+    { icon: 'phone', label: '+31 6 123 456 78', href: 'tel:+31612345678' },
+  ]}
+  formHeading="Or send a support request"
+/>
