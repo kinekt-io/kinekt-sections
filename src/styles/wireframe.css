@@ -1808,7 +1808,7 @@
   color: var(--kinekt-component-muted);
 }
 
-:where(.beta-support-contact-allentown) .beta-support-contact-allentown__form,
+:where(.beta-support-contact-allentown) form.beta-support-contact-allentown__form,
 :where(.beta-support-contact-allentown) .beta-support-contact-allentown__form-row {
   display: grid;
   gap: var(--support-contact-control-gap);
