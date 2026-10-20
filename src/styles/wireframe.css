@@ -853,6 +853,87 @@
   padding-block: clamp(1rem, 3vw, 3rem);
 }
 
+/*
+ * Trinity keeps its visual as a full-width field until it reaches the shared
+ * content measure. Above that measure the field stays centred and exposes its
+ * lower corners against the section canvas.
+ */
+:where(.hero-trinity) {
+  --hero-trinity-frame-width: var(--kinekt-component-content-width);
+  --hero-trinity-m-min-block-size: 35rem;
+  --hero-trinity-d-min-block-size: 50.625rem;
+  --hero-trinity-frame-min-block-size: clamp(
+    var(--hero-trinity-m-min-block-size),
+    56.25vw,
+    var(--hero-trinity-d-min-block-size)
+  );
+  --hero-trinity-frame-radius: var(--kinekt-section-hero-trinity-frame-radius, 0.5rem);
+  --hero-trinity-copy-width: min(100%, 48.75rem);
+  padding-block: 0;
+}
+
+:where(.hero-trinity) .hero-trinity__container {
+  position: relative;
+  display: grid;
+  inline-size: 100%;
+  max-inline-size: var(--hero-trinity-frame-width);
+  min-block-size: var(--hero-trinity-frame-min-block-size);
+  margin-inline: auto;
+  padding-inline: 0;
+  isolation: isolate;
+  overflow: clip;
+}
+
+:where(.hero-trinity) .hero-trinity__media {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  display: block;
+  margin: 0;
+}
+
+:where(.hero-trinity) .hero-trinity__media::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(240deg, transparent 22%, var(--kinekt-component-canvas) 99%);
+  pointer-events: none;
+}
+
+:where(.hero-trinity) .hero-trinity__image {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+:where(.hero-trinity) .hero-trinity__content {
+  z-index: 0;
+  align-content: end;
+  inline-size: 100%;
+  max-inline-size: none;
+  min-block-size: var(--hero-trinity-frame-min-block-size);
+  padding: var(--kinekt-wireframe-section-space-m) var(--kinekt-component-inline-space);
+}
+
+:where(.hero-trinity) .hero-trinity__content > :is(.section-intro, .hero-trinity__actions) {
+  inline-size: min(100%, var(--hero-trinity-copy-width));
+}
+
+:where(.hero-trinity) .hero-trinity__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kinekt-wireframe-space-s);
+  margin-block-start: var(--kinekt-wireframe-space-xl);
+}
+
+@media (min-width: 90rem) {
+  :where(.hero-trinity) .hero-trinity__container {
+    border-end-start-radius: var(--hero-trinity-frame-radius);
+    border-end-end-radius: var(--hero-trinity-frame-radius);
+  }
+}
+
 :where(.read-more, .media-feature-list, .media-accordion-allentown, .media-fact-grid-allentown, .media-metrics-allentown, .process-story-allentown, .product-details-allentown, .facilities-overview-allentown, .support-contact-allentown) {
   --kinekt-section-media-ratio: 4 / 5;
 }
