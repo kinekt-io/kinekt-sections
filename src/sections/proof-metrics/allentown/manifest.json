@@ -1,1 +1,65 @@
-{"$schema":"https://kinekt.io/schemas/component-manifest.schema.json","schemaVersion":1,"version":"26.10.0-beta.0","id":"sections/proof-metrics/allentown","slug":"proof-metrics-allentown","title":"Proof Metrics Allentown","description":"A reusable evidence section with a localized introduction, one or more result metrics, optional proof media, and a CTA callout.","category":"sections","tags":["metrics","social-proof","beta"],"role":"proof-metrics","variation":"allentown","status":"beta","figma":{"url":"https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412607&t=mG3L6xlBzomA03GY-11","nodeId":"5240:412607"},"fields":{"theme":{"kind":"select","required":true,"localized":false,"options":["light","semi-light","semi-dark","dark"],"description":"CMS-selected presentation setting passed to the renderer."},"intro":{"kind":"component","componentId":"components/intro/allentown","required":true,"localized":true},"metrics":{"kind":"componentList","componentId":"components/result-item/allentown","required":true,"localized":true,"minItems":1,"description":"One or more named metrics; each metric has a required label and a localized Label value."},"media":{"kind":"media","required":false,"localized":true,"description":"Optional editor-selected proof media, localized per locale."},"callout":{"kind":"component","componentId":"components/callout/allentown","required":true,"localized":true,"description":"A localized action callout with a required Button component."}},"runtimeProps":{"metricLayout":{"kind":"responsiveGrid","source":"renderer"},"calloutFlightPath":{"kind":"flightPath","source":"renderer"}}}
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "version": "26.10.0-beta.0",
+  "id": "sections/proof-metrics/allentown",
+  "slug": "proof-metrics-allentown",
+  "title": "Proof Metrics Allentown",
+  "description": "A reusable evidence section with an introduction, four proof values, wide proof media, and a labelled CTA callout.",
+  "category": "sections",
+  "tags": ["metrics", "social-proof", "beta"],
+  "role": "proof-metrics",
+  "variation": "allentown",
+  "status": "beta",
+  "figma": {
+    "url": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412607&t=mG3L6xlBzomA03GY-11",
+    "nodeId": "5240:412607"
+  },
+  "fields": {
+    "theme": {
+      "kind": "select",
+      "required": true,
+      "localized": false,
+      "options": ["light", "semi-light", "semi-dark", "dark"],
+      "description": "CMS-selected presentation setting passed to the renderer."
+    },
+    "intro": {
+      "kind": "component",
+      "componentId": "components/intro/allentown",
+      "required": true,
+      "localized": true
+    },
+    "metrics": {
+      "kind": "componentList",
+      "componentId": "components/result-item/allentown",
+      "required": true,
+      "localized": true,
+      "minItems": 4,
+      "maxItems": 4,
+      "description": "Four named proof values; each metric has a required label and a localized Label value."
+    },
+    "media": {
+      "kind": "media",
+      "required": false,
+      "localized": true,
+      "description": "Optional editor-selected proof media, localized per locale."
+    },
+    "callout": {
+      "kind": "component",
+      "componentId": "components/callout/allentown",
+      "required": true,
+      "localized": true,
+      "description": "A localized action callout with a required Button component."
+    }
+  },
+  "runtimeProps": {
+    "metricLayout": {
+      "kind": "responsiveGrid",
+      "source": "renderer"
+    },
+    "calloutFlightPath": {
+      "kind": "flightPath",
+      "source": "renderer"
+    }
+  }
+}

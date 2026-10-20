@@ -207,10 +207,42 @@ function heroPreview(manifest) {
   }
 }
 
+function proofMetricsPreview() {
+  return {
+    theme: 'light',
+    intro: {
+      accentHeading: 'Proof in practice',
+      heading: 'Evidence that supports confident technical decisions',
+      description: 'Use measurable proof points to connect the work, its operating context and its outcome.',
+    },
+    metrics: [
+      { label: 'Validated process', value: { text: 'Documented from review through release.' } },
+      { label: 'Clear inputs', value: { text: 'Requirements visible to every stakeholder.' } },
+      { label: 'Measured outcomes', value: { text: 'Evidence ready for practical comparison.' } },
+      { label: 'Direct support', value: { text: 'Expert guidance at each decision point.' } },
+    ],
+    media: {
+      url: 'https://placehold.co/1296x406/png?text=Proof+media',
+      alt: 'Abstract grayscale placeholder for proof media',
+      width: 1296,
+      height: 406,
+    },
+    callout: {
+      label: 'Next step',
+      intro: {
+        heading: 'Turn evidence into a clear next decision',
+        description: 'Review the relevant details with the people responsible for the next stage.',
+      },
+      cta: { cta: { label: 'Start a conversation', href: '#' } },
+    },
+  }
+}
+
 function sampleContent(manifest, depth = 0, index = 0) {
   const hero = depth === 0 && heroPreview(manifest)
   if (hero) return hero
   if (depth === 0 && manifest.slug === 'case-studies-allentown') return caseStudiesPreview()
+  if (depth === 0 && manifest.slug === 'proof-metrics-allentown') return proofMetricsPreview()
   return Object.fromEntries(Object.entries(manifest.fields).map(([key, field]) => [key, sampleField(field, key, depth, index)]))
 }
 
@@ -258,7 +290,15 @@ for (const directory of await manifestDirectories(sections)) {
   await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\nconst fields = ${JSON.stringify(fields, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(block)} fields={fields} {...props} />\n`)
   await materialize(path.join(directory, `${base}.types.ts`), `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`)
   await materialize(path.join(directory, `${base}.payload.ts`), `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`)
-  const previewSource = `---
+  const previewSource = manifest.slug === 'proof-metrics-allentown'
+    ? `---
+import ProofMetricsAllentown from './${base}.astro'
+
+const content = ${JSON.stringify(previewContent, null, 2)}
+---
+<ProofMetricsAllentown {...content} />
+`
+    : `---
 // @generated structural section preview.
 import StructuralSection from '${importAstro}'
 

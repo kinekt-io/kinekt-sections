@@ -1,87 +1,57 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe.css'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { Media, SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "metrics": {
-    "kind": "componentList",
-    "id": "components/result-item/allentown",
-    "role": "result-item",
-    "fields": {
-      "label": {
-        "kind": "text"
-      },
-      "value": {
-        "kind": "component",
-        "id": "atoms/label/allentown",
-        "role": "label",
-        "fields": {
-          "text": {
-            "kind": "text"
-          },
-          "icon": {
-            "kind": "text"
-          }
-        }
-      }
-    }
-  },
-  "media": {
-    "kind": "media"
-  },
-  "callout": {
-    "kind": "component",
-    "id": "components/callout/allentown",
-    "role": "callout",
-    "fields": {
-      "intro": {
-        "kind": "component",
-        "id": "components/intro/allentown",
-        "role": "intro",
-        "fields": {
-          "accentHeading": {
-            "kind": "text"
-          },
-          "heading": {
-            "kind": "text"
-          },
-          "description": {
-            "kind": "richText"
-          }
-        }
-      },
-      "cta": {
-        "kind": "component",
-        "id": "controls/button/allentown",
-        "role": "button",
-        "fields": {
-          "cta": {
-            "kind": "cta"
-          }
-        }
-      }
-    }
+interface Props {
+  id?: string
+  theme?: SectionTheme
+  intro: SectionIntroContent
+  metrics: Array<{ label: string; value: { text: string } }>
+  media?: Media | null
+  callout: {
+    label?: string
+    intro: SectionIntroContent
+    cta: { cta: { label: string; href: string } }
   }
+  headingLevel?: 'h1' | 'h2' | 'h3'
 }
+
+const { id, theme = 'light', intro, metrics, media, callout, headingLevel = 'h2' } = Astro.props as Props
 ---
-<StructuralSection block="beta-proof-metrics-allentown" fields={fields} {...props} />
+<section class="proof-metrics-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="proof-metrics-allentown__container">
+    <div class="proof-metrics-allentown__intro-and-metrics">
+      <header class="proof-metrics-allentown__intro">
+        <SectionIntro intro={intro} headingLevel={headingLevel} />
+      </header>
+
+      <ul class="proof-metrics-allentown__metrics" aria-label="Proof points">
+        {metrics.map((metric) => (
+          <li class="proof-metrics-allentown__metric">
+            <p class="proof-metrics-allentown__metric-label">{metric.label}</p>
+            <p class="proof-metrics-allentown__metric-value">{metric.value.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {media && <KinektMedia class="proof-metrics-allentown__media" imageClass="proof-metrics-allentown__image" media={media} />}
+
+    <div class="proof-metrics-allentown__callout">
+      {callout.label && (
+        <div class="proof-metrics-allentown__callout-label" aria-hidden="true">
+          <span>{callout.label}</span>
+        </div>
+      )}
+      <div class="proof-metrics-allentown__callout-body">
+        <div class="proof-metrics-allentown__callout-content">
+          <SectionIntro intro={callout.intro} headingLevel="h3" />
+        </div>
+        <Button class="proof-metrics-allentown__callout-action" href={callout.cta.cta.href} label={callout.cta.cta.label} />
+      </div>
+    </div>
+  </div>
+</section>

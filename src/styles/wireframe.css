@@ -1556,7 +1556,6 @@
 
 :where([data-kinekt-section][class*='checklist-feature-list-allentown'],
   [data-kinekt-section][class*='solution-list-allentown'],
-  [data-kinekt-section][class*='proof-metrics-allentown'],
   [data-kinekt-section][class*='moq-lead-times-allentown']) {
   --kinekt-section-reading-width: 44rem;
   --kinekt-section-gap: clamp(2rem, 5vw, 4.5rem);
@@ -1645,7 +1644,6 @@
 /* Structural metric and checklist lists are deliberately open, not cards. */
 :where([data-kinekt-section][class*='checklist-feature-list-allentown'],
   [data-kinekt-section][class*='solution-list-allentown'],
-  [data-kinekt-section][class*='proof-metrics-allentown'],
   [data-kinekt-section][class*='moq-lead-times-allentown'],
   [data-kinekt-section][class*='hd-cells-engineering-allentown'])
   :is([class$='__items'], [class$='__features'], [class$='__metrics'], [class$='__cell-items'], [class$='__engineering-topics']) {
@@ -1655,7 +1653,6 @@
 
 :where([data-kinekt-section][class*='checklist-feature-list-allentown'],
   [data-kinekt-section][class*='solution-list-allentown'],
-  [data-kinekt-section][class*='proof-metrics-allentown'],
   [data-kinekt-section][class*='moq-lead-times-allentown'],
   [data-kinekt-section][class*='hd-cells-engineering-allentown'])
   :is([class$='__items'], [class$='__features'], [class$='__metrics'], [class$='__cell-items'], [class$='__engineering-topics']) > li > article {
@@ -1746,7 +1743,6 @@
 
   :where([data-kinekt-section][class*='checklist-feature-list-allentown'],
     [data-kinekt-section][class*='solution-list-allentown'],
-    [data-kinekt-section][class*='proof-metrics-allentown'],
     [data-kinekt-section][class*='moq-lead-times-allentown'])
     :is([class$='__items'], [class$='__features'], [class$='__metrics']) > li > article {
     grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
@@ -2834,5 +2830,151 @@
 
   :where(.beta-use-cases-allentown) .beta-use-cases-allentown__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/*
+ * Proof Metrics follows the source composition: editorial introduction,
+ * four unboxed proof values, a wide proof image, then one clear action.
+ * The aliases let a site retune this composition without replacing markup.
+ */
+:where(.proof-metrics-allentown[data-kinekt-section]) {
+  --kinekt-section-proof-metrics-inline-space: var(--kinekt-section-inline-space, clamp(1rem, 3vw, 2rem));
+  --kinekt-section-proof-metrics-section-space: var(--kinekt-section-block-space, clamp(4rem, 8vw, 8.75rem));
+  --kinekt-section-proof-metrics-content-width: var(--kinekt-section-content-width, 81rem);
+  --kinekt-section-proof-metrics-major-gap: var(--kinekt-section-proof-metrics-gap, clamp(3rem, 6vw, 5rem));
+  --kinekt-section-proof-metrics-metric-gap: var(--kinekt-section-proof-metrics-metric-gap, clamp(1.5rem, 4vw, 7.8125rem));
+  --kinekt-section-proof-metrics-callout-gap: var(--kinekt-section-proof-metrics-callout-gap, clamp(2rem, 6vw, 7.5rem));
+  --kinekt-section-proof-metrics-value-gap: var(--kinekt-section-proof-metrics-value-gap, .8rem);
+  --kinekt-section-proof-metrics-media-ratio: var(--kinekt-section-proof-metrics-media-ratio, 1296 / 406);
+  padding-block: var(--kinekt-section-proof-metrics-section-space);
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__container {
+  display: grid;
+  max-width: var(--kinekt-section-proof-metrics-content-width);
+  gap: var(--kinekt-section-proof-metrics-major-gap);
+  padding-inline: var(--kinekt-section-proof-metrics-inline-space);
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__intro-and-metrics {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  max-width: 54rem;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__intro {
+  display: grid;
+  gap: var(--kinekt-component-intro-description-gap);
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem var(--kinekt-section-proof-metrics-metric-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__metric {
+  display: grid;
+  align-content: start;
+  gap: var(--kinekt-section-proof-metrics-value-gap);
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__metric-label,
+:where(.proof-metrics-allentown) .proof-metrics-allentown__metric-value {
+  margin: 0;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__metric-label {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.035em;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__metric-value {
+  color: var(--kinekt-component-muted);
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__media {
+  display: block;
+  width: 100%;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--kinekt-section-proof-metrics-media-ratio);
+  object-fit: cover;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__callout {
+  display: grid;
+  gap: 2rem;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__callout-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--kinekt-component-muted);
+  font-family: var(--kinekt-component-mono);
+  font-size: .8125rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__callout-label::after {
+  width: 100%;
+  height: var(--kinekt-component-border-width);
+  background: var(--kinekt-component-line);
+  content: '';
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__callout-label span {
+  flex: none;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__callout-body {
+  display: grid;
+  gap: 2rem;
+  align-items: end;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__callout-content {
+  max-width: 42rem;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__callout-content h3 {
+  font-size: 2rem;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__callout-content .section-intro__description {
+  margin-top: 1rem;
+  font-size: 1.125rem;
+}
+
+:where(.proof-metrics-allentown) .proof-metrics-allentown__callout-action {
+  justify-self: start;
+}
+
+@media (min-width: 48rem) {
+  :where(.proof-metrics-allentown) .proof-metrics-allentown__metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  :where(.proof-metrics-allentown) .proof-metrics-allentown__callout-body {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--kinekt-section-proof-metrics-callout-gap);
+  }
+
+  :where(.proof-metrics-allentown) .proof-metrics-allentown__callout-action {
+    justify-self: end;
   }
 }
