@@ -2318,3 +2318,135 @@
     grid-row: 1;
   }
 }
+
+/*
+ * Use Cases Allentown — the wireframe deliberately omits the source design's
+ * brand-specific topographic decoration. A consuming site can add it back
+ * without changing the semantic section structure.
+ */
+:where(.beta-use-cases-allentown[data-kinekt-section]) {
+  --kinekt-wireframe-use-cases-d-section-space: 8.75rem;
+  --kinekt-wireframe-use-cases-d-container-width: 90rem;
+  --kinekt-wireframe-use-cases-d-inline-space: 4.5rem;
+  --kinekt-wireframe-use-cases-d-intro-width: 54rem;
+  --kinekt-wireframe-use-cases-d-content-gap: 5rem;
+  --kinekt-wireframe-use-cases-d-column-gap: 6.25rem;
+  --kinekt-wireframe-use-cases-d-row-gap: 2.56rem;
+  --kinekt-wireframe-use-cases-d-heading-size: 3rem;
+  --kinekt-wireframe-use-cases-d-item-heading-size: 1.75rem;
+  --kinekt-wireframe-use-cases-d-description-size: 1rem;
+  --use-cases-section-space: var(--kinekt-section-use-cases-section-space, 5rem);
+  --use-cases-container-width: var(--kinekt-section-use-cases-container-width, var(--kinekt-wireframe-use-cases-d-container-width));
+  --use-cases-inline-space: var(--kinekt-section-use-cases-inline-space, 1rem);
+  --use-cases-intro-width: var(--kinekt-section-use-cases-intro-width, var(--kinekt-wireframe-use-cases-d-intro-width));
+  --use-cases-content-gap: var(--kinekt-section-use-cases-content-gap, var(--kinekt-wireframe-use-cases-d-content-gap));
+  --use-cases-column-gap: var(--kinekt-section-use-cases-column-gap, var(--kinekt-wireframe-use-cases-d-column-gap));
+  --use-cases-row-gap: var(--kinekt-section-use-cases-row-gap, var(--kinekt-wireframe-use-cases-d-row-gap));
+  --use-cases-heading-size: var(--kinekt-section-use-cases-heading-size, var(--kinekt-wireframe-use-cases-d-heading-size));
+  --use-cases-item-heading-size: var(--kinekt-section-use-cases-item-heading-size, var(--kinekt-wireframe-use-cases-d-item-heading-size));
+  --use-cases-description-size: var(--kinekt-section-use-cases-description-size, var(--kinekt-wireframe-use-cases-d-description-size));
+  --kinekt-component-block-space: var(--use-cases-section-space);
+  --kinekt-component-inline-space: var(--use-cases-inline-space);
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__container {
+  display: grid;
+  max-width: var(--use-cases-container-width);
+  gap: var(--use-cases-content-gap);
+  margin-inline: auto;
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__intro {
+  max-width: var(--use-cases-intro-width);
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__intro .section-intro__heading {
+  font-size: var(--use-cases-heading-size);
+  line-height: 1;
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__intro .section-intro__description {
+  max-width: none;
+  font-size: 1.125rem;
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__content {
+  display: grid;
+  gap: 2.5rem;
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__label p {
+  flex: none;
+  margin: 0;
+  color: var(--kinekt-component-muted);
+  font-family: var(--kinekt-component-mono);
+  font-size: .8125rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__label span {
+  width: 100%;
+  height: var(--kinekt-component-border-width);
+  background: var(--kinekt-component-line);
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__grid {
+  display: grid;
+  gap: var(--use-cases-row-gap) var(--use-cases-column-gap);
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .8rem;
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__item :is(h3, p),
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__description :is(p, ul, ol) {
+  margin: 0;
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__item h3 {
+  font-size: var(--use-cases-item-heading-size);
+  line-height: 1.1;
+  letter-spacing: -.03em;
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__item > :is(p, .beta-use-cases-allentown__description) {
+  max-width: 32rem;
+  color: var(--kinekt-component-muted);
+  font-size: var(--use-cases-description-size);
+  line-height: 1.5;
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__cta {
+  margin-top: .45rem;
+  color: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  text-underline-offset: .2em;
+}
+
+:where(.beta-use-cases-allentown) .beta-use-cases-allentown__cta:hover {
+  color: var(--kinekt-component-muted);
+}
+
+@media (min-width: 48rem) {
+  :where(.beta-use-cases-allentown[data-kinekt-section]) {
+    --use-cases-inline-space: var(--kinekt-section-use-cases-inline-space, var(--kinekt-wireframe-use-cases-d-inline-space));
+    --use-cases-section-space: var(--kinekt-section-use-cases-section-space, var(--kinekt-wireframe-use-cases-d-section-space));
+  }
+
+  :where(.beta-use-cases-allentown) .beta-use-cases-allentown__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

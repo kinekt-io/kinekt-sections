@@ -1,73 +1,71 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe.css'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "advantageHeading": {
-    "kind": "text"
-  },
-  "advantages": {
-    "kind": "componentList",
-    "id": "atoms/label/allentown",
-    "role": "label",
-    "fields": {
-      "text": {
-        "kind": "text"
-      },
-      "icon": {
-        "kind": "text"
-      }
-    }
-  },
-  "gridHeading": {
-    "kind": "text"
-  },
-  "items": {
-    "kind": "componentList",
-    "id": "components/use-case-item/allentown",
-    "role": "use-case-item",
-    "fields": {
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      },
-      "ctaGroup": {
-        "kind": "component",
-        "id": "components/cta-group/allentown",
-        "role": "cta-group",
-        "fields": {
-          "primaryButton": {
-            "kind": "cta"
-          },
-          "secondaryButton": {
-            "kind": "cta"
-          }
-        }
-      }
-    }
+interface Cta {
+  label: string
+  href: string
+}
+
+interface UseCase {
+  title: string
+  description?: string | { html: string }
+  ctaGroup?: {
+    primaryButton?: Cta
   }
 }
+
+interface Props {
+  id?: string
+  theme?: SectionTheme
+  intro: SectionIntroContent
+  advantageHeading?: string
+  gridHeading?: string
+  items: UseCase[]
+  headingLevel?: 'h1' | 'h2' | 'h3'
+}
+
+const {
+  id,
+  theme = 'semi-light',
+  intro,
+  advantageHeading,
+  gridHeading,
+  items,
+  headingLevel = 'h2',
+} = Astro.props as Props
+const sectionLabel = advantageHeading || gridHeading
 ---
-<StructuralSection block="beta-use-cases-allentown" fields={fields} {...props} />
+
+<section class="beta-use-cases-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="beta-use-cases-allentown__container">
+    <header class="beta-use-cases-allentown__intro">
+      <SectionIntro intro={intro} headingLevel={headingLevel} />
+    </header>
+
+    <div class="beta-use-cases-allentown__content">
+      {sectionLabel && (
+        <div class="beta-use-cases-allentown__label">
+          <p>{sectionLabel}</p>
+          <span aria-hidden="true"></span>
+        </div>
+      )}
+
+      <div class="beta-use-cases-allentown__grid">
+        {items.map((item) => (
+          <article class="beta-use-cases-allentown__item">
+            <h3>{item.title}</h3>
+            {typeof item.description === 'string' && <p>{item.description}</p>}
+            {item.description && typeof item.description === 'object' && <div class="beta-use-cases-allentown__description" set:html={item.description.html} />}
+            {item.ctaGroup?.primaryButton?.label && item.ctaGroup.primaryButton.href && (
+              <a class="beta-use-cases-allentown__cta" href={item.ctaGroup.primaryButton.href}>
+                {item.ctaGroup.primaryButton.label}
+              </a>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

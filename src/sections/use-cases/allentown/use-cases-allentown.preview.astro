@@ -1,160 +1,39 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import UseCasesAllentown from './use-cases-allentown.astro'
 
 const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  theme: 'semi-light',
+  intro: {
+    accentHeading: 'Battery solutions',
+    heading: 'The right battery pack for every application',
+    description: 'From heavy-duty equipment to compact mobile devices, battery packs are engineered around the operating conditions that matter most.',
   },
-  "advantageHeading": "Energy systems built around real operating conditions",
-  "advantages": [
+  advantageHeading: 'Applications',
+  items: [
     {
-      "text": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+      title: 'Industrial equipment',
+      description: 'Dependable power for demanding duty cycles, harsh environments and long service lives.',
     },
     {
-      "text": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
+      title: 'Medical devices',
+      description: 'Compact, reliable energy systems designed for precision, safety and uninterrupted operation.',
     },
     {
-      "text": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-    }
+      title: 'Robotics and automation',
+      description: 'High-performance battery packs that support mobility, efficiency and repeatable output.',
+    },
+    {
+      title: 'Specialist applications',
+      description: 'A battery pack configured around your technical requirements and operating context.',
+      ctaGroup: {
+        primaryButton: {
+          label: 'Discuss your application',
+          href: '#contact',
+        },
+      },
+    },
   ],
-  "gridHeading": "Energy systems built around real operating conditions",
-  "items": [
-    {
-      "title": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "ctaGroup": {
-        "primaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        },
-        "secondaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        }
-      }
-    },
-    {
-      "title": "Designed for the constraints that shape delivery",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "ctaGroup": {
-        "primaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        },
-        "secondaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        }
-      }
-    },
-    {
-      "title": "Performance data teams can use with confidence",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "ctaGroup": {
-        "primaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        },
-        "secondaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        }
-      }
-    }
-  ]
 }
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "advantageHeading": {
-    "kind": "text"
-  },
-  "advantages": {
-    "kind": "componentList",
-    "id": "atoms/label/allentown",
-    "role": "label",
-    "fields": {
-      "text": {
-        "kind": "text"
-      },
-      "icon": {
-        "kind": "text"
-      }
-    }
-  },
-  "gridHeading": {
-    "kind": "text"
-  },
-  "items": {
-    "kind": "componentList",
-    "id": "components/use-case-item/allentown",
-    "role": "use-case-item",
-    "fields": {
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      },
-      "ctaGroup": {
-        "kind": "component",
-        "id": "components/cta-group/allentown",
-        "role": "cta-group",
-        "fields": {
-          "primaryButton": {
-            "kind": "cta"
-          },
-          "secondaryButton": {
-            "kind": "cta"
-          }
-        }
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block="beta-use-cases-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+
+<UseCasesAllentown {...content} />
