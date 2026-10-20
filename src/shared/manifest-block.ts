@@ -10,10 +10,12 @@ interface ManifestField {
   minItems?: number
 }
 
+type SectionStatus = 'planned' | 'alpha' | 'beta' | 'prerelease' | 'release' | 'released' | 'deprecated'
+
 interface SectionManifest {
   slug: string
   title: string
-  status: 'planned' | 'released' | 'deprecated'
+  status: SectionStatus
   fields: Record<string, ManifestField>
 }
 
