@@ -767,10 +767,10 @@
  * values deliberately establish hierarchy and rhythm without prescribing a brand.
  */
 :where([data-kinekt-section]) {
-  --kinekt-wireframe-section-space: clamp(4rem, 9vw, 9rem);
-  --kinekt-wireframe-content-gap: clamp(1.25rem, 3vw, 2.25rem);
-  --kinekt-wireframe-editorial-gap: clamp(2.5rem, 7vw, 7rem);
-  --kinekt-wireframe-card-padding: clamp(1.25rem, 2.25vw, 2rem);
+  --kinekt-wireframe-section-space: var(--kinekt-wireframe-section-space-xl);
+  --kinekt-wireframe-content-gap: var(--kinekt-wireframe-space-m);
+  --kinekt-wireframe-editorial-gap: var(--kinekt-wireframe-section-space-xxl);
+  --kinekt-wireframe-card-padding: var(--kinekt-wireframe-space-l);
   --kinekt-wireframe-media-ratio: 4 / 3;
   --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kinekt-wireframe-section-space));
   --kinekt-component-gap: var(--kinekt-section-gap, var(--kinekt-wireframe-content-gap));
@@ -798,7 +798,7 @@
 :where([data-kinekt-section]) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) > li > article {
   display: grid;
   align-content: start;
-  gap: 1rem;
+  gap: var(--kinekt-wireframe-space-m);
   padding: var(--kinekt-wireframe-card-padding);
   border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
   background: var(--kinekt-component-surface);
