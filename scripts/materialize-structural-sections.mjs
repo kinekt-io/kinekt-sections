@@ -164,7 +164,7 @@ function caseStudiesPreview() {
 function heroPreview(manifest) {
   const hero = {
     'hero-allentown': {
-      theme: 'light',
+      theme: 'dark',
       accentHeading: '/ Built for demanding systems',
       heading: 'Powering the next generation of electric mobility',
       description: 'A high-density battery platform for teams that need reliable performance, clear integration data and room to scale.',
