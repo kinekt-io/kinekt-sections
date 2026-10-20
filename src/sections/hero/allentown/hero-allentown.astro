@@ -2,7 +2,7 @@
 import '../../../styles/wireframe.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
-import type { Media } from '../../../shared/content.js'
+import type { CtaIcon, Media } from '../../../shared/content.js'
 import type { HeroContent } from './hero-allentown.types.js'
 import { isSafeWebUrl } from '../../../urls.js'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
@@ -13,18 +13,24 @@ function assertSafeImage(image: Media, name: string): void {
   if (!Number.isSafeInteger(image.width) || image.width <= 0) throw new Error(`${name}.width must be a positive integer.`)
   if (!Number.isSafeInteger(image.height) || image.height <= 0) throw new Error(`${name}.height must be a positive integer.`)
 }
+const ctaIconPaths: Record<CtaIcon, { viewBox: string; path: string }> = {
+  'arrow-right': { viewBox: '0 0 11 18', path: 'm2 2 7 7-7 7' },
+  'arrow-down': { viewBox: '0 0 18 18', path: 'm2 9 7 7 7-7M9 2v14' },
+}
 const { id, theme = 'light', headingLevel = 'h1', intro, ctas, image, mobileImage } = Astro.props
 for (const cta of [ctas?.primary, ctas?.secondary]) if (cta && !isSafeWebUrl(cta.href)) throw new Error('ctas must use an HTTP(S) or root-relative URL.')
 assertSafeImage(image, 'image')
 if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
+const primaryIcon = ctas?.primary?.icon ? ctaIconPaths[ctas.primary.icon] : undefined
+const secondaryIcon = ctas?.secondary?.icon ? ctaIconPaths[ctas.secondary.icon] : undefined
 ---
 <section class="hero-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="hero-allentown__container">
     <header class="hero-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
       {(ctas?.primary || ctas?.secondary) && <div class="hero-allentown__actions">
-        {ctas.primary && <Button class="hero-allentown__action hero-allentown__action--primary" href={ctas.primary.href} label={ctas.primary.label}><svg aria-hidden="true" width="11" height="18" viewBox="0 0 11 18" fill="none"><path d="m2 2 7 7-7 7" stroke="currentColor" stroke-width="2" /></svg></Button>}
-        {ctas.secondary && <Button class="hero-allentown__action hero-allentown__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="secondary" />}
+        {ctas.primary && <Button class="hero-allentown__action hero-allentown__action--primary" href={ctas.primary.href} label={ctas.primary.label}>{primaryIcon && <svg aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+        {ctas.secondary && <Button class="hero-allentown__action hero-allentown__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="clear">{secondaryIcon && <svg aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
       </div>}
     </header>
     <KinektMedia class="hero-allentown__media" imageClass="hero-allentown__image" media={image} mobileMedia={mobileImage} loading="eager" fetchpriority="high" />

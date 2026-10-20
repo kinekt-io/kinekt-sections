@@ -28,6 +28,12 @@ function localized(field: ManifestField) {
   return field.localized ? { localized: true } : {}
 }
 
+const ctaFields = (required: boolean) => [
+  { name: 'label', type: 'text' as const, required },
+  { name: 'href', type: 'text' as const, required },
+  { name: 'icon', type: 'select' as const, options: [{ label: 'Arrow right', value: 'arrow-right' }, { label: 'Arrow down', value: 'arrow-down' }] },
+]
+
 function fieldFor(name: string, field: ManifestField, options: Required<CreateManifestBlockOptions>) {
   const common = { name, required: field.required, ...localized(field) }
 
@@ -41,8 +47,8 @@ function fieldFor(name: string, field: ManifestField, options: Required<CreateMa
     case 'media':
     case 'video': return { ...common, type: 'upload' as const, relationTo: options.mediaCollection }
     case 'mediaList': return { ...common, type: 'array' as const, minRows: field.minItems, fields: [{ name: 'media', type: 'upload' as const, relationTo: options.mediaCollection, required: true }] }
-    case 'cta': return { ...common, type: 'group' as const, fields: [{ name: 'label', type: 'text' as const, required: true }, { name: 'href', type: 'text' as const, required: true }] }
-    case 'ctaGroup': return { ...common, type: 'group' as const, fields: ['primary', 'secondary'].map((name) => ({ name, type: 'group' as const, fields: [{ name: 'label', type: 'text' as const }, { name: 'href', type: 'text' as const }] })) }
+    case 'cta': return { ...common, type: 'group' as const, fields: ctaFields(true) }
+    case 'ctaGroup': return { ...common, type: 'group' as const, fields: ['primary', 'secondary'].map((name) => ({ name, type: 'group' as const, fields: ctaFields(false) })) }
     case 'formReference': return { ...common, type: 'relationship' as const, relationTo: options.formCollection }
     default: return { ...common, type: 'json' as const }
   }

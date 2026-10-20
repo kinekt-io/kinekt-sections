@@ -14,10 +14,10 @@
    */
   --kinekt-wireframe-font-sans: system-ui, sans-serif;
   --kinekt-wireframe-font-mono: ui-monospace, monospace;
-  --kinekt-wireframe-heading-1-size: clamp(2.75rem, 6vw, 5.5rem);
-  --kinekt-wireframe-heading-2-size: clamp(2.25rem, 5vw, 4rem);
-  --kinekt-wireframe-heading-3-size: clamp(1.75rem, 3.5vw, 2.75rem);
-  --kinekt-wireframe-heading-4-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  --kinekt-wireframe-heading-1-size: clamp(2.75rem, 4vw, 3.5rem);
+  --kinekt-wireframe-heading-2-size: clamp(2.25rem, 3.5vw, 3rem);
+  --kinekt-wireframe-heading-3-size: clamp(1.75rem, 2.5vw, 2.25rem);
+  --kinekt-wireframe-heading-4-size: clamp(1.25rem, 1.75vw, 1.5rem);
   --kinekt-wireframe-heading-line-height: 0.97;
   --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kinekt-color-canvas, #ffffff));
   --kinekt-component-surface: var(--kinekt-section-surface, var(--kinekt-color-surface, #f5f5f5));
@@ -1361,6 +1361,59 @@
   display: inline-flex;
   flex: none;
   color: var(--kinekt-component-muted);
+}
+
+/*
+ * Hero Allentown — Kinekt's side-media homepage hero. The local geometry
+ * reflects the Figma 1440px content area while keeping the public theme and
+ * section tokens overrideable by a consuming site.
+ */
+:where(.hero-allentown[data-kinekt-section]) {
+  --hero-allentown-copy-width: var(--kinekt-section-hero-copy-width, 48.75rem);
+  --hero-allentown-media-width: var(--kinekt-section-hero-media-width, 36rem);
+  --hero-allentown-column-gap: var(--kinekt-section-hero-column-gap, 5.25rem);
+  --hero-allentown-min-block-size: var(--kinekt-section-hero-min-block-size, 45rem);
+  --hero-allentown-action-gap: var(--kinekt-section-hero-action-gap, 2.56rem);
+  --kinekt-section-media-ratio: var(--kinekt-section-hero-media-ratio, 4 / 5);
+}
+
+:where(.hero-allentown) .hero-allentown__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  max-width: var(--hero-allentown-copy-width);
+  padding-block: 0;
+}
+
+:where(.hero-allentown) .hero-allentown__actions {
+  margin-block-start: var(--hero-allentown-action-gap);
+}
+
+:where(.hero-allentown) .hero-allentown__media {
+  display: block;
+  width: 100%;
+  max-width: var(--hero-allentown-media-width);
+  aspect-ratio: var(--kinekt-section-media-ratio);
+  overflow: hidden;
+}
+
+:where(.hero-allentown) .hero-allentown__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 50rem) {
+  :where(.hero-allentown) .hero-allentown__container {
+    grid-template-columns: minmax(0, var(--hero-allentown-copy-width)) minmax(0, var(--hero-allentown-media-width));
+    justify-content: space-between;
+    column-gap: var(--hero-allentown-column-gap);
+    min-height: var(--hero-allentown-min-block-size);
+    max-width: calc(var(--hero-allentown-copy-width) + var(--hero-allentown-media-width) + var(--hero-allentown-column-gap) + var(--kinekt-component-inline-space) + var(--kinekt-component-inline-space));
+  }
 }
 
 @media (min-width: 50rem) {

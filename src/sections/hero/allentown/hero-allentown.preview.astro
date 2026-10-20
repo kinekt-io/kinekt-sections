@@ -5,15 +5,15 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
 ---
 
 <HeroAllentown
-  theme="light"
+  theme="semi-light"
   intro={{
-    accentHeading: '/ System engineering',
+    accentHeading: 'System engineering',
     heading: 'Energy storage designed around the work ahead',
     description: 'Modular systems for teams balancing operational performance, integration evidence and a clear route to deployment.',
   }}
   ctas={{
-    primary: { label: 'Discuss a system brief', href: '/' },
-    secondary: { label: 'Review system options', href: '/' },
+    primary: { label: 'Discuss a system brief', href: '/', icon: 'arrow-right' },
+    secondary: { label: 'Review system options', href: '/', icon: 'arrow-down' },
   }}
   image={{
     url: `${catalogueBase}placeholders/hero-allentown-buses.webp`,

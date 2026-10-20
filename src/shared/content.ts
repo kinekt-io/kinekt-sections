@@ -1,4 +1,5 @@
-export interface Cta { label: string; href: string }
+export type CtaIcon = 'arrow-right' | 'arrow-down'
+export interface Cta { label: string; href: string; icon?: CtaIcon }
 export interface CtaGroup { primary?: Cta | null; secondary?: Cta | null }
 export interface MediaSource { url: string; width: number; height: number }
 export interface Media { url: string; alt: string; width: number; height: number; sources?: MediaSource[]; sizes?: string; fallbackUrl?: string }
