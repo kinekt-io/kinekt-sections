@@ -1239,12 +1239,19 @@
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   max-width: none;
   margin: 0;
 }
 
+:where(.beta-action-contact-allentown) .beta-action-contact-allentown__header > :is(.section-intro__accent, .section-intro__heading, .section-intro__description) {
+  margin: 0;
+}
+
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__header .section-intro__accent {
-  margin: 0 0 var(--action-contact-accent-gap);
+  margin-block-end: var(--action-contact-accent-gap);
   font-size: 1rem;
   line-height: 1.1;
 }
@@ -1258,7 +1265,7 @@
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__header .section-intro__description {
   max-width: none;
-  margin-top: var(--action-contact-header-gap);
+  margin-block-start: var(--action-contact-header-gap);
   font-size: 1.125rem;
   line-height: 1.5;
 }
