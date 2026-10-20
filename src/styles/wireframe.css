@@ -1217,10 +1217,14 @@
   flex: 0 1 var(--action-contact-media-width);
   width: 100%;
   max-width: var(--action-contact-media-width);
+  aspect-ratio: var(--action-contact-media-ratio);
+  overflow: hidden;
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__image {
-  aspect-ratio: var(--action-contact-media-ratio);
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
