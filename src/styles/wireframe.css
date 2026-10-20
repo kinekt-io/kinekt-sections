@@ -1343,13 +1343,11 @@
   text-decoration: none;
 }
 
-:where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-method a > :last-child {
-  margin-left: auto;
-}
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-icon {
+  display: inline-flex;
+  flex: none;
   color: var(--kinekt-component-muted);
-  font-family: var(--kinekt-component-mono);
 }
 
 @media (min-width: 50rem) {

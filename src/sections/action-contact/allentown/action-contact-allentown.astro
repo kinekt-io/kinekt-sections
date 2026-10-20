@@ -2,6 +2,7 @@
 import '../../../styles/wireframe.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
@@ -11,7 +12,7 @@ interface Cta {
 }
 
 interface ContactMethod {
-  icon?: string
+  icon?: 'whatsapp' | 'phone' | 'email'
   label: string
   href: string
 }
@@ -75,9 +76,8 @@ const actionList = Object.values(actions).filter((action): action is Cta => Bool
               {contactMethods.map((method) => (
                 <li class="beta-action-contact-allentown__contact-method">
                   <a href={method.href}>
-                    {method.icon && <span class="beta-action-contact-allentown__contact-icon" aria-hidden="true">{method.icon}</span>}
+                    {method.icon && <span class="beta-action-contact-allentown__contact-icon"><ContactIcon name={method.icon} /></span>}
                     <span>{method.label}</span>
-                    <span aria-hidden="true">→</span>
                   </a>
                 </li>
               ))}
