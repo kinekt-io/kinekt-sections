@@ -14,6 +14,77 @@
    */
   --kinekt-wireframe-font-sans: system-ui, sans-serif;
   --kinekt-wireframe-font-mono: ui-monospace, monospace;
+  /*
+   * Layout and spacing scale. M and D explicitly mean mobile and desktop.
+   * A site can replace the public --kinekt-layout-* and --kinekt-space-*
+   * aliases; components only consume the resulting semantic tokens.
+   */
+  --kinekt-wireframe-layout-m-website-width: 26.375rem;
+  --kinekt-wireframe-layout-m-content-width: 24.375rem;
+  --kinekt-wireframe-layout-m-width-xs: 2.4375rem;
+  --kinekt-wireframe-layout-m-width-s: 4.875rem;
+  --kinekt-wireframe-layout-m-width-m: 9.75rem;
+  --kinekt-wireframe-layout-m-width-l: 14.625rem;
+  --kinekt-wireframe-layout-m-width-xl: 19.5rem;
+  --kinekt-wireframe-layout-m-width-xxl: 21.9375rem;
+  --kinekt-wireframe-layout-m-section-gutter: 1rem;
+  --kinekt-wireframe-layout-d-website-width: 107.5rem;
+  --kinekt-wireframe-layout-d-content-width: 90rem;
+  --kinekt-wireframe-layout-d-width-xs: 9rem;
+  --kinekt-wireframe-layout-d-width-s: 18rem;
+  --kinekt-wireframe-layout-d-width-m: 36rem;
+  --kinekt-wireframe-layout-d-width-l: 54rem;
+  --kinekt-wireframe-layout-d-width-xl: 72rem;
+  --kinekt-wireframe-layout-d-width-xxl: 81rem;
+  --kinekt-wireframe-layout-d-section-gutter: 8.75rem;
+  --kinekt-wireframe-space-m-xxs: 0.56rem;
+  --kinekt-wireframe-space-m-xs: 0.64rem;
+  --kinekt-wireframe-space-m-s: 0.8rem;
+  --kinekt-wireframe-space-m-m: 1rem;
+  --kinekt-wireframe-space-m-l: 1.25rem;
+  --kinekt-wireframe-space-m-xl: 1.5625rem;
+  --kinekt-wireframe-space-m-xxl: 1.953125rem;
+  --kinekt-wireframe-space-d-xxs: 0.56rem;
+  --kinekt-wireframe-space-d-xs: 0.8rem;
+  --kinekt-wireframe-space-d-s: 1rem;
+  --kinekt-wireframe-space-d-m: 1.25rem;
+  --kinekt-wireframe-space-d-l: 1.5625rem;
+  --kinekt-wireframe-space-d-xl: 1.953125rem;
+  --kinekt-wireframe-space-d-xxl: 2.44140625rem;
+  --kinekt-wireframe-section-space-m-xs: 2.048rem;
+  --kinekt-wireframe-section-space-m-s: 2.56rem;
+  --kinekt-wireframe-section-space-m-m: 3.2rem;
+  --kinekt-wireframe-section-space-m-l: 4rem;
+  --kinekt-wireframe-section-space-m-xl: 5rem;
+  --kinekt-wireframe-section-space-m-xxl: 6.25rem;
+  --kinekt-wireframe-section-space-d-xs: 2.56rem;
+  --kinekt-wireframe-section-space-d-s: 3.2rem;
+  --kinekt-wireframe-section-space-d-m: 4rem;
+  --kinekt-wireframe-section-space-d-l: 5rem;
+  --kinekt-wireframe-section-space-d-xl: 6.25rem;
+  --kinekt-wireframe-section-space-d-xxl: 7.8125rem;
+  --kinekt-wireframe-layout-website-width: clamp(var(--kinekt-wireframe-layout-m-website-width), calc(2.589rem + 97.594vw), var(--kinekt-wireframe-layout-d-website-width));
+  --kinekt-wireframe-layout-content-width: clamp(var(--kinekt-wireframe-layout-m-content-width), calc(5.132rem + 78.947vw), var(--kinekt-wireframe-layout-d-content-width));
+  --kinekt-wireframe-layout-width-xs: clamp(var(--kinekt-wireframe-layout-m-width-xs), calc(0.513rem + 7.895vw), var(--kinekt-wireframe-layout-d-width-xs));
+  --kinekt-wireframe-layout-width-s: clamp(var(--kinekt-wireframe-layout-m-width-s), calc(1.026rem + 15.789vw), var(--kinekt-wireframe-layout-d-width-s));
+  --kinekt-wireframe-layout-width-m: clamp(var(--kinekt-wireframe-layout-m-width-m), calc(2.053rem + 31.579vw), var(--kinekt-wireframe-layout-d-width-m));
+  --kinekt-wireframe-layout-width-l: clamp(var(--kinekt-wireframe-layout-m-width-l), calc(3.079rem + 47.368vw), var(--kinekt-wireframe-layout-d-width-l));
+  --kinekt-wireframe-layout-width-xl: clamp(var(--kinekt-wireframe-layout-m-width-xl), calc(4.105rem + 63.158vw), var(--kinekt-wireframe-layout-d-width-xl));
+  --kinekt-wireframe-layout-width-xxl: clamp(var(--kinekt-wireframe-layout-m-width-xxl), calc(4.618rem + 71.053vw), var(--kinekt-wireframe-layout-d-width-xxl));
+  --kinekt-wireframe-layout-section-gutter: clamp(var(--kinekt-wireframe-layout-m-section-gutter), calc(-1.272rem + 9.323vw), var(--kinekt-wireframe-layout-d-section-gutter));
+  --kinekt-wireframe-space-xxs: var(--kinekt-wireframe-space-m-xxs);
+  --kinekt-wireframe-space-xs: clamp(var(--kinekt-wireframe-space-m-xs), calc(0.592rem + 0.193vw), var(--kinekt-wireframe-space-d-xs));
+  --kinekt-wireframe-space-s: clamp(var(--kinekt-wireframe-space-m-s), calc(0.74rem + 0.241vw), var(--kinekt-wireframe-space-d-s));
+  --kinekt-wireframe-space-m: clamp(var(--kinekt-wireframe-space-m-m), calc(0.925rem + 0.301vw), var(--kinekt-wireframe-space-d-m));
+  --kinekt-wireframe-space-l: clamp(var(--kinekt-wireframe-space-m-l), calc(1.156rem + 0.301vw), var(--kinekt-wireframe-space-d-l));
+  --kinekt-wireframe-space-xl: clamp(var(--kinekt-wireframe-space-m-xl), calc(1.445rem + 0.376vw), var(--kinekt-wireframe-space-d-xl));
+  --kinekt-wireframe-space-xxl: clamp(var(--kinekt-wireframe-space-m-xxl), calc(1.806rem + 0.47vw), var(--kinekt-wireframe-space-d-xxl));
+  --kinekt-wireframe-section-space-xs: clamp(var(--kinekt-wireframe-section-space-m-xs), calc(0.547rem + 6.158vw), var(--kinekt-wireframe-section-space-d-xs));
+  --kinekt-wireframe-section-space-s: clamp(var(--kinekt-wireframe-section-space-m-s), calc(0.684rem + 7.697vw), var(--kinekt-wireframe-section-space-d-s));
+  --kinekt-wireframe-section-space-m: clamp(var(--kinekt-wireframe-section-space-m-m), calc(0.855rem + 9.62vw), var(--kinekt-wireframe-section-space-d-m));
+  --kinekt-wireframe-section-space-l: clamp(var(--kinekt-wireframe-section-space-m-l), calc(1.069rem + 12.03vw), var(--kinekt-wireframe-section-space-d-l));
+  --kinekt-wireframe-section-space-xl: clamp(var(--kinekt-wireframe-section-space-m-xl), calc(1.336rem + 15.04vw), var(--kinekt-wireframe-section-space-d-xl));
+  --kinekt-wireframe-section-space-xxl: clamp(var(--kinekt-wireframe-section-space-m-xxl), calc(1.67rem + 18.8vw), var(--kinekt-wireframe-section-space-d-xxl));
   --kinekt-wireframe-heading-1-size: clamp(2.75rem, 4vw, 3.5rem);
   --kinekt-wireframe-heading-2-size: clamp(2.25rem, 3.5vw, 3rem);
   --kinekt-wireframe-heading-3-size: clamp(1.75rem, 2.5vw, 2.25rem);
@@ -28,15 +99,16 @@
   --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kinekt-color-action-text, #ffffff));
   --kinekt-component-font: var(--kinekt-section-font, var(--kinekt-font-sans, var(--kinekt-wireframe-font-sans)));
   --kinekt-component-mono: var(--kinekt-section-mono, var(--kinekt-font-mono, var(--kinekt-wireframe-font-mono)));
-  --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kinekt-content-width, 90rem));
+  --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kinekt-website-width, var(--kinekt-wireframe-layout-website-width)));
+  --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kinekt-content-width, var(--kinekt-wireframe-layout-content-width)));
   --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kinekt-reading-width, 42rem));
-  --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kinekt-space-inline, clamp(1.25rem, 8vw, 9rem)));
-  --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kinekt-space-section, clamp(3.5rem, 8vw, 8rem)));
-  --kinekt-component-gap: var(--kinekt-section-gap, var(--kinekt-space-content, clamp(1.25rem, 3vw, 2rem)));
+  --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kinekt-space-inline, var(--kinekt-wireframe-layout-section-gutter)));
+  --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kinekt-space-section, var(--kinekt-wireframe-section-space-l)));
+  --kinekt-component-gap: var(--kinekt-section-gap, var(--kinekt-space-content, var(--kinekt-wireframe-space-m)));
   --kinekt-component-radius: var(--kinekt-section-radius, var(--kinekt-radius, 0));
   --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kinekt-border-width, 1px));
-  --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, 0.56rem);
-  --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, 1.25rem);
+  --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kinekt-wireframe-space-xxs));
+  --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kinekt-wireframe-space-m));
   --kinekt-component-heading-1-size: var(--kinekt-section-heading-1-size, var(--kinekt-heading-1-size, var(--kinekt-wireframe-heading-1-size)));
   --kinekt-component-heading-2-size: var(--kinekt-section-heading-2-size, var(--kinekt-heading-2-size, var(--kinekt-wireframe-heading-2-size)));
   --kinekt-component-heading-3-size: var(--kinekt-section-heading-3-size, var(--kinekt-heading-3-size, var(--kinekt-wireframe-heading-3-size)));
@@ -1369,11 +1441,15 @@
  * section tokens overrideable by a consuming site.
  */
 :where(.hero-allentown[data-kinekt-section]) {
-  --hero-allentown-copy-width: var(--kinekt-section-hero-copy-width, 48.75rem);
-  --hero-allentown-media-width: var(--kinekt-section-hero-media-width, 36rem);
-  --hero-allentown-column-gap: var(--kinekt-section-hero-column-gap, 5.25rem);
-  --hero-allentown-min-block-size: var(--kinekt-section-hero-min-block-size, 45rem);
-  --hero-allentown-action-gap: var(--kinekt-section-hero-action-gap, 2.56rem);
+  /* Figma's desktop hero geometry; a site can override every local alias. */
+  --kinekt-wireframe-hero-allentown-d-copy-width: 48.75rem;
+  --kinekt-wireframe-hero-allentown-d-column-gap: 5.25rem;
+  --kinekt-wireframe-hero-allentown-d-min-block-size: 45rem;
+  --hero-allentown-copy-width: var(--kinekt-section-hero-copy-width, clamp(var(--kinekt-wireframe-layout-m-content-width), 100%, var(--kinekt-wireframe-hero-allentown-d-copy-width)));
+  --hero-allentown-media-width: var(--kinekt-section-hero-media-width, clamp(var(--kinekt-wireframe-layout-m-content-width), 100%, var(--kinekt-wireframe-layout-d-width-m)));
+  --hero-allentown-column-gap: var(--kinekt-section-hero-column-gap, var(--kinekt-wireframe-hero-allentown-d-column-gap));
+  --hero-allentown-min-block-size: var(--kinekt-section-hero-min-block-size, var(--kinekt-wireframe-hero-allentown-d-min-block-size));
+  --hero-allentown-action-gap: var(--kinekt-section-hero-action-gap, var(--kinekt-wireframe-section-space-xs));
   --kinekt-section-media-ratio: var(--kinekt-section-hero-media-ratio, 4 / 5);
 }
 
