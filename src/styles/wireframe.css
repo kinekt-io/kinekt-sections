@@ -690,11 +690,6 @@
   max-width: none;
 }
 
-:where([data-kinekt-section]) [class$='__header'] {
-  display: grid;
-  align-items: end;
-  gap: var(--kinekt-component-gap);
-}
 
 :where([data-kinekt-section]) [class$='__header-content'] {
   max-width: var(--kinekt-component-reading-width);
