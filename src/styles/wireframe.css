@@ -1002,35 +1002,42 @@
   padding: 0;
 }
 
-:where(.hero-todos-santos) .hero-todos-santos__features {
-  display: grid;
-  gap: var(--hero-todos-santos-feature-gap);
+:where(.hero-todos-santos) .hero-todos-santos__feature-table {
+  inline-size: max-content;
+  max-inline-size: 100%;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  border-collapse: collapse;
+  text-align: start;
 }
 
-:where(.hero-todos-santos) .hero-todos-santos__features-heading {
+:where(.hero-todos-santos) .hero-todos-santos__feature-table caption {
+  margin-block-end: var(--hero-todos-santos-feature-gap);
+  color: inherit;
   font-size: var(--kinekt-component-heading-4-size);
   font-weight: 700;
   letter-spacing: -0.025em;
+  text-align: start;
 }
 
-:where(.hero-todos-santos) .hero-todos-santos__feature-list {
-  display: grid;
-  gap: var(--hero-todos-santos-feature-row-gap);
+:where(.hero-todos-santos) .hero-todos-santos__feature-table tr + tr {
+  border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
 }
 
-:where(.hero-todos-santos) .hero-todos-santos__feature {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--kinekt-wireframe-space-xxs);
-  padding-block-end: var(--hero-todos-santos-feature-row-gap);
-  border-block-end: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+:where(.hero-todos-santos) .hero-todos-santos__feature-table :is(th, td) {
+  padding-block: var(--hero-todos-santos-feature-row-gap);
+  border: 0;
+  background: transparent;
+  vertical-align: top;
 }
 
-:where(.hero-todos-santos) .hero-todos-santos__feature :is(dt, dd) {
-  margin: 0;
+:where(.hero-todos-santos) .hero-todos-santos__feature-table th {
+  padding-inline-end: var(--kinekt-wireframe-space-m);
+  font-weight: 400;
 }
 
-:where(.hero-todos-santos) .hero-todos-santos__feature dd {
+:where(.hero-todos-santos) .hero-todos-santos__feature-table td {
   color: var(--kinekt-component-muted);
 }
 

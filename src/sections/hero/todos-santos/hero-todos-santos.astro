@@ -46,13 +46,13 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
       <header class="hero-todos-santos__header">
         <SectionIntro intro={intro} headingLevel={headingLevel} />
       </header>
-      {featureHeading && features.length > 0 && (
-        <section class="hero-todos-santos__features" aria-labelledby={`${id ?? 'hero-todos-santos'}-features-heading`}>
-          <h2 class="hero-todos-santos__features-heading" id={`${id ?? 'hero-todos-santos'}-features-heading`}>{featureHeading}</h2>
-          <dl class="hero-todos-santos__feature-list">
-            {features.map((feature) => <div class="hero-todos-santos__feature"><dt>{feature.label}</dt><dd>{feature.value}</dd></div>)}
-          </dl>
-        </section>
+      {features.length > 0 && (
+        <table class="hero-todos-santos__feature-table">
+          {featureHeading && <caption>{featureHeading}</caption>}
+          <tbody>
+            {features.map((feature) => <tr><th scope="row">{feature.label}</th><td>{feature.value}</td></tr>)}
+          </tbody>
+        </table>
       )}
       {(ctas?.primary || ctas?.secondary) && (
         <nav class="hero-todos-santos__actions" aria-label="Hero actions">
