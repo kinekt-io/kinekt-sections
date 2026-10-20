@@ -6,7 +6,7 @@ import type { BetaHomepageProblemSolutionAllentownContent, PayloadBetaHomepagePr
 const manifest = {
   "slug": "homepage-problem-solution-allentown",
   "title": "Homepage Problem Solution Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

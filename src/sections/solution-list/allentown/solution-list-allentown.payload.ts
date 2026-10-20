@@ -6,7 +6,7 @@ import type { BetaSolutionListAllentownContent, PayloadBetaSolutionListAllentown
 const manifest = {
   "slug": "solution-list-allentown",
   "title": "Solution List Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

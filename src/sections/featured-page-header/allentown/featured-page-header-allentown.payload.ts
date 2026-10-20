@@ -6,7 +6,7 @@ import type { BetaFeaturedPageHeaderAllentownContent, PayloadBetaFeaturedPageHea
 const manifest = {
   "slug": "featured-page-header-allentown",
   "title": "Featured Page Header Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

@@ -6,7 +6,7 @@ import type { BetaMediaAccordionAllentownContent, PayloadBetaMediaAccordionAllen
 const manifest = {
   "slug": "media-accordion-allentown",
   "title": "Media Accordion Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

@@ -6,7 +6,7 @@ import type { BetaComplianceDetailAllentownContent, PayloadBetaComplianceDetailA
 const manifest = {
   "slug": "compliance-detail-allentown",
   "title": "Compliance Detail Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

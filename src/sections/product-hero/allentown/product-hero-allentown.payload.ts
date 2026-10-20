@@ -6,7 +6,7 @@ import type { BetaProductHeroAllentownContent, PayloadBetaProductHeroAllentownDo
 const manifest = {
   "slug": "product-hero-allentown",
   "title": "Product Hero Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

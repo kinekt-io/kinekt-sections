@@ -6,7 +6,7 @@ import type { BetaStepsStageContent, PayloadBetaStepsStageDocument } from './ste
 const manifest = {
   "slug": "steps-stage",
   "title": "Steps Stage",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

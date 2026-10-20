@@ -6,7 +6,7 @@ import type { BetaInsightIndexAllentownContent, PayloadBetaInsightIndexAllentown
 const manifest = {
   "slug": "insight-index-allentown",
   "title": "Insight Index Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

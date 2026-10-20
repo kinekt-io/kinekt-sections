@@ -1864,3 +1864,262 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/*
+ * Figma-informed structural compositions.
+ *
+ * These variants retain the neutral token contract while distinguishing the
+ * catalogue, data and editorial geometries that the shared renderer exposes.
+ */
+:where(.beta-battery-models-allentown[data-kinekt-section]) {
+  --kinekt-section-card-columns: 4;
+  --kinekt-section-card-min-width: 15rem;
+  --kinekt-section-card-padding: 0;
+}
+
+:where(.beta-battery-models-allentown) .beta-battery-models-allentown__models,
+:where(.beta-event-overview-allentown) .beta-event-overview-allentown__items {
+  gap: var(--kinekt-wireframe-section-space-s);
+  background: transparent;
+}
+
+:where(.beta-battery-models-allentown) .beta-battery-models-allentown__models > li > article,
+:where(.beta-event-overview-allentown) .beta-event-overview-allentown__items > li > article {
+  padding: 0;
+  background: transparent;
+}
+
+:where(.beta-battery-models-allentown) .beta-battery-models-allentown__models > li > article {
+  gap: var(--kinekt-wireframe-space-xl);
+}
+
+:where(.beta-battery-models-allentown) .beta-battery-models-allentown__models > li > article > picture:first-child img {
+  aspect-ratio: 16 / 9;
+}
+
+:where(.beta-comparison-overview-allentown),
+:where(.beta-density-comparison-allentown),
+:where(.beta-faq-allentown),
+:where(.beta-faq-index-allentown) {
+  --kinekt-section-reading-width: 54rem;
+}
+
+:where(.beta-comparison-overview-allentown) .beta-comparison-overview-allentown__header,
+:where(.beta-density-comparison-allentown) .beta-density-comparison-allentown__header,
+:where(.beta-faq-allentown) .beta-faq-allentown__header,
+:where(.beta-faq-index-allentown) .beta-faq-index-allentown__header {
+  text-align: center;
+}
+
+:where(.beta-comparison-overview-allentown) .beta-comparison-overview-allentown__header-content,
+:where(.beta-density-comparison-allentown) .beta-density-comparison-allentown__header-content,
+:where(.beta-faq-allentown) .beta-faq-allentown__header-content,
+:where(.beta-faq-index-allentown) .beta-faq-index-allentown__header-content {
+  margin-inline: auto;
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(10rem, 1fr);
+  gap: var(--kinekt-wireframe-space-l);
+  margin: 0;
+  padding: var(--kinekt-wireframe-space-m) var(--kinekt-wireframe-space-xl);
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__item:nth-child(odd) {
+  background: var(--kinekt-component-surface);
+}
+
+:where(.compatibility-specifications--allentown) .compatibility-specifications__item :is(dt, dd) {
+  margin: 0;
+}
+
+:where(.beta-facilities-overview-allentown) .beta-facilities-overview-allentown__container {
+  gap: var(--kinekt-wireframe-section-space-l);
+}
+
+:where(.beta-facilities-overview-allentown) .beta-facilities-overview-allentown__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--kinekt-wireframe-section-space-s) var(--kinekt-wireframe-section-space-m);
+  border: 0;
+}
+
+:where(.beta-facilities-overview-allentown) .beta-facilities-overview-allentown__facts > li {
+  padding: 0;
+  border: 0;
+}
+
+:where(.beta-facilities-overview-allentown) .beta-facilities-overview-allentown__media img {
+  aspect-ratio: 17 / 10;
+  object-fit: cover;
+}
+
+:where(.beta-featured-insights-allentown) .beta-featured-insights-allentown__insight-sources {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  background: transparent;
+}
+
+:where(.beta-featured-insights-allentown) .beta-featured-insights-allentown__insight-sources > li > article {
+  padding: var(--kinekt-wireframe-section-space-s) 0;
+  border-width: 0 0 var(--kinekt-component-border-width);
+  background: transparent;
+}
+
+:where(.beta-featured-insights-allentown) .beta-featured-insights-allentown__insight-sources > li:first-child > article {
+  padding-top: 0;
+}
+
+@media (min-width: 50rem) {
+  :where(.beta-facilities-overview-allentown) .beta-facilities-overview-allentown__container {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: end;
+  }
+
+  :where(.beta-facilities-overview-allentown) .beta-facilities-overview-allentown__header {
+    grid-column: 1 / -1;
+  }
+
+  :where(.beta-featured-insights-allentown) .beta-featured-insights-allentown__insight-sources {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: var(--kinekt-wireframe-section-space-l);
+  }
+
+  :where(.beta-featured-insights-allentown) .beta-featured-insights-allentown__insight-sources > li:first-child {
+    grid-row: span 3;
+  }
+
+  :where(.beta-featured-insights-allentown) .beta-featured-insights-allentown__insight-sources > li:first-child > article {
+    gap: var(--kinekt-wireframe-space-xl);
+  }
+}
+
+/* Figma-informed process and utility compositions. */
+:where(.beta-steps-stage) .beta-steps-stage__container {
+  display: grid;
+  gap: var(--kinekt-wireframe-section-space-l);
+}
+
+:where(.beta-steps-stage) .beta-steps-stage__steps {
+  display: grid;
+  gap: var(--kinekt-wireframe-section-space-s);
+  margin: 0;
+}
+
+:where(.beta-steps-stage) .beta-steps-stage__steps-item {
+  border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-border);
+}
+
+:where(.beta-steps-stage) .beta-steps-stage__steps summary {
+  padding-block: var(--kinekt-wireframe-space-s);
+}
+
+:where(.beta-steps-stage) .beta-steps-stage__steps-body {
+  padding: 0 0 var(--kinekt-wireframe-space-m);
+}
+
+:where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__container {
+  display: grid;
+  gap: var(--kinekt-wireframe-section-space-l);
+}
+
+:where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__header,
+:where(.beta-not-found-hero-allentown) .beta-not-found-hero-allentown__header {
+  justify-self: center;
+  max-inline-size: var(--kinekt-section-reading-width);
+  text-align: center;
+}
+
+:where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__next-steps-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--kinekt-wireframe-space-s);
+  margin: 0;
+}
+
+:where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__next-steps-heading::after {
+  flex: 1;
+  block-size: var(--kinekt-component-border-width);
+  background: var(--kinekt-component-border);
+  content: "";
+}
+
+:where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__next-steps {
+  display: grid;
+  gap: var(--kinekt-wireframe-section-space-m);
+  margin: 0;
+}
+
+:where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__next-steps > li > article {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+:where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__media {
+  justify-self: center;
+  inline-size: min(100%, 37.5rem);
+}
+
+:where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__media img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+:where(.beta-read-more-allentown) .beta-read-more-allentown__container {
+  display: grid;
+  gap: var(--kinekt-wireframe-section-space-l);
+}
+
+:where(.beta-read-more-allentown) .beta-read-more-allentown__header {
+  align-self: center;
+}
+
+:where(.beta-read-more-allentown) .beta-read-more-allentown__media {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--kinekt-wireframe-space-s);
+}
+
+:where(.beta-read-more-allentown) .beta-read-more-allentown__media img {
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+@media (min-width: 50rem) {
+  :where(.beta-steps-stage) .beta-steps-stage__container {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  :where(.beta-steps-stage) .beta-steps-stage__steps {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  :where(.beta-steps-stage) .beta-steps-stage__media {
+    grid-column: 1;
+  }
+
+  :where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__next-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  :where(.beta-read-more-allentown) .beta-read-more-allentown__container {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, .7fr);
+    align-items: center;
+  }
+
+  :where(.beta-read-more-allentown) .beta-read-more-allentown__media {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}

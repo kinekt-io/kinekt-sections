@@ -6,7 +6,7 @@ import type { BetaFaqIndexAllentownContent, PayloadBetaFaqIndexAllentownDocument
 const manifest = {
   "slug": "faq-index-allentown",
   "title": "FAQ Index Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

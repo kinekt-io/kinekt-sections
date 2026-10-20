@@ -6,7 +6,7 @@ import type { BetaHdCellsEngineeringAllentownContent, PayloadBetaHdCellsEngineer
 const manifest = {
   "slug": "hd-cells-engineering-allentown",
   "title": "HD Cells Engineering Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

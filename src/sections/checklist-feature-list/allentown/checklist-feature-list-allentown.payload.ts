@@ -6,7 +6,7 @@ import type { BetaChecklistFeatureListAllentownContent, PayloadBetaChecklistFeat
 const manifest = {
   "slug": "checklist-feature-list-allentown",
   "title": "Checklist Feature List Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

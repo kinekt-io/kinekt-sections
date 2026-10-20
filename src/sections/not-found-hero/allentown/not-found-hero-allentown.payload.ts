@@ -6,7 +6,7 @@ import type { BetaNotFoundHeroAllentownContent, PayloadBetaNotFoundHeroAllentown
 const manifest = {
   "slug": "not-found-hero-allentown",
   "title": "Not Found Hero Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

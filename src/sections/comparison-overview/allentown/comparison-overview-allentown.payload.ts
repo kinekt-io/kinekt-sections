@@ -6,7 +6,7 @@ import type { BetaComparisonOverviewAllentownContent, PayloadBetaComparisonOverv
 const manifest = {
   "slug": "comparison-overview-allentown",
   "title": "Comparison Overview Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

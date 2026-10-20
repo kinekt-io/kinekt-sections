@@ -6,7 +6,7 @@ import type { BetaFeaturedInsightsAllentownContent, PayloadBetaFeaturedInsightsA
 const manifest = {
   "slug": "featured-insights-allentown",
   "title": "Featured Insights Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

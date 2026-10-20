@@ -6,7 +6,7 @@ import type { BetaMediaMetricsAllentownContent, PayloadBetaMediaMetricsAllentown
 const manifest = {
   "slug": "media-metrics-allentown",
   "title": "Media Metrics Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

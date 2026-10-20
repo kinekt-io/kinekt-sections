@@ -6,7 +6,7 @@ import type { BetaProductOptionsAllentownContent, PayloadBetaProductOptionsAllen
 const manifest = {
   "slug": "product-options-allentown",
   "title": "Product Options Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

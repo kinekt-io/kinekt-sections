@@ -6,7 +6,7 @@ import type { BetaMediaFactGridAllentownContent, PayloadBetaMediaFactGridAllento
 const manifest = {
   "slug": "media-fact-grid-allentown",
   "title": "Media Fact Grid Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

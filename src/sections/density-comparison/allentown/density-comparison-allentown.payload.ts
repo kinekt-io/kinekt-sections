@@ -6,7 +6,7 @@ import type { BetaDensityComparisonAllentownContent, PayloadBetaDensityCompariso
 const manifest = {
   "slug": "density-comparison-allentown",
   "title": "Density Comparison Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

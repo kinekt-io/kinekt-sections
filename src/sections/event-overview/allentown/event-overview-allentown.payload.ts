@@ -6,7 +6,7 @@ import type { BetaEventOverviewAllentownContent, PayloadBetaEventOverviewAllento
 const manifest = {
   "slug": "event-overview-allentown",
   "title": "Event Overview Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",
