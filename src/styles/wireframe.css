@@ -8,6 +8,17 @@
  */
 
 :where([data-kinekt-section]) {
+  /*
+   * The package's default theme. Sites override the --kinekt-* aliases;
+   * component CSS only reads the --kinekt-component-* semantic aliases.
+   */
+  --kinekt-wireframe-font-sans: system-ui, sans-serif;
+  --kinekt-wireframe-font-mono: ui-monospace, monospace;
+  --kinekt-wireframe-heading-1-size: clamp(2.75rem, 6vw, 5.5rem);
+  --kinekt-wireframe-heading-2-size: clamp(2.25rem, 5vw, 4rem);
+  --kinekt-wireframe-heading-3-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  --kinekt-wireframe-heading-4-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  --kinekt-wireframe-heading-line-height: 0.97;
   --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kinekt-color-canvas, #ffffff));
   --kinekt-component-surface: var(--kinekt-section-surface, var(--kinekt-color-surface, #f5f5f5));
   --kinekt-component-ink: var(--kinekt-section-ink, var(--kinekt-color-ink, #111111));
@@ -15,8 +26,8 @@
   --kinekt-component-line: var(--kinekt-section-line, var(--kinekt-color-line, #d4d4d4));
   --kinekt-component-action: var(--kinekt-section-action, var(--kinekt-color-action, #111111));
   --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kinekt-color-action-text, #ffffff));
-  --kinekt-component-font: var(--kinekt-section-font, var(--kinekt-font-sans, system-ui, sans-serif));
-  --kinekt-component-mono: var(--kinekt-section-mono, var(--kinekt-font-mono, ui-monospace, monospace));
+  --kinekt-component-font: var(--kinekt-section-font, var(--kinekt-font-sans, var(--kinekt-wireframe-font-sans)));
+  --kinekt-component-mono: var(--kinekt-section-mono, var(--kinekt-font-mono, var(--kinekt-wireframe-font-mono)));
   --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kinekt-content-width, 90rem));
   --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kinekt-reading-width, 42rem));
   --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kinekt-space-inline, clamp(1.25rem, 8vw, 9rem)));
@@ -26,6 +37,11 @@
   --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kinekt-border-width, 1px));
   --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, 0.56rem);
   --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, 1.25rem);
+  --kinekt-component-heading-1-size: var(--kinekt-section-heading-1-size, var(--kinekt-heading-1-size, var(--kinekt-wireframe-heading-1-size)));
+  --kinekt-component-heading-2-size: var(--kinekt-section-heading-2-size, var(--kinekt-heading-2-size, var(--kinekt-wireframe-heading-2-size)));
+  --kinekt-component-heading-3-size: var(--kinekt-section-heading-3-size, var(--kinekt-heading-3-size, var(--kinekt-wireframe-heading-3-size)));
+  --kinekt-component-heading-4-size: var(--kinekt-section-heading-4-size, var(--kinekt-heading-4-size, var(--kinekt-wireframe-heading-4-size)));
+  --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kinekt-heading-line-height, var(--kinekt-wireframe-heading-line-height)));
   box-sizing: border-box;
   padding-block: var(--kinekt-component-block-space);
   color: var(--kinekt-component-ink);
@@ -99,15 +115,15 @@
   color: inherit;
   font: inherit;
   font-weight: 400;
-  line-height: 0.97;
+  line-height: var(--kinekt-component-heading-line-height);
   letter-spacing: -0.045em;
   text-wrap: balance;
 }
 
-:where([data-kinekt-section]) h1,
-:where([data-kinekt-section]) h2 { font-size: clamp(2rem, 7vw, 4.75rem); }
-:where([data-kinekt-section]) h3 { font-size: clamp(1.2rem, 3vw, 1.8rem); }
-:where([data-kinekt-section]) h4 { font-size: 1.125rem; }
+:where([data-kinekt-section]) h1 { font-size: var(--kinekt-component-heading-1-size); }
+:where([data-kinekt-section]) h2 { font-size: var(--kinekt-component-heading-2-size); }
+:where([data-kinekt-section]) h3 { font-size: var(--kinekt-component-heading-3-size); }
+:where([data-kinekt-section]) h4 { font-size: var(--kinekt-component-heading-4-size); }
 
 :where([data-kinekt-section]) :is(p, li, dd, td, th, label, input, textarea, button) {
   font: inherit;
@@ -1255,9 +1271,6 @@
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__header .section-intro__heading {
   max-width: none;
-  font-size: clamp(2rem, 2.5vw, 2.25rem);
-  line-height: 1.2;
-  letter-spacing: -0.03em;
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__header .section-intro__description {

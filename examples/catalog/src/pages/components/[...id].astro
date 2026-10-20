@@ -48,6 +48,13 @@ const Preview = (previewModule as { default: any }).default
             <label><input type="radio" name="theme" value="semi-dark" /> Semi-dark</label>
             <label><input type="radio" name="theme" value="dark" /> Dark</label>
           </fieldset>
+          <fieldset data-kinekt-intro-heading-options hidden>
+            <legend>First intro heading</legend>
+            <label><input type="radio" name="intro-heading-level" value="h1" /> H1</label>
+            <label><input type="radio" name="intro-heading-level" value="h2" checked /> H2</label>
+            <label><input type="radio" name="intro-heading-level" value="h3" /> H3</label>
+            <label><input type="radio" name="intro-heading-level" value="h4" /> H4</label>
+          </fieldset>
           {component.id === 'sections/case-studies/allentown' && (
             <>
               <fieldset>
@@ -85,6 +92,22 @@ const Preview = (previewModule as { default: any }).default
       const initialThemeControl = Array.from(document.querySelectorAll<HTMLInputElement>('.preview-options input[name="theme"]'))
         .find((input) => input.value === initialTheme)
       if (initialThemeControl) initialThemeControl.checked = true
+      const initialIntroHeading = surface?.querySelector<HTMLHeadingElement>('.section-intro__heading')
+      const introHeadingOptions = document.querySelector<HTMLFieldSetElement>('[data-kinekt-intro-heading-options]')
+      if (initialIntroHeading && introHeadingOptions) {
+        introHeadingOptions.hidden = false
+        const initialHeadingControl = Array.from(document.querySelectorAll<HTMLInputElement>('.preview-options input[name="intro-heading-level"]'))
+          .find((input) => input.value === initialIntroHeading.tagName.toLowerCase())
+        if (initialHeadingControl) initialHeadingControl.checked = true
+      }
+      function setIntroHeadingLevel(level: 'h1' | 'h2' | 'h3' | 'h4') {
+        const heading = surface?.querySelector<HTMLHeadingElement>('.section-intro__heading')
+        if (!heading || heading.tagName.toLowerCase() === level) return
+        const replacement = document.createElement(level)
+        for (const attribute of heading.attributes) replacement.setAttribute(attribute.name, attribute.value)
+        replacement.replaceChildren(...Array.from(heading.childNodes))
+        heading.replaceWith(replacement)
+      }
       function toggleCtaIcons(links: NodeListOf<HTMLAnchorElement>, visible: boolean) {
         links.forEach((link) => {
           const icon = link.querySelector('[data-kinekt-cta-icon]')
@@ -104,6 +127,9 @@ const Preview = (previewModule as { default: any }).default
           if (input.name === 'theme') {
             const section = surface.querySelector<HTMLElement>('[data-kinekt-section]')
             if (section) section.dataset.kinektTheme = input.value
+          }
+          if (input.name === 'intro-heading-level' && (input.value === 'h1' || input.value === 'h2' || input.value === 'h3' || input.value === 'h4')) {
+            setIntroHeadingLevel(input.value)
           }
           if (input.name === 'carousel-controls') {
             const carousel = surface.querySelector<HTMLElement>('[data-kinekt-carousel]')
