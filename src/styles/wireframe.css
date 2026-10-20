@@ -1675,6 +1675,201 @@
 }
 
 /*
+ * MOQ & Lead Times is an intentionally asymmetrical ordering section. These
+ * local aliases mirror the Figma geometry without leaking brand tokens; a
+ * consuming site can replace each --kinekt-section-moq-lead-times-* value.
+ */
+:where(.beta-moq-lead-times-allentown[data-kinekt-section]) {
+  --kinekt-wireframe-moq-lead-times-d-content-width: 90rem;
+  --kinekt-wireframe-moq-lead-times-d-intro-width: 36rem;
+  --kinekt-wireframe-moq-lead-times-d-facts-width: 40rem;
+  --kinekt-wireframe-moq-lead-times-d-fact-column-width: 18rem;
+  --kinekt-wireframe-moq-lead-times-d-fact-column-gap: 4rem;
+  --kinekt-wireframe-moq-lead-times-d-facts-inset: 1.953125rem;
+  --kinekt-wireframe-moq-lead-times-d-block-space: 6.25rem;
+  --kinekt-wireframe-moq-lead-times-d-intro-action-gap: 2.56rem;
+  --kinekt-wireframe-moq-lead-times-m-inline-space: 1rem;
+  --kinekt-wireframe-moq-lead-times-fact-header-gap: 0.56rem;
+  --kinekt-wireframe-moq-lead-times-fact-content-gap: 1.5625rem;
+  --kinekt-wireframe-moq-lead-times-fact-value-gap: 0.8rem;
+  --kinekt-wireframe-moq-lead-times-lead-fact-gap: 1.953125rem;
+  --kinekt-wireframe-moq-lead-times-fact-value-inline-padding: 1rem;
+  --kinekt-wireframe-moq-lead-times-fact-value-block-padding: 0.68rem;
+  --kinekt-wireframe-moq-lead-times-fact-heading-size: 1.5rem;
+  --kinekt-wireframe-moq-lead-times-fact-description-size: 1rem;
+  --kinekt-wireframe-moq-lead-times-action-size: 1.125rem;
+  --moq-lead-times-content-width: var(--kinekt-section-moq-lead-times-content-width, var(--kinekt-wireframe-moq-lead-times-d-content-width));
+  --moq-lead-times-intro-width: var(--kinekt-section-moq-lead-times-intro-width, var(--kinekt-wireframe-moq-lead-times-d-intro-width));
+  --moq-lead-times-facts-width: var(--kinekt-section-moq-lead-times-facts-width, var(--kinekt-wireframe-moq-lead-times-d-facts-width));
+  --moq-lead-times-fact-column-width: var(--kinekt-section-moq-lead-times-fact-column-width, var(--kinekt-wireframe-moq-lead-times-d-fact-column-width));
+  --moq-lead-times-fact-column-gap: var(--kinekt-section-moq-lead-times-fact-column-gap, var(--kinekt-wireframe-moq-lead-times-d-fact-column-gap));
+  --moq-lead-times-facts-inset: var(--kinekt-section-moq-lead-times-facts-inset, 0);
+  --moq-lead-times-block-space: var(--kinekt-section-moq-lead-times-block-space, var(--kinekt-wireframe-moq-lead-times-d-block-space));
+  --moq-lead-times-inline-space: var(--kinekt-section-moq-lead-times-inline-space, var(--kinekt-wireframe-moq-lead-times-m-inline-space));
+  --moq-lead-times-intro-action-gap: var(--kinekt-section-moq-lead-times-intro-action-gap, var(--kinekt-wireframe-moq-lead-times-d-intro-action-gap));
+  --moq-lead-times-fact-header-gap: var(--kinekt-section-moq-lead-times-fact-header-gap, var(--kinekt-wireframe-moq-lead-times-fact-header-gap));
+  --moq-lead-times-fact-content-gap: var(--kinekt-section-moq-lead-times-fact-content-gap, var(--kinekt-wireframe-moq-lead-times-fact-content-gap));
+  --moq-lead-times-fact-value-gap: var(--kinekt-section-moq-lead-times-fact-value-gap, var(--kinekt-wireframe-moq-lead-times-fact-value-gap));
+  --moq-lead-times-lead-fact-gap: var(--kinekt-section-moq-lead-times-lead-fact-gap, var(--kinekt-wireframe-moq-lead-times-lead-fact-gap));
+  --moq-lead-times-fact-value-inline-padding: var(--kinekt-section-moq-lead-times-fact-value-inline-padding, var(--kinekt-wireframe-moq-lead-times-fact-value-inline-padding));
+  --moq-lead-times-fact-value-block-padding: var(--kinekt-section-moq-lead-times-fact-value-block-padding, var(--kinekt-wireframe-moq-lead-times-fact-value-block-padding));
+  --moq-lead-times-fact-heading-size: var(--kinekt-section-moq-lead-times-fact-heading-size, var(--kinekt-wireframe-moq-lead-times-fact-heading-size));
+  --moq-lead-times-fact-description-size: var(--kinekt-section-moq-lead-times-fact-description-size, var(--kinekt-wireframe-moq-lead-times-fact-description-size));
+  --moq-lead-times-action-size: var(--kinekt-section-moq-lead-times-action-size, var(--kinekt-wireframe-moq-lead-times-action-size));
+  --kinekt-component-content-width: var(--moq-lead-times-content-width);
+  --kinekt-component-inline-space: var(--moq-lead-times-inline-space);
+  --kinekt-component-block-space: var(--moq-lead-times-block-space);
+  --kinekt-component-reading-width: var(--moq-lead-times-intro-width);
+  --kinekt-component-intro-description-gap: var(--kinekt-section-moq-lead-times-intro-description-gap, var(--kinekt-wireframe-space-d-m));
+  --kinekt-component-action: var(--kinekt-section-moq-lead-times-action, var(--kinekt-component-surface));
+  --kinekt-component-action-text: var(--kinekt-section-moq-lead-times-action-text, var(--kinekt-component-ink));
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--moq-lead-times-intro-action-gap);
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__intro,
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__facts,
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-column,
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__intro {
+  width: 100%;
+  max-width: var(--moq-lead-times-intro-width);
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__intro > :is(.section-intro__accent, .section-intro__heading, .section-intro__description),
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-header > :is(h3, p) {
+  margin: 0;
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__intro .section-intro__heading {
+  font-size: var(--kinekt-section-moq-lead-times-heading-size, 2.25rem);
+  line-height: 1.1;
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__intro .section-intro__description {
+  max-width: none;
+  font-size: var(--kinekt-section-moq-lead-times-description-size, 1.125rem);
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__actions {
+  margin-top: var(--moq-lead-times-intro-action-gap);
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__actions .button {
+  font-size: var(--moq-lead-times-action-size);
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__facts {
+  display: grid;
+  width: 100%;
+  max-width: var(--moq-lead-times-facts-width);
+  gap: var(--moq-lead-times-fact-column-gap);
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-column {
+  width: 100%;
+  gap: var(--moq-lead-times-fact-content-gap);
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-header {
+  gap: var(--moq-lead-times-fact-header-gap);
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-header h3 {
+  font-size: var(--moq-lead-times-fact-heading-size);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-header p {
+  color: var(--kinekt-component-muted);
+  font-size: var(--moq-lead-times-fact-description-size);
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-values {
+  display: grid;
+  gap: var(--moq-lead-times-fact-value-gap);
+  width: 100%;
+  margin: 0;
+  padding-top: var(--moq-lead-times-fact-content-gap);
+  border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-values > div,
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-values > div:first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--moq-lead-times-fact-value-gap);
+  padding: 0;
+  border: 0;
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-values--lead-times {
+  gap: var(--moq-lead-times-lead-fact-gap);
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-values :is(dt, dd) {
+  margin: 0;
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-values dt {
+  font-weight: 600;
+  line-height: 1;
+}
+
+:where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-values dd {
+  padding: var(--moq-lead-times-fact-value-block-padding) var(--moq-lead-times-fact-value-inline-padding);
+  border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+  border-radius: var(--kinekt-component-radius);
+  color: var(--kinekt-component-ink);
+  background: var(--kinekt-component-surface);
+  font-family: var(--kinekt-component-mono);
+  font-size: var(--kinekt-component-text-m-size);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 48rem) {
+  :where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__facts {
+    grid-template-columns: repeat(2, minmax(0, var(--moq-lead-times-fact-column-width)));
+  }
+}
+
+@media (min-width: 80rem) {
+  :where(.beta-moq-lead-times-allentown[data-kinekt-section]) {
+    --moq-lead-times-inline-space: var(--kinekt-section-moq-lead-times-inline-space, 0rem);
+    --moq-lead-times-facts-inset: var(--kinekt-section-moq-lead-times-facts-inset, var(--kinekt-wireframe-moq-lead-times-d-facts-inset));
+  }
+
+  :where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__container {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--kinekt-section-moq-lead-times-column-gap, var(--kinekt-wireframe-section-space-l));
+  }
+
+  :where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__facts {
+    flex: 0 1 var(--moq-lead-times-facts-width);
+    padding-top: var(--moq-lead-times-facts-inset);
+  }
+}
+
+/*
  * Hero Allentown — Kinekt's side-media homepage hero. The local geometry
  * reflects the Figma 1440px content area while keeping the public theme and
  * section tokens overrideable by a consuming site.

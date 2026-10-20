@@ -1,157 +1,42 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
-
-const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-  },
-  "cta": {
-    "cta": {
-      "label": "Explore the specification",
-      "href": "#"
-    }
-  },
-  "moq": {
-    "title": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-    "value": {
-      "text": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-    }
-  },
-  "leadTimes": [
-    {
-      "title": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "value": {
-        "text": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-        "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-      }
-    },
-    {
-      "title": "Designed for the constraints that shape delivery",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "value": {
-        "text": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-        "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-      }
-    },
-    {
-      "title": "Performance data teams can use with confidence",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "value": {
-        "text": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-        "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-      }
-    }
-  ]
-}
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "cta": {
-    "kind": "component",
-    "id": "controls/button/allentown",
-    "role": "button",
-    "fields": {
-      "cta": {
-        "kind": "cta"
-      }
-    }
-  },
-  "moq": {
-    "kind": "component",
-    "id": "components/delivery-fact/allentown",
-    "role": "delivery-fact",
-    "fields": {
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "textarea"
-      },
-      "value": {
-        "kind": "component",
-        "id": "atoms/label/allentown",
-        "role": "label",
-        "fields": {
-          "text": {
-            "kind": "text"
-          },
-          "icon": {
-            "kind": "text"
-          }
-        }
-      }
-    }
-  },
-  "leadTimes": {
-    "kind": "componentList",
-    "id": "components/delivery-fact/allentown",
-    "role": "delivery-fact",
-    "fields": {
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "textarea"
-      },
-      "value": {
-        "kind": "component",
-        "id": "atoms/label/allentown",
-        "role": "label",
-        "fields": {
-          "text": {
-            "kind": "text"
-          },
-          "icon": {
-            "kind": "text"
-          }
-        }
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
+import MoqLeadTimesAllentown from './moq-lead-times-allentown.astro'
 ---
-<StructuralSection block="beta-moq-lead-times-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+
+<MoqLeadTimesAllentown
+  theme="dark"
+  intro={{
+    accentHeading: 'Ordering & delivery',
+    heading: 'From first order to scalable supply',
+    description: 'Clear order quantities and predictable lead times help you plan from early testing through recurring production.',
+  }}
+  cta={{
+    cta: {
+      label: 'Discuss with an expert',
+      href: '#',
+    },
+  }}
+  moq={{
+    title: 'Minimum order quantity',
+    description: 'Start small. Scale when you are ready.',
+    value: {
+      icon: 'Production',
+      text: 'From 200 units',
+    },
+  }}
+  leadTimes={[
+    {
+      title: 'Sample',
+      description: 'Evaluation units prepared for the next engineering decision.',
+      value: {
+        text: '2–3 weeks',
+      },
+    },
+    {
+      title: 'Production',
+      description: 'Confirmed production windows for approved specifications.',
+      value: {
+        text: '8–10 weeks',
+      },
+    },
+  ]}
+/>

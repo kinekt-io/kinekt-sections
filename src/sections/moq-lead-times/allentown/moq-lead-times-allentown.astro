@@ -1,90 +1,85 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe.css'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "cta": {
-    "kind": "component",
-    "id": "controls/button/allentown",
-    "role": "button",
-    "fields": {
-      "cta": {
-        "kind": "cta"
-      }
-    }
-  },
-  "moq": {
-    "kind": "component",
-    "id": "components/delivery-fact/allentown",
-    "role": "delivery-fact",
-    "fields": {
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "textarea"
-      },
-      "value": {
-        "kind": "component",
-        "id": "atoms/label/allentown",
-        "role": "label",
-        "fields": {
-          "text": {
-            "kind": "text"
-          },
-          "icon": {
-            "kind": "text"
-          }
-        }
-      }
-    }
-  },
-  "leadTimes": {
-    "kind": "componentList",
-    "id": "components/delivery-fact/allentown",
-    "role": "delivery-fact",
-    "fields": {
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "textarea"
-      },
-      "value": {
-        "kind": "component",
-        "id": "atoms/label/allentown",
-        "role": "label",
-        "fields": {
-          "text": {
-            "kind": "text"
-          },
-          "icon": {
-            "kind": "text"
-          }
-        }
-      }
-    }
-  }
+interface Cta {
+  label: string
+  href: string
 }
+
+interface FactValue {
+  text: string
+  icon?: string
+}
+
+interface DeliveryFact {
+  title: string
+  description: string
+  value: FactValue
+}
+
+interface Props {
+  id?: string
+  theme?: 'light' | 'semi-light' | 'semi-dark' | 'dark'
+  intro: SectionIntroContent
+  cta?: { cta?: Cta }
+  moq: DeliveryFact
+  leadTimes: DeliveryFact[]
+  headingLevel?: 'h1' | 'h2' | 'h3'
+}
+
+const {
+  id,
+  theme = 'dark',
+  intro,
+  cta,
+  moq,
+  leadTimes,
+  headingLevel = 'h2',
+} = Astro.props as Props
 ---
-<StructuralSection block="beta-moq-lead-times-allentown" fields={fields} {...props} />
+
+<section class="beta-moq-lead-times-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="beta-moq-lead-times-allentown__container">
+    <header class="beta-moq-lead-times-allentown__intro">
+      <SectionIntro intro={intro} headingLevel={headingLevel} />
+      {cta?.cta?.label && cta.cta.href && (
+        <div class="beta-moq-lead-times-allentown__actions">
+          <Button href={cta.cta.href} label={cta.cta.label} />
+        </div>
+      )}
+    </header>
+
+    <section class="beta-moq-lead-times-allentown__facts" aria-label="Order requirements">
+      <article class="beta-moq-lead-times-allentown__fact-column">
+        <header class="beta-moq-lead-times-allentown__fact-header">
+          <h3>{moq.title}</h3>
+          <p>{moq.description}</p>
+        </header>
+        <dl class="beta-moq-lead-times-allentown__fact-values">
+          <div>
+            {moq.value.icon && <dt>{moq.value.icon}</dt>}
+            <dd>{moq.value.text}</dd>
+          </div>
+        </dl>
+      </article>
+
+      <article class="beta-moq-lead-times-allentown__fact-column">
+        <header class="beta-moq-lead-times-allentown__fact-header">
+          <h3>Lead times</h3>
+          <p>Plan with predictable delivery windows.</p>
+        </header>
+        <dl class="beta-moq-lead-times-allentown__fact-values beta-moq-lead-times-allentown__fact-values--lead-times">
+          {leadTimes.map((leadTime) => (
+            <div>
+              <dt>{leadTime.title}</dt>
+              <dd>{leadTime.value.text}</dd>
+            </div>
+          ))}
+        </dl>
+      </article>
+    </section>
+  </div>
+</section>
