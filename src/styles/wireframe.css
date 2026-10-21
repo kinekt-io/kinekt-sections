@@ -2329,15 +2329,22 @@
   --kinekt-section-battery-models-major-gap: var(--kinekt-wireframe-section-space-m-xl);
   --kinekt-section-battery-models-intro-width: var(--kinekt-wireframe-layout-d-width-l);
   --kinekt-section-battery-models-models-gap: var(--kinekt-wireframe-space-m-xl);
-  --kinekt-section-battery-models-model-content-gap: var(--kinekt-wireframe-space-m-m);
+  --kinekt-section-battery-models-model-card-width: min(100%, calc((var(--kinekt-section-battery-models-inner-width) - var(--kinekt-section-battery-models-models-gap) - var(--kinekt-section-battery-models-models-gap) - var(--kinekt-section-battery-models-models-gap)) / 4));
+  --kinekt-section-battery-models-model-media-to-text-gap: var(--kinekt-wireframe-space-m-l);
+  --kinekt-section-battery-models-model-text-gap: var(--kinekt-wireframe-space-m-xs);
+  --kinekt-section-battery-models-model-text-to-specifications-gap: var(--kinekt-wireframe-space-m-xl);
   --kinekt-section-battery-models-specification-gap: var(--kinekt-wireframe-space-m-xs);
   --kinekt-section-battery-models-specification-row-space: var(--kinekt-wireframe-space-m-s);
-  --kinekt-section-battery-models-cross-sell-gap: var(--kinekt-wireframe-section-space-m-l);
+  --kinekt-section-battery-models-specification-label-width: var(--kinekt-wireframe-section-space-m-xxl);
+  --kinekt-section-battery-models-cross-sell-gap: var(--kinekt-wireframe-space-m-l);
+  --kinekt-section-battery-models-cross-sell-content-row-gap: var(--kinekt-wireframe-section-space-m-l);
   --kinekt-section-battery-models-cross-sell-copy-width: var(--kinekt-wireframe-layout-d-width-m);
   --kinekt-section-battery-models-cross-sell-item-gap: var(--kinekt-wireframe-space-m-l);
-  --kinekt-section-battery-models-cross-sell-media-size: 6.25rem;
+  --kinekt-section-battery-models-cross-sell-media-size: var(--kinekt-wireframe-section-space-m-xxl);
   --kinekt-section-battery-models-cross-sell-label-gap: var(--kinekt-wireframe-space-m-s);
-  --kinekt-section-battery-models-cross-sell-label-rule-width: var(--kinekt-wireframe-layout-m-width-l);
+  --kinekt-section-battery-models-cross-sell-offset: 0;
+  --kinekt-section-battery-models-cross-sell-item-content-gap: var(--kinekt-wireframe-space-m-l);
+  --kinekt-section-battery-models-intro-actions-gap: var(--kinekt-wireframe-section-space-m-xs);
   --kinekt-section-canvas: var(--kinekt-section-battery-models-canvas);
   --kinekt-section-content-width: var(--kinekt-section-battery-models-inner-width);
   --kinekt-section-inline-space: var(--kinekt-section-battery-models-inline-space);
@@ -2354,6 +2361,10 @@
   max-width: var(--kinekt-section-battery-models-intro-width);
 }
 
+:where(.beta-battery-models-allentown) .beta-battery-models-allentown__actions {
+  margin-top: var(--kinekt-section-battery-models-intro-actions-gap);
+}
+
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__models {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -2366,7 +2377,7 @@
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__model > article {
   display: grid;
-  gap: var(--kinekt-section-battery-models-model-content-gap);
+  gap: 0;
   min-height: 100%;
   padding: 0;
   border: 0;
@@ -2386,7 +2397,8 @@
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__model-content {
   display: grid;
-  gap: var(--kinekt-section-battery-models-model-content-gap);
+  gap: var(--kinekt-section-battery-models-model-text-gap);
+  margin-top: var(--kinekt-section-battery-models-model-media-to-text-gap);
 }
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__model-description {
@@ -2395,10 +2407,11 @@
 }
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__specifications {
-  margin: 0;
+  margin: var(--kinekt-section-battery-models-model-text-to-specifications-gap) 0 0;
 }
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__specifications > div {
+  grid-template-columns: var(--kinekt-section-battery-models-specification-label-width) minmax(0, 1fr);
   gap: var(--kinekt-section-battery-models-specification-gap);
   padding-block: var(--kinekt-section-battery-models-specification-row-space);
 }
@@ -2411,6 +2424,7 @@
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell {
   display: grid;
   gap: var(--kinekt-section-battery-models-cross-sell-gap);
+  margin-top: var(--kinekt-section-battery-models-cross-sell-offset);
 }
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-intro {
@@ -2421,14 +2435,19 @@
   display: flex;
   align-items: center;
   gap: var(--kinekt-section-battery-models-cross-sell-label-gap);
-  margin: 0 0 var(--kinekt-section-battery-models-cross-sell-label-gap);
+  margin: 0;
 }
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-label::after {
-  width: var(--kinekt-section-battery-models-cross-sell-label-rule-width);
+  flex: 1;
   height: var(--kinekt-component-border-width);
   background: var(--kinekt-component-line);
   content: '';
+}
+
+:where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-content-row {
+  display: grid;
+  gap: var(--kinekt-section-battery-models-cross-sell-content-row-gap);
 }
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-items {
@@ -2442,7 +2461,7 @@
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-item {
   display: grid;
   grid-template-columns: var(--kinekt-section-battery-models-cross-sell-media-size) minmax(0, 1fr);
-  gap: var(--kinekt-section-battery-models-cross-sell-item-gap);
+  gap: var(--kinekt-section-battery-models-cross-sell-item-content-gap);
   align-items: center;
   padding: 0;
   border: 0;
@@ -2474,22 +2493,28 @@
   :where(.beta-battery-models-allentown[data-kinekt-section]) {
     --kinekt-section-battery-models-inline-space: 0;
     --kinekt-section-battery-models-outer-block-space: var(--kinekt-wireframe-layout-d-section-gutter);
-    --kinekt-section-battery-models-major-gap: var(--kinekt-wireframe-section-space-d-xl);
+    --kinekt-section-battery-models-major-gap: var(--kinekt-wireframe-section-space-d-l);
     --kinekt-section-battery-models-models-gap: var(--kinekt-wireframe-space-d-xxl);
-    --kinekt-section-battery-models-model-content-gap: var(--kinekt-wireframe-space-d-m);
-    --kinekt-section-battery-models-specification-gap: var(--kinekt-wireframe-space-d-xs);
-    --kinekt-section-battery-models-specification-row-space: var(--kinekt-wireframe-space-d-s);
-    --kinekt-section-battery-models-cross-sell-gap: var(--kinekt-wireframe-layout-d-section-gutter);
+    --kinekt-section-battery-models-model-media-to-text-gap: var(--kinekt-wireframe-space-d-l);
+    --kinekt-section-battery-models-model-text-gap: var(--kinekt-wireframe-space-d-xs);
+    --kinekt-section-battery-models-model-text-to-specifications-gap: var(--kinekt-wireframe-space-d-xl);
+    --kinekt-section-battery-models-specification-gap: var(--kinekt-wireframe-space-d-xxl);
+    --kinekt-section-battery-models-specification-row-space: var(--kinekt-wireframe-space-d-xxs);
+    --kinekt-section-battery-models-cross-sell-gap: var(--kinekt-wireframe-space-d-l);
+    --kinekt-section-battery-models-cross-sell-content-row-gap: var(--kinekt-wireframe-layout-d-section-gutter);
+    --kinekt-section-battery-models-cross-sell-offset: var(--kinekt-wireframe-space-d-m);
     --kinekt-section-battery-models-cross-sell-item-gap: var(--kinekt-wireframe-space-d-l);
-    --kinekt-section-battery-models-cross-sell-label-gap: var(--kinekt-wireframe-space-d-s);
-    --kinekt-section-battery-models-cross-sell-label-rule-width: var(--kinekt-wireframe-layout-d-width-s);
+    --kinekt-section-battery-models-cross-sell-item-content-gap: var(--kinekt-wireframe-space-d-m);
+    --kinekt-section-battery-models-cross-sell-label-gap: var(--kinekt-wireframe-space-d-l);
+    --kinekt-section-battery-models-intro-actions-gap: var(--kinekt-wireframe-section-space-d-xs);
+    --kinekt-section-intro-description-gap: var(--kinekt-wireframe-space-d-m);
   }
 
   :where(.beta-battery-models-allentown) .beta-battery-models-allentown__models {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(4, var(--kinekt-section-battery-models-model-card-width));
   }
 
-  :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell {
+  :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-content-row {
     grid-template-columns: minmax(0, var(--kinekt-section-battery-models-cross-sell-copy-width)) minmax(0, 1fr);
     align-items: start;
   }

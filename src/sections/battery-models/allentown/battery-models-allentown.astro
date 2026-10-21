@@ -79,23 +79,25 @@ const {
 
     {crossSell && crossSell.items.length > 0 && (
       <section class="beta-battery-models-allentown__cross-sell">
-        <div class="beta-battery-models-allentown__cross-sell-intro">
-          {crossSell.label && <p class="beta-battery-models-allentown__cross-sell-label">{crossSell.label}</p>}
-          <SectionIntro intro={crossSell.intro} headingLevel="h2" />
+        {crossSell.label && <p class="beta-battery-models-allentown__cross-sell-label">{crossSell.label}</p>}
+        <div class="beta-battery-models-allentown__cross-sell-content-row">
+          <div class="beta-battery-models-allentown__cross-sell-intro">
+            <SectionIntro intro={crossSell.intro} headingLevel="h2" />
+          </div>
+          <ul class="beta-battery-models-allentown__cross-sell-items">
+            {crossSell.items.map((item) => (
+              <li>
+                <article class="beta-battery-models-allentown__cross-sell-item">
+                  <KinektMedia class="beta-battery-models-allentown__cross-sell-media" imageClass="beta-battery-models-allentown__cross-sell-image" media={item.image} />
+                  <div class="beta-battery-models-allentown__cross-sell-content">
+                    <h3 class="beta-battery-models-allentown__cross-sell-title">{item.title}</h3>
+                    <Button class="beta-battery-models-allentown__cross-sell-action" href={item.cta.cta.href} label={item.cta.cta.label} style="clear" />
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul class="beta-battery-models-allentown__cross-sell-items">
-          {crossSell.items.map((item) => (
-            <li>
-              <article class="beta-battery-models-allentown__cross-sell-item">
-                <KinektMedia class="beta-battery-models-allentown__cross-sell-media" imageClass="beta-battery-models-allentown__cross-sell-image" media={item.image} />
-                <div class="beta-battery-models-allentown__cross-sell-content">
-                  <h3 class="beta-battery-models-allentown__cross-sell-title">{item.title}</h3>
-                  <Button class="beta-battery-models-allentown__cross-sell-action" href={item.cta.cta.href} label={item.cta.cta.label} style="clear" />
-                </div>
-              </article>
-            </li>
-          ))}
-        </ul>
       </section>
     )}
   </div>
