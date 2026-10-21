@@ -2375,17 +2375,19 @@
   list-style: none;
 }
 
-:where(.beta-battery-models-allentown) .beta-battery-models-allentown__model > article {
+.beta-battery-models-allentown[data-kinekt-section] .beta-battery-models-allentown__models > .beta-battery-models-allentown__model > article {
   display: grid;
   gap: 0;
   min-height: 100%;
   padding: 0;
   border: 0;
+  border-radius: 0;
   background: transparent;
 }
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__model-media {
-  aspect-ratio: 16 / 9;
+  width: 100%;
+  aspect-ratio: 1;
   overflow: hidden;
 }
 
