@@ -354,7 +354,6 @@ export function mediaMetricsAllentownToProps(data: PayloadMediaMetricsAllentownD
 import MediaMetricsAllentown from './${base}.astro'
 
 const content = {
-  theme: 'light',
   intro: {
     accentHeading: 'Operational proof points',
     heading: 'The figures that support the next technical decision',
@@ -374,7 +373,7 @@ const content = {
   }
 }
 ---
-<MediaMetricsAllentown {...content} />
+<MediaMetricsAllentown theme="light" {...content} />
 `
   const previewCtas = previewContent.ctas ?? previewContent.ctaGroup
   const previewMedia = previewContent.media
