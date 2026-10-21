@@ -2512,7 +2512,7 @@
 
 @media (min-width: 50rem) {
   :where(.beta-battery-models-allentown[data-kinekt-section]) {
-    --kinekt-section-battery-models-inline-space: 0;
+    --kinekt-section-battery-models-inline-space: var(--kinekt-wireframe-layout-m-section-gutter);
     --kinekt-section-battery-models-outer-block-space: var(--kinekt-wireframe-layout-d-section-gutter);
     --kinekt-section-battery-models-major-gap: var(--kinekt-wireframe-section-space-d-l);
     --kinekt-section-battery-models-models-gap: var(--kinekt-wireframe-space-d-xxl);
@@ -2538,6 +2538,12 @@
   :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-content-row {
     grid-template-columns: minmax(0, var(--kinekt-section-battery-models-cross-sell-copy-width)) minmax(0, 1fr);
     align-items: start;
+  }
+}
+
+@media (min-width: 90rem) {
+  :where(.beta-battery-models-allentown[data-kinekt-section]) {
+    --kinekt-section-battery-models-inline-space: 0;
   }
 }
 
