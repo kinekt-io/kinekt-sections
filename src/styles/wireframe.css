@@ -2536,9 +2536,8 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-content-row {
-    grid-template-columns: minmax(0, var(--kinekt-section-battery-models-cross-sell-copy-width)) minmax(0, 1fr);
-    align-items: start;
+  :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -2549,6 +2548,11 @@
 
   :where(.beta-battery-models-allentown) .beta-battery-models-allentown__models {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-content-row {
+    grid-template-columns: minmax(0, var(--kinekt-section-battery-models-cross-sell-copy-width)) minmax(0, 1fr);
+    align-items: start;
   }
 }
 
