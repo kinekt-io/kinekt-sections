@@ -309,7 +309,9 @@ export interface PayloadMediaMetricsAllentownDocument extends DraftFields<Omit<M
 }
 `
   const mediaMetricsPayload = `import type { Block, CollectionSlug } from 'payload'
-import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
+import { createManifestBlock } from '../../../shared/manifest-block.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import { mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import type { MediaMetricsAllentownContent, PayloadMediaMetricsAllentownDocument } from './${base}.types.js'
 
 const manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const
@@ -320,8 +322,32 @@ export function createMediaMetricsAllentownBlock(options: CreateMediaMetricsAlle
   return createManifestBlock(manifest, options)
 }
 
-export function mediaMetricsAllentownToProps(data: PayloadMediaMetricsAllentownDocument): MediaMetricsAllentownContent {
-  return manifestToProps(data) as MediaMetricsAllentownContent
+export function mediaMetricsAllentownToProps(data: PayloadMediaMetricsAllentownDocument, options: PayloadAdapterOptions = {}): MediaMetricsAllentownContent {
+  const intro = requireObject(data.intro, 'intro')
+  const media = data.media
+
+  return {
+    theme: requireTheme(data.theme),
+    intro: {
+      accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'),
+      heading: requireText(intro.heading, 'intro.heading'),
+      ...(intro.description ? { description: { html: richTextToHtml(intro.description, 'intro.description') } } : {}),
+    },
+    metrics: requireArray(data.metrics, 'metrics').map((item, index) => {
+      const metric = requireObject(item, 'metrics[' + index + ']')
+      const value = requireObject(metric.value, 'metrics[' + index + '].value')
+      const icon = optionalText(value.icon, 'metrics[' + index + '].value.icon')
+
+      return {
+        label: requireText(metric.label, 'metrics[' + index + '].label'),
+        value: {
+          text: requireText(value.text, 'metrics[' + index + '].value.text'),
+          ...(icon ? { icon } : {}),
+        },
+      }
+    }),
+    ...(media === undefined ? {} : { media: media === null ? null : mediaToProps(media, 'media', options) }),
+  }
 }
 `
   const mediaMetricsPreview = `---

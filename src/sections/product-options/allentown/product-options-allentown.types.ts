@@ -24,7 +24,7 @@ export interface ProductOptionsAllentownContent {
 type DraftFields<T> = { [Field in keyof T]?: T[Field] | null }
 type PayloadID = string | number
 
-export interface PayloadProductOptionsAllentownDocument extends DraftFields<Omit<ProductOptionsAllentownContent, 'intro' | 'ctas' | 'options'>> {
+export interface PayloadProductOptionsAllentownDocument extends DraftFields<Omit<ProductOptionsAllentownContent, 'intro' | 'ctas' | 'options' | 'form'>> {
   blockType?: string
   intro?: { accentHeading?: string | null; heading?: string | null; description?: unknown } | null
   ctas?: unknown

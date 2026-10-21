@@ -1,5 +1,7 @@
 import type { Block, CollectionSlug } from 'payload'
-import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
+import { createManifestBlock } from '../../../shared/manifest-block.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import { ctaGroupToProps, mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import type { ProductOptionsAllentownContent, PayloadProductOptionsAllentownDocument } from './product-options-allentown.types.js'
 
 const manifest = {
@@ -53,6 +55,48 @@ export function createBetaProductOptionsAllentownBlock(options: CreateBetaProduc
   return createManifestBlock(manifest, options)
 }
 
-export function betaProductOptionsAllentownToProps(data: PayloadProductOptionsAllentownDocument): ProductOptionsAllentownContent {
-  return manifestToProps(data) as ProductOptionsAllentownContent
+function formToProps(value: PayloadProductOptionsAllentownDocument['form']): ProductOptionsAllentownContent['form'] | undefined {
+  if (value === undefined || value === null || typeof value === 'string' || typeof value === 'number') return value
+
+  const form = requireObject(value, 'form')
+  const id = form.id
+  if (id !== undefined && typeof id !== 'string' && typeof id !== 'number') throw new Error('form.id must be a string or number.')
+
+  const name = optionalText(form.name, 'form.name')
+  return {
+    ...(id === undefined ? {} : { id }),
+    ...(name === undefined ? {} : { name }),
+  }
+}
+
+export function betaProductOptionsAllentownToProps(data: PayloadProductOptionsAllentownDocument, options: PayloadAdapterOptions = {}): ProductOptionsAllentownContent {
+  const intro = requireObject(data.intro, 'intro')
+  const ctas = ctaGroupToProps(data.ctas, 'ctas', false)
+  const form = formToProps(data.form)
+
+  return {
+    theme: requireTheme(data.theme),
+    intro: {
+      accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'),
+      heading: requireText(intro.heading, 'intro.heading'),
+      ...(intro.description ? { description: { html: richTextToHtml(intro.description, 'intro.description') } } : {}),
+    },
+    ...(ctas ? { ctas } : {}),
+    options: requireArray(data.options, 'options').map((item, index) => {
+      const option = requireObject(item, `options[${index}]`)
+      const benefits = option.benefits === undefined || option.benefits === null
+        ? option.benefits
+        : requireArray(option.benefits, `options[${index}].benefits`).map((benefit, benefitIndex) =>
+            requireText(benefit, `options[${index}].benefits[${benefitIndex}]`),
+          )
+
+      return {
+        image: mediaToProps(option.image, `options[${index}].image`, options),
+        title: requireText(option.title, `options[${index}].title`),
+        description: requireText(option.description, `options[${index}].description`),
+        ...(benefits === undefined ? {} : { benefits }),
+      }
+    }),
+    ...(form === undefined ? {} : { form }),
+  }
 }
