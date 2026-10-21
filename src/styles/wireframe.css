@@ -2498,7 +2498,7 @@
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-content {
   display: grid;
-  gap: var(--kinekt-section-battery-models-specification-gap);
+  gap: var(--kinekt-section-battery-models-cross-sell-item-content-gap);
 }
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-title {
