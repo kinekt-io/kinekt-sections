@@ -2325,8 +2325,8 @@
   --kinekt-section-battery-models-canvas: var(--kinekt-color-canvas-muted, #eeeeee);
   --kinekt-section-battery-models-inner-width: var(--kinekt-wireframe-layout-d-content-width);
   --kinekt-section-battery-models-inline-space: var(--kinekt-wireframe-layout-m-section-gutter);
-  --kinekt-section-battery-models-outer-block-space: var(--kinekt-wireframe-section-space-m-xl);
-  --kinekt-section-battery-models-major-gap: var(--kinekt-wireframe-section-space-m-xl);
+  --kinekt-section-battery-models-outer-block-space: var(--kinekt-wireframe-section-space-m-xs);
+  --kinekt-section-battery-models-major-gap: var(--kinekt-wireframe-section-space-m-xs);
   --kinekt-section-battery-models-intro-width: var(--kinekt-wireframe-layout-d-width-l);
   --kinekt-section-battery-models-models-gap: var(--kinekt-wireframe-space-m-xl);
   --kinekt-section-battery-models-model-card-min-width: var(--kinekt-wireframe-layout-d-width-s);
@@ -2342,7 +2342,7 @@
   --kinekt-section-battery-models-cross-sell-item-gap: var(--kinekt-wireframe-space-m-l);
   --kinekt-section-battery-models-cross-sell-media-size: var(--kinekt-wireframe-section-space-m-xxl);
   --kinekt-section-battery-models-cross-sell-label-gap: var(--kinekt-wireframe-space-m-s);
-  --kinekt-section-battery-models-cross-sell-offset: 0;
+  --kinekt-section-battery-models-cross-sell-offset: var(--kinekt-wireframe-space-m);
   --kinekt-section-battery-models-cross-sell-item-content-gap: var(--kinekt-wireframe-space-m-l);
   --kinekt-section-battery-models-intro-actions-gap: var(--kinekt-wireframe-section-space-m-xs);
   --kinekt-section-battery-models-cross-sell-heading: var(--kinekt-section-battery-models-cross-sell-heading-size, var(--kinekt-component-heading-4-size));
@@ -2514,8 +2514,8 @@
 @media (min-width: 50rem) {
   :where(.beta-battery-models-allentown[data-kinekt-section]) {
     --kinekt-section-battery-models-inline-space: var(--kinekt-wireframe-layout-m-section-gutter);
-    --kinekt-section-battery-models-outer-block-space: var(--kinekt-wireframe-layout-d-section-gutter);
-    --kinekt-section-battery-models-major-gap: var(--kinekt-wireframe-section-space-d-l);
+    --kinekt-section-battery-models-outer-block-space: var(--kinekt-wireframe-section-space-d-l);
+    --kinekt-section-battery-models-major-gap: var(--kinekt-wireframe-section-space-d-xs);
     --kinekt-section-battery-models-models-gap: var(--kinekt-wireframe-space-d-xxl);
     --kinekt-section-battery-models-model-media-to-text-gap: var(--kinekt-wireframe-space-d-l);
     --kinekt-section-battery-models-model-text-gap: var(--kinekt-wireframe-space-d-xs);
