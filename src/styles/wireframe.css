@@ -2523,7 +2523,7 @@
     --kinekt-section-battery-models-specification-gap: var(--kinekt-wireframe-space-d-xxl);
     --kinekt-section-battery-models-specification-row-space: var(--kinekt-wireframe-space-d-xxs);
     --kinekt-section-battery-models-cross-sell-gap: var(--kinekt-wireframe-space-d-l);
-    --kinekt-section-battery-models-cross-sell-content-row-gap: var(--kinekt-wireframe-layout-d-section-gutter);
+    --kinekt-section-battery-models-cross-sell-content-row-gap: var(--kinekt-wireframe-section-space-d-l);
     --kinekt-section-battery-models-cross-sell-offset: var(--kinekt-wireframe-space-d-m);
     --kinekt-section-battery-models-cross-sell-item-gap: var(--kinekt-wireframe-space-d-l);
     --kinekt-section-battery-models-cross-sell-item-content-gap: var(--kinekt-wireframe-space-d-m);
