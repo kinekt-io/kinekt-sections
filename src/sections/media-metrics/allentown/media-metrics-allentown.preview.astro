@@ -2,7 +2,6 @@
 import MediaMetricsAllentown from './media-metrics-allentown.astro'
 
 const content = {
-  theme: 'light' as const,
   intro: {
     accentHeading: 'Operational proof points',
     heading: 'The figures that support the next technical decision',
@@ -22,4 +21,4 @@ const content = {
   }
 }
 ---
-<MediaMetricsAllentown {...content} />
+<MediaMetricsAllentown theme="light" {...content} />
