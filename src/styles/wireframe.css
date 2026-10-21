@@ -2365,6 +2365,7 @@
 }
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__actions {
+  flex-wrap: wrap;
   margin-top: var(--kinekt-section-battery-models-intro-actions-gap);
 }
 
