@@ -2387,7 +2387,7 @@
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__model-media {
   width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
 }
 
