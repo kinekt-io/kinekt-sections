@@ -1,5 +1,6 @@
 ---
 import Button from '../controls/button/allentown/button-allentown.astro'
+import Label from '../atoms/label/allentown/label-allentown.astro'
 interface Field {
   kind: string
   id?: string
@@ -112,6 +113,12 @@ function buttonStyle(value: Record<string, unknown>, key: string): 'primary' | '
     </figure>
   }
 
+
+  if (field.kind === 'component' && field.id === 'atoms/label/allentown' && isRecord(value)) {
+    const labelText = text(value.text)
+    const icon = text(value.icon)
+    return labelText ? <Label class={className} text={labelText} icon={icon || undefined} /> : null
+  }
 
   if (field.kind === 'component' && isRecord(value)) {
     return <div class={className}><Astro.self block={block} instanceId={`${instanceId}-${key}`} content={value} fields={field.fields ?? {}} level={Math.min(level + 1, 4) as 2 | 3 | 4} /></div>

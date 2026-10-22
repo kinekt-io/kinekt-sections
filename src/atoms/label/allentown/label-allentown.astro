@@ -1,0 +1,34 @@
+---
+interface Props { text: string; icon?: string; class?: string }
+const { text, icon, class: className } = Astro.props
+const classes = ['label-allentown', className].filter(Boolean).join(' ')
+---
+<span class={classes}><span class="label-allentown__text">{text}</span>{icon && <span class="label-allentown__icon" aria-hidden="true">{icon}</span>}</span>
+<style>
+  .label-allentown {
+    --kinekt-label-allentown-background: color-mix(in srgb, var(--kinekt-component-ink) 7%, transparent);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    inline-size: max-content;
+    max-inline-size: 100%;
+    margin: 0;
+    padding: 0.625rem 0.75rem;
+    border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+    color: var(--kinekt-component-line);
+    background: var(--kinekt-label-allentown-background);
+    font-family: var(--kinekt-component-font);
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  :global(:where(
+    [data-kinekt-section][data-kinekt-theme='dark'],
+    [data-kinekt-section][data-kinekt-theme='semi-dark']
+  )) .label-allentown {
+    --kinekt-label-allentown-background: color-mix(in srgb, var(--kinekt-component-ink) 4%, transparent);
+  }
+</style>

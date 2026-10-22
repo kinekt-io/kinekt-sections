@@ -1,208 +1,44 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
-
-const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-  },
-  "items": [
-    {
-      "image": {
-        "url": "https://placehold.co/1600x900/png?text=Image",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "accentHeading": "Energy systems built around real operating conditions",
-      "heading": "Energy systems built around real operating conditions",
-      "label": {
-        "text": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-        "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-      },
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "cta": {
-        "cta": {
-          "label": "Explore the specification",
-          "href": "#"
-        }
-      }
-    },
-    {
-      "image": {
-        "url": "https://placehold.co/1600x900/png?text=Image",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "accentHeading": "Designed for the constraints that shape delivery",
-      "heading": "Designed for the constraints that shape delivery",
-      "label": {
-        "text": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-        "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-      },
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "cta": {
-        "cta": {
-          "label": "Explore the specification",
-          "href": "#"
-        }
-      }
-    },
-    {
-      "image": {
-        "url": "https://placehold.co/1600x900/png?text=Image",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "accentHeading": "Performance data teams can use with confidence",
-      "heading": "Performance data teams can use with confidence",
-      "label": {
-        "text": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-        "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-      },
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "cta": {
-        "cta": {
-          "label": "Explore the specification",
-          "href": "#"
-        }
-      }
-    }
-  ],
-  "callout": {
-    "intro": {
-      "accentHeading": "Energy systems built around real operating conditions",
-      "heading": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-    },
-    "cta": {
-      "cta": {
-        "label": "Explore the specification",
-        "href": "#"
-      }
-    }
-  }
-}
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "items": {
-    "kind": "componentList",
-    "id": "components/solution-item/allentown",
-    "role": "solution-item",
-    "fields": {
-      "image": {
-        "kind": "media"
-      },
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "label": {
-        "kind": "component",
-        "id": "atoms/label/allentown",
-        "role": "label",
-        "fields": {
-          "text": {
-            "kind": "text"
-          },
-          "icon": {
-            "kind": "text"
-          }
-        }
-      },
-      "description": {
-        "kind": "textarea"
-      },
-      "cta": {
-        "kind": "component",
-        "id": "controls/button/allentown",
-        "role": "button",
-        "fields": {
-          "cta": {
-            "kind": "cta"
-          }
-        }
-      }
-    }
-  },
-  "callout": {
-    "kind": "component",
-    "id": "components/callout/allentown",
-    "role": "callout",
-    "fields": {
-      "intro": {
-        "kind": "component",
-        "id": "components/intro/allentown",
-        "role": "intro",
-        "fields": {
-          "accentHeading": {
-            "kind": "text"
-          },
-          "heading": {
-            "kind": "text"
-          },
-          "description": {
-            "kind": "richText"
-          }
-        }
-      },
-      "cta": {
-        "kind": "component",
-        "id": "controls/button/allentown",
-        "role": "button",
-        "fields": {
-          "cta": {
-            "kind": "cta"
-          }
-        }
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
+import SolutionListAllentown from './solution-list-allentown.astro'
+const image = (text: string) => ({ url: `https://placehold.co/1600x900/png?text=${encodeURIComponent(text)}`, alt: `${text} preview`, width: 1600, height: 900 })
 ---
-<StructuralSection block="beta-solution-list-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<SolutionListAllentown
+  intro={{
+    accentHeading: 'Service formats',
+    heading: 'Choose the support model that fits your next rollout',
+  }}
+  items={[
+    {
+      image: image('Planning workshop'),
+      accentHeading: 'Start with clarity',
+      heading: 'Planning workshop',
+      label: { text: 'Best for teams aligning a complex brief' },
+      description: 'Turn an early idea into priorities, milestones, and a practical delivery plan.',
+      cta: { cta: { label: 'Explore workshops', href: '#' } },
+    },
+    {
+      image: image('Delivery partnership'),
+      accentHeading: 'Build with momentum',
+      heading: 'Delivery partnership',
+      label: { text: 'Best for programmes that need an embedded team' },
+      description: 'Combine specialist delivery capacity with a clear cadence for decisions and progress.',
+      cta: { cta: { label: 'Explore delivery', href: '#' } },
+    },
+    {
+      image: image('Capability review'),
+      accentHeading: 'Improve what exists',
+      heading: 'Capability review',
+      label: { text: 'Best for teams preparing their next operating model' },
+      description: 'Identify the constraints holding work back and define the changes worth making first.',
+      cta: { cta: { label: 'Explore reviews', href: '#' } },
+    },
+  ]}
+  callout={{
+    intro: {
+      accentHeading: 'Planning a new initiative?',
+      heading: 'Bring the right people together before delivery starts.',
+      description: 'Share the context, constraints, and intended outcome. We will help frame a useful next step.',
+    },
+    cta: { cta: { label: 'Start a conversation', href: '#' } },
+  }}
+/>

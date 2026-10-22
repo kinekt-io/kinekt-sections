@@ -1,0 +1,93 @@
+---
+import SectionIntro from "../../../primitives/section-intro/section-intro.astro";
+import Button from "../../../controls/button/allentown/button-allentown.astro";
+import type {
+  Cta,
+  SectionIntro as SectionIntroContent,
+} from "../../../shared/content.js";
+
+interface Props {
+  callout: { intro: SectionIntroContent; cta: { cta: Cta } | Cta };
+  headingLevel?: "h1" | "h2" | "h3";
+  class?: string;
+}
+
+const { callout, headingLevel = "h3", class: className } = Astro.props;
+const cta = "cta" in callout.cta ? callout.cta.cta : callout.cta;
+const classes = ["callout-allentown", className].filter(Boolean).join(" ");
+const contentIntro = { ...callout.intro, accentHeading: undefined };
+---
+
+<aside class={classes}>
+  {
+    callout.intro.accentHeading && (
+      <header class="callout-allentown__header">
+        <>
+          <p class="callout-allentown__label">{callout.intro.accentHeading}</p>
+          <span class="callout-allentown__line" aria-hidden="true" />
+        </>
+      </header>
+    )
+  }
+  <div class="callout-allentown__body">
+    <div class="callout-allentown__content">
+      <SectionIntro intro={contentIntro} headingLevel={headingLevel} />
+    </div>
+    <div class="callout-allentown__action">
+      <Button href={cta.href} label={cta.label} />
+    </div>
+  </div>
+</aside>
+
+<style>
+  .callout-allentown {
+    display: grid;
+    width: 100%;
+    max-width: none;
+    gap: var(--kinekt-wireframe-space-l);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+  .callout-allentown__header {
+    display: flex;
+    align-items: center;
+    gap: var(--kinekt-wireframe-space-xs);
+    margin: 0;
+  }
+  .callout-allentown__label {
+    flex: 0 0 auto;
+    margin: 0;
+    color: var(--kinekt-component-action);
+    font: 700 0.75rem/1.2 var(--kinekt-component-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .callout-allentown__line {
+    flex: 1;
+    height: var(--kinekt-component-border-width);
+    background: var(--kinekt-component-line);
+  }
+  .callout-allentown__body {
+    display: grid;
+    gap: var(--kinekt-wireframe-space-l);
+  }
+  .callout-allentown__content {
+    max-width: 42rem;
+  }
+  .callout-allentown__action {
+    display: flex;
+    align-items: end; 
+    .button {
+      min-height: 2.75rem;
+    }
+  }
+  @media (min-width: 50rem) {
+    .callout-allentown__body {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: clamp(2rem, 5vw, 6rem);
+    }
+  }
+</style>

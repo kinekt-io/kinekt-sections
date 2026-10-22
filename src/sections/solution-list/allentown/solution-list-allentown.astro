@@ -1,103 +1,164 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe.css'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import Label from '../../../atoms/label/allentown/label-allentown.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import Callout from '../../../components/callout/allentown/callout-allentown.astro'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
+const { id, theme = 'semi-light', intro, items = [], callout, headingLevel = 'h2' } = Astro.props as any
+const sectionId = id ?? 'solution-list'
+const toc = items.map((item: any, index: number) => ({ id: `${sectionId}-item-${index + 1}`, label: item.heading }))
+const description = (value: unknown) => typeof value === 'string' ? value : (value as { html?: string })?.html
+const action = (value: any) => value?.cta ?? value
+---
+<section class="beta-solution-list-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="beta-solution-list-allentown__container">
+    <header class="beta-solution-list-allentown__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
+    <nav class="beta-solution-list-allentown__toc" aria-label="Solutions in this section"><ul>{toc.map((item: any) => <li><a href={`#${item.id}`}>{item.label}</a></li>)}</ul></nav>
+    <ul class="beta-solution-list-allentown__items">
+      {items.map((item: any, index: number) => (
+        <li id={toc[index].id}><article>
+          <KinektMedia class="beta-solution-list-allentown__media" imageClass="beta-solution-list-allentown__image" media={item.image} />
+          <div class="beta-solution-list-allentown__content">
+            <div class="beta-solution-list-allentown__body">
+              <div class="beta-solution-list-allentown__heading-group">
+                {item.accentHeading && <p class="beta-solution-list-allentown__accent">{item.accentHeading}</p>}
+                <h3>{item.heading}</h3>
+              </div>
+              {item.label?.text && <Label class="beta-solution-list-allentown__label" text={item.label.text} icon={item.label.icon} />}
+              {item.label && typeof item.label === 'string' && <Label class="beta-solution-list-allentown__label" text={item.label} />}
+              {description(item.description) && <div class="beta-solution-list-allentown__description" set:html={description(item.description)} />}
+            </div>
+            {action(item.cta)?.label && <div class="beta-solution-list-allentown__actions"><Button href={action(item.cta).href} label={action(item.cta).label} style="clear" /></div>}
+          </div>
+        </article></li>
+      ))}
+    </ul>
+  </div>
+  {callout && <div class="beta-solution-list-allentown__callout-container"><Callout class="beta-solution-list-allentown__callout" callout={callout} /></div>}
+</section>
+<style>
+  .beta-solution-list-allentown {
+    --kinekt-section-card-media-ratio: 1 / 1;
+    --solution-list-accent-to-heading: var(--kinekt-wireframe-space-xs);
+    --solution-list-heading-group-to-label: var(--kinekt-wireframe-space-m);
+    --solution-list-label-to-description: var(--kinekt-wireframe-space-l);
+    --solution-list-body-to-action: var(--kinekt-wireframe-space-l);
+
+    & > .beta-solution-list-allentown__container {
+      gap: var(--kinekt-wireframe-space-xl);
+    }
+
+    & > .beta-solution-list-allentown__callout-container {
+      display: grid;
+      width: 100%;
+      max-width: var(--kinekt-component-content-width);
+      margin-block-start: var(--kinekt-component-gap);
+      margin-inline: auto;
+      padding-inline: var(--kinekt-component-inline-space);
+    }
+
+    & .beta-solution-list-allentown__content,
+    & .beta-solution-list-allentown__body,
+    & .beta-solution-list-allentown__heading-group {
+      display: grid;
+    }
+
+    & .beta-solution-list-allentown__content {
+      row-gap: var(--solution-list-body-to-action);
+    }
+
+    & .beta-solution-list-allentown__body {
+      row-gap: var(--solution-list-heading-group-to-label);
+    }
+
+    & .beta-solution-list-allentown__heading-group {
+      row-gap: var(--solution-list-accent-to-heading);
+    }
+
+    & .beta-solution-list-allentown__accent,
+    & h3,
+    & .beta-solution-list-allentown__description {
+      margin: 0;
+    }
+
+    & .beta-solution-list-allentown__label {
+      margin: 0 0 calc(var(--solution-list-label-to-description) - var(--solution-list-heading-group-to-label));
+    }
+
+    & .beta-solution-list-allentown__actions {
+      display: flex;
+      margin-block-start: 0;
+    }
+
+    & .beta-solution-list-allentown__toc {
+      inline-size: 100vw;
+      margin-inline: calc(50% - 50vw);
+      overflow-x: auto;
+      ul {
+        display: flex;
+        gap: var(--kinekt-wireframe-space-xs);
+        width: max-content;
+        min-width: 100%;
+        margin: 0;
+        padding-inline: var(--kinekt-component-inline-space);
+        list-style: none;
+      }
+
+      a {
+        display: block;
+        padding: 0.625rem 0.75rem;
+        border: 1px solid var(--kinekt-component-line);
+        color: var(--kinekt-component-line);
+        text-decoration: none;
+        white-space: nowrap;
+
+        &:focus-visible,
+        &:hover {
+          box-shadow: inset 0 0 0 2px var(--kinekt-component-ink);
+          background: var(--kinekt-component-surface);
+        }
       }
     }
-  },
-  "items": {
-    "kind": "componentList",
-    "id": "components/solution-item/allentown",
-    "role": "solution-item",
-    "fields": {
-      "image": {
-        "kind": "media"
-      },
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "label": {
-        "kind": "component",
-        "id": "atoms/label/allentown",
-        "role": "label",
-        "fields": {
-          "text": {
-            "kind": "text"
-          },
-          "icon": {
-            "kind": "text"
-          }
-        }
-      },
-      "description": {
-        "kind": "textarea"
-      },
-      "cta": {
-        "kind": "component",
-        "id": "controls/button/allentown",
-        "role": "button",
-        "fields": {
-          "cta": {
-            "kind": "cta"
-          }
-        }
+
+    & .beta-solution-list-allentown__items {
+      margin: 0;
+      padding: 0;
+      border-top: 0;
+      list-style: none;
+
+      > li:last-child > article {
+        border-bottom: 0;
+      }
+      article {
+        display: grid;
+        row-gap: var(--kinekt-wireframe-space-s);
+        column-gap: 0;
       }
     }
-  },
-  "callout": {
-    "kind": "component",
-    "id": "components/callout/allentown",
-    "role": "callout",
-    "fields": {
-      "intro": {
-        "kind": "component",
-        "id": "components/intro/allentown",
-        "role": "intro",
-        "fields": {
-          "accentHeading": {
-            "kind": "text"
-          },
-          "heading": {
-            "kind": "text"
-          },
-          "description": {
-            "kind": "richText"
-          }
-        }
-      },
-      "cta": {
-        "kind": "component",
-        "id": "controls/button/allentown",
-        "role": "button",
-        "fields": {
-          "cta": {
-            "kind": "cta"
-          }
-        }
+
+    & .beta-solution-list-allentown__media,
+    & .beta-solution-list-allentown__image {
+      display: block;
+      width: 100%;
+    }
+
+    & .beta-solution-list-allentown__image {
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      filter: var(--kinekt-component-media-filter);
+    }
+
+    @media (min-width: 50rem) {
+      & .beta-solution-list-allentown__toc {
+        display: none;
+      }
+
+      & .beta-solution-list-allentown__items article {
+        grid-template-columns: minmax(0, 0.45fr) minmax(0, 1.55fr);
+        column-gap: clamp(1.5rem, 3vw, 3rem);
       }
     }
   }
-}
----
-<StructuralSection block="beta-solution-list-allentown" fields={fields} {...props} />
+</style>

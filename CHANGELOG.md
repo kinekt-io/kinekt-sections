@@ -1,5 +1,11 @@
 # Changelog
 
+## 26.10.2-beta.15 — 2026-10-22
+
+### Changed
+
+- Added the `Solution List / Allentown` renderer, reusable Callout and Label integrations, responsive TOC, and wireframe-themed label treatment.
+
 ## 26.10.2-beta.14 — 2025-08-11
 
 ### Added

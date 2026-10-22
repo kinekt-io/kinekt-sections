@@ -240,6 +240,7 @@
   text-transform: uppercase;
 }
 
+
 :where([data-kinekt-section]) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); }
 :where([data-kinekt-section]) .section-intro__heading { margin: 0; }
 :where([data-kinekt-section]) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: 1.05rem; line-height: 1.45; }
@@ -294,7 +295,6 @@
 
 :where([data-kinekt-section]) :is(ul, ol)[class*='__'] {
   display: grid;
-  gap: var(--kinekt-component-gap);
   padding: 0;
   list-style: none;
 }
@@ -657,22 +657,6 @@
   background: transparent;
 }
 
-:where(.case-studies-allentown) .case-studies-allentown__value {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-:where(.case-studies-allentown) .case-studies-allentown__value :is([class$='__text'], [class$='__icon']) {
-  margin: 0;
-  padding: 0.625rem 0.75rem;
-  border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
-  color: var(--kinekt-component-action);
-  background: var(--kinekt-component-surface);
-  font-size: 0.875rem;
-  font-weight: 700;
-  line-height: 1.1;
-}
 
 :where(.case-studies-allentown) .case-studies-allentown__quote {
   margin: 0;
@@ -1560,6 +1544,7 @@
   --kinekt-section-reading-width: 44rem;
   --kinekt-section-gap: clamp(2rem, 5vw, 4.5rem);
 }
+
 
 :where([data-kinekt-section][class*='comparison-overview-allentown'],
   [data-kinekt-section][class*='density-comparison-allentown']) {
