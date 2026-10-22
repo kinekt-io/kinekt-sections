@@ -1,11 +1,11 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import CaseStudiesAllentown from './case-studies-allentown.astro'
 
+// Representative local preview content.
 const content = {
   "theme": "light",
   "intro": {
-    "accentHeading": "/ Applied engineering",
+    "accentHeading": "Applied engineering",
     "heading": "Systems shaped by the work they do",
     "description": "A collection of fictional engineering scenarios showing how duty cycles, integration constraints and measurable outcomes inform the system design."
   },
@@ -322,7 +322,7 @@ const fields = {
   }
 }
 const intro = {
-  "accentHeading": "/ Applied engineering",
+  "accentHeading": "Applied engineering",
   "heading": "Systems shaped by the work they do",
   "description": "A collection of fictional engineering scenarios showing how duty cycles, integration constraints and measurable outcomes inform the system design."
 }
@@ -342,4 +342,4 @@ function resolveCatalogueAssets(value: unknown): unknown {
 
 const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block="case-studies-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<CaseStudiesAllentown content={resolvedContent} />

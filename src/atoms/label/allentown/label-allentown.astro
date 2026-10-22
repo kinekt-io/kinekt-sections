@@ -1,0 +1,47 @@
+---
+interface Props {
+  text: string
+  icon?: string
+  class?: string
+}
+
+const { text, icon, class: className } = Astro.props as Props
+const classes = ['label-allentown', className].filter(Boolean).join(' ')
+---
+<span class={classes}>{icon && <span class="label-allentown__icon" aria-hidden="true">{icon}</span>}{text}</span>
+<style>
+  .label-allentown {
+    --kinekt-label-allentown-background: #e5e5e5;
+    --kinekt-label-allentown-ink: #111111;
+    --kinekt-label-allentown-border: #bdbdbd;
+  }
+
+  :global(:where(
+    [data-kinekt-section][data-kinekt-theme='light'],
+    [data-kinekt-section][data-kinekt-theme='semi-light']
+  ) .label-allentown) {
+    --kinekt-label-allentown-background: var(--kinekt-section-label-background-light, var(--kinekt-label-background-light, #e5e5e5));
+    --kinekt-label-allentown-ink: var(--kinekt-section-label-ink-light, var(--kinekt-label-ink-light, #111111));
+    --kinekt-label-allentown-border: var(--kinekt-section-label-border-light, var(--kinekt-label-border-light, #bdbdbd));
+  }
+
+  :global(:where(
+    [data-kinekt-section][data-kinekt-theme='dark'],
+    [data-kinekt-section][data-kinekt-theme='semi-dark']
+  ) .label-allentown) {
+    --kinekt-label-allentown-background: var(--kinekt-section-label-background-dark, var(--kinekt-label-background-dark, #464646));
+    --kinekt-label-allentown-ink: var(--kinekt-section-label-ink-dark, var(--kinekt-label-ink-dark, #ffffff));
+    --kinekt-label-allentown-border: var(--kinekt-section-label-border-dark, var(--kinekt-label-border-dark, #7d7d7d));
+  }
+
+  .label-allentown {
+    margin: 0;
+    padding: 0.625rem 0.75rem;
+    border: var(--kinekt-label-border-width, var(--kinekt-border-width, 1px)) solid var(--kinekt-label-allentown-border);
+    background: var(--kinekt-label-allentown-background);
+    color: var(--kinekt-label-allentown-ink);
+    font-size: 0.875rem;
+    /* font-weight: 700; */
+    line-height: 1.1;
+  }
+</style>

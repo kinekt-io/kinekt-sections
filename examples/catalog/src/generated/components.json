@@ -1,5 +1,37 @@
 [
   {
+    "id": "atoms/label/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "label-allentown",
+    "category": "atoms",
+    "tags": [],
+    "role": "label",
+    "variation": "allentown",
+    "title": "Label Allentown",
+    "description": "A reusable label atom with editor-managed localised text and renderer-owned presentation.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4811-276494&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "text": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "icon": {
+        "kind": "text",
+        "required": false,
+        "localized": true,
+        "description": "Optional Font Awesome icon key rendered before the label text."
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/atoms/label-allentown.astro"
+    }
+  },
+  {
     "id": "controls/button/allentown",
     "version": "26.10.0-beta.0",
     "slug": "button-allentown",
@@ -2068,7 +2100,7 @@
     "role": "media-metrics",
     "variation": "allentown",
     "title": "Media Metrics Allentown",
-    "description": "A reusable topic section with a localized introduction, one or more result metrics, and optional aside media.",
+    "description": "A reusable topic introduction with four key metrics and optional supporting media.",
     "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414386&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -2096,21 +2128,18 @@
         "componentId": "components/result-item/allentown",
         "required": true,
         "localized": true,
-        "minItems": 1
+        "minItems": 4,
+        "maxItems": 4,
+        "description": "Four named metrics; each item presents a Label value before its heading."
       },
       "media": {
         "kind": "media",
         "required": false,
         "localized": true,
-        "description": "Optional editor-selected aside media, localized per locale."
+        "description": "Optional editor-selected supporting media, localized per locale."
       }
     },
-    "runtimeProps": {
-      "metricLayout": {
-        "kind": "responsiveGrid",
-        "source": "renderer"
-      }
-    },
+    "runtimeProps": {},
     "previewSource": "sections/media-metrics/allentown/media-metrics-allentown.preview.astro",
     "entries": {
       "astro": "@kinekt-io/components/sections/media-metrics-allentown.astro",

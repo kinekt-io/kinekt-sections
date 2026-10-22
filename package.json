@@ -20,7 +20,9 @@
     "src"
   ],
   "exports": {
+    "./atoms/label-allentown.astro": "./src/atoms/label/allentown/label-allentown.astro",
     "./controls/button-allentown.astro": "./src/controls/button/allentown/button-allentown.astro",
+    "./primitives/contact-icon.astro": "./src/primitives/contact-icon/contact-icon.astro",
     "./primitives/section-intro.astro": "./src/primitives/section-intro/section-intro.astro",
     "./sections/action-contact-allentown.astro": "./src/sections/action-contact/allentown/action-contact-allentown.astro",
     "./sections/action-contact-allentown.payload": {
