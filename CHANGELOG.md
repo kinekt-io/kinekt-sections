@@ -1,5 +1,13 @@
 # Changelog
 
+## 26.10.2-beta.15
+
+### Added
+
+- Page-backed, manually ordered Case Studies Allentown slides with per-slide copy and media overrides.
+- Region- and locale-aware selection support for CMS integrations; slide CTA destinations resolve from the selected Page.
+- Optional CTA icons for Case Studies header and slide actions.
+
 ## 26.10.2-beta.14 — 2025-08-11
 
 ### Added

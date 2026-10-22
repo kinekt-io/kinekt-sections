@@ -379,12 +379,16 @@ const content = {
   const previewMedia = previewContent.media
 
   await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\nconst fields = ${JSON.stringify(fields, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(block)} fields={fields} {...props} />\n`)
-  await materialize(path.join(directory, `${base}.types.ts`), manifest.slug === 'media-metrics-allentown'
-    ? mediaMetricsTypes
-    : `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`, manifest.slug === 'media-metrics-allentown')
-  await materialize(path.join(directory, `${base}.payload.ts`), manifest.slug === 'media-metrics-allentown'
-    ? mediaMetricsPayload
-    : `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`, manifest.slug === 'media-metrics-allentown')
+  await materialize(path.join(directory, `${base}.types.ts`), manifest.slug === 'case-studies-allentown'
+    ? `// @generated structural section entrypoint — implementation is the Case Studies contract.\nexport type { CaseStudiesAllentownContent, CaseStudyCtaIcon, CaseStudyResult, CaseStudySlide, PayloadCaseStudiesAllentownDocument } from './${base}.contract.js'\n`
+    : manifest.slug === 'media-metrics-allentown'
+      ? mediaMetricsTypes
+      : `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`, manifest.slug === 'media-metrics-allentown')
+  await materialize(path.join(directory, `${base}.payload.ts`), manifest.slug === 'case-studies-allentown'
+    ? `// @generated structural section entrypoint — implementation is the Case Studies contract.\nexport { caseStudiesAllentownToProps, createCaseStudiesAllentownBlock } from './${base}.contract.js'\nexport type { CaseStudiesAllentownAdapterOptions, CreateCaseStudiesAllentownBlockOptions } from './${base}.contract.js'\n`
+    : manifest.slug === 'media-metrics-allentown'
+      ? mediaMetricsPayload
+      : `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`, manifest.slug === 'media-metrics-allentown')
   const previewSource = manifest.slug === 'media-metrics-allentown'
     ? mediaMetricsPreview
     : manifest.slug === 'proof-metrics-allentown'

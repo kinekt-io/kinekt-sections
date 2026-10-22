@@ -16,6 +16,7 @@ interface Media {
 interface Cta {
   label?: string
   href?: string
+  icon?: 'arrow-right' | 'arrow-down'
 }
 
 interface Result {
@@ -56,6 +57,11 @@ const intro = content.intro as { accentHeading?: string; heading: string; descri
 const carousel = content.carousel as { items?: CaseStudy[] } | undefined
 const cases = Array.isArray(carousel?.items) ? carousel.items : []
 const sectionCta = isCta(content.cta) ? content.cta : isCta((content.cta as { cta?: unknown } | undefined)?.cta) ? (content.cta as { cta: Cta }).cta : undefined
+const ctaIconPaths = {
+  'arrow-right': { viewBox: '0 0 11 18', path: 'm2 2 7 7-7 7' },
+  'arrow-down': { viewBox: '0 0 18 18', path: 'm2 9 7 7 7-7M9 2v14' },
+} as const
+const sectionCtaIcon = sectionCta?.icon ? ctaIconPaths[sectionCta.icon] : undefined
 const controls = props.carouselControls === 'next' ? 'next' : 'previous-next'
 ---
 <section class="case-studies-allentown" id={typeof props.id === 'string' ? props.id : undefined} data-kinekt-section data-kinekt-theme={theme}>
@@ -63,7 +69,7 @@ const controls = props.carouselControls === 'next' ? 'next' : 'previous-next'
     {(intro || sectionCta) && (
       <header class="case-studies-allentown__header">
         {intro && <div class="case-studies-allentown__header-content"><SectionIntro intro={intro} headingLevel={(props.headingLevel as 'h1' | 'h2' | 'h3' | undefined) ?? 'h2'} /></div>}
-        {sectionCta && <div class="case-studies-allentown__cta"><Button class="case-studies-allentown__cta" href={sectionCta.href!} label={sectionCta.label!} /></div>}
+        {sectionCta && <div class="case-studies-allentown__cta"><Button class="case-studies-allentown__cta" href={sectionCta.href!} label={sectionCta.label!}>{sectionCtaIcon && <svg aria-hidden="true" width="1em" height="1em" viewBox={sectionCtaIcon.viewBox} fill="none"><path d={sectionCtaIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button></div>}
       </header>
     )}
 
@@ -74,6 +80,7 @@ const controls = props.carouselControls === 'next' ? 'next' : 'previous-next'
           <ul class="case-studies-allentown__carousel-slides" data-kinekt-carousel-container>
             {cases.map((item) => {
               const cta = isCta(item.cta) ? item.cta : isCta(item.cta?.cta) ? item.cta.cta : undefined
+              const ctaIcon = cta?.icon ? ctaIconPaths[cta.icon] : undefined
               const quote = item.quote
               return <li class="case-studies-allentown__carousel-slide" data-kinekt-carousel-slide>
                 <article>
@@ -87,7 +94,7 @@ const controls = props.carouselControls === 'next' ? 'next' : 'previous-next'
                     <div class="case-studies-allentown__carousel-slide-details">
                       {item.results?.length && <ul class="case-studies-allentown__results">{item.results.map((result) => <li><article><p>{result.label}</p><div class="case-studies-allentown__value">{result.value?.icon && <Label class="case-studies-allentown__value-icon" text={result.value.icon} />}{result.value?.text && <Label class="case-studies-allentown__value-text" text={result.value.text} />}</div></article></li>)}</ul>}
                       {quote && <figure class="case-studies-allentown__quote"><blockquote>{quote.quote && <p class="case-studies-allentown__quote-text">{quote.quote}</p>}</blockquote>{(quote.avatar?.url || quote.authorName || quote.authorRole) && <figcaption class="case-studies-allentown__quote-attribution">{quote.avatar?.url && <KinektMedia class="case-studies-allentown__quote-avatar" imageClass="case-studies-allentown__quote-avatar-image" media={quote.avatar as KinektMediaValue} loading="lazy" />}<div class="case-studies-allentown__quote-author">{quote.authorName && <p class="case-studies-allentown__quote-author-name">{quote.authorName}</p>}{quote.authorRole && <p class="case-studies-allentown__quote-author-role">{quote.authorRole}</p>}</div></figcaption>}</figure>}
-                      {cta && <div class="case-studies-allentown__cta"><Button href={cta.href!} label={cta.label!} style="clear" /></div>}
+                      {cta && <div class="case-studies-allentown__cta"><Button href={cta.href!} label={cta.label!} style="clear">{ctaIcon && <svg aria-hidden="true" width="1em" height="1em" viewBox={ctaIcon.viewBox} fill="none"><path d={ctaIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button></div>}
                     </div>
                   </div>
                 </article>
