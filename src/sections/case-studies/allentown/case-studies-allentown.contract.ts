@@ -98,7 +98,7 @@ export function createCaseStudiesAllentownBlock({
           name: 'items', type: 'array', label: 'Case studies', minRows: 1, required: true,
           admin: { description: 'Drag to set display order. A Page can be used only once.' },
           fields: [
-            { name: 'page', type: 'relationship', label: 'Destination page', relationTo: pageCollection, required: true, filterOptions: pageFilterOptions, admin: { description: 'Published page available in this Region and locale. The button always links here.' } },
+            { name: 'page', type: 'relationship', label: 'Destination page', relationTo: pageCollection, required: true, filterOptions: pageFilterOptions, admin: { description: 'The button always links here. Save-time validation requires a published Page available in this Region and locale.' } },
             { name: 'logo', type: 'upload', label: 'Logo', relationTo: mediaCollection, localized: true },
             { name: 'title', type: 'text', label: 'Title', localized: true, required: true, validate: textRequired },
             { name: 'description', type: 'textarea', label: 'Description', localized: true },

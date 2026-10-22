@@ -23,8 +23,8 @@ export function createHeroBlock({ mediaCollection = 'media' }: CreateHeroBlockOp
         { name: 'description', type: 'richText', label: 'Description' },
       ] },
       { name: 'ctas', type: 'group', label: 'CTA Group', localized: true, fields: [
-        { name: 'primary', type: 'group', label: 'Primary CTA', fields: ctaFields() },
-        { name: 'secondary', type: 'group', label: 'Secondary CTA', fields: ctaFields() },
+        { name: 'primary', type: 'group', label: 'Primary CTA', validate: optionalCtaValidation, fields: ctaFields() },
+        { name: 'secondary', type: 'group', label: 'Secondary CTA', validate: optionalCtaValidation, fields: ctaFields() },
       ] },
       { name: 'image', type: 'upload', label: 'Image', relationTo: mediaCollection as CollectionSlug, localized: true, required: true },
       { name: 'mobileImage', type: 'upload', label: 'Mobile image', relationTo: mediaCollection as CollectionSlug, localized: true },
@@ -46,8 +46,16 @@ export function heroToProps(data: PayloadHeroDocument, options: PayloadAdapterOp
 
 function ctaFields() {
   return [
-    { name: 'label', type: 'text' as const, label: 'Label', required: true, validate: (value: unknown) => hasText(value) || requiredTextValidationMessage },
-    { name: 'href', type: 'text' as const, label: 'URL', required: true, validate: (value: unknown) => isSafeWebUrl(value) || ctaHrefValidationMessage },
+    { name: 'label', type: 'text' as const, label: 'Label' },
+    { name: 'href', type: 'text' as const, label: 'URL', validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeWebUrl(value) || ctaHrefValidationMessage },
   ]
+}
+function optionalCtaValidation(value: unknown) {
+  if (value === undefined || value === null) return true
+  if (typeof value !== 'object' || Array.isArray(value)) return 'Enter both a label and URL.'
+  const label = 'label' in value ? value.label : undefined
+  const href = 'href' in value ? value.href : undefined
+  if ((label === undefined || label === '') && (href === undefined || href === '')) return true
+  return hasText(label) && isSafeWebUrl(href) || 'Enter both a label and a valid URL.'
 }
 function hasText(value: unknown): value is string { return typeof value === 'string' && value.trim().length > 0 }

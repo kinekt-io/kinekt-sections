@@ -1,5 +1,12 @@
 # Changelog
 
+## 26.10.2-beta.16
+
+### Changed
+
+- Hero Allentown and Hero Trinity primary and secondary CTA groups are optional; a populated CTA still requires both a label and a valid URL.
+- Clarified Case Studies destination-page validation in the CMS contract.
+
 ## 26.10.2-beta.15
 
 ### Added
