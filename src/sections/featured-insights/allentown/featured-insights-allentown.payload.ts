@@ -12,7 +12,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -25,7 +25,24 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "insightSources": {
       "kind": "insightSourceList",
@@ -38,12 +55,19 @@ const manifest = {
       "kind": "component",
       "componentId": "controls/button/allentown",
       "required": false,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "cta": {
+          "kind": "cta",
+          "required": true,
+          "localized": true
+        }
+      }
     }
   }
 } as const
 
-export interface CreateBetaFeaturedInsightsAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaFeaturedInsightsAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaFeaturedInsightsAllentownBlock(options: CreateBetaFeaturedInsightsAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

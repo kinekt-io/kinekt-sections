@@ -1,3 +1,2 @@
-// @generated structural section — source manifest remains the contract.
-export type BetaFormSectionAllentownContent = Record<string, unknown>
-export type PayloadBetaFormSectionAllentownDocument = BetaFormSectionAllentownContent & { id?: string }
+// Form Section native Payload contract type entrypoint.
+export type { BetaFormSectionAllentownContent, ContactMethod, ContactMethodIcon, FormSectionImagePosition, PayloadBetaFormSectionAllentownDocument } from './form-section-allentown.contract.js'

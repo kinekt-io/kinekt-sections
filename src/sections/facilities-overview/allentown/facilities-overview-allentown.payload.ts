@@ -11,7 +11,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -24,20 +24,62 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "label": {
       "kind": "component",
       "componentId": "atoms/label/allentown",
       "required": false,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "text": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "icon": {
+          "kind": "text",
+          "required": false,
+          "localized": true,
+          "description": "Optional Font Awesome icon key rendered before the label text."
+        }
+      }
     },
     "facts": {
       "kind": "componentList",
       "componentId": "components/facility-fact/allentown",
       "minItems": 1,
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "title": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": true,
+          "localized": true
+        }
+      }
     },
     "media": {
       "kind": "media",
@@ -47,7 +89,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaFacilitiesOverviewAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaFacilitiesOverviewAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaFacilitiesOverviewAllentownBlock(options: CreateBetaFacilitiesOverviewAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

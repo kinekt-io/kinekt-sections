@@ -11,7 +11,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -25,7 +25,24 @@ const manifest = {
       "componentId": "components/intro/allentown",
       "required": true,
       "localized": true,
-      "description": "Use the optional Intro description only in a renderer variation that supports it."
+      "description": "Use the optional Intro description only in a renderer variation that supports it.",
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "insightSources": {
       "kind": "insightSourceList",
@@ -37,7 +54,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaFeaturedPageHeaderAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaFeaturedPageHeaderAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaFeaturedPageHeaderAllentownBlock(options: CreateBetaFeaturedPageHeaderAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

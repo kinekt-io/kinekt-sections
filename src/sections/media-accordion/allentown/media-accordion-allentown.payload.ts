@@ -11,7 +11,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -24,7 +24,24 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "ctas": {
       "kind": "ctaGroup",
@@ -44,12 +61,46 @@ const manifest = {
       "required": true,
       "localized": true,
       "minItems": 1,
-      "description": "An unordered list of accessible accordion items."
+      "description": "An unordered list of accessible accordion items.",
+      "fields": {
+        "markerType": {
+          "kind": "select",
+          "required": true,
+          "localized": true,
+          "options": [
+            "none",
+            "number",
+            "icon"
+          ],
+          "description": "When number is selected, the renderer derives the marker from the item's list position. When icon is selected, icon is required."
+        },
+        "icon": {
+          "kind": "text",
+          "required": false,
+          "localized": true,
+          "description": "Required when markerType is icon. Font Awesome icon key."
+        },
+        "title": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "subtitle": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": true,
+          "localized": true
+        }
+      }
     }
   }
 } as const
 
-export interface CreateBetaMediaAccordionAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaMediaAccordionAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaMediaAccordionAllentownBlock(options: CreateBetaMediaAccordionAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

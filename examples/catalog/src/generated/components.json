@@ -112,7 +112,7 @@
       "name": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "whatsapp",
           "phone",
@@ -183,7 +183,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -266,7 +266,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -331,7 +331,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -394,7 +394,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -458,7 +458,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -521,7 +521,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -578,7 +578,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -658,7 +658,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -730,7 +730,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -802,7 +802,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -864,7 +864,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -926,7 +926,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -994,7 +994,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -1058,7 +1058,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -1127,7 +1127,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -1185,7 +1185,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -1260,7 +1260,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -1307,7 +1307,7 @@
   },
   {
     "id": "sections/form-section/allentown",
-    "version": "26.10.2-beta.15",
+    "version": "26.10.2-beta.25",
     "slug": "form-section-allentown",
     "category": "sections",
     "tags": [
@@ -1318,7 +1318,7 @@
     "role": "form-section",
     "variation": "allentown",
     "title": "Form Section Allentown",
-    "description": "A reusable split conversion section with optional media, a governed form reference and direct contact methods.",
+    "description": "A reusable split conversion section with optional media, a HubSpot embed code and direct contact methods.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411427&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -1326,7 +1326,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -1357,10 +1357,10 @@
         "description": "Desktop media position. Mobile always presents content before media."
       },
       "form": {
-        "kind": "formReference",
+        "kind": "textarea",
         "required": true,
         "localized": true,
-        "description": "Only active forms available to the current region are selectable. The integration renders the selected form as a HubSpot embed."
+        "description": "HubSpot embed code. The wireframe preview renders a safe placeholder; the integration owns execution of the embed."
       },
       "contactHeading": {
         "kind": "text",
@@ -1413,7 +1413,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -1487,7 +1487,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -1559,7 +1559,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -1642,7 +1642,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -1708,7 +1708,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -1792,7 +1792,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -1867,7 +1867,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -1941,7 +1941,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2020,7 +2020,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2083,7 +2083,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2094,7 +2094,7 @@
       "direction": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "mediaLeft",
           "mediaRight"
@@ -2155,7 +2155,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2215,7 +2215,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2279,7 +2279,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2339,7 +2339,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2400,7 +2400,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2463,7 +2463,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2524,7 +2524,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2595,7 +2595,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2651,7 +2651,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2735,7 +2735,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2799,7 +2799,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2876,7 +2876,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -2999,7 +2999,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -3065,7 +3065,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -3142,7 +3142,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -3203,7 +3203,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",
@@ -3274,7 +3274,7 @@
       "theme": {
         "kind": "select",
         "required": true,
-        "localized": false,
+        "localized": true,
         "options": [
           "light",
           "semi-light",

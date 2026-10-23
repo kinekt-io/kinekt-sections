@@ -11,7 +11,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -24,19 +24,54 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "tabs": {
       "kind": "componentList",
       "componentId": "components/tab-item/allentown",
       "required": true,
       "localized": true,
-      "minItems": 1
+      "minItems": 1,
+      "fields": {
+        "label": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        },
+        "form": {
+          "kind": "formReference",
+          "required": false,
+          "localized": true,
+          "description": "The selected Form record owns actions, inputs, validation, submission, success behavior and optional footnote."
+        }
+      }
     }
   }
 } as const
 
-export interface CreateBetaTabsAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaTabsAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaTabsAllentownBlock(options: CreateBetaTabsAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

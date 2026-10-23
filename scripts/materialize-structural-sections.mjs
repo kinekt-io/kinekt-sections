@@ -67,6 +67,19 @@ const manifests = new Map(await Promise.all(manifestDirectoriesList.map(async (d
   return [manifest.id, manifest]
 })))
 
+function expandComponentFields(fields, ancestors = []) {
+  return Object.fromEntries(Object.entries(fields).map(([key, field]) => {
+    if (!field.componentId) return [key, field]
+    if (ancestors.includes(field.componentId)) throw new Error(`Circular component manifest reference: ${[...ancestors, field.componentId].join(' -> ')}`)
+    const component = manifests.get(field.componentId)
+    if (!component) throw new Error(`Missing reusable component manifest: ${field.componentId}`)
+    return [key, {
+      ...field,
+      fields: expandComponentFields(component.fields, [...ancestors, field.componentId]),
+    }]
+  }))
+}
+
 function sampleField(field, key, depth = 0, index = 0) {
   const child = field.componentId ? manifests.get(field.componentId) : null
   if (field.kind === 'component' && child && depth < 4) return sampleContent(child, depth + 1, index)
@@ -262,7 +275,8 @@ function previewFields(manifest, depth = 0) {
 async function materialize(filename, source, force = false) {
   try {
     const existing = await readFile(filename, 'utf8')
-    if (!force && !existing.includes('@generated structural section')) return
+    const generatedStructuralPayload = filename.endsWith('.payload.ts') && source.includes('structuralSectionToProps')
+    if (!force && !generatedStructuralPayload && !existing.includes('@generated structural section')) return
   } catch (error) {
     if (error?.code !== 'ENOENT') throw error
   }
@@ -272,6 +286,7 @@ async function materialize(filename, source, force = false) {
 for (const directory of await manifestDirectories(sections)) {
   const manifest = JSON.parse(await readFile(path.join(directory, 'manifest.json'), 'utf8'))
 
+  manifest.fields = expandComponentFields(manifest.fields)
   const relativeAstro = path.relative(directory, path.join(source, 'shared', 'structural-section.astro')).split(path.sep).join('/')
   const relativeAdapter = path.relative(directory, path.join(source, 'shared', 'manifest-block.js')).split(path.sep).join('/')
   const importAstro = relativeAstro.startsWith('.') ? relativeAstro : `./${relativeAstro}`
@@ -283,13 +298,13 @@ for (const directory of await manifestDirectories(sections)) {
   const structuralAdapter = new Set([
     'solution-list-allentown',
     'process-story-trinity',
-    'form-section-allentown',
     'comparison-overview-allentown',
     'density-comparison-allentown',
     'featured-insights-allentown',
   ]).has(manifest.slug)
   const caseStudiesContract = manifest.slug === 'case-studies-allentown'
   const solutionListContract = manifest.slug === 'solution-list-allentown'
+  const formSectionContract = manifest.slug === 'form-section-allentown'
   const block = `${prefix}${manifest.slug}`
   const previewContent = sampleContent(manifest)
   const fields = previewFields(manifest)
@@ -392,6 +407,7 @@ const content = {
   const caseStudiesPayload = `// Case Studies contract entrypoint.\nexport { caseStudiesAllentownToProps, createCaseStudiesAllentownBlock } from './case-studies-allentown.contract.js'\nexport type { CaseStudiesAllentownAdapterOptions, CreateCaseStudiesAllentownBlockOptions } from './case-studies-allentown.contract.js'\n`
   const solutionListTypes = `// Solution List native Payload contract type entrypoint.\nexport type { PayloadSolutionListAllentownDocument, SolutionListAllentownContent, SolutionListAllentownItem } from './solution-list-allentown.contract.js'\n`
   const solutionListPayload = `// Solution List native Payload contract entrypoint.\nexport { createSolutionListAllentownBlock, solutionListAllentownToProps } from './solution-list-allentown.contract.js'\nexport type { CreateSolutionListAllentownBlockOptions, PayloadSolutionListAllentownDocument, SolutionListAllentownAdapterOptions, SolutionListAllentownContent, SolutionListAllentownItem } from './solution-list-allentown.contract.js'\n`
+  const formSectionTypes = `// Form Section native Payload contract type entrypoint.\nexport type { BetaFormSectionAllentownContent, ContactMethod, ContactMethodIcon, FormSectionImagePosition, PayloadBetaFormSectionAllentownDocument } from './form-section-allentown.contract.js'\n`
 
   await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\nconst fields = ${JSON.stringify(fields, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(block)} fields={fields} {...props} />\n`)
   await materialize(path.join(directory, `${base}.types.ts`), manifest.slug === 'media-metrics-allentown'
@@ -400,7 +416,9 @@ const content = {
       ? caseStudiesTypes
       : solutionListContract
         ? solutionListTypes
-        : `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`, manifest.slug === 'media-metrics-allentown' || solutionListContract)
+        : formSectionContract
+          ? formSectionTypes
+          : `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`, manifest.slug === 'media-metrics-allentown' || solutionListContract || formSectionContract)
   await materialize(path.join(directory, `${base}.payload.ts`), manifest.slug === 'media-metrics-allentown'
     ? mediaMetricsPayload
     : caseStudiesContract
@@ -408,8 +426,8 @@ const content = {
       : solutionListContract
         ? solutionListPayload
         : structuralAdapter
-          ? `import type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock } from '${importAdapter}'\nimport { structuralSectionToProps } from '${importStructuralAdapter}'\nimport type { PayloadAdapterOptions } from '../../../shared/payload.js'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document, options: PayloadAdapterOptions = {}): ${name}Content {\n  return structuralSectionToProps(data, options)\n}\n`
-          : `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`, manifest.slug === 'media-metrics-allentown' || solutionListContract)
+          ? `import type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock } from '${importAdapter}'\nimport { structuralSectionToProps } from '${importStructuralAdapter}'\nimport type { PayloadAdapterOptions } from '../../../shared/payload.js'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document, options: PayloadAdapterOptions = {}): ${name}Content {\n  return structuralSectionToProps(data, options)\n}\n`
+          : `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`, manifest.slug === 'media-metrics-allentown' || solutionListContract)
   const previewSource = manifest.slug === 'media-metrics-allentown'
     ? mediaMetricsPreview
     : manifest.slug === 'proof-metrics-allentown'

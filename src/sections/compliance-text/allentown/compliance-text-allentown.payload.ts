@@ -11,7 +11,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -24,14 +24,38 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "checklistItems": {
       "kind": "componentList",
       "componentId": "components/checklist-item/allentown",
       "minItems": 1,
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "text": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        }
+      }
     },
     "closingText": {
       "kind": "richText",
@@ -47,7 +71,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaComplianceTextAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaComplianceTextAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaComplianceTextAllentownBlock(options: CreateBetaComplianceTextAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

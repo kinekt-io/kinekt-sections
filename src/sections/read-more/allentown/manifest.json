@@ -16,7 +16,7 @@
     "nodeId": "5240:411426"
   },
   "fields": {
-    "theme": { "kind": "select", "required": true, "localized": false, "options": ["light", "semi-light", "semi-dark", "dark"] },
+    "theme": { "kind": "select", "required": true, "localized": true, "options": ["light", "semi-light", "semi-dark", "dark"] },
     "intro": { "kind": "component", "componentId": "components/intro/allentown", "required": true, "localized": true },
     "label": { "kind": "component", "componentId": "atoms/label/allentown", "required": false, "localized": true, "description": "Optional localized location or context label shown between the heading and description." },
     "ctas": { "kind": "ctaGroup", "required": true, "localized": true },

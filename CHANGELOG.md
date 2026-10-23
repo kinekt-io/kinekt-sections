@@ -1,5 +1,15 @@
 # Changelog
 
+## 26.10.2-beta.25 — 2026-10-23
+
+### Changed
+
+- Replace Form Section Allentown's generic JSON fields with native localized Payload controls for theme, Intro Block, media, image position, HubSpot embed code and repeatable contact methods.
+- Preserve the existing prerelease block slug while validating and adapting the native fields into the Astro renderer contract.
+- Materialize reusable component manifests as nested native Payload groups and arrays instead of generic JSON controls.
+- Localize every editor-owned manifest field, including themes, media choices and display options.
+- Standardize section buttons on a shared Content-or-URL destination contract that can target Pages and every configured content collection.
+
 ## 26.10.2-beta.24 — 2026-10-23
 
 ### Changed

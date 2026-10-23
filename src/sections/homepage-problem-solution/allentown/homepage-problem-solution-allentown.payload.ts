@@ -11,7 +11,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -24,38 +24,122 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "problemItems": {
       "kind": "componentList",
       "componentId": "components/homepage-problem-item/allentown",
       "minItems": 1,
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "icon": {
+          "kind": "text",
+          "required": true,
+          "localized": true,
+          "description": "Allowed icon key selected by the editor."
+        },
+        "title": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": true,
+          "localized": true
+        }
+      }
     },
     "solutionIntro": {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "solutionSteps": {
       "kind": "componentList",
       "componentId": "components/homepage-solution-step/allentown",
       "minItems": 1,
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "icon": {
+          "kind": "text",
+          "required": true,
+          "localized": true,
+          "description": "Allowed icon key selected by the editor."
+        },
+        "title": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": true,
+          "localized": true
+        }
+      }
     },
     "solutionCtaGroup": {
       "kind": "component",
       "componentId": "components/cta-group/allentown",
       "required": false,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "primaryButton": {
+          "kind": "cta",
+          "required": false,
+          "localized": true,
+          "description": "Optional primary Button component part."
+        },
+        "secondaryButton": {
+          "kind": "cta",
+          "required": false,
+          "localized": true,
+          "description": "Optional secondary Button component part."
+        }
+      }
     }
   }
 } as const
 
-export interface CreateBetaHomepageProblemSolutionAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaHomepageProblemSolutionAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaHomepageProblemSolutionAllentownBlock(options: CreateBetaHomepageProblemSolutionAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

@@ -16,7 +16,7 @@
     "nodeId": "5255:537962"
   },
   "fields": {
-    "theme": { "kind": "select", "required": true, "localized": false, "options": ["light", "semi-light", "semi-dark", "dark"] },
+    "theme": { "kind": "select", "required": true, "localized": true, "options": ["light", "semi-light", "semi-dark", "dark"] },
     "intro": { "kind": "component", "componentId": "components/intro/allentown", "required": true, "localized": true },
     "ctas": { "kind": "ctaGroup", "required": false, "localized": true },
     "label": { "kind": "text", "required": false, "localized": true },

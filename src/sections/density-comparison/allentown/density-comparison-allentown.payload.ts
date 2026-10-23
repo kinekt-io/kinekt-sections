@@ -12,7 +12,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -25,24 +25,99 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "comparison": {
       "kind": "component",
       "componentId": "patterns/comparison-table/trinity",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "columns": {
+          "kind": "infoItems",
+          "required": true,
+          "localized": true,
+          "minItems": 1
+        },
+        "rows": {
+          "kind": "componentList",
+          "componentId": "components/comparison-row/trinity",
+          "required": true,
+          "localized": true,
+          "minItems": 1,
+          "fields": {
+            "feature": {
+              "kind": "text",
+              "required": true,
+              "localized": true
+            },
+            "cells": {
+              "kind": "componentList",
+              "componentId": "components/comparison-cell/trinity",
+              "required": true,
+              "localized": true,
+              "minItems": 1,
+              "fields": {
+                "text": {
+                  "kind": "text",
+                  "required": true,
+                  "localized": true
+                },
+                "status": {
+                  "kind": "select",
+                  "required": true,
+                  "localized": true,
+                  "options": [
+                    "positive",
+                    "negative"
+                  ]
+                },
+                "icon": {
+                  "kind": "text",
+                  "required": true,
+                  "localized": true,
+                  "description": "Font Awesome icon key."
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "cta": {
       "kind": "component",
       "componentId": "controls/button/allentown",
       "required": false,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "cta": {
+          "kind": "cta",
+          "required": true,
+          "localized": true
+        }
+      }
     }
   }
 } as const
 
-export interface CreateBetaDensityComparisonAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaDensityComparisonAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaDensityComparisonAllentownBlock(options: CreateBetaDensityComparisonAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

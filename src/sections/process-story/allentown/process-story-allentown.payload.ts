@@ -11,7 +11,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -24,7 +24,24 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "image": {
       "kind": "media",
@@ -36,12 +53,29 @@ const manifest = {
       "componentId": "components/process-item/allentown",
       "required": true,
       "localized": true,
-      "minItems": 1
+      "minItems": 1,
+      "fields": {
+        "label": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "title": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "textarea",
+          "required": true,
+          "localized": true
+        }
+      }
     }
   }
 } as const
 
-export interface CreateBetaProcessStoryAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaProcessStoryAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaProcessStoryAllentownBlock(options: CreateBetaProcessStoryAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

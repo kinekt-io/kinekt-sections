@@ -3,15 +3,14 @@ import type { Block, CollectionSlug } from 'payload'
 import type { HeroContent, PayloadHeroDocument } from './hero-trinity.types.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { ctaGroupToProps, mediaToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
-import { isSafeWebUrl } from '../../../urls.js'
+import { ctaGroupFields } from '../../../shared/payload-fields.js'
 
-export interface CreateHeroBlockOptions { mediaCollection?: string }
+export interface CreateHeroBlockOptions { mediaCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 const requiredTextValidationMessage = 'Enter non-empty text.'
-const ctaHrefValidationMessage = 'Enter an absolute HTTP(S) URL or a site-root-relative path.'
 
 /** Creates a localized Trinity Hero block with a reusable Intro Block and optional CTA Group. */
-export function createHeroBlock({ mediaCollection = 'media' }: CreateHeroBlockOptions = {}): Block {
+export function createHeroBlock({ mediaCollection = 'media', targetCollections = ['pages'] }: CreateHeroBlockOptions = {}): Block {
   return {
     slug: 'hero-trinity', interfaceName: 'HeroTrinity',
     labels: { singular: 'BETA — Hero Trinity', plural: 'BETA — Hero Trinity blocks' },
@@ -22,10 +21,7 @@ export function createHeroBlock({ mediaCollection = 'media' }: CreateHeroBlockOp
         { name: 'heading', type: 'text', label: 'Heading', required: true, validate: (value: unknown) => hasText(value) || requiredTextValidationMessage },
         { name: 'description', type: 'richText', label: 'Description' },
       ] },
-      { name: 'ctas', type: 'group', label: 'CTA Group', localized: true, fields: [
-        { name: 'primary', type: 'group', label: 'Primary CTA', fields: ctaFields() },
-        { name: 'secondary', type: 'group', label: 'Secondary CTA', fields: ctaFields() },
-      ] },
+      { name: 'ctas', type: 'group', label: 'CTA Group', localized: true, fields: ctaGroupFields(targetCollections) },
       { name: 'image', type: 'upload', label: 'Image', relationTo: mediaCollection as CollectionSlug, localized: true, required: true },
       { name: 'mobileImage', type: 'upload', label: 'Mobile image', relationTo: mediaCollection as CollectionSlug, localized: true },
     ],
@@ -34,7 +30,7 @@ export function createHeroBlock({ mediaCollection = 'media' }: CreateHeroBlockOp
 
 export function heroToProps(data: PayloadHeroDocument, options: PayloadAdapterOptions = {}): HeroContent {
   const intro = requireObject(data.intro, 'intro')
-  const ctas = ctaGroupToProps(data.ctas, 'ctas')
+  const ctas = ctaGroupToProps(data.ctas, 'ctas', options)
   return {
     theme: requireTheme(data.theme),
     intro: { accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'), heading: requireText(intro.heading, 'intro.heading'), ...(intro.description ? { description: { html: richTextToHtml(intro.description, 'intro.description') } } : {}) },
@@ -44,10 +40,4 @@ export function heroToProps(data: PayloadHeroDocument, options: PayloadAdapterOp
   }
 }
 
-function ctaFields() {
-  return [
-    { name: 'label', type: 'text' as const, label: 'Label' },
-    { name: 'href', type: 'text' as const, label: 'URL', validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeWebUrl(value) || ctaHrefValidationMessage },
-  ]
-}
 function hasText(value: unknown): value is string { return typeof value === 'string' && value.trim().length > 0 }

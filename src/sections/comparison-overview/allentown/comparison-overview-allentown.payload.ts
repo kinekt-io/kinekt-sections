@@ -12,7 +12,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -25,30 +25,161 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "introCta": {
       "kind": "component",
       "componentId": "controls/button/allentown",
       "required": false,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "cta": {
+          "kind": "cta",
+          "required": true,
+          "localized": true
+        }
+      }
     },
     "comparison": {
       "kind": "component",
       "componentId": "patterns/comparison-table/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "columns": {
+          "kind": "infoItems",
+          "required": true,
+          "localized": true,
+          "minItems": 1,
+          "description": "Product column labels."
+        },
+        "rows": {
+          "kind": "componentList",
+          "componentId": "components/comparison-row/allentown",
+          "required": true,
+          "localized": true,
+          "minItems": 1,
+          "description": "Each row must provide exactly one cell for every column.",
+          "fields": {
+            "feature": {
+              "kind": "text",
+              "required": true,
+              "localized": true
+            },
+            "cells": {
+              "kind": "componentList",
+              "componentId": "components/comparison-cell/allentown",
+              "required": true,
+              "localized": true,
+              "minItems": 1,
+              "fields": {
+                "type": {
+                  "kind": "select",
+                  "required": true,
+                  "localized": true,
+                  "options": [
+                    "text",
+                    "status"
+                  ]
+                },
+                "text": {
+                  "kind": "text",
+                  "required": false,
+                  "localized": true
+                },
+                "status": {
+                  "kind": "select",
+                  "required": false,
+                  "localized": true,
+                  "options": [
+                    "positive",
+                    "negative"
+                  ]
+                },
+                "icon": {
+                  "kind": "text",
+                  "required": false,
+                  "localized": true,
+                  "description": "Required for status. Font Awesome icon key."
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "callout": {
       "kind": "component",
       "componentId": "components/callout/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "intro": {
+          "kind": "component",
+          "componentId": "components/intro/allentown",
+          "required": true,
+          "localized": true,
+          "fields": {
+            "accentHeading": {
+              "kind": "text",
+              "required": false,
+              "localized": true
+            },
+            "heading": {
+              "kind": "text",
+              "required": true,
+              "localized": true
+            },
+            "description": {
+              "kind": "richText",
+              "required": false,
+              "localized": true
+            }
+          }
+        },
+        "ctaGroup": {
+          "kind": "component",
+          "componentId": "components/cta-group/allentown",
+          "required": true,
+          "localized": true,
+          "fields": {
+            "primaryButton": {
+              "kind": "cta",
+              "required": false,
+              "localized": true,
+              "description": "Optional primary Button component part."
+            },
+            "secondaryButton": {
+              "kind": "cta",
+              "required": false,
+              "localized": true,
+              "description": "Optional secondary Button component part."
+            }
+          }
+        }
+      }
     }
   }
 } as const
 
-export interface CreateBetaComparisonOverviewAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaComparisonOverviewAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaComparisonOverviewAllentownBlock(options: CreateBetaComparisonOverviewAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

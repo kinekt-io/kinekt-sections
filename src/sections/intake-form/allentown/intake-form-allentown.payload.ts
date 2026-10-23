@@ -11,7 +11,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -24,7 +24,24 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "stepsHeading": {
       "kind": "text",
@@ -36,7 +53,14 @@ const manifest = {
       "componentId": "components/intake-step/allentown",
       "required": true,
       "localized": true,
-      "minItems": 1
+      "minItems": 1,
+      "fields": {
+        "text": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        }
+      }
     },
     "formHeading": {
       "kind": "text",
@@ -52,7 +76,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaIntakeFormAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaIntakeFormAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaIntakeFormAllentownBlock(options: CreateBetaIntakeFormAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

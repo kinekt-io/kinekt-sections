@@ -7,13 +7,15 @@ import type {
 } from "../../../shared/content.js";
 
 interface Props {
-  callout: { intro: SectionIntroContent; ctaGroup: CtaGroup };
+  callout: { intro: SectionIntroContent; ctaGroup: CtaGroup | { primaryButton?: CtaGroup['primary']; secondaryButton?: CtaGroup['secondary'] } };
   headingLevel?: "h1" | "h2" | "h3";
   class?: string;
 }
 
 const { callout, headingLevel = "h3", class: className } = Astro.props;
-const { primary, secondary } = callout.ctaGroup;
+const actions = callout.ctaGroup as CtaGroup & { primaryButton?: CtaGroup['primary']; secondaryButton?: CtaGroup['secondary'] };
+const primary = actions.primary ?? actions.primaryButton;
+const secondary = actions.secondary ?? actions.secondaryButton;
 const classes = ["callout-allentown", className].filter(Boolean).join(" ");
 const contentIntro = { ...callout.intro, accentHeading: undefined };
 ---
@@ -58,7 +60,6 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
     margin: 0;
   }
   .callout-allentown__label {
-    flex: 0 0 auto;
     margin: 0;
     color: var(--kinekt-component-action);
     font: 700 0.75rem/1.2 var(--kinekt-component-mono);

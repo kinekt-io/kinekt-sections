@@ -11,7 +11,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -30,7 +30,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaInsightIndexAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaInsightIndexAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaInsightIndexAllentownBlock(options: CreateBetaInsightIndexAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

@@ -11,7 +11,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -24,7 +24,24 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "ctas": {
       "kind": "ctaGroup",
@@ -37,18 +54,111 @@ const manifest = {
       "componentId": "components/battery-card/allentown",
       "required": true,
       "localized": true,
-      "minItems": 1
+      "minItems": 1,
+      "fields": {
+        "image": {
+          "kind": "media",
+          "required": true,
+          "localized": true
+        },
+        "title": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": true,
+          "localized": true
+        },
+        "specs": {
+          "kind": "componentList",
+          "componentId": "components/spec-pair/allentown",
+          "required": true,
+          "localized": true,
+          "minItems": 1,
+          "fields": {
+            "label": {
+              "kind": "text",
+              "required": true,
+              "localized": true
+            },
+            "value": {
+              "kind": "text",
+              "required": true,
+              "localized": true
+            }
+          }
+        }
+      }
     },
     "crossSell": {
       "kind": "component",
       "componentId": "patterns/cross-sell/allentown",
       "required": false,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "intro": {
+          "kind": "component",
+          "componentId": "components/intro/allentown",
+          "required": true,
+          "localized": true,
+          "fields": {
+            "accentHeading": {
+              "kind": "text",
+              "required": false,
+              "localized": true
+            },
+            "heading": {
+              "kind": "text",
+              "required": true,
+              "localized": true
+            },
+            "description": {
+              "kind": "richText",
+              "required": false,
+              "localized": true
+            }
+          }
+        },
+        "items": {
+          "kind": "componentList",
+          "componentId": "components/cross-sell-item/allentown",
+          "required": true,
+          "localized": true,
+          "minItems": 0,
+          "fields": {
+            "image": {
+              "kind": "media",
+              "required": true,
+              "localized": true
+            },
+            "title": {
+              "kind": "text",
+              "required": true,
+              "localized": true
+            },
+            "cta": {
+              "kind": "component",
+              "componentId": "controls/button/allentown",
+              "required": true,
+              "localized": true,
+              "fields": {
+                "cta": {
+                  "kind": "cta",
+                  "required": true,
+                  "localized": true
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 } as const
 
-export interface CreateBetaBatteryModelsAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaBatteryModelsAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaBatteryModelsAllentownBlock(options: CreateBetaBatteryModelsAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

@@ -11,7 +11,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -24,18 +24,80 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "callout": {
       "kind": "component",
       "componentId": "components/callout/allentown",
       "required": false,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "intro": {
+          "kind": "component",
+          "componentId": "components/intro/allentown",
+          "required": true,
+          "localized": true,
+          "fields": {
+            "accentHeading": {
+              "kind": "text",
+              "required": false,
+              "localized": true
+            },
+            "heading": {
+              "kind": "text",
+              "required": true,
+              "localized": true
+            },
+            "description": {
+              "kind": "richText",
+              "required": false,
+              "localized": true
+            }
+          }
+        },
+        "ctaGroup": {
+          "kind": "component",
+          "componentId": "components/cta-group/allentown",
+          "required": true,
+          "localized": true,
+          "fields": {
+            "primaryButton": {
+              "kind": "cta",
+              "required": false,
+              "localized": true,
+              "description": "Optional primary Button component part."
+            },
+            "secondaryButton": {
+              "kind": "cta",
+              "required": false,
+              "localized": true,
+              "description": "Optional secondary Button component part."
+            }
+          }
+        }
+      }
     }
   }
 } as const
 
-export interface CreateBetaFaqIndexAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaFaqIndexAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaFaqIndexAllentownBlock(options: CreateBetaFaqIndexAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

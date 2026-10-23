@@ -12,7 +12,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -25,7 +25,24 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "metrics": {
       "kind": "componentList",
@@ -34,7 +51,33 @@ const manifest = {
       "localized": true,
       "minItems": 4,
       "maxItems": 4,
-      "description": "Four named metrics; each item presents a Label value before its heading."
+      "description": "Four named metrics; each item presents a Label value before its heading.",
+      "fields": {
+        "label": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "value": {
+          "kind": "component",
+          "componentId": "atoms/label/allentown",
+          "required": true,
+          "localized": true,
+          "fields": {
+            "text": {
+              "kind": "text",
+              "required": true,
+              "localized": true
+            },
+            "icon": {
+              "kind": "text",
+              "required": false,
+              "localized": true,
+              "description": "Optional Font Awesome icon key rendered before the label text."
+            }
+          }
+        }
+      }
     },
     "media": {
       "kind": "media",

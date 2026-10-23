@@ -1,9 +1,9 @@
-import type { Block, CollectionSlug, RelationshipField } from 'payload'
+import type { Block, CollectionSlug } from 'payload'
 
 import type { Cta, CtaIcon, Media, SectionIntro } from '../../../shared/content.js'
-import { isSafeWebUrl } from '../../../urls.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
-import { mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { ctaToProps, mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { contentTargetField, ctaFields } from '../../../shared/payload-fields.js'
 
 export type CaseStudyResult = {
   label: string
@@ -11,7 +11,7 @@ export type CaseStudyResult = {
 }
 
 export type CaseStudySlide = {
-  page: string
+  page?: string
   logo?: Media
   title: string
   description?: string
@@ -40,39 +40,35 @@ export type CaseStudyCtaIcon = CtaIcon
 export interface CreateCaseStudiesAllentownBlockOptions {
   mediaCollection?: CollectionSlug
   pageCollection?: CollectionSlug
-  pageFilterOptions?: RelationshipField['filterOptions']
+  targetCollections?: CollectionSlug[]
 }
 
 export interface CaseStudiesAllentownAdapterOptions extends PayloadAdapterOptions {
-  pageHref: (pageID: string) => string | undefined
+  contentHref: (collection: string, documentID: string) => string | undefined
 }
 
-const ctaIconOptions = [
-  { label: 'Arrow right', value: 'arrow-right' },
-  { label: 'Arrow down', value: 'arrow-down' },
-]
 
 const textRequired = (value: unknown) => hasText(value) || 'Enter non-empty text.'
-const urlRequired = (value: unknown) => isSafeWebUrl(value) || 'Enter an absolute HTTP(S) URL or a site-root-relative path.'
 
 /**
- * A page-backed, manually ordered Case Studies carousel.
+ * A manually ordered Case Studies carousel with content-or-URL destinations.
  *
- * Slide copy and media intentionally remain local to the carousel. The selected
- * published Page only provides its canonical destination at manifest-build time.
+ * Slide copy and media remain local to the carousel. Content destinations are
+ * resolved to their canonical route at manifest-build time.
  */
 export function createCaseStudiesAllentownBlock({
   mediaCollection = 'media',
   pageCollection = 'pages',
-  pageFilterOptions,
+  targetCollections = [pageCollection],
 }: CreateCaseStudiesAllentownBlockOptions = {}): Block {
+  const targetRelation = targetCollections.length === 1 ? targetCollections[0] : targetCollections
   return {
     slug: 'case-studies-allentown',
     interfaceName: 'CaseStudiesAllentown',
     labels: { singular: 'PRE-RELEASE — Case Studies Allentown', plural: 'PRE-RELEASE — Case Studies Allentown blocks' },
     fields: [
       {
-        name: 'theme', type: 'select', required: true, defaultValue: 'light',
+        name: 'theme', type: 'select', localized: true, required: true, defaultValue: 'light',
         options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })),
       },
       {
@@ -86,11 +82,7 @@ export function createCaseStudiesAllentownBlock({
       { name: 'sectionLabel', type: 'text', label: 'Carousel label', localized: true, admin: { description: 'Optional label displayed before the carousel with a decorative line.' } },
       {
         name: 'cta', type: 'group', label: 'Header CTA', localized: true,
-        fields: [
-          { name: 'label', type: 'text', label: 'Button text', validate: (value: unknown) => value === undefined || value === null || value === '' || textRequired(value) },
-          { name: 'href', type: 'text', label: 'Link', validate: (value: unknown) => value === undefined || value === null || value === '' || urlRequired(value) },
-          { name: 'icon', type: 'select', label: 'Icon', options: ctaIconOptions },
-        ],
+        fields: ctaFields(targetRelation),
       },
       {
         name: 'carousel', type: 'group', label: 'Carousel', localized: true, required: true,
@@ -98,7 +90,9 @@ export function createCaseStudiesAllentownBlock({
           name: 'items', type: 'array', label: 'Case studies', minRows: 1, required: true,
           admin: { description: 'Drag to set display order. A Page can be used only once.' },
           fields: [
-            { name: 'page', type: 'relationship', label: 'Destination page', relationTo: pageCollection, required: true, filterOptions: pageFilterOptions, admin: { description: 'Published page available in this Region and locale. The button always links here.' } },
+            { name: 'destinationType', type: 'select', label: 'Link type', required: true, defaultValue: 'content', options: [{ label: 'Content', value: 'content' }, { label: 'URL', value: 'url' }] },
+            { name: 'href', type: 'text', label: 'URL', admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' } },
+            contentTargetField(targetRelation),
             { name: 'logo', type: 'upload', label: 'Logo', relationTo: mediaCollection, localized: true },
             { name: 'title', type: 'text', label: 'Title', localized: true, required: true, validate: textRequired },
             { name: 'description', type: 'textarea', label: 'Description', localized: true },
@@ -124,10 +118,10 @@ export function createCaseStudiesAllentownBlock({
             },
             {
               name: 'cta', type: 'group', label: 'Slide CTA', localized: true, required: true,
-              admin: { description: 'The destination is always the selected Page.' },
+              admin: { description: 'Uses the Content target or URL selected for this slide.' },
               fields: [
                 { name: 'label', type: 'text', label: 'Button text', required: true, validate: textRequired },
-                { name: 'icon', type: 'select', label: 'Icon', options: ctaIconOptions },
+                { name: 'icon', type: 'select', label: 'Icon', options: [{ label: 'Arrow right', value: 'arrow-right' }, { label: 'Arrow down', value: 'arrow-down' }] },
               ],
             },
           ],
@@ -139,11 +133,12 @@ export function createCaseStudiesAllentownBlock({
 
 export function caseStudiesAllentownToProps(
   data: PayloadCaseStudiesAllentownDocument,
-  { pageHref, ...payloadOptions }: CaseStudiesAllentownAdapterOptions,
+  { contentHref, ...payloadOptions }: CaseStudiesAllentownAdapterOptions,
 ): CaseStudiesAllentownContent {
   const intro = requireObject(data.intro, 'intro')
   const carousel = requireObject(data.carousel, 'carousel')
-  const items = requireArray(carousel.items, 'carousel.items').map((item, index) => slideToProps(item, index, pageHref, payloadOptions))
+  const options = { ...payloadOptions, contentHref }
+  const items = requireArray(carousel.items, 'carousel.items').map((item, index) => slideToProps(item, index, options))
 
   return {
     theme: requireTheme(data.theme),
@@ -154,32 +149,28 @@ export function caseStudiesAllentownToProps(
     },
     ...(optionalText(data.sectionLabel, 'sectionLabel') ? { sectionLabel: optionalText(data.sectionLabel, 'sectionLabel') } : {}),
     carousel: { items },
-    ...(optionalLinkedCta(data.cta, 'cta') ? { cta: optionalLinkedCta(data.cta, 'cta') } : {}),
+    ...(optionalLinkedCta(data.cta, 'cta', options) ? { cta: optionalLinkedCta(data.cta, 'cta', options) } : {}),
   }
 }
 
-function slideToProps(value: unknown, index: number, pageHref: CaseStudiesAllentownAdapterOptions['pageHref'], options: PayloadAdapterOptions): CaseStudySlide {
+function slideToProps(value: unknown, index: number, options: PayloadAdapterOptions): CaseStudySlide {
   const item = requireObject(value, `carousel.items[${index}]`)
-  const page = relationshipID(item.page, `carousel.items[${index}].page`)
-  const href = pageHref(page)
-  if (!href) throw new Error(`carousel.items[${index}].page is not available in this static build.`)
   const cta = requireObject(item.cta, `carousel.items[${index}].cta`)
+  const destinationType = item.destinationType ?? (item.page ? 'content' : 'url')
+  const action = ctaToProps({ ...cta, destinationType, page: item.page, href: item.href }, `carousel.items[${index}].cta`, options)
+  const page = item.page ? relationshipID(item.page, `carousel.items[${index}].page`) : undefined
   const quote = optionalQuote(item.quote, `carousel.items[${index}].quote`, options)
   const results = item.results === undefined || item.results === null ? undefined : requireArray(item.results, `carousel.items[${index}].results`).map((result, resultIndex) => resultToProps(result, index, resultIndex))
 
   return {
-    page,
+    ...(page ? { page } : {}),
     ...(item.logo ? { logo: mediaToProps(item.logo, `carousel.items[${index}].logo`, options) } : {}),
     title: requireText(item.title, `carousel.items[${index}].title`),
     ...(optionalText(item.description, `carousel.items[${index}].description`) ? { description: optionalText(item.description, `carousel.items[${index}].description`) } : {}),
     image: mediaToProps(item.image, `carousel.items[${index}].image`, options),
     ...(results?.length ? { results } : {}),
     ...(quote ? { quote } : {}),
-    cta: {
-      label: requireText(cta.label, `carousel.items[${index}].cta.label`),
-      href,
-      ...(ctaIcon(cta.icon, `carousel.items[${index}].cta.icon`) ? { icon: ctaIcon(cta.icon, `carousel.items[${index}].cta.icon`) } : {}),
-    },
+    cta: action,
   }
 }
 
@@ -210,27 +201,25 @@ function optionalQuote(value: unknown, field: string, options: PayloadAdapterOpt
   }
 }
 
-function optionalLinkedCta(value: unknown, field: string): Cta | undefined {
+function optionalLinkedCta(value: unknown, field: string, options: PayloadAdapterOptions): Cta | undefined {
   if (!value) return undefined
   const cta = requireObject(value, field)
   const label = optionalText(cta.label, `${field}.label`)
-  const href = optionalText(cta.href, `${field}.href`)
-  if (!label && !href) return undefined
-  if (!label || !href) throw new Error(`${field} requires both button text and link.`)
-  if (!isSafeWebUrl(href)) throw new Error(`${field}.href must be an HTTP(S) or root-relative URL.`)
-  return { label, href, ...(ctaIcon(cta.icon, `${field}.icon`) ? { icon: ctaIcon(cta.icon, `${field}.icon`) } : {}) }
+  if (!label) return undefined
+  return ctaToProps(cta, field, options)
 }
 
-function ctaIcon(value: unknown, field: string): CtaIcon | undefined {
-  if (value === undefined || value === null || value === '') return undefined
-  if (value === 'arrow-right' || value === 'arrow-down') return value
-  throw new Error(`${field} must be arrow-right or arrow-down.`)
-}
 
 function relationshipID(value: unknown, field: string): string {
-  if (typeof value === 'string') return value
-  if (value && typeof value === 'object' && 'id' in value && typeof value.id === 'string') return value.id
-  throw new Error(`${field} must reference a Page.`)
+  if (typeof value === 'string' || typeof value === 'number') return String(value)
+  const relation = requireObject(value, field)
+  if (typeof relation.relationTo === 'string') {
+    const document = relation.value
+    if (typeof document === 'string' || typeof document === 'number') return String(document)
+    return String(requireObject(document, `${field}.value`).id)
+  }
+  if (typeof relation.id === 'string' || typeof relation.id === 'number') return String(relation.id)
+  throw new Error(`${field} must reference content.`)
 }
 
 function hasText(value: unknown): value is string {

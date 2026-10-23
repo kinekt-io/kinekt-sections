@@ -11,7 +11,7 @@ const manifest = {
     "theme": {
       "kind": "select",
       "required": true,
-      "localized": false,
+      "localized": true,
       "options": [
         "light",
         "semi-light",
@@ -25,20 +25,58 @@ const manifest = {
       "componentId": "components/intro/allentown",
       "required": true,
       "localized": true,
-      "description": "The localized accent heading maps from the former section title; description remains optional."
+      "description": "The localized accent heading maps from the former section title; description remains optional.",
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
     },
     "checklistItems": {
       "kind": "componentList",
       "componentId": "components/checklist-item/allentown",
       "minItems": 1,
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "text": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        }
+      }
     },
     "ctaGroup": {
       "kind": "component",
       "componentId": "components/cta-group/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "primaryButton": {
+          "kind": "cta",
+          "required": false,
+          "localized": true,
+          "description": "Optional primary Button component part."
+        },
+        "secondaryButton": {
+          "kind": "cta",
+          "required": false,
+          "localized": true,
+          "description": "Optional secondary Button component part."
+        }
+      }
     },
     "certImage": {
       "kind": "media",
@@ -55,7 +93,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaComplianceDetailAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }
+export interface CreateBetaComplianceDetailAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaComplianceDetailAllentownBlock(options: CreateBetaComplianceDetailAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

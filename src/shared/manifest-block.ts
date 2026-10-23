@@ -1,4 +1,5 @@
-import type { Block, CollectionSlug } from 'payload'
+import type { Block, CollectionSlug, Field } from 'payload'
+import { ctaFields, ctaGroupFields } from './payload-fields.js'
 
 type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'insightSourceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
 
@@ -8,6 +9,8 @@ interface ManifestField {
   localized: boolean
   options?: readonly string[]
   minItems?: number
+  componentId?: string
+  fields?: Readonly<Record<string, ManifestField>>
 }
 
 type SectionStatus = 'planned' | 'alpha' | 'beta' | 'prerelease' | 'release' | 'released' | 'deprecated'
@@ -16,7 +19,7 @@ interface SectionManifest {
   slug: string
   title: string
   status: SectionStatus
-  fields: Record<string, ManifestField>
+  fields: Readonly<Record<string, ManifestField>>
 }
 
 export type ManifestSectionDocument = Record<string, unknown> & { id?: string }
@@ -24,44 +27,97 @@ export type ManifestSectionDocument = Record<string, unknown> & { id?: string }
 export interface CreateManifestBlockOptions {
   mediaCollection?: CollectionSlug
   formCollection?: CollectionSlug
+  targetCollections?: CollectionSlug[]
 }
 
-function localized(field: ManifestField) {
-  return field.localized ? { localized: true } : {}
+type ResolvedOptions = CreateManifestBlockOptions & {
+  mediaCollection: CollectionSlug
+  targetCollections: CollectionSlug[]
 }
 
-const ctaFields = (required: boolean) => [
-  { name: 'label', type: 'text' as const, required },
-  { name: 'href', type: 'text' as const, required },
-  { name: 'icon', type: 'select' as const, options: [{ label: 'Arrow right', value: 'arrow-right' }, { label: 'Arrow down', value: 'arrow-down' }] },
+const introFields = (): Field[] => [
+  { name: 'accentHeading', type: 'text' },
+  { name: 'heading', type: 'text', required: true },
+  { name: 'description', type: 'richText' },
 ]
 
-function fieldFor(name: string, field: ManifestField, options: CreateManifestBlockOptions & { mediaCollection: CollectionSlug }) {
-  const common = { name, required: field.required, ...localized(field) }
+function childFields(field: ManifestField, options: ResolvedOptions, parentLocalized: boolean): Field[] {
+  if (!field.fields) throw new Error(`Reusable component ${field.componentId ?? '(unknown)'} has no expanded field contract.`)
+  return Object.entries(field.fields).map(([name, child]) => fieldFor(name, child, options, parentLocalized))
+}
+
+function commonField(name: string, field: ManifestField, parentLocalized: boolean) {
+  return {
+    name,
+    required: field.required,
+    ...(field.localized && !parentLocalized ? { localized: true as const } : {}),
+  }
+}
+
+function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, parentLocalized = false): Field {
+  const common = commonField(name, field, parentLocalized)
+  const descendantsLocalized = parentLocalized || field.localized
 
   switch (field.kind) {
-    case 'text': return { ...common, type: 'text' as const }
-    case 'textarea': return { ...common, type: 'textarea' as const }
-    case 'richText': return { ...common, type: 'richText' as const }
-    case 'dateTime': return { ...common, type: 'date' as const, admin: { date: { pickerAppearance: 'dayAndTime' as const } } }
+    case 'text': return { ...common, type: 'text' }
+    case 'textarea': return { ...common, type: 'textarea' }
+    case 'richText': return { ...common, type: 'richText' }
+    case 'dateTime': return { ...common, type: 'date', admin: { date: { pickerAppearance: 'dayAndTime' } } }
     case 'select':
-    case 'theme': return { ...common, type: 'select' as const, options: (field.options ?? ['light', 'dark']).map((value) => ({ label: value, value })) }
+    case 'theme': return { ...common, type: 'select', options: (field.options ?? ['light', 'dark']).map((value) => ({ label: value, value })) }
     case 'media':
-    case 'video': return { ...common, type: 'upload' as const, relationTo: options.mediaCollection }
-    case 'mediaList': return { ...common, type: 'array' as const, minRows: field.minItems, fields: [{ name: 'media', type: 'upload' as const, relationTo: options.mediaCollection, required: true }] }
-    case 'cta': return { ...common, type: 'group' as const, fields: ctaFields(true) }
-    case 'ctaGroup': return { ...common, type: 'group' as const, fields: ['primary', 'secondary'].map((name) => ({ name, type: 'group' as const, fields: ctaFields(false) })) }
-    case 'formReference': return options.formCollection
-      ? { ...common, type: 'relationship' as const, relationTo: options.formCollection }
-      : { ...common, type: 'json' as const }
-    default: return { ...common, type: 'json' as const }
+    case 'video': return { ...common, type: 'upload', relationTo: options.mediaCollection }
+    case 'mediaList': return { ...common, type: 'array', minRows: field.minItems, fields: [{ name: 'media', type: 'upload', relationTo: options.mediaCollection, required: true }] }
+    case 'cta': return { ...common, type: 'group', fields: ctaFields(options.targetCollections, true) }
+    case 'ctaGroup': return { ...common, type: 'group', fields: ctaGroupFields(options.targetCollections) }
+    case 'sectionIntro': return { ...common, type: 'group', fields: introFields() }
+    case 'component': return { ...common, type: 'group', fields: childFields(field, options, descendantsLocalized) }
+    case 'componentList': return { ...common, type: 'array', minRows: field.minItems, fields: childFields(field, options, descendantsLocalized) }
+    case 'infoItems':
+    case 'featureItems':
+    case 'comparisonColumns': return { ...common, type: 'array', minRows: field.minItems, fields: [{ name: 'value', type: 'text', required: true }] }
+    case 'processSteps': return { ...common, type: 'array', minRows: field.minItems, fields: [{ name: 'title', type: 'text', required: true }, { name: 'description', type: 'richText', required: true }] }
+    case 'faqItems': return { ...common, type: 'array', minRows: field.minItems, fields: [{ name: 'question', type: 'text', required: true }, { name: 'answer', type: 'richText', required: true }] }
+    case 'comparisonRows': return {
+      ...common,
+      type: 'array',
+      minRows: field.minItems,
+      fields: [
+        { name: 'feature', type: 'text', required: true },
+        { name: 'cells', type: 'array', required: true, minRows: 1, fields: [
+          { name: 'type', type: 'select', required: true, options: [{ label: 'Text', value: 'text' }, { label: 'Status', value: 'status' }] },
+          { name: 'text', type: 'text' },
+          { name: 'status', type: 'select', options: [{ label: 'Positive', value: 'positive' }, { label: 'Negative', value: 'negative' }] },
+        ] },
+      ],
+    }
+    case 'insightSourceList': return {
+      ...common,
+      type: 'array',
+      minRows: field.minItems,
+      fields: [
+        { name: 'title', type: 'text', required: true },
+        { name: 'excerpt', type: 'textarea', required: true },
+        { name: 'href', type: 'text', required: true },
+        { name: 'publishedAt', type: 'date', required: true },
+        { name: 'kind', type: 'select', options: [{ label: 'Article', value: 'Article' }, { label: 'Case', value: 'Case' }] },
+        { name: 'featured', type: 'checkbox', defaultValue: false },
+        { name: 'image', type: 'upload', relationTo: options.mediaCollection },
+      ],
+    }
+    case 'formReference': {
+      if (!options.formCollection) throw new Error(`Field ${name} requires a formCollection; JSON fallback is forbidden.`)
+      return { ...common, type: 'relationship', relationTo: options.formCollection }
+    }
+    default: throw new Error(`Unsupported manifest field kind on ${name}; JSON fallback is forbidden.`)
   }
 }
 
 export function createManifestBlock(manifest: SectionManifest, input: CreateManifestBlockOptions = {}): Block {
-  const options: CreateManifestBlockOptions & { mediaCollection: CollectionSlug } = {
+  const options: ResolvedOptions = {
     mediaCollection: input.mediaCollection ?? 'media',
     formCollection: input.formCollection,
+    targetCollections: input.targetCollections?.length ? input.targetCollections : ['pages'],
   }
 
   const released = manifest.status === 'released'
@@ -73,7 +129,7 @@ export function createManifestBlock(manifest: SectionManifest, input: CreateMani
     labels: released
       ? { singular: manifest.title, plural: `${manifest.title} blocks` }
       : { singular: `${statusLabel} — ${manifest.title}`, plural: `${statusLabel} — ${manifest.title} blocks` },
-    fields: Object.entries(manifest.fields).map(([name, field]) => fieldFor(name, field, options)) as Block['fields'],
+    fields: Object.entries(manifest.fields).map(([fieldName, field]) => fieldFor(fieldName, field, options)),
   }
 }
 
