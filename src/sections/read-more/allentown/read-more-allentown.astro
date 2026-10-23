@@ -1,4 +1,5 @@
 ---
+import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
 import '../../../styles/wireframe.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import Label from '../../../atoms/label/allentown/label-allentown.astro'
@@ -20,7 +21,7 @@ const { theme = 'light', intro, label, ctas, media, headingLevel = 'h2', mediaLo
 const Heading = headingLevel
 const description = (value: string | RichText | undefined) => typeof value === 'string' ? value : value?.html
 ---
-<section class="read-more-allentown" data-kinekt-section data-kinekt-theme={theme}>
+<section class="read-more-allentown" data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('read-more-allentown')}>
   <div class="read-more-allentown__container">
     <header class="read-more-allentown__content">
       {intro.accentHeading && <p class="read-more-allentown__accent">{intro.accentHeading}</p>}
@@ -39,20 +40,34 @@ const description = (value: string | RichText | undefined) => typeof value === '
   </div>
 </section>
 <style>
+  :global(:where(.read-more-allentown)) {
+    --kiw--read-more-allentown-container-gap: var(--section-space-m);
+    --kiw--read-more-allentown-content-gap: var(--space-l);
+    --kiw--read-more-allentown-accent-color: var(--kinekt-component-action);
+    --kiw--read-more-allentown-accent-font-family: var(--kinekt-component-mono);
+    --kiw--read-more-allentown-accent-font-size: var(--text-s);
+    --kiw--read-more-allentown-accent-font-weight: var(--heading-font-weight);
+    --kiw--read-more-allentown-accent-letter-spacing: var(--text-letter-spacing);
+    --kiw--read-more-allentown-reading-width: var(--width-m);
+    --kiw--read-more-allentown-muted-color: var(--kinekt-component-muted);
+    --kiw--read-more-allentown-actions-gap: var(--space-s);
+    --kiw--read-more-allentown-column-gap: var(--section-space-xl);
+  }
+
   .read-more-allentown {
-    & > .read-more-allentown__container { gap: var(--kinekt-wireframe-section-space-m); }
-    & .read-more-allentown__content { display: grid; align-content: center; gap: var(--kinekt-wireframe-space-l); }
+    & > .read-more-allentown__container { gap: var(--kiw--read-more-allentown-container-gap); }
+    & .read-more-allentown__content { display: grid; align-content: center; gap: var(--kiw--read-more-allentown-content-gap); }
     & :is(.read-more-allentown__accent, .read-more-allentown__heading, .read-more-allentown__description) { margin: 0; }
-    & .read-more-allentown__accent { color: var(--kinekt-component-action); font-family: var(--kinekt-component-mono); font-size: .8125rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-    & .read-more-allentown__description { max-width: var(--kinekt-wireframe-layout-width-m); color: var(--kinekt-component-muted); }
+    & .read-more-allentown__accent { color: var(--kiw--read-more-allentown-accent-color); font-family: var(--kiw--read-more-allentown-accent-font-family); font-size: var(--kiw--read-more-allentown-accent-font-size); font-weight: var(--kiw--read-more-allentown-accent-font-weight); letter-spacing: var(--kiw--read-more-allentown-accent-letter-spacing); text-transform: uppercase; }
+    & .read-more-allentown__description { max-width: var(--kiw--read-more-allentown-reading-width); color: var(--kiw--read-more-allentown-muted-color); }
     & .read-more-allentown__description :first-child { margin-top: 0; }
     & .read-more-allentown__description :last-child { margin-bottom: 0; }
-    & .read-more-allentown__actions { display: flex; flex-wrap: wrap; gap: var(--kinekt-wireframe-space-s); margin: 0; }
+    & .read-more-allentown__actions { display: flex; flex-wrap: wrap; gap: var(--kiw--read-more-allentown-actions-gap); margin: 0; }
     & .read-more-allentown__media { display: block; width: 100%; }
     & .read-more-allentown__image { aspect-ratio: 4 / 5; object-fit: cover; }
 
     @media (min-width: 50rem) {
-      & > .read-more-allentown__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; column-gap: var(--kinekt-wireframe-section-space-xl); }
+      & > .read-more-allentown__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; column-gap: var(--kiw--read-more-allentown-column-gap); }
     }
   }
 </style>

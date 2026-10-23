@@ -15,8 +15,12 @@ const content = {
       "heading": "Energy systems built around real operating conditions",
       "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
     },
-    "cta": {
-      "cta": {
+    "ctaGroup": {
+      "primaryButton": {
+        "label": "Explore the specification",
+        "href": "#"
+      },
+      "secondaryButton": {
         "label": "Explore the specification",
         "href": "#"
       }
@@ -64,12 +68,15 @@ const fields = {
           }
         }
       },
-      "cta": {
+      "ctaGroup": {
         "kind": "component",
-        "id": "controls/button/allentown",
-        "role": "button",
+        "id": "components/cta-group/allentown",
+        "role": "cta-group",
         "fields": {
-          "cta": {
+          "primaryButton": {
+            "kind": "cta"
+          },
+          "secondaryButton": {
             "kind": "cta"
           }
         }

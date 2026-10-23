@@ -1,4 +1,5 @@
 ---
+import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
 import '../../../styles/wireframe.css'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
@@ -29,7 +30,7 @@ const normalizedCallout = {
   ctaGroup: callout.ctaGroup ?? { primary: getCta(callout.cta) },
 }
 ---
-<section class="comparison-overview-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="comparison-overview-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('comparison-overview-allentown')}>
   <div class="comparison-overview-allentown__container">
     <header class="comparison-overview-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
@@ -53,23 +54,39 @@ const normalizedCallout = {
   </div>
 </section>
 <style>
+  :global(:where(.comparison-overview-allentown)) {
+    --kiw--comparison-overview-allentown-container-gap: var(--section-space-xl);
+    --kiw--comparison-overview-allentown-intro-gap: var(--space-m);
+    --kiw--comparison-overview-allentown-intro-width: var(--kinekt-component-reading-width);
+    --kiw--comparison-overview-allentown-cell-block-space: var(--space-l);
+    --kiw--comparison-overview-allentown-cell-inline-space: var(--space-m);
+    --kiw--comparison-overview-allentown-border-width: var(--border-width);
+    --kiw--comparison-overview-allentown-line-color: var(--kinekt-component-line);
+    --kiw--comparison-overview-allentown-heading-weight: var(--heading-font-weight);
+    --kiw--comparison-overview-allentown-muted-color: var(--kinekt-component-muted);
+    --kiw--comparison-overview-allentown-text-size: var(--text-s);
+    --kiw--comparison-overview-allentown-status-size: var(--text-m);
+    --kiw--comparison-overview-allentown-action-color: var(--kinekt-component-action);
+    --kiw--comparison-overview-allentown-callout-space: var(--section-space-l);
+  }
+
   .comparison-overview-allentown {
-    & > .comparison-overview-allentown__container { display: grid; gap: var(--kinekt-wireframe-section-space-xl); }
+    & > .comparison-overview-allentown__container { display: grid; gap: var(--kiw--comparison-overview-allentown-container-gap); }
     & .comparison-overview-allentown__visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-    & .comparison-overview-allentown__intro { display: grid; justify-items: center; gap: var(--kinekt-wireframe-space-m); text-align: center; }
-    & .comparison-overview-allentown__intro :global(.section-intro) { max-width: 46rem; }
-    & .comparison-overview-allentown__intro :global(.section-intro__description) { max-width: 40rem; margin-inline: auto; }
+    & .comparison-overview-allentown__intro { display: grid; justify-items: center; gap: var(--kiw--comparison-overview-allentown-intro-gap); text-align: center; }
+    & .comparison-overview-allentown__intro :global(.section-intro) { max-width: var(--kiw--comparison-overview-allentown-intro-width); }
+    & .comparison-overview-allentown__intro :global(.section-intro__description) { max-width: var(--kiw--comparison-overview-allentown-intro-width); margin-inline: auto; }
     & .comparison-overview-allentown__table-wrap { overflow-x: auto; }
     & .comparison-overview-allentown__table { width: 100%; min-width: 42rem; border: 0; border-collapse: collapse; background: transparent; text-align: left; }
-    & .comparison-overview-allentown__table :is(th, td) { padding: 1.125rem 1rem; border: 0; border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line); background: transparent; vertical-align: middle; }
-    & .comparison-overview-allentown__table thead th { font-weight: 600; }
+    & .comparison-overview-allentown__table :is(th, td) { padding: var(--kiw--comparison-overview-allentown-cell-block-space) var(--kiw--comparison-overview-allentown-cell-inline-space); border: 0; border-bottom: var(--kiw--comparison-overview-allentown-border-width) solid var(--kiw--comparison-overview-allentown-line-color); background: transparent; vertical-align: middle; }
+    & .comparison-overview-allentown__table thead th { font-weight: var(--kiw--comparison-overview-allentown-heading-weight); }
     & .comparison-overview-allentown__table tbody tr:last-child :is(th, td) { border-bottom: 0; }
-    & .comparison-overview-allentown__table tbody th { width: 38%; font-weight: 500; }
-    & .comparison-overview-allentown__table td { color: var(--kinekt-component-muted); font-size: .875rem; }
-    & .comparison-overview-allentown__status { display: inline-flex; width: 1rem; height: 1rem; }
+    & .comparison-overview-allentown__table tbody th { width: 38%; font-weight: var(--kiw--comparison-overview-allentown-heading-weight); }
+    & .comparison-overview-allentown__table td { color: var(--kiw--comparison-overview-allentown-muted-color); font-size: var(--kiw--comparison-overview-allentown-text-size); }
+    & .comparison-overview-allentown__status { position: relative; display: inline-flex; width: var(--kiw--comparison-overview-allentown-status-size); height: var(--kiw--comparison-overview-allentown-status-size); }
     & .comparison-overview-allentown__status svg { width: 100%; height: 100%; fill: currentColor; }
-    & .comparison-overview-allentown__status--positive { color: var(--kinekt-component-action); }
-    & .comparison-overview-allentown__status--negative { color: var(--kinekt-component-muted); }
-    & .comparison-overview-allentown__callout { margin-top: var(--kinekt-wireframe-section-space-l); }
+    & .comparison-overview-allentown__status--positive { color: var(--kiw--comparison-overview-allentown-action-color); }
+    & .comparison-overview-allentown__status--negative { color: var(--kiw--comparison-overview-allentown-muted-color); }
+    & .comparison-overview-allentown__callout { margin-top: var(--kiw--comparison-overview-allentown-callout-space); }
   }
 </style>

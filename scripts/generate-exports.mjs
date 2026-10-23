@@ -25,6 +25,11 @@ async function discover(directory) {
 
     const relative = path.relative(source, filename).split(path.sep).join('/')
     const parts = relative.split('/')
+    if (parts[0] === 'styles' && entry.name.endsWith('.css')) {
+      entries.set(`./styles/${entry.name}`, { source: relative, target: `./src/${relative}` })
+      continue
+    }
+
 
     if (parts[0] === 'shared') continue
 

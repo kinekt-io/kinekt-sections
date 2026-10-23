@@ -1,149 +1,96 @@
+@import './wireframe-tokens.css';
+
 /*
  * Public wireframe token contract
  *
- * The package assigns component-local aliases only. A consuming site can set
- * the --kinekt-color-*, --kinekt-font-* and --kinekt-space-* tokens on :root,
- * or override any --kinekt-section-* token on an individual section root.
- * The neutral fallbacks keep the package useful without a site token layer.
+ * Canonical unprefixed tokens are defined in wireframe-tokens.css. A consumer
+ * can override them on :root, while individual sections retain
+ * --kinekt-section-* hooks. Components consume only local semantic aliases.
  */
-
 :where([data-kinekt-section]) {
-  /*
-   * The package's default theme. Sites override the --kinekt-* aliases;
-   * component CSS only reads the --kinekt-component-* semantic aliases.
-   */
-  --kinekt-wireframe-font-sans: system-ui, sans-serif;
-  --kinekt-wireframe-font-mono: ui-monospace, monospace;
-  /*
-   * Layout and spacing scale. M and D explicitly mean mobile and desktop.
-   * A site can replace the public --kinekt-layout-* and --kinekt-space-*
-   * aliases; components only consume the resulting semantic tokens.
-   */
-  --kinekt-wireframe-layout-m-website-width: 26.375rem;
-  --kinekt-wireframe-layout-m-content-width: 24.375rem;
-  --kinekt-wireframe-layout-m-width-xs: 2.4375rem;
-  --kinekt-wireframe-layout-m-width-s: 4.875rem;
-  --kinekt-wireframe-layout-m-width-m: 9.75rem;
-  --kinekt-wireframe-layout-m-width-l: 14.625rem;
-  --kinekt-wireframe-layout-m-width-xl: 19.5rem;
-  --kinekt-wireframe-layout-m-width-xxl: 21.9375rem;
-  --kinekt-wireframe-layout-m-section-gutter: 1rem;
-  --kinekt-wireframe-layout-d-website-width: 107.5rem;
-  --kinekt-wireframe-layout-d-content-width: 90rem;
-  --kinekt-wireframe-layout-d-width-xs: 9rem;
-  --kinekt-wireframe-layout-d-width-s: 18rem;
-  --kinekt-wireframe-layout-d-width-m: 36rem;
-  --kinekt-wireframe-layout-d-width-l: 54rem;
-  --kinekt-wireframe-layout-d-width-xl: 72rem;
-  --kinekt-wireframe-layout-d-width-xxl: 81rem;
-  --kinekt-wireframe-layout-d-section-gutter: 8.75rem;
-  --kinekt-wireframe-space-m-xxs: 0.56rem;
-  --kinekt-wireframe-space-m-xs: 0.64rem;
-  --kinekt-wireframe-space-m-s: 0.8rem;
-  --kinekt-wireframe-space-m-m: 1rem;
-  --kinekt-wireframe-space-m-l: 1.25rem;
-  --kinekt-wireframe-space-m-xl: 1.5625rem;
-  --kinekt-wireframe-space-m-xxl: 1.953125rem;
-  --kinekt-wireframe-space-d-xxs: 0.56rem;
-  --kinekt-wireframe-space-d-xs: 0.8rem;
-  --kinekt-wireframe-space-d-s: 1rem;
-  --kinekt-wireframe-space-d-m: 1.25rem;
-  --kinekt-wireframe-space-d-l: 1.5625rem;
-  --kinekt-wireframe-space-d-xl: 1.953125rem;
-  --kinekt-wireframe-space-d-xxl: 2.44140625rem;
-  --kinekt-wireframe-section-space-m-xs: 2.048rem;
-  --kinekt-wireframe-section-space-m-s: 2.56rem;
-  --kinekt-wireframe-section-space-m-m: 3.2rem;
-  --kinekt-wireframe-section-space-m-l: 4rem;
-  --kinekt-wireframe-section-space-m-xl: 5rem;
-  --kinekt-wireframe-section-space-m-xxl: 6.25rem;
-  --kinekt-wireframe-section-space-d-xs: 2.56rem;
-  --kinekt-wireframe-section-space-d-s: 3.2rem;
-  --kinekt-wireframe-section-space-d-m: 4rem;
-  --kinekt-wireframe-section-space-d-l: 5rem;
-  --kinekt-wireframe-section-space-d-xl: 6.25rem;
-  --kinekt-wireframe-section-space-d-xxl: 7.8125rem;
-  --kinekt-wireframe-layout-website-width: clamp(var(--kinekt-wireframe-layout-m-website-width), calc(2.589rem + 97.594vw), var(--kinekt-wireframe-layout-d-website-width));
-  --kinekt-wireframe-layout-content-width: clamp(var(--kinekt-wireframe-layout-m-content-width), calc(5.132rem + 78.947vw), var(--kinekt-wireframe-layout-d-content-width));
-  --kinekt-wireframe-layout-width-xs: clamp(var(--kinekt-wireframe-layout-m-width-xs), calc(0.513rem + 7.895vw), var(--kinekt-wireframe-layout-d-width-xs));
-  --kinekt-wireframe-layout-width-s: clamp(var(--kinekt-wireframe-layout-m-width-s), calc(1.026rem + 15.789vw), var(--kinekt-wireframe-layout-d-width-s));
-  --kinekt-wireframe-layout-width-m: clamp(var(--kinekt-wireframe-layout-m-width-m), calc(2.053rem + 31.579vw), var(--kinekt-wireframe-layout-d-width-m));
-  --kinekt-wireframe-layout-width-l: clamp(var(--kinekt-wireframe-layout-m-width-l), calc(3.079rem + 47.368vw), var(--kinekt-wireframe-layout-d-width-l));
-  --kinekt-wireframe-layout-width-xl: clamp(var(--kinekt-wireframe-layout-m-width-xl), calc(4.105rem + 63.158vw), var(--kinekt-wireframe-layout-d-width-xl));
-  --kinekt-wireframe-layout-width-xxl: clamp(var(--kinekt-wireframe-layout-m-width-xxl), calc(4.618rem + 71.053vw), var(--kinekt-wireframe-layout-d-width-xxl));
-  --kinekt-wireframe-layout-section-gutter: clamp(var(--kinekt-wireframe-layout-m-section-gutter), calc(-1.272rem + 9.323vw), var(--kinekt-wireframe-layout-d-section-gutter));
-  --kinekt-wireframe-space-xxs: var(--kinekt-wireframe-space-m-xxs);
-  --kinekt-wireframe-space-xs: clamp(var(--kinekt-wireframe-space-m-xs), calc(0.592rem + 0.193vw), var(--kinekt-wireframe-space-d-xs));
-  --kinekt-wireframe-space-s: clamp(var(--kinekt-wireframe-space-m-s), calc(0.74rem + 0.241vw), var(--kinekt-wireframe-space-d-s));
-  --kinekt-wireframe-space-m: clamp(var(--kinekt-wireframe-space-m-m), calc(0.925rem + 0.301vw), var(--kinekt-wireframe-space-d-m));
-  --kinekt-wireframe-space-l: clamp(var(--kinekt-wireframe-space-m-l), calc(1.156rem + 0.301vw), var(--kinekt-wireframe-space-d-l));
-  --kinekt-wireframe-space-xl: clamp(var(--kinekt-wireframe-space-m-xl), calc(1.445rem + 0.376vw), var(--kinekt-wireframe-space-d-xl));
-  --kinekt-wireframe-space-xxl: clamp(var(--kinekt-wireframe-space-m-xxl), calc(1.806rem + 0.47vw), var(--kinekt-wireframe-space-d-xxl));
-  --kinekt-wireframe-section-space-xs: clamp(var(--kinekt-wireframe-section-space-m-xs), calc(0.547rem + 6.158vw), var(--kinekt-wireframe-section-space-d-xs));
-  --kinekt-wireframe-section-space-s: clamp(var(--kinekt-wireframe-section-space-m-s), calc(0.684rem + 7.697vw), var(--kinekt-wireframe-section-space-d-s));
-  --kinekt-wireframe-section-space-m: clamp(var(--kinekt-wireframe-section-space-m-m), calc(0.855rem + 9.62vw), var(--kinekt-wireframe-section-space-d-m));
-  --kinekt-wireframe-section-space-l: clamp(var(--kinekt-wireframe-section-space-m-l), calc(1.069rem + 12.03vw), var(--kinekt-wireframe-section-space-d-l));
-  --kinekt-wireframe-section-space-xl: clamp(var(--kinekt-wireframe-section-space-m-xl), calc(1.336rem + 15.04vw), var(--kinekt-wireframe-section-space-d-xl));
-  --kinekt-wireframe-section-space-xxl: clamp(var(--kinekt-wireframe-section-space-m-xxl), calc(1.67rem + 18.8vw), var(--kinekt-wireframe-section-space-d-xxl));
-  --kinekt-wireframe-heading-1-size: clamp(2.75rem, 4vw, 3.5rem);
-  --kinekt-wireframe-heading-2-size: clamp(2.25rem, 3.5vw, 3rem);
-  --kinekt-wireframe-heading-3-size: clamp(1.75rem, 2.5vw, 2.25rem);
-  --kinekt-wireframe-heading-4-size: clamp(1.25rem, 1.75vw, 1.5rem);
-  --kinekt-wireframe-heading-line-height: 0.97;
-  --kinekt-wireframe-text-xs-size: 0.75rem;
-  --kinekt-wireframe-text-xs-line-height: 1.5;
-  --kinekt-wireframe-text-s-size: 0.875rem;
-  --kinekt-wireframe-text-s-line-height: 1.5;
-  --kinekt-wireframe-text-m-size: 1rem;
-  --kinekt-wireframe-text-m-line-height: 1.5;
-  --kinekt-wireframe-text-l-size: 1.125rem;
-  --kinekt-wireframe-text-l-line-height: 1.5;
-  --kinekt-wireframe-text-xl-size: 1.25rem;
-  --kinekt-wireframe-text-xl-line-height: 1.5;
-  --kinekt-wireframe-text-xxl-size: 1.375rem;
-  --kinekt-wireframe-text-xxl-line-height: 1.5;
-  --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kinekt-color-canvas, #ffffff));
-  --kinekt-component-surface: var(--kinekt-section-surface, var(--kinekt-color-surface, #f5f5f5));
-  --kinekt-component-ink: var(--kinekt-section-ink, var(--kinekt-color-ink, #111111));
-  --kinekt-component-muted: var(--kinekt-section-muted, var(--kinekt-color-muted, #666666));
-  --kinekt-component-line: var(--kinekt-section-line, var(--kinekt-color-line, #d4d4d4));
-  --kinekt-component-action: var(--kinekt-section-action, var(--kinekt-color-action, #111111));
-  --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kinekt-color-action-text, #ffffff));
-  --kinekt-component-font: var(--kinekt-section-font, var(--kinekt-font-sans, var(--kinekt-wireframe-font-sans)));
-  --kinekt-component-mono: var(--kinekt-section-mono, var(--kinekt-font-mono, var(--kinekt-wireframe-font-mono)));
-  --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kinekt-website-width, var(--kinekt-wireframe-layout-website-width)));
-  --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kinekt-content-width, var(--kinekt-wireframe-layout-content-width)));
-  --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kinekt-reading-width, 42rem));
-  --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kinekt-space-inline, var(--kinekt-wireframe-layout-section-gutter)));
-  --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kinekt-space-section, var(--kinekt-wireframe-section-space-l)));
-  --kinekt-component-gap: var(--kinekt-section-gap, var(--kinekt-space-content, var(--kinekt-wireframe-space-m)));
-  --kinekt-component-radius: var(--kinekt-section-radius, var(--kinekt-radius, 0));
-  --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kinekt-border-width, 1px));
-  --kinekt-component-media-filter: var(--kinekt-section-media-filter, grayscale(1));
-  --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kinekt-wireframe-space-xxs));
-  --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kinekt-wireframe-space-m));
-  --kinekt-component-heading-1-size: var(--kinekt-section-heading-1-size, var(--kinekt-heading-1-size, var(--kinekt-wireframe-heading-1-size)));
-  --kinekt-component-heading-2-size: var(--kinekt-section-heading-2-size, var(--kinekt-heading-2-size, var(--kinekt-wireframe-heading-2-size)));
-  --kinekt-component-heading-3-size: var(--kinekt-section-heading-3-size, var(--kinekt-heading-3-size, var(--kinekt-wireframe-heading-3-size)));
-  --kinekt-component-heading-4-size: var(--kinekt-section-heading-4-size, var(--kinekt-heading-4-size, var(--kinekt-wireframe-heading-4-size)));
-  --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kinekt-heading-line-height, var(--kinekt-wireframe-heading-line-height)));
-  --kinekt-component-text-xs-size: var(--kinekt-section-text-xs-size, var(--kinekt-text-xs-size, var(--kinekt-wireframe-text-xs-size)));
-  --kinekt-component-text-xs-line-height: var(--kinekt-section-text-xs-line-height, var(--kinekt-text-xs-line-height, var(--kinekt-wireframe-text-xs-line-height)));
-  --kinekt-component-text-s-size: var(--kinekt-section-text-s-size, var(--kinekt-text-s-size, var(--kinekt-wireframe-text-s-size)));
-  --kinekt-component-text-s-line-height: var(--kinekt-section-text-s-line-height, var(--kinekt-text-s-line-height, var(--kinekt-wireframe-text-s-line-height)));
-  --kinekt-component-text-m-size: var(--kinekt-section-text-m-size, var(--kinekt-text-m-size, var(--kinekt-wireframe-text-m-size)));
-  --kinekt-component-text-m-line-height: var(--kinekt-section-text-m-line-height, var(--kinekt-text-m-line-height, var(--kinekt-wireframe-text-m-line-height)));
-  --kinekt-component-text-l-size: var(--kinekt-section-text-l-size, var(--kinekt-text-l-size, var(--kinekt-wireframe-text-l-size)));
-  --kinekt-component-text-l-line-height: var(--kinekt-section-text-l-line-height, var(--kinekt-text-l-line-height, var(--kinekt-wireframe-text-l-line-height)));
-  --kinekt-component-text-xl-size: var(--kinekt-section-text-xl-size, var(--kinekt-text-xl-size, var(--kinekt-wireframe-text-xl-size)));
-  --kinekt-component-text-xl-line-height: var(--kinekt-section-text-xl-line-height, var(--kinekt-text-xl-line-height, var(--kinekt-wireframe-text-xl-line-height)));
-  --kinekt-component-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kinekt-text-xxl-size, var(--kinekt-wireframe-text-xxl-size)));
-  --kinekt-component-text-xxl-line-height: var(--kinekt-section-text-xxl-line-height, var(--kinekt-text-xxl-line-height, var(--kinekt-wireframe-text-xxl-line-height)));
+  --kiw--section-site-width: var(--website-width);
+  --kiw--section-content-width: var(--content-width);
+  --kiw--section-reading-width: var(--width-m);
+  --kiw--section-inline-space: var(--section-gutter);
+  --kiw--section-block-space: var(--section-space-l);
+  --kiw--section-gap: var(--content-gap);
+  --kiw--section-radius: var(--radius-none);
+  --kiw--section-border-width: var(--border-width);
+  --kiw--section-media-filter: var(--media-filter);
+  --kiw--section-intro-accent-gap: var(--space-xxs);
+  --kiw--section-intro-description-gap: var(--space-m);
+  --kiw--section-heading-1-size: var(--h1);
+  --kiw--section-heading-2-size: var(--h2);
+  --kiw--section-heading-3-size: var(--h3);
+  --kiw--section-heading-4-size: var(--h4);
+  --kiw--section-heading-5-size: var(--h5);
+  --kiw--section-heading-6-size: var(--h6);
+  --kiw--section-heading-font-family: var(--heading-font-family);
+  --kiw--section-heading-font-weight: var(--heading-font-weight);
+  --kiw--section-heading-line-height: var(--heading-line-height);
+  --kiw--section-heading-letter-spacing: var(--heading-letter-spacing);
+  --kiw--section-text-font-family: var(--text-font-family);
+  --kiw--section-text-font-weight: var(--text-font-weight);
+  --kiw--section-text-line-height: var(--text-line-height);
+  --kiw--section-text-letter-spacing: var(--text-letter-spacing);
+  --kiw--section-mono-font-family: var(--mono-font-family);
+  --kiw--section-text-xs-size: var(--text-xs);
+  --kiw--section-text-s-size: var(--text-s);
+  --kiw--section-text-m-size: var(--text-m);
+  --kiw--section-text-l-size: var(--text-l);
+  --kiw--section-text-xl-size: var(--text-xl);
+  --kiw--section-text-xxl-size: var(--text-xxl);
+  --kiw--section-input-height: var(--input-height);
+  --kiw--section-carousel-gap: var(--content-gap);
+  --kiw--section-actions-gap: var(--space-s);
+  --kiw--section-actions-margin: var(--space-xl);
+  --kiw--section-button-height: var(--kiw--section-input-height);
+  --kiw--section-button-padding-block: var(--space-s);
+  --kiw--section-button-padding-inline: var(--space-l);
+  --kiw--section-button-radius: var(--buttons-radius);
+  --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light)));
+  --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
+  --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark)));
+  --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-ultra-dark)));
+  --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral-semi-light)));
+  --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-ultra-dark)));
+  --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+  --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family));
+  --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family));
+  --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width));
+  --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width));
+  --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width));
+  --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space));
+  --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space));
+  --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap));
+  --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius));
+  --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width));
+  --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter));
+  --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap));
+  --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap));
+  --kinekt-component-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--section-heading-1-size));
+  --kinekt-component-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--section-heading-2-size));
+  --kinekt-component-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--section-heading-3-size));
+  --kinekt-component-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--section-heading-4-size));
+  --kinekt-component-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--section-heading-5-size));
+  --kinekt-component-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--section-heading-6-size));
+  --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height));
+  --kinekt-component-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--section-text-xs-size));
+  --kinekt-component-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--section-text-s-size));
+  --kinekt-component-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--section-text-m-size));
+  --kinekt-component-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--section-text-l-size));
+  --kinekt-component-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--section-text-xl-size));
+  --kinekt-component-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--section-text-xxl-size));
+  --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height));
   box-sizing: border-box;
   padding-block: var(--kinekt-component-block-space);
   color: var(--kinekt-component-ink);
   background: var(--kinekt-component-canvas);
   font-family: var(--kinekt-component-font);
+  font-size: var(--kiw--section-text-m-size);
+  font-weight: var(--kiw--section-text-font-weight);
+  line-height: var(--kiw--section-text-line-height);
+  letter-spacing: var(--kiw--section-text-letter-spacing);
 }
 
 :where([data-kinekt-section][data-kinekt-theme='light']) {
@@ -151,32 +98,32 @@
 }
 
 :where([data-kinekt-section][data-kinekt-theme='semi-light']) {
-  --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kinekt-color-canvas-muted, #eeeeee));
-  --kinekt-component-surface: var(--kinekt-section-surface, var(--kinekt-color-surface, #ffffff));
-  --kinekt-component-ink: var(--kinekt-section-ink, var(--kinekt-color-ink, #111111));
-  --kinekt-component-muted: var(--kinekt-section-muted, var(--kinekt-color-muted, #5f5f5f));
-  --kinekt-component-line: var(--kinekt-section-line, var(--kinekt-color-line, #c7c7c7));
+  --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light)));
+  --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
+  --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark)));
+  --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-dark)));
+  --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral)));
   color-scheme: light;
 }
 
 :where([data-kinekt-section][data-kinekt-theme='dark']) {
-  --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kinekt-color-ink, #111111));
-  --kinekt-component-surface: var(--kinekt-section-surface, var(--kinekt-color-surface-dark, #242424));
-  --kinekt-component-ink: var(--kinekt-section-ink, var(--kinekt-color-canvas, #ffffff));
-  --kinekt-component-muted: var(--kinekt-section-muted, var(--kinekt-color-muted-on-dark, #c4c4c4));
-  --kinekt-component-line: var(--kinekt-section-line, var(--kinekt-color-line-on-dark, #555555));
-  --kinekt-component-action: var(--kinekt-section-action, var(--kinekt-color-canvas, #ffffff));
-  --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kinekt-color-ink, #111111));
+  --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark)));
+  --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-dark)));
+  --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white)));
+  --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light)));
+  --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light)));
+  --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white)));
+  --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark)));
 }
 
 :where([data-kinekt-section][data-kinekt-theme='semi-dark']) {
-  --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kinekt-color-canvas-dark-muted, #2b2b2b));
-  --kinekt-component-surface: var(--kinekt-section-surface, var(--kinekt-color-surface-dark, #1f1f1f));
-  --kinekt-component-ink: var(--kinekt-section-ink, var(--kinekt-color-canvas, #ffffff));
-  --kinekt-component-muted: var(--kinekt-section-muted, var(--kinekt-color-muted-on-dark, #c8c8c8));
-  --kinekt-component-line: var(--kinekt-section-line, var(--kinekt-color-line-on-dark, #5e5e5e));
-  --kinekt-component-action: var(--kinekt-section-action, var(--kinekt-color-canvas, #ffffff));
-  --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kinekt-color-ink, #111111));
+  --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark)));
+  --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-ultra-dark)));
+  --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white)));
+  --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light)));
+  --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light)));
+  --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white)));
+  --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark)));
 }
 
 :where([data-kinekt-section][data-kinekt-theme='dark'], [data-kinekt-section][data-kinekt-theme='semi-dark']) {
@@ -196,7 +143,7 @@
 :where([data-kinekt-section]) > [class$='__container'] {
   display: grid;
   width: 100%;
-  max-width: var(--kinekt-component-content-width);
+  max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2)));
   gap: var(--kinekt-component-gap);
   margin-inline: auto;
   padding-inline: var(--kinekt-component-inline-space);
@@ -206,14 +153,14 @@
   max-width: var(--kinekt-component-reading-width);
 }
 
-:where([data-kinekt-section]) :is(h1, h2, h3, h4) {
+:where([data-kinekt-section]) :is(h1, h2, h3, h4, h5, h6) {
   max-width: var(--kinekt-component-reading-width);
   margin-block: 0;
   color: inherit;
-  font: inherit;
-  font-weight: 400;
+  font-family: var(--kiw--section-heading-font-family);
+  font-weight: var(--kiw--section-heading-font-weight);
   line-height: var(--kinekt-component-heading-line-height);
-  letter-spacing: -0.045em;
+  letter-spacing: var(--kiw--section-heading-letter-spacing);
   text-wrap: balance;
 }
 
@@ -221,37 +168,39 @@
 :where([data-kinekt-section]) h2 { font-size: var(--kinekt-component-heading-2-size); }
 :where([data-kinekt-section]) h3 { font-size: var(--kinekt-component-heading-3-size); }
 :where([data-kinekt-section]) h4 { font-size: var(--kinekt-component-heading-4-size); }
+:where([data-kinekt-section]) h5 { font-size: var(--kinekt-component-heading-5-size); }
+:where([data-kinekt-section]) h6 { font-size: var(--kinekt-component-heading-6-size); }
 
 :where([data-kinekt-section]) :is(p, li, dd, td, th, label, input, textarea, button) {
   font: inherit;
-  line-height: 1.55;
+  line-height: var(--kinekt-component-text-line-height);
 }
 
 :where([data-kinekt-section]) :is(p, ul, ol, dl, table, form) {
   margin-block: 0;
 }
 
-:where([data-kinekt-section]) :is([class$='__accent'], [class*='__label'], [class*='__category']) {
+:where([data-kinekt-section] :is([class$='__accent'], [class*='__label'], [class*='__category'])) {
   color: var(--kinekt-component-muted);
   font-family: var(--kinekt-component-mono);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: var(--kinekt-component-text-xs-size);
+  font-weight: var(--kiw--section-heading-font-weight);
+  letter-spacing: var(--kiw--section-text-letter-spacing);
   text-transform: uppercase;
 }
 
 
 :where([data-kinekt-section]) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); }
 :where([data-kinekt-section]) .section-intro__heading { margin: 0; }
-:where([data-kinekt-section]) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: 1.05rem; line-height: 1.45; }
+:where([data-kinekt-section]) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-l-size); line-height: var(--kinekt-component-text-line-height); }
 :where([data-kinekt-section]) .section-intro__description > :first-child { margin-top: 0; }
 :where([data-kinekt-section]) .section-intro__description > :last-child { margin-bottom: 0; }
 
 :where([data-kinekt-section]) :is([class$='__actions'], [class*='__cta-group']) {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1.75rem;
+  gap: var(--kiw--section-actions-gap);
+  margin-top: var(--kiw--section-actions-margin);
 }
 
 :where([data-kinekt-section]) .button {
@@ -259,15 +208,15 @@
   align-items: center;
   justify-content: center;
   gap: 0.8ch;
-  min-height: 3rem;
-  padding: 0.8rem 1.15rem;
+  min-height: var(--kiw--section-button-height);
+  padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline);
   border: var(--kinekt-component-border-width) solid var(--kinekt-component-action);
-  border-radius: var(--kinekt-component-radius);
+  border-radius: calc(var(--buttons-has-radius) * var(--kiw--button-allentown-radius, var(--kiw--section-button-radius)));
   color: var(--kinekt-component-action-text);
   background: var(--kinekt-component-action);
-  font-size: 0.85rem;
-  font-weight: 600;
-  line-height: 1.2;
+  font-size: var(--kinekt-component-text-s-size);
+  font-weight: var(--kiw--section-heading-font-weight);
+  line-height: var(--kinekt-component-text-line-height);
   text-decoration: none;
   cursor: pointer;
 }
@@ -305,8 +254,8 @@
 
 :where([data-kinekt-section]) :is(ul, ol):not([class]) {
   display: grid;
-  gap: 0.5rem;
-  padding-left: 1.25rem;
+  gap: var(--space-xs);
+  padding-left: var(--space-l);
 }
 
 :where([data-kinekt-section]) :is([class$='__cards'], [class$='__insight-sources']) {
@@ -315,7 +264,7 @@
 
 :where([data-kinekt-section]) li > article {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--space-s);
   padding: var(--kinekt-component-gap);
   border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
   border-radius: var(--kinekt-component-radius);
@@ -323,13 +272,13 @@
 }
 
 :where([data-kinekt-section]) [class$='__cards'] {
-  gap: 1px;
+  gap: var(--border-width);
   background: var(--kinekt-component-line);
 }
 
 :where([data-kinekt-section]) [class$='__cards'] > li > article {
   min-height: 100%;
-  padding: 1.5rem;
+  padding: var(--space-l);
   border: 0;
   border-radius: 0;
   background: var(--kinekt-component-canvas);
@@ -337,11 +286,11 @@
 
 :where([data-kinekt-section]) [class$='__features'] {
   gap: 0;
-  margin-top: 2rem;
+  margin-top: var(--section-space-xs);
 }
 
 :where([data-kinekt-section]) [class$='__features'] > li > article {
-  padding: 1rem 0;
+  padding: var(--space-m) 0;
   border-width: var(--kinekt-component-border-width) 0 0;
   border-radius: 0;
   background: transparent;
@@ -350,8 +299,8 @@
 :where([data-kinekt-section]) dl > div {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 1rem;
-  padding: 1rem 0;
+  gap: var(--space-m);
+  padding: var(--space-m) 0;
   border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
 }
 
@@ -360,13 +309,13 @@
 }
 
 :where([data-kinekt-section]) :is(dt, dd) { margin: 0; }
-:where([data-kinekt-section]) dd { font-weight: 600; }
+:where([data-kinekt-section]) dd { font-weight: var(--heading-font-weight); }
 
 :where([data-kinekt-section]) aside {
   display: grid;
-  gap: 1rem;
-  margin-top: 2rem;
-  padding: 1.5rem;
+  gap: var(--space-m);
+  margin-top: var(--section-space-xs);
+  padding: var(--space-l);
   background: var(--kinekt-component-surface);
 }
 
@@ -379,37 +328,38 @@
 }
 
 :where([data-kinekt-section]) :is(th, td) {
-  padding: 0.75rem;
+  padding: var(--space-s);
   border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
   text-align: left;
   vertical-align: top;
 }
 
-:where([data-kinekt-section]) th { font-weight: 700; background: var(--kinekt-component-surface); }
+:where([data-kinekt-section]) th { font-weight: var(--heading-font-weight); background: var(--kinekt-component-surface); }
 
 :where([data-kinekt-section]) form[class*='__'] {
   display: grid;
   gap: var(--kinekt-component-gap);
 }
 
-:where([data-kinekt-section]) form label { display: grid; gap: 0.375rem; font-weight: 700; }
-:where([data-kinekt-section]) :is(input, textarea, button) { border-radius: var(--kinekt-component-radius); }
-:where([data-kinekt-section]) :is(input, textarea) { width: 100%; padding: 0.625rem; border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); }
-:where([data-kinekt-section]) textarea { min-height: 8rem; resize: vertical; }
-:where([data-kinekt-section]) button { display: inline-flex; align-items: center; justify-content: center; gap: 0.8ch; width: fit-content; min-height: 2.75rem; padding: 0.625rem 1rem; border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-weight: 700; cursor: pointer; }
+:where([data-kinekt-section]) form label { display: grid; gap: var(--space-xxs); font-weight: var(--heading-font-weight); }
+:where([data-kinekt-section]) :is(input, textarea) { border-radius: var(--kinekt-component-radius); }
+:where([data-kinekt-section]) button { border-radius: calc(var(--buttons-has-radius) * var(--kiw--section-button-radius)); }
+:where([data-kinekt-section]) :is(input, textarea) { width: 100%; padding: var(--space-s); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); }
+:where([data-kinekt-section]) textarea { min-height: var(--section-space-s); resize: vertical; }
+:where([data-kinekt-section]) button { display: inline-flex; align-items: center; justify-content: center; gap: 0.8ch; width: fit-content; min-height: var(--kiw--section-button-height); padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline); border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-weight: var(--kiw--section-heading-font-weight); cursor: pointer; }
 
 :where([data-kinekt-section]) :is(a, button, input, textarea):focus-visible {
-  outline: 3px solid var(--kinekt-section-focus, var(--kinekt-color-focus, #111111));
-  outline-offset: 3px;
+  outline: calc(var(--border-width) * 3) solid var(--kinekt-section-focus, var(--kinekt-component-action));
+  outline-offset: var(--space-xxs);
 }
 
-:where([data-kinekt-section]) a:not([class]) { color: inherit; font-weight: 700; text-underline-offset: 0.18em; }
+:where([data-kinekt-section]) a:not([class]) { color: inherit; font-weight: var(--heading-font-weight); text-underline-offset: var(--space-xxs); }
 
 @media (min-width: 50rem) {
   :where([data-kinekt-section]) > [class$='__container']:has(> [class$='__media']) {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: center;
-    gap: clamp(3rem, 9vw, 9rem);
+    gap: var(--section-space-xxl);
   }
 
   :where([data-kinekt-section][data-kinekt-direction='mediaRight']) > [class$='__container'] > [class$='__media'] {
@@ -426,7 +376,7 @@
 
   :where([data-kinekt-section]) > [class$='__container']:has(> [class$='__cards']):not(:has(> [class$='__media'])) {
     grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-    gap: clamp(3rem, 9vw, 9rem);
+    gap: var(--section-space-xxl);
   }
 
   :where([data-kinekt-section]) > [class$='__container'] > [class$='__cards'] {
@@ -435,7 +385,7 @@
 
   :where([data-kinekt-section]) > [class$='__container']:has(> dl) {
     grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-    gap: clamp(3rem, 9vw, 9rem);
+    gap: var(--section-space-xxl);
   }
 
   :where([data-kinekt-section]) > [class$='__container']:has(> dl) > :is([class$='__header'], [class$='__intro']) {
@@ -481,39 +431,39 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--space-m);
   padding: var(--kinekt-component-gap);
   cursor: pointer;
-  font-weight: 700;
+  font-weight: var(--heading-font-weight);
 }
 
 :where([data-kinekt-section]) summary::-webkit-details-marker { display: none; }
-:where([data-kinekt-section]) summary::after { content: '+'; flex: none; font-size: 1.5rem; line-height: 1; }
+:where([data-kinekt-section]) summary::after { content: '+'; flex: none; font-size: var(--text-xl); line-height: var(--text-line-height); }
 :where([data-kinekt-section]) details[open] summary::after { content: '−'; }
-:where([data-kinekt-section]) [class$='-subtitle'] { color: var(--kinekt-component-muted); font-weight: 400; }
+:where([data-kinekt-section]) [class$='-subtitle'] { color: var(--kinekt-component-muted); font-weight: var(--text-font-weight); }
 :where([data-kinekt-section]) [class$='-body'] { padding: 0 var(--kinekt-component-gap) var(--kinekt-component-gap); }
 
 :where([data-kinekt-section]) [data-kinekt-tabs] { display: grid; gap: var(--kinekt-component-gap); }
-:where([data-kinekt-section]) [role='tablist'] { display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+:where([data-kinekt-section]) [role='tablist'] { display: flex; flex-wrap: wrap; gap: var(--space-xs); border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
 :where([data-kinekt-section]) [role='tab'] { color: var(--kinekt-component-ink); background: transparent; }
 :where([data-kinekt-section]) [role='tab'][aria-selected='true'] { color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); }
 :where([data-kinekt-section]) [role='tabpanel'] { padding: var(--kinekt-component-gap); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); }
 
 :where([data-kinekt-section]) [data-kinekt-carousel-viewport] { overflow: hidden; }
-:where([data-kinekt-section]) [data-kinekt-carousel] { --kinekt-carousel-gap: var(--kinekt-section-carousel-gap, var(--kinekt-space-carousel, 1rem)); }
+:where([data-kinekt-section]) [data-kinekt-carousel] { --kinekt-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--section-carousel-gap)); }
 :where([data-kinekt-section]) ul[data-kinekt-carousel-container] { display: flex; gap: var(--kinekt-carousel-gap); }
 :where([data-kinekt-section]) [data-kinekt-carousel-slide] { flex: 0 0 var(--kinekt-carousel-slide-basis, 100%); }
 :where([data-kinekt-section]) [data-kinekt-carousel-loop='true'] ul[data-kinekt-carousel-container] { gap: 0; }
 :where([data-kinekt-section]) [data-kinekt-carousel-loop='true'] [data-kinekt-carousel-slide] { margin-inline-start: var(--kinekt-carousel-gap); }
-:where([data-kinekt-section]) [data-kinekt-carousel-pagination] { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'counter next' 'indicators indicators'; align-items: center; gap: 1.25rem; }
+:where([data-kinekt-section]) [data-kinekt-carousel-pagination] { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'counter next' 'indicators indicators'; align-items: center; gap: var(--space-l); }
 :where([data-kinekt-section]) [data-kinekt-carousel-controls='previous-next'] [data-kinekt-carousel-pagination] { grid-template-columns: minmax(0, 1fr) auto auto; grid-template-areas: 'counter previous next' 'indicators indicators indicators'; }
-:where([data-kinekt-section]) [data-kinekt-carousel-counter] { grid-area: counter; margin: 0; color: var(--kinekt-component-action); font: 500 var(--kinekt-carousel-counter-size, 1.25rem)/1 var(--kinekt-carousel-counter-font, var(--kinekt-component-font)); letter-spacing: var(--kinekt-carousel-counter-tracking, 0); }
+:where([data-kinekt-section]) [data-kinekt-carousel-counter] { grid-area: counter; margin: 0; color: var(--kinekt-component-action); font: var(--heading-font-weight) var(--text-xl)/var(--heading-line-height) var(--kinekt-carousel-counter-font, var(--kinekt-component-font)); letter-spacing: var(--kinekt-carousel-counter-tracking, var(--heading-letter-spacing)); }
 :where([data-kinekt-section]) :is([data-kinekt-carousel-separator], [data-kinekt-carousel-total]) { color: var(--kinekt-component-muted); }
 :where([data-kinekt-section]) [data-kinekt-carousel-previous] { grid-area: previous; }
 :where([data-kinekt-section]) [data-kinekt-carousel-next] { grid-area: next; }
-:where([data-kinekt-section]) [data-kinekt-carousel-indicators] { grid-area: indicators; display: grid; grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr)); gap: 0.5rem; }
-:where([data-kinekt-section]) [data-kinekt-carousel-dot] { position: relative; width: auto; min-height: var(--kinekt-carousel-indicator-hit-area, 2.75rem); padding: 0; border: 0; border-radius: 0; color: transparent; background: transparent; touch-action: manipulation; }
-:where([data-kinekt-section]) [data-kinekt-carousel-dot]::after { position: absolute; top: 50%; right: 0; left: 0; height: var(--kinekt-carousel-indicator-size, 0.125rem); transform: translateY(-50%); background: var(--kinekt-component-line); content: ''; }
+:where([data-kinekt-section]) [data-kinekt-carousel-indicators] { grid-area: indicators; display: grid; grid-template-columns: repeat(auto-fit, minmax(var(--width-xs), 1fr)); gap: var(--space-xs); }
+:where([data-kinekt-section]) [data-kinekt-carousel-dot] { position: relative; width: auto; min-height: var(--kinekt-carousel-indicator-hit-area, var(--input-height)); padding: 0; border: 0; border-radius: 0; color: transparent; background: transparent; touch-action: manipulation; }
+:where([data-kinekt-section]) [data-kinekt-carousel-dot]::after { position: absolute; top: 50%; right: 0; left: 0; height: var(--kinekt-carousel-indicator-size, var(--border-width)); transform: translateY(-50%); background: var(--kinekt-component-line); content: ''; }
 :where([data-kinekt-section]) [data-kinekt-carousel-dot][aria-current='true']::after { background: var(--kinekt-component-action); }
 
 :where([data-kinekt-section]) [data-kinekt-carousel-control-style='icon'] [data-kinekt-carousel-control-text],
@@ -527,7 +477,7 @@
 :where([data-kinekt-section]) [data-kinekt-search-grid] { display: grid; gap: var(--kinekt-component-gap); }
 :where([data-kinekt-section]) [data-kinekt-search-form] { display: flex; flex-wrap: wrap; align-items: end; max-width: none; }
 :where([data-kinekt-section]) [data-kinekt-search-form] label { min-width: min(100%, 12rem); flex: 1 1 12rem; }
-:where([data-kinekt-section]) select { min-height: 2.75rem; padding: 0.625rem; border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font: inherit; }
+:where([data-kinekt-section]) select { min-height: var(--input-height); padding: var(--space-s); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font: inherit; }
 :where([data-kinekt-section]) [data-kinekt-search-status] { margin: 0; color: var(--kinekt-component-muted); }
 
 /*
@@ -537,18 +487,13 @@
  */
 
 /*
- * Neutral editorial composition shared by every section preview.
- * Sites replace the --kinekt-wireframe-* aliases with their own tokens; these
- * values deliberately establish hierarchy and rhythm without prescribing a brand.
+ * Neutral editorial composition shared by every section preview. Local aliases
+ * remain override points for a particular rendered component.
  */
 :where([data-kinekt-section]) {
-  --kinekt-wireframe-section-space: var(--kinekt-wireframe-section-space-xl);
-  --kinekt-wireframe-content-gap: var(--kinekt-wireframe-space-m);
-  --kinekt-wireframe-editorial-gap: var(--kinekt-wireframe-section-space-xxl);
-  --kinekt-wireframe-card-padding: var(--kinekt-wireframe-space-l);
-  --kinekt-wireframe-media-ratio: 4 / 3;
-  --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kinekt-wireframe-section-space));
-  --kinekt-component-gap: var(--kinekt-section-gap, var(--kinekt-wireframe-content-gap));
+  --kiw--section-editorial-gap: var(--section-space-xxl);
+  --kiw--section-card-padding: var(--space-l);
+  --kiw--section-media-ratio: 4 / 3;
 }
 
 :where([data-kinekt-section]) :is([class$='__header'], [class$='__intro']) {
@@ -566,15 +511,15 @@
 
 :where([data-kinekt-section]) [class$='__media'] img,
 :where([data-kinekt-section]) [class$='__image'] {
-  aspect-ratio: var(--kinekt-section-media-ratio, var(--kinekt-wireframe-media-ratio));
+  aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--section-media-ratio));
   object-fit: cover;
 }
 
 :where([data-kinekt-section]) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) > li > article {
   display: grid;
   align-content: start;
-  gap: var(--kinekt-wireframe-space-m);
-  padding: var(--kinekt-wireframe-card-padding);
+  gap: var(--space-m);
+  padding: var(--kiw--section-card-padding);
   border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
   background: var(--kinekt-component-surface);
 }
@@ -585,8 +530,8 @@
 }
 
 :where([data-kinekt-section]) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) > li > article :is(h3, h4) {
-  font-size: clamp(1.25rem, 2.2vw, 1.8rem);
-  line-height: 1.05;
+  font-size: var(--h4);
+  line-height: var(--heading-line-height);
 }
 
 :where([data-kinekt-section]) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) > li > article :is(p, [class*='__description']) {
@@ -598,7 +543,7 @@
 }
 
 :where([data-kinekt-section]) :is([class$='__features'], [class$='__checklist'], [class$='__specifications'], [class$='__facts'], [class$='__metrics']) > li {
-  padding-block: 1.25rem;
+  padding-block: var(--space-l);
   border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
 }
 
@@ -608,16 +553,16 @@
   background: transparent;
 }
 
-:where([data-kinekt-section]) :is([class$='__highlight'], [class$='__callout'], [class$='__note']) {
+:where([data-kinekt-section] :is([class$='__highlight'], [class$='__callout'], [class$='__note'])) {
   max-width: var(--kinekt-component-reading-width);
-  padding: var(--kinekt-wireframe-card-padding);
-  border-left: 2px solid var(--kinekt-component-action);
+  padding: var(--kiw--section-card-padding);
+  border-left: var(--kinekt-component-border-width) solid var(--kinekt-component-action);
   background: var(--kinekt-component-surface);
 }
 
 :where(.hero-allentown, .hero-trinity, .hero-todos-santos, .product-hero-allentown, .featured-page-header-allentown, .thank-you-hero-allentown, .not-found-hero-allentown) {
   --kinekt-section-media-ratio: 1 / 1.05;
-  --kinekt-section-reading-width: 36rem;
+  --kinekt-section-reading-width: var(--width-m);
 }
 
 :where(.hero-allentown, .hero-trinity, .hero-todos-santos, .product-hero-allentown, .featured-page-header-allentown, .thank-you-hero-allentown, .not-found-hero-allentown) [class$='__container'] {
@@ -627,7 +572,7 @@
 :where(.hero-allentown, .hero-trinity, .hero-todos-santos, .product-hero-allentown, .featured-page-header-allentown, .thank-you-hero-allentown, .not-found-hero-allentown) [class$='__content'],
 :where(.hero-allentown, .hero-trinity, .hero-todos-santos, .product-hero-allentown, .featured-page-header-allentown, .thank-you-hero-allentown, .not-found-hero-allentown) [class$='__header'] {
   align-content: center;
-  padding-block: clamp(1rem, 3vw, 3rem);
+  padding-block: var(--section-space-xs);
 }
 
 /*
@@ -636,19 +581,14 @@
  * lower corners against the section canvas.
  */
 :where(.hero-trinity) {
-  --hero-trinity-frame-width: var(--kinekt-component-content-width);
-  --hero-trinity-m-min-block-size: 35rem;
-  --hero-trinity-d-min-block-size: 50.625rem;
-  --hero-trinity-frame-min-block-size: var(
-    --kinekt-section-hero-trinity-min-block-size,
-    clamp(
-      var(--hero-trinity-m-min-block-size),
-      56.25vw,
-      var(--hero-trinity-d-min-block-size)
-    )
-  );
-  --hero-trinity-frame-radius: var(--kinekt-section-hero-trinity-frame-radius, var(--kinekt-radius, 0.5rem));
-  --hero-trinity-copy-width: var(--kinekt-section-hero-trinity-copy-width, min(100%, 48.75rem));
+  --kiw--hero-trinity-frame-width: var(--content-width);
+  --kiw--hero-trinity-frame-min-block-size: var(--width-l);
+  --kiw--hero-trinity-frame-radius: var(--radius-m);
+  --kiw--hero-trinity-copy-width: var(--width-l);
+  --hero-trinity-frame-width: var(--kinekt-section-hero-trinity-frame-width, var(--kiw--hero-trinity-frame-width));
+  --hero-trinity-frame-min-block-size: var(--kinekt-section-hero-trinity-min-block-size, var(--kiw--hero-trinity-frame-min-block-size));
+  --hero-trinity-frame-radius: var(--kinekt-section-hero-trinity-frame-radius, var(--kiw--hero-trinity-frame-radius));
+  --hero-trinity-copy-width: var(--kinekt-section-hero-trinity-copy-width, var(--kiw--hero-trinity-copy-width));
   padding: 0;
 }
 
@@ -694,7 +634,7 @@
   inline-size: 100%;
   max-inline-size: none;
   min-block-size: var(--hero-trinity-frame-min-block-size);
-  padding: var(--kinekt-wireframe-section-space-m) var(--kinekt-component-inline-space);
+  padding: var(--section-space-m) var(--kinekt-component-inline-space);
 }
 
 :where(.hero-trinity) .hero-trinity__content > :is(.section-intro, .hero-trinity__actions) {
@@ -704,15 +644,15 @@
 :where(.hero-trinity) .hero-trinity__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--kinekt-wireframe-space-s);
-  margin-block-start: var(--kinekt-wireframe-space-xl);
+  gap: var(--space-s);
+  margin-block-start: var(--space-xl);
 }
 
 @media (min-width: 90.0625rem) {
   :where(.hero-trinity) {
     padding-block-end: var(
       --kinekt-section-hero-trinity-block-end-space,
-      var(--kinekt-wireframe-section-space-m)
+      var(--section-space-m)
     );
   }
 
@@ -726,48 +666,42 @@
   --hero-todos-santos-content-width: var(
     --kinekt-section-hero-todos-santos-content-width,
     clamp(
-      var(--kinekt-wireframe-layout-m-content-width),
+      var(--mobile-content-width),
       100%,
-      var(--kinekt-wireframe-layout-d-width-m)
+      var(--desktop-width-m)
     )
   );
-  --hero-todos-santos-block-space: var(
-    --kinekt-section-hero-todos-santos-block-space,
-    clamp(
-      var(--kinekt-wireframe-section-space-m),
-      8.14vw,
-      var(--kinekt-component-inline-space)
-    )
-  );
+  --kiw--hero-todos-santos-block-space: var(--section-space-m);
+  --hero-todos-santos-block-space: var(--kinekt-section-hero-todos-santos-block-space, var(--kiw--hero-todos-santos-block-space));
   --hero-todos-santos-content-gap: var(
     --kinekt-section-hero-todos-santos-content-gap,
-    var(--kinekt-wireframe-section-space-m)
+    var(--section-space-m)
   );
   --hero-todos-santos-intro-gap: var(
     --kinekt-section-hero-todos-santos-intro-gap,
-    var(--kinekt-wireframe-section-space-xs)
+    var(--section-space-xs)
   );
-  --hero-todos-santos-feature-gap: var(--kinekt-section-hero-todos-santos-feature-gap, var(--kinekt-wireframe-space-s));
+  --hero-todos-santos-feature-gap: var(--kinekt-section-hero-todos-santos-feature-gap, var(--space-s));
   --hero-todos-santos-feature-heading-size: var(--kinekt-section-hero-todos-santos-feature-heading-size, var(--kinekt-component-text-m-size));
   --hero-todos-santos-feature-row-gap: var(
     --kinekt-section-hero-todos-santos-feature-row-gap,
-    var(--kinekt-wireframe-space-xs)
+    var(--space-xs)
   );
-  --hero-todos-santos-media-height: var(
-    --kinekt-section-hero-todos-santos-media-height,
-    38.4375rem
-  );
+  --kiw--hero-todos-santos-media-height: var(--width-m);
+  --hero-todos-santos-media-height: var(--kinekt-section-hero-todos-santos-media-height, var(--kiw--hero-todos-santos-media-height));
   padding-block: var(--hero-todos-santos-block-space);
 }
 
 :where(.hero-todos-santos) .hero-todos-santos__container {
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--kinekt-wireframe-section-space-m);
+  gap: var(--section-space-m);
   max-inline-size: var(--kinekt-component-content-width);
 }
 
 :where(.hero-todos-santos) .hero-todos-santos__content {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-inline-size: 0;
   gap: var(--hero-todos-santos-content-gap);
   max-inline-size: var(--hero-todos-santos-content-width);
   padding: 0;
@@ -779,7 +713,7 @@
 }
 
 :where(.hero-todos-santos) .hero-todos-santos__feature-table {
-  inline-size: max-content;
+  inline-size: 100%;
   max-inline-size: 100%;
   overflow: visible;
   border: 0;
@@ -792,8 +726,8 @@
   margin-block-end: var(--hero-todos-santos-feature-gap);
   color: inherit;
   font-size: var(--hero-todos-santos-feature-heading-size);
-  font-weight: 700;
-  letter-spacing: -0.025em;
+  font-weight: var(--heading-font-weight);
+  letter-spacing: var(--heading-letter-spacing);
   text-align: start;
 }
 
@@ -809,8 +743,8 @@
 }
 
 :where(.hero-todos-santos) .hero-todos-santos__feature-table th {
-  padding-inline-end: var(--kinekt-wireframe-space-m);
-  font-weight: 400;
+  padding-inline-end: var(--space-m);
+  font-weight: var(--text-font-weight);
 }
 
 :where(.hero-todos-santos) .hero-todos-santos__feature-table td {
@@ -820,7 +754,7 @@
 :where(.hero-todos-santos) .hero-todos-santos__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--kinekt-wireframe-space-l);
+  gap: var(--space-l);
 }
 
 :where(.hero-todos-santos) .hero-todos-santos__media {
@@ -838,12 +772,12 @@
     grid-template-columns: minmax(0, var(--hero-todos-santos-content-width)) minmax(0, 1fr);
     align-items: center;
     justify-content: space-between;
-    gap: var(--kinekt-wireframe-editorial-gap);
+    gap: var(--kiw--section-editorial-gap);
   }
 
   :where(.hero-todos-santos) .hero-todos-santos__feature {
     grid-template-columns: minmax(0, 12.5rem) minmax(0, 1fr);
-    gap: var(--kinekt-wireframe-space-m);
+    gap: var(--space-m);
   }
 
   :where(.hero-todos-santos) .hero-todos-santos__media {
@@ -868,11 +802,11 @@
 }
 
 :where(.comparison-overview-allentown, .density-comparison-allentown, .compatibility-specifications) {
-  --kinekt-section-reading-width: 34rem;
+  --kinekt-section-reading-width: var(--width-m);
 }
 
 :where(.comparison-overview-allentown, .density-comparison-allentown) [class$='__table'] {
-  font-size: clamp(0.8125rem, 1.4vw, 1rem);
+  font-size: var(--text-m);
 }
 
 :where(.faq-allentown, .faq-index-allentown, .media-accordion-allentown, .product-details-allentown) details {
@@ -890,7 +824,7 @@
   :where([data-kinekt-section]) [class$='__header']:has(> [class$='__header-content']):has(> :is([class$='__actions'], [class$='__cta'])) {
     grid-template-columns: minmax(0, var(--kinekt-component-reading-width)) auto;
     justify-content: space-between;
-    column-gap: var(--kinekt-wireframe-editorial-gap);
+    column-gap: var(--kiw--section-editorial-gap);
   }
 
   :where(.output-card-grid, .featured-insights-allentown, .insight-index-allentown, .product-options-allentown, .use-cases-allentown, .facilities-overview-allentown) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) {
@@ -900,15 +834,24 @@
 
 /* Verified Figma layout: Section - Customized Batteries (5255:537962). */
 :where(.output-card-grid--allentown) {
-  --kinekt-section-output-card-grid-block-space: 8.75rem;
-  --kinekt-section-output-card-grid-content-width: 81rem;
-  --kinekt-section-output-card-grid-major-gap: 5rem;
-  --kinekt-section-output-card-grid-grid-column-gap: 4rem;
-  --kinekt-section-output-card-grid-grid-row-gap: 1.5625rem;
-  --kinekt-section-output-card-grid-label-to-grid-gap: 3.1875rem;
-  --kinekt-section-output-card-grid-card-media-size: 9rem;
-  --kinekt-section-output-card-grid-card-content-gap: 1.5625rem;
-  --kinekt-section-output-card-grid-card-heading-size: 2rem;
+  --kiw--output-card-grid-block-space: var(--section-gutter);
+  --kiw--output-card-grid-content-width: var(--width-xxl);
+  --kiw--output-card-grid-major-gap: var(--section-space-xl);
+  --kiw--output-card-grid-grid-column-gap: var(--section-space-l);
+  --kiw--output-card-grid-grid-row-gap: var(--space-xl);
+  --kiw--output-card-grid-label-to-grid-gap: var(--section-space-m);
+  --kiw--output-card-grid-card-media-size: var(--width-xs);
+  --kiw--output-card-grid-card-content-gap: var(--space-xl);
+  --kiw--output-card-grid-card-heading-size: var(--h3);
+  --kinekt-section-output-card-grid-block-space: var(--kiw--output-card-grid-block-space);
+  --kinekt-section-output-card-grid-content-width: var(--kiw--output-card-grid-content-width);
+  --kinekt-section-output-card-grid-major-gap: var(--kiw--output-card-grid-major-gap);
+  --kinekt-section-output-card-grid-grid-column-gap: var(--kiw--output-card-grid-grid-column-gap);
+  --kinekt-section-output-card-grid-grid-row-gap: var(--kiw--output-card-grid-grid-row-gap);
+  --kinekt-section-output-card-grid-label-to-grid-gap: var(--kiw--output-card-grid-label-to-grid-gap);
+  --kinekt-section-output-card-grid-card-media-size: var(--kiw--output-card-grid-card-media-size);
+  --kinekt-section-output-card-grid-card-content-gap: var(--kiw--output-card-grid-card-content-gap);
+  --kinekt-section-output-card-grid-card-heading-size: var(--kiw--output-card-grid-card-heading-size);
   --kinekt-component-block-space: var(--kinekt-section-output-card-grid-block-space);
   --kinekt-component-content-width: var(--kinekt-section-output-card-grid-content-width);
 }
@@ -924,13 +867,13 @@
 }
 
 :where(.output-card-grid--allentown) .output-card-grid__header-content {
-  max-width: 54rem;
+  max-width: var(--width-l);
 }
 
 :where(.output-card-grid--allentown) .output-card-grid__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--kinekt-wireframe-space-m);
+  gap: var(--space-m);
   align-self: end;
 }
 
@@ -942,20 +885,20 @@
 :where(.output-card-grid--allentown) .output-card-grid__label {
   display: flex;
   align-items: center;
-  gap: var(--kinekt-wireframe-space-m);
+  gap: var(--space-m);
   margin: 0;
   color: var(--kinekt-component-muted);
   font-family: var(--kinekt-component-mono);
   font-size: var(--kinekt-component-text-xs-size);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1.3;
+  font-weight: var(--heading-font-weight);
+  letter-spacing: var(--text-letter-spacing);
+  line-height: var(--text-line-height);
   text-transform: uppercase;
 }
 
 :where(.output-card-grid--allentown) .output-card-grid__label::after {
   flex: 1;
-  min-width: 2rem;
+  min-width: var(--width-xs);
   border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
   content: '';
 }
@@ -994,18 +937,18 @@
 
 :where(.output-card-grid--allentown) .output-card-grid__title {
   font-size: var(--kinekt-section-output-card-grid-card-heading-size);
-  line-height: 1;
+  line-height: var(--heading-line-height);
 }
 
 :where(.output-card-grid--allentown) .output-card-grid__description {
   color: var(--kinekt-component-muted);
   font-size: var(--kinekt-component-text-l-size);
-  line-height: var(--kinekt-component-text-l-line-height);
+  line-height: var(--kinekt-component-text-line-height);
 }
 
 @media (min-width: 50rem) {
   :where(.output-card-grid--allentown) .output-card-grid__header {
-    grid-template-columns: minmax(0, 54rem) auto;
+    grid-template-columns: minmax(0, var(--width-l)) auto;
     justify-content: space-between;
   }
 
@@ -1015,52 +958,48 @@
 }
 
 :where(.media-feature-list--allentown) {
-  --kinekt-section-media-feature-list-mobile-section-padding: 4rem;
-  --kinekt-section-media-feature-list-desktop-section-padding: 8.75rem;
-  --kinekt-section-media-feature-list-mobile-container-width: 26.375rem;
-  --kinekt-section-media-feature-list-desktop-container-width: 90rem;
-  --kinekt-section-media-feature-list-mobile-major-gap: 2.5rem;
-  --kinekt-section-media-feature-list-desktop-major-gap: 4rem;
-  --kinekt-section-media-feature-list-mobile-header-width: 100%;
-  --kinekt-section-media-feature-list-desktop-header-width: 54rem;
-  --kinekt-section-media-feature-list-mobile-header-group-gap: 1.25rem;
-  --kinekt-section-media-feature-list-desktop-header-group-gap: 1.953125rem;
-  --kinekt-section-media-feature-list-heading-stack-gap: 0.56rem;
-  --kinekt-section-media-feature-list-mobile-feature-gap: 2rem;
-  --kinekt-section-media-feature-list-desktop-feature-gap: 3.2rem;
-  --kinekt-section-media-feature-list-feature-copy-gap: 0.8rem;
-  --kinekt-section-media-feature-list-media-ratio: 688 / 406;
-  --kinekt-section-block-space: var(--kinekt-section-media-feature-list-mobile-section-padding);
-  --kinekt-section-content-width: var(--kinekt-section-media-feature-list-mobile-container-width);
-  --kinekt-section-gap: var(--kinekt-section-media-feature-list-mobile-major-gap);
+  --kiw--media-feature-list-section-padding: var(--section-gutter);
+  --kiw--media-feature-list-container-width: var(--content-width);
+  --kiw--media-feature-list-major-gap: var(--section-space-l);
+  --kiw--media-feature-list-header-width: var(--width-l);
+  --kiw--media-feature-list-header-group-gap: var(--space-xl);
+  --kiw--media-feature-list-heading-stack-gap: var(--space-xxs);
+  --kiw--media-feature-list-feature-gap: var(--section-space-s);
+  --kiw--media-feature-list-feature-copy-gap: var(--space-s);
+  --kiw--media-feature-list-media-ratio: 688 / 406;
+  --kiw--media-feature-list-heading-size: var(--h2);
+  --kiw--media-feature-list-description-size: var(--text-xl);
+  --kinekt-section-block-space: var(--kiw--media-feature-list-section-padding);
+  --kinekt-section-content-width: var(--kiw--media-feature-list-container-width);
+  --kinekt-section-gap: var(--kiw--media-feature-list-major-gap);
 }
 
 :where(.media-feature-list--allentown) .media-feature-list__container {
-  gap: var(--kinekt-section-media-feature-list-mobile-major-gap);
+  gap: var(--kiw--media-feature-list-major-gap);
 }
 
 :where(.media-feature-list--allentown) .media-feature-list__header {
   display: grid;
-  max-inline-size: var(--kinekt-section-media-feature-list-mobile-header-width);
-  gap: var(--kinekt-section-media-feature-list-mobile-header-group-gap);
+  max-inline-size: var(--kiw--media-feature-list-header-width);
+  gap: var(--kiw--media-feature-list-header-group-gap);
 }
 
 :where(.media-feature-list--allentown) .media-feature-list__heading-stack {
   display: grid;
-  gap: var(--kinekt-section-media-feature-list-heading-stack-gap);
+  gap: var(--kiw--media-feature-list-heading-stack-gap);
 }
 
 :where(.media-feature-list--allentown) .media-feature-list__accent,
 :where(.media-feature-list--allentown) .media-feature-list__label {
   color: var(--kinekt-component-muted);
   font-size: var(--kinekt-component-text-s-size);
-  line-height: var(--kinekt-component-text-s-line-height);
+  line-height: var(--kinekt-component-text-line-height);
 }
 
 :where(.media-feature-list--allentown) .media-feature-list__label {
   display: flex;
   align-items: baseline;
-  gap: 0.5rem;
+  gap: var(--space-xs);
 }
 
 :where(.media-feature-list--allentown) .media-feature-list__label-icon {
@@ -1068,18 +1007,18 @@
 }
 
 :where(.media-feature-list--allentown) .media-feature-list__heading {
-  font-size: 3rem;
+  font-size: var(--h2);
 }
 
 :where(.media-feature-list--allentown) .media-feature-list__description {
-  max-inline-size: 54rem;
-  font-size: 1.25rem;
-  line-height: 1.5;
+  max-inline-size: var(--width-l);
+  font-size: var(--text-xl);
+  line-height: var(--text-line-height);
 }
 
 :where(.media-feature-list--allentown) .media-feature-list__body {
   display: grid;
-  gap: var(--kinekt-section-media-feature-list-mobile-major-gap);
+  gap: var(--kiw--media-feature-list-major-gap);
 }
 
 :where(.media-feature-list--allentown) .media-feature-list__media {
@@ -1089,14 +1028,14 @@
 :where(.media-feature-list--allentown) .media-feature-list__image {
   display: block;
   inline-size: 100%;
-  aspect-ratio: var(--kinekt-section-media-feature-list-media-ratio);
+  aspect-ratio: var(--kiw--media-feature-list-media-ratio);
   object-fit: cover;
   filter: var(--kinekt-component-media-filter);
 }
 
 :where(.media-feature-list--allentown) .media-feature-list__features {
   display: grid;
-  gap: var(--kinekt-section-media-feature-list-mobile-feature-gap);
+  gap: var(--kiw--media-feature-list-feature-gap);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1104,40 +1043,40 @@
 
 :where(.media-feature-list--allentown) .media-feature-list__feature {
   display: grid;
-  gap: var(--kinekt-section-media-feature-list-feature-copy-gap);
+  gap: var(--kiw--media-feature-list-feature-copy-gap);
 }
 
 :where(.media-feature-list--allentown) .media-feature-list__feature-title {
-  font-size: 1.75rem;
-  line-height: 1.15;
+  font-size: var(--h3);
+  line-height: var(--heading-line-height);
 }
 
 :where(.media-feature-list--allentown) .media-feature-list__feature-description {
   color: var(--kinekt-component-muted);
-  font-size: 1.125rem;
-  line-height: 1.5;
+  font-size: var(--text-l);
+  line-height: var(--text-line-height);
 }
 
 @media (min-width: 50rem) {
   :where(.media-feature-list--allentown) {
-    --kinekt-section-block-space: var(--kinekt-section-media-feature-list-desktop-section-padding);
-    --kinekt-section-content-width: var(--kinekt-section-media-feature-list-desktop-container-width);
-    --kinekt-section-gap: var(--kinekt-section-media-feature-list-desktop-major-gap);
+    --kinekt-section-block-space: var(--kiw--media-feature-list-section-padding);
+    --kinekt-section-content-width: var(--kiw--media-feature-list-container-width);
+    --kinekt-section-gap: var(--kiw--media-feature-list-major-gap);
   }
 
   :where(.media-feature-list--allentown) .media-feature-list__container {
-    gap: var(--kinekt-section-media-feature-list-desktop-major-gap);
+    gap: var(--kiw--media-feature-list-major-gap);
   }
 
   :where(.media-feature-list--allentown) .media-feature-list__header {
-    max-inline-size: var(--kinekt-section-media-feature-list-desktop-header-width);
-    gap: var(--kinekt-section-media-feature-list-desktop-header-group-gap);
+    max-inline-size: var(--kiw--media-feature-list-header-width);
+    gap: var(--kiw--media-feature-list-header-group-gap);
   }
 
   :where(.media-feature-list--allentown) .media-feature-list__body {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: center;
-    gap: var(--kinekt-section-media-feature-list-desktop-major-gap);
+    gap: var(--kiw--media-feature-list-major-gap);
   }
 
   :where(.media-feature-list--allentown.media-feature-list--mediaRight) .media-feature-list__media {
@@ -1145,7 +1084,7 @@
   }
 
   :where(.media-feature-list--allentown) .media-feature-list__features {
-    gap: var(--kinekt-section-media-feature-list-desktop-feature-gap);
+    gap: var(--kiw--media-feature-list-feature-gap);
   }
 }
 
@@ -1154,7 +1093,7 @@
 }
 
 :where(.read-more--allentown) .read-more__container {
-  gap: var(--kinekt-wireframe-editorial-gap);
+  gap: var(--kiw--section-editorial-gap);
 }
 
 :where(.read-more--allentown) .read-more__image {
@@ -1163,17 +1102,28 @@
 }
 
 :where(.compatibility-specifications--allentown) {
-  --kinekt-section-compatibility-specifications-container-width: 72rem;
-  --kinekt-section-compatibility-specifications-section-padding: 8.75rem;
-  --kinekt-section-compatibility-specifications-major-gap: 5rem;
-  --kinekt-section-compatibility-specifications-intro-list-gap: 3.2rem;
-  --kinekt-section-compatibility-specifications-list-row-gap: 1.25rem;
-  --kinekt-section-compatibility-specifications-list-padding-block: 1.25rem;
-  --kinekt-section-compatibility-specifications-list-padding-inline-start: 4rem;
-  --kinekt-section-compatibility-specifications-list-padding-inline-end: 2.4375rem;
-  --kinekt-section-compatibility-specifications-value-width: 18rem;
-  --kinekt-section-compatibility-specifications-platform-gap: 6.25rem;
-  --kinekt-section-compatibility-specifications-label-line-width: 5rem;
+  --kiw--compatibility-specifications-container-width: var(--width-xl);
+  --kiw--compatibility-specifications-section-padding: var(--section-gutter);
+  --kiw--compatibility-specifications-major-gap: var(--section-space-xl);
+  --kiw--compatibility-specifications-intro-list-gap: var(--section-space-s);
+  --kiw--compatibility-specifications-list-row-gap: var(--space-l);
+  --kiw--compatibility-specifications-list-padding-block: var(--space-l);
+  --kiw--compatibility-specifications-list-padding-inline-start: var(--section-space-l);
+  --kiw--compatibility-specifications-list-padding-inline-end: var(--width-xs);
+  --kiw--compatibility-specifications-value-width: var(--width-s);
+  --kiw--compatibility-specifications-platform-gap: var(--section-space-xxl);
+  --kiw--compatibility-specifications-label-line-width: var(--section-space-xl);
+  --kinekt-section-compatibility-specifications-container-width: var(--kiw--compatibility-specifications-container-width);
+  --kinekt-section-compatibility-specifications-section-padding: var(--kiw--compatibility-specifications-section-padding);
+  --kinekt-section-compatibility-specifications-major-gap: var(--kiw--compatibility-specifications-major-gap);
+  --kinekt-section-compatibility-specifications-intro-list-gap: var(--kiw--compatibility-specifications-intro-list-gap);
+  --kinekt-section-compatibility-specifications-list-row-gap: var(--kiw--compatibility-specifications-list-row-gap);
+  --kinekt-section-compatibility-specifications-list-padding-block: var(--kiw--compatibility-specifications-list-padding-block);
+  --kinekt-section-compatibility-specifications-list-padding-inline-start: var(--kiw--compatibility-specifications-list-padding-inline-start);
+  --kinekt-section-compatibility-specifications-list-padding-inline-end: var(--kiw--compatibility-specifications-list-padding-inline-end);
+  --kinekt-section-compatibility-specifications-value-width: var(--kiw--compatibility-specifications-value-width);
+  --kinekt-section-compatibility-specifications-platform-gap: var(--kiw--compatibility-specifications-platform-gap);
+  --kinekt-section-compatibility-specifications-label-line-width: var(--kiw--compatibility-specifications-label-line-width);
   --kinekt-section-block-space: var(--kinekt-section-compatibility-specifications-section-padding);
   --kinekt-section-content-width: var(--kinekt-section-compatibility-specifications-container-width);
   --kinekt-section-gap: var(--kinekt-section-compatibility-specifications-major-gap);
@@ -1189,7 +1139,7 @@
 }
 
 :where(.compatibility-specifications--allentown) .compatibility-specifications__intro {
-  max-width: 54rem;
+  max-width: var(--kiw--compatibility-specifications-allentown-intro-width, var(--kinekt-component-reading-width));
 }
 
 :where(.compatibility-specifications--allentown) .compatibility-specifications__list {
@@ -1200,9 +1150,9 @@
 
 :where(.compatibility-specifications--allentown) .compatibility-specifications__item {
   display: grid;
-  gap: var(--kinekt-wireframe-space-l);
+  gap: var(--space-l);
   margin: 0;
-  padding: var(--kinekt-section-compatibility-specifications-list-padding-block) var(--kinekt-wireframe-space-l);
+  padding: var(--kinekt-section-compatibility-specifications-list-padding-block) var(--space-l);
 }
 
 :where(.compatibility-specifications--allentown) .compatibility-specifications__item:nth-child(odd) {
@@ -1214,19 +1164,19 @@
 }
 
 :where(.compatibility-specifications--allentown) .compatibility-specifications__item dt {
-  font-size: 1.25rem;
-  line-height: 1.3;
+  font-size: var(--text-xl);
+  line-height: var(--text-line-height);
 }
 
 :where(.compatibility-specifications--allentown) .compatibility-specifications__platforms {
   display: grid;
-  gap: var(--kinekt-wireframe-space-l);
+  gap: var(--space-l);
 }
 
 :where(.compatibility-specifications--allentown) .compatibility-specifications__platforms-heading {
   display: flex;
   align-items: center;
-  gap: var(--kinekt-wireframe-space-m);
+  gap: var(--space-m);
 }
 
 :where(.compatibility-specifications--allentown) .compatibility-specifications__platforms-heading::after {
@@ -1240,17 +1190,17 @@
   margin: 0;
   color: var(--kinekt-component-muted);
   font-family: var(--kinekt-component-mono);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1.3;
+  font-size: var(--text-xs);
+  font-weight: var(--heading-font-weight);
+  letter-spacing: var(--text-letter-spacing);
+  line-height: var(--text-line-height);
   text-transform: uppercase;
 }
 
 :where(.compatibility-specifications--allentown) .compatibility-specifications__platforms ul {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--kinekt-wireframe-space-l) var(--kinekt-section-compatibility-specifications-platform-gap);
+  gap: var(--space-l) var(--kinekt-section-compatibility-specifications-platform-gap);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1259,12 +1209,12 @@
 :where(.compatibility-specifications--allentown) .compatibility-specifications__platforms li {
   display: inline-flex;
   align-items: center;
-  gap: 0.6em;
+  gap: var(--space-s);
 }
 
 :where(.compatibility-specifications--allentown) .compatibility-specifications__platforms li span {
-  font-size: 1.1em;
-  font-weight: 700;
+  font-size: var(--text-m);
+  font-weight: var(--heading-font-weight);
 }
 
 @media (min-width: 50rem) {
@@ -1281,7 +1231,7 @@
  * visually absent.
  */
 :where(.case-studies-allentown) .case-studies-allentown__results > li > article {
-  gap: 0.75rem;
+  gap: var(--space-s);
   padding: 0;
   border: 0;
   background: transparent;
@@ -1297,8 +1247,8 @@
  */
 :where([data-kinekt-section][class*='action-contact-allentown'],
   [data-kinekt-section][class*='support-contact-allentown']) {
-  --kinekt-section-reading-width: 38rem;
-  --kinekt-section-gap: clamp(2rem, 5vw, 5rem);
+  --kinekt-section-reading-width: var(--width-m);
+  --kinekt-section-gap: var(--section-space-xl);
 }
 
 :where([data-kinekt-section][class*='product-options-allentown'],
@@ -1307,39 +1257,39 @@
   [data-kinekt-section][class*='event-overview-allentown'],
   [data-kinekt-section][class*='facilities-overview-allentown']) {
   --kinekt-section-card-columns: 3;
-  --kinekt-section-card-min-width: 18rem;
+  --kinekt-section-card-min-width: var(--width-s);
   --kinekt-section-card-media-ratio: 3 / 2;
-  --kinekt-section-gap: clamp(2.5rem, 6vw, 5.5rem);
+  --kinekt-section-gap: var(--section-space-xl);
 }
 
 :where([data-kinekt-section][class*='checklist-feature-list-allentown'],
   [data-kinekt-section][class*='solution-list-allentown'],
   [data-kinekt-section][class*='moq-lead-times-allentown']) {
-  --kinekt-section-reading-width: 44rem;
-  --kinekt-section-gap: clamp(2rem, 5vw, 4.5rem);
+  --kinekt-section-reading-width: var(--width-m);
+  --kinekt-section-gap: var(--section-space-l);
 }
 
 
 :where([data-kinekt-section][class*='comparison-overview-allentown'],
   [data-kinekt-section][class*='density-comparison-allentown']) {
-  --kinekt-section-content-width: 96rem;
-  --kinekt-section-reading-width: 40rem;
-  --kinekt-section-gap: clamp(2rem, 5vw, 4rem);
+  --kinekt-section-content-width: var(--content-width);
+  --kinekt-section-reading-width: var(--width-m);
+  --kinekt-section-gap: var(--section-space-l);
 }
 
 :where([data-kinekt-section][class*='compliance-detail-allentown'],
   [data-kinekt-section][class*='compliance-overview-allentown'],
   [data-kinekt-section][class*='compliance-text-allentown']) {
-  --kinekt-section-reading-width: 46rem;
-  --kinekt-section-gap: clamp(2rem, 5vw, 4.5rem);
+  --kinekt-section-reading-width: var(--width-m);
+  --kinekt-section-gap: var(--section-space-l);
 }
 
 :where([data-kinekt-section][class*='faq-allentown'],
   [data-kinekt-section][class*='faq-index-allentown'],
   [data-kinekt-section][class*='product-details-allentown'],
   [data-kinekt-section][class*='media-accordion-allentown']) {
-  --kinekt-section-reading-width: 52rem;
-  --kinekt-section-gap: clamp(2rem, 4vw, 3.5rem);
+  --kinekt-section-reading-width: var(--width-l);
+  --kinekt-section-gap: var(--section-space-l);
 }
 
 :where([data-kinekt-section][class*='featured-event-allentown'],
@@ -1348,21 +1298,21 @@
   [data-kinekt-section][class*='media-fact-grid-allentown'],
   [data-kinekt-section][class*='media-metrics-allentown']) {
   --kinekt-section-media-ratio: 4 / 5;
-  --kinekt-section-gap: clamp(2.5rem, 7vw, 7rem);
+  --kinekt-section-gap: var(--section-space-xl);
 }
 
 :where([data-kinekt-section][class*='form-section-allentown'],
   [data-kinekt-section][class*='intake-form-allentown'],
   [data-kinekt-section][class*='product-finder-form-allentown']) {
-  --kinekt-section-reading-width: 42rem;
-  --kinekt-section-gap: clamp(2rem, 5vw, 4rem);
+  --kinekt-section-reading-width: var(--width-m);
+  --kinekt-section-gap: var(--section-space-l);
 }
 
 :where([data-kinekt-section][class*='hd-cells-engineering-allentown'],
   [data-kinekt-section][class*='homepage-problem-solution-allentown']) {
-  --kinekt-section-content-width: 96rem;
-  --kinekt-section-reading-width: 38rem;
-  --kinekt-section-gap: clamp(3rem, 7vw, 7rem);
+  --kinekt-section-content-width: var(--content-width);
+  --kinekt-section-reading-width: var(--width-m);
+  --kinekt-section-gap: var(--section-space-xl);
 }
 
 :where([data-kinekt-section][class*='hero-allentown'],
@@ -1371,33 +1321,33 @@
   [data-kinekt-section][class*='product-hero-allentown'],
   [data-kinekt-section][class*='thank-you-hero-allentown'],
   [data-kinekt-section][class*='not-found-hero-allentown']) {
-  --kinekt-section-content-width: 100rem;
-  --kinekt-section-reading-width: 38rem;
+  --kinekt-section-content-width: var(--content-width);
+  --kinekt-section-reading-width: var(--width-m);
   --kinekt-section-media-ratio: 1 / 1;
-  --kinekt-section-gap: clamp(2rem, 7vw, 8rem);
+  --kinekt-section-gap: var(--section-space-xl);
 }
 
 :where([data-kinekt-section][class*='insight-index-allentown']) {
-  --kinekt-section-content-width: 96rem;
+  --kinekt-section-content-width: var(--content-width);
   --kinekt-section-card-columns: 3;
-  --kinekt-section-card-min-width: 18rem;
-  --kinekt-section-gap: clamp(2rem, 5vw, 5rem);
+  --kinekt-section-card-min-width: var(--width-s);
+  --kinekt-section-gap: var(--section-space-xl);
 }
 
 
 :where([data-kinekt-section][class*='tabs-allentown']) {
-  --kinekt-section-reading-width: 58rem;
-  --kinekt-section-gap: clamp(2rem, 4vw, 3.5rem);
+  --kinekt-section-reading-width: var(--width-l);
+  --kinekt-section-gap: var(--section-space-l);
 }
 
 :where([data-kinekt-section][class*='steps-stage']) {
-  --kinekt-section-reading-width: 48rem;
-  --kinekt-section-gap: clamp(2rem, 5vw, 5rem);
+  --kinekt-section-reading-width: var(--width-l);
+  --kinekt-section-gap: var(--section-space-xl);
 }
 
 /* Editorial title/action row, including the manually-authored sections. */
 :where([data-kinekt-section]) [class$='__header']:has(> [class$='__header-content']) {
-  margin-bottom: var(--kinekt-section-header-to-content, clamp(1.5rem, 4vw, 3rem));
+  margin-bottom: var(--kinekt-section-header-to-content, var(--kiw--section-header-to-content-gap, var(--section-space-s)));
 }
 
 /* Structural metric and checklist lists are deliberately open, not cards. */
@@ -1415,7 +1365,7 @@
   [data-kinekt-section][class*='moq-lead-times-allentown'],
   [data-kinekt-section][class*='hd-cells-engineering-allentown'])
   :is([class$='__items'], [class$='__features'], [class$='__metrics'], [class$='__cell-items'], [class$='__engineering-topics']) > li > article {
-  padding: clamp(1.25rem, 2vw, 2rem) 0;
+  padding: var(--space-l) 0;
   border-width: 0 0 var(--kinekt-component-border-width);
   background: transparent;
 }
@@ -1423,7 +1373,7 @@
 /* Documentation-heavy and comparison sections keep a wide data surface. */
 :where([data-kinekt-section][class*='comparison-overview-allentown'],
   [data-kinekt-section][class*='density-comparison-allentown']) [class$='__table'] {
-  margin-top: var(--kinekt-section-table-offset, clamp(1rem, 3vw, 2rem));
+  margin-top: var(--kinekt-section-table-offset, var(--kiw--section-table-offset, var(--space-xl)));
 }
 
 :where([data-kinekt-section][class*='compliance-detail-allentown'],
@@ -1436,7 +1386,7 @@
 :where([data-kinekt-section][class*='compliance-detail-allentown'],
   [data-kinekt-section][class*='compliance-overview-allentown'],
   [data-kinekt-section][class*='compliance-text-allentown']) :is([class$='__items'], [class$='__details']) > li > article {
-  padding: clamp(1.25rem, 2.5vw, 2.5rem) 0;
+  padding: var(--space-l) 0;
   border-width: 0 0 var(--kinekt-component-border-width);
   background: transparent;
 }
@@ -1449,7 +1399,7 @@
   [data-kinekt-section][class*='facilities-overview-allentown'],
   [data-kinekt-section][class*='insight-index-allentown'])
   :is([class$='__cards'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__results'], [class$='__insight-sources']) {
-  gap: 1px;
+  gap: var(--border-width);
   background: var(--kinekt-component-line);
 }
 
@@ -1461,7 +1411,7 @@
   [data-kinekt-section][class*='insight-index-allentown'])
   :is([class$='__cards'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__results'], [class$='__insight-sources']) > li > article {
   min-height: 100%;
-  padding: var(--kinekt-section-card-padding, clamp(1.25rem, 2.5vw, 2.25rem));
+  padding: var(--kinekt-section-card-padding, var(--space-l));
   border: 0;
   background: var(--kinekt-component-canvas);
 }
@@ -1470,7 +1420,7 @@
 :where([data-kinekt-section][class*='form-section-allentown'],
   [data-kinekt-section][class*='intake-form-allentown'],
   [data-kinekt-section][class*='product-finder-form-allentown']) form[class*='__'] {
-  padding: var(--kinekt-section-form-padding, clamp(1.25rem, 3vw, 2.5rem));
+  padding: var(--kinekt-section-form-padding, var(--space-l));
   border-radius: 0;
 }
 
@@ -1505,7 +1455,7 @@
     [data-kinekt-section][class*='moq-lead-times-allentown'])
     :is([class$='__items'], [class$='__features'], [class$='__metrics']) > li > article {
     grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
-    column-gap: clamp(2rem, 5vw, 6rem);
+    column-gap: var(--section-space-xl);
   }
 
   :where([data-kinekt-section][class*='tabs-allentown']) [role='tablist'] {
@@ -1513,7 +1463,7 @@
   }
 
   :where([data-kinekt-section][class*='tabs-allentown']) [role='tab'] {
-    padding-inline: clamp(1rem, 2vw, 2rem);
+    padding-inline: var(--space-m);
   }
 }
 
@@ -1529,16 +1479,16 @@
  */
 :where(.beta-action-contact-allentown[data-kinekt-section]) {
   --action-contact-media-ratio: 4 / 5;
-  --kinekt-wireframe-action-contact-d-media-width: 26.4375rem;
-  --action-contact-media-width: var(--kinekt-section-media-width, clamp(var(--kinekt-wireframe-layout-m-content-width), 100%, var(--kinekt-wireframe-action-contact-d-media-width)));
-  --action-contact-content-width: var(--kinekt-section-content-width, clamp(var(--kinekt-wireframe-layout-m-content-width), 100%, var(--kinekt-wireframe-layout-d-width-m)));
-  --action-contact-column-gap: var(--kinekt-section-column-gap, var(--kinekt-wireframe-section-space-l));
-  --action-contact-content-gap: var(--kinekt-section-content-gap, var(--kinekt-wireframe-space-xl));
-  --action-contact-header-gap: var(--kinekt-section-header-gap, var(--kinekt-wireframe-space-m));
-  --action-contact-accent-gap: var(--kinekt-section-accent-gap, var(--kinekt-wireframe-space-xxs));
-  --action-contact-detail-gap: var(--kinekt-section-detail-gap, var(--kinekt-wireframe-space-xxl));
-  --action-contact-action-gap: var(--kinekt-section-action-gap, var(--kinekt-wireframe-space-l));
-  --action-contact-control-gap: var(--kinekt-section-control-gap, var(--kinekt-wireframe-space-s));
+  --kiw--action-contact-media-width: var(--width-m);
+  --action-contact-media-width: var(--kinekt-section-media-width, var(--kiw--action-contact-media-width));
+  --action-contact-content-width: var(--kinekt-section-content-width, var(--width-m));
+  --action-contact-column-gap: var(--kinekt-section-column-gap, var(--section-space-l));
+  --action-contact-content-gap: var(--kinekt-section-content-gap, var(--space-xl));
+  --action-contact-header-gap: var(--kinekt-section-header-gap, var(--space-m));
+  --action-contact-accent-gap: var(--kinekt-section-accent-gap, var(--space-xxs));
+  --action-contact-detail-gap: var(--kinekt-section-detail-gap, var(--space-xxl));
+  --action-contact-action-gap: var(--kinekt-section-action-gap, var(--space-l));
+  --action-contact-control-gap: var(--kinekt-section-control-gap, var(--space-s));
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__container {
@@ -1590,8 +1540,8 @@
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__header .section-intro__accent {
   margin-block-end: var(--action-contact-accent-gap);
-  font-size: 1rem;
-  line-height: 1.1;
+  font-size: var(--text-m);
+  line-height: var(--heading-line-height);
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__header .section-intro__heading {
@@ -1601,8 +1551,8 @@
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__header .section-intro__description {
   max-width: none;
   margin-block-start: var(--action-contact-header-gap);
-  font-size: 1.125rem;
-  line-height: 1.5;
+  font-size: var(--text-l);
+  line-height: var(--text-line-height);
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__details,
@@ -1631,8 +1581,8 @@
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__action-heading {
   max-width: 22ch;
-  font-size: 1.25rem;
-  line-height: 1.2;
+  font-size: var(--text-xl);
+  line-height: var(--text-line-height);
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__actions {
@@ -1640,7 +1590,7 @@
 }
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__action-note {
-  max-width: 42rem;
+  max-width: var(--kiw--action-contact-allentown-note-width, var(--kinekt-component-reading-width));
   margin: 0;
   color: var(--kinekt-component-muted);
 }
@@ -1653,8 +1603,8 @@
 
 :where(.beta-action-contact-allentown) .beta-action-contact-allentown__contact-heading {
   max-width: 22ch;
-  font-size: 1.125rem;
-  line-height: 1.2;
+  font-size: var(--text-l);
+  line-height: var(--text-line-height);
 }
 
 :where(.beta-action-contact-allentown) ul.beta-action-contact-allentown__contact-methods {
@@ -1676,8 +1626,8 @@
   min-height: 0;
   padding: 0;
   color: var(--kinekt-component-ink);
-  font-weight: 400;
-  line-height: 1.2;
+  font-weight: var(--text-font-weight);
+  line-height: var(--text-line-height);
   text-decoration: none;
 }
 
@@ -1694,47 +1644,47 @@
  * consuming site can replace each --kinekt-section-moq-lead-times-* value.
  */
 :where(.beta-moq-lead-times-allentown[data-kinekt-section]) {
-  --kinekt-wireframe-moq-lead-times-d-content-width: 90rem;
-  --kinekt-wireframe-moq-lead-times-d-intro-width: 36rem;
-  --kinekt-wireframe-moq-lead-times-d-facts-width: 40rem;
-  --kinekt-wireframe-moq-lead-times-d-fact-column-width: 18rem;
-  --kinekt-wireframe-moq-lead-times-d-fact-column-gap: 4rem;
-  --kinekt-wireframe-moq-lead-times-d-facts-inset: 1.953125rem;
-  --kinekt-wireframe-moq-lead-times-d-block-space: 6.25rem;
-  --kinekt-wireframe-moq-lead-times-d-intro-action-gap: 2.56rem;
-  --kinekt-wireframe-moq-lead-times-m-inline-space: 1rem;
-  --kinekt-wireframe-moq-lead-times-fact-header-gap: 0.56rem;
-  --kinekt-wireframe-moq-lead-times-fact-content-gap: 1.5625rem;
-  --kinekt-wireframe-moq-lead-times-fact-value-gap: 0.8rem;
-  --kinekt-wireframe-moq-lead-times-lead-fact-gap: 1.953125rem;
-  --kinekt-wireframe-moq-lead-times-fact-value-inline-padding: 1rem;
-  --kinekt-wireframe-moq-lead-times-fact-value-block-padding: 0.68rem;
-  --kinekt-wireframe-moq-lead-times-fact-heading-size: 1.5rem;
-  --kinekt-wireframe-moq-lead-times-fact-description-size: 1rem;
-  --kinekt-wireframe-moq-lead-times-action-size: 1.125rem;
-  --moq-lead-times-content-width: var(--kinekt-section-moq-lead-times-content-width, var(--kinekt-wireframe-moq-lead-times-d-content-width));
-  --moq-lead-times-intro-width: var(--kinekt-section-moq-lead-times-intro-width, var(--kinekt-wireframe-moq-lead-times-d-intro-width));
-  --moq-lead-times-facts-width: var(--kinekt-section-moq-lead-times-facts-width, var(--kinekt-wireframe-moq-lead-times-d-facts-width));
-  --moq-lead-times-fact-column-width: var(--kinekt-section-moq-lead-times-fact-column-width, var(--kinekt-wireframe-moq-lead-times-d-fact-column-width));
-  --moq-lead-times-fact-column-gap: var(--kinekt-section-moq-lead-times-fact-column-gap, var(--kinekt-wireframe-moq-lead-times-d-fact-column-gap));
+  --kiw--moq-lead-times-content-width: var(--content-width);
+  --kiw--moq-lead-times-intro-width: var(--width-m);
+  --kiw--moq-lead-times-facts-width: var(--width-m);
+  --kiw--moq-lead-times-fact-column-width: var(--width-s);
+  --kiw--moq-lead-times-fact-column-gap: var(--section-space-s);
+  --kiw--moq-lead-times-facts-inset: var(--space-xl);
+  --kiw--moq-lead-times-block-space: var(--section-space-xxl);
+  --kiw--moq-lead-times-intro-action-gap: var(--section-space-s);
+  --kiw--moq-lead-times-inline-space: var(--section-gutter);
+  --kiw--moq-lead-times-fact-header-gap: var(--space-xxs);
+  --kiw--moq-lead-times-fact-content-gap: var(--space-xl);
+  --kiw--moq-lead-times-fact-value-gap: var(--space-s);
+  --kiw--moq-lead-times-lead-fact-gap: var(--space-xl);
+  --kiw--moq-lead-times-fact-value-inline-padding: var(--space-m);
+  --kiw--moq-lead-times-fact-value-block-padding: var(--space-xs);
+  --kiw--moq-lead-times-fact-heading-size: var(--text-xl);
+  --kiw--moq-lead-times-fact-description-size: var(--text-m);
+  --kiw--moq-lead-times-action-size: var(--text-l);
+  --moq-lead-times-content-width: var(--kinekt-section-moq-lead-times-content-width, var(--kiw--moq-lead-times-content-width));
+  --moq-lead-times-intro-width: var(--kinekt-section-moq-lead-times-intro-width, var(--kiw--moq-lead-times-intro-width));
+  --moq-lead-times-facts-width: var(--kinekt-section-moq-lead-times-facts-width, var(--kiw--moq-lead-times-facts-width));
+  --moq-lead-times-fact-column-width: var(--kinekt-section-moq-lead-times-fact-column-width, var(--kiw--moq-lead-times-fact-column-width));
+  --moq-lead-times-fact-column-gap: var(--kinekt-section-moq-lead-times-fact-column-gap, var(--kiw--moq-lead-times-fact-column-gap));
   --moq-lead-times-facts-inset: var(--kinekt-section-moq-lead-times-facts-inset, 0);
-  --moq-lead-times-block-space: var(--kinekt-section-moq-lead-times-block-space, var(--kinekt-wireframe-moq-lead-times-d-block-space));
-  --moq-lead-times-inline-space: var(--kinekt-section-moq-lead-times-inline-space, var(--kinekt-wireframe-moq-lead-times-m-inline-space));
-  --moq-lead-times-intro-action-gap: var(--kinekt-section-moq-lead-times-intro-action-gap, var(--kinekt-wireframe-moq-lead-times-d-intro-action-gap));
-  --moq-lead-times-fact-header-gap: var(--kinekt-section-moq-lead-times-fact-header-gap, var(--kinekt-wireframe-moq-lead-times-fact-header-gap));
-  --moq-lead-times-fact-content-gap: var(--kinekt-section-moq-lead-times-fact-content-gap, var(--kinekt-wireframe-moq-lead-times-fact-content-gap));
-  --moq-lead-times-fact-value-gap: var(--kinekt-section-moq-lead-times-fact-value-gap, var(--kinekt-wireframe-moq-lead-times-fact-value-gap));
-  --moq-lead-times-lead-fact-gap: var(--kinekt-section-moq-lead-times-lead-fact-gap, var(--kinekt-wireframe-moq-lead-times-lead-fact-gap));
-  --moq-lead-times-fact-value-inline-padding: var(--kinekt-section-moq-lead-times-fact-value-inline-padding, var(--kinekt-wireframe-moq-lead-times-fact-value-inline-padding));
-  --moq-lead-times-fact-value-block-padding: var(--kinekt-section-moq-lead-times-fact-value-block-padding, var(--kinekt-wireframe-moq-lead-times-fact-value-block-padding));
-  --moq-lead-times-fact-heading-size: var(--kinekt-section-moq-lead-times-fact-heading-size, var(--kinekt-wireframe-moq-lead-times-fact-heading-size));
-  --moq-lead-times-fact-description-size: var(--kinekt-section-moq-lead-times-fact-description-size, var(--kinekt-wireframe-moq-lead-times-fact-description-size));
-  --moq-lead-times-action-size: var(--kinekt-section-moq-lead-times-action-size, var(--kinekt-wireframe-moq-lead-times-action-size));
+  --moq-lead-times-block-space: var(--kinekt-section-moq-lead-times-block-space, var(--kiw--moq-lead-times-block-space));
+  --moq-lead-times-inline-space: var(--kinekt-section-moq-lead-times-inline-space, var(--kiw--moq-lead-times-inline-space));
+  --moq-lead-times-intro-action-gap: var(--kinekt-section-moq-lead-times-intro-action-gap, var(--kiw--moq-lead-times-intro-action-gap));
+  --moq-lead-times-fact-header-gap: var(--kinekt-section-moq-lead-times-fact-header-gap, var(--kiw--moq-lead-times-fact-header-gap));
+  --moq-lead-times-fact-content-gap: var(--kinekt-section-moq-lead-times-fact-content-gap, var(--kiw--moq-lead-times-fact-content-gap));
+  --moq-lead-times-fact-value-gap: var(--kinekt-section-moq-lead-times-fact-value-gap, var(--kiw--moq-lead-times-fact-value-gap));
+  --moq-lead-times-lead-fact-gap: var(--kinekt-section-moq-lead-times-lead-fact-gap, var(--kiw--moq-lead-times-lead-fact-gap));
+  --moq-lead-times-fact-value-inline-padding: var(--kinekt-section-moq-lead-times-fact-value-inline-padding, var(--kiw--moq-lead-times-fact-value-inline-padding));
+  --moq-lead-times-fact-value-block-padding: var(--kinekt-section-moq-lead-times-fact-value-block-padding, var(--kiw--moq-lead-times-fact-value-block-padding));
+  --moq-lead-times-fact-heading-size: var(--kinekt-section-moq-lead-times-fact-heading-size, var(--kiw--moq-lead-times-fact-heading-size));
+  --moq-lead-times-fact-description-size: var(--kinekt-section-moq-lead-times-fact-description-size, var(--kiw--moq-lead-times-fact-description-size));
+  --moq-lead-times-action-size: var(--kinekt-section-moq-lead-times-action-size, var(--kiw--moq-lead-times-action-size));
   --kinekt-component-content-width: var(--moq-lead-times-content-width);
   --kinekt-component-inline-space: var(--moq-lead-times-inline-space);
   --kinekt-component-block-space: var(--moq-lead-times-block-space);
   --kinekt-component-reading-width: var(--moq-lead-times-intro-width);
-  --kinekt-component-intro-description-gap: var(--kinekt-section-moq-lead-times-intro-description-gap, var(--kinekt-wireframe-space-d-m));
+  --kinekt-component-intro-description-gap: var(--kinekt-section-moq-lead-times-intro-description-gap, var(--space-m));
   --kinekt-component-action: var(--kinekt-section-moq-lead-times-action, var(--kinekt-component-surface));
   --kinekt-component-action-text: var(--kinekt-section-moq-lead-times-action-text, var(--kinekt-component-ink));
 }
@@ -1765,13 +1715,13 @@
 }
 
 :where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__intro .section-intro__heading {
-  font-size: var(--kinekt-section-moq-lead-times-heading-size, 2.25rem);
-  line-height: 1.1;
+  font-size: var(--kinekt-section-moq-lead-times-heading-size, var(--h2));
+  line-height: var(--heading-line-height);
 }
 
 :where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__intro .section-intro__description {
   max-width: none;
-  font-size: var(--kinekt-section-moq-lead-times-description-size, 1.125rem);
+  font-size: var(--kinekt-section-moq-lead-times-description-size, var(--text-l));
 }
 
 :where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__actions {
@@ -1803,8 +1753,8 @@
 
 :where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-header h3 {
   font-size: var(--moq-lead-times-fact-heading-size);
-  line-height: 1;
-  letter-spacing: -0.03em;
+  line-height: var(--heading-line-height);
+  letter-spacing: var(--heading-letter-spacing);
 }
 
 :where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-header p {
@@ -1840,8 +1790,8 @@
 }
 
 :where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-values dt {
-  font-weight: 600;
-  line-height: 1;
+  font-weight: var(--heading-font-weight);
+  line-height: var(--text-line-height);
 }
 
 :where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__fact-values dd {
@@ -1852,9 +1802,9 @@
   background: var(--kinekt-component-surface);
   font-family: var(--kinekt-component-mono);
   font-size: var(--kinekt-component-text-m-size);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.04em;
+  font-weight: var(--heading-font-weight);
+  line-height: var(--text-line-height);
+  letter-spacing: var(--text-letter-spacing);
   text-transform: uppercase;
 }
 
@@ -1866,15 +1816,15 @@
 
 @media (min-width: 80rem) {
   :where(.beta-moq-lead-times-allentown[data-kinekt-section]) {
-    --moq-lead-times-inline-space: var(--kinekt-section-moq-lead-times-inline-space, 0rem);
-    --moq-lead-times-facts-inset: var(--kinekt-section-moq-lead-times-facts-inset, var(--kinekt-wireframe-moq-lead-times-d-facts-inset));
+    --moq-lead-times-inline-space: var(--kinekt-section-moq-lead-times-inline-space, 0);
+    --moq-lead-times-facts-inset: var(--kinekt-section-moq-lead-times-facts-inset, var(--kiw--moq-lead-times-facts-inset));
   }
 
   :where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__container {
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
-    gap: var(--kinekt-section-moq-lead-times-column-gap, var(--kinekt-wireframe-section-space-l));
+    gap: var(--kinekt-section-moq-lead-times-column-gap, var(--section-space-l));
   }
 
   :where(.beta-moq-lead-times-allentown) .beta-moq-lead-times-allentown__facts {
@@ -1890,14 +1840,14 @@
  */
 :where(.hero-allentown[data-kinekt-section]) {
   /* Figma's desktop hero geometry; a site can override every local alias. */
-  --kinekt-wireframe-hero-allentown-d-copy-width: 48.75rem;
-  --kinekt-wireframe-hero-allentown-d-column-gap: 5.25rem;
-  --kinekt-wireframe-hero-allentown-d-min-block-size: 45rem;
-  --hero-allentown-copy-width: var(--kinekt-section-hero-copy-width, clamp(var(--kinekt-wireframe-layout-m-content-width), 100%, var(--kinekt-wireframe-hero-allentown-d-copy-width)));
-  --hero-allentown-media-width: var(--kinekt-section-hero-media-width, clamp(var(--kinekt-wireframe-layout-m-content-width), 100%, var(--kinekt-wireframe-layout-d-width-m)));
-  --hero-allentown-column-gap: var(--kinekt-section-hero-column-gap, var(--kinekt-wireframe-hero-allentown-d-column-gap));
-  --hero-allentown-min-block-size: var(--kinekt-section-hero-min-block-size, var(--kinekt-wireframe-hero-allentown-d-min-block-size));
-  --hero-allentown-action-gap: var(--kinekt-section-hero-action-gap, var(--kinekt-wireframe-section-space-xs));
+  --kiw--hero-allentown-copy-width: var(--width-l);
+  --kiw--hero-allentown-column-gap: var(--section-space-l);
+  --kiw--hero-allentown-min-block-size: var(--section-space-xxl);
+  --hero-allentown-copy-width: var(--kinekt-section-hero-copy-width, var(--kiw--hero-allentown-copy-width));
+  --hero-allentown-media-width: var(--kinekt-section-hero-media-width, var(--width-m));
+  --hero-allentown-column-gap: var(--kinekt-section-hero-column-gap, var(--kiw--hero-allentown-column-gap));
+  --hero-allentown-min-block-size: var(--kinekt-section-hero-min-block-size, var(--kiw--hero-allentown-min-block-size));
+  --hero-allentown-action-gap: var(--kinekt-section-hero-action-gap, var(--section-space-xs));
   --kinekt-section-media-ratio: var(--kinekt-section-hero-media-ratio, 4 / 5);
 }
 
@@ -1958,13 +1908,13 @@
  * in one readable, sequential landmark.
  */
 :where(.beta-support-contact-allentown) {
-  --support-contact-column-gap: var(--kinekt-section-support-contact-column-gap, var(--kinekt-wireframe-section-space-xxl));
-  --support-contact-panel-gap: var(--kinekt-section-support-contact-panel-gap, var(--kinekt-wireframe-section-space-s));
-  --support-contact-group-gap: var(--kinekt-section-support-contact-group-gap, var(--kinekt-wireframe-space-xxl));
-  --support-contact-control-gap: var(--kinekt-section-support-contact-control-gap, var(--kinekt-wireframe-space-s));
-  --support-contact-control-padding-inline: var(--kinekt-section-support-contact-control-padding-inline, var(--kinekt-wireframe-space-m));
-  --support-contact-control-padding-block: var(--kinekt-section-support-contact-control-padding-block, var(--kinekt-wireframe-space-s));
-  --support-contact-textarea-size: var(--kinekt-section-support-contact-textarea-size, var(--kinekt-wireframe-section-space-xl));
+  --support-contact-column-gap: var(--kinekt-section-support-contact-column-gap, var(--section-space-xxl));
+  --support-contact-panel-gap: var(--kinekt-section-support-contact-panel-gap, var(--section-space-s));
+  --support-contact-group-gap: var(--kinekt-section-support-contact-group-gap, var(--space-xxl));
+  --support-contact-control-gap: var(--kinekt-section-support-contact-control-gap, var(--space-s));
+  --support-contact-control-padding-inline: var(--kinekt-section-support-contact-control-padding-inline, var(--space-m));
+  --support-contact-control-padding-block: var(--kinekt-section-support-contact-control-padding-block, var(--space-s));
+  --support-contact-textarea-size: var(--kinekt-section-support-contact-textarea-size, var(--section-space-xl));
 }
 
 :where(.beta-support-contact-allentown) .beta-support-contact-allentown__container {
@@ -1990,7 +1940,7 @@
 :where(.beta-support-contact-allentown) :is(.beta-support-contact-allentown__direct-heading, .beta-support-contact-allentown__request-heading) {
   margin: 0;
   font-size: var(--kinekt-component-text-l-size);
-  line-height: var(--kinekt-component-text-l-line-height);
+  line-height: var(--kinekt-component-text-line-height);
 }
 
 :where(.beta-support-contact-allentown) ul.beta-support-contact-allentown__contact-methods {
@@ -2027,8 +1977,8 @@
   display: grid;
   gap: var(--support-contact-control-gap);
   font-size: var(--kinekt-component-text-l-size);
-  font-weight: 500;
-  line-height: var(--kinekt-component-text-l-line-height);
+  font-weight: var(--heading-font-weight);
+  line-height: var(--kinekt-component-text-line-height);
 }
 
 :where(.beta-support-contact-allentown) .beta-support-contact-allentown__form :is(input, select, textarea) {
@@ -2041,8 +1991,8 @@
   background: var(--kinekt-component-surface);
   font-family: inherit;
   font-size: var(--kinekt-component-text-l-size);
-  font-weight: 400;
-  line-height: var(--kinekt-component-text-l-line-height);
+  font-weight: var(--text-font-weight);
+  line-height: var(--kinekt-component-text-line-height);
 }
 
 :where(.beta-support-contact-allentown) .beta-support-contact-allentown__form textarea {
@@ -2056,7 +2006,7 @@
 
 :where(.beta-support-contact-allentown) .beta-support-contact-allentown__form .button {
   font-size: var(--kinekt-component-text-l-size);
-  font-weight: 500;
+  font-weight: var(--heading-font-weight);
 }
 
 @media (min-width: 50rem) {
@@ -2066,7 +2016,7 @@
   }
 
   :where(.beta-support-contact-allentown) .beta-support-contact-allentown__support {
-    padding-block-start: var(--kinekt-wireframe-space-xl);
+    padding-block-start: var(--space-xl);
   }
 
   :where(.beta-support-contact-allentown) .beta-support-contact-allentown__form-row {
@@ -2081,29 +2031,29 @@
  * neutral wireframe implementation.
  */
 :where(.beta-battery-models-allentown[data-kinekt-section]) {
-  --kinekt-section-battery-models-canvas: var(--kinekt-color-canvas-muted, #eeeeee);
-  --kinekt-section-battery-models-inner-width: var(--kinekt-wireframe-layout-d-content-width);
-  --kinekt-section-battery-models-inline-space: var(--kinekt-wireframe-layout-m-section-gutter);
-  --kinekt-section-battery-models-outer-block-space: var(--kinekt-wireframe-section-space-m-xs);
-  --kinekt-section-battery-models-major-gap: var(--kinekt-wireframe-section-space-m-xs);
-  --kinekt-section-battery-models-intro-width: var(--kinekt-wireframe-layout-d-width-l);
-  --kinekt-section-battery-models-models-gap: var(--kinekt-wireframe-space-m-xl);
-  --kinekt-section-battery-models-model-card-min-width: var(--kinekt-wireframe-layout-d-width-s);
-  --kinekt-section-battery-models-model-media-to-text-gap: var(--kinekt-wireframe-space-m-l);
-  --kinekt-section-battery-models-model-text-gap: var(--kinekt-wireframe-space-m-xs);
-  --kinekt-section-battery-models-model-text-to-specifications-gap: var(--kinekt-wireframe-space-m-xl);
-  --kinekt-section-battery-models-specification-gap: var(--kinekt-wireframe-space-m-xs);
-  --kinekt-section-battery-models-specification-row-space: var(--kinekt-wireframe-space-m-s);
-  --kinekt-section-battery-models-specification-label-width: var(--kinekt-wireframe-section-space-m-xxl);
-  --kinekt-section-battery-models-cross-sell-gap: var(--kinekt-wireframe-space-m-l);
-  --kinekt-section-battery-models-cross-sell-content-row-gap: var(--kinekt-wireframe-section-space-m-l);
-  --kinekt-section-battery-models-cross-sell-copy-width: var(--kinekt-wireframe-layout-d-width-m);
-  --kinekt-section-battery-models-cross-sell-item-gap: var(--kinekt-wireframe-space-m-l);
-  --kinekt-section-battery-models-cross-sell-media-size: var(--kinekt-wireframe-section-space-m-xxl);
-  --kinekt-section-battery-models-cross-sell-label-gap: var(--kinekt-wireframe-space-m-s);
-  --kinekt-section-battery-models-cross-sell-offset: var(--kinekt-wireframe-space-m);
-  --kinekt-section-battery-models-cross-sell-item-content-gap: var(--kinekt-wireframe-space-m-l);
-  --kinekt-section-battery-models-intro-actions-gap: var(--kinekt-wireframe-section-space-m-xs);
+  --kinekt-section-battery-models-canvas: var(--neutral-light);
+  --kinekt-section-battery-models-inner-width: var(--content-width);
+  --kinekt-section-battery-models-inline-space: var(--section-gutter);
+  --kinekt-section-battery-models-outer-block-space: var(--section-space-xs);
+  --kinekt-section-battery-models-major-gap: var(--section-space-xs);
+  --kinekt-section-battery-models-intro-width: var(--width-l);
+  --kinekt-section-battery-models-models-gap: var(--space-xl);
+  --kinekt-section-battery-models-model-card-min-width: var(--width-s);
+  --kinekt-section-battery-models-model-media-to-text-gap: var(--space-l);
+  --kinekt-section-battery-models-model-text-gap: var(--space-xs);
+  --kinekt-section-battery-models-model-text-to-specifications-gap: var(--space-xl);
+  --kinekt-section-battery-models-specification-gap: var(--space-xs);
+  --kinekt-section-battery-models-specification-row-space: var(--space-s);
+  --kinekt-section-battery-models-specification-label-width: var(--section-space-xxl);
+  --kinekt-section-battery-models-cross-sell-gap: var(--space-l);
+  --kinekt-section-battery-models-cross-sell-content-row-gap: var(--space-l);
+  --kinekt-section-battery-models-cross-sell-copy-width: var(--width-m);
+  --kinekt-section-battery-models-cross-sell-item-gap: var(--space-l);
+  --kinekt-section-battery-models-cross-sell-media-size: var(--section-space-xxl);
+  --kinekt-section-battery-models-cross-sell-label-gap: var(--space-s);
+  --kinekt-section-battery-models-cross-sell-offset: var(--space-m);
+  --kinekt-section-battery-models-cross-sell-item-content-gap: var(--space-l);
+  --kinekt-section-battery-models-intro-actions-gap: var(--section-space-xs);
   --kinekt-section-battery-models-cross-sell-heading: var(--kinekt-section-battery-models-cross-sell-heading-size, var(--kinekt-component-heading-4-size));
   --kinekt-section-battery-models-cross-sell-description: var(--kinekt-section-battery-models-cross-sell-description-size, var(--kinekt-component-text-s-size));
   --kinekt-section-battery-models-cross-sell-item-title: var(--kinekt-section-battery-models-cross-sell-item-title-size, var(--kinekt-component-text-m-size));
@@ -2203,7 +2153,7 @@
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-intro .section-intro__description {
   font-size: var(--kinekt-section-battery-models-cross-sell-description);
-  line-height: var(--kinekt-component-text-s-line-height);
+  line-height: var(--kinekt-component-text-line-height);
 }
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-label {
@@ -2263,7 +2213,7 @@
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-title {
   margin: 0;
   font-size: var(--kinekt-section-battery-models-cross-sell-item-title);
-  line-height: var(--kinekt-component-text-m-line-height);
+  line-height: var(--kinekt-component-text-line-height);
 }
 
 :where(.beta-battery-models-allentown) .beta-battery-models-allentown__cross-sell-action {
@@ -2272,23 +2222,23 @@
 
 @media (min-width: 50rem) {
   :where(.beta-battery-models-allentown[data-kinekt-section]) {
-    --kinekt-section-battery-models-inline-space: var(--kinekt-wireframe-layout-m-section-gutter);
-    --kinekt-section-battery-models-outer-block-space: var(--kinekt-wireframe-section-space-d-l);
-    --kinekt-section-battery-models-major-gap: var(--kinekt-wireframe-section-space-d-xs);
-    --kinekt-section-battery-models-models-gap: var(--kinekt-wireframe-space-d-xxl);
-    --kinekt-section-battery-models-model-media-to-text-gap: var(--kinekt-wireframe-space-d-l);
-    --kinekt-section-battery-models-model-text-gap: var(--kinekt-wireframe-space-d-xs);
-    --kinekt-section-battery-models-model-text-to-specifications-gap: var(--kinekt-wireframe-space-d-xl);
-    --kinekt-section-battery-models-specification-gap: var(--kinekt-wireframe-space-d-xxl);
-    --kinekt-section-battery-models-specification-row-space: var(--kinekt-wireframe-space-d-xxs);
-    --kinekt-section-battery-models-cross-sell-gap: var(--kinekt-wireframe-space-d-l);
-    --kinekt-section-battery-models-cross-sell-content-row-gap: var(--kinekt-wireframe-layout-d-section-gutter);
-    --kinekt-section-battery-models-cross-sell-offset: var(--kinekt-wireframe-space-d-m);
-    --kinekt-section-battery-models-cross-sell-item-gap: var(--kinekt-wireframe-space-d-l);
-    --kinekt-section-battery-models-cross-sell-item-content-gap: var(--kinekt-wireframe-space-d-m);
-    --kinekt-section-battery-models-cross-sell-label-gap: var(--kinekt-wireframe-space-d-l);
-    --kinekt-section-battery-models-intro-actions-gap: var(--kinekt-wireframe-section-space-d-xs);
-    --kinekt-section-intro-description-gap: var(--kinekt-wireframe-space-d-m);
+    --kinekt-section-battery-models-inline-space: var(--section-gutter);
+    --kinekt-section-battery-models-outer-block-space: var(--section-space-l);
+    --kinekt-section-battery-models-major-gap: var(--section-space-xs);
+    --kinekt-section-battery-models-models-gap: var(--space-xxl);
+    --kinekt-section-battery-models-model-media-to-text-gap: var(--space-l);
+    --kinekt-section-battery-models-model-text-gap: var(--space-xs);
+    --kinekt-section-battery-models-model-text-to-specifications-gap: var(--space-xl);
+    --kinekt-section-battery-models-specification-gap: var(--space-xxl);
+    --kinekt-section-battery-models-specification-row-space: var(--space-xxs);
+    --kinekt-section-battery-models-cross-sell-gap: var(--space-l);
+    --kinekt-section-battery-models-cross-sell-content-row-gap: var(--section-gutter);
+    --kinekt-section-battery-models-cross-sell-offset: var(--space-m);
+    --kinekt-section-battery-models-cross-sell-item-gap: var(--space-l);
+    --kinekt-section-battery-models-cross-sell-item-content-gap: var(--space-m);
+    --kinekt-section-battery-models-cross-sell-label-gap: var(--space-l);
+    --kinekt-section-battery-models-intro-actions-gap: var(--section-space-xs);
+    --kinekt-section-intro-description-gap: var(--space-m);
   }
 
   :where(.beta-battery-models-allentown) .beta-battery-models-allentown__models {
@@ -2319,7 +2269,7 @@
 :where(.beta-density-comparison-allentown),
 :where(.beta-faq-allentown),
 :where(.beta-faq-index-allentown) {
-  --kinekt-section-reading-width: 54rem;
+  --kinekt-section-reading-width: var(--width-l);
 }
 
 :where(.beta-comparison-overview-allentown) .beta-comparison-overview-allentown__header,
@@ -2338,13 +2288,13 @@
 
 
 :where(.beta-facilities-overview-allentown) .beta-facilities-overview-allentown__container {
-  gap: var(--kinekt-wireframe-section-space-l);
+  gap: var(--section-space-l);
 }
 
 :where(.beta-facilities-overview-allentown) .beta-facilities-overview-allentown__facts {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--kinekt-wireframe-section-space-s) var(--kinekt-wireframe-section-space-m);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--section-space-s) var(--section-space-m);
   border: 0;
 }
 
@@ -2366,7 +2316,7 @@
 }
 
 :where(.beta-featured-insights-allentown) .beta-featured-insights-allentown__insight-sources > li > article {
-  padding: var(--kinekt-wireframe-section-space-s) 0;
+  padding: var(--section-space-s) 0;
   border-width: 0 0 var(--kinekt-component-border-width);
   background: transparent;
 }
@@ -2385,9 +2335,13 @@
     grid-column: 1 / -1;
   }
 
+  :where(.beta-facilities-overview-allentown) .beta-facilities-overview-allentown__facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   :where(.beta-featured-insights-allentown) .beta-featured-insights-allentown__insight-sources {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: var(--kinekt-wireframe-section-space-l);
+    column-gap: var(--section-space-l);
   }
 
   :where(.beta-featured-insights-allentown) .beta-featured-insights-allentown__insight-sources > li:first-child {
@@ -2395,19 +2349,19 @@
   }
 
   :where(.beta-featured-insights-allentown) .beta-featured-insights-allentown__insight-sources > li:first-child > article {
-    gap: var(--kinekt-wireframe-space-xl);
+    gap: var(--space-xl);
   }
 }
 
 /* Figma-informed process and utility compositions. */
 :where(.beta-steps-stage) .beta-steps-stage__container {
   display: grid;
-  gap: var(--kinekt-wireframe-section-space-l);
+  gap: var(--section-space-l);
 }
 
 :where(.beta-steps-stage) .beta-steps-stage__steps {
   display: grid;
-  gap: var(--kinekt-wireframe-section-space-s);
+  gap: var(--section-space-s);
   margin: 0;
 }
 
@@ -2416,16 +2370,16 @@
 }
 
 :where(.beta-steps-stage) .beta-steps-stage__steps summary {
-  padding-block: var(--kinekt-wireframe-space-s);
+  padding-block: var(--space-s);
 }
 
 :where(.beta-steps-stage) .beta-steps-stage__steps-body {
-  padding: 0 0 var(--kinekt-wireframe-space-m);
+  padding: 0 0 var(--space-m);
 }
 
 :where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__container {
   display: grid;
-  gap: var(--kinekt-wireframe-section-space-l);
+  gap: var(--section-space-l);
 }
 
 :where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__header,
@@ -2438,7 +2392,7 @@
 :where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__next-steps-heading {
   display: flex;
   align-items: center;
-  gap: var(--kinekt-wireframe-space-s);
+  gap: var(--space-s);
   margin: 0;
 }
 
@@ -2451,7 +2405,7 @@
 
 :where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__next-steps {
   display: grid;
-  gap: var(--kinekt-wireframe-section-space-m);
+  gap: var(--section-space-m);
   margin: 0;
 }
 
@@ -2463,7 +2417,7 @@
 
 :where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__media {
   justify-self: center;
-  inline-size: min(100%, 37.5rem);
+  inline-size: min(100%, var(--kiw--thank-you-hero-allentown-media-width, var(--width-m)));
 }
 
 :where(.beta-thank-you-hero-allentown) .beta-thank-you-hero-allentown__media img {
@@ -2473,7 +2427,7 @@
 
 :where(.beta-read-more-allentown) .beta-read-more-allentown__container {
   display: grid;
-  gap: var(--kinekt-wireframe-section-space-l);
+  gap: var(--section-space-l);
 }
 
 :where(.beta-read-more-allentown) .beta-read-more-allentown__header {
@@ -2483,7 +2437,7 @@
 :where(.beta-read-more-allentown) .beta-read-more-allentown__media {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--kinekt-wireframe-space-s);
+  gap: var(--space-s);
 }
 
 :where(.beta-read-more-allentown) .beta-read-more-allentown__media img {
@@ -2527,26 +2481,26 @@
  * without changing the semantic section structure.
  */
 :where(.beta-use-cases-allentown[data-kinekt-section]) {
-  --kinekt-wireframe-use-cases-d-section-space: 8.75rem;
-  --kinekt-wireframe-use-cases-d-container-width: 90rem;
-  --kinekt-wireframe-use-cases-d-inline-space: 4.5rem;
-  --kinekt-wireframe-use-cases-d-intro-width: 54rem;
-  --kinekt-wireframe-use-cases-d-content-gap: 5rem;
-  --kinekt-wireframe-use-cases-d-column-gap: 6.25rem;
-  --kinekt-wireframe-use-cases-d-row-gap: 2.56rem;
-  --kinekt-wireframe-use-cases-d-heading-size: 3rem;
-  --kinekt-wireframe-use-cases-d-item-heading-size: 1.75rem;
-  --kinekt-wireframe-use-cases-d-description-size: 1rem;
-  --use-cases-section-space: var(--kinekt-section-use-cases-section-space, 5rem);
-  --use-cases-container-width: var(--kinekt-section-use-cases-container-width, var(--kinekt-wireframe-use-cases-d-container-width));
-  --use-cases-inline-space: var(--kinekt-section-use-cases-inline-space, 1rem);
-  --use-cases-intro-width: var(--kinekt-section-use-cases-intro-width, var(--kinekt-wireframe-use-cases-d-intro-width));
-  --use-cases-content-gap: var(--kinekt-section-use-cases-content-gap, var(--kinekt-wireframe-use-cases-d-content-gap));
-  --use-cases-column-gap: var(--kinekt-section-use-cases-column-gap, var(--kinekt-wireframe-use-cases-d-column-gap));
-  --use-cases-row-gap: var(--kinekt-section-use-cases-row-gap, var(--kinekt-wireframe-use-cases-d-row-gap));
-  --use-cases-heading-size: var(--kinekt-section-use-cases-heading-size, var(--kinekt-wireframe-use-cases-d-heading-size));
-  --use-cases-item-heading-size: var(--kinekt-section-use-cases-item-heading-size, var(--kinekt-wireframe-use-cases-d-item-heading-size));
-  --use-cases-description-size: var(--kinekt-section-use-cases-description-size, var(--kinekt-wireframe-use-cases-d-description-size));
+  --kiw--use-cases-section-space: var(--section-space-xl);
+  --kiw--use-cases-container-width: var(--content-width);
+  --kiw--use-cases-inline-space: var(--section-gutter);
+  --kiw--use-cases-intro-width: var(--width-l);
+  --kiw--use-cases-content-gap: var(--section-space-xl);
+  --kiw--use-cases-column-gap: var(--section-space-xxl);
+  --kiw--use-cases-row-gap: var(--section-space-s);
+  --kiw--use-cases-heading-size: var(--h2);
+  --kiw--use-cases-item-heading-size: var(--h3);
+  --kiw--use-cases-description-size: var(--text-m);
+  --use-cases-section-space: var(--kinekt-section-use-cases-section-space, var(--kiw--use-cases-section-space));
+  --use-cases-container-width: var(--kinekt-section-use-cases-container-width, var(--kiw--use-cases-container-width));
+  --use-cases-inline-space: var(--kinekt-section-use-cases-inline-space, var(--kiw--use-cases-inline-space));
+  --use-cases-intro-width: var(--kinekt-section-use-cases-intro-width, var(--kiw--use-cases-intro-width));
+  --use-cases-content-gap: var(--kinekt-section-use-cases-content-gap, var(--kiw--use-cases-content-gap));
+  --use-cases-column-gap: var(--kinekt-section-use-cases-column-gap, var(--kiw--use-cases-column-gap));
+  --use-cases-row-gap: var(--kinekt-section-use-cases-row-gap, var(--kiw--use-cases-row-gap));
+  --use-cases-heading-size: var(--kinekt-section-use-cases-heading-size, var(--kiw--use-cases-heading-size));
+  --use-cases-item-heading-size: var(--kinekt-section-use-cases-item-heading-size, var(--kiw--use-cases-item-heading-size));
+  --use-cases-description-size: var(--kinekt-section-use-cases-description-size, var(--kiw--use-cases-description-size));
   --kinekt-component-block-space: var(--use-cases-section-space);
   --kinekt-component-inline-space: var(--use-cases-inline-space);
 }
@@ -2564,23 +2518,23 @@
 
 :where(.beta-use-cases-allentown) .beta-use-cases-allentown__intro .section-intro__heading {
   font-size: var(--use-cases-heading-size);
-  line-height: 1;
+  line-height: var(--heading-line-height);
 }
 
 :where(.beta-use-cases-allentown) .beta-use-cases-allentown__intro .section-intro__description {
   max-width: none;
-  font-size: 1.125rem;
+  font-size: var(--text-l);
 }
 
 :where(.beta-use-cases-allentown) .beta-use-cases-allentown__content {
   display: grid;
-  gap: 2.5rem;
+  gap: var(--section-space-s);
 }
 
 :where(.beta-use-cases-allentown) .beta-use-cases-allentown__label {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-m);
 }
 
 :where(.beta-use-cases-allentown) .beta-use-cases-allentown__label p {
@@ -2588,9 +2542,9 @@
   margin: 0;
   color: var(--kinekt-component-muted);
   font-family: var(--kinekt-component-mono);
-  font-size: .8125rem;
-  font-weight: 700;
-  letter-spacing: .08em;
+  font-size: var(--text-xs);
+  font-weight: var(--heading-font-weight);
+  letter-spacing: var(--text-letter-spacing);
   text-transform: uppercase;
 }
 
@@ -2609,7 +2563,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: .8rem;
+  gap: var(--space-s);
 }
 
 :where(.beta-use-cases-allentown) .beta-use-cases-allentown__item :is(h3, p),
@@ -2619,23 +2573,23 @@
 
 :where(.beta-use-cases-allentown) .beta-use-cases-allentown__item h3 {
   font-size: var(--use-cases-item-heading-size);
-  line-height: 1.1;
-  letter-spacing: -.03em;
+  line-height: var(--heading-line-height);
+  letter-spacing: var(--heading-letter-spacing);
 }
 
 :where(.beta-use-cases-allentown) .beta-use-cases-allentown__item > :is(p, .beta-use-cases-allentown__description) {
-  max-width: 32rem;
+  max-width: var(--kiw--use-cases-allentown-description-width, var(--kinekt-component-reading-width));
   color: var(--kinekt-component-muted);
   font-size: var(--use-cases-description-size);
-  line-height: 1.5;
+  line-height: var(--text-line-height);
 }
 
 :where(.beta-use-cases-allentown) .beta-use-cases-allentown__cta {
-  margin-top: .45rem;
+  margin-top: var(--kiw--use-cases-allentown-action-space, var(--space-xxxs));
   color: inherit;
-  font-size: 1rem;
-  font-weight: 700;
-  text-underline-offset: .2em;
+  font-size: var(--text-m);
+  font-weight: var(--heading-font-weight);
+  text-underline-offset: var(--space-xxs);
 }
 
 :where(.beta-use-cases-allentown) .beta-use-cases-allentown__cta:hover {
@@ -2644,8 +2598,8 @@
 
 @media (min-width: 48rem) {
   :where(.beta-use-cases-allentown[data-kinekt-section]) {
-    --use-cases-inline-space: var(--kinekt-section-use-cases-inline-space, var(--kinekt-wireframe-use-cases-d-inline-space));
-    --use-cases-section-space: var(--kinekt-section-use-cases-section-space, var(--kinekt-wireframe-use-cases-d-section-space));
+    --use-cases-inline-space: var(--kinekt-section-use-cases-inline-space, var(--kiw--use-cases-inline-space));
+    --use-cases-section-space: var(--kinekt-section-use-cases-section-space, var(--kiw--use-cases-section-space));
   }
 
   :where(.beta-use-cases-allentown) .beta-use-cases-allentown__grid {
@@ -2659,28 +2613,28 @@
  * The aliases let a site retune this composition without replacing markup.
  */
 :where(.proof-metrics-allentown[data-kinekt-section]) {
-  --kinekt-section-proof-metrics-inline-space: var(--kinekt-section-inline-space, clamp(1rem, 3vw, 2rem));
-  --kinekt-section-proof-metrics-section-space: var(--kinekt-section-block-space, clamp(4rem, 8vw, 8.75rem));
-  --kinekt-section-proof-metrics-content-width: var(--kinekt-section-content-width, 81rem);
-  --kinekt-section-proof-metrics-major-gap: var(--kinekt-section-proof-metrics-gap, clamp(3rem, 6vw, 5rem));
-  --kinekt-section-proof-metrics-metric-gap: var(--kinekt-section-proof-metrics-metric-gap, clamp(1.5rem, 4vw, 7.8125rem));
-  --kinekt-section-proof-metrics-callout-gap: var(--kinekt-section-proof-metrics-callout-gap, clamp(2rem, 6vw, 7.5rem));
-  --kinekt-section-proof-metrics-value-gap: var(--kinekt-section-proof-metrics-value-gap, .8rem);
-  --kinekt-section-proof-metrics-media-ratio: var(--kinekt-section-proof-metrics-media-ratio, 1296 / 406);
-  padding-block: var(--kinekt-section-proof-metrics-section-space);
+  --kiw--proof-metrics-inline-space: var(--section-gutter);
+  --kiw--proof-metrics-section-space: var(--section-gutter);
+  --kiw--proof-metrics-content-width: var(--width-xxl);
+  --kiw--proof-metrics-major-gap: var(--section-space-xl);
+  --kiw--proof-metrics-metric-gap: var(--section-space-xxl);
+  --kiw--proof-metrics-callout-gap: var(--section-space-xxl);
+  --kiw--proof-metrics-value-gap: var(--space-s);
+  --kiw--proof-metrics-media-ratio: 1296 / 406;
+  padding-block: var(--kiw--proof-metrics-section-space);
 }
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__container {
   display: grid;
-  max-width: var(--kinekt-section-proof-metrics-content-width);
-  gap: var(--kinekt-section-proof-metrics-major-gap);
-  padding-inline: var(--kinekt-section-proof-metrics-inline-space);
+  max-width: var(--kiw--proof-metrics-content-width);
+  gap: var(--kiw--proof-metrics-major-gap);
+  padding-inline: var(--kiw--proof-metrics-inline-space);
 }
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__intro-and-metrics {
   display: grid;
-  gap: clamp(2.5rem, 5vw, 4rem);
-  max-width: 54rem;
+  gap: var(--section-space-l);
+  max-width: var(--width-l);
 }
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__intro {
@@ -2691,7 +2645,7 @@
 :where(.proof-metrics-allentown) .proof-metrics-allentown__metrics {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2rem var(--kinekt-section-proof-metrics-metric-gap);
+  gap: var(--section-space-xs) var(--kiw--proof-metrics-metric-gap);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -2700,7 +2654,7 @@
 :where(.proof-metrics-allentown) .proof-metrics-allentown__metric {
   display: grid;
   align-content: start;
-  gap: var(--kinekt-section-proof-metrics-value-gap);
+  gap: var(--kiw--proof-metrics-value-gap);
 }
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__metric-label,
@@ -2709,16 +2663,16 @@
 }
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__metric-label {
-  font-size: 1.5rem;
-  font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -.035em;
+  font-size: var(--text-xl);
+  font-weight: var(--text-font-weight);
+  line-height: var(--heading-line-height);
+  letter-spacing: var(--heading-letter-spacing);
 }
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__metric-value {
   color: var(--kinekt-component-muted);
-  font-size: .875rem;
-  line-height: 1.5;
+  font-size: var(--text-s);
+  line-height: var(--text-line-height);
 }
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__media {
@@ -2729,24 +2683,24 @@
 :where(.proof-metrics-allentown) .proof-metrics-allentown__image {
   display: block;
   width: 100%;
-  aspect-ratio: var(--kinekt-section-proof-metrics-media-ratio);
+  aspect-ratio: var(--kiw--proof-metrics-media-ratio);
   object-fit: cover;
 }
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__callout {
   display: grid;
-  gap: 2rem;
+  gap: var(--section-space-xs);
 }
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__callout-label {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-m);
   color: var(--kinekt-component-muted);
   font-family: var(--kinekt-component-mono);
-  font-size: .8125rem;
-  font-weight: 700;
-  letter-spacing: .08em;
+  font-size: var(--text-xs);
+  font-weight: var(--heading-font-weight);
+  letter-spacing: var(--text-letter-spacing);
   text-transform: uppercase;
 }
 
@@ -2763,21 +2717,21 @@
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__callout-body {
   display: grid;
-  gap: 2rem;
+  gap: var(--section-space-xs);
   align-items: end;
 }
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__callout-content {
-  max-width: 42rem;
+  max-width: var(--kiw--proof-metrics-allentown-callout-width, var(--kinekt-component-reading-width));
 }
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__callout-content h3 {
-  font-size: 2rem;
+  font-size: var(--h3);
 }
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__callout-content .section-intro__description {
-  margin-top: 1rem;
-  font-size: 1.125rem;
+  margin-top: var(--space-m);
+  font-size: var(--text-l);
 }
 
 :where(.proof-metrics-allentown) .proof-metrics-allentown__callout-action {
@@ -2791,7 +2745,7 @@
 
   :where(.proof-metrics-allentown) .proof-metrics-allentown__callout-body {
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: var(--kinekt-section-proof-metrics-callout-gap);
+    gap: var(--kiw--proof-metrics-callout-gap);
   }
 
   :where(.proof-metrics-allentown) .proof-metrics-allentown__callout-action {
@@ -2805,23 +2759,23 @@
  * not boxed UI, and the selected form remains an external form embed.
  */
 :where(.product-options-allentown[data-kinekt-section]) {
-  --kinekt-section-product-options-outer-space: var(--kinekt-wireframe-section-space-m-xl);
-  --kinekt-section-product-options-content-width: var(--kinekt-wireframe-layout-d-content-width);
-  --kinekt-section-product-options-inline-space: var(--kinekt-wireframe-layout-m-section-gutter);
-  --kinekt-section-product-options-intro-width: var(--kinekt-wireframe-layout-d-width-l);
-  --kinekt-section-product-options-major-gap: var(--kinekt-wireframe-section-space-m-xl);
-  --kinekt-section-product-options-action-gap: var(--kinekt-wireframe-space-m-xl);
-  --kinekt-section-product-options-grid-column-gap: var(--kinekt-wireframe-space-m-xl);
-  --kinekt-section-product-options-grid-row-gap: var(--kinekt-wireframe-section-space-m-l);
-  --kinekt-section-product-options-media-size: 7rem;
-  --kinekt-section-product-options-card-gap: var(--kinekt-wireframe-space-m-xl);
-  --kinekt-section-product-options-card-title-size: var(--kinekt-wireframe-heading-3-size);
-  --kinekt-section-product-options-card-description-size: var(--kinekt-wireframe-text-l-size);
-  --kinekt-section-product-options-benefit-gap: var(--kinekt-wireframe-space-m-s);
-  --kinekt-section-product-options-form-intro-width: var(--kinekt-wireframe-layout-d-width-m);
-  --kinekt-section-product-options-form-gap: var(--kinekt-wireframe-section-space-m-xl);
-  --kinekt-section-product-options-control-gap: var(--kinekt-wireframe-space-m-s);
-  --kinekt-section-product-options-control-padding: var(--kinekt-wireframe-space-m-s);
+  --kinekt-section-product-options-outer-space: var(--section-space-xl);
+  --kinekt-section-product-options-content-width: var(--content-width);
+  --kinekt-section-product-options-inline-space: var(--section-gutter);
+  --kinekt-section-product-options-intro-width: var(--width-l);
+  --kinekt-section-product-options-major-gap: var(--section-space-xl);
+  --kinekt-section-product-options-action-gap: var(--space-xl);
+  --kinekt-section-product-options-grid-column-gap: var(--space-xl);
+  --kinekt-section-product-options-grid-row-gap: var(--section-space-l);
+  --kinekt-section-product-options-media-size: var(--width-xs);
+  --kinekt-section-product-options-card-gap: var(--space-xl);
+  --kinekt-section-product-options-card-title-size: var(--h3);
+  --kinekt-section-product-options-card-description-size: var(--text-l);
+  --kinekt-section-product-options-benefit-gap: var(--space-s);
+  --kinekt-section-product-options-form-intro-width: var(--width-m);
+  --kinekt-section-product-options-form-gap: var(--section-space-xl);
+  --kinekt-section-product-options-control-gap: var(--space-s);
+  --kinekt-section-product-options-control-padding: var(--space-s);
   --kinekt-component-block-space: var(--kinekt-section-product-options-outer-space);
   --kinekt-component-content-width: var(--kinekt-section-product-options-content-width);
   --kinekt-component-inline-space: var(--kinekt-section-product-options-inline-space);
@@ -2904,7 +2858,7 @@
   margin: 0;
   color: var(--kinekt-component-muted);
   font-size: var(--kinekt-section-product-options-card-description-size);
-  line-height: var(--kinekt-component-text-l-line-height);
+  line-height: var(--kinekt-component-text-line-height);
 }
 
 :where(.product-options-allentown) .product-options-allentown__benefits {
@@ -2921,7 +2875,7 @@
   gap: var(--kinekt-section-product-options-benefit-gap);
   color: var(--kinekt-component-muted);
   font-size: var(--kinekt-component-text-m-size);
-  line-height: var(--kinekt-component-text-m-line-height);
+  line-height: var(--kinekt-component-text-line-height);
 }
 
 :where(.product-options-allentown) .product-options-allentown__benefits li::before {
@@ -2963,7 +2917,7 @@
 :where(.product-options-allentown) .product-options-allentown__form legend {
   padding: 0;
   font-size: var(--kinekt-component-text-l-size);
-  font-weight: 500;
+  font-weight: var(--heading-font-weight);
 }
 
 :where(.product-options-allentown) .product-options-allentown__form label {
@@ -2982,13 +2936,13 @@
 }
 
 :where(.product-options-allentown) .product-options-allentown__form textarea {
-  min-height: var(--kinekt-wireframe-section-space-m);
+  min-height: var(--section-space-m);
   resize: vertical;
 }
 
 :where(.product-options-allentown) .product-options-allentown__form button {
   justify-self: start;
-  padding: var(--kinekt-section-product-options-control-padding) var(--kinekt-wireframe-space-m);
+  padding: var(--kinekt-section-product-options-control-padding) var(--space-m);
   border: var(--kinekt-component-border-width) solid var(--kinekt-component-action);
   border-radius: 0;
   color: var(--kinekt-component-action-text);
@@ -2997,20 +2951,20 @@
 
 @media (min-width: 50rem) {
   :where(.product-options-allentown[data-kinekt-section]) {
-    --kinekt-section-product-options-outer-space: var(--kinekt-wireframe-layout-d-section-gutter);
+    --kinekt-section-product-options-outer-space: var(--section-gutter);
     --kinekt-section-product-options-inline-space: 0;
-    --kinekt-section-product-options-major-gap: var(--kinekt-wireframe-section-space-d-xl);
-    --kinekt-section-product-options-action-gap: 2.56rem;
-    --kinekt-section-product-options-grid-column-gap: var(--kinekt-wireframe-space-d-xxl);
-    --kinekt-section-product-options-grid-row-gap: var(--kinekt-wireframe-section-space-d-l);
-    --kinekt-section-product-options-media-size: var(--kinekt-wireframe-layout-d-width-xs);
-    --kinekt-section-product-options-card-gap: var(--kinekt-wireframe-space-d-l);
-    --kinekt-section-product-options-card-title-size: 2rem;
-    --kinekt-section-product-options-card-description-size: var(--kinekt-wireframe-text-l-size);
-    --kinekt-section-product-options-benefit-gap: var(--kinekt-wireframe-space-d-s);
-    --kinekt-section-product-options-form-gap: var(--kinekt-wireframe-section-space-d-xl);
-    --kinekt-section-product-options-control-gap: var(--kinekt-wireframe-space-d-s);
-    --kinekt-section-product-options-control-padding: var(--kinekt-wireframe-space-d-s);
+    --kinekt-section-product-options-major-gap: var(--section-space-xl);
+    --kinekt-section-product-options-action-gap: var(--section-space-s);
+    --kinekt-section-product-options-grid-column-gap: var(--space-xxl);
+    --kinekt-section-product-options-grid-row-gap: var(--section-space-l);
+    --kinekt-section-product-options-media-size: var(--width-xs);
+    --kinekt-section-product-options-card-gap: var(--space-l);
+    --kinekt-section-product-options-card-title-size: var(--h3);
+    --kinekt-section-product-options-card-description-size: var(--text-l);
+    --kinekt-section-product-options-benefit-gap: var(--space-s);
+    --kinekt-section-product-options-form-gap: var(--section-space-xl);
+    --kinekt-section-product-options-control-gap: var(--space-s);
+    --kinekt-section-product-options-control-padding: var(--space-s);
   }
 
   :where(.product-options-allentown) .product-options-allentown__options {
@@ -3033,41 +2987,41 @@
  * counterpart. Public aliases retain the geometry without prescribing a brand.
  */
 :where(.media-metrics-allentown[data-kinekt-section]) {
-  --kinekt-section-media-metrics-inline-space: var(--kinekt-section-inline-space, clamp(1rem, 3vw, 2rem));
-  --kinekt-section-media-metrics-section-space: var(--kinekt-section-block-space, clamp(4rem, 8vw, 8.75rem));
-  --kinekt-section-media-metrics-content-width: var(--kinekt-section-content-width, 90rem);
-  --kinekt-section-media-metrics-intro-width: var(--kinekt-section-media-metrics-intro-width, 54rem);
-  --kinekt-section-media-metrics-major-gap: var(--kinekt-section-media-metrics-gap, clamp(3rem, 6vw, 5rem));
-  --kinekt-section-media-metrics-column-gap: var(--kinekt-section-media-metrics-column-gap, 4rem);
-  --kinekt-section-media-metrics-metric-column-gap: var(--kinekt-section-media-metrics-metric-column-gap, 2.56rem);
-  --kinekt-section-media-metrics-metric-row-gap: var(--kinekt-section-media-metrics-metric-row-gap, 4rem);
-  --kinekt-section-media-metrics-metric-width: var(--kinekt-section-media-metrics-metric-width, 18rem);
-  --kinekt-section-media-metrics-value-gap: var(--kinekt-section-media-metrics-value-gap, .8rem);
-  --kinekt-section-media-metrics-media-ratio: var(--kinekt-section-media-metrics-media-ratio, 688 / 406);
-  padding-block: var(--kinekt-section-media-metrics-section-space);
+  --kiw--media-metrics-inline-space: var(--section-gutter);
+  --kiw--media-metrics-section-space: var(--section-gutter);
+  --kiw--media-metrics-content-width: var(--content-width);
+  --kiw--media-metrics-intro-width: var(--width-l);
+  --kiw--media-metrics-major-gap: var(--section-space-xl);
+  --kiw--media-metrics-column-gap: var(--section-space-l);
+  --kiw--media-metrics-metric-column-gap: var(--section-space-s);
+  --kiw--media-metrics-metric-row-gap: var(--section-space-l);
+  --kiw--media-metrics-metric-width: var(--width-s);
+  --kiw--media-metrics-value-gap: var(--space-s);
+  --kiw--media-metrics-media-ratio: 688 / 406;
+  padding-block: var(--kiw--media-metrics-section-space);
 }
 
 :where(.media-metrics-allentown) .media-metrics-allentown__container {
   display: grid;
-  max-width: var(--kinekt-section-media-metrics-content-width);
-  gap: var(--kinekt-section-media-metrics-major-gap);
-  padding-inline: var(--kinekt-section-media-metrics-inline-space);
+  max-width: var(--kiw--media-metrics-content-width);
+  gap: var(--kiw--media-metrics-major-gap);
+  padding-inline: var(--kiw--media-metrics-inline-space);
 }
 
 :where(.media-metrics-allentown) .media-metrics-allentown__intro {
-  max-width: var(--kinekt-section-media-metrics-intro-width);
+  max-width: var(--kiw--media-metrics-intro-width);
 }
 
 :where(.media-metrics-allentown) .media-metrics-allentown__content {
   display: grid;
-  gap: var(--kinekt-section-media-metrics-column-gap);
+  gap: var(--kiw--media-metrics-column-gap);
   align-items: center;
 }
 
 :where(.media-metrics-allentown) .media-metrics-allentown__metrics {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, var(--kinekt-section-media-metrics-metric-width)));
-  gap: var(--kinekt-section-media-metrics-metric-row-gap) var(--kinekt-section-media-metrics-metric-column-gap);
+  grid-template-columns: repeat(2, minmax(0, var(--kiw--media-metrics-metric-width)));
+  gap: var(--kiw--media-metrics-metric-row-gap) var(--kiw--media-metrics-metric-column-gap);
   margin: 0;
   padding: 0;
   border: 0;
@@ -3077,7 +3031,7 @@
 :where(.media-metrics-allentown) .media-metrics-allentown__metric > article {
   display: grid;
   align-content: start;
-  gap: var(--kinekt-section-media-metrics-value-gap);
+  gap: var(--kiw--media-metrics-value-gap);
   padding: 0;
   border: 0;
   background: transparent;
@@ -3089,15 +3043,15 @@
 
 :where(.media-metrics-allentown) .media-metrics-allentown__metric-value {
   color: var(--kinekt-component-action);
-  font: 700 clamp(1.5rem, 2.2vw, 2rem)/1 var(--kinekt-component-font);
-  letter-spacing: -.035em;
+  font: var(--heading-font-weight) var(--h3)/var(--heading-line-height) var(--heading-font-family);
+  letter-spacing: var(--heading-letter-spacing);
 }
 
 :where(.media-metrics-allentown) .media-metrics-allentown__metric-label {
   color: var(--kinekt-component-ink);
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.35;
+  font-size: var(--text-m);
+  font-weight: var(--text-font-weight);
+  line-height: var(--text-line-height);
 }
 
 :where(.media-metrics-allentown) .media-metrics-allentown__media,
@@ -3107,12 +3061,18 @@
 }
 
 :where(.media-metrics-allentown) .media-metrics-allentown__image {
-  aspect-ratio: var(--kinekt-section-media-metrics-media-ratio);
+  aspect-ratio: var(--kiw--media-metrics-media-ratio);
   object-fit: cover;
 }
 
 @media (min-width: 50rem) {
   :where(.media-metrics-allentown) .media-metrics-allentown__content {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 49.99rem) {
+  :where([data-kinekt-section]) {
+    --kinekt-component-reading-width: var(--content-width);
   }
 }

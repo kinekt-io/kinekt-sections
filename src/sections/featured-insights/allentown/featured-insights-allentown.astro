@@ -1,4 +1,5 @@
 ---
+import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
 import '../../../styles/wireframe.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
@@ -29,7 +30,7 @@ const featured = insightSources.find((insight) => insight.featured) ?? insightSo
 const recent = insightSources.filter((insight) => insight !== featured).slice(0, 3)
 const kindLabel = (kind?: string): string | undefined => kind?.replace(/[-_]/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase())
 ---
-<section class="featured-insights-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="featured-insights-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('featured-insights-allentown')}>
   <div class="featured-insights-allentown__container">
     <header class="featured-insights-allentown__intro">
       <div class="featured-insights-allentown__intro-content"><SectionIntro intro={intro} headingLevel={headingLevel} /></div>
@@ -60,36 +61,61 @@ const kindLabel = (kind?: string): string | undefined => kind?.replace(/[-_]/g, 
   </div>
 </section>
 <style>
+  :global(:where(.featured-insights-allentown)) {
+    --kiw--featured-insights-allentown-content-width: var(--content-width);
+    --kiw--featured-insights-allentown-container-gap: var(--section-space-l);
+    --kiw--featured-insights-allentown-intro-gap: var(--space-m);
+    --kiw--featured-insights-allentown-intro-width: var(--kinekt-component-reading-width);
+    --kiw--featured-insights-allentown-card-gap: var(--space-s);
+    --kiw--featured-insights-allentown-action-color: var(--kinekt-component-action);
+    --kiw--featured-insights-allentown-mono-font: var(--kinekt-component-mono);
+    --kiw--featured-insights-allentown-label-size: var(--text-xs);
+    --kiw--featured-insights-allentown-label-weight: var(--heading-font-weight);
+    --kiw--featured-insights-allentown-text-line-height: var(--text-line-height);
+    --kiw--featured-insights-allentown-text-letter-spacing: var(--text-letter-spacing);
+    --kiw--featured-insights-allentown-copy-width: var(--width-m);
+    --kiw--featured-insights-allentown-link-gap: var(--space-xs);
+    --kiw--featured-insights-allentown-ink-color: var(--kinekt-component-ink);
+    --kiw--featured-insights-allentown-link-size: var(--text-s);
+    --kiw--featured-insights-allentown-line-color: var(--kinekt-component-line);
+    --kiw--featured-insights-allentown-border-width: var(--border-width);
+    --kiw--featured-insights-allentown-recent-heading-size: var(--h6);
+    --kiw--featured-insights-allentown-heading-line-height: var(--heading-line-height);
+    --kiw--featured-insights-allentown-muted-color: var(--kinekt-component-muted);
+    --kiw--featured-insights-allentown-recent-space: var(--space-l);
+    --kiw--featured-insights-allentown-column-gap: var(--section-space-xl);
+  }
+
   .featured-insights-allentown {
-    --kinekt-section-content-width: 96rem;
-    & > .featured-insights-allentown__container { display: grid; gap: var(--kinekt-wireframe-section-space-l); }
-    & .featured-insights-allentown__intro { display: flex; flex-direction: column; align-items: flex-start; gap: var(--kinekt-wireframe-space-m); width: 100%; max-width: none; }
-    & .featured-insights-allentown__intro :global(.section-intro__description) { max-width: 42rem; }
-    & .featured-insights-allentown__content { display: grid; width: 100%; max-width: none; gap: var(--kinekt-wireframe-section-space-l); }
-    & :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent article) { display: grid; align-content: start; gap: var(--kinekt-wireframe-space-s); }
+    --kinekt-section-content-width: var(--kiw--featured-insights-allentown-content-width);
+    & > .featured-insights-allentown__container { display: grid; gap: var(--kiw--featured-insights-allentown-container-gap); }
+    & .featured-insights-allentown__intro { display: flex; flex-direction: column; align-items: flex-start; gap: var(--kiw--featured-insights-allentown-intro-gap); width: 100%; max-width: none; }
+    & .featured-insights-allentown__intro :global(.section-intro__description) { max-width: var(--kiw--featured-insights-allentown-intro-width); }
+    & .featured-insights-allentown__content { display: grid; width: 100%; max-width: none; gap: var(--kiw--featured-insights-allentown-container-gap); }
+    & :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent article) { display: grid; align-content: start; gap: var(--kiw--featured-insights-allentown-card-gap); }
     & :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent article) :is(h3, p) { margin: 0; }
     & .featured-insights-allentown__media img { aspect-ratio: 4 / 3; object-fit: cover; }
-    & .featured-insights-allentown__eyebrow, & .featured-insights-allentown__recent-header p { color: var(--kinekt-component-action); font: 700 .75rem/1.2 var(--kinekt-component-mono); letter-spacing: .08em; text-transform: uppercase; }
-    & .featured-insights-allentown__kind { color: var(--kinekt-component-action); font-size: .75rem; font-weight: 700; }
-    & :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent) > :is(p, h3), & .featured-insights-allentown__recent article > :is(p, h3) { max-width: 34rem; }
-    & .featured-insights-allentown__link { display: inline-flex; align-items: center; gap: .5rem; width: max-content; color: var(--kinekt-component-ink); font-size: .875rem; font-weight: 700; text-decoration: none; }
-    & .featured-insights-allentown__link:hover { color: var(--kinekt-component-action); }
+    & .featured-insights-allentown__eyebrow, & .featured-insights-allentown__recent-header p { color: var(--kiw--featured-insights-allentown-action-color); font-family: var(--kiw--featured-insights-allentown-mono-font); font-size: var(--kiw--featured-insights-allentown-label-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); line-height: var(--kiw--featured-insights-allentown-text-line-height); letter-spacing: var(--kiw--featured-insights-allentown-text-letter-spacing); text-transform: uppercase; }
+    & .featured-insights-allentown__kind { color: var(--kiw--featured-insights-allentown-action-color); font-size: var(--kiw--featured-insights-allentown-label-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); }
+    & :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent) > :is(p, h3), & .featured-insights-allentown__recent article > :is(p, h3) { max-width: var(--kiw--featured-insights-allentown-copy-width); }
+    & .featured-insights-allentown__link { display: inline-flex; align-items: center; gap: var(--kiw--featured-insights-allentown-link-gap); width: max-content; color: var(--kiw--featured-insights-allentown-ink-color); font-size: var(--kiw--featured-insights-allentown-link-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); text-decoration: none; }
+    & .featured-insights-allentown__link:hover { color: var(--kiw--featured-insights-allentown-action-color); }
     & .featured-insights-allentown__recent { display: none; }
-    & .featured-insights-allentown__featured-header, & .featured-insights-allentown__recent-header { display: flex; align-items: center; gap: .75rem; }
+    & .featured-insights-allentown__featured-header, & .featured-insights-allentown__recent-header { display: flex; align-items: center; gap: var(--kiw--featured-insights-allentown-card-gap); }
     & .featured-insights-allentown__featured-header p, & .featured-insights-allentown__recent-header p { flex: 0 0 auto; margin: 0; }
-    & .featured-insights-allentown__featured-header span, & .featured-insights-allentown__recent-header span { flex: 1; height: var(--kinekt-component-border-width); background: var(--kinekt-component-line); }
+    & .featured-insights-allentown__featured-header span, & .featured-insights-allentown__recent-header span { flex: 1; height: var(--kiw--featured-insights-allentown-border-width); background: var(--kiw--featured-insights-allentown-line-color); }
     & .featured-insights-allentown__recent ol { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
     & .featured-insights-allentown__recent li > article { min-height: 0; padding: 0; border: 0; background: transparent; box-shadow: none; }
-    & .featured-insights-allentown__recent li > article h3 { font-size: 1.125rem; line-height: 1.2; }
-    & .featured-insights-allentown__recent li > article > p:not(.featured-insights-allentown__kind) { color: var(--kinekt-component-muted); font-size: .875rem; }
-    & .featured-insights-allentown__recent li { padding-block: var(--kinekt-wireframe-space-l); border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+    & .featured-insights-allentown__recent li > article h3 { font-size: var(--kiw--featured-insights-allentown-recent-heading-size); line-height: var(--kiw--featured-insights-allentown-heading-line-height); }
+    & .featured-insights-allentown__recent li > article > p:not(.featured-insights-allentown__kind) { color: var(--kiw--featured-insights-allentown-muted-color); font-size: var(--kiw--featured-insights-allentown-link-size); }
+    & .featured-insights-allentown__recent li { padding-block: var(--kiw--featured-insights-allentown-recent-space); border-bottom: var(--kiw--featured-insights-allentown-border-width) solid var(--kiw--featured-insights-allentown-line-color); }
     & .featured-insights-allentown__recent li:first-child { padding-top: 0; }
     & .featured-insights-allentown__recent li:last-child { border-bottom: 0; }
 
     @media (min-width: 50rem) {
-      & .featured-insights-allentown__intro { flex-direction: row; align-items: end; justify-content: space-between; column-gap: var(--kinekt-wireframe-section-space-xl); }
-      & .featured-insights-allentown__content { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); column-gap: var(--kinekt-wireframe-section-space-l); }
-      & .featured-insights-allentown__recent { display: grid; align-content: start; gap: var(--kinekt-wireframe-space-l); }
+      & .featured-insights-allentown__intro { flex-direction: row; align-items: end; justify-content: space-between; column-gap: var(--kiw--featured-insights-allentown-column-gap); }
+      & .featured-insights-allentown__content { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); column-gap: var(--kiw--featured-insights-allentown-container-gap); }
+      & .featured-insights-allentown__recent { display: grid; align-content: start; gap: var(--kiw--featured-insights-allentown-recent-space); }
     }
   }
 </style>

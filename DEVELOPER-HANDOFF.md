@@ -4,7 +4,7 @@ Developer handoff for [`kinekt-io/kinekt-sections`](https://github.com/kinekt-io
 
 **Scope:** manifests, paired Astro/Payload implementations, types, design tokens, catalogue previews, checks and GitHub workflows. Customer CMS configuration, customer frontend registration and deployment infrastructure are outside this guide.
 
-The token migration is currently local and unpublished. This handoff does not authorize a commit, push, merge, package publication or Pages deployment.
+The token migration is included in this source revision. Package publication remains separate from merging source and deploying the catalogue; older published versions do not necessarily provide this contract. Obtain authorization for future merges and releases.
 
 ## 1. Start here
 

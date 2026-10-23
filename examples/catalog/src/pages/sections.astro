@@ -1,4 +1,5 @@
 ---
+import '@package-src/styles/wireframe-tokens.css'
 import components from '../generated/components.json'
 
 const previewModules = import.meta.glob('@package-src/**/*.preview.astro', { eager: true })
@@ -23,7 +24,7 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
     <meta name="description" content="Rendered structural preview of every Kinekt section." />
     <title>All sections · Kinekt components</title>
   </head>
-  <body>
+  <body class="sections-page">
     <header class="masthead">
       <a href={import.meta.env.BASE_URL}>← Component catalogue</a>
       <p>Wireframe section previews</p>
@@ -81,24 +82,27 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
   </body>
 </html>
 
-<style>
-  :root { color: #111; background: #f1f1f1; font-family: system-ui, sans-serif; }
-  body { margin: 0; }
-  .masthead { padding: clamp(2rem, 6vw, 5rem); color: #fff; background: #111; }
-  .masthead a { color: inherit; font-weight: 700; text-underline-offset: 0.18em; }
-  .masthead p { max-width: 44rem; color: #d2d2d2; line-height: 1.5; }
-  .masthead h1 { margin: 1.25rem 0 0.75rem; font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 400; letter-spacing: -0.06em; text-wrap: balance; }
-  main { display: grid; gap: 1px; background: #bdbdbd; }
-  .section-preview { padding: clamp(1.5rem, 4vw, 3.5rem); background: #fff; }
-  .section-preview__meta { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem 2rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #bdbdbd; }
-  .section-preview__meta p { margin: 0; color: #5e5e5e; font: 600 0.75rem/1.2 ui-monospace, monospace; }
-  .section-preview__meta h2 { flex-basis: 100%; order: -1; margin: 0; font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 400; letter-spacing: -0.05em; text-wrap: balance; }
-  .section-preview__tags { display: flex; flex-basis: 100%; flex-wrap: wrap; gap: 0.5rem; order: -1; margin: 0; padding: 0; list-style: none; }
-  .section-preview__tags li { padding: 0.3rem 0.5rem; border: 1px solid #bdbdbd; color: #4f4f4f; font: 700 0.6875rem/1 ui-monospace, monospace; letter-spacing: 0.06em; text-transform: uppercase; }
-  .section-preview__tools { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
-  .theme-switch { display: flex; flex-wrap: wrap; padding: 0.1875rem; border: 1px solid #777; border-radius: 0; }
-  .theme-switch button { min-height: 2rem; padding: 0.25rem 0.75rem; border: 0; border-radius: 0; color: #111; background: transparent; font: inherit; font-size: 0.8125rem; font-weight: 700; cursor: pointer; }
-  .theme-switch button[aria-pressed='true'] { color: #fff; background: #111; }
-  .theme-switch button:focus-visible { outline: 2px solid #111; outline-offset: 2px; }
-  .section-preview__meta a { color: inherit; font-weight: 700; text-underline-offset: 0.18em; }
+<style is:global>
+  :where(.sections-page) {
+    --kiw--sections-ink: var(--base); --kiw--sections-canvas: var(--white); --kiw--sections-surface: var(--neutral-light); --kiw--sections-dark: var(--primary-ultra-dark); --kiw--sections-dark-muted: var(--primary-ultra-light); --kiw--sections-muted: var(--primary-semi-light); --kiw--sections-line: var(--neutral-semi-dark); --kiw--sections-action: var(--primary); --kiw--sections-focus: var(--accent); --kiw--sections-text-font: var(--text-font-family); --kiw--sections-heading-font: var(--heading-font-family); --kiw--sections-mono-font: var(--mono-font-family); --kiw--sections-text-weight: var(--text-font-weight); --kiw--sections-heading-weight: var(--heading-font-weight); --kiw--sections-text-tracking: var(--text-letter-spacing); --kiw--sections-heading-tracking: var(--heading-letter-spacing); --kiw--sections-text-line-height: var(--text-line-height); --kiw--sections-heading-line-height: var(--heading-line-height); --kiw--sections-text-xs: var(--text-xs); --kiw--sections-text-s: var(--text-s); --kiw--sections-h1: var(--h1); --kiw--sections-h2: var(--h2); --kiw--sections-gutter: var(--section-gutter); --kiw--sections-space-xxxs: var(--space-xxxs); --kiw--sections-space-xs: var(--space-xs); --kiw--sections-space-s: var(--space-s); --kiw--sections-space-m: var(--space-m); --kiw--sections-space-l: var(--space-l); --kiw--sections-space-xl: var(--space-xl); --kiw--sections-section-space-xs: var(--section-space-xs); --kiw--sections-section-space-l: var(--section-space-l); --kiw--sections-border: var(--border-width); --kiw--sections-radius: var(--radius-s); --kiw--sections-theme-button-radius: var(--buttons-radius); --kiw--sections-theme-button-radius-switch: var(--buttons-has-radius);
+  }
+  .sections-page { margin: 0; color: var(--kiw--sections-ink); background: var(--kiw--sections-surface); font-family: var(--kiw--sections-text-font); font-weight: var(--kiw--sections-text-weight); letter-spacing: var(--kiw--sections-text-tracking); }
+  .sections-page body { margin: 0; }
+  .sections-page .masthead { padding: var(--kiw--sections-section-space-l) var(--kiw--sections-gutter); color: var(--kiw--sections-canvas); background: var(--kiw--sections-dark); }
+  .sections-page .masthead a { color: inherit; font-weight: var(--kiw--sections-heading-weight); text-underline-offset: 0.18em; }
+  .sections-page .masthead p { max-width: 44rem; color: var(--kiw--sections-dark-muted); line-height: var(--kiw--sections-text-line-height); }
+  .sections-page .masthead h1 { margin: var(--kiw--sections-space-l) 0 var(--kiw--sections-space-s); font-family: var(--kiw--sections-heading-font); font-size: var(--kiw--sections-h1); font-weight: var(--kiw--sections-heading-weight); letter-spacing: var(--kiw--sections-heading-tracking); line-height: var(--kiw--sections-heading-line-height); text-wrap: balance; }
+  .sections-page main { display: grid; gap: var(--kiw--sections-border); background: var(--kiw--sections-line); }
+  .sections-page .section-preview { padding: var(--kiw--sections-section-space-xs) var(--kiw--sections-gutter); background: var(--kiw--sections-canvas); }
+  .sections-page .section-preview__meta { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--kiw--sections-space-s) var(--kiw--sections-space-xl); margin-bottom: var(--kiw--sections-space-xl); padding-bottom: var(--kiw--sections-space-m); border-bottom: var(--kiw--sections-border) solid var(--kiw--sections-line); }
+  .sections-page .section-preview__meta p { margin: 0; color: var(--kiw--sections-muted); font-family: var(--kiw--sections-mono-font); font-size: var(--kiw--sections-text-xs); font-weight: var(--kiw--sections-heading-weight); line-height: var(--kiw--sections-text-line-height); }
+  .sections-page .section-preview__meta h2 { flex-basis: 100%; order: -1; margin: 0; font-family: var(--kiw--sections-heading-font); font-size: var(--kiw--sections-h2); font-weight: var(--kiw--sections-heading-weight); letter-spacing: var(--kiw--sections-heading-tracking); line-height: var(--kiw--sections-heading-line-height); text-wrap: balance; }
+  .sections-page .section-preview__tags { display: flex; flex-basis: 100%; flex-wrap: wrap; gap: var(--kiw--sections-space-xxxs); order: -1; margin: 0; padding: 0; list-style: none; }
+  .sections-page .section-preview__tags li { padding: var(--kiw--sections-space-xxxs) var(--kiw--sections-space-xs); border: var(--kiw--sections-border) solid var(--kiw--sections-line); border-radius: var(--kiw--sections-radius); color: var(--kiw--sections-action); font-family: var(--kiw--sections-mono-font); font-size: var(--kiw--sections-text-xs); font-weight: var(--kiw--sections-heading-weight); letter-spacing: var(--kiw--sections-heading-tracking); text-transform: uppercase; }
+  .sections-page .section-preview__tools { display: flex; align-items: center; flex-wrap: wrap; gap: var(--kiw--sections-space-s); }
+  .sections-page .theme-switch { display: flex; flex-wrap: wrap; padding: var(--kiw--sections-space-xxxs); border: var(--kiw--sections-border) solid var(--kiw--sections-muted); border-radius: var(--kiw--sections-radius); }
+  .sections-page .theme-switch button { min-height: 2rem; padding: var(--kiw--sections-space-xxxs) var(--kiw--sections-space-s); border: 0; border-radius: calc(var(--kiw--sections-theme-button-radius-switch) * var(--kiw--sections-theme-button-radius)); color: var(--kiw--sections-ink); background: transparent; font: inherit; font-size: var(--kiw--sections-text-s); font-weight: var(--kiw--sections-heading-weight); cursor: pointer; }
+  .sections-page .theme-switch button[aria-pressed='true'] { color: var(--kiw--sections-canvas); background: var(--kiw--sections-action); }
+  .sections-page .theme-switch button:focus-visible { outline: var(--kiw--sections-border) solid var(--kiw--sections-focus); outline-offset: var(--kiw--sections-space-xxxs); }
+  .sections-page .section-preview__meta a { color: inherit; font-weight: var(--kiw--sections-heading-weight); text-underline-offset: 0.18em; }
 </style>

@@ -1,11 +1,12 @@
 ---
+import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
 import '../../../styles/wireframe.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type {CompatibilitySpecificationsContent} from './compatibility-specifications-allentown.types.js'
 interface Props extends CompatibilitySpecificationsContent { headingLevel?: 'h1' | 'h2' | 'h3' }
 const { theme, intro, specifications, compatiblePlatforms, headingLevel = 'h2' } = Astro.props
 ---
-<section class="compatibility-specifications compatibility-specifications--allentown" data-kinekt-section data-kinekt-theme={theme}>
+<section class="compatibility-specifications compatibility-specifications--allentown" data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('compatibility-specifications-allentown')}>
   <div class="compatibility-specifications__container">
     <div class="compatibility-specifications__specifications-group">
       <header class="compatibility-specifications__intro">

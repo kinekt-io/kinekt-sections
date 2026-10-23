@@ -153,7 +153,7 @@ The four semantic themes retain their meaning: `light` uses `--neutral-ultra-lig
 
 Keep component defaults low-specificity. Inside scoped Astro CSS, use `:global(:where(.component))` for variable declarations and a separate scoped class selector for layout rules. Never point a bridged component alias back to the semantic variable that consumes it: that creates a CSS custom-property cycle.
 
-This migration is local-only until a package release is authorized. The linked Tulip and template checkouts use the new exports; their existing release pins do not yet provide them.
+The token migration is part of this source revision. Installing it through a published package still requires an authorized new package release and updated consumer pins; older consumer pins do not provide the new CSS exports.
 
 ## Interactions
 

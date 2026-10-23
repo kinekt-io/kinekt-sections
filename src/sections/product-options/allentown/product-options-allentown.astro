@@ -1,4 +1,5 @@
 ---
+import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
 import '../../../styles/wireframe.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
@@ -11,7 +12,7 @@ interface Props extends ProductOptionsAllentownContent {
 
 const { theme, intro, ctas, options, form, headingLevel = 'h2' } = Astro.props as Props
 ---
-<section class="product-options-allentown" data-kinekt-section data-kinekt-theme={theme}>
+<section class="product-options-allentown" data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('product-options-allentown')}>
   <div class="product-options-allentown__container">
     <header class="product-options-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} />

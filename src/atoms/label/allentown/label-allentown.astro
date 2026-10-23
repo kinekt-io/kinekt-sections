@@ -4,44 +4,57 @@ const { text, icon, class: className } = Astro.props
 const classes = ['label-allentown', className].filter(Boolean).join(' ')
 ---
 <span class={classes}><span class="label-allentown__text">{text}</span>{icon && <span class="label-allentown__icon" aria-hidden="true">{icon}</span>}</span>
-<style>
-  .label-allentown {
-    --kinekt-label-allentown-background: color-mix(in srgb, var(--kinekt-component-ink) 7%, var(--kinekt-component-canvas));
-    --kinekt-label-allentown-line: color-mix(in srgb, var(--kinekt-component-line) 70%, var(--kinekt-component-ink));
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-sizing: border-box;
-    inline-size: max-content;
-    max-inline-size: 100%;
-    min-inline-size: 0;
-    margin: 0;
-    padding: 0.625rem 0.75rem;
-    border: var(--kinekt-component-border-width) solid var(--kinekt-label-allentown-line);
-    color: var(--kinekt-label-allentown-line);
-    background: var(--kinekt-label-allentown-background);
-    font-family: var(--kinekt-component-font);
-    font-size: 0.875rem;
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: normal;
-    text-transform: none;
+<style is:global>
+  :where(.label-allentown) {
+    --kiw--label-allentown-align-items: center;
+    --kiw--label-allentown-gap: var(--space-xs);
+    --kiw--label-allentown-padding-block: var(--space-xs);
+    --kiw--label-allentown-padding-inline: var(--space-s);
+    --kiw--label-allentown-border-width: var(--border-width);
+    --kiw--label-allentown-border-color: var(--kinekt-component-line);
+    --kiw--label-allentown-ink: var(--kinekt-component-ink);
+    --kiw--label-allentown-background: var(--kinekt-component-surface);
+    --kiw--label-allentown-font-family: var(--text-font-family);
+    --kiw--label-allentown-font-size: var(--text-s);
+    --kiw--label-allentown-font-weight: var(--text-font-weight);
+    --kiw--label-allentown-line-height: var(--text-line-height);
+    --kiw--label-allentown-letter-spacing: var(--text-letter-spacing);
+    --kiw--label-allentown-text-wrap: balance;
+    --kiw--label-allentown-text-transform: none;
   }
 
-  .label-allentown__text {
+  .label-allentown {
+    display: inline-flex;
+    align-items: var(--kiw--label-allentown-align-items);
+    gap: var(--kiw--label-allentown-gap);
+    box-sizing: border-box;
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    min-inline-size: 0;
+    text-wrap: var(--kiw--label-allentown-text-wrap);
+    margin: 0;
+    padding: var(--kiw--label-allentown-padding-block) var(--kiw--label-allentown-padding-inline);
+    border: var(--kiw--label-allentown-border-width) solid var(--kiw--label-allentown-border-color);
+    color: var(--kiw--label-allentown-ink);
+    background: var(--kiw--label-allentown-background);
+    font-family: var(--kiw--label-allentown-font-family);
+    font-size: var(--kiw--label-allentown-font-size);
+    font-weight: var(--kiw--label-allentown-font-weight);
+    line-height: var(--kiw--label-allentown-line-height);
+    letter-spacing: var(--kiw--label-allentown-letter-spacing);
+    text-transform: var(--kiw--label-allentown-text-transform);
+  }
+
+  :where(.label-allentown__text) {
     min-inline-size: 0;
     white-space: normal;
     overflow-wrap: anywhere;
   }
 
-  .label-allentown__icon {
-    flex: none;
-  }
-
-  :global(:where(
-    [data-kinekt-section][data-kinekt-theme='dark'],
-    [data-kinekt-section][data-kinekt-theme='semi-dark']
-  )) .label-allentown {
-    --kinekt-label-allentown-background: color-mix(in srgb, var(--kinekt-component-ink) 4%, var(--kinekt-component-canvas));
+  :where(.label-allentown__icon) {
+    flex: 0 1 auto;
+    min-inline-size: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 </style>

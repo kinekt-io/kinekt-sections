@@ -1,4 +1,5 @@
 ---
+import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
 import '../../../styles/wireframe.css'
 import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
@@ -33,7 +34,7 @@ const {
 const methods = contactMethods.filter((method) => method.label && method.href)
 ---
 
-<section class="beta-support-contact-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="beta-support-contact-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('support-contact-allentown')}>
   <div class="beta-support-contact-allentown__container">
     <header class="beta-support-contact-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} />

@@ -1,4 +1,5 @@
 ---
+import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
 import '../../../styles/wireframe.css'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
@@ -23,7 +24,7 @@ const { id, theme = 'semi-light', headingLevel = 'h2', intro, comparison, cta } 
 const action = cta && ('cta' in cta ? cta.cta : cta)
 const iconFor = (status: Status) => fas[status === 'positive' ? 'faCircleCheck' : 'faCircleXmark']
 ---
-<section class="density-comparison-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="density-comparison-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('density-comparison-allentown')}>
   <div class="density-comparison-allentown__container">
     <header class="density-comparison-allentown__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
     <div class="density-comparison-allentown__table-wrap">
@@ -41,19 +42,32 @@ const iconFor = (status: Status) => fas[status === 'positive' ? 'faCircleCheck' 
   </div>
 </section>
 <style>
+  :global(:where(.density-comparison-allentown)) {
+    --kiw--density-comparison-allentown-container-gap: var(--section-space-xs);
+    --kiw--density-comparison-allentown-intro-width: var(--kinekt-component-reading-width);
+    --kiw--density-comparison-allentown-cell-space: var(--space-m);
+    --kiw--density-comparison-allentown-border-width: var(--border-width);
+    --kiw--density-comparison-allentown-line-color: var(--kinekt-component-line);
+    --kiw--density-comparison-allentown-heading-weight: var(--heading-font-weight);
+    --kiw--density-comparison-allentown-value-gap: var(--space-s);
+    --kiw--density-comparison-allentown-muted-color: var(--kinekt-component-muted);
+    --kiw--density-comparison-allentown-text-size: var(--text-s);
+    --kiw--density-comparison-allentown-action-color: var(--kinekt-component-action);
+  }
+
   .density-comparison-allentown {
-    & > .density-comparison-allentown__container { display: grid; gap: calc(var(--kinekt-wireframe-section-space-l) / 2); }
-    & .density-comparison-allentown__intro { justify-self: center; max-width: 46rem; text-align: center; }
+    & > .density-comparison-allentown__container { display: grid; gap: var(--kiw--density-comparison-allentown-container-gap); }
+    & .density-comparison-allentown__intro { justify-self: center; max-width: var(--kiw--density-comparison-allentown-intro-width); text-align: center; }
     & .density-comparison-allentown__table-wrap { overflow-x: auto; }
     & .density-comparison-allentown__table { width: 100%; min-width: 48rem; border: 0; border-collapse: collapse; background: transparent; text-align: left; }
-    & .density-comparison-allentown__table :is(th, td) { padding: 1rem; border: 0; border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line); background: transparent; vertical-align: middle; }
+    & .density-comparison-allentown__table :is(th, td) { padding: var(--kiw--density-comparison-allentown-cell-space); border: 0; border-bottom: var(--kiw--density-comparison-allentown-border-width) solid var(--kiw--density-comparison-allentown-line-color); background: transparent; vertical-align: middle; }
     & .density-comparison-allentown__table tbody tr:last-child :is(th, td) { border-bottom: 0; }
-    & .density-comparison-allentown__table thead th { font-weight: 600; }
-    & .density-comparison-allentown__table tbody th { width: 32%; font-weight: 500; }
-    & .density-comparison-allentown__value { display: inline-flex; align-items: center; gap: .625rem; color: var(--kinekt-component-muted); font-size: .875rem; }
-    & .density-comparison-allentown__value svg { flex: 0 0 auto; width: .875rem; height: .875rem; fill: currentColor; }
-    & .density-comparison-allentown__value--positive svg { color: var(--kinekt-component-action); }
-    & .density-comparison-allentown__value--negative svg { color: var(--kinekt-component-muted); }
+    & .density-comparison-allentown__table thead th { font-weight: var(--kiw--density-comparison-allentown-heading-weight); }
+    & .density-comparison-allentown__table tbody th { width: 32%; font-weight: var(--kiw--density-comparison-allentown-heading-weight); }
+    & .density-comparison-allentown__value { display: inline-flex; align-items: center; gap: var(--kiw--density-comparison-allentown-value-gap); color: var(--kiw--density-comparison-allentown-muted-color); font-size: var(--kiw--density-comparison-allentown-text-size); }
+    & .density-comparison-allentown__value svg { flex: 0 0 auto; width: var(--kiw--density-comparison-allentown-text-size); height: var(--kiw--density-comparison-allentown-text-size); fill: currentColor; }
+    & .density-comparison-allentown__value--positive svg { color: var(--kiw--density-comparison-allentown-action-color); }
+    & .density-comparison-allentown__value--negative svg { color: var(--kiw--density-comparison-allentown-muted-color); }
     & .density-comparison-allentown__action { display: flex; justify-content: center; }
     & .density-comparison-allentown__visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
   }

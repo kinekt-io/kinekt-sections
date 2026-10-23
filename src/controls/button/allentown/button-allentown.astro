@@ -11,3 +11,9 @@ const classes = ['button', `button--${style}`, className].filter(Boolean).join('
 ---
 
 <a class={classes} href={href}>{label}<slot /></a>
+
+<style>
+  :global(:where(.button)) {
+    --kiw--button-allentown-radius: var(--kiw--section-button-radius, var(--buttons-radius));
+  }
+</style>

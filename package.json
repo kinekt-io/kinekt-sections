@@ -530,7 +530,9 @@
       "default": "./dist/sections/use-cases/allentown/use-cases-allentown.types.js",
       "import": "./dist/sections/use-cases/allentown/use-cases-allentown.types.js",
       "types": "./dist/sections/use-cases/allentown/use-cases-allentown.types.d.ts"
-    }
+    },
+    "./styles/wireframe-tokens.css": "./src/styles/wireframe-tokens.css",
+    "./styles/wireframe.css": "./src/styles/wireframe.css"
   },
   "scripts": {
     "exports:generate": "node scripts/materialize-structural-sections.mjs && node scripts/generate-exports.mjs",

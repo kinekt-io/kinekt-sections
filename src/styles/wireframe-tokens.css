@@ -1,0 +1,206 @@
+/*
+ * Canonical public token defaults.
+ *
+ * A customer stylesheet can override these unprefixed custom properties on
+ * :root. Wireframe sections consume them through component-local aliases.
+ */
+@layer kinekt.tokens {
+:root {
+  /* Color palettes: deliberately neutral until a customer theme overrides them. */
+  --primary-ultra-light: #f5f5f5;
+  --primary-light: #dedede;
+  --primary-semi-light: #b8b8b8;
+  --primary: #8a8a8a;
+  --primary-semi-dark: #666666;
+  --primary-dark: #3d3d3d;
+  --primary-ultra-dark: #171717;
+
+  --accent-ultra-light: #f7f7f7;
+  --accent-light: #e5e5e5;
+  --accent-semi-light: #c9c9c9;
+  --accent: #969696;
+  --accent-semi-dark: #696969;
+  --accent-dark: #454545;
+  --accent-ultra-dark: #242424;
+
+  --neutral-ultra-light: #f7f7f7;
+  --neutral-light: #ededed;
+  --neutral-semi-light: #d9d9d9;
+  --neutral: #c4c4c4;
+  --neutral-semi-dark: #a6a6a6;
+  --neutral-dark: #737373;
+  --neutral-ultra-dark: #474747;
+
+  --white: #ffffff;
+  --base: var(--primary-ultra-dark);
+  --success: var(--accent-semi-dark);
+  --warning: var(--primary-semi-light);
+  --error: var(--primary-dark);
+  --info: var(--primary-semi-dark);
+
+  /* Fluid layout inputs. */
+  --desktop-content-width: 90rem;
+  --mobile-content-width: 24.375rem;
+  --desktop-section-gutter: 8.75rem;
+  --mobile-section-gutter: 1rem;
+  --desktop-base-spacing-value: 1.25rem;
+  --mobile-base-spacing-value: 1rem;
+  --desktop-spacing-scale-ratio: 1.25;
+  --mobile-spacing-scale-ratio: 1.25;
+  --desktop-section-spacing-multiplier: 3.2;
+  --mobile-section-spacing-multiplier: 3.2;
+  --desktop-input-height: 3rem;
+  --mobile-input-height: 2.75rem;
+
+  --desktop-website-width: calc(var(--desktop-content-width) + (var(--desktop-section-gutter) * 2));
+  --mobile-website-width: calc(var(--mobile-content-width) + (var(--mobile-section-gutter) * 2));
+  --fluid-min-width: var(--mobile-website-width);
+  --fluid-max-width: var(--desktop-website-width);
+  --fluid-progress: clamp(0, calc((100vw - var(--fluid-min-width)) / (var(--fluid-max-width) - var(--fluid-min-width))), 1);
+
+  --desktop-width-50: calc(var(--desktop-content-width) / 2);
+  --desktop-width-xs: calc(var(--desktop-content-width) * 0.1);
+  --desktop-width-s: calc(var(--desktop-content-width) * 0.2);
+  --desktop-width-m: calc(var(--desktop-content-width) * 0.4);
+  --desktop-width-l: calc(var(--desktop-content-width) * 0.6);
+  --desktop-width-xl: calc(var(--desktop-content-width) * 0.8);
+  --desktop-width-xxl: calc(var(--desktop-content-width) * 0.9);
+  --mobile-width-50: calc(var(--mobile-content-width) / 2);
+  --mobile-width-xs: calc(var(--mobile-content-width) * 0.1);
+  --mobile-width-s: calc(var(--mobile-content-width) * 0.2);
+  --mobile-width-m: calc(var(--mobile-content-width) * 0.4);
+  --mobile-width-l: calc(var(--mobile-content-width) * 0.6);
+  --mobile-width-xl: calc(var(--mobile-content-width) * 0.8);
+  --mobile-width-xxl: calc(var(--mobile-content-width) * 0.9);
+
+  --mobile-space-xxxs: calc(var(--mobile-base-spacing-value) * pow(var(--mobile-spacing-scale-ratio), -4));
+  --mobile-space-xxs: calc(var(--mobile-base-spacing-value) * pow(var(--mobile-spacing-scale-ratio), -3));
+  --mobile-space-xs: calc(var(--mobile-base-spacing-value) * pow(var(--mobile-spacing-scale-ratio), -2));
+  --mobile-space-s: calc(var(--mobile-base-spacing-value) * pow(var(--mobile-spacing-scale-ratio), -1));
+  --mobile-space-m: var(--mobile-base-spacing-value);
+  --mobile-space-l: calc(var(--mobile-base-spacing-value) * pow(var(--mobile-spacing-scale-ratio), 1));
+  --mobile-space-xl: calc(var(--mobile-base-spacing-value) * pow(var(--mobile-spacing-scale-ratio), 2));
+  --mobile-space-xxl: calc(var(--mobile-base-spacing-value) * pow(var(--mobile-spacing-scale-ratio), 3));
+  --desktop-space-xxxs: calc(var(--desktop-base-spacing-value) * pow(var(--desktop-spacing-scale-ratio), -4));
+  --desktop-space-xxs: calc(var(--desktop-base-spacing-value) * pow(var(--desktop-spacing-scale-ratio), -3));
+  --desktop-space-xs: calc(var(--desktop-base-spacing-value) * pow(var(--desktop-spacing-scale-ratio), -2));
+  --desktop-space-s: calc(var(--desktop-base-spacing-value) * pow(var(--desktop-spacing-scale-ratio), -1));
+  --desktop-space-m: var(--desktop-base-spacing-value);
+  --desktop-space-l: calc(var(--desktop-base-spacing-value) * pow(var(--desktop-spacing-scale-ratio), 1));
+  --desktop-space-xl: calc(var(--desktop-base-spacing-value) * pow(var(--desktop-spacing-scale-ratio), 2));
+  --desktop-space-xxl: calc(var(--desktop-base-spacing-value) * pow(var(--desktop-spacing-scale-ratio), 3));
+
+  --mobile-section-space-xxs: calc(var(--mobile-section-spacing-multiplier) * var(--mobile-space-xxs));
+  --mobile-section-space-xs: calc(var(--mobile-section-spacing-multiplier) * var(--mobile-space-xs));
+  --mobile-section-space-s: calc(var(--mobile-section-spacing-multiplier) * var(--mobile-space-s));
+  --mobile-section-space-m: calc(var(--mobile-section-spacing-multiplier) * var(--mobile-space-m));
+  --mobile-section-space-l: calc(var(--mobile-section-spacing-multiplier) * var(--mobile-space-l));
+  --mobile-section-space-xl: calc(var(--mobile-section-spacing-multiplier) * var(--mobile-space-xl));
+  --mobile-section-space-xxl: calc(var(--mobile-section-spacing-multiplier) * var(--mobile-space-xxl));
+  --desktop-section-space-xxs: calc(var(--desktop-section-spacing-multiplier) * var(--desktop-space-xxs));
+  --desktop-section-space-xs: calc(var(--desktop-section-spacing-multiplier) * var(--desktop-space-xs));
+  --desktop-section-space-s: calc(var(--desktop-section-spacing-multiplier) * var(--desktop-space-s));
+  --desktop-section-space-m: calc(var(--desktop-section-spacing-multiplier) * var(--desktop-space-m));
+  --desktop-section-space-l: calc(var(--desktop-section-spacing-multiplier) * var(--desktop-space-l));
+  --desktop-section-space-xl: calc(var(--desktop-section-spacing-multiplier) * var(--desktop-space-xl));
+  --desktop-section-space-xxl: calc(var(--desktop-section-spacing-multiplier) * var(--desktop-space-xxl));
+  --desktop-container-gap: var(--desktop-space-xl);
+  --mobile-container-gap: var(--mobile-space-xl);
+  --desktop-content-gap: var(--desktop-space-m);
+  --mobile-content-gap: var(--mobile-space-m);
+  --desktop-grid-gap: var(--desktop-space-m);
+  --mobile-grid-gap: var(--mobile-space-m);
+
+  --content-width: calc(var(--mobile-content-width) + (var(--desktop-content-width) - var(--mobile-content-width)) * var(--fluid-progress));
+  --website-width: calc(var(--mobile-website-width) + (var(--desktop-website-width) - var(--mobile-website-width)) * var(--fluid-progress));
+  --section-gutter: calc(var(--mobile-section-gutter) + (var(--desktop-section-gutter) - var(--mobile-section-gutter)) * var(--fluid-progress));
+  --width-50: calc(var(--mobile-width-50) + (var(--desktop-width-50) - var(--mobile-width-50)) * var(--fluid-progress));
+  --width-xs: calc(var(--mobile-width-xs) + (var(--desktop-width-xs) - var(--mobile-width-xs)) * var(--fluid-progress));
+  --width-s: calc(var(--mobile-width-s) + (var(--desktop-width-s) - var(--mobile-width-s)) * var(--fluid-progress));
+  --width-m: calc(var(--mobile-width-m) + (var(--desktop-width-m) - var(--mobile-width-m)) * var(--fluid-progress));
+  --width-l: calc(var(--mobile-width-l) + (var(--desktop-width-l) - var(--mobile-width-l)) * var(--fluid-progress));
+  --width-xl: calc(var(--mobile-width-xl) + (var(--desktop-width-xl) - var(--mobile-width-xl)) * var(--fluid-progress));
+  --width-xxl: calc(var(--mobile-width-xxl) + (var(--desktop-width-xxl) - var(--mobile-width-xxl)) * var(--fluid-progress));
+  --space-xxxs: calc(var(--mobile-space-xxxs) + (var(--desktop-space-xxxs) - var(--mobile-space-xxxs)) * var(--fluid-progress));
+  --space-xxs: calc(var(--mobile-space-xxs) + (var(--desktop-space-xxs) - var(--mobile-space-xxs)) * var(--fluid-progress));
+  --space-xs: calc(var(--mobile-space-xs) + (var(--desktop-space-xs) - var(--mobile-space-xs)) * var(--fluid-progress));
+  --space-s: calc(var(--mobile-space-s) + (var(--desktop-space-s) - var(--mobile-space-s)) * var(--fluid-progress));
+  --space-m: calc(var(--mobile-space-m) + (var(--desktop-space-m) - var(--mobile-space-m)) * var(--fluid-progress));
+  --space-l: calc(var(--mobile-space-l) + (var(--desktop-space-l) - var(--mobile-space-l)) * var(--fluid-progress));
+  --space-xl: calc(var(--mobile-space-xl) + (var(--desktop-space-xl) - var(--mobile-space-xl)) * var(--fluid-progress));
+  --space-xxl: calc(var(--mobile-space-xxl) + (var(--desktop-space-xxl) - var(--mobile-space-xxl)) * var(--fluid-progress));
+  --section-space-xxs: calc(var(--mobile-section-space-xxs) + (var(--desktop-section-space-xxs) - var(--mobile-section-space-xxs)) * var(--fluid-progress));
+  --section-space-xs: calc(var(--mobile-section-space-xs) + (var(--desktop-section-space-xs) - var(--mobile-section-space-xs)) * var(--fluid-progress));
+  --section-space-s: calc(var(--mobile-section-space-s) + (var(--desktop-section-space-s) - var(--mobile-section-space-s)) * var(--fluid-progress));
+  --section-space-m: calc(var(--mobile-section-space-m) + (var(--desktop-section-space-m) - var(--mobile-section-space-m)) * var(--fluid-progress));
+  --section-space-l: calc(var(--mobile-section-space-l) + (var(--desktop-section-space-l) - var(--mobile-section-space-l)) * var(--fluid-progress));
+  --section-space-xl: calc(var(--mobile-section-space-xl) + (var(--desktop-section-space-xl) - var(--mobile-section-space-xl)) * var(--fluid-progress));
+  --section-space-xxl: calc(var(--mobile-section-space-xxl) + (var(--desktop-section-space-xxl) - var(--mobile-section-space-xxl)) * var(--fluid-progress));
+  --container-gap: calc(var(--mobile-container-gap) + (var(--desktop-container-gap) - var(--mobile-container-gap)) * var(--fluid-progress));
+  --content-gap: calc(var(--mobile-content-gap) + (var(--desktop-content-gap) - var(--mobile-content-gap)) * var(--fluid-progress));
+  --grid-gap: calc(var(--mobile-grid-gap) + (var(--desktop-grid-gap) - var(--mobile-grid-gap)) * var(--fluid-progress));
+  --input-height: calc(var(--mobile-input-height) + (var(--desktop-input-height) - var(--mobile-input-height)) * var(--fluid-progress));
+
+  /* Fluid typography inputs and outputs. */
+  --heading-font-family: system-ui, sans-serif;
+  --heading-font-weight: 500;
+  --heading-letter-spacing: 0;
+  --text-font-family: system-ui, sans-serif;
+  --text-font-weight: 400;
+  --text-letter-spacing: 0;
+  --mono-font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --heading-line-height: 0.97;
+  --text-line-height: 1.5;
+
+  --mobile-h1: 2.75rem;
+  --desktop-h1: 3.5rem;
+  --mobile-h2: 2.25rem;
+  --desktop-h2: 3rem;
+  --mobile-h3: 1.75rem;
+  --desktop-h3: 2rem;
+  --mobile-h4: 1.625rem;
+  --desktop-h4: 1.75rem;
+  --mobile-h5: 1.25rem;
+  --desktop-h5: 1.5rem;
+  --mobile-h6: 1.125rem;
+  --desktop-h6: 1.25rem;
+  --mobile-text-xs: 0.75rem;
+  --desktop-text-xs: 0.75rem;
+  --mobile-text-s: 0.875rem;
+  --desktop-text-s: 0.875rem;
+  --mobile-text-m: 1rem;
+  --desktop-text-m: 1rem;
+  --mobile-text-l: 1.125rem;
+  --desktop-text-l: 1.125rem;
+  --mobile-text-xl: 1.25rem;
+  --desktop-text-xl: 1.25rem;
+  --mobile-text-xxl: 1.375rem;
+  --desktop-text-xxl: 1.375rem;
+  --h1: calc(var(--mobile-h1) + (var(--desktop-h1) - var(--mobile-h1)) * var(--fluid-progress));
+  --h2: calc(var(--mobile-h2) + (var(--desktop-h2) - var(--mobile-h2)) * var(--fluid-progress));
+  --h3: calc(var(--mobile-h3) + (var(--desktop-h3) - var(--mobile-h3)) * var(--fluid-progress));
+  --h4: calc(var(--mobile-h4) + (var(--desktop-h4) - var(--mobile-h4)) * var(--fluid-progress));
+  --h5: calc(var(--mobile-h5) + (var(--desktop-h5) - var(--mobile-h5)) * var(--fluid-progress));
+  --h6: calc(var(--mobile-h6) + (var(--desktop-h6) - var(--mobile-h6)) * var(--fluid-progress));
+  --text-xs: calc(var(--mobile-text-xs) + (var(--desktop-text-xs) - var(--mobile-text-xs)) * var(--fluid-progress));
+  --text-s: calc(var(--mobile-text-s) + (var(--desktop-text-s) - var(--mobile-text-s)) * var(--fluid-progress));
+  --text-m: calc(var(--mobile-text-m) + (var(--desktop-text-m) - var(--mobile-text-m)) * var(--fluid-progress));
+  --text-l: calc(var(--mobile-text-l) + (var(--desktop-text-l) - var(--mobile-text-l)) * var(--fluid-progress));
+  --text-xl: calc(var(--mobile-text-xl) + (var(--desktop-text-xl) - var(--mobile-text-xl)) * var(--fluid-progress));
+  --text-xxl: calc(var(--mobile-text-xxl) + (var(--desktop-text-xxl) - var(--mobile-text-xxl)) * var(--fluid-progress));
+
+  --border-width: 1px;
+  --radius-none: 0;
+  --radius-xs: 0.125rem;
+  --radius-s: 0.25rem;
+  --radius-m: 0.5rem;
+  --radius-l: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-xxl: 2rem;
+  --buttons-has-radius: 0;
+  --buttons-radius: var(--radius-m);
+  --media-filter: grayscale(1);
+  --motion-duration: 200ms;
+  --motion-easing: ease;
+}
+}

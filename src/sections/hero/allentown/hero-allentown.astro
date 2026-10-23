@@ -1,4 +1,5 @@
 ---
+import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
 import '../../../styles/wireframe.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
@@ -24,7 +25,7 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 const primaryIcon = ctas?.primary?.icon ? ctaIconPaths[ctas.primary.icon] : undefined
 const secondaryIcon = ctas?.secondary?.icon ? ctaIconPaths[ctas.secondary.icon] : undefined
 ---
-<section class="hero-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="hero-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('hero-allentown')}>
   <div class="hero-allentown__container">
     <header class="hero-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />

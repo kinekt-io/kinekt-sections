@@ -1,5 +1,7 @@
 ---
+import '@package-src/styles/wireframe-tokens.css'
 import components from '../../../generated/components.json'
+
 
 const previewModules = import.meta.glob('@package-src/**/*.preview.astro', { eager: true })
 
@@ -22,11 +24,17 @@ const Preview = (previewModule as { default: any }).default
     <meta name="viewport" content="width=device-width" />
     <title>{component.title} preview</title>
   </head>
-  <body>
+  <body class="component-embed-page">
     <Preview />
   </body>
 </html>
 
-<style>
-  body { margin: 0; }
+<style is:global>
+  :where(.component-embed-page) {
+    --kiw--component-embed-canvas: var(--white);
+    --kiw--component-embed-ink: var(--base);
+    --kiw--component-embed-font: var(--text-font-family);
+  }
+
+  .component-embed-page { margin: 0; color: var(--kiw--component-embed-ink); background: var(--kiw--component-embed-canvas); font-family: var(--kiw--component-embed-font); }
 </style>

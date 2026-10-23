@@ -1,4 +1,5 @@
 ---
+import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
 import '../../../styles/wireframe.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
@@ -21,7 +22,7 @@ interface Props {
 
 const { id, theme = 'light', intro, metrics, media, callout, headingLevel = 'h2' } = Astro.props as Props
 ---
-<section class="proof-metrics-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="proof-metrics-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('proof-metrics-allentown')}>
   <div class="proof-metrics-allentown__container">
     <div class="proof-metrics-allentown__intro-and-metrics">
       <header class="proof-metrics-allentown__intro">

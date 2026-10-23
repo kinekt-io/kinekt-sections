@@ -1,0 +1,56 @@
+/** @internal Shared dynamic bridge for section renderer root styles. */
+const sectionTokenRoles = [
+  ['site-width', 'website-width'],
+  ['content-width', 'content-width'],
+  ['reading-width', 'width-m'],
+  ['inline-space', 'section-gutter'],
+  ['block-space', 'section-space-l'],
+  ['gap', 'content-gap'],
+  ['radius', 'radius-none'],
+  ['border-width', 'border-width'],
+  ['media-filter', 'media-filter'],
+  ['intro-accent-gap', 'space-xxs'],
+  ['intro-description-gap', 'space-m'],
+  ['heading-1-size', 'h1'],
+  ['heading-2-size', 'h2'],
+  ['heading-3-size', 'h3'],
+  ['heading-4-size', 'h4'],
+  ['heading-5-size', 'h5'],
+  ['heading-6-size', 'h6'],
+  ['heading-font-family', 'heading-font-family'],
+  ['heading-font-weight', 'heading-font-weight'],
+  ['heading-line-height', 'heading-line-height'],
+  ['heading-letter-spacing', 'heading-letter-spacing'],
+  ['text-font-family', 'text-font-family'],
+  ['text-font-weight', 'text-font-weight'],
+  ['text-line-height', 'text-line-height'],
+  ['text-letter-spacing', 'text-letter-spacing'],
+  ['mono-font-family', 'mono-font-family'],
+  ['text-xs-size', 'text-xs'],
+  ['text-s-size', 'text-s'],
+  ['text-m-size', 'text-m'],
+  ['text-l-size', 'text-l'],
+  ['text-xl-size', 'text-xl'],
+  ['text-xxl-size', 'text-xxl'],
+  ['carousel-gap', 'content-gap'],
+  ['actions-gap', 'space-s'],
+  ['actions-margin', 'space-xl'],
+  ['button-height', 'input-height'],
+  ['button-padding-block', 'space-s'],
+  ['button-padding-inline', 'space-l'],
+  ['button-radius', 'buttons-radius'],
+  ['input-height', 'input-height'],
+  ['editorial-gap', 'section-space-xxl'],
+  ['card-padding', 'space-l'],
+  ['header-to-content-gap', 'section-space-s'],
+  ['table-offset', 'space-xl'],
+] as const
+
+const sectionColorRoles = ['canvas', 'surface', 'ink', 'muted', 'line', 'action', 'action-text'] as const
+
+export function sectionTokenBridgeStyle(block: string): string {
+  return [
+    ...sectionTokenRoles.map(([role, token]) => `--kiw--section-${role}: var(--kiw--${block}-${role}, var(--${token}))`),
+    ...sectionColorRoles.map((role) => `--kiw--section-${role}: var(--kiw--${block}-${role})`),
+  ].join('; ')
+}

@@ -1,6 +1,8 @@
 ---
+import '@kinekt-io/components/styles/wireframe-tokens.css'
 import Hero from '@kinekt-io/components/sections/hero-allentown.astro'
 import { hero } from '../data/hero'
+
 ---
 <!doctype html>
 <html lang="en">
@@ -9,12 +11,15 @@ import { hero } from '../data/hero'
     <meta name="viewport" content="width=device-width" />
     <meta name="robots" content="noindex" />
     <title>Kinekt hero package preview</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600&display=swap" />
   </head>
-  <body><main><Hero {...hero} /></main></body>
+  <body class="astro-preview-page"><main><Hero {...hero} /></main></body>
 </html>
 <style is:global>
-  @font-face { font-family: Brockmann; src: url('https://kinekt.io/wp-content/uploads/brockmann-medium-webfont.woff2') format('woff2'); font-weight: 500; font-display: swap; }
-  @font-face { font-family: Brockmann; src: url('https://kinekt.io/wp-content/uploads/brockmann-semibold-webfont.woff2') format('woff2'); font-weight: 600; font-display: swap; }
-  body { margin: 0; background: white; }
+  :where(.astro-preview-page) {
+    --kiw--astro-preview-canvas: var(--white);
+    --kiw--astro-preview-ink: var(--base);
+    --kiw--astro-preview-font: var(--text-font-family);
+  }
+
+  .astro-preview-page { margin: 0; color: var(--kiw--astro-preview-ink); background: var(--kiw--astro-preview-canvas); font-family: var(--kiw--astro-preview-font); }
 </style>

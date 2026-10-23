@@ -15,6 +15,7 @@ if (installed.version !== expected.version || JSON.stringify(installed.exports) 
 const astroImports = []
 const payloadImports = []
 const typeImports = []
+const cssImports = []
 for (const [key, target] of Object.entries(installed.exports)) {
   const specifier = `${installed.name}${key.slice(1)}`
   for (const file of typeof target === 'string' ? [target] : Object.values(target)) {
@@ -23,6 +24,7 @@ for (const [key, target] of Object.entries(installed.exports)) {
   if (key.endsWith('.astro')) astroImports.push(specifier)
   else if (key.endsWith('.payload')) payloadImports.push(specifier)
   else if (key.endsWith('.types')) typeImports.push(specifier)
+  else if (key.endsWith('.css')) cssImports.push(specifier)
   else throw new Error(`Unexpected generated export: ${key}`)
 }
 
@@ -39,7 +41,10 @@ execFileSync(process.execPath, ['--input-type=module', '-e', `
 
 const page = path.join(consumer, 'src/pages/index.astro')
 await mkdir(path.dirname(page), { recursive: true })
-const imports = astroImports.map((name, index) => `import Component${index} from ${JSON.stringify(name)}`).join('\n')
+const imports = [
+  ...cssImports.map((name) => `import ${JSON.stringify(name)}`),
+  ...astroImports.map((name, index) => `import Component${index} from ${JSON.stringify(name)}`),
+].join('\n')
 const components = astroImports.map((_, index) => `Component${index}`).join(', ')
 // Props belong in component examples. Here every installed Astro entrypoint is compiled.
 await writeFile(page, `---\n${imports}\nconst components = [${components}]\n---\n<p>Verified {components.length} Astro component imports</p>\n`, { flag: 'wx' })

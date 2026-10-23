@@ -1,4 +1,5 @@
 ---
+import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
 import '../../../styles/wireframe.css'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import type { MediaFeatureListContent } from './media-feature-list-allentown.types.js'
@@ -11,7 +12,7 @@ interface Props extends MediaFeatureListContent {
 const { theme, direction, intro, label, media, features, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 const Heading = headingLevel
 ---
-<section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-section data-kinekt-theme={theme} data-kinekt-direction={direction}>
+<section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-section data-kinekt-theme={theme} data-kinekt-direction={direction} style={sectionTokenBridgeStyle('media-feature-list-allentown')}>
   <div class="media-feature-list__container">
     <header class="media-feature-list__header">
       <div class="media-feature-list__heading-stack">

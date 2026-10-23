@@ -1,4 +1,5 @@
 ---
+import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
 import '../../../styles/wireframe.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import Label from '../../../atoms/label/allentown/label-allentown.astro'
@@ -12,7 +13,7 @@ const toc = items.map((item: any, index: number) => ({ id: `${sectionId}-item-${
 const description = (value: unknown) => typeof value === 'string' ? value : (value as { html?: string })?.html
 const action = (value: any) => value?.cta ?? value
 ---
-<section class="beta-solution-list-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="beta-solution-list-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('solution-list-allentown')}>
   <div class="beta-solution-list-allentown__container">
     <header class="beta-solution-list-allentown__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
     <nav class="beta-solution-list-allentown__toc" aria-label="Solutions in this section"><ul>{toc.map((item: any) => <li><a href={`#${item.id}`}>{item.label}</a></li>)}</ul></nav>
@@ -39,24 +40,44 @@ const action = (value: any) => value?.cta ?? value
   {callout && <div class="beta-solution-list-allentown__callout-container"><Callout class="beta-solution-list-allentown__callout" callout={callout} /></div>}
 </section>
 <style>
+  :global(:where(.beta-solution-list-allentown)) {
+    --kiw--solution-list-allentown-accent-gap: var(--space-xs);
+    --kiw--solution-list-allentown-heading-gap: var(--space-m);
+    --kiw--solution-list-allentown-label-space: var(--space-l);
+    --kiw--solution-list-allentown-container-gap: var(--space-xl);
+    --kiw--solution-list-allentown-content-width: var(--content-width);
+    --kiw--solution-list-allentown-content-gap: var(--content-gap);
+    --kiw--solution-list-allentown-inline-space: var(--section-gutter);
+    --kiw--solution-list-allentown-toc-gap: var(--space-xs);
+    --kiw--solution-list-allentown-toc-block-space: var(--space-xs);
+    --kiw--solution-list-allentown-toc-inline-space: var(--space-s);
+    --kiw--solution-list-allentown-border-width: var(--border-width);
+    --kiw--solution-list-allentown-line-color: var(--kinekt-component-line);
+    --kiw--solution-list-allentown-ink-color: var(--kinekt-component-ink);
+    --kiw--solution-list-allentown-surface-color: var(--kinekt-component-surface);
+    --kiw--solution-list-allentown-item-gap: var(--space-s);
+    --kiw--solution-list-allentown-media-filter: var(--media-filter);
+    --kiw--solution-list-allentown-column-gap: var(--section-space-s);
+  }
+
   .beta-solution-list-allentown {
     --kinekt-section-card-media-ratio: 1 / 1;
-    --solution-list-accent-to-heading: var(--kinekt-wireframe-space-xs);
-    --solution-list-heading-group-to-label: var(--kinekt-wireframe-space-m);
-    --solution-list-label-to-description: var(--kinekt-wireframe-space-l);
-    --solution-list-body-to-action: var(--kinekt-wireframe-space-l);
+    --solution-list-accent-to-heading: var(--kiw--solution-list-allentown-accent-gap);
+    --solution-list-heading-group-to-label: var(--kiw--solution-list-allentown-heading-gap);
+    --solution-list-label-to-description: var(--kiw--solution-list-allentown-label-space);
+    --solution-list-body-to-action: var(--kiw--solution-list-allentown-label-space);
 
     & > .beta-solution-list-allentown__container {
-      gap: var(--kinekt-wireframe-space-xl);
+      gap: var(--kiw--solution-list-allentown-container-gap);
     }
 
     & > .beta-solution-list-allentown__callout-container {
       display: grid;
       width: 100%;
-      max-width: var(--kinekt-component-content-width);
-      margin-block-start: var(--kinekt-component-gap);
+      max-width: var(--kiw--solution-list-allentown-content-width);
+      margin-block-start: var(--kiw--solution-list-allentown-content-gap);
       margin-inline: auto;
-      padding-inline: var(--kinekt-component-inline-space);
+      padding-inline: var(--kiw--solution-list-allentown-inline-space);
     }
 
     & .beta-solution-list-allentown__content,
@@ -98,26 +119,26 @@ const action = (value: any) => value?.cta ?? value
       overflow-x: auto;
       ul {
         display: flex;
-        gap: var(--kinekt-wireframe-space-xs);
+        gap: var(--kiw--solution-list-allentown-toc-gap);
         width: max-content;
         min-width: 100%;
         margin: 0;
-        padding-inline: var(--kinekt-component-inline-space);
+        padding-inline: var(--kiw--solution-list-allentown-inline-space);
         list-style: none;
       }
 
       a {
         display: block;
-        padding: 0.625rem 0.75rem;
-        border: 1px solid var(--kinekt-component-line);
-        color: var(--kinekt-component-line);
+        padding: var(--kiw--solution-list-allentown-toc-block-space) var(--kiw--solution-list-allentown-toc-inline-space);
+        border: var(--kiw--solution-list-allentown-border-width) solid var(--kiw--solution-list-allentown-line-color);
+        color: var(--kiw--solution-list-allentown-line-color);
         text-decoration: none;
         white-space: nowrap;
 
         &:focus-visible,
         &:hover {
-          box-shadow: inset 0 0 0 2px var(--kinekt-component-ink);
-          background: var(--kinekt-component-surface);
+          box-shadow: inset 0 0 0 calc(var(--kiw--solution-list-allentown-border-width) * 2) var(--kiw--solution-list-allentown-ink-color);
+          background: var(--kiw--solution-list-allentown-surface-color);
         }
       }
     }
@@ -133,7 +154,7 @@ const action = (value: any) => value?.cta ?? value
       }
       article {
         display: grid;
-        row-gap: var(--kinekt-wireframe-space-s);
+        row-gap: var(--kiw--solution-list-allentown-item-gap);
         column-gap: 0;
       }
     }
@@ -147,7 +168,7 @@ const action = (value: any) => value?.cta ?? value
     & .beta-solution-list-allentown__image {
       aspect-ratio: 1 / 1;
       object-fit: cover;
-      filter: var(--kinekt-component-media-filter);
+      filter: var(--kiw--solution-list-allentown-media-filter);
     }
 
     @media (min-width: 50rem) {
@@ -157,7 +178,7 @@ const action = (value: any) => value?.cta ?? value
 
       & .beta-solution-list-allentown__items article {
         grid-template-columns: minmax(0, 0.45fr) minmax(0, 1.55fr);
-        column-gap: clamp(1.5rem, 3vw, 3rem);
+        column-gap: var(--kiw--solution-list-allentown-column-gap);
       }
     }
   }

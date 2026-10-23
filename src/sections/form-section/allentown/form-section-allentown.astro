@@ -1,4 +1,5 @@
 ---
+import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
 import '../../../styles/wireframe.css'
 import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
@@ -26,7 +27,7 @@ interface Props {
 const { id, theme = 'semi-dark', intro, image, imagePosition = 'left', contactHeading, contactMethods = [], headingLevel = 'h2' } = Astro.props as Props
 const methods = contactMethods.filter((method) => method.label && method.href)
 ---
-<section class="form-section-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-image-position={imagePosition} data-form-variation="compact">
+<section class="form-section-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-image-position={imagePosition} data-form-variation="compact" style={sectionTokenBridgeStyle('form-section-allentown')}>
   <div class="form-section-allentown__container">
     <div class="form-section-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
@@ -66,27 +67,49 @@ const methods = contactMethods.filter((method) => method.label && method.href)
   </div>
 </section>
 <style>
+  :global(:where(.form-section-allentown)) {
+    --kiw--form-section-allentown-container-gap: var(--section-space-l);
+    --kiw--form-section-allentown-content-gap: var(--space-l);
+    --kiw--form-section-allentown-embed-gap: var(--space-xs);
+    --kiw--form-section-allentown-expanded-gap: var(--space-m);
+    --kiw--form-section-allentown-label-font-size: var(--text-s);
+    --kiw--form-section-allentown-label-font-weight: var(--heading-font-weight);
+    --kiw--form-section-allentown-row-gap: var(--space-s);
+    --kiw--form-section-allentown-input-height: var(--input-height);
+    --kiw--form-section-allentown-border-width: var(--border-width);
+    --kiw--form-section-allentown-line-color: var(--kinekt-component-line);
+    --kiw--form-section-allentown-radius: var(--radius-none);
+    --kiw--form-section-allentown-input-inline-space: var(--space-s);
+    --kiw--form-section-allentown-canvas-color: var(--kinekt-component-canvas);
+    --kiw--form-section-allentown-ink-color: var(--kinekt-component-ink);
+    --kiw--form-section-allentown-button-gap: var(--space-xs);
+    --kiw--form-section-allentown-button-inline-space: var(--space-m);
+    --kiw--form-section-allentown-action-color: var(--kinekt-component-action);
+    --kiw--form-section-allentown-contacts-gap: var(--space-s);
+    --kiw--form-section-allentown-column-gap: var(--section-space-xl);
+  }
+
   .form-section-allentown {
-    & > .form-section-allentown__container { gap: var(--kinekt-wireframe-section-space-l); }
-    & .form-section-allentown__content { display: grid; align-content: center; gap: var(--kinekt-wireframe-space-l); }
-    & .form-section-allentown__form-embed { display: grid; gap: .5rem; }
-    & .form-section-allentown__form-expanded { display: none; gap: 1rem; }
+    & > .form-section-allentown__container { gap: var(--kiw--form-section-allentown-container-gap); }
+    & .form-section-allentown__content { display: grid; align-content: center; gap: var(--kiw--form-section-allentown-content-gap); }
+    & .form-section-allentown__form-embed { display: grid; gap: var(--kiw--form-section-allentown-embed-gap); }
+    & .form-section-allentown__form-expanded { display: none; gap: var(--kiw--form-section-allentown-expanded-gap); }
     &[data-form-variation='expanded'] .form-section-allentown__form-compact { display: none; }
     &[data-form-variation='expanded'] .form-section-allentown__form-expanded { display: grid; }
-    & .form-section-allentown__email-label, & .form-section-allentown__contacts-heading, & .form-section-allentown__form-expanded label { display: grid; gap: .5rem; margin: 0; font-size: .8125rem; font-weight: 700; }
+    & .form-section-allentown__email-label, & .form-section-allentown__contacts-heading, & .form-section-allentown__form-expanded label { display: grid; gap: var(--kiw--form-section-allentown-embed-gap); margin: 0; font-size: var(--kiw--form-section-allentown-label-font-size); font-weight: var(--kiw--form-section-allentown-label-font-weight); }
     & .form-section-allentown__email-row, & .form-section-allentown__form-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-    & .form-section-allentown__form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
-    & .form-section-allentown__form-embed :is(input, select, button) { min-height: 3rem; border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: 0; font: inherit; }
-    & .form-section-allentown__form-embed :is(input, select) { min-width: 0; padding: 0 .875rem; background: color-mix(in srgb, var(--kinekt-component-canvas) 90%, var(--kinekt-component-ink)); color: var(--kinekt-component-ink); }
-    & .form-section-allentown__form-embed button { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; width: max-content; padding: 0 1rem; border-color: var(--kinekt-component-action); background: var(--kinekt-component-action); color: var(--kinekt-component-canvas); cursor: pointer; }
-    & .form-section-allentown__contacts { display: grid; gap: .75rem; font-style: normal; }
-    & .form-section-allentown__contacts ul { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
-    & .form-section-allentown__contacts a { display: inline-flex; align-items: center; gap: .5rem; color: inherit; text-decoration: none; }
+    & .form-section-allentown__form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--kiw--form-section-allentown-row-gap); }
+    & .form-section-allentown__form-embed :is(input, select, button) { min-height: var(--kiw--form-section-allentown-input-height); border: var(--kiw--form-section-allentown-border-width) solid var(--kiw--form-section-allentown-line-color); border-radius: var(--kiw--form-section-allentown-radius); font: inherit; }
+    & .form-section-allentown__form-embed :is(input, select) { min-width: 0; padding: 0 var(--kiw--form-section-allentown-input-inline-space); background: color-mix(in srgb, var(--kiw--form-section-allentown-canvas-color) 90%, var(--kiw--form-section-allentown-ink-color)); color: var(--kiw--form-section-allentown-ink-color); }
+    & .form-section-allentown__form-embed button { display: inline-flex; align-items: center; justify-content: center; gap: var(--kiw--form-section-allentown-button-gap); width: max-content; padding: 0 var(--kiw--form-section-allentown-button-inline-space); border-color: var(--kiw--form-section-allentown-action-color); background: var(--kiw--form-section-allentown-action-color); color: var(--kiw--form-section-allentown-canvas-color); cursor: pointer; }
+    & .form-section-allentown__contacts { display: grid; gap: var(--kiw--form-section-allentown-contacts-gap); font-style: normal; }
+    & .form-section-allentown__contacts ul { display: grid; gap: var(--kiw--form-section-allentown-embed-gap); margin: 0; padding: 0; list-style: none; }
+    & .form-section-allentown__contacts a { display: inline-flex; align-items: center; gap: var(--kiw--form-section-allentown-embed-gap); color: inherit; text-decoration: none; }
     & .form-section-allentown__media { display: block; min-width: 0; }
     & .form-section-allentown__media img { aspect-ratio: 1 / 1; object-fit: cover; }
 
     @media (min-width: 50rem) {
-      & > .form-section-allentown__container { align-items: center; column-gap: var(--kinekt-wireframe-section-space-xl); }
+      & > .form-section-allentown__container { align-items: center; column-gap: var(--kiw--form-section-allentown-column-gap); }
       &[data-image-position='left'] > .form-section-allentown__container { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
       &[data-image-position='left'] .form-section-allentown__media { grid-column: 1; grid-row: 1; }
       &[data-image-position='left'] .form-section-allentown__content { grid-column: 2; grid-row: 1; }

@@ -3,6 +3,7 @@ import Button from '../controls/button/allentown/button-allentown.astro'
 import '../styles/wireframe.css'
 import SectionIntro from '../primitives/section-intro/section-intro.astro'
 import StructuralContent from './structural-content.astro'
+import { sectionTokenBridgeStyle } from './section-token-bridge.js'
 
 interface Cta {
   label?: string
@@ -65,8 +66,9 @@ const theme = content.theme === 'dark' || content.theme === 'semi-dark' || conte
 const actions = collectCtas(ctas)
 const caseStudyAction = block.includes('case-studies') ? collectCtas(content.cta)[0] : undefined
 const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta'] : ['theme', 'intro', 'ctas', 'media']
+const sectionStyle = sectionTokenBridgeStyle(block.startsWith('beta-') ? block.slice(5) : block)
 ---
-<section class={block} id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class={block} id={id} data-kinekt-section data-kinekt-theme={theme} style={sectionStyle}>
   <div class={`${block}__container`}>
     {(intro || actions.length > 0 || caseStudyAction) && (
       <header class={`${block}__header`}>
