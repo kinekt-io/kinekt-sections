@@ -1,5 +1,11 @@
 # Changelog
 
+## 26.10.2-beta.22 — 2026-10-23
+
+### Fixed
+
+- Default Callout CTA Group links to URL so existing URL-backed CTA records remain valid when the polymorphic content selector is introduced.
+
 ## 26.10.2-beta.21 — 2026-10-23
 
 ### Changed
