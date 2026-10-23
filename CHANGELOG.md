@@ -1,5 +1,11 @@
 # Changelog
 
+## 26.10.2-beta.18 — 2026-10-22
+
+### Fixed
+
+- Form Section falls back to a governed JSON form reference when a consumer has no registered `forms` collection, preventing Payload configuration failure while the HubSpot integration remains external.
+
 ## 26.10.2-beta.17 — 2026-10-22
 
 ### Added

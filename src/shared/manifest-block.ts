@@ -36,7 +36,7 @@ const ctaFields = (required: boolean) => [
   { name: 'icon', type: 'select' as const, options: [{ label: 'Arrow right', value: 'arrow-right' }, { label: 'Arrow down', value: 'arrow-down' }] },
 ]
 
-function fieldFor(name: string, field: ManifestField, options: Required<CreateManifestBlockOptions>) {
+function fieldFor(name: string, field: ManifestField, options: CreateManifestBlockOptions & { mediaCollection: CollectionSlug }) {
   const common = { name, required: field.required, ...localized(field) }
 
   switch (field.kind) {
@@ -51,15 +51,17 @@ function fieldFor(name: string, field: ManifestField, options: Required<CreateMa
     case 'mediaList': return { ...common, type: 'array' as const, minRows: field.minItems, fields: [{ name: 'media', type: 'upload' as const, relationTo: options.mediaCollection, required: true }] }
     case 'cta': return { ...common, type: 'group' as const, fields: ctaFields(true) }
     case 'ctaGroup': return { ...common, type: 'group' as const, fields: ['primary', 'secondary'].map((name) => ({ name, type: 'group' as const, fields: ctaFields(false) })) }
-    case 'formReference': return { ...common, type: 'relationship' as const, relationTo: options.formCollection }
+    case 'formReference': return options.formCollection
+      ? { ...common, type: 'relationship' as const, relationTo: options.formCollection }
+      : { ...common, type: 'json' as const }
     default: return { ...common, type: 'json' as const }
   }
 }
 
 export function createManifestBlock(manifest: SectionManifest, input: CreateManifestBlockOptions = {}): Block {
-  const options: Required<CreateManifestBlockOptions> = {
+  const options: CreateManifestBlockOptions & { mediaCollection: CollectionSlug } = {
     mediaCollection: input.mediaCollection ?? 'media',
-    formCollection: input.formCollection ?? 'forms',
+    formCollection: input.formCollection,
   }
 
   const released = manifest.status === 'released'
