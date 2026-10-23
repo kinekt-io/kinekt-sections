@@ -8,10 +8,9 @@ type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 interface Cta { label: string; href: string }
 interface Insight {
   title: string
-  excerpt: string
+  excerpt?: string
   href: string
-  publishedAt: string
-  kind?: 'Article' | 'Case'
+  kind?: string
   featured?: boolean
   image?: Media
 }
@@ -26,9 +25,9 @@ interface Props {
 
 const { id, theme = 'light', headingLevel = 'h2', intro, insightSources = [], cta } = Astro.props as Props
 const action = cta && ('cta' in cta ? cta.cta : cta)
-const sortedInsights = [...insightSources].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
-const featured = sortedInsights.find((insight) => insight.featured) ?? sortedInsights[0]
-const recent = sortedInsights.filter((insight) => insight !== featured).slice(0, 3)
+const featured = insightSources.find((insight) => insight.featured) ?? insightSources[0]
+const recent = insightSources.filter((insight) => insight !== featured).slice(0, 3)
+const kindLabel = (kind?: string): string | undefined => kind?.replace(/[-_]/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase())
 ---
 <section class="featured-insights-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="featured-insights-allentown__container">
@@ -43,18 +42,18 @@ const recent = sortedInsights.filter((insight) => insight !== featured).slice(0,
           <img src={featured.image.url} alt={featured.image.alt} width={featured.image.width} height={featured.image.height} data-fallback-url={featured.image.fallbackUrl} loading="lazy" decoding="async" />
         </picture>}
         <header class="featured-insights-allentown__featured-header"><p class="featured-insights-allentown__eyebrow">Featured</p><span aria-hidden="true"></span></header>
-        <p class="featured-insights-allentown__kind">{featured.kind ?? 'Article'}</p>
+        {kindLabel(featured.kind) && <p class="featured-insights-allentown__kind">{kindLabel(featured.kind)}</p>}
         <h3>{featured.title}</h3>
-        <p>{featured.excerpt}</p>
+        {featured.excerpt && <p>{featured.excerpt}</p>}
         <Button class="featured-insights-allentown__link" href={featured.href} label="Read more" style="clear"><span aria-hidden="true">›</span></Button>
       </article>}
       <div class="featured-insights-allentown__recent">
         <header class="featured-insights-allentown__recent-header"><p>Most recent</p><span aria-hidden="true"></span></header>
         <ol>{recent.map((insight) => <li><article>
-          <p class="featured-insights-allentown__kind">{insight.kind ?? 'Article'}</p>
+          {kindLabel(insight.kind) && <p class="featured-insights-allentown__kind">{kindLabel(insight.kind)}</p>}
           <h3>{insight.title}</h3>
-          <p>{insight.excerpt}</p>
-          <Button class="featured-insights-allentown__link" href={insight.href} label={`Read ${insight.kind?.toLowerCase() ?? 'article'}`} style="clear"><span aria-hidden="true">›</span></Button>
+          {insight.excerpt && <p>{insight.excerpt}</p>}
+          <Button class="featured-insights-allentown__link" href={insight.href} label="Read more" style="clear"><span aria-hidden="true">›</span></Button>
         </article></li>)}</ol>
       </div>
     </div>

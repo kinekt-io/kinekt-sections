@@ -1,7 +1,7 @@
 import type { Block, CollectionSlug, Field } from 'payload'
 import { ctaFields, ctaGroupFields } from './payload-fields.js'
 
-type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'insightSourceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
+type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'insightSourceList' | 'contentReferenceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
 
 interface ManifestField {
   kind: FieldKind
@@ -103,6 +103,21 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
         { name: 'kind', type: 'select', options: [{ label: 'Article', value: 'Article' }, { label: 'Case', value: 'Case' }] },
         { name: 'featured', type: 'checkbox', defaultValue: false },
         { name: 'image', type: 'upload', relationTo: options.mediaCollection },
+      ],
+    }
+    case 'contentReferenceList': return {
+      ...common,
+      type: 'array',
+      minRows: field.minItems,
+      fields: [
+        {
+          name: 'content',
+          type: 'relationship',
+          relationTo: options.targetCollections,
+          required: true,
+          filterOptions: { _status: { equals: 'published' } },
+        },
+        { name: 'featured', type: 'checkbox', defaultValue: false },
       ],
     }
     case 'formReference': {

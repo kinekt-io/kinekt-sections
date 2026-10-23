@@ -45,11 +45,11 @@ const manifest = {
       }
     },
     "insightSources": {
-      "kind": "insightSourceList",
+      "kind": "contentReferenceList",
       "required": true,
       "localized": true,
       "minItems": 1,
-      "description": "Multiple active platform-admin Insight Sources. Each source maps a collection or collection filter, such as Articles: Case or Certifications."
+      "description": "Select published content. Its title, route, optional description and optional Article type are rendered automatically."
     },
     "cta": {
       "kind": "component",
