@@ -1,6 +1,6 @@
 {
   "name": "@kinekt-io/components",
-  "version": "26.10.2-beta.15",
+  "version": "26.10.2-beta.17",
   "description": "Paired Astro sections and Payload blocks for Kinekt websites",
   "type": "module",
   "license": "UNLICENSED",
@@ -388,6 +388,17 @@
       "import": "./dist/sections/process-story/allentown/process-story-allentown.types.js",
       "types": "./dist/sections/process-story/allentown/process-story-allentown.types.d.ts"
     },
+    "./sections/process-story-trinity.astro": "./src/sections/process-story/trinity/process-story-trinity.astro",
+    "./sections/process-story-trinity.payload": {
+      "default": "./dist/sections/process-story/trinity/process-story-trinity.payload.js",
+      "import": "./dist/sections/process-story/trinity/process-story-trinity.payload.js",
+      "types": "./dist/sections/process-story/trinity/process-story-trinity.payload.d.ts"
+    },
+    "./sections/process-story-trinity.types": {
+      "default": "./dist/sections/process-story/trinity/process-story-trinity.types.js",
+      "import": "./dist/sections/process-story/trinity/process-story-trinity.types.js",
+      "types": "./dist/sections/process-story/trinity/process-story-trinity.types.d.ts"
+    },
     "./sections/product-details-allentown.astro": "./src/sections/product-details/allentown/product-details-allentown.astro",
     "./sections/product-details-allentown.payload": {
       "default": "./dist/sections/product-details/allentown/product-details-allentown.payload.js",
@@ -564,6 +575,7 @@
     ]
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^7.3.1",
     "embla-carousel": "8.6.0"
   }
 }

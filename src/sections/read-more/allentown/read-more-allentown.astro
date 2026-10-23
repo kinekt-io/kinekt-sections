@@ -1,23 +1,58 @@
 ---
 import '../../../styles/wireframe.css'
-import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
-import type { ReadMoreContent } from './read-more-allentown.types.js'
-interface Props extends ReadMoreContent { headingLevel?: 'h1' | 'h2' | 'h3'; mediaLoading?: 'eager' | 'lazy' }
-const { theme, intro, ctas, media, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
+import Label from '../../../atoms/label/allentown/label-allentown.astro'
+import type { Media, RichText, SectionIntro } from '../../../shared/content.js'
+
+type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
+type Cta = { label: string; href: string }
+interface Props {
+  theme?: Theme
+  headingLevel?: 'h1' | 'h2' | 'h3'
+  intro: SectionIntro
+  label?: { text: string; icon?: string }
+  ctas: { primary?: Cta; secondary?: Cta }
+  media: Media
+  mediaLoading?: 'eager' | 'lazy'
+}
+
+const { theme = 'light', intro, label, ctas, media, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props
+const Heading = headingLevel
+const description = (value: string | RichText | undefined) => typeof value === 'string' ? value : value?.html
 ---
-<section class="read-more read-more--allentown" data-kinekt-section data-kinekt-theme={theme}>
-  <div class="read-more__container">
-    <header class="read-more__content">
-      <SectionIntro intro={intro} headingLevel={headingLevel} />
-      {(ctas.primary || ctas.secondary) && <div class="read-more__actions">
-        {ctas.primary && <Button class="read-more__action read-more__action--primary" href={ctas.primary.href} label={ctas.primary.label} />}
-        {ctas.secondary && <Button class="read-more__action read-more__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="secondary" />}
+<section class="read-more-allentown" data-kinekt-section data-kinekt-theme={theme}>
+  <div class="read-more-allentown__container">
+    <header class="read-more-allentown__content">
+      {intro.accentHeading && <p class="read-more-allentown__accent">{intro.accentHeading}</p>}
+      <Heading class="read-more-allentown__heading" data-kinekt-intro-heading>{intro.heading}</Heading>
+      {label?.text && <Label class="read-more-allentown__label" text={label.text} icon={label.icon} />}
+      {description(intro.description) && <div class="read-more-allentown__description" set:html={description(intro.description)} />}
+      {(ctas.primary || ctas.secondary) && <div class="read-more-allentown__actions">
+        {ctas.primary && <Button href={ctas.primary.href} label={ctas.primary.label} />}
+        {ctas.secondary && <Button href={ctas.secondary.href} label={ctas.secondary.label} style="secondary" />}
       </div>}
     </header>
-    <picture class="read-more__media">
+    <picture class="read-more-allentown__media">
       {media.sources?.length && <source type="image/avif" srcset={media.sources.map((source) => `${source.url} ${source.width}w`).join(', ')} sizes={media.sizes} />}
-      <img class="read-more__image" src={media.url} alt={media.alt} width={media.width} height={media.height} data-fallback-url={media.fallbackUrl} loading={mediaLoading} decoding="async" />
+      <img class="read-more-allentown__image" src={media.url} alt={media.alt} width={media.width} height={media.height} data-fallback-url={media.fallbackUrl} loading={mediaLoading} decoding="async" />
     </picture>
   </div>
 </section>
+<style>
+  .read-more-allentown {
+    & > .read-more-allentown__container { gap: var(--kinekt-wireframe-section-space-m); }
+    & .read-more-allentown__content { display: grid; align-content: center; gap: var(--kinekt-wireframe-space-l); }
+    & :is(.read-more-allentown__accent, .read-more-allentown__heading, .read-more-allentown__description) { margin: 0; }
+    & .read-more-allentown__accent { color: var(--kinekt-component-action); font-family: var(--kinekt-component-mono); font-size: .8125rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    & .read-more-allentown__description { max-width: var(--kinekt-wireframe-layout-width-m); color: var(--kinekt-component-muted); }
+    & .read-more-allentown__description :first-child { margin-top: 0; }
+    & .read-more-allentown__description :last-child { margin-bottom: 0; }
+    & .read-more-allentown__actions { display: flex; flex-wrap: wrap; gap: var(--kinekt-wireframe-space-s); margin: 0; }
+    & .read-more-allentown__media { display: block; width: 100%; }
+    & .read-more-allentown__image { aspect-ratio: 4 / 5; object-fit: cover; }
+
+    @media (min-width: 50rem) {
+      & > .read-more-allentown__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; column-gap: var(--kinekt-wireframe-section-space-xl); }
+    }
+  }
+</style>

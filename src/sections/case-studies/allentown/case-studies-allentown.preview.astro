@@ -1,6 +1,5 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import CaseStudiesAllentown from './case-studies-allentown.astro'
 
 const content = {
   "theme": "light",
@@ -342,4 +341,4 @@ function resolveCatalogueAssets(value: unknown): unknown {
 
 const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block="case-studies-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<CaseStudiesAllentown {...resolvedContent} />

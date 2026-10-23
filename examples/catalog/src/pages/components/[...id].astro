@@ -101,6 +101,27 @@ const Preview = (previewModule as { default: any }).default
               </fieldset>
             </>
           )}
+          {component.id === 'sections/process-story/trinity' && (
+            <fieldset>
+              <legend>Step marker</legend>
+              <label><input type="radio" name="process-story-marker" value="number" checked /> Numbers</label>
+              <label><input type="radio" name="process-story-marker" value="icon" /> Icons</label>
+            </fieldset>
+          )}
+          {component.id === 'sections/form-section/allentown' && (
+            <>
+              <fieldset>
+                <legend>Formuliergrootte</legend>
+                <label><input type="radio" name="form-section-variation" value="compact" checked /> Compact e-mailveld</label>
+                <label><input type="radio" name="form-section-variation" value="expanded" /> Uitgebreid formulier</label>
+              </fieldset>
+              <fieldset>
+                <legend>Media-positie</legend>
+                <label><input type="radio" name="form-section-image-position" value="left" checked /> Links</label>
+                <label><input type="radio" name="form-section-image-position" value="right" /> Rechts</label>
+              </fieldset>
+            </>
+          )}
         </aside>
       )}
       <div data-kinekt-preview-surface><Preview /></div>
@@ -109,11 +130,14 @@ const Preview = (previewModule as { default: any }).default
       import { initializeKinektInteractions } from '../../../../../src/shared/interactions'
 
       const surface = document.querySelector<HTMLElement>('[data-kinekt-preview-surface]')
+      const initialProcessStoryMarker = document.querySelector<HTMLInputElement>('.preview-options input[name="process-story-marker"]:checked')
+      const processStory = surface?.querySelector<HTMLElement>('.process-story-trinity')
+      if (initialProcessStoryMarker && processStory) processStory.dataset.processStoryMarker = initialProcessStoryMarker.value
       const initialTheme = surface?.querySelector<HTMLElement>('[data-kinekt-section]')?.dataset.kinektTheme
       const initialThemeControl = Array.from(document.querySelectorAll<HTMLInputElement>('.preview-options input[name="theme"]'))
         .find((input) => input.value === initialTheme)
       if (initialThemeControl) initialThemeControl.checked = true
-      const initialIntroHeading = surface?.querySelector<HTMLHeadingElement>('.section-intro__heading')
+      const initialIntroHeading = surface?.querySelector<HTMLHeadingElement>(':is(.section-intro__heading, [data-kinekt-intro-heading])')
       const introHeadingOptions = document.querySelector<HTMLFieldSetElement>('[data-kinekt-intro-heading-options]')
       if (initialIntroHeading && introHeadingOptions) {
         introHeadingOptions.hidden = false
@@ -122,7 +146,7 @@ const Preview = (previewModule as { default: any }).default
         if (initialHeadingControl) initialHeadingControl.checked = true
       }
       function setIntroHeadingLevel(level: 'h1' | 'h2' | 'h3' | 'h4') {
-        const heading = surface?.querySelector<HTMLHeadingElement>('.section-intro__heading')
+        const heading = surface?.querySelector<HTMLHeadingElement>(':is(.section-intro__heading, [data-kinekt-intro-heading])')
         if (!heading || heading.tagName.toLowerCase() === level) return
         const replacement = document.createElement(level)
         for (const attribute of heading.attributes) replacement.setAttribute(attribute.name, attribute.value)
@@ -169,6 +193,18 @@ const Preview = (previewModule as { default: any }).default
           }
           if (input.name === 'intro-heading-level' && (input.value === 'h1' || input.value === 'h2' || input.value === 'h3' || input.value === 'h4')) {
             setIntroHeadingLevel(input.value)
+          }
+          if (input.name === 'process-story-marker' && (input.value === 'number' || input.value === 'icon')) {
+            const processStory = surface.querySelector<HTMLElement>('.process-story-trinity')
+            if (processStory) processStory.dataset.processStoryMarker = input.value
+          }
+          if (input.name === 'form-section-variation' && (input.value === 'compact' || input.value === 'expanded')) {
+            const formSection = surface.querySelector<HTMLElement>('.form-section-allentown')
+            if (formSection) formSection.dataset.formVariation = input.value
+          }
+          if (input.name === 'form-section-image-position' && (input.value === 'left' || input.value === 'right')) {
+            const formSection = surface.querySelector<HTMLElement>('.form-section-allentown')
+            if (formSection) formSection.dataset.imagePosition = input.value
           }
           if (input.name === 'hero-primary-cta' || input.name === 'hero-secondary-cta') {
             const action = surface.querySelector<HTMLElement>(input.name === 'hero-primary-cta' ? '.hero-allentown__action--primary' : '.hero-allentown__action--secondary')

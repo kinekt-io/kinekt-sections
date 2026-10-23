@@ -63,13 +63,14 @@ export function createManifestBlock(manifest: SectionManifest, input: CreateMani
   }
 
   const released = manifest.status === 'released'
+  const statusLabel = manifest.status === 'prerelease' ? 'PRERELEASE' : 'BETA'
   const name = manifest.slug.split('-').map((part) => part[0]?.toUpperCase() + part.slice(1)).join('')
   return {
     slug: `${released ? '' : 'beta-'}${manifest.slug}`,
     interfaceName: `${released ? '' : 'Beta'}${name}`,
     labels: released
       ? { singular: manifest.title, plural: `${manifest.title} blocks` }
-      : { singular: `BETA — ${manifest.title}`, plural: `BETA — ${manifest.title} blocks` },
+      : { singular: `${statusLabel} — ${manifest.title}`, plural: `${statusLabel} — ${manifest.title} blocks` },
     fields: Object.entries(manifest.fields).map(([name, field]) => fieldFor(name, field, options)) as Block['fields'],
   }
 }

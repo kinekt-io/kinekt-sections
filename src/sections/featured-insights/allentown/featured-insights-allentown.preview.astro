@@ -1,112 +1,26 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import FeaturedInsightsAllentown from './featured-insights-allentown.astro'
 
-const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-  },
-  "insightSources": [
-    {
-      "title": "How system constraints shape battery design",
-      "excerpt": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "href": "#",
-      "publishedAt": "2026-10-01",
-      "image": {
-        "url": "https://placehold.co/1200x800/png?text=Insight+1",
-        "alt": "Engineering team reviewing test data",
-        "width": 1200,
-        "height": 800
-      }
-    },
-    {
-      "title": "Making validation data useful for integration teams",
-      "excerpt": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "href": "#",
-      "publishedAt": "2026-10-02",
-      "image": {
-        "url": "https://placehold.co/1200x800/png?text=Insight+2",
-        "alt": "Battery system integration",
-        "width": 1200,
-        "height": 800
-      }
-    },
-    {
-      "title": "A practical guide to energy-storage specifications",
-      "excerpt": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "href": "#",
-      "publishedAt": "2026-10-03",
-      "image": {
-        "url": "https://placehold.co/1200x800/png?text=Insight+3",
-        "alt": "Technical documentation review",
-        "width": 1200,
-        "height": 800
-      }
-    }
-  ],
-  "cta": {
-    "cta": {
-      "label": "Explore the specification",
-      "href": "#"
-    }
-  }
-}
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "insightSources": {
-    "kind": "insightSourceList"
-  },
-  "cta": {
-    "kind": "component",
-    "id": "controls/button/allentown",
-    "role": "button",
-    "fields": {
-      "cta": {
-        "kind": "cta"
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = undefined
 const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
+const intro = { accentHeading: 'Research updates', heading: 'Notes from the engineering floor' }
+const insightSources = [
+  {
+    title: 'How modular packs shorten integration cycles',
+    excerpt: 'A practical view of the mechanical, electrical and service decisions that keep deployment moving.',
+    href: '#',
+    publishedAt: '2026-10-15',
+    kind: 'Article' as const,
+    featured: true,
+    image: { url: `${catalogueBase}placeholders/hero-trinity-street.webp`, alt: 'A city street at dusk', width: 1200, height: 900 },
+  },
+  { title: 'Planning the verification route', excerpt: 'How teams turn open technical questions into a clear evidence plan.', href: '#', publishedAt: '2026-10-14', kind: 'Article' as const },
+  { title: 'Designing for service access', excerpt: 'Small packaging choices that reduce maintenance time in the field.', href: '#', publishedAt: '2026-10-13', kind: 'Article' as const },
+  { title: 'A programme built around delivery evidence', excerpt: 'What a controlled handover looks like from prototype to production.', href: '#', publishedAt: '2026-10-12', kind: 'Case' as const },
+]
 ---
-<StructuralSection block="beta-featured-insights-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<FeaturedInsightsAllentown
+  theme="light"
+  intro={intro}
+  insightSources={insightSources}
+  cta={{ cta: { label: 'Browse field notes', href: '#' } }}
+/>

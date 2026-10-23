@@ -1,0 +1,20 @@
+---
+import ProcessStoryTrinity from './process-story-trinity.astro'
+
+const content = {
+  theme: 'semi-light' as const,
+  intro: {
+    accentHeading: 'From brief to validation',
+    heading: 'A clear process for complex technical work',
+    description: 'Each stage establishes the evidence needed for the next decision, from the first operating profile through to release readiness.',
+  },
+  items: [
+    { markerType: 'icon' as const, icon: 'blender-phone', title: 'Define the operating profile', description: 'We establish the duty cycle, environmental conditions and measurable outcomes that set the engineering direction.' },
+    { markerType: 'icon' as const, icon: 'magnifying-glass', title: 'Map the technical constraints', description: 'Mechanical envelopes, interfaces, charging conditions and service access are brought into one feasible specification.' },
+    { markerType: 'icon' as const, icon: 'flask', title: 'Develop and review the system', description: 'Engineering choices are tested against performance targets so trade-offs remain explicit before integration begins.' },
+    { markerType: 'icon' as const, icon: 'gears', title: 'Build and validate the prototype', description: 'The prototype is assessed under representative operating conditions with traceable evidence for every critical result.' },
+    { markerType: 'icon' as const, icon: 'dumpster-fire', title: 'Prepare for dependable delivery', description: 'Production readiness, documentation and quality controls are aligned for a controlled handover to the field team.' },
+  ],
+}
+---
+<ProcessStoryTrinity {...content} />

@@ -1,5 +1,16 @@
 # Changelog
 
+## 26.10.2-beta.17 — 2026-10-22
+
+### Added
+
+- Added prerelease Payload blocks and adapted renderer props for Solution List Allentown, Process Story Trinity, Form Section Allentown, Comparison Overview Allentown, Density Comparison Allentown, and Featured Insights Allentown.
+
+### Changed
+
+- Classified prerelease block labels as `PRERELEASE` in Payload.
+- Preserved the reusable neutral wireframe styling, live catalogue routes, fictional preview content, and component-local label and section styles.
+
 ## 26.10.2-beta.15 — 2026-10-22
 
 ### Changed

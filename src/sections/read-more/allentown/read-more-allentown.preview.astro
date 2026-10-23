@@ -1,23 +1,21 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import ReadMoreAllentown from './read-more-allentown.astro'
 
 const content = {
   "theme": "light",
   "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
+    "accentHeading": "Engineering support",
     "heading": "Energy systems built around real operating conditions",
     "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  },
+  "label": {
+    "text": "HQ, The Netherlands"
   },
   "ctas": {
     "primary": {
       "label": "Talk to an expert",
       "href": "#"
     },
-    "secondary": {
-      "label": "View technical details",
-      "href": "#"
-    }
   },
   "media": {
     "url": "https://placehold.co/1600x900/png?text=Media",
@@ -43,6 +41,19 @@ const fields = {
       },
       "description": {
         "kind": "richText"
+      }
+    }
+  },
+  "label": {
+    "kind": "component",
+    "id": "atoms/label/allentown",
+    "role": "label",
+    "fields": {
+      "text": {
+        "kind": "text"
+      },
+      "icon": {
+        "kind": "text"
       }
     }
   },
@@ -88,4 +99,4 @@ function resolveCatalogueAssets(value: unknown): unknown {
 
 const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
-<StructuralSection block="beta-read-more-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<ReadMoreAllentown {...(resolvedContent as any)} />

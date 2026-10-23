@@ -1,119 +1,480 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import "../../../styles/wireframe.css";
+import SectionIntro from "../../../primitives/section-intro/section-intro.astro";
+import Button from "../../../controls/button/allentown/button-allentown.astro";
+import Label from "../../../atoms/label/allentown/label-allentown.astro";
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
+const {
+  id,
+  theme = "light",
+  intro,
+  sectionLabel,
+  carousel = {},
+  cta,
+  headingLevel = "h2",
+  carouselControlStyle = "icon",
+  carouselControls = "previous-next",
+  carouselLoop = false,
+} = Astro.props as any;
+const items = Array.isArray(carousel.items) ? carousel.items : [];
+const action = cta?.cta ?? cta;
+const slideAction = (item: any) => item.cta?.cta ?? item.cta;
+---
+
+<section
+  class="case-studies-allentown"
+  id={id}
+  data-kinekt-section
+  data-kinekt-theme={theme}
+>
+  <div class="case-studies-allentown__container">
+    <header class="case-studies-allentown__header">
+      {
+        intro && (
+          <div class="case-studies-allentown__header-content">
+            <SectionIntro intro={intro} headingLevel={headingLevel} />
+          </div>
+        )
       }
-    }
-  },
-  "sectionLabel": {
-    "kind": "text"
-  },
-  "carousel": {
-    "kind": "component",
-    "id": "patterns/case-study-carousel/allentown",
-    "role": "case-study-carousel",
-    "fields": {
-      "items": {
-        "kind": "componentList",
-        "id": "components/case-study/allentown",
-        "role": "case-study",
-        "fields": {
-          "logo": {
-            "kind": "media"
-          },
-          "title": {
-            "kind": "text"
-          },
-          "description": {
-            "kind": "textarea"
-          },
-          "image": {
-            "kind": "media"
-          },
-          "results": {
-            "kind": "componentList",
-            "id": "components/result-item/allentown",
-            "role": "result-item",
-            "fields": {
-              "label": {
-                "kind": "text"
-              },
-              "value": {
-                "kind": "component",
-                "id": "atoms/label/allentown",
-                "role": "label",
-                "fields": {
-                  "text": {
-                    "kind": "text"
-                  },
-                  "icon": {
-                    "kind": "text"
-                  }
-                }
-              }
-            }
-          },
-          "quote": {
-            "kind": "component",
-            "id": "components/quote/allentown",
-            "role": "quote",
-            "fields": {
-              "quote": {
-                "kind": "textarea"
-              },
-              "authorName": {
-                "kind": "text"
-              },
-              "authorRole": {
-                "kind": "text"
-              },
-              "avatar": {
-                "kind": "media"
-              }
-            }
-          },
-          "cta": {
-            "kind": "component",
-            "id": "controls/button/allentown",
-            "role": "button",
-            "fields": {
-              "cta": {
-                "kind": "cta"
-              }
-            }
+      {
+        action?.label && (
+          <div class="case-studies-allentown__cta">
+            <Button
+              class="case-studies-allentown__cta"
+              href={action.href}
+              label={action.label}
+            />
+          </div>
+        )
+      }
+    </header>
+    <div
+      class="case-studies-allentown__carousel"
+      data-kinekt-carousel
+      data-kinekt-carousel-controls={carouselControls}
+      data-kinekt-carousel-control-style={carouselControlStyle}
+      data-kinekt-carousel-loop={carouselLoop ? "true" : "false"}
+      role="region"
+      aria-label="Case studies carousel"
+    >
+      {
+        sectionLabel && (
+          <div
+            class="case-studies-allentown__carousel-label"
+            data-kinekt-carousel-label
+          >
+            <>
+              <p>{sectionLabel}</p>
+              <span aria-hidden="true" />
+            </>
+          </div>
+        )
+      }
+      <div
+        class="case-studies-allentown__carousel-viewport"
+        data-kinekt-carousel-viewport
+      >
+        <ul
+          class="case-studies-allentown__carousel-slides"
+          data-kinekt-carousel-container
+        >
+          {
+            items.map((item: any) => {
+              const itemAction = slideAction(item);
+              return (
+                <li
+                  class="case-studies-allentown__carousel-slide"
+                  data-kinekt-carousel-slide
+                >
+                  <article>
+                    {item.logo?.url && (
+                      <picture class="case-studies-allentown__logo">
+                        <img
+                          src={item.logo.url}
+                          alt={item.logo.alt ?? ""}
+                          width={item.logo.width}
+                          height={item.logo.height}
+                        />
+                      </picture>
+                    )}
+                    {item.title && (
+                      <h3 class="case-studies-allentown__title">
+                        {item.title}
+                      </h3>
+                    )}
+                    {item.description && (
+                      <p class="case-studies-allentown__description">
+                        {item.description}
+                      </p>
+                    )}
+                    <div class="case-studies-allentown__carousel-slide-content">
+                      {item.image?.url && (
+                        <picture class="case-studies-allentown__image">
+                          <img
+                            src={item.image.url}
+                            alt={item.image.alt ?? ""}
+                            width={item.image.width}
+                            height={item.image.height}
+                          />
+                        </picture>
+                      )}
+                      <div class="case-studies-allentown__carousel-slide-details">
+                        {item.results?.length > 0 && (
+                          <ul class="case-studies-allentown__results">
+                            {item.results.map((result: any) => (
+                              <li class="case-studies-allentown__results-item">
+                                <article>
+                                  <p class="case-studies-allentown__label">
+                                    {result.label}
+                                  </p>
+                                  <Label
+                                    class="case-studies-allentown__value"
+                                    text={result.value?.text ?? ""}
+                                    icon={result.value?.icon}
+                                  />
+                                </article>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        {item.quote?.quote && (
+                          <figure class="case-studies-allentown__quote">
+                            <blockquote>
+                              <p class="case-studies-allentown__quote-text">
+                                {item.quote.quote}
+                              </p>
+                            </blockquote>
+                            <figcaption class="case-studies-allentown__quote-attribution">
+                              {item.quote.avatar?.url && (
+                                <picture class="case-studies-allentown__quote-avatar">
+                                  <img
+                                    src={item.quote.avatar.url}
+                                    alt={item.quote.avatar.alt ?? ""}
+                                    width={item.quote.avatar.width}
+                                    height={item.quote.avatar.height}
+                                  />
+                                </picture>
+                              )}
+                              <div class="case-studies-allentown__quote-author">
+                                {item.quote.authorName && (
+                                  <p class="case-studies-allentown__quote-author-name">
+                                    {item.quote.authorName}
+                                  </p>
+                                )}
+                                {item.quote.authorRole && (
+                                  <p class="case-studies-allentown__quote-author-role">
+                                    {item.quote.authorRole}
+                                  </p>
+                                )}
+                              </div>
+                            </figcaption>
+                          </figure>
+                        )}
+                        {itemAction?.label && (
+                          <div class="case-studies-allentown__cta">
+                            <Button
+                              class="case-studies-allentown__cta"
+                              href={itemAction.href}
+                              label={itemAction.label}
+                              style="clear"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </article>
+                </li>
+              );
+            })
           }
+        </ul>
+      </div>
+      <div
+        class="case-studies-allentown__carousel-pagination"
+        data-kinekt-carousel-pagination
+      >
+        {
+          carouselControls === "previous-next" && (
+            <button
+              class="button button--clear"
+              type="button"
+              data-kinekt-carousel-previous
+              aria-label="Previous case study"
+            >
+              <>
+                <span data-kinekt-carousel-control-icon aria-hidden="true">
+                  ←
+                </span>
+                <span data-kinekt-carousel-control-text>Previous</span>
+              </>
+            </button>
+          )
         }
-      }
+        <p
+          class="case-studies-allentown__carousel-counter"
+          data-kinekt-carousel-counter
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <span data-kinekt-carousel-current aria-hidden="true">1</span><span
+            data-kinekt-carousel-separator
+            aria-hidden="true"
+          >
+            /
+          </span><span data-kinekt-carousel-total aria-hidden="true"
+            >{items.length}</span
+          ><span
+            class="case-studies-allentown__carousel-status"
+            data-kinekt-carousel-status>Slide 1 of {items.length}</span>
+        </p>
+        <button
+          class="button button--clear"
+          type="button"
+          data-kinekt-carousel-next
+          aria-label="Next case study"
+          ><span data-kinekt-carousel-control-icon aria-hidden="true">→</span
+          ><span data-kinekt-carousel-control-text>Next</span></button
+        >
+        <div
+          class="case-studies-allentown__carousel-indicators"
+          data-kinekt-carousel-indicators
+          role="group"
+          aria-label="Case study pagination"
+        >
+          {
+            items.map((_: any, index: number) => (
+              <button
+                class="button button--clear"
+                type="button"
+                data-kinekt-carousel-dot
+                data-kinekt-carousel-index={index}
+                aria-label={`Go to case study ${index + 1}`}
+                aria-current={index === 0 ? "true" : undefined}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  import { initializeKinektInteractions } from "../../../shared/interactions";
+  initializeKinektInteractions();
+</script>
+<style>
+  .case-studies-allentown {
+    --kinekt-section-content-width: var(
+      --kinekt-wireframe-layout-content-width
+    );
+    --case-studies-carousel-to-slide: clamp(
+      var(--kinekt-wireframe-section-space-s),
+      4vw,
+      var(--kinekt-wireframe-section-space-m)
+    );
+    --case-studies-label-gap: var(--kinekt-wireframe-space-s);
+    --case-studies-header-gap: var(--kinekt-wireframe-space-m);
+    --case-studies-header-content-width: var(--kinekt-wireframe-layout-width-l);
+    --case-studies-header-column-gap: var(--kinekt-wireframe-space-xl);
+    --case-studies-logo-to-title: var(--kinekt-wireframe-space-m);
+    --case-studies-title-to-summary: var(--kinekt-wireframe-space-m);
+    --case-studies-summary-to-content: var(--kinekt-wireframe-section-space-xs);
+    --case-studies-media-to-details: clamp(
+      var(--kinekt-wireframe-section-space-s),
+      5.5vw,
+      var(--kinekt-wireframe-section-space-l)
+    );
+    --case-studies-details-gap: clamp(
+      var(--kinekt-wireframe-space-xl),
+      3vw,
+      var(--kinekt-wireframe-section-space-xs)
+    );
+    --case-studies-results-gap: var(--kinekt-wireframe-space-l);
+
+    & > .case-studies-allentown__container {
+      gap: 0;
     }
-  },
-  "cta": {
-    "kind": "component",
-    "id": "controls/button/allentown",
-    "role": "button",
-    "fields": {
-      "cta": {
-        "kind": "cta"
+    & .case-studies-allentown__header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      max-width: none;
+      gap: var(--case-studies-header-gap);
+      margin-bottom: 0;
+    }
+    & .case-studies-allentown__carousel {
+      display: grid;
+      gap: var(--case-studies-carousel-to-slide);
+    }
+    & .case-studies-allentown__carousel-label {
+      display: flex;
+      align-items: center;
+      gap: var(--case-studies-label-gap);
+    }
+    & .case-studies-allentown__carousel-label p {
+      margin: 0;
+      /* color: var(--kinekt-component-action); */
+    }
+    & .case-studies-allentown__carousel-label span {
+      flex: 1;
+      height: var(--kinekt-component-border-width);
+      background: var(--kinekt-component-action);
+    }
+    & .case-studies-allentown__carousel-slide {
+      flex-basis: 100%;
+    }
+    & .case-studies-allentown__carousel-slide > article {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+    &
+      :is(
+        .case-studies-allentown__carousel-slide-content,
+        .case-studies-allentown__carousel-slide-details
+      ) {
+      display: flex;
+      flex-direction: column;
+    }
+    & .case-studies-allentown__logo {
+      width: min(100%, 5.625rem);
+      margin-bottom: var(--case-studies-logo-to-title);
+    }
+    & .case-studies-allentown__logo img {
+      height: 1.5rem;
+      object-fit: contain;
+      object-position: left center;
+    }
+    & .case-studies-allentown__title {
+      max-width: 54rem;
+      margin-bottom: var(--case-studies-title-to-summary);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      line-height: 1.1;
+    }
+    & .case-studies-allentown__description {
+      max-width: 54rem;
+      margin: 0;
+    }
+    & .case-studies-allentown__carousel-slide-content {
+      gap: var(--case-studies-summary-to-content);
+      margin-top: var(--case-studies-summary-to-content);
+    }
+    & .case-studies-allentown__carousel-slide-details {
+      gap: var(--case-studies-details-gap);
+    }
+    & .case-studies-allentown__image img {
+      aspect-ratio: 1.25;
+      object-fit: cover;
+    }
+    & .case-studies-allentown__results {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--case-studies-results-gap);
+      align-content: start;
+      margin: 0;
+    }
+    & .case-studies-allentown__results > li > article {
+      gap: 0.75rem;
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+    & .case-studies-allentown__quote {
+      margin: 0;
+    }
+    & .case-studies-allentown__quote blockquote {
+      margin: 0 0 1.25rem;
+    }
+    & .case-studies-allentown__quote-text {
+      margin: 0;
+      color: var(--kinekt-component-action);
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      line-height: 1.2;
+    }
+    & .case-studies-allentown__quote-attribution {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    & .case-studies-allentown__quote-avatar {
+      flex: 0 0 3rem;
+      width: 3rem;
+    }
+    & .case-studies-allentown__quote-avatar img {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    & .case-studies-allentown__quote-author {
+      display: grid;
+      gap: 0.375rem;
+    }
+    &
+      :is(
+        .case-studies-allentown__quote-author-name,
+        .case-studies-allentown__quote-author-role
+      ) {
+      margin: 0;
+      font-size: 0.875rem;
+      line-height: 1.2;
+    }
+    & .case-studies-allentown__quote-author-role {
+      color: var(--kinekt-component-muted);
+    }
+    & .case-studies-allentown__carousel-slide .case-studies-allentown__cta > a {
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      color: var(--kinekt-component-ink);
+      background: transparent;
+    }
+    & [data-kinekt-carousel-pagination] {
+      gap: var(--case-studies-pagination-gap, 1.25rem);
+    }
+    & :is([data-kinekt-carousel-previous], [data-kinekt-carousel-next]) {
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      color: light-dark(black, white);
+      background: transparent;
+      font-size: var(--case-studies-pagination-icon-size, 1.375rem);
+    }
+    & [data-kinekt-carousel-indicators] {
+      gap: var(--case-studies-pagination-indicator-gap, 0.5rem);
+    }
+
+    @media (min-width: 50rem) {
+      & .case-studies-allentown__header {
+        display: grid;
+        grid-template-columns: minmax(
+            0,
+            var(--case-studies-header-content-width)
+          ) auto;
+        align-items: end;
+        column-gap: var(--case-studies-header-column-gap);
+        justify-content: space-between;
+      }
+      & .case-studies-allentown__header-content {
+        grid-column: 1;
+      }
+      & .case-studies-allentown__header > .case-studies-allentown__cta {
+        grid-column: 2;
+        align-self: end;
+      }
+      & .case-studies-allentown__carousel-slide-content {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: var(--case-studies-media-to-details);
+      }
+      & .case-studies-allentown__image {
+        flex: 1.2 1 0;
+      }
+      & .case-studies-allentown__carousel-slide-details {
+        flex: 1 1 0;
       }
     }
   }
-}
----
-<StructuralSection block="case-studies-allentown" fields={fields} {...props} />
+</style>

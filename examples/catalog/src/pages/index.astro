@@ -3,6 +3,7 @@ import components from '../generated/components.json'
 
 const repositoryUrl = 'https://github.com/kinekt-io/kinekt-sections'
 const tags = [...new Set(['alpha', 'beta', 'prerelease', 'release', ...components.flatMap((component) => component.tags)])].sort()
+const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
 const roles = new Set(components.map((component) => component.role).filter(Boolean))
 ---
 
@@ -80,7 +81,7 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
                         </a>
                       )}
                       {component.previewSource && (
-                        <a class="component__action" href={`components/${component.id}/`}>
+                        <a class="component__action" href={`${catalogueBase}components/${component.id}/`}>
                           Open wireframe preview <span aria-hidden="true">→</span>
                         </a>
                       )}
@@ -91,7 +92,7 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
                   <div class="component__thumbnail">
                     <iframe
                       title={`Scaled preview of ${component.title}`}
-                      src={`components/embed/${component.id}/`}
+                      src={`${catalogueBase}components/embed/${component.id}/`}
                       loading="lazy"
                       tabindex="-1"
                     ></iframe>

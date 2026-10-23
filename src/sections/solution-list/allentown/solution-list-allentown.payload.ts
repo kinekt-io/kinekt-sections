@@ -1,12 +1,13 @@
-// @generated structural section — source manifest remains the contract.
 import type { Block, CollectionSlug } from 'payload'
-import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
+import { createManifestBlock } from '../../../shared/manifest-block.js'
+import { structuralSectionToProps } from '../../../shared/structural-props.js'
+import type { PayloadAdapterOptions } from '../../../shared/payload.js'
 import type { BetaSolutionListAllentownContent, PayloadBetaSolutionListAllentownDocument } from './solution-list-allentown.types.js'
 
 const manifest = {
   "slug": "solution-list-allentown",
   "title": "Solution List Allentown",
-  "status": "beta",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",
@@ -48,6 +49,6 @@ export function createBetaSolutionListAllentownBlock(options: CreateBetaSolution
   return createManifestBlock(manifest, options)
 }
 
-export function betaSolutionListAllentownToProps(data: PayloadBetaSolutionListAllentownDocument): BetaSolutionListAllentownContent {
-  return manifestToProps(data)
+export function betaSolutionListAllentownToProps(data: PayloadBetaSolutionListAllentownDocument, options: PayloadAdapterOptions = {}): BetaSolutionListAllentownContent {
+  return structuralSectionToProps(data, options)
 }

@@ -1,110 +1,71 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe.css'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import Callout from '../../../components/callout/allentown/callout-allentown.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "introCta": {
-    "kind": "component",
-    "id": "controls/button/allentown",
-    "role": "button",
-    "fields": {
-      "cta": {
-        "kind": "cta"
-      }
-    }
-  },
-  "comparison": {
-    "kind": "component",
-    "id": "patterns/comparison-table/allentown",
-    "role": "comparison-table",
-    "fields": {
-      "columns": {
-        "kind": "infoItems"
-      },
-      "rows": {
-        "kind": "componentList",
-        "id": "components/comparison-row/allentown",
-        "role": "comparison-row",
-        "fields": {
-          "feature": {
-            "kind": "text"
-          },
-          "cells": {
-            "kind": "componentList",
-            "id": "components/comparison-cell/allentown",
-            "role": "comparison-cell",
-            "fields": {
-              "type": {
-                "kind": "select"
-              },
-              "text": {
-                "kind": "text"
-              },
-              "status": {
-                "kind": "select"
-              },
-              "icon": {
-                "kind": "text"
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "callout": {
-    "kind": "component",
-    "id": "components/callout/allentown",
-    "role": "callout",
-    "fields": {
-      "intro": {
-        "kind": "component",
-        "id": "components/intro/allentown",
-        "role": "intro",
-        "fields": {
-          "accentHeading": {
-            "kind": "text"
-          },
-          "heading": {
-            "kind": "text"
-          },
-          "description": {
-            "kind": "richText"
-          }
-        }
-      },
-      "cta": {
-        "kind": "component",
-        "id": "controls/button/allentown",
-        "role": "button",
-        "fields": {
-          "cta": {
-            "kind": "cta"
-          }
-        }
-      }
-    }
-  }
+type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
+type Status = 'positive' | 'negative'
+interface Cta { label: string; href: string }
+interface Cell { type: 'text' | 'status'; text?: string; status?: Status }
+interface ComparisonRow { feature: string; cells: Cell[] }
+interface Props {
+  id?: string
+  theme?: Theme
+  headingLevel?: 'h1' | 'h2' | 'h3'
+  intro: SectionIntroContent
+  introCta?: { cta: Cta } | Cta
+  comparison: { columns: string[]; rows: ComparisonRow[] }
+  callout: { intro: SectionIntroContent; cta: { cta: Cta } | Cta }
 }
+
+const { id, theme = 'semi-light', headingLevel = 'h2', intro, introCta, comparison, callout } = Astro.props as Props
+const getCta = (value: Props['introCta']) => value && ('cta' in value ? value.cta : value)
+const fontAwesomeIcon = (name: 'circle-check' | 'circle-xmark') => fas[name === 'circle-check' ? 'faCircleCheck' : 'faCircleXmark']
 ---
-<StructuralSection block="beta-comparison-overview-allentown" fields={fields} {...props} />
+<section class="comparison-overview-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="comparison-overview-allentown__container">
+    <header class="comparison-overview-allentown__intro">
+      <SectionIntro intro={intro} headingLevel={headingLevel} />
+      {getCta(introCta) && <Button {...getCta(introCta)!} style="clear" />}
+    </header>
+    <div class="comparison-overview-allentown__table-wrap">
+      <table class="comparison-overview-allentown__table">
+        <thead><tr><th scope="col"><span class="comparison-overview-allentown__visually-hidden">Feature</span></th>{comparison.columns.map((column) => <th scope="col">{column}</th>)}</tr></thead>
+        <tbody>{comparison.rows.map((row) => <tr><th scope="row">{row.feature}</th>{comparison.columns.map((_, index) => {
+          const cell = row.cells[index]
+          if (cell?.type === 'status' && (cell.status === 'positive' || cell.status === 'negative')) {
+            const icon = fontAwesomeIcon(cell.status === 'positive' ? 'circle-check' : 'circle-xmark')
+            const label = cell.status === 'positive' ? 'Yes' : 'No'
+            return <td><span class:list={['comparison-overview-allentown__status', `comparison-overview-allentown__status--${cell.status}`]}><svg viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} aria-hidden="true" focusable="false"><path d={icon.icon[4] as string} /></svg><span class="comparison-overview-allentown__visually-hidden">{label}</span></span></td>
+          }
+          return <td>{cell?.text}</td>
+        })}</tr>)}</tbody>
+      </table>
+    </div>
+    <Callout callout={callout} class="comparison-overview-allentown__callout" />
+  </div>
+</section>
+<style>
+  .comparison-overview-allentown {
+    & > .comparison-overview-allentown__container { display: grid; gap: var(--kinekt-wireframe-section-space-xl); }
+    & .comparison-overview-allentown__visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    & .comparison-overview-allentown__intro { display: grid; justify-items: center; gap: var(--kinekt-wireframe-space-m); text-align: center; }
+    & .comparison-overview-allentown__intro :global(.section-intro) { max-width: 46rem; }
+    & .comparison-overview-allentown__intro :global(.section-intro__description) { max-width: 40rem; margin-inline: auto; }
+    & .comparison-overview-allentown__table-wrap { overflow-x: auto; }
+    & .comparison-overview-allentown__table { width: 100%; min-width: 42rem; border: 0; border-collapse: collapse; background: transparent; text-align: left; }
+    & .comparison-overview-allentown__table :is(th, td) { padding: 1.125rem 1rem; border: 0; border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line); background: transparent; vertical-align: middle; }
+    & .comparison-overview-allentown__table thead th { font-weight: 600; }
+    & .comparison-overview-allentown__table tbody tr:last-child :is(th, td) { border-bottom: 0; }
+    & .comparison-overview-allentown__table tbody th { width: 38%; font-weight: 500; }
+    & .comparison-overview-allentown__table td { color: var(--kinekt-component-muted); font-size: .875rem; }
+    & .comparison-overview-allentown__status { display: inline-flex; width: 1rem; height: 1rem; }
+    & .comparison-overview-allentown__status svg { width: 100%; height: 100%; fill: currentColor; }
+    & .comparison-overview-allentown__status--positive { color: var(--kinekt-component-action); }
+    & .comparison-overview-allentown__status--negative { color: var(--kinekt-component-muted); }
+    & .comparison-overview-allentown__callout { margin-top: var(--kinekt-wireframe-section-space-l); }
+  }
+</style>

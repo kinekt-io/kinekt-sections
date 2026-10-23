@@ -6,7 +6,8 @@ const classes = ['label-allentown', className].filter(Boolean).join(' ')
 <span class={classes}><span class="label-allentown__text">{text}</span>{icon && <span class="label-allentown__icon" aria-hidden="true">{icon}</span>}</span>
 <style>
   .label-allentown {
-    --kinekt-label-allentown-background: color-mix(in srgb, var(--kinekt-component-ink) 7%, transparent);
+    --kinekt-label-allentown-background: color-mix(in srgb, var(--kinekt-component-ink) 7%, var(--kinekt-component-canvas));
+    --kinekt-label-allentown-line: color-mix(in srgb, var(--kinekt-component-line) 70%, var(--kinekt-component-ink));
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -14,8 +15,8 @@ const classes = ['label-allentown', className].filter(Boolean).join(' ')
     max-inline-size: 100%;
     margin: 0;
     padding: 0.625rem 0.75rem;
-    border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
-    color: var(--kinekt-component-line);
+    border: var(--kinekt-component-border-width) solid var(--kinekt-label-allentown-line);
+    color: var(--kinekt-label-allentown-line);
     background: var(--kinekt-label-allentown-background);
     font-family: var(--kinekt-component-font);
     font-size: 0.875rem;
@@ -29,6 +30,6 @@ const classes = ['label-allentown', className].filter(Boolean).join(' ')
     [data-kinekt-section][data-kinekt-theme='dark'],
     [data-kinekt-section][data-kinekt-theme='semi-dark']
   )) .label-allentown {
-    --kinekt-label-allentown-background: color-mix(in srgb, var(--kinekt-component-ink) 4%, transparent);
+    --kinekt-label-allentown-background: color-mix(in srgb, var(--kinekt-component-ink) 4%, var(--kinekt-component-canvas));
   }
 </style>

@@ -276,9 +276,18 @@ for (const directory of await manifestDirectories(sections)) {
   const relativeAdapter = path.relative(directory, path.join(source, 'shared', 'manifest-block.js')).split(path.sep).join('/')
   const importAstro = relativeAstro.startsWith('.') ? relativeAstro : `./${relativeAstro}`
   const importAdapter = relativeAdapter.startsWith('.') ? relativeAdapter : `./${relativeAdapter}`
+  const importStructuralAdapter = importAdapter.replace('manifest-block.js', 'structural-props.js')
   const prefix = manifest.status === 'released' ? '' : 'beta-'
   const name = pascalCase(`${prefix}${manifest.slug}`)
   const base = manifest.slug
+  const structuralAdapter = new Set([
+    'solution-list-allentown',
+    'process-story-trinity',
+    'form-section-allentown',
+    'comparison-overview-allentown',
+    'density-comparison-allentown',
+    'featured-insights-allentown',
+  ]).has(manifest.slug)
   const block = `${prefix}${manifest.slug}`
   const previewContent = sampleContent(manifest)
   const fields = previewFields(manifest)
@@ -384,7 +393,9 @@ const content = {
     : `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`, manifest.slug === 'media-metrics-allentown')
   await materialize(path.join(directory, `${base}.payload.ts`), manifest.slug === 'media-metrics-allentown'
     ? mediaMetricsPayload
-    : `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`, manifest.slug === 'media-metrics-allentown')
+    : structuralAdapter
+      ? `import type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock } from '${importAdapter}'\nimport { structuralSectionToProps } from '${importStructuralAdapter}'\nimport type { PayloadAdapterOptions } from '../../../shared/payload.js'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document, options: PayloadAdapterOptions = {}): ${name}Content {\n  return structuralSectionToProps(data, options)\n}\n`
+      : `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`, manifest.slug === 'media-metrics-allentown')
   const previewSource = manifest.slug === 'media-metrics-allentown'
     ? mediaMetricsPreview
     : manifest.slug === 'proof-metrics-allentown'

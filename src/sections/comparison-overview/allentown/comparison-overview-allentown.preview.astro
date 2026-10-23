@@ -1,234 +1,35 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import ComparisonOverviewAllentown from './comparison-overview-allentown.astro'
 
-const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-  },
-  "introCta": {
-    "cta": {
-      "label": "Explore the specification",
-      "href": "#"
-    }
-  },
-  "comparison": {
-    "columns": [
-      "Validated operating range",
-      "Traceable test data",
-      "Integration-ready documentation"
-    ],
-    "rows": [
-      {
-        "feature": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-        "cells": [
-          {
-            "type": "text",
-            "text": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-            "status": "positive",
-            "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-          },
-          {
-            "type": "text",
-            "text": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-            "status": "positive",
-            "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-          },
-          {
-            "type": "text",
-            "text": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-            "status": "positive",
-            "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-          }
-        ]
-      },
-      {
-        "feature": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-        "cells": [
-          {
-            "type": "text",
-            "text": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-            "status": "positive",
-            "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-          },
-          {
-            "type": "text",
-            "text": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-            "status": "positive",
-            "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-          },
-          {
-            "type": "text",
-            "text": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-            "status": "positive",
-            "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-          }
-        ]
-      },
-      {
-        "feature": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-        "cells": [
-          {
-            "type": "text",
-            "text": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-            "status": "positive",
-            "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-          },
-          {
-            "type": "text",
-            "text": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-            "status": "positive",
-            "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-          },
-          {
-            "type": "text",
-            "text": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-            "status": "positive",
-            "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-          }
-        ]
-      }
-    ]
-  },
-  "callout": {
-    "intro": {
-      "accentHeading": "Energy systems built around real operating conditions",
-      "heading": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-    },
-    "cta": {
-      "cta": {
-        "label": "Explore the specification",
-        "href": "#"
-      }
-    }
-  }
-}
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "introCta": {
-    "kind": "component",
-    "id": "controls/button/allentown",
-    "role": "button",
-    "fields": {
-      "cta": {
-        "kind": "cta"
-      }
-    }
-  },
-  "comparison": {
-    "kind": "component",
-    "id": "patterns/comparison-table/allentown",
-    "role": "comparison-table",
-    "fields": {
-      "columns": {
-        "kind": "infoItems"
-      },
-      "rows": {
-        "kind": "componentList",
-        "id": "components/comparison-row/allentown",
-        "role": "comparison-row",
-        "fields": {
-          "feature": {
-            "kind": "text"
-          },
-          "cells": {
-            "kind": "componentList",
-            "id": "components/comparison-cell/allentown",
-            "role": "comparison-cell",
-            "fields": {
-              "type": {
-                "kind": "select"
-              },
-              "text": {
-                "kind": "text"
-              },
-              "status": {
-                "kind": "select"
-              },
-              "icon": {
-                "kind": "text"
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "callout": {
-    "kind": "component",
-    "id": "components/callout/allentown",
-    "role": "callout",
-    "fields": {
-      "intro": {
-        "kind": "component",
-        "id": "components/intro/allentown",
-        "role": "intro",
-        "fields": {
-          "accentHeading": {
-            "kind": "text"
-          },
-          "heading": {
-            "kind": "text"
-          },
-          "description": {
-            "kind": "richText"
-          }
-        }
-      },
-      "cta": {
-        "kind": "component",
-        "id": "controls/button/allentown",
-        "role": "button",
-        "fields": {
-          "cta": {
-            "kind": "cta"
-          }
-        }
-      }
-    }
-  }
-}
 const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  accentHeading: 'Programme assurance',
+  heading: 'Choose the evidence package that fits your rollout',
+  description: 'Each delivery path includes a clear set of test evidence, production controls and programme documentation.',
 }
-const ctas = undefined
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
+const comparison = {
+  columns: ['Core package', 'Adapt package', 'Connected package'],
+  rows: [
+    { feature: 'Transport test record', cells: [{ type: 'text', text: 'Included' }, { type: 'text', text: 'Included' }, { type: 'text', text: 'Included' }] },
+    { feature: 'Market-entry review', cells: [{ type: 'status', status: 'positive' }, { type: 'status', status: 'positive' }, { type: 'status', status: 'positive' }] },
+    { feature: 'System integration dossier', cells: [{ type: 'text', text: 'Standard scope' }, { type: 'text', text: 'Programme scope' }, { type: 'text', text: 'Programme scope' }] },
+    { feature: 'Independent lab report', cells: [{ type: 'status', status: 'positive' }, { type: 'status', status: 'positive' }, { type: 'status', status: 'positive' }] },
+    { feature: 'Serial traceability pack', cells: [{ type: 'status', status: 'positive' }, { type: 'status', status: 'positive' }, { type: 'status', status: 'positive' }] },
+    { feature: 'Supplier audit summary', cells: [{ type: 'status', status: 'positive' }, { type: 'status', status: 'negative' }, { type: 'status', status: 'negative' }] },
+  ],
 }
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
+const callout = {
+  intro: {
+    accentHeading: 'Talk to a programme lead',
+    heading: 'Map the evidence needed for your release',
+    description: 'Review the tests, records and handover material required before production begins.',
+  },
+  cta: { label: 'Arrange a call', href: '#' },
+}
 ---
-<StructuralSection block="beta-comparison-overview-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<ComparisonOverviewAllentown
+  theme="semi-light"
+  intro={intro}
+  introCta={{ cta: { label: 'Review package options', href: '#' } }}
+  comparison={comparison as any}
+  callout={callout}
+/>

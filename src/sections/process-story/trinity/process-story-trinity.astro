@@ -1,0 +1,191 @@
+---
+import '../../../styles/wireframe.css'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import type { RichText, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+
+interface Cta { label: string; href: string }
+
+interface ProcessItem {
+  title: string
+  description?: string | RichText
+  markerType?: 'number' | 'icon'
+  icon?: string
+  ctaGroup?: { primaryButton?: Cta; secondaryButton?: Cta }
+}
+
+interface Props {
+  id?: string
+  theme?: 'light' | 'semi-light' | 'semi-dark' | 'dark'
+  headingLevel?: 'h1' | 'h2' | 'h3'
+  intro: SectionIntroContent
+  items: ProcessItem[]
+}
+
+const { id, theme = 'light', headingLevel = 'h2', intro, items = [] } = Astro.props as Props
+const description = (value: ProcessItem['description']) => typeof value === 'string' ? value : value?.html
+const fontAwesomeIcon = (name?: string) => {
+  if (!name || !/^[a-z0-9-]+$/.test(name)) return undefined
+  const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
+  return fas[key]
+}
+---
+<section class="process-story-trinity" id={id} data-kinekt-section data-kinekt-theme={theme} data-process-story-trinity>
+  <div class="process-story-trinity__container">
+    <div class="process-story-trinity__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></div>
+    <ol class="process-story-trinity__steps" aria-label="Process steps">
+      {items.map((item, index) => {
+        const icon = fontAwesomeIcon(item.icon)
+        return <li class="process-story-trinity__step" data-process-story-step data-process-story-item-marker={item.markerType ?? 'number'}>
+          <details class="process-story-trinity__disclosure" open={index === 0} data-process-story-disclosure>
+            <summary class="process-story-trinity__trigger" data-process-story-trigger>
+              <span class="process-story-trinity__number" aria-hidden="true">
+                <span class="process-story-trinity__marker-number">{String(index + 1).padStart(2, '0')}</span>
+                {icon && <svg class="process-story-trinity__marker-icon" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} focusable="false"><path d={icon.icon[4] as string} /></svg>}
+              </span>
+              <span class="process-story-trinity__title">{item.title}</span>
+              <span class="process-story-trinity__timer" aria-hidden="true"><span></span></span>
+            </summary>
+            <div class="process-story-trinity__panel">
+              {description(item.description) && <div class="process-story-trinity__description" set:html={description(item.description)} />}
+              {item.ctaGroup && <div class="process-story-trinity__cta-group">
+                {item.ctaGroup.primaryButton && <Button {...item.ctaGroup.primaryButton} />}
+                {item.ctaGroup.secondaryButton && <Button {...item.ctaGroup.secondaryButton} style="secondary" />}
+              </div>}
+            </div>
+          </details>
+        </li>
+      })}
+    </ol>
+  </div>
+</section>
+
+<script>
+  const duration = 6000
+
+  function initialise(root: HTMLElement) {
+    if (root.dataset.processStoryInitialised) return
+    root.dataset.processStoryInitialised = 'true'
+
+    const steps = [...root.querySelectorAll<HTMLElement>('[data-process-story-step]')]
+    if (steps.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const disclosures = steps.map((step) => step.querySelector<HTMLDetailsElement>('[data-process-story-disclosure]')!)
+    const triggers = steps.map((step) => step.querySelector<HTMLElement>('[data-process-story-trigger]')!)
+    let activeIndex = 0
+    let timer: number | undefined
+    let pausedByPointer = false
+    let outsideViewport = true
+    let stoppedByClick = false
+
+    const setTimerState = (state: 'running' | 'paused') => {
+      root.dataset.processStoryTimerState = state
+    }
+
+    const clearTimer = () => {
+      if (timer !== undefined) window.clearTimeout(timer)
+      timer = undefined
+    }
+
+    const show = (index: number) => {
+      activeIndex = index
+      steps.forEach((step, stepIndex) => {
+        const active = stepIndex === index
+        step.toggleAttribute('data-process-story-active', active)
+        disclosures[stepIndex].open = active
+      })
+    }
+
+    const schedule = () => {
+      clearTimer()
+      if (stoppedByClick || pausedByPointer || outsideViewport) {
+        setTimerState('paused')
+        return
+      }
+      setTimerState('running')
+      timer = window.setTimeout(() => {
+        show((activeIndex + 1) % steps.length)
+        schedule()
+      }, duration)
+    }
+
+    show(0)
+    root.addEventListener('pointerenter', () => {
+      pausedByPointer = true
+      schedule()
+    })
+    root.addEventListener('pointerleave', () => {
+      pausedByPointer = false
+      schedule()
+    })
+    triggers.forEach((trigger, index) => trigger.addEventListener('click', (event) => {
+      event.preventDefault()
+      stoppedByClick = true
+      root.dataset.processStoryStopped = 'true'
+      show(index)
+      schedule()
+    }))
+
+    const observer = new IntersectionObserver(([entry]) => {
+      outsideViewport = !entry.isIntersecting
+      schedule()
+    }, { threshold: 0.2 })
+    observer.observe(root)
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-process-story-trinity]').forEach(initialise)
+</script>
+
+<style>
+  .process-story-trinity {
+    --process-story-trinity-step-gap: var(--kinekt-wireframe-space-s);
+    --process-story-trinity-step-padding: var(--kinekt-wireframe-space-l);
+    --process-story-trinity-duration: 6s;
+
+    & > .process-story-trinity__container { gap: var(--kinekt-wireframe-section-space-m); }
+    & .process-story-trinity__intro { max-width: var(--kinekt-wireframe-layout-width-l); }
+    & .process-story-trinity__steps { display: grid; gap: var(--process-story-trinity-step-gap); margin: 0; padding: 0; list-style: none; }
+    & .process-story-trinity__step { position: relative; display: grid; gap: var(--process-story-trinity-step-gap); min-width: 0; padding: var(--process-story-trinity-step-padding) 0 var(--process-story-trinity-step-padding) calc(var(--process-story-trinity-step-padding) + var(--kinekt-wireframe-space-s)); border: 0; background: transparent; }
+    & .process-story-trinity__disclosure { min-width: 0; margin: 0; padding: 0; border: 0; background: transparent; }
+    & .process-story-trinity__trigger { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--kinekt-wireframe-space-m); align-items: center; width: 100%; min-height: 0; padding: 0; color: var(--kinekt-component-ink); background: transparent; text-align: left; cursor: pointer; list-style: none; appearance: none; }
+    & .process-story-trinity__trigger::marker { display: none; content: none; }
+    & .process-story-trinity__trigger::-webkit-details-marker { display: none; }
+    & .process-story-trinity__trigger::after { display: none; content: none; }
+    & .process-story-trinity__number { color: var(--kinekt-component-muted); font-family: var(--kinekt-component-mono); font-size: clamp(1.25rem, 2vw, 1.75rem); font-weight: 700; letter-spacing: .08em; line-height: 1.1; }
+    & .process-story-trinity__marker-icon { display: none; width: 1em; height: 1em; fill: currentColor; }
+    & [data-process-story-item-marker='icon'] .process-story-trinity__marker-number { display: none; }
+    & [data-process-story-item-marker='icon'] .process-story-trinity__marker-icon { display: block; }
+    &[data-process-story-marker='number'] .process-story-trinity__marker-number { display: inline; }
+    &[data-process-story-marker='number'] .process-story-trinity__marker-icon { display: none; }
+    &[data-process-story-marker='icon'] .process-story-trinity__marker-number { display: none; }
+    &[data-process-story-marker='icon'] .process-story-trinity__marker-icon { display: block; }
+    & .process-story-trinity__title { font-size: clamp(1.25rem, 2vw, 1.75rem); font-weight: 500; line-height: 1.1; }
+    & .process-story-trinity__panel { display: grid; max-width: var(--kinekt-wireframe-layout-width-m); padding-inline: 0 2rem; }
+    & .process-story-trinity__description { color: var(--kinekt-component-muted); }
+    & .process-story-trinity__description :first-child { margin-top: 0; }
+    & .process-story-trinity__description :last-child { margin-bottom: 0; }
+    & .process-story-trinity__cta-group { display: flex; flex-wrap: wrap; gap: var(--kinekt-wireframe-space-s); margin-top: var(--kinekt-wireframe-space-l); }
+    & .process-story-trinity__timer { position: absolute; inset-block: var(--process-story-trinity-step-padding); inset-inline-start: 0; display: block; inline-size: var(--kinekt-component-border-width); overflow: hidden; background: var(--kinekt-component-line); }
+    & .process-story-trinity__timer > span { display: block; width: 100%; height: 0; background: var(--kinekt-component-ink); }
+    & [data-process-story-active] .process-story-trinity__timer > span { animation: process-story-trinity-timer var(--process-story-trinity-duration) linear both; animation-play-state: paused; }
+    &[data-process-story-timer-state='running'] [data-process-story-active] .process-story-trinity__timer > span { animation-play-state: running; }
+    &[data-process-story-stopped='true'] [data-process-story-active] .process-story-trinity__timer > span { height: 100%; animation: none; }
+
+    @media (max-width: 49.999rem) {
+      & .process-story-trinity__intro,
+      & .process-story-trinity__steps { width: 100%; max-width: none; }
+    }
+
+    @media (min-width: 50rem) {
+      & > .process-story-trinity__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; column-gap: var(--kinekt-wireframe-section-space-xl); }
+      & .process-story-trinity__steps { grid-column: 2; }
+    }
+  }
+
+  @keyframes process-story-trinity-timer { to { height: 100%; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .process-story-trinity .process-story-trinity__timer { display: none; }
+  }
+</style>

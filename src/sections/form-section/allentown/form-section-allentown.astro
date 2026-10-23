@@ -1,53 +1,98 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe.css'
+import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "image": {
-    "kind": "media"
-  },
-  "form": {
-    "kind": "formReference"
-  },
-  "contactHeading": {
-    "kind": "text"
-  },
-  "contactMethods": {
-    "kind": "componentList",
-    "id": "components/contact-method/allentown",
-    "role": "contact-method",
-    "fields": {
-      "icon": {
-        "kind": "text"
-      },
-      "label": {
-        "kind": "text"
-      },
-      "href": {
-        "kind": "text"
-      }
+type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
+type ImagePosition = 'left' | 'right'
+interface ContactMethod {
+  icon?: 'whatsapp' | 'phone' | 'email'
+  label: string
+  href: string
+}
+interface Props {
+  id?: string
+  theme?: Theme
+  intro: SectionIntroContent
+  image?: Media
+  imagePosition?: ImagePosition
+  form: unknown
+  contactHeading?: string
+  headingLevel?: 'h1' | 'h2' | 'h3'
+  contactMethods?: ContactMethod[]
+}
+
+const { id, theme = 'semi-dark', intro, image, imagePosition = 'left', contactHeading, contactMethods = [], headingLevel = 'h2' } = Astro.props as Props
+const methods = contactMethods.filter((method) => method.label && method.href)
+---
+<section class="form-section-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-image-position={imagePosition} data-form-variation="compact">
+  <div class="form-section-allentown__container">
+    <div class="form-section-allentown__content">
+      <SectionIntro intro={intro} headingLevel={headingLevel} />
+      <div class="form-section-allentown__form-embed" data-kinekt-hubspot-form-placeholder aria-label="Formulier wordt geladen">
+        <div class="form-section-allentown__form-compact">
+          <label class="form-section-allentown__email-label" for={`${id ?? 'form-section'}-email`}>Your email address</label>
+          <div class="form-section-allentown__email-row">
+            <input id={`${id ?? 'form-section'}-email`} name="email" type="email" autocomplete="email" inputmode="email" placeholder="Email address" />
+            <button type="button">Book a call <span aria-hidden="true">›</span></button>
+          </div>
+        </div>
+        <div class="form-section-allentown__form-expanded">
+          <div class="form-section-allentown__form-row">
+            <label>First name <input name="given-name" autocomplete="given-name" placeholder="Morgan" /></label>
+            <label>Last name <input name="family-name" autocomplete="family-name" placeholder="Reed" /></label>
+          </div>
+          <label>Email address <input name="email" type="email" autocomplete="email" placeholder="morgan.reed@example.com" /></label>
+          <label>Phone number <input name="tel" type="tel" autocomplete="tel" placeholder="+1 212 555 0147" /></label>
+          <div class="form-section-allentown__form-row">
+            <label>Company name <input name="organization" autocomplete="organization" placeholder="Company X" /></label>
+            <label>Country <select name="country"><option>Select country</option></select></label>
+          </div>
+          <button type="button">Schedule your call <span aria-hidden="true">›</span></button>
+        </div>
+      </div>
+      {methods.length > 0 && <address class="form-section-allentown__contacts">
+        {contactHeading && <p class="form-section-allentown__contacts-heading">{contactHeading}</p>}
+        <ul>
+          {methods.map((method) => <li><a href={method.href}>{method.icon && <ContactIcon name={method.icon} />}<span>{method.label}</span></a></li>)}
+        </ul>
+      </address>}
+    </div>
+    {image && <picture class="form-section-allentown__media">
+      {image.sources?.length && <source type="image/avif" srcset={image.sources.map((source) => `${source.url} ${source.width}w`).join(', ')} sizes={image.sizes} />}
+      <img src={image.url} alt={image.alt} width={image.width} height={image.height} data-fallback-url={image.fallbackUrl} loading="lazy" decoding="async" />
+    </picture>}
+  </div>
+</section>
+<style>
+  .form-section-allentown {
+    & > .form-section-allentown__container { gap: var(--kinekt-wireframe-section-space-l); }
+    & .form-section-allentown__content { display: grid; align-content: center; gap: var(--kinekt-wireframe-space-l); }
+    & .form-section-allentown__form-embed { display: grid; gap: .5rem; }
+    & .form-section-allentown__form-expanded { display: none; gap: 1rem; }
+    &[data-form-variation='expanded'] .form-section-allentown__form-compact { display: none; }
+    &[data-form-variation='expanded'] .form-section-allentown__form-expanded { display: grid; }
+    & .form-section-allentown__email-label, & .form-section-allentown__contacts-heading, & .form-section-allentown__form-expanded label { display: grid; gap: .5rem; margin: 0; font-size: .8125rem; font-weight: 700; }
+    & .form-section-allentown__email-row, & .form-section-allentown__form-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+    & .form-section-allentown__form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+    & .form-section-allentown__form-embed :is(input, select, button) { min-height: 3rem; border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: 0; font: inherit; }
+    & .form-section-allentown__form-embed :is(input, select) { min-width: 0; padding: 0 .875rem; background: color-mix(in srgb, var(--kinekt-component-canvas) 90%, var(--kinekt-component-ink)); color: var(--kinekt-component-ink); }
+    & .form-section-allentown__form-embed button { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; width: max-content; padding: 0 1rem; border-color: var(--kinekt-component-action); background: var(--kinekt-component-action); color: var(--kinekt-component-canvas); cursor: pointer; }
+    & .form-section-allentown__contacts { display: grid; gap: .75rem; font-style: normal; }
+    & .form-section-allentown__contacts ul { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+    & .form-section-allentown__contacts a { display: inline-flex; align-items: center; gap: .5rem; color: inherit; text-decoration: none; }
+    & .form-section-allentown__media { display: block; min-width: 0; }
+    & .form-section-allentown__media img { aspect-ratio: 1 / 1; object-fit: cover; }
+
+    @media (min-width: 50rem) {
+      & > .form-section-allentown__container { align-items: center; column-gap: var(--kinekt-wireframe-section-space-xl); }
+      &[data-image-position='left'] > .form-section-allentown__container { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+      &[data-image-position='left'] .form-section-allentown__media { grid-column: 1; grid-row: 1; }
+      &[data-image-position='left'] .form-section-allentown__content { grid-column: 2; grid-row: 1; }
+      &[data-image-position='right'] > .form-section-allentown__container { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
+      &[data-image-position='right'] .form-section-allentown__content { grid-column: 1; grid-row: 1; }
+      &[data-image-position='right'] .form-section-allentown__media { grid-column: 2; grid-row: 1; }
     }
   }
-}
----
-<StructuralSection block="beta-form-section-allentown" fields={fields} {...props} />
+</style>

@@ -1,108 +1,28 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import FormSectionAllentown from './form-section-allentown.astro'
 
-const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-  },
-  "image": {
-    "url": "https://placehold.co/1600x900/png?text=Image",
-    "alt": "Battery module and electrical interface",
-    "width": 1600,
-    "height": 900
-  },
-  "form": {
-    "name": "Project enquiry",
-    "description": "A governed form reference for product, engineering and partnership enquiries."
-  },
-  "contactHeading": "Energy systems built around real operating conditions",
-  "contactMethods": [
-    {
-      "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "label": "System engineering",
-      "href": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-    },
-    {
-      "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "label": "Built for the field",
-      "href": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-    },
-    {
-      "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "label": "From cell to system",
-      "href": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-    }
-  ]
-}
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "image": {
-    "kind": "media"
-  },
-  "form": {
-    "kind": "formReference"
-  },
-  "contactHeading": {
-    "kind": "text"
-  },
-  "contactMethods": {
-    "kind": "componentList",
-    "id": "components/contact-method/allentown",
-    "role": "contact-method",
-    "fields": {
-      "icon": {
-        "kind": "text"
-      },
-      "label": {
-        "kind": "text"
-      },
-      "href": {
-        "kind": "text"
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = undefined
 const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
+const intro = {
+  accentHeading: 'Work with our experts',
+  heading: 'Not sure yet? Discuss with one of our experts.',
+  description: 'Every operation has its own constraints. We help map the technical priorities and define a practical next step together.',
 }
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
+const image = {
+  url: `${catalogueBase}placeholders/pexels-industrial-building.webp`,
+  alt: 'A team member in an industrial workspace',
+  width: 1200,
+  height: 1200,
+}
 ---
-<StructuralSection block="beta-form-section-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<FormSectionAllentown
+  theme="semi-dark"
+  intro={intro}
+  image={image}
+  imagePosition="left"
+  form={{ name: 'Book a call' }}
+  contactHeading="Or get in touch with us directly:"
+  contactMethods={[
+    { icon: 'email', label: 'advice@example.com', href: 'mailto:advice@example.com' },
+    { icon: 'phone', label: '+1 212 555 0147', href: 'tel:+12125550147' },
+  ]}
+/>

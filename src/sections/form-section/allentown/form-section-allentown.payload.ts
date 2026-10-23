@@ -1,12 +1,13 @@
-// @generated structural section — source manifest remains the contract.
 import type { Block, CollectionSlug } from 'payload'
-import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
+import { createManifestBlock } from '../../../shared/manifest-block.js'
+import { structuralSectionToProps } from '../../../shared/structural-props.js'
+import type { PayloadAdapterOptions } from '../../../shared/payload.js'
 import type { BetaFormSectionAllentownContent, PayloadBetaFormSectionAllentownDocument } from './form-section-allentown.types.js'
 
 const manifest = {
   "slug": "form-section-allentown",
   "title": "Form Section Allentown",
-  "status": "planned",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",
@@ -31,11 +32,21 @@ const manifest = {
       "required": false,
       "localized": true
     },
+    "imagePosition": {
+      "kind": "select",
+      "required": true,
+      "localized": true,
+      "options": [
+        "left",
+        "right"
+      ],
+      "description": "Desktop media position. Mobile always presents content before media."
+    },
     "form": {
       "kind": "formReference",
       "required": true,
       "localized": true,
-      "description": "Only active forms available to the current region are selectable."
+      "description": "Only active forms available to the current region are selectable. The integration renders the selected form as a HubSpot embed."
     },
     "contactHeading": {
       "kind": "text",
@@ -58,6 +69,6 @@ export function createBetaFormSectionAllentownBlock(options: CreateBetaFormSecti
   return createManifestBlock(manifest, options)
 }
 
-export function betaFormSectionAllentownToProps(data: PayloadBetaFormSectionAllentownDocument): BetaFormSectionAllentownContent {
-  return manifestToProps(data)
+export function betaFormSectionAllentownToProps(data: PayloadBetaFormSectionAllentownDocument, options: PayloadAdapterOptions = {}): BetaFormSectionAllentownContent {
+  return structuralSectionToProps(data, options)
 }
