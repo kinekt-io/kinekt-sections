@@ -5,7 +5,7 @@
   "id": "components/solution-item/allentown",
   "slug": "solution-item-allentown",
   "title": "Solution Item Allentown",
-  "description": "A reusable solution item with per-locale media, required copy, optional label and optional CTA.",
+  "description": "A reusable solution item with per-locale media, copy, optional label, and a required destination resolved to a Page or URL.",
   "category": "components",
   "role": "solution-item",
   "variation": "allentown",
@@ -20,7 +20,7 @@
     "heading": { "kind": "text", "required": true, "localized": true },
     "label": { "kind": "component", "componentId": "atoms/label/allentown", "required": false, "localized": true },
     "description": { "kind": "textarea", "required": true, "localized": true },
-    "cta": { "kind": "component", "componentId": "controls/button/allentown", "required": false, "localized": true }
+    "cta": { "kind": "component", "componentId": "controls/button/allentown", "required": true, "localized": true, "description": "Link label plus either a Page relationship or a URL." }
   },
   "runtimeProps": {
     "headingLevel": { "kind": "headingLevel", "source": "renderer" }

@@ -2,18 +2,18 @@
 import SectionIntro from "../../../primitives/section-intro/section-intro.astro";
 import Button from "../../../controls/button/allentown/button-allentown.astro";
 import type {
-  Cta,
+  CtaGroup,
   SectionIntro as SectionIntroContent,
 } from "../../../shared/content.js";
 
 interface Props {
-  callout: { intro: SectionIntroContent; cta: { cta: Cta } | Cta };
+  callout: { intro: SectionIntroContent; ctaGroup: CtaGroup };
   headingLevel?: "h1" | "h2" | "h3";
   class?: string;
 }
 
 const { callout, headingLevel = "h3", class: className } = Astro.props;
-const cta = "cta" in callout.cta ? callout.cta.cta : callout.cta;
+const { primary, secondary } = callout.ctaGroup;
 const classes = ["callout-allentown", className].filter(Boolean).join(" ");
 const contentIntro = { ...callout.intro, accentHeading: undefined };
 ---
@@ -34,7 +34,8 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
       <SectionIntro intro={contentIntro} headingLevel={headingLevel} />
     </div>
     <div class="callout-allentown__action">
-      <Button href={cta.href} label={cta.label} />
+      {primary && <Button href={primary.href} label={primary.label} />}
+      {secondary && <Button href={secondary.href} label={secondary.label} style="secondary" />}
     </div>
   </div>
 </aside>
@@ -78,7 +79,10 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
   }
   .callout-allentown__action {
     display: flex;
-    align-items: end; 
+    flex-wrap: wrap;
+    align-items: end;
+    gap: var(--kinekt-wireframe-space-s);
+
     .button {
       min-height: 2.75rem;
     }

@@ -1,5 +1,12 @@
 # Changelog
 
+## 26.10.2-beta.20 — 2026-10-23
+
+### Changed
+
+- Replaced Solution List Allentown's generic JSON Payload fields with native localized Intro, repeatable Item, Page-or-URL destination, and standardized Callout/CTA Group fields.
+- Updated Callout Allentown to consume the reusable CTA Group contract.
+
 ## 26.10.2-beta.19 — 2026-10-22
 
 ### Fixed

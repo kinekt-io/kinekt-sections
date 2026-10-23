@@ -1,3 +1,2 @@
-// @generated structural section — source manifest remains the contract.
-export type BetaSolutionListAllentownContent = Record<string, unknown>
-export type PayloadBetaSolutionListAllentownDocument = BetaSolutionListAllentownContent & { id?: string }
+// Solution List native Payload contract type entrypoint.
+export type { PayloadSolutionListAllentownDocument, SolutionListAllentownContent, SolutionListAllentownItem } from './solution-list-allentown.contract.js'

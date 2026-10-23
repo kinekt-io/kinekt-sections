@@ -5,7 +5,7 @@
   "id": "components/callout/allentown",
   "slug": "callout-allentown",
   "title": "Callout Allentown",
-  "description": "A reusable CTA callout that combines an Intro Block with one required action control.",
+  "description": "A reusable callout that combines an Intro Block with a CTA Group.",
   "category": "components",
   "role": "callout",
   "variation": "allentown",
@@ -16,6 +16,6 @@
   },
   "fields": {
     "intro": { "kind": "component", "componentId": "components/intro/allentown", "required": true, "localized": true },
-    "cta": { "kind": "component", "componentId": "controls/button/allentown", "required": true, "localized": true }
+    "ctaGroup": { "kind": "component", "componentId": "components/cta-group/allentown", "required": true, "localized": true }
   }
 }

@@ -18,12 +18,16 @@ interface Props {
   intro: SectionIntroContent
   introCta?: { cta: Cta } | Cta
   comparison: { columns: string[]; rows: ComparisonRow[] }
-  callout: { intro: SectionIntroContent; cta: { cta: Cta } | Cta }
+  callout: { intro: SectionIntroContent; ctaGroup?: { primary?: Cta; secondary?: Cta }; cta?: { cta: Cta } | Cta }
 }
 
 const { id, theme = 'semi-light', headingLevel = 'h2', intro, introCta, comparison, callout } = Astro.props as Props
 const getCta = (value: Props['introCta']) => value && ('cta' in value ? value.cta : value)
 const fontAwesomeIcon = (name: 'circle-check' | 'circle-xmark') => fas[name === 'circle-check' ? 'faCircleCheck' : 'faCircleXmark']
+const normalizedCallout = {
+  intro: callout.intro,
+  ctaGroup: callout.ctaGroup ?? { primary: getCta(callout.cta) },
+}
 ---
 <section class="comparison-overview-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="comparison-overview-allentown__container">
@@ -45,7 +49,7 @@ const fontAwesomeIcon = (name: 'circle-check' | 'circle-xmark') => fas[name === 
         })}</tr>)}</tbody>
       </table>
     </div>
-    <Callout callout={callout} class="comparison-overview-allentown__callout" />
+    <Callout callout={normalizedCallout} class="comparison-overview-allentown__callout" />
   </div>
 </section>
 <style>
