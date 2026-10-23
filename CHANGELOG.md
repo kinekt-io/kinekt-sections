@@ -1,5 +1,11 @@
 # Changelog
 
+## 26.10.2-beta.19 — 2026-10-22
+
+### Fixed
+
+- Restored the page-backed Case Studies Payload contract and protected its explicit adapter entrypoints from structural renderer generation.
+
 ## 26.10.2-beta.18 — 2026-10-22
 
 ### Fixed

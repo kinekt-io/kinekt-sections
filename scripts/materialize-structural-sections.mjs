@@ -288,6 +288,7 @@ for (const directory of await manifestDirectories(sections)) {
     'density-comparison-allentown',
     'featured-insights-allentown',
   ]).has(manifest.slug)
+  const caseStudiesContract = manifest.slug === 'case-studies-allentown'
   const block = `${prefix}${manifest.slug}`
   const previewContent = sampleContent(manifest)
   const fields = previewFields(manifest)
@@ -386,13 +387,19 @@ const content = {
 `
   const previewCtas = previewContent.ctas ?? previewContent.ctaGroup
   const previewMedia = previewContent.media
+  const caseStudiesTypes = `// Case Studies contract type entrypoint.\nexport type { CaseStudiesAllentownContent, CaseStudyCtaIcon, CaseStudyResult, CaseStudySlide, PayloadCaseStudiesAllentownDocument } from './case-studies-allentown.contract.js'\n`
+  const caseStudiesPayload = `// Case Studies contract entrypoint.\nexport { caseStudiesAllentownToProps, createCaseStudiesAllentownBlock } from './case-studies-allentown.contract.js'\nexport type { CaseStudiesAllentownAdapterOptions, CreateCaseStudiesAllentownBlockOptions } from './case-studies-allentown.contract.js'\n`
 
   await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\nconst fields = ${JSON.stringify(fields, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(block)} fields={fields} {...props} />\n`)
   await materialize(path.join(directory, `${base}.types.ts`), manifest.slug === 'media-metrics-allentown'
     ? mediaMetricsTypes
-    : `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`, manifest.slug === 'media-metrics-allentown')
+    : caseStudiesContract
+      ? caseStudiesTypes
+      : `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`, manifest.slug === 'media-metrics-allentown')
   await materialize(path.join(directory, `${base}.payload.ts`), manifest.slug === 'media-metrics-allentown'
     ? mediaMetricsPayload
+    : caseStudiesContract
+      ? caseStudiesPayload
     : structuralAdapter
       ? `import type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock } from '${importAdapter}'\nimport { structuralSectionToProps } from '${importStructuralAdapter}'\nimport type { PayloadAdapterOptions } from '../../../shared/payload.js'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document, options: PayloadAdapterOptions = {}): ${name}Content {\n  return structuralSectionToProps(data, options)\n}\n`
       : `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`, manifest.slug === 'media-metrics-allentown')

@@ -1,3 +1,2 @@
-// @generated structural section — source manifest remains the contract.
-export type CaseStudiesAllentownContent = Record<string, unknown>
-export type PayloadCaseStudiesAllentownDocument = CaseStudiesAllentownContent & { id?: string }
+// Case Studies contract type entrypoint.
+export type { CaseStudiesAllentownContent, CaseStudyCtaIcon, CaseStudyResult, CaseStudySlide, PayloadCaseStudiesAllentownDocument } from './case-studies-allentown.contract.js'
