@@ -98,35 +98,62 @@ if (!hero) throw new Error('The homepage has no Allentown hero block.')
 
 ## Wireframe styling and site token overrides
 
-Every public section root carries `data-kinekt-section`. The package imports its neutral wireframe stylesheet with each section renderer; consumers do not import a separate global stylesheet.
+Shared sections use the canonical contract in [`src/styles/wireframe-tokens.css`](src/styles/wireframe-tokens.css), based on the supplied wireframe token file. Defaults are grayscale with system fonts. Customer colors and fonts belong in one customer stylesheet, not in section renderers.
 
-The stylesheet has only black, white and grey fallbacks. It does not define site tokens, so a consuming site can set the generic token layer once and override a single component without selector specificity or `!important`:
+Import the styles once in the consuming layout:
+
+```ts
+import '@kinekt-io/components/styles/wireframe-tokens.css'
+import '@kinekt-io/components/styles/wireframe.css'
+import '../styles/customer-tokens.css'
+```
+
+Section renderers also load the shared stylesheet. Canonical defaults are inside `@layer kinekt.tokens`; unlayered customer declarations take precedence even when loaded before those defaults. Use root declarations for canonical inputs and a component class for component-specific overrides:
 
 ```css
 :root {
-  --kinekt-color-canvas: #ffffff;
-  --kinekt-color-surface: #f5f5f5;
-  --kinekt-color-ink: #111111;
-  --kinekt-color-muted: #666666;
-  --kinekt-color-line: #d4d4d4;
-  --kinekt-color-action: #111111;
-  --kinekt-color-action-text: #ffffff;
-  --kinekt-font-sans: system-ui, sans-serif;
-  --kinekt-font-mono: ui-monospace, monospace;
-  --kinekt-content-width: 80rem;
-  --kinekt-reading-width: 46rem;
-  --kinekt-space-inline: 2rem;
-  --kinekt-space-section: 6rem;
-  --kinekt-space-content: 1.5rem;
+  --primary-ultra-dark: #20103b;
+  --primary-dark: #382354;
+  --neutral-ultra-light: #fff8eb;
+  --neutral-light: #f0e4d1;
+  --heading-font-family: Georgia, serif;
+  --text-font-family: system-ui, sans-serif;
+  --desktop-content-width: 75rem;
+  --desktop-section-gutter: 5rem;
+  --mobile-section-gutter: 1.25rem;
+  --desktop-base-spacing-value: 1.75rem;
+  --mobile-base-spacing-value: 1.125rem;
+  --buttons-has-radius: 1;
+  --buttons-radius: var(--radius-m);
 }
 
 .hero-allentown {
-  --kinekt-section-canvas: #f5f5f5;
-  --kinekt-section-content-width: 90rem;
+  --kiw--hero-allentown-block-space: var(--section-space-m);
+  --kiw--hero-allentown-gap: var(--space-xs);
+}
+
+.button {
+  --kiw--button-allentown-radius: var(--radius-l);
 }
 ```
 
-Section-local tokens (`--kinekt-section-*`) resolve before generic site tokens (`--kinekt-*-*`). `data-kinekt-theme="dark"` switches only the component-local aliases; a site can still override those aliases on the section root.
+### Fluid values and radii
+
+`--content-width`, `--website-width`, `--section-gutter`, `--container-gap`, `--content-gap`, `--grid-gap`, width/spacing scales, heading sizes, text sizes and input height interpolate between their mobile and desktop endpoints. Values clamp outside the fluid interval. Website width derives from content width plus both gutters; `--fluid-min-width` and `--fluid-max-width` define the interpolation interval.
+
+Override the `--mobile-*` and `--desktop-*` inputs rather than copying their equations. Container, content and grid gaps have independent endpoint pairs, such as `--mobile-grid-gap` and `--desktop-grid-gap`. Equal endpoints produce a constant value. The calculations use CSS typed arithmetic and `pow()`; runtime verification currently covers Chromium, not every browser engine.
+
+Radius values are `--radius-none` (0), `--radius-xs` (2px), `--radius-s` (4px), `--radius-m` (8px), `--radius-l` (16px), `--radius-xl` (24px) and `--radius-xxl` (32px), expressed in rem. Buttons multiply their selected radius by `--buttons-has-radius`: `0` disables rounding, `1` enables it. The wireframe default is `0`.
+
+### Component defaults and theme roles
+
+Each section root carries `data-kinekt-section`. Its token bridge maps `--kiw--<section-slug>-<role>` overrides to canonical defaults. Renderers with local styles define additional component aliases beside those styles. Use the nearest scale value instead of introducing a second spacing or typography scale.
+
+The four semantic themes retain their meaning: `light` uses `--neutral-ultra-light`, `semi-light` uses `--neutral-light`, `dark` uses `--primary-ultra-dark`, and `semi-dark` uses `--primary-dark`. Existing explicit `--kinekt-section-*` hooks remain available; old generic `--kinekt-color-*`, `--kinekt-font-*` and `--kinekt-space-*` site contracts have been replaced.
+
+Keep component defaults low-specificity. Inside scoped Astro CSS, use `:global(:where(.component))` for variable declarations and a separate scoped class selector for layout rules. Never point a bridged component alias back to the semantic variable that consumes it: that creates a CSS custom-property cycle.
+
+This migration is local-only until a package release is authorized. The linked Tulip and template checkouts use the new exports; their existing release pins do not yet provide them.
 
 ## Interactions
 
@@ -151,17 +178,71 @@ The consumer’s indexed article layouts must expose the governed metadata, for 
 
 ## Add a component
 
-See [`naming-conventions.md`](./naming-conventions.md) for the naming scheme and folder layout.
+Start with the [section developer handoff](DEVELOPER-HANDOFF.md). It covers this repository's manifest, paired Astro/Payload contract, token usage, previews, checks and GitHub workflows. See [naming conventions](naming-conventions.md) for role and variation names.
 
-1. Add `<name>.astro`, `<name>.payload.ts`, `<name>.types.ts`, and `README.md` below `src/<category>/`.
-2. Use the same base name for the three source files and for the Payload slug.
-3. Describe the component in its `README.md`. The first heading and paragraph appear in the generated catalogue.
-4. Add `## Figma` and place an approved `https://www.figma.com/...` URL on the next line when a design exists. The catalogue reads it and creates an external design link.
-5. Add `<name>.preview.astro` when the component can be rendered with representative static content. The catalogue links to this page but does not publish it as a package entrypoint.
-6. Run the checks below.
-7. Increase `version` in `package.json` before publishing a release.
+1. Review the approved design and define `manifest.json` before implementing its editor-owned fields or runtime props.
+2. Add the paired `<name>.astro`, `<name>.payload.ts` and `<name>.types.ts` entries under `src/<category>/<role>/<variation>/`.
+3. Keep manifest fields, native Payload fields, adapter output and Astro props consistent; inspect generator ownership before editing generated files.
+4. Document behavior in the component `README.md`; catalogue title, description, tags and Figma reference come from the manifest.
+5. Add `<name>.preview.astro` with realistic fictional content and the required states; previews are not public package entrypoints.
+6. Regenerate exports, run the checks below and inspect the actual responsive preview.
+7. Publish only after authorization, with a new immutable package version.
 
-The build discovers the three filenames and rewrites `package.json` `exports`. Do not add exports manually. The generator stops on duplicate public import paths.
+The build discovers entrypoints and rewrites `package.json` exports and catalogue metadata. Do not edit either generated output manually. The implemented manifest checks are not full JSON Schema validation.
+
+## Component maturity and release stages
+
+Component maturity is separate from publishing the package. A package can contain components at different stages; publishing a version does not automatically mark every component as released.
+
+### Review gates
+
+Use these human review gates when promoting a component. The tooling does not assess readiness or advance the stage automatically.
+
+| Stage | Manifest status | Intended use and promotion gate |
+| --- | --- | --- |
+| Alpha | `alpha` | Early design and content-contract review; structure and fields may change, so do not treat it as a stable consumer contract. |
+| Beta | `beta` | Paired Astro/Payload implementation and preview work; use it for integration testing while resolving contract, responsive and interaction issues. |
+| Prerelease | `prerelease` | Release candidate: approved scope is implemented, field parity and localization are checked, and responsive, theme, optional-content and accessibility behavior have been exercised. |
+| Release | `released` | Maintainer-approved stable contract with passing checks and a documented release; breaking changes require an explicit migration or a new variation. |
+
+Use the spelling `prerelease`, including `PRERELEASE` in display labels. `planned` and `deprecated` are additional lifecycle values, not synonyms for alpha or release.
+
+### What the generator actually does
+
+The current generated Payload factory has these observable behaviors:
+
+| `manifest.status` | Generated display label | Stored block slug |
+| --- | --- | --- |
+| `alpha` | `BETA — <Title>` | `beta-<slug>` |
+| `beta` | `BETA — <Title>` | `beta-<slug>` |
+| `prerelease` | `PRERELEASE — <Title>` | `beta-<slug>` |
+| `released` | `<Title>` without a maturity prefix | `<slug>` |
+
+**Current limitations:** alpha has no separate generated `ALPHA` label. The string `release` passes metadata validation but does not select the stable generator branch; it still produces a `BETA` label and `beta-` slug. Use `released` for the release stage in generated manifests.
+
+Handwritten adapters can preserve existing stable slugs and explicitly defined labels. Read More, for example, has beta metadata but uses `read-more-allentown`. Always inspect the actual factory rather than inferring the stored identifier from the stage.
+
+### Promote without breaking stored content
+
+1. Confirm the next stage's review gate and update `manifest.status` plus matching catalogue tags.
+2. Check handwritten Payload labels and documentation; they do not automatically follow manifest metadata.
+3. Regenerate exports and inspect generated names, interface names and block slugs.
+4. If a stored slug changes, plan and apply the coordinated content/caller migration before exposing the new contract; do not silently rename existing CMS blocks.
+5. Run the package checks and actual preview scenarios before approval.
+
+For generated components, changing `prerelease` to `released` removes the `beta-` slug prefix. That can be a breaking content-model change even when the visual design is unchanged.
+
+### Keep the version fields distinct
+
+- `schemaVersion` identifies the manifest format; the current value is `1`.
+- `manifest.status` identifies that component's maturity.
+- `manifest.version` records component metadata using the validator's supported CalVer forms: `YY.MM.revision` or `YY.MM.revision-beta.index`.
+- `package.json.version` identifies the installable package and must be unique for every publication.
+
+Do not invent `-alpha` or `-prerelease` manifest version suffixes: the current metadata validator does not accept them. Component maturity can be `prerelease` while its version still uses the supported `-beta.N` format.
+
+The [developer handoff](DEVELOPER-HANDOFF.md) covers the full manifest, implementation, token, preview and PR workflow. Catalogue deployment and package publication remain separate actions described below.
+
 
 ## Local development
 
@@ -191,8 +272,8 @@ GitHub Pages MUST be available for private repositories on the organization plan
 The package publishes to GitHub Packages, not npmjs.com.
 
 1. Run the local checks above.
-2. Commit and push the component source, generated `package.json`, and lockfile.
-3. Increase `version` in `package.json` before each new package version. GitHub Packages does not allow replacing an existing version.
+2. Increase `version` in `package.json` before committing release changes. GitHub Packages does not allow replacing an existing version.
+3. Commit and push the approved source, generated `package.json`, and lockfile.
 4. In GitHub, open **Actions → Publish private package → Run workflow**.
 
 The workflow builds the package, publishes it, verifies private visibility, installs the resulting package in a new consumer directory, and discovers every generated Astro, Payload, and type entrypoint. It does not need a component-specific update when you add a new entrypoint.

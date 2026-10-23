@@ -2,6 +2,8 @@
 
 This package can contain several implementations of the same UI role. A generic name such as `Hero` becomes ambiguous as soon as a second hero exists. Every component variant therefore has a stable descriptive role and a unique variation name.
 
+Follow the [section developer handoff](DEVELOPER-HANDOFF.md) for the current manifest-first workflow, token contract and generator ownership rules.
+
 ## Name a component
 
 Use lowercase kebab case:
@@ -22,7 +24,7 @@ card-cold-harbor
 - `role` describes the interface role: `hero`, `card`, `gallery`, `quote`, or `cta`.
 - `variation` identifies one implementation of that role. It does not describe a client, a page, or temporary campaign content.
 - A variation name MUST be unique within its role.
-- Use the same base name for the Astro renderer, Payload adapter, shared types, Payload block slug, and Payload interface name.
+- Use the same base name for the paired source files; inspect the actual Payload factory for generated maturity prefixes in its stored slug and interface name.
 - Do not rename a published variation. A rename is a breaking import and content-model change. Add a new variation instead.
 
 ## File and import names
@@ -34,6 +36,7 @@ src/
 └── sections/
     └── hero/
         └── allentown/
+            ├── manifest.json
             ├── README.md
             ├── hero-allentown.astro
             ├── hero-allentown.payload.ts
@@ -61,7 +64,7 @@ The `.payload` and `.types` suffixes are package entrypoint names. Their source 
 
 ## Shared type contract
 
-`<name>.types.ts` owns names and value types shared by Astro and Payload. For example, `HeroContent['eyebrow']` is the same `string` in the renderer and the CMS-to-render conversion.
+`<name>.types.ts` owns the value types shared by Astro and Payload conversion. For example, `HeroContent['intro']` describes the renderer-ready intro rather than a raw Payload document.
 
 Payload has additional document types for its own lifecycle:
 
@@ -85,11 +88,11 @@ Use PascalCase for the `interfaceName`. Keep the slug stable after content exist
 ## Adding a variation
 
 1. Choose an unused variation from the list below.
-2. Create the three paired source files and a `README.md` in a new component folder.
-3. Use the same base name in all source filenames, the Payload slug, and interface name.
-4. Put the component name in the README heading and a one-paragraph description directly below it. The generated catalogue uses both.
-5. Run `pnpm build`.
-6. Add a real rendering example before publishing when the component has required props or runtime behaviour.
+2. Define and review `manifest.json`, including localized editor fields and renderer-owned runtime props.
+3. Create the paired source files and a `README.md` in the component folder; verify the factory's stable stored slug.
+4. Keep the README descriptive; the manifest supplies the generated catalogue's title and description.
+5. Run `pnpm build` to regenerate exports and compile the package.
+6. Add a representative preview and verify the approved states before publishing.
 
 ## Catalogue previews
 
@@ -99,15 +102,9 @@ Preview files are not package exports. They MAY contain component-specific examp
 
 ## Figma links
 
-Add an optional design link in the component `README.md` when the design is approved:
+Record the approved HTTPS Figma URL in `manifest.json` under `figma.url`, with its meaningful frame name in the component documentation. The current generator requires this manifest reference and uses it for catalogue metadata.
 
-```md
-## Figma
-
-https://www.figma.com/design/your-file
-```
-
-The build reads the first HTTPS URL under `## Figma` when it points to `figma.com`. It places that value in generated catalogue metadata, and the catalogue renders an **Open Figma design** link. It does not expose a link when the section or valid URL is absent.
+The component README may also link to the same design for readers. A README-only link does not replace the manifest reference.
 
 The build discovers `.astro`, `.payload.ts`, and `.types.ts` files beneath `src/` and generates `package.json` exports. Do not edit `exports` by hand. Two files that produce the same public import path stop the build.
 
