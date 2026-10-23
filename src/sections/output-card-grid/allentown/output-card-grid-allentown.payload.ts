@@ -20,7 +20,7 @@ export function createOutputCardGridBlock(options: PayloadAdapterOptions = {}): 
 
 export function outputCardGridToProps(data: PayloadOutputCardGridDocument, options: PayloadAdapterOptions = {}): OutputCardGridContent {
   const intro = requireObject(data.intro, 'intro')
-  const ctas = ctaGroupToProps(data.ctas, 'ctas', false)
+  const ctas = ctaGroupToProps(data.ctas, 'ctas')
   const label = optionalText(data.label, 'label')
 
   return {

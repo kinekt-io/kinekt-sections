@@ -18,6 +18,7 @@ const {
 } = Astro.props as any;
 const items = Array.isArray(carousel.items) ? carousel.items : [];
 const action = cta?.cta ?? cta;
+const hasCarousel = items.length > 1;
 const slideAction = (item: any) => item.cta?.cta ?? item.cta;
 ---
 
@@ -50,18 +51,18 @@ const slideAction = (item: any) => item.cta?.cta ?? item.cta;
     </header>
     <div
       class="case-studies-allentown__carousel"
-      data-kinekt-carousel
-      data-kinekt-carousel-controls={carouselControls}
-      data-kinekt-carousel-control-style={carouselControlStyle}
-      data-kinekt-carousel-loop={carouselLoop ? "true" : "false"}
-      role="region"
-      aria-label="Case studies carousel"
+      data-kinekt-carousel={hasCarousel ? true : undefined}
+      data-kinekt-carousel-controls={hasCarousel ? carouselControls : undefined}
+      data-kinekt-carousel-control-style={hasCarousel ? carouselControlStyle : undefined}
+      data-kinekt-carousel-loop={hasCarousel ? (carouselLoop ? "true" : "false") : undefined}
+      role={hasCarousel ? "region" : undefined}
+      aria-label={hasCarousel ? "Case studies carousel" : undefined}
     >
       {
         sectionLabel && (
           <div
             class="case-studies-allentown__carousel-label"
-            data-kinekt-carousel-label
+            data-kinekt-carousel-label={hasCarousel ? true : undefined}
           >
             <>
               <p>{sectionLabel}</p>
@@ -72,11 +73,11 @@ const slideAction = (item: any) => item.cta?.cta ?? item.cta;
       }
       <div
         class="case-studies-allentown__carousel-viewport"
-        data-kinekt-carousel-viewport
+        data-kinekt-carousel-viewport={hasCarousel ? true : undefined}
       >
         <ul
           class="case-studies-allentown__carousel-slides"
-          data-kinekt-carousel-container
+          data-kinekt-carousel-container={hasCarousel ? true : undefined}
         >
           {
             items.map((item: any) => {
@@ -84,7 +85,7 @@ const slideAction = (item: any) => item.cta?.cta ?? item.cta;
               return (
                 <li
                   class="case-studies-allentown__carousel-slide"
-                  data-kinekt-carousel-slide
+                  data-kinekt-carousel-slide={hasCarousel ? true : undefined}
                 >
                   <article>
                     {item.logo?.url && (
@@ -189,72 +190,70 @@ const slideAction = (item: any) => item.cta?.cta ?? item.cta;
           }
         </ul>
       </div>
-      <div
-        class="case-studies-allentown__carousel-pagination"
-        data-kinekt-carousel-pagination
-      >
-        {
-          carouselControls === "previous-next" && (
-            <button
-              class="button button--clear"
-              type="button"
-              data-kinekt-carousel-previous
-              aria-label="Previous case study"
-            >
-              <>
+      {
+        hasCarousel && (
+          <div
+            class="case-studies-allentown__carousel-pagination"
+            data-kinekt-carousel-pagination
+          >
+            {carouselControls === "previous-next" && (
+              <button
+                class="button button--clear"
+                type="button"
+                data-kinekt-carousel-previous
+                aria-label="Previous case study"
+              >
                 <span data-kinekt-carousel-control-icon aria-hidden="true">
                   ←
                 </span>
                 <span data-kinekt-carousel-control-text>Previous</span>
-              </>
+              </button>
+            )}
+            <p
+              class="case-studies-allentown__carousel-counter"
+              data-kinekt-carousel-counter
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <span data-kinekt-carousel-current aria-hidden="true">1</span>
+              <span data-kinekt-carousel-separator aria-hidden="true">/</span>
+              <span data-kinekt-carousel-total aria-hidden="true">{items.length}</span>
+              <span
+                class="case-studies-allentown__carousel-status"
+                data-kinekt-carousel-status
+              >
+                Slide 1 of {items.length}
+              </span>
+            </p>
+            <button
+              class="button button--clear"
+              type="button"
+              data-kinekt-carousel-next
+              aria-label="Next case study"
+            >
+              <span data-kinekt-carousel-control-icon aria-hidden="true">→</span>
+              <span data-kinekt-carousel-control-text>Next</span>
             </button>
-          )
-        }
-        <p
-          class="case-studies-allentown__carousel-counter"
-          data-kinekt-carousel-counter
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          <span data-kinekt-carousel-current aria-hidden="true">1</span><span
-            data-kinekt-carousel-separator
-            aria-hidden="true"
-          >
-            /
-          </span><span data-kinekt-carousel-total aria-hidden="true"
-            >{items.length}</span
-          ><span
-            class="case-studies-allentown__carousel-status"
-            data-kinekt-carousel-status>Slide 1 of {items.length}</span>
-        </p>
-        <button
-          class="button button--clear"
-          type="button"
-          data-kinekt-carousel-next
-          aria-label="Next case study"
-          ><span data-kinekt-carousel-control-icon aria-hidden="true">→</span
-          ><span data-kinekt-carousel-control-text>Next</span></button
-        >
-        <div
-          class="case-studies-allentown__carousel-indicators"
-          data-kinekt-carousel-indicators
-          role="group"
-          aria-label="Case study pagination"
-        >
-          {
-            items.map((_: any, index: number) => (
-              <button
-                class="button button--clear"
-                type="button"
-                data-kinekt-carousel-dot
-                data-kinekt-carousel-index={index}
-                aria-label={`Go to case study ${index + 1}`}
-                aria-current={index === 0 ? "true" : undefined}
-              />
-            ))
-          }
-        </div>
-      </div>
+            <div
+              class="case-studies-allentown__carousel-indicators"
+              data-kinekt-carousel-indicators
+              role="group"
+              aria-label="Case study pagination"
+            >
+              {items.map((_: any, index: number) => (
+                <button
+                  class="button button--clear"
+                  type="button"
+                  data-kinekt-carousel-dot
+                  data-kinekt-carousel-index={index}
+                  aria-label={`Go to case study ${index + 1}`}
+                  aria-current={index === 0 ? "true" : undefined}
+                />
+              ))}
+            </div>
+          </div>
+        )
+      }
     </div>
   </div>
 </section>

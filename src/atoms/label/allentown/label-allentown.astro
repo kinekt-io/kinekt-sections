@@ -11,8 +11,10 @@ const classes = ['label-allentown', className].filter(Boolean).join(' ')
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    box-sizing: border-box;
     inline-size: max-content;
     max-inline-size: 100%;
+    min-inline-size: 0;
     margin: 0;
     padding: 0.625rem 0.75rem;
     border: var(--kinekt-component-border-width) solid var(--kinekt-label-allentown-line);
@@ -24,6 +26,16 @@ const classes = ['label-allentown', className].filter(Boolean).join(' ')
     line-height: 1.1;
     letter-spacing: normal;
     text-transform: none;
+  }
+
+  .label-allentown__text {
+    min-inline-size: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .label-allentown__icon {
+    flex: none;
   }
 
   :global(:where(

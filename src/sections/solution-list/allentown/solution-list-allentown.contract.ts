@@ -168,7 +168,6 @@ function calloutToProps(value: unknown, contentHref: SolutionListAllentownAdapte
   const ctaGroup = requireObject(callout.ctaGroup, 'callout.ctaGroup')
   const primary = optionalButtonToProps(ctaGroup.primaryButton, 'callout.ctaGroup.primaryButton', contentHref)
   const secondary = optionalButtonToProps(ctaGroup.secondaryButton, 'callout.ctaGroup.secondaryButton', contentHref)
-  if (!primary && !secondary) throw new Error('callout.ctaGroup requires a primary or secondary action.')
   return {
     intro: introToProps(callout.intro, 'callout.intro'),
     ctaGroup: { primary, secondary },

@@ -34,7 +34,7 @@ export function createHeroBlock({ mediaCollection = 'media' }: CreateHeroBlockOp
 
 export function heroToProps(data: PayloadHeroDocument, options: PayloadAdapterOptions = {}): HeroContent {
   const intro = requireObject(data.intro, 'intro')
-  const ctas = ctaGroupToProps(data.ctas, 'ctas', false)
+  const ctas = ctaGroupToProps(data.ctas, 'ctas')
   return {
     theme: requireTheme(data.theme),
     intro: { accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'), heading: requireText(intro.heading, 'intro.heading'), ...(intro.description ? { description: { html: richTextToHtml(intro.description, 'intro.description') } } : {}) },
@@ -46,8 +46,8 @@ export function heroToProps(data: PayloadHeroDocument, options: PayloadAdapterOp
 
 function ctaFields() {
   return [
-    { name: 'label', type: 'text' as const, label: 'Label', required: true, validate: (value: unknown) => hasText(value) || requiredTextValidationMessage },
-    { name: 'href', type: 'text' as const, label: 'URL', required: true, validate: (value: unknown) => isSafeWebUrl(value) || ctaHrefValidationMessage },
+    { name: 'label', type: 'text' as const, label: 'Label' },
+    { name: 'href', type: 'text' as const, label: 'URL', validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeWebUrl(value) || ctaHrefValidationMessage },
   ]
 }
 function hasText(value: unknown): value is string { return typeof value === 'string' && value.trim().length > 0 }

@@ -1,5 +1,16 @@
 # Changelog
 
+## 26.10.2-beta.24 — 2026-10-23
+
+### Changed
+
+- Allow every CTA Group to omit its primary button, secondary button, or both.
+- Render a single Case Studies item as static content without Embla hooks, controls, or pagination.
+
+### Fixed
+
+- Keep Label Allentown intrinsically sized for short text while wrapping oversized text inside its available container width.
+
 ## 26.10.2-beta.23 — 2026-10-23
 
 ### Fixed

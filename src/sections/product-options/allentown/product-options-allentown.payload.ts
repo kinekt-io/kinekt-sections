@@ -71,7 +71,7 @@ function formToProps(value: PayloadProductOptionsAllentownDocument['form']): Pro
 
 export function betaProductOptionsAllentownToProps(data: PayloadProductOptionsAllentownDocument, options: PayloadAdapterOptions = {}): ProductOptionsAllentownContent {
   const intro = requireObject(data.intro, 'intro')
-  const ctas = ctaGroupToProps(data.ctas, 'ctas', false)
+  const ctas = ctaGroupToProps(data.ctas, 'ctas')
   const form = formToProps(data.form)
 
   return {
