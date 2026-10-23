@@ -11,12 +11,28 @@ interface Props {
 }
 
 const { media, mobileMedia, class: className, imageClass, loading = 'lazy', fetchpriority } = Astro.props
+const classes = ['kinekt-media', className].filter(Boolean).join(' ')
 const srcset = (value: Media): string | undefined => value.sources?.map((source) => `${source.url} ${source.width}w`).join(', ')
 ---
 
-<picture class={className}>
+<picture class={classes}>
   {mobileMedia && <source media="(max-width: 767px)" type="image/avif" srcset={srcset(mobileMedia) ?? mobileMedia.url} sizes={mobileMedia.sizes} />}
   {media.sources?.length && <source type="image/avif" srcset={srcset(media)} sizes={media.sizes} />}
   <img class={imageClass} src={media.url} alt={media.alt} width={media.width} height={media.height} data-fallback-url={media.fallbackUrl} data-mobile-fallback-url={mobileMedia?.fallbackUrl} loading={loading} fetchpriority={fetchpriority} decoding="async" />
 </picture>
+
+<style is:global>
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .kinekt-media {
+    display: block;
+    max-width: 100%;
+  }
+
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .kinekt-media > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--kinekt-component-radius);
+    filter: var(--kinekt-component-media-filter);
+  }
+</style>
 

@@ -1,6 +1,5 @@
 ---
-import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
-import '../../../styles/wireframe.css'
+import '../../../styles/wireframe-tokens.css'
 import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
@@ -27,7 +26,7 @@ interface Props {
 const { id, theme = 'semi-dark', intro, image, imagePosition = 'left', contactHeading, contactMethods = [], headingLevel = 'h2' } = Astro.props as Props
 const methods = contactMethods.filter((method) => method.label && method.href)
 ---
-<section class="form-section-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-image-position={imagePosition} data-form-variation="compact" style={sectionTokenBridgeStyle('form-section-allentown')}>
+<section class="form-section-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-image-position={imagePosition} data-form-variation="compact">
   <div class="form-section-allentown__container">
     <div class="form-section-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
@@ -66,8 +65,101 @@ const methods = contactMethods.filter((method) => method.label && method.href)
     </picture>}
   </div>
 </section>
-<style>
-  :global(:where(.form-section-allentown)) {
+<style is:global>
+  :where(.form-section-allentown) { box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--kiw--section-text-m-size); font-weight: var(--kiw--section-text-font-weight); line-height: var(--kiw--section-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing); } :where(.form-section-allentown) *, :where(.form-section-allentown) *::before, :where(.form-section-allentown) *::after { box-sizing: border-box; }
+  :where(.form-section-allentown) { --kinekt-component-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--section-heading-2-size)); --kinekt-component-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--section-text-xs-size)); --kinekt-component-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--section-text-l-size)); }
+  :where(.form-section-allentown) > [class$='__container'] { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); } :where(.form-section-allentown) :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } :where(.form-section-allentown) h2 { font-size: var(--kinekt-section-heading-2-size, var(--kiw--section-heading-2-size)); }
+  :where(.form-section-allentown) h1 { font-size: var(--kinekt-section-heading-1-size, var(--kiw--section-heading-1-size, var(--h1))); } :where(.form-section-allentown) h3 { font-size: var(--kinekt-section-heading-3-size, var(--kiw--section-heading-3-size, var(--h3))); } :where(.form-section-allentown) h4 { font-size: var(--kinekt-section-heading-4-size, var(--kiw--section-heading-4-size, var(--h4))); } :where(.form-section-allentown) h5 { font-size: var(--kinekt-section-heading-5-size, var(--kiw--section-heading-5-size, var(--h5))); } :where(.form-section-allentown) h6 { font-size: var(--kinekt-section-heading-6-size, var(--kiw--section-heading-6-size, var(--h6))); }
+  :where(.form-section-allentown) :is(p, li, dd, td, th, label, input, textarea, button) { font: inherit; line-height: var(--kinekt-component-text-line-height); } :where(.form-section-allentown) :is(p, ul, ol, dl, table, form) { margin-block: 0; } :where(.form-section-allentown) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); color: var(--kinekt-component-muted); font-family: var(--kinekt-component-mono); font-size: var(--kinekt-component-text-xs-size); font-weight: var(--kiw--section-heading-font-weight); letter-spacing: var(--kiw--section-text-letter-spacing); text-transform: uppercase; } :where(.form-section-allentown) .section-intro__heading { margin: 0; } :where(.form-section-allentown) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-l-size); }
+  :where(.form-section-allentown) form[class*='__'] { display: grid; gap: var(--kinekt-component-gap); } :where(.form-section-allentown) form label { display: grid; gap: var(--space-xxs); font-weight: var(--heading-font-weight); } :where(.form-section-allentown) :is(input, textarea) { width: 100%; padding: var(--space-s); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); } :where(.form-section-allentown) textarea { min-height: var(--section-space-s); resize: vertical; } :where(.form-section-allentown) button { display: inline-flex; align-items: center; justify-content: center; gap: .8ch; width: fit-content; min-height: var(--kiw--section-button-height); padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline); border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); border-radius: calc(var(--buttons-has-radius) * var(--kiw--section-button-radius)); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-weight: var(--kiw--section-heading-font-weight); cursor: pointer; }
+  :where(.form-section-allentown) :is([class$='__media'], [class*='__media-'], [class*='__image']), :where(.form-section-allentown) picture { display: block; max-width: 100%; } :where(.form-section-allentown) img { display: block; width: 100%; height: auto; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+</style>
+<style is:global>
+  .form-section-allentown {
+    --kiw--section-site-width: var(--kiw--form-section-allentown-site-width, var(--website-width));
+    --kiw--section-content-width: var(--kiw--form-section-allentown-content-width, var(--content-width));
+    --kiw--section-reading-width: var(--kiw--form-section-allentown-reading-width, var(--width-m));
+    --kiw--section-inline-space: var(--kiw--form-section-allentown-inline-space, var(--section-gutter));
+    --kiw--section-block-space: var(--kiw--form-section-allentown-block-space, var(--section-space-l));
+    --kiw--section-gap: var(--kiw--form-section-allentown-gap, var(--content-gap));
+    --kiw--section-radius: var(--kiw--form-section-allentown-radius, var(--radius-none));
+    --kiw--section-border-width: var(--kiw--form-section-allentown-border-width, var(--border-width));
+    --kiw--section-media-filter: var(--kiw--form-section-allentown-media-filter, var(--media-filter));
+    --kiw--section-intro-accent-gap: var(--kiw--form-section-allentown-intro-accent-gap, var(--space-xxs));
+    --kiw--section-intro-description-gap: var(--kiw--form-section-allentown-intro-description-gap, var(--space-m));
+    --kiw--section-heading-1-size: var(--kiw--form-section-allentown-heading-1-size, var(--h1));
+    --kiw--section-heading-2-size: var(--kiw--form-section-allentown-heading-2-size, var(--h2));
+    --kiw--section-heading-3-size: var(--kiw--form-section-allentown-heading-3-size, var(--h3));
+    --kiw--section-heading-4-size: var(--kiw--form-section-allentown-heading-4-size, var(--h4));
+    --kiw--section-heading-5-size: var(--kiw--form-section-allentown-heading-5-size, var(--h5));
+    --kiw--section-heading-6-size: var(--kiw--form-section-allentown-heading-6-size, var(--h6));
+    --kiw--section-heading-font-family: var(--kiw--form-section-allentown-heading-font-family, var(--heading-font-family));
+    --kiw--section-heading-font-weight: var(--kiw--form-section-allentown-heading-font-weight, var(--heading-font-weight));
+    --kiw--section-heading-line-height: var(--kiw--form-section-allentown-heading-line-height, var(--heading-line-height));
+    --kiw--section-heading-letter-spacing: var(--kiw--form-section-allentown-heading-letter-spacing, var(--heading-letter-spacing));
+    --kiw--section-text-font-family: var(--kiw--form-section-allentown-text-font-family, var(--text-font-family));
+    --kiw--section-text-font-weight: var(--kiw--form-section-allentown-text-font-weight, var(--text-font-weight));
+    --kiw--section-text-line-height: var(--kiw--form-section-allentown-text-line-height, var(--text-line-height));
+    --kiw--section-text-letter-spacing: var(--kiw--form-section-allentown-text-letter-spacing, var(--text-letter-spacing));
+    --kiw--section-mono-font-family: var(--kiw--form-section-allentown-mono-font-family, var(--mono-font-family));
+    --kiw--section-text-xs-size: var(--kiw--form-section-allentown-text-xs-size, var(--text-xs));
+    --kiw--section-text-s-size: var(--kiw--form-section-allentown-text-s-size, var(--text-s));
+    --kiw--section-text-m-size: var(--kiw--form-section-allentown-text-m-size, var(--text-m));
+    --kiw--section-text-l-size: var(--kiw--form-section-allentown-text-l-size, var(--text-l));
+    --kiw--section-text-xl-size: var(--kiw--form-section-allentown-text-xl-size, var(--text-xl));
+    --kiw--section-text-xxl-size: var(--kiw--form-section-allentown-text-xxl-size, var(--text-xxl));
+    --kiw--section-carousel-gap: var(--kiw--form-section-allentown-carousel-gap, var(--content-gap));
+    --kiw--section-actions-gap: var(--kiw--form-section-allentown-actions-gap, var(--space-s));
+    --kiw--section-actions-margin: var(--kiw--form-section-allentown-actions-margin, var(--space-xl));
+    --kiw--section-button-height: var(--kiw--form-section-allentown-button-height, var(--input-height));
+    --kiw--section-button-padding-block: var(--kiw--form-section-allentown-button-padding-block, var(--space-s));
+    --kiw--section-button-padding-inline: var(--kiw--form-section-allentown-button-padding-inline, var(--space-l));
+    --kiw--section-button-radius: var(--kiw--form-section-allentown-button-radius, var(--buttons-radius));
+    --kiw--section-input-height: var(--kiw--form-section-allentown-input-height, var(--input-height));
+    --kiw--section-editorial-gap: var(--kiw--form-section-allentown-editorial-gap, var(--section-space-xxl));
+    --kiw--section-card-padding: var(--kiw--form-section-allentown-card-padding, var(--space-l));
+    --kiw--section-header-to-content-gap: var(--kiw--form-section-allentown-header-to-content-gap, var(--section-space-s));
+    --kiw--section-table-offset: var(--kiw--form-section-allentown-table-offset, var(--space-xl));
+    --kiw--section-canvas: var(--kiw--form-section-allentown-canvas);
+    --kiw--section-surface: var(--kiw--form-section-allentown-surface);
+    --kiw--section-ink: var(--kiw--form-section-allentown-ink);
+    --kiw--section-muted: var(--kiw--form-section-allentown-muted);
+    --kiw--section-line: var(--kiw--form-section-allentown-line);
+    --kiw--section-action: var(--kiw--form-section-allentown-action);
+    --kiw--section-action-text: var(--kiw--form-section-allentown-action-text);
+    --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space));
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-ultra-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral-semi-light)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-ultra-dark)));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+    --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family));
+    --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family));
+    --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width));
+    --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width));
+    --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width));
+    --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space));
+    --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap));
+    --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius));
+    --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width));
+    --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter));
+    --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap));
+    --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap));
+    --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height));
+    --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height));
+  }
+  .form-section-allentown[data-kinekt-theme='semi-dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-ultra-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+</style>
+<style is:global>
+  :where(.form-section-allentown[data-kinekt-section]) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-ultra-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-ultra-dark))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family)); --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family)); --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width)); --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width)); --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width)); --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space)); --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space)); --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap)); --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius)); --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width)); --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter)); --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap)); --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap)); --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height)); --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height)); }
+  :where(.form-section-allentown[data-kinekt-section][data-kinekt-theme='semi-light']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral))); color-scheme: light; }
+  :where(.form-section-allentown[data-kinekt-section][data-kinekt-theme='dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+  :where(.form-section-allentown[data-kinekt-section][data-kinekt-theme='semi-dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-ultra-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+</style>
+<style is:global>
+  :where(.form-section-allentown) {
     --kiw--form-section-allentown-container-gap: var(--section-space-l);
     --kiw--form-section-allentown-content-gap: var(--space-l);
     --kiw--form-section-allentown-embed-gap: var(--space-xs);
@@ -89,33 +181,34 @@ const methods = contactMethods.filter((method) => method.label && method.href)
     --kiw--form-section-allentown-column-gap: var(--section-space-xl);
   }
 
-  .form-section-allentown {
-    & > .form-section-allentown__container { gap: var(--kiw--form-section-allentown-container-gap); }
-    & .form-section-allentown__content { display: grid; align-content: center; gap: var(--kiw--form-section-allentown-content-gap); }
-    & .form-section-allentown__form-embed { display: grid; gap: var(--kiw--form-section-allentown-embed-gap); }
-    & .form-section-allentown__form-expanded { display: none; gap: var(--kiw--form-section-allentown-expanded-gap); }
-    &[data-form-variation='expanded'] .form-section-allentown__form-compact { display: none; }
-    &[data-form-variation='expanded'] .form-section-allentown__form-expanded { display: grid; }
-    & .form-section-allentown__email-label, & .form-section-allentown__contacts-heading, & .form-section-allentown__form-expanded label { display: grid; gap: var(--kiw--form-section-allentown-embed-gap); margin: 0; font-size: var(--kiw--form-section-allentown-label-font-size); font-weight: var(--kiw--form-section-allentown-label-font-weight); }
-    & .form-section-allentown__email-row, & .form-section-allentown__form-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-    & .form-section-allentown__form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--kiw--form-section-allentown-row-gap); }
-    & .form-section-allentown__form-embed :is(input, select, button) { min-height: var(--kiw--form-section-allentown-input-height); border: var(--kiw--form-section-allentown-border-width) solid var(--kiw--form-section-allentown-line-color); border-radius: var(--kiw--form-section-allentown-radius); font: inherit; }
-    & .form-section-allentown__form-embed :is(input, select) { min-width: 0; padding: 0 var(--kiw--form-section-allentown-input-inline-space); background: color-mix(in srgb, var(--kiw--form-section-allentown-canvas-color) 90%, var(--kiw--form-section-allentown-ink-color)); color: var(--kiw--form-section-allentown-ink-color); }
-    & .form-section-allentown__form-embed button { display: inline-flex; align-items: center; justify-content: center; gap: var(--kiw--form-section-allentown-button-gap); width: max-content; padding: 0 var(--kiw--form-section-allentown-button-inline-space); border-color: var(--kiw--form-section-allentown-action-color); background: var(--kiw--form-section-allentown-action-color); color: var(--kiw--form-section-allentown-canvas-color); cursor: pointer; }
-    & .form-section-allentown__contacts { display: grid; gap: var(--kiw--form-section-allentown-contacts-gap); font-style: normal; }
-    & .form-section-allentown__contacts ul { display: grid; gap: var(--kiw--form-section-allentown-embed-gap); margin: 0; padding: 0; list-style: none; }
-    & .form-section-allentown__contacts a { display: inline-flex; align-items: center; gap: var(--kiw--form-section-allentown-embed-gap); color: inherit; text-decoration: none; }
-    & .form-section-allentown__media { display: block; min-width: 0; }
-    & .form-section-allentown__media img { aspect-ratio: 1 / 1; object-fit: cover; }
-
-    @media (min-width: 50rem) {
-      & > .form-section-allentown__container { align-items: center; column-gap: var(--kiw--form-section-allentown-column-gap); }
-      &[data-image-position='left'] > .form-section-allentown__container { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
-      &[data-image-position='left'] .form-section-allentown__media { grid-column: 1; grid-row: 1; }
-      &[data-image-position='left'] .form-section-allentown__content { grid-column: 2; grid-row: 1; }
-      &[data-image-position='right'] > .form-section-allentown__container { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
-      &[data-image-position='right'] .form-section-allentown__content { grid-column: 1; grid-row: 1; }
-      &[data-image-position='right'] .form-section-allentown__media { grid-column: 2; grid-row: 1; }
-    }
+  .form-section-allentown > .form-section-allentown__container { gap: var(--kiw--form-section-allentown-container-gap); }
+  .form-section-allentown .section-intro__accent { font: inherit; }
+  .form-section-allentown :is(.section-intro__heading, .section-intro__description) { max-width: var(--kinekt-component-reading-width); }
+  @media (max-width: 49.99rem) { .form-section-allentown { --kinekt-component-reading-width: var(--content-width); } }
+  .form-section-allentown .form-section-allentown__content { display: grid; align-content: center; gap: var(--kiw--form-section-allentown-content-gap); }
+  .form-section-allentown .form-section-allentown__form-embed { display: grid; gap: var(--kiw--form-section-allentown-embed-gap); }
+  .form-section-allentown .form-section-allentown__form-expanded { display: none; gap: var(--kiw--form-section-allentown-expanded-gap); }
+  .form-section-allentown[data-form-variation='expanded'] .form-section-allentown__form-compact { display: none; }
+  .form-section-allentown[data-form-variation='expanded'] .form-section-allentown__form-expanded { display: grid; }
+  .form-section-allentown :is(.form-section-allentown__email-label, .form-section-allentown__contacts-heading, .form-section-allentown__form-expanded label) { display: grid; gap: var(--kiw--form-section-allentown-embed-gap); margin: 0; font-size: var(--kiw--form-section-allentown-label-font-size); font-weight: var(--kiw--form-section-allentown-label-font-weight); }
+  .form-section-allentown :is(.form-section-allentown__email-row, .form-section-allentown__form-row) { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+  .form-section-allentown .form-section-allentown__form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--kiw--form-section-allentown-row-gap); }
+  .form-section-allentown .form-section-allentown__form-embed :is(input, select, button) { min-height: var(--kiw--form-section-allentown-input-height); border: var(--kiw--form-section-allentown-border-width) solid var(--kiw--form-section-allentown-line-color); border-radius: var(--kiw--form-section-allentown-radius); font: inherit; }
+  .form-section-allentown .form-section-allentown__form-embed :is(input, select) { min-width: 0; padding: 0 var(--kiw--form-section-allentown-input-inline-space); background: color-mix(in srgb, var(--kiw--form-section-allentown-canvas-color) 90%, var(--kiw--form-section-allentown-ink-color)); color: var(--kiw--form-section-allentown-ink-color); }
+  .form-section-allentown .form-section-allentown__form-embed button { display: inline-flex; align-items: center; justify-content: center; gap: var(--kiw--form-section-allentown-button-gap); width: max-content; padding: 0 var(--kiw--form-section-allentown-button-inline-space); border-color: var(--kiw--form-section-allentown-action-color); background: var(--kiw--form-section-allentown-action-color); color: var(--kiw--form-section-allentown-canvas-color); cursor: pointer; }
+  .form-section-allentown .form-section-allentown__contacts { display: grid; gap: var(--kiw--form-section-allentown-contacts-gap); font-style: normal; }
+  .form-section-allentown .form-section-allentown__contacts ul { display: grid; gap: var(--kiw--form-section-allentown-embed-gap); margin: 0; padding: 0; list-style: none; }
+  .form-section-allentown .form-section-allentown__contacts a { display: inline-flex; align-items: center; gap: var(--kiw--form-section-allentown-embed-gap); color: inherit; font-weight: var(--heading-font-weight); text-decoration: none; }
+  .form-section-allentown .form-section-allentown__media { display: block; min-width: 0; }
+  .form-section-allentown .form-section-allentown__media img { aspect-ratio: 1 / 1; object-fit: cover; }
+  @media (min-width: 50rem) {
+    .form-section-allentown :is(.section-intro__heading, .section-intro__description) { max-width: var(--kinekt-component-reading-width); }
+    .form-section-allentown > .form-section-allentown__container { align-items: center; column-gap: var(--kiw--form-section-allentown-column-gap); }
+    .form-section-allentown[data-image-position='left'] > .form-section-allentown__container { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+    .form-section-allentown[data-image-position='left'] .form-section-allentown__media { grid-column: 1; grid-row: 1; }
+    .form-section-allentown[data-image-position='left'] .form-section-allentown__content { grid-column: 2; grid-row: 1; }
+    .form-section-allentown[data-image-position='right'] > .form-section-allentown__container { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
+    .form-section-allentown[data-image-position='right'] .form-section-allentown__content { grid-column: 1; grid-row: 1; }
+    .form-section-allentown[data-image-position='right'] .form-section-allentown__media { grid-column: 2; grid-row: 1; }
   }
 </style>

@@ -81,47 +81,53 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
     padding: 0;
     border: 0;
     background: transparent;
+  }
 
-    & .callout-allentown__header {
-      display: flex;
-      align-items: var(--kiw--callout-allentown-header-align-items);
-      gap: var(--kiw--callout-allentown-header-gap);
-      margin: 0;
-    }
-    & .callout-allentown__label {
-      margin: 0;
-      color: var(--kiw--callout-allentown-label-ink);
-      font-family: var(--kiw--callout-allentown-label-font-family);
-      font-size: var(--kiw--callout-allentown-label-font-size);
-      font-weight: var(--kiw--callout-allentown-label-font-weight);
-      line-height: var(--kiw--callout-allentown-label-line-height);
-      letter-spacing: var(--kiw--callout-allentown-label-letter-spacing);
-      text-transform: var(--kiw--callout-allentown-label-text-transform);
-    }
-    & .callout-allentown__line {
-      flex: 1;
-      height: var(--kiw--callout-allentown-line-width);
-      background: var(--kiw--callout-allentown-line-color);
-    }
-    & .callout-allentown__body {
-      display: grid;
-      gap: var(--kiw--callout-allentown-body-gap);
-    }
-    & .callout-allentown__content {
-      max-width: var(--kiw--callout-allentown-content-width);
-    }
-    & .callout-allentown__action {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: var(--kiw--callout-allentown-action-align-items);
-      gap: var(--kiw--callout-allentown-action-gap);
-    }
-    @media (min-width: 50rem) {
-      & .callout-allentown__body {
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-items: var(--kiw--callout-allentown-desktop-body-align-items);
-        gap: var(--kiw--callout-allentown-desktop-body-gap);
-      }
+  .callout-allentown .callout-allentown__header {
+    display: flex;
+    align-items: var(--kiw--callout-allentown-header-align-items);
+    gap: var(--kiw--callout-allentown-header-gap);
+    margin: 0;
+  }
+
+  .callout-allentown .callout-allentown__label {
+    margin: 0;
+    color: var(--kiw--callout-allentown-label-ink);
+    font-family: var(--kiw--callout-allentown-label-font-family);
+    font-size: var(--kiw--callout-allentown-label-font-size);
+    font-weight: var(--kiw--callout-allentown-label-font-weight);
+    line-height: var(--kiw--callout-allentown-label-line-height);
+    letter-spacing: var(--kiw--callout-allentown-label-letter-spacing);
+    text-transform: var(--kiw--callout-allentown-label-text-transform);
+  }
+
+  .callout-allentown .callout-allentown__line {
+    flex: 1;
+    height: var(--kiw--callout-allentown-line-width);
+    background: var(--kiw--callout-allentown-line-color);
+  }
+
+  .callout-allentown .callout-allentown__body {
+    display: grid;
+    gap: var(--kiw--callout-allentown-body-gap);
+  }
+
+  .callout-allentown .callout-allentown__content {
+    max-width: var(--kiw--callout-allentown-content-width);
+  }
+
+  .callout-allentown .callout-allentown__action {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: var(--kiw--callout-allentown-action-align-items);
+    gap: var(--kiw--callout-allentown-action-gap);
+  }
+
+  @media (min-width: 50rem) {
+    .callout-allentown .callout-allentown__body {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: var(--kiw--callout-allentown-desktop-body-align-items);
+      gap: var(--kiw--callout-allentown-desktop-body-gap);
     }
   }
 </style>

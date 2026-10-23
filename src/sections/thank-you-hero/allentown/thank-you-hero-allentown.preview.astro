@@ -141,3 +141,70 @@ function resolveCatalogueAssets(value: unknown): unknown {
 const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
 <StructuralSection block="beta-thank-you-hero-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<style is:global>
+.beta-thank-you-hero-allentown[data-kinekt-section] {
+  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--thank-you-hero-allentown-site-width, var(--website-width)));
+  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--thank-you-hero-allentown-content-width, var(--content-width)));
+  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--thank-you-hero-allentown-reading-width, var(--width-m)));
+  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--thank-you-hero-allentown-inline-space, var(--section-gutter)));
+  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--thank-you-hero-allentown-block-space, var(--section-space-l)));
+  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--thank-you-hero-allentown-gap, var(--content-gap)));
+  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--thank-you-hero-allentown-radius, var(--radius-none)));
+  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--thank-you-hero-allentown-border-width, var(--border-width)));
+  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--thank-you-hero-allentown-media-filter, var(--media-filter)));
+  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--thank-you-hero-allentown-intro-accent-gap, var(--space-xxs)));
+  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--thank-you-hero-allentown-intro-description-gap, var(--space-m)));
+  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--thank-you-hero-allentown-heading-1-size, var(--h1)));
+  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--thank-you-hero-allentown-heading-2-size, var(--h2)));
+  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--thank-you-hero-allentown-heading-3-size, var(--h3)));
+  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--thank-you-hero-allentown-heading-4-size, var(--h4)));
+  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--thank-you-hero-allentown-heading-5-size, var(--h5)));
+  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--thank-you-hero-allentown-heading-6-size, var(--h6)));
+  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--thank-you-hero-allentown-heading-font-family, var(--heading-font-family)));
+  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--thank-you-hero-allentown-heading-font-weight, var(--heading-font-weight)));
+  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--thank-you-hero-allentown-heading-line-height, var(--heading-line-height)));
+  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--thank-you-hero-allentown-heading-letter-spacing, var(--heading-letter-spacing)));
+  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--thank-you-hero-allentown-text-font-family, var(--text-font-family)));
+  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--thank-you-hero-allentown-text-font-weight, var(--text-font-weight)));
+  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--thank-you-hero-allentown-text-line-height, var(--text-line-height)));
+  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--thank-you-hero-allentown-text-letter-spacing, var(--text-letter-spacing)));
+  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--thank-you-hero-allentown-mono-font-family, var(--mono-font-family)));
+  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--thank-you-hero-allentown-text-xs-size, var(--text-xs)));
+  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--thank-you-hero-allentown-text-s-size, var(--text-s)));
+  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--thank-you-hero-allentown-text-m-size, var(--text-m)));
+  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--thank-you-hero-allentown-text-l-size, var(--text-l)));
+  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--thank-you-hero-allentown-text-xl-size, var(--text-xl)));
+  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--thank-you-hero-allentown-text-xxl-size, var(--text-xxl)));
+  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--thank-you-hero-allentown-carousel-gap, var(--content-gap)));
+  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--thank-you-hero-allentown-actions-gap, var(--space-s)));
+  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--thank-you-hero-allentown-actions-margin, var(--space-xl)));
+  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--thank-you-hero-allentown-button-height, var(--input-height)));
+  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--thank-you-hero-allentown-button-padding-block, var(--space-s)));
+  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--thank-you-hero-allentown-button-padding-inline, var(--space-l)));
+  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--thank-you-hero-allentown-button-radius, var(--buttons-radius)));
+  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--thank-you-hero-allentown-input-height, var(--input-height)));
+  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--thank-you-hero-allentown-editorial-gap, var(--section-space-xxl)));
+  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--thank-you-hero-allentown-card-padding, var(--space-l)));
+  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--thank-you-hero-allentown-header-to-content-gap, var(--section-space-s)));
+  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--thank-you-hero-allentown-table-offset, var(--space-xl)));
+  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--thank-you-hero-allentown-canvas));
+  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--thank-you-hero-allentown-surface));
+  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--thank-you-hero-allentown-ink));
+  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--thank-you-hero-allentown-muted));
+  --kiw--section-line: var(--kinekt-section-line, var(--kiw--thank-you-hero-allentown-line));
+  --kiw--section-action: var(--kinekt-section-action, var(--kiw--thank-you-hero-allentown-action));
+  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--thank-you-hero-allentown-action-text));
+}
+</style>
+<style is:global>
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-media-ratio: 1 / 1; --kinekt-section-gap: var(--section-space-xl); }
+  :where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) [class$='__container'] { gap: var(--section-space-l); }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__header { justify-self: center; max-inline-size: var(--kinekt-section-reading-width); text-align: center; }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps-heading { display: flex; align-items: center; gap: var(--space-s); margin: 0; }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps-heading::after { flex: 1; block-size: var(--kinekt-component-border-width); background: var(--kinekt-component-border); content: ''; }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps { display: grid; gap: var(--section-space-m); margin: 0; }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps > li > article { padding: 0; border: 0; background: transparent; }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__media { justify-self: center; inline-size: min(100%, var(--kinekt-section-thank-you-hero-media-width, var(--width-m))); }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__media img { aspect-ratio: 16 / 9; object-fit: cover; }
+@media (min-width: 50rem) { :where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+</style>

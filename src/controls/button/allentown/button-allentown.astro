@@ -12,8 +12,35 @@ const classes = ['button', `button--${style}`, className].filter(Boolean).join('
 
 <a class={classes} href={href}>{label}<slot /></a>
 
-<style>
-  :global(:where(.button)) {
-    --kiw--button-allentown-radius: var(--kiw--section-button-radius, var(--buttons-radius));
+<style is:global>
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .button {
+    min-height: var(--kiw--section-button-height);
+    padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline);
+    border: var(--kinekt-component-border-width) solid var(--kinekt-component-action);
+    border-radius: calc(var(--buttons-has-radius) * var(--kiw--button-allentown-radius, var(--kiw--section-button-radius)));
+    color: var(--kinekt-component-action-text);
+    background: var(--kinekt-component-action);
+    font-size: var(--kinekt-component-text-s-size, var(--text-s));
+    font-weight: var(--kinekt-component-heading-font-weight, var(--heading-font-weight));
+    line-height: var(--kinekt-component-text-line-height, var(--text-line-height));
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    gap: .8ch;
+    text-decoration: none;
+    display: inline-flex;
+  }
+
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .button--secondary {
+    color: var(--kinekt-component-ink);
+    background: transparent;
+  }
+
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .button--clear {
+    min-height: auto;
+    padding: 0;
+    border-color: transparent;
+    color: var(--kinekt-component-ink);
+    background: transparent;
   }
 </style>

@@ -1,6 +1,5 @@
 ---
-import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
-import '../../../styles/wireframe.css'
+import '../../../styles/wireframe-tokens.css'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
@@ -24,7 +23,7 @@ const { id, theme = 'semi-light', headingLevel = 'h2', intro, comparison, cta } 
 const action = cta && ('cta' in cta ? cta.cta : cta)
 const iconFor = (status: Status) => fas[status === 'positive' ? 'faCircleCheck' : 'faCircleXmark']
 ---
-<section class="density-comparison-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('density-comparison-allentown')}>
+<section class="density-comparison-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="density-comparison-allentown__container">
     <header class="density-comparison-allentown__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
     <div class="density-comparison-allentown__table-wrap">
@@ -41,8 +40,77 @@ const iconFor = (status: Status) => fas[status === 'positive' ? 'faCircleCheck' 
     {action && <div class="density-comparison-allentown__action"><Button {...action} style="clear" /></div>}
   </div>
 </section>
-<style>
-  :global(:where(.density-comparison-allentown)) {
+<style is:global>
+  :where(.density-comparison-allentown) { box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--kiw--section-text-m-size); font-weight: var(--kiw--section-text-font-weight); line-height: var(--kiw--section-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing); } :where(.density-comparison-allentown) *, :where(.density-comparison-allentown) *::before, :where(.density-comparison-allentown) *::after { box-sizing: border-box; }
+  :where(.density-comparison-allentown) { --kinekt-component-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--section-heading-2-size)); --kinekt-component-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--section-text-xs-size)); --kinekt-component-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--section-text-s-size)); --kinekt-component-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--section-text-l-size)); }
+  :where(.density-comparison-allentown) > [class$='__container'] { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); } :where(.density-comparison-allentown) :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } :where(.density-comparison-allentown) h2 { font-size: var(--kinekt-section-heading-2-size, var(--kiw--section-heading-2-size)); }
+  :where(.density-comparison-allentown) :is(p, li, dd, td, th, label, input, textarea, button) { font: inherit; line-height: var(--kinekt-component-text-line-height); } :where(.density-comparison-allentown) :is(p, ul, ol, dl, table, form) { margin-block: 0; } :where(.density-comparison-allentown) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); color: var(--kinekt-component-muted); font-family: var(--kinekt-component-mono); font-size: var(--kinekt-component-text-xs-size); font-weight: var(--kiw--section-heading-font-weight); letter-spacing: var(--kiw--section-text-letter-spacing); text-transform: uppercase; } :where(.density-comparison-allentown) .section-intro__heading { margin: 0; } :where(.density-comparison-allentown) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-l-size); }
+  :where(.density-comparison-allentown) table { width: 100%; border-collapse: collapse; overflow: hidden; border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); } :where(.density-comparison-allentown) :is(th, td) { padding: var(--space-s); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); text-align: left; vertical-align: top; } :where(.density-comparison-allentown) th { font-weight: var(--heading-font-weight); background: var(--kinekt-component-surface); }
+  :where(.density-comparison-allentown) .button { display: inline-flex; align-items: center; justify-content: center; gap: .8ch; min-height: var(--kiw--section-button-height); padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline); border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); border-radius: calc(var(--buttons-has-radius) * var(--kiw--button-allentown-radius, var(--kiw--section-button-radius))); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-size: var(--kinekt-component-text-s-size); font-weight: var(--kiw--section-heading-font-weight); text-decoration: none; cursor: pointer; } :where(.density-comparison-allentown) .button--clear { min-height: auto; padding: 0; border-color: transparent; color: var(--kinekt-component-ink); background: transparent; }
+</style>
+<style is:global>
+  .density-comparison-allentown {
+    --kiw--section-site-width: var(--kiw--density-comparison-allentown-site-width, var(--website-width));
+    --kiw--section-content-width: var(--kiw--density-comparison-allentown-content-width, var(--content-width));
+    --kiw--section-reading-width: var(--kiw--density-comparison-allentown-reading-width, var(--width-m));
+    --kiw--section-inline-space: var(--kiw--density-comparison-allentown-inline-space, var(--section-gutter));
+    --kiw--section-block-space: var(--kiw--density-comparison-allentown-block-space, var(--section-space-l));
+    --kiw--section-gap: var(--kiw--density-comparison-allentown-gap, var(--content-gap));
+    --kiw--section-radius: var(--kiw--density-comparison-allentown-radius, var(--radius-none));
+    --kiw--section-border-width: var(--kiw--density-comparison-allentown-border-width, var(--border-width));
+    --kiw--section-media-filter: var(--kiw--density-comparison-allentown-media-filter, var(--media-filter));
+    --kiw--section-intro-accent-gap: var(--kiw--density-comparison-allentown-intro-accent-gap, var(--space-xxs));
+    --kiw--section-intro-description-gap: var(--kiw--density-comparison-allentown-intro-description-gap, var(--space-m));
+    --kiw--section-heading-1-size: var(--kiw--density-comparison-allentown-heading-1-size, var(--h1));
+    --kiw--section-heading-2-size: var(--kiw--density-comparison-allentown-heading-2-size, var(--h2));
+    --kiw--section-heading-3-size: var(--kiw--density-comparison-allentown-heading-3-size, var(--h3));
+    --kiw--section-heading-4-size: var(--kiw--density-comparison-allentown-heading-4-size, var(--h4));
+    --kiw--section-heading-5-size: var(--kiw--density-comparison-allentown-heading-5-size, var(--h5));
+    --kiw--section-heading-6-size: var(--kiw--density-comparison-allentown-heading-6-size, var(--h6));
+    --kiw--section-heading-font-family: var(--kiw--density-comparison-allentown-heading-font-family, var(--heading-font-family));
+    --kiw--section-heading-font-weight: var(--kiw--density-comparison-allentown-heading-font-weight, var(--heading-font-weight));
+    --kiw--section-heading-line-height: var(--kiw--density-comparison-allentown-heading-line-height, var(--heading-line-height));
+    --kiw--section-heading-letter-spacing: var(--kiw--density-comparison-allentown-heading-letter-spacing, var(--heading-letter-spacing));
+    --kiw--section-text-font-family: var(--kiw--density-comparison-allentown-text-font-family, var(--text-font-family));
+    --kiw--section-text-font-weight: var(--kiw--density-comparison-allentown-text-font-weight, var(--text-font-weight));
+    --kiw--section-text-line-height: var(--kiw--density-comparison-allentown-text-line-height, var(--text-line-height));
+    --kiw--section-text-letter-spacing: var(--kiw--density-comparison-allentown-text-letter-spacing, var(--text-letter-spacing));
+    --kiw--section-mono-font-family: var(--kiw--density-comparison-allentown-mono-font-family, var(--mono-font-family));
+    --kiw--section-text-xs-size: var(--kiw--density-comparison-allentown-text-xs-size, var(--text-xs));
+    --kiw--section-text-s-size: var(--kiw--density-comparison-allentown-text-s-size, var(--text-s));
+    --kiw--section-text-m-size: var(--kiw--density-comparison-allentown-text-m-size, var(--text-m));
+    --kiw--section-text-l-size: var(--kiw--density-comparison-allentown-text-l-size, var(--text-l));
+    --kiw--section-text-xl-size: var(--kiw--density-comparison-allentown-text-xl-size, var(--text-xl));
+    --kiw--section-text-xxl-size: var(--kiw--density-comparison-allentown-text-xxl-size, var(--text-xxl));
+    --kiw--section-carousel-gap: var(--kiw--density-comparison-allentown-carousel-gap, var(--content-gap));
+    --kiw--section-actions-gap: var(--kiw--density-comparison-allentown-actions-gap, var(--space-s));
+    --kiw--section-actions-margin: var(--kiw--density-comparison-allentown-actions-margin, var(--space-xl));
+    --kiw--section-button-height: var(--kiw--density-comparison-allentown-button-height, var(--input-height));
+    --kiw--section-button-padding-block: var(--kiw--density-comparison-allentown-button-padding-block, var(--space-s));
+    --kiw--section-button-padding-inline: var(--kiw--density-comparison-allentown-button-padding-inline, var(--space-l));
+    --kiw--section-button-radius: var(--kiw--density-comparison-allentown-button-radius, var(--buttons-radius));
+    --kiw--section-input-height: var(--kiw--density-comparison-allentown-input-height, var(--input-height));
+    --kiw--section-editorial-gap: var(--kiw--density-comparison-allentown-editorial-gap, var(--section-space-xxl));
+    --kiw--section-card-padding: var(--kiw--density-comparison-allentown-card-padding, var(--space-l));
+    --kiw--section-header-to-content-gap: var(--kiw--density-comparison-allentown-header-to-content-gap, var(--section-space-s));
+    --kiw--section-table-offset: var(--kiw--density-comparison-allentown-table-offset, var(--space-xl));
+    --kiw--section-canvas: var(--kiw--density-comparison-allentown-canvas);
+    --kiw--section-surface: var(--kiw--density-comparison-allentown-surface);
+    --kiw--section-ink: var(--kiw--density-comparison-allentown-ink);
+    --kiw--section-muted: var(--kiw--density-comparison-allentown-muted);
+    --kiw--section-line: var(--kiw--density-comparison-allentown-line);
+    --kiw--section-action: var(--kiw--density-comparison-allentown-action);
+    --kiw--section-action-text: var(--kiw--density-comparison-allentown-action-text);
+  }
+</style>
+<style is:global>
+  :where(.density-comparison-allentown[data-kinekt-section]) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-ultra-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-ultra-dark))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family)); --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family)); --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width)); --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width)); --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width)); --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space)); --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space)); --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap)); --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius)); --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width)); --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter)); --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap)); --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap)); --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height)); --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height)); }
+  :where(.density-comparison-allentown[data-kinekt-section][data-kinekt-theme='semi-light']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral))); color-scheme: light; }
+  :where(.density-comparison-allentown[data-kinekt-section][data-kinekt-theme='dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+  :where(.density-comparison-allentown[data-kinekt-section][data-kinekt-theme='semi-dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-ultra-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+</style>
+<style is:global>
+  :where(.density-comparison-allentown) {
     --kiw--density-comparison-allentown-container-gap: var(--section-space-xs);
     --kiw--density-comparison-allentown-intro-width: var(--kinekt-component-reading-width);
     --kiw--density-comparison-allentown-cell-space: var(--space-m);
@@ -55,20 +123,38 @@ const iconFor = (status: Status) => fas[status === 'positive' ? 'faCircleCheck' 
     --kiw--density-comparison-allentown-action-color: var(--kinekt-component-action);
   }
 
+  .density-comparison-allentown > .density-comparison-allentown__container { display: grid; gap: var(--kiw--density-comparison-allentown-container-gap); }
+  .density-comparison-allentown .density-comparison-allentown__intro { justify-self: center; max-width: var(--kiw--density-comparison-allentown-intro-width); text-align: center; }
+  .density-comparison-allentown .density-comparison-allentown__table-wrap { overflow-x: auto; }
+  .density-comparison-allentown .density-comparison-allentown__table { width: 100%; min-width: 48rem; border: 0; border-collapse: collapse; background: transparent; text-align: left; }
+  .density-comparison-allentown .density-comparison-allentown__table :is(th, td) { padding: var(--kiw--density-comparison-allentown-cell-space); border: 0; border-bottom: var(--kiw--density-comparison-allentown-border-width) solid var(--kiw--density-comparison-allentown-line-color); background: transparent; vertical-align: middle; }
+  .density-comparison-allentown .density-comparison-allentown__table tbody tr:last-child :is(th, td) { border-bottom: 0; }
+  .density-comparison-allentown .density-comparison-allentown__table thead th { font-weight: var(--kiw--density-comparison-allentown-heading-weight); }
+  .density-comparison-allentown .density-comparison-allentown__table tbody th { width: 32%; font-weight: var(--kiw--density-comparison-allentown-heading-weight); }
+  .density-comparison-allentown .density-comparison-allentown__value { display: inline-flex; align-items: center; gap: var(--kiw--density-comparison-allentown-value-gap); color: var(--kiw--density-comparison-allentown-muted-color); font-size: var(--kiw--density-comparison-allentown-text-size); }
+  .density-comparison-allentown .density-comparison-allentown__value svg { flex: 0 0 auto; width: var(--kiw--density-comparison-allentown-text-size); height: var(--kiw--density-comparison-allentown-text-size); fill: currentColor; }
+  .density-comparison-allentown .density-comparison-allentown__value--positive svg { color: var(--kiw--density-comparison-allentown-action-color); }
+  .density-comparison-allentown .density-comparison-allentown__value--negative svg { color: var(--kiw--density-comparison-allentown-muted-color); }
+  .density-comparison-allentown .density-comparison-allentown__action { display: flex; justify-content: center; }
+  .density-comparison-allentown .density-comparison-allentown__visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  .density-comparison-allentown .section-intro__accent { font: inherit; letter-spacing: inherit; }
+
+  @media (max-width: 49.99rem) {
+    .density-comparison-allentown { --kinekt-component-reading-width: var(--content-width); }
+    .density-comparison-allentown .density-comparison-allentown__intro { width: 100%; max-width: var(--kinekt-component-reading-width); }
+    .density-comparison-allentown .density-comparison-allentown__intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { width: 100%; max-width: none; }
+    .density-comparison-allentown .density-comparison-allentown__intro .section-intro__heading { max-width: var(--kinekt-component-reading-width); }
+  }
+</style>
+<style is:global>
   .density-comparison-allentown {
-    & > .density-comparison-allentown__container { display: grid; gap: var(--kiw--density-comparison-allentown-container-gap); }
-    & .density-comparison-allentown__intro { justify-self: center; max-width: var(--kiw--density-comparison-allentown-intro-width); text-align: center; }
-    & .density-comparison-allentown__table-wrap { overflow-x: auto; }
-    & .density-comparison-allentown__table { width: 100%; min-width: 48rem; border: 0; border-collapse: collapse; background: transparent; text-align: left; }
-    & .density-comparison-allentown__table :is(th, td) { padding: var(--kiw--density-comparison-allentown-cell-space); border: 0; border-bottom: var(--kiw--density-comparison-allentown-border-width) solid var(--kiw--density-comparison-allentown-line-color); background: transparent; vertical-align: middle; }
-    & .density-comparison-allentown__table tbody tr:last-child :is(th, td) { border-bottom: 0; }
-    & .density-comparison-allentown__table thead th { font-weight: var(--kiw--density-comparison-allentown-heading-weight); }
-    & .density-comparison-allentown__table tbody th { width: 32%; font-weight: var(--kiw--density-comparison-allentown-heading-weight); }
-    & .density-comparison-allentown__value { display: inline-flex; align-items: center; gap: var(--kiw--density-comparison-allentown-value-gap); color: var(--kiw--density-comparison-allentown-muted-color); font-size: var(--kiw--density-comparison-allentown-text-size); }
-    & .density-comparison-allentown__value svg { flex: 0 0 auto; width: var(--kiw--density-comparison-allentown-text-size); height: var(--kiw--density-comparison-allentown-text-size); fill: currentColor; }
-    & .density-comparison-allentown__value--positive svg { color: var(--kiw--density-comparison-allentown-action-color); }
-    & .density-comparison-allentown__value--negative svg { color: var(--kiw--density-comparison-allentown-muted-color); }
-    & .density-comparison-allentown__action { display: flex; justify-content: center; }
-    & .density-comparison-allentown__visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    --kinekt-section-content-width: var(--content-width);
+    --kinekt-section-reading-width: var(--width-m);
+    --kinekt-section-gap: var(--section-space-l);
+  }
+
+  .density-comparison-allentown [class$='__table'] {
+    margin-top: var(--kinekt-section-table-offset, var(--kiw--section-table-offset, var(--space-xl)));
+    font-size: var(--text-m);
   }
 </style>

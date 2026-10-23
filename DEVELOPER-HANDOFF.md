@@ -170,7 +170,7 @@ Read More is not a perfect copy template: its manifest/renderer expose an option
 
 ### Canonical values and themes
 
-[`src/styles/wireframe-tokens.css`](src/styles/wireframe-tokens.css) defines neutral defaults in `@layer kinekt.tokens`. [`src/styles/wireframe.css`](src/styles/wireframe.css) maps them to semantic roles. Customer sites provide their own canonical values; shared sections stay brand-neutral.
+[`src/styles/wireframe-tokens.css`](src/styles/wireframe-tokens.css) defines the shared neutral defaults in `@layer kinekt.tokens`. Each component maps those canonical values to its own semantic roles and theme states in its owning `<style>` block. Customer sites provide their own canonical values; shared sections stay brand-neutral.
 
 | Theme | Canvas token |
 | --- | --- |
@@ -179,7 +179,7 @@ Read More is not a perfect copy template: its manifest/renderer expose an option
 | `semi-dark` | `--primary-dark` |
 | `dark` | `--primary-ultra-dark` |
 
-Do not put Tulip colors, fonts or decorative flight paths into the shared wireframes. Keep customer colors outside this repository's component styles.
+Do not put client colors, fonts or decorative elements into the shared wireframes. Keep customer colors outside this repository's component styles.
 
 ### Scales to use
 
@@ -198,10 +198,10 @@ Choose the nearest scale value behind an overridable component variable. Do not 
 
 ### Native CSS nesting
 
-This pattern belongs inside the Astro component's `<style>` block:
+This pattern belongs inside the Astro component's `<style is:global>` block:
 
 ```css
-:global(:where(.read-more-allentown)) {
+:where(.read-more-allentown) {
   --kiw--read-more-allentown-content-gap: var(--space-l);
 }
 
@@ -213,17 +213,21 @@ This pattern belongs inside the Astro component's `<style>` block:
 }
 ```
 
-Use native CSS nesting, not SCSS. Keep new section-specific layout rules in the component, not broad suffix selectors in `wireframe.css`.
+Use native CSS nesting, not SCSS. Every component `<style>` MUST use `is:global`. Keep every layout, visual, reset, typography and theme rule in its owning component or reusable primitive—never in a shared wireframe stylesheet.
 
-`:global(:where(...))` keeps variable defaults low-specificity. Plain scoped `:where()` gains an Astro scope attribute and can unexpectedly beat customer overrides. Keep actual layout rules in the separate scoped class block.
+Anchor every global selector to the owning component root. Reusable child components expose low-specificity base rules; a parent component's root-anchored contextual selectors override those bases without leaking to unrelated components.
 
-### Root hooks and the token bridge
+Use `:where()` for overridable token defaults. Keep the parent class specificity on contextual child rules so they can override primitive defaults. Do not wrap selectors in Astro's `:global()` inside an `is:global` block.
 
-A handwritten section imports `../../../styles/wireframe.css` and `sectionTokenBridgeStyle` from `../../../shared/section-token-bridge.js`. Its root carries `data-kinekt-section`, `data-kinekt-theme` and the bridge style using its canonical slug.
+### Root hooks and static token mappings
 
-For Read More, the root includes `style={sectionTokenBridgeStyle('read-more-allentown')}`. Follow that existing implementation rather than defining a second root token system.
+A handwritten section imports `../../../styles/wireframe-tokens.css`; its root carries `data-kinekt-section` and `data-kinekt-theme`. Define the canonical token mappings, semantic aliases, theme fallbacks, reset and typography in that owning component's `<style is:global>` block, anchored to its root class. Do not use a `style` attribute for static token redeclarations.
 
-The bridge exposes generic overrides such as `--kiw--<slug>-inline-space` and `--kiw--<slug>-heading-2-size`. Local styles define additional aliases. Existing explicit `--kinekt-section-*` hooks take precedence where present.
+For example, Read More maps `--kiw--read-more-allentown-inline-space` to `--kiw--section-inline-space` there, with `var(--section-gutter)` as its fallback. Follow the complete role mapping used by existing sections rather than defining a second root token system.
+
+The mapping exposes generic overrides such as `--kiw--<slug>-inline-space` and `--kiw--<slug>-heading-2-size`. Local styles define additional aliases. Existing explicit `--kinekt-section-*` hooks take precedence where present.
+
+Keep root mapping selectors specific enough to beat generic `:where([data-kinekt-section])` defaults while retaining customer overrideability. Use `is:global` when the root must be addressed globally.
 
 Avoid custom-property cycles. A bridged inline-space alias should terminate in `var(--section-gutter)`, not point back to `var(--kinekt-component-inline-space)` on the same root.
 

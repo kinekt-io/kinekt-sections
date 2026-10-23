@@ -1,6 +1,5 @@
 ---
-import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
-import '../../../styles/wireframe.css'
+import '../../../styles/wireframe-tokens.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
@@ -12,7 +11,7 @@ interface Props extends ProductOptionsAllentownContent {
 
 const { theme, intro, ctas, options, form, headingLevel = 'h2' } = Astro.props as Props
 ---
-<section class="product-options-allentown" data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('product-options-allentown')}>
+<section class="product-options-allentown" data-kinekt-section data-kinekt-theme={theme}>
   <div class="product-options-allentown__container">
     <header class="product-options-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
@@ -61,3 +60,372 @@ const { theme, intro, ctas, options, form, headingLevel = 'h2' } = Astro.props a
     )}
   </div>
 </section>
+<style is:global>
+  .product-options-allentown {
+    --kiw--section-site-width: var(--kiw--product-options-allentown-site-width, var(--website-width));
+    --kiw--section-content-width: var(--kiw--product-options-allentown-content-width, var(--content-width));
+    --kiw--section-reading-width: var(--kiw--product-options-allentown-reading-width, var(--width-m));
+    --kiw--section-inline-space: var(--kiw--product-options-allentown-inline-space, var(--section-gutter));
+    --kiw--section-block-space: var(--kiw--product-options-allentown-block-space, var(--section-space-l));
+    --kiw--section-gap: var(--kiw--product-options-allentown-gap, var(--content-gap));
+    --kiw--section-radius: var(--kiw--product-options-allentown-radius, var(--radius-none));
+    --kiw--section-border-width: var(--kiw--product-options-allentown-border-width, var(--border-width));
+    --kiw--section-media-filter: var(--kiw--product-options-allentown-media-filter, var(--media-filter));
+    --kiw--section-intro-accent-gap: var(--kiw--product-options-allentown-intro-accent-gap, var(--space-xxs));
+    --kiw--section-intro-description-gap: var(--kiw--product-options-allentown-intro-description-gap, var(--space-m));
+    --kiw--section-heading-1-size: var(--kiw--product-options-allentown-heading-1-size, var(--h1));
+    --kiw--section-heading-2-size: var(--kiw--product-options-allentown-heading-2-size, var(--h2));
+    --kiw--section-heading-3-size: var(--kiw--product-options-allentown-heading-3-size, var(--h3));
+    --kiw--section-heading-4-size: var(--kiw--product-options-allentown-heading-4-size, var(--h4));
+    --kiw--section-heading-5-size: var(--kiw--product-options-allentown-heading-5-size, var(--h5));
+    --kiw--section-heading-6-size: var(--kiw--product-options-allentown-heading-6-size, var(--h6));
+    --kiw--section-heading-font-family: var(--kiw--product-options-allentown-heading-font-family, var(--heading-font-family));
+    --kiw--section-heading-font-weight: var(--kiw--product-options-allentown-heading-font-weight, var(--heading-font-weight));
+    --kiw--section-heading-line-height: var(--kiw--product-options-allentown-heading-line-height, var(--heading-line-height));
+    --kiw--section-heading-letter-spacing: var(--kiw--product-options-allentown-heading-letter-spacing, var(--heading-letter-spacing));
+    --kiw--section-text-font-family: var(--kiw--product-options-allentown-text-font-family, var(--text-font-family));
+    --kiw--section-text-font-weight: var(--kiw--product-options-allentown-text-font-weight, var(--text-font-weight));
+    --kiw--section-text-line-height: var(--kiw--product-options-allentown-text-line-height, var(--text-line-height));
+    --kiw--section-text-letter-spacing: var(--kiw--product-options-allentown-text-letter-spacing, var(--text-letter-spacing));
+    --kiw--section-mono-font-family: var(--kiw--product-options-allentown-mono-font-family, var(--mono-font-family));
+    --kiw--section-text-xs-size: var(--kiw--product-options-allentown-text-xs-size, var(--text-xs));
+    --kiw--section-text-s-size: var(--kiw--product-options-allentown-text-s-size, var(--text-s));
+    --kiw--section-text-m-size: var(--kiw--product-options-allentown-text-m-size, var(--text-m));
+    --kiw--section-text-l-size: var(--kiw--product-options-allentown-text-l-size, var(--text-l));
+    --kiw--section-text-xl-size: var(--kiw--product-options-allentown-text-xl-size, var(--text-xl));
+    --kiw--section-text-xxl-size: var(--kiw--product-options-allentown-text-xxl-size, var(--text-xxl));
+    --kiw--section-carousel-gap: var(--kiw--product-options-allentown-carousel-gap, var(--content-gap));
+    --kiw--section-actions-gap: var(--kiw--product-options-allentown-actions-gap, var(--space-s));
+    --kiw--section-actions-margin: var(--kiw--product-options-allentown-actions-margin, var(--space-xl));
+    --kiw--section-button-height: var(--kiw--product-options-allentown-button-height, var(--input-height));
+    --kiw--section-button-padding-block: var(--kiw--product-options-allentown-button-padding-block, var(--space-s));
+    --kiw--section-button-padding-inline: var(--kiw--product-options-allentown-button-padding-inline, var(--space-l));
+    --kiw--section-button-radius: var(--kiw--product-options-allentown-button-radius, var(--buttons-radius));
+    --kiw--section-input-height: var(--kiw--product-options-allentown-input-height, var(--input-height));
+    --kiw--section-editorial-gap: var(--kiw--product-options-allentown-editorial-gap, var(--section-space-xxl));
+    --kiw--section-card-padding: var(--kiw--product-options-allentown-card-padding, var(--space-l));
+    --kiw--section-header-to-content-gap: var(--kiw--product-options-allentown-header-to-content-gap, var(--section-space-s));
+    --kiw--section-table-offset: var(--kiw--product-options-allentown-table-offset, var(--space-xl));
+    --kiw--section-canvas: var(--kiw--product-options-allentown-canvas);
+    --kiw--section-surface: var(--kiw--product-options-allentown-surface);
+    --kiw--section-ink: var(--kiw--product-options-allentown-ink);
+    --kiw--section-muted: var(--kiw--product-options-allentown-muted);
+    --kiw--section-line: var(--kiw--product-options-allentown-line);
+    --kiw--section-action: var(--kiw--product-options-allentown-action);
+    --kiw--section-action-text: var(--kiw--product-options-allentown-action-text);
+  }
+</style>
+<style is:global>
+  :where(.product-options-allentown[data-kinekt-section]) {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-ultra-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-ultra-dark))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+    --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family)); --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family)); --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width)); --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width)); --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width)); --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space)); --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space)); --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap)); --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius)); --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width)); --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter)); --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap)); --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap)); --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height)); --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height));
+    --kinekt-component-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--section-heading-1-size)); --kinekt-component-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--section-heading-2-size)); --kinekt-component-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--section-heading-3-size)); --kinekt-component-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--section-heading-4-size)); --kinekt-component-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--section-heading-5-size)); --kinekt-component-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--section-heading-6-size)); --kinekt-component-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--section-text-xs-size)); --kinekt-component-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--section-text-s-size)); --kinekt-component-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--section-text-m-size)); --kinekt-component-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--section-text-l-size)); --kinekt-component-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--section-text-xl-size)); --kinekt-component-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--section-text-xxl-size));
+    box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--kiw--section-text-m-size); font-weight: var(--kiw--section-text-font-weight); line-height: var(--kiw--section-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing);
+  }
+  :where(.product-options-allentown[data-kinekt-theme='semi-light']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral))); color-scheme: light; }
+  :where(.product-options-allentown[data-kinekt-theme='dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+  :where(.product-options-allentown[data-kinekt-theme='semi-dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-ultra-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+  :where(.product-options-allentown[data-kinekt-theme='light']) { color-scheme: light; }
+  :where(.product-options-allentown[data-kinekt-section]) *, :where(.product-options-allentown[data-kinekt-section]) *::before, :where(.product-options-allentown[data-kinekt-section]) *::after { box-sizing: border-box; }
+  :where(.product-options-allentown[data-kinekt-section]) [hidden] { display: none !important; }
+  :where(.product-options-allentown[data-kinekt-section]) > .product-options-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
+  :where(.product-options-allentown) :is(.product-options-allentown__intro, .product-options-allentown__header) { max-width: var(--kinekt-component-reading-width); }
+  :where(.product-options-allentown) :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; }
+  :where(.product-options-allentown) h1 { font-size: var(--kinekt-component-heading-1-size); } :where(.product-options-allentown) h2 { font-size: var(--kinekt-component-heading-2-size); } :where(.product-options-allentown) h3 { font-size: var(--kinekt-component-heading-3-size); } :where(.product-options-allentown) h4 { font-size: var(--kinekt-component-heading-4-size); }
+  :where(.product-options-allentown) :is(p, li, label, input, textarea, button) { font: inherit; line-height: var(--kinekt-component-text-line-height); }
+  :where(.product-options-allentown) :is(p, ul, ol, dl, table, form) { margin-block: 0; }
+  :where(.product-options-allentown) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); } :where(.product-options-allentown) .section-intro__heading { margin: 0; } :where(.product-options-allentown) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-l-size); line-height: var(--kinekt-component-text-line-height); }
+  :where(.product-options-allentown) :is([class$='__actions'], [class*='__cta-group']) { display: flex; flex-wrap: wrap; gap: var(--kiw--section-actions-gap); margin-top: var(--kiw--section-actions-margin); }
+  :where(.product-options-allentown) .button { display: inline-flex; align-items: center; justify-content: center; gap: .8ch; min-height: var(--kiw--section-button-height); padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline); border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); border-radius: calc(var(--buttons-has-radius) * var(--kiw--section-button-radius)); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-size: var(--kinekt-component-text-s-size); font-weight: var(--kiw--section-heading-font-weight); text-decoration: none; cursor: pointer; }
+  :where(.product-options-allentown) :is([class$='__media'], [class*='__media-'], [class*='__image']) { display: block; max-width: 100%; } :where(.product-options-allentown) picture { display: block; } :where(.product-options-allentown) img { display: block; width: 100%; height: auto; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+  :where(.product-options-allentown) :is(ul, ol)[class*='__'] { display: grid; padding: 0; list-style: none; } :where(.product-options-allentown) :is(ul, ol)[class*='__'] > li { min-width: 0; }
+  :where(.product-options-allentown) :is(a, button, input, textarea):focus-visible { outline: calc(var(--border-width) * 3) solid var(--kinekt-section-focus, var(--kinekt-component-action)); outline-offset: var(--space-xxs); }
+</style>
+<style is:global>
+/*
+ * Product Options Allentown — Section - Product and cell options
+ * (5240:411550). The layout is intentionally open: cards are content groups,
+ * not boxed UI, and the selected form remains an external form embed.
+ */
+.product-options-allentown[data-kinekt-section] {
+  --kinekt-section-product-options-outer-space: var(--section-space-xl);
+  --kinekt-section-product-options-content-width: var(--content-width);
+  --kinekt-section-product-options-inline-space: var(--section-gutter);
+  --kinekt-section-product-options-intro-width: var(--width-l);
+  --kinekt-section-product-options-major-gap: var(--section-space-xl);
+  --kinekt-section-product-options-action-gap: var(--space-xl);
+  --kinekt-section-product-options-grid-column-gap: var(--space-xl);
+  --kinekt-section-product-options-grid-row-gap: var(--section-space-l);
+  --kinekt-section-product-options-media-size: var(--width-xs);
+  --kinekt-section-product-options-card-gap: var(--space-xl);
+  --kinekt-section-product-options-card-title-size: var(--h3);
+  --kinekt-section-product-options-card-description-size: var(--text-l);
+  --kinekt-section-product-options-benefit-gap: var(--space-s);
+  --kinekt-section-product-options-form-intro-width: var(--width-m);
+  --kinekt-section-product-options-form-gap: var(--section-space-xl);
+  --kinekt-section-product-options-control-gap: var(--space-s);
+  --kinekt-section-product-options-control-padding: var(--space-s);
+  --kinekt-component-block-space: var(--kinekt-section-product-options-outer-space);
+  --kinekt-component-content-width: var(--kinekt-section-product-options-content-width);
+  --kinekt-component-inline-space: var(--kinekt-section-product-options-inline-space);
+  --kinekt-component-gap: var(--kinekt-section-product-options-major-gap);
+  --kinekt-component-reading-width: var(--kinekt-section-product-options-intro-width);
+}
+
+.product-options-allentown .product-options-allentown__container {
+  gap: var(--kinekt-section-product-options-major-gap);
+}
+
+.product-options-allentown .product-options-allentown__intro {
+  display: grid;
+  max-width: var(--kinekt-section-product-options-intro-width);
+}
+
+.product-options-allentown .product-options-allentown__intro .section-intro__description {
+  max-width: none;
+}
+
+.product-options-allentown .product-options-allentown__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kinekt-section-product-options-action-gap);
+  margin-block-start: var(--kinekt-section-product-options-action-gap);
+}
+
+.product-options-allentown .product-options-allentown__divider {
+  width: 100%;
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+}
+
+.product-options-allentown .product-options-allentown__options {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--kinekt-section-product-options-grid-row-gap) var(--kinekt-section-product-options-grid-column-gap);
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  list-style: none;
+}
+
+.product-options-allentown .product-options-allentown__option > article {
+  display: grid;
+  gap: var(--kinekt-section-product-options-card-gap);
+  min-height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.product-options-allentown .product-options-allentown__media {
+  width: var(--kinekt-section-product-options-media-size);
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.product-options-allentown .product-options-allentown__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: var(--kinekt-component-media-filter);
+}
+
+.product-options-allentown .product-options-allentown__option-content {
+  display: grid;
+  align-content: start;
+  gap: var(--kinekt-section-product-options-card-gap);
+}
+
+.product-options-allentown .product-options-allentown__title {
+  font-size: var(--kinekt-section-product-options-card-title-size);
+}
+
+.product-options-allentown .product-options-allentown__description {
+  margin: 0;
+  color: var(--kinekt-component-muted);
+  font-size: var(--kinekt-section-product-options-card-description-size);
+  line-height: var(--kinekt-component-text-line-height);
+}
+
+.product-options-allentown .product-options-allentown__benefits {
+  display: grid;
+  gap: var(--kinekt-section-product-options-benefit-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.product-options-allentown .product-options-allentown__benefits li {
+  display: grid;
+  grid-template-columns: 1em minmax(0, 1fr);
+  gap: var(--kinekt-section-product-options-benefit-gap);
+  color: var(--kinekt-component-muted);
+  font-size: var(--kinekt-component-text-m-size);
+  line-height: var(--kinekt-component-text-line-height);
+}
+
+.product-options-allentown .product-options-allentown__benefits li::before {
+  color: var(--kinekt-component-ink);
+  content: '✓';
+}
+
+.product-options-allentown .product-options-allentown__form-section {
+  display: grid;
+  gap: var(--kinekt-section-product-options-form-gap);
+}
+
+.product-options-allentown .product-options-allentown__form-intro {
+  display: grid;
+  gap: var(--kinekt-component-intro-description-gap);
+  max-width: var(--kinekt-section-product-options-form-intro-width);
+}
+
+.product-options-allentown .product-options-allentown__form-intro p {
+  margin: 0;
+  color: var(--kinekt-component-muted);
+  font-size: var(--kinekt-component-text-l-size);
+}
+
+.product-options-allentown .product-options-allentown__form-embed,
+.product-options-allentown .product-options-allentown__form,
+.product-options-allentown .product-options-allentown__form fieldset {
+  display: grid;
+  gap: var(--kinekt-section-product-options-control-gap);
+}
+
+.product-options-allentown .product-options-allentown__form fieldset {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.product-options-allentown .product-options-allentown__form legend {
+  padding: 0;
+  font-size: var(--kinekt-component-text-l-size);
+  font-weight: var(--heading-font-weight);
+}
+
+.product-options-allentown .product-options-allentown__form label {
+  display: grid;
+  gap: var(--kinekt-section-product-options-control-gap);
+  font-size: var(--kinekt-component-text-m-size);
+}
+
+.product-options-allentown .product-options-allentown__form :is(input, textarea, select) {
+  width: 100%;
+  padding: var(--kinekt-section-product-options-control-padding);
+  border: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+  border-radius: 0;
+  color: var(--kinekt-component-ink);
+  background: var(--kinekt-component-surface);
+}
+
+.product-options-allentown .product-options-allentown__form textarea {
+  min-height: var(--section-space-m);
+  resize: vertical;
+}
+
+.product-options-allentown .product-options-allentown__form button {
+  justify-self: start;
+  padding: var(--kinekt-section-product-options-control-padding) var(--space-m);
+  border: var(--kinekt-component-border-width) solid var(--kinekt-component-action);
+  border-radius: 0;
+  color: var(--kinekt-component-action-text);
+  background: var(--kinekt-component-action);
+}
+
+@media (min-width: 50rem) {
+  .product-options-allentown[data-kinekt-section] {
+    --kinekt-section-product-options-outer-space: var(--section-gutter);
+    --kinekt-section-product-options-inline-space: 0;
+    --kinekt-section-product-options-major-gap: var(--section-space-xl);
+    --kinekt-section-product-options-action-gap: var(--section-space-s);
+    --kinekt-section-product-options-grid-column-gap: var(--space-xxl);
+    --kinekt-section-product-options-grid-row-gap: var(--section-space-l);
+    --kinekt-section-product-options-media-size: var(--width-xs);
+    --kinekt-section-product-options-card-gap: var(--space-l);
+    --kinekt-section-product-options-card-title-size: var(--h3);
+    --kinekt-section-product-options-card-description-size: var(--text-l);
+    --kinekt-section-product-options-benefit-gap: var(--space-s);
+    --kinekt-section-product-options-form-gap: var(--section-space-xl);
+    --kinekt-section-product-options-control-gap: var(--space-s);
+    --kinekt-section-product-options-control-padding: var(--space-s);
+  }
+
+  .product-options-allentown .product-options-allentown__options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .product-options-allentown .product-options-allentown__option > article {
+    grid-template-columns: 1fr;
+  }
+
+  .product-options-allentown .product-options-allentown__form-section {
+    grid-template-columns: minmax(0, var(--kinekt-section-product-options-form-intro-width)) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.product-options-allentown[data-kinekt-section] {
+  --kiw--section-card-padding: var(--space-l);
+  --kinekt-section-card-media-ratio: 3 / 2;
+}
+
+.product-options-allentown .button--secondary {
+  color: var(--kinekt-component-ink);
+  background: transparent;
+}
+
+.product-options-allentown .product-options-allentown__options > li > article {
+  align-content: start;
+  gap: var(--space-m);
+  min-height: 100%;
+  padding: var(--kiw--section-card-padding);
+  border: 0;
+  background: var(--kinekt-component-canvas);
+}
+
+.product-options-allentown .product-options-allentown__options > li > article > picture:first-child img {
+  aspect-ratio: var(--kinekt-section-card-media-ratio);
+  object-fit: cover;
+}
+
+.product-options-allentown .product-options-allentown__options > li > article :is(h3, h4) {
+  font-size: var(--h4);
+  line-height: var(--heading-line-height);
+}
+
+.product-options-allentown form[class*='__'] {
+  display: grid;
+  gap: var(--kinekt-component-gap);
+}
+
+.product-options-allentown form label {
+  display: grid;
+  gap: var(--space-xxs);
+  font-weight: var(--heading-font-weight);
+}
+
+.product-options-allentown .product-options-allentown__form button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .8ch;
+  width: fit-content;
+  min-height: var(--kiw--section-button-height);
+  border-radius: calc(var(--buttons-has-radius) * var(--kiw--section-button-radius));
+  font-weight: var(--kiw--section-heading-font-weight);
+  cursor: pointer;
+}
+
+@media (max-width: 49.99rem) {
+  .product-options-allentown[data-kinekt-section] {
+    --kinekt-component-reading-width: var(--content-width);
+  }
+}
+
+</style>

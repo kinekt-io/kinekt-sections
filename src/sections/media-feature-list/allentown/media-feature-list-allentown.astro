@@ -1,6 +1,5 @@
 ---
-import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
-import '../../../styles/wireframe.css'
+import '../../../styles/wireframe-tokens.css'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import type { MediaFeatureListContent } from './media-feature-list-allentown.types.js'
 
@@ -12,7 +11,7 @@ interface Props extends MediaFeatureListContent {
 const { theme, direction, intro, label, media, features, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 const Heading = headingLevel
 ---
-<section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-section data-kinekt-theme={theme} data-kinekt-direction={direction} style={sectionTokenBridgeStyle('media-feature-list-allentown')}>
+<section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-section data-kinekt-theme={theme} data-kinekt-direction={direction}>
   <div class="media-feature-list__container">
     <header class="media-feature-list__header">
       <div class="media-feature-list__heading-stack">
@@ -37,3 +36,141 @@ const Heading = headingLevel
     </div>
   </div>
 </section>
+<style is:global>
+  .media-feature-list.media-feature-list--allentown {
+    --kiw--section-site-width: var(--kiw--media-feature-list-allentown-site-width, var(--website-width));
+    --kiw--section-content-width: var(--kiw--media-feature-list-allentown-content-width, var(--content-width));
+    --kiw--section-reading-width: var(--kiw--media-feature-list-allentown-reading-width, var(--width-m));
+    --kiw--section-inline-space: var(--kiw--media-feature-list-allentown-inline-space, var(--section-gutter));
+    --kiw--section-block-space: var(--kiw--media-feature-list-allentown-block-space, var(--section-space-l));
+    --kiw--section-gap: var(--kiw--media-feature-list-allentown-gap, var(--content-gap));
+    --kiw--section-radius: var(--kiw--media-feature-list-allentown-radius, var(--radius-none));
+    --kiw--section-border-width: var(--kiw--media-feature-list-allentown-border-width, var(--border-width));
+    --kiw--section-media-filter: var(--kiw--media-feature-list-allentown-media-filter, var(--media-filter));
+    --kiw--section-intro-accent-gap: var(--kiw--media-feature-list-allentown-intro-accent-gap, var(--space-xxs));
+    --kiw--section-intro-description-gap: var(--kiw--media-feature-list-allentown-intro-description-gap, var(--space-m));
+    --kiw--section-heading-1-size: var(--kiw--media-feature-list-allentown-heading-1-size, var(--h1));
+    --kiw--section-heading-2-size: var(--kiw--media-feature-list-allentown-heading-2-size, var(--h2));
+    --kiw--section-heading-3-size: var(--kiw--media-feature-list-allentown-heading-3-size, var(--h3));
+    --kiw--section-heading-4-size: var(--kiw--media-feature-list-allentown-heading-4-size, var(--h4));
+    --kiw--section-heading-5-size: var(--kiw--media-feature-list-allentown-heading-5-size, var(--h5));
+    --kiw--section-heading-6-size: var(--kiw--media-feature-list-allentown-heading-6-size, var(--h6));
+    --kiw--section-heading-font-family: var(--kiw--media-feature-list-allentown-heading-font-family, var(--heading-font-family));
+    --kiw--section-heading-font-weight: var(--kiw--media-feature-list-allentown-heading-font-weight, var(--heading-font-weight));
+    --kiw--section-heading-line-height: var(--kiw--media-feature-list-allentown-heading-line-height, var(--heading-line-height));
+    --kiw--section-heading-letter-spacing: var(--kiw--media-feature-list-allentown-heading-letter-spacing, var(--heading-letter-spacing));
+    --kiw--section-text-font-family: var(--kiw--media-feature-list-allentown-text-font-family, var(--text-font-family));
+    --kiw--section-text-font-weight: var(--kiw--media-feature-list-allentown-text-font-weight, var(--text-font-weight));
+    --kiw--section-text-line-height: var(--kiw--media-feature-list-allentown-text-line-height, var(--text-line-height));
+    --kiw--section-text-letter-spacing: var(--kiw--media-feature-list-allentown-text-letter-spacing, var(--text-letter-spacing));
+    --kiw--section-mono-font-family: var(--kiw--media-feature-list-allentown-mono-font-family, var(--mono-font-family));
+    --kiw--section-text-xs-size: var(--kiw--media-feature-list-allentown-text-xs-size, var(--text-xs));
+    --kiw--section-text-s-size: var(--kiw--media-feature-list-allentown-text-s-size, var(--text-s));
+    --kiw--section-text-m-size: var(--kiw--media-feature-list-allentown-text-m-size, var(--text-m));
+    --kiw--section-text-l-size: var(--kiw--media-feature-list-allentown-text-l-size, var(--text-l));
+    --kiw--section-text-xl-size: var(--kiw--media-feature-list-allentown-text-xl-size, var(--text-xl));
+    --kiw--section-text-xxl-size: var(--kiw--media-feature-list-allentown-text-xxl-size, var(--text-xxl));
+    --kiw--section-carousel-gap: var(--kiw--media-feature-list-allentown-carousel-gap, var(--content-gap));
+    --kiw--section-actions-gap: var(--kiw--media-feature-list-allentown-actions-gap, var(--space-s));
+    --kiw--section-actions-margin: var(--kiw--media-feature-list-allentown-actions-margin, var(--space-xl));
+    --kiw--section-button-height: var(--kiw--media-feature-list-allentown-button-height, var(--input-height));
+    --kiw--section-button-padding-block: var(--kiw--media-feature-list-allentown-button-padding-block, var(--space-s));
+    --kiw--section-button-padding-inline: var(--kiw--media-feature-list-allentown-button-padding-inline, var(--space-l));
+    --kiw--section-button-radius: var(--kiw--media-feature-list-allentown-button-radius, var(--buttons-radius));
+    --kiw--section-input-height: var(--kiw--media-feature-list-allentown-input-height, var(--input-height));
+    --kiw--section-editorial-gap: var(--kiw--media-feature-list-allentown-editorial-gap, var(--section-space-xxl));
+    --kiw--section-card-padding: var(--kiw--media-feature-list-allentown-card-padding, var(--space-l));
+    --kiw--section-header-to-content-gap: var(--kiw--media-feature-list-allentown-header-to-content-gap, var(--section-space-s));
+    --kiw--section-table-offset: var(--kiw--media-feature-list-allentown-table-offset, var(--space-xl));
+    --kiw--section-canvas: var(--kiw--media-feature-list-allentown-canvas);
+    --kiw--section-surface: var(--kiw--media-feature-list-allentown-surface);
+    --kiw--section-ink: var(--kiw--media-feature-list-allentown-ink);
+    --kiw--section-muted: var(--kiw--media-feature-list-allentown-muted);
+    --kiw--section-line: var(--kiw--media-feature-list-allentown-line);
+    --kiw--section-action: var(--kiw--media-feature-list-allentown-action);
+    --kiw--section-action-text: var(--kiw--media-feature-list-allentown-action-text);
+  }
+</style>
+<style is:global>
+  :where(.media-feature-list--allentown[data-kinekt-section]) > .media-feature-list__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
+  :where(.media-feature-list--allentown) :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } :where(.media-feature-list--allentown) h2 { font-size: var(--kiw--section-heading-2-size); } :where(.media-feature-list--allentown) h3 { font-size: var(--kiw--section-heading-3-size); } :where(.media-feature-list--allentown) h4 { font-size: var(--kiw--section-heading-4-size); } :where(.media-feature-list--allentown) :is(p, li) { font: inherit; line-height: var(--kinekt-component-text-line-height); } :where(.media-feature-list--allentown) :is(p, ul, ol) { margin-block: 0; } :where(.media-feature-list--allentown) img { display: block; width: 100%; height: auto; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+  :where(.media-feature-list--allentown) h1 { font-size: var(--kiw--section-heading-1-size); } :where(.media-feature-list--allentown) h2 { font-size: var(--kiw--section-heading-2-size); } :where(.media-feature-list--allentown) h3 { font-size: var(--kiw--section-heading-3-size); } :where(.media-feature-list--allentown) h4 { font-size: var(--kiw--section-heading-4-size); } :where(.media-feature-list--allentown) h5 { font-size: var(--kiw--section-heading-5-size); } :where(.media-feature-list--allentown) h6 { font-size: var(--kiw--section-heading-6-size); }
+</style>
+<style is:global>
+  .media-feature-list--allentown[data-kinekt-section] > .media-feature-list__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
+  .media-feature-list--allentown :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } .media-feature-list--allentown h2 { font-size: var(--kiw--section-heading-2-size); } .media-feature-list--allentown h3 { font-size: var(--kiw--section-heading-3-size); } .media-feature-list--allentown h4 { font-size: var(--kiw--section-heading-4-size); }
+</style>
+<style is:global>
+  :where(.media-feature-list--allentown) {
+    --kiw--media-feature-list-section-padding: var(--section-gutter);
+    --kiw--media-feature-list-container-width: var(--content-width);
+    --kiw--media-feature-list-major-gap: var(--section-space-l);
+    --kiw--media-feature-list-header-width: var(--width-l);
+    --kiw--media-feature-list-header-group-gap: var(--space-xl);
+    --kiw--media-feature-list-heading-stack-gap: var(--space-xxs);
+    --kiw--media-feature-list-feature-gap: var(--section-space-s);
+    --kiw--media-feature-list-feature-copy-gap: var(--space-s);
+    --kiw--media-feature-list-media-ratio: 688 / 406;
+    --kinekt-section-block-space: var(--kiw--media-feature-list-section-padding);
+    --kinekt-section-content-width: var(--kiw--media-feature-list-container-width);
+    --kinekt-section-gap: var(--kiw--media-feature-list-major-gap);
+  }
+  .media-feature-list--allentown { --kinekt-component-text-s-size: var(--kiw--section-text-s-size); --kinekt-section-media-ratio: 4 / 5; }
+  .media-feature-list--allentown .media-feature-list__container { gap: var(--kiw--media-feature-list-major-gap); }
+  .media-feature-list--allentown .media-feature-list__header { display: grid; max-inline-size: var(--kiw--media-feature-list-header-width); gap: var(--kiw--media-feature-list-header-group-gap); }
+  .media-feature-list--allentown .media-feature-list__heading-stack { display: grid; gap: var(--kiw--media-feature-list-heading-stack-gap); }
+  .media-feature-list--allentown :is(.media-feature-list__accent, .media-feature-list__label) { color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-s-size); line-height: var(--kinekt-component-text-line-height); text-transform: uppercase; }
+  .media-feature-list--allentown .media-feature-list__label { display: flex; align-items: baseline; gap: var(--space-xs); }
+  .media-feature-list--allentown .media-feature-list__label-icon { flex: none; font-family: var(--kiw--section-mono-font-family); font-size: var(--kiw--section-text-xs-size); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kiw--section-text-line-height); }
+  .media-feature-list--allentown .media-feature-list__feature { min-width: 0; }
+  .media-feature-list--allentown .media-feature-list__heading { font-size: var(--h2); }
+  .media-feature-list--allentown .media-feature-list__description { max-inline-size: var(--width-l); font-size: var(--text-xl); line-height: var(--text-line-height); }
+  .media-feature-list--allentown .media-feature-list__body { display: grid; gap: var(--kiw--media-feature-list-major-gap); }
+  .media-feature-list--allentown .media-feature-list__media { display: block; align-self: stretch; }
+  .media-feature-list--allentown .media-feature-list__image { display: block; inline-size: 100%; max-inline-size: 100%; aspect-ratio: var(--kinekt-section-media-ratio); object-fit: cover; filter: var(--kinekt-component-media-filter); }
+  .media-feature-list--allentown .media-feature-list__features { display: grid; gap: var(--kiw--media-feature-list-feature-gap); margin: 0; padding: 0; list-style: none; border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+  .media-feature-list--allentown .media-feature-list__feature { display: grid; gap: var(--kiw--media-feature-list-feature-copy-gap); border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+  .media-feature-list--allentown .media-feature-list__feature { padding-block: var(--space-l); }
+  .media-feature-list--allentown .media-feature-list__feature-title { font-size: var(--h3); line-height: var(--heading-line-height); }
+  .media-feature-list--allentown .media-feature-list__feature-description { color: var(--kinekt-component-muted); font-size: var(--text-l); line-height: var(--text-line-height); }
+  @media (min-width: 50rem) {
+    .media-feature-list--allentown .media-feature-list__body { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; }
+    .media-feature-list--allentown.media-feature-list--mediaRight .media-feature-list__media { order: 2; }
+  }
+  @media (max-width: 49.999rem) {
+    .media-feature-list--allentown :is(h1, h2, h3, h4, h5, h6) { max-width: 100vw; }
+  }
+</style>
+<style is:global>
+  .media-feature-list {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-ultra-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral-semi-light)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-ultra-dark)));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+    --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family));
+    --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family));
+    --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width));
+    --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width));
+    --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width));
+    --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space));
+    --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space));
+    --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap));
+    --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius));
+    --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width));
+    --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter));
+    --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap));
+    --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap));
+    --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height));
+    --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height));
+    box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--kiw--section-text-m-size); font-weight: var(--kiw--section-text-font-weight); line-height: var(--kiw--section-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing);
+  }
+  .media-feature-list[data-kinekt-theme='semi-light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral))); color-scheme: light; }
+  .media-feature-list[data-kinekt-theme='dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+  .media-feature-list[data-kinekt-theme='semi-dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-ultra-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+  .media-feature-list, .media-feature-list[data-kinekt-theme='light'] { color-scheme: light; }
+  .media-feature-list *, .media-feature-list *::before, .media-feature-list *::after { box-sizing: border-box; }
+  .media-feature-list [hidden] { display: none !important; }
+</style>

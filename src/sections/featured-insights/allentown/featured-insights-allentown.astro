@@ -1,6 +1,5 @@
 ---
-import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
-import '../../../styles/wireframe.css'
+import '../../../styles/wireframe-tokens.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
@@ -30,7 +29,7 @@ const featured = insightSources.find((insight) => insight.featured) ?? insightSo
 const recent = insightSources.filter((insight) => insight !== featured).slice(0, 3)
 const kindLabel = (kind?: string): string | undefined => kind?.replace(/[-_]/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase())
 ---
-<section class="featured-insights-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('featured-insights-allentown')}>
+<section class="featured-insights-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="featured-insights-allentown__container">
     <header class="featured-insights-allentown__intro">
       <div class="featured-insights-allentown__intro-content"><SectionIntro intro={intro} headingLevel={headingLevel} /></div>
@@ -60,8 +59,78 @@ const kindLabel = (kind?: string): string | undefined => kind?.replace(/[-_]/g, 
     </div>
   </div>
 </section>
-<style>
-  :global(:where(.featured-insights-allentown)) {
+<style is:global>
+  :where(.featured-insights-allentown) { box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--kiw--section-text-m-size); font-weight: var(--kiw--section-text-font-weight); line-height: var(--kiw--section-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing); } :where(.featured-insights-allentown) *, :where(.featured-insights-allentown) *::before, :where(.featured-insights-allentown) *::after { box-sizing: border-box; }
+  :where(.featured-insights-allentown) { --kinekt-component-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--section-heading-2-size)); --kinekt-component-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--section-heading-3-size)); --kinekt-component-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--section-text-xs-size)); --kinekt-component-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--section-text-s-size)); --kinekt-component-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--section-text-l-size)); }
+  :where(.featured-insights-allentown) > [class$='__container'] { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); } :where(.featured-insights-allentown) :is([class$='__header'], [class$='__intro']) { max-width: var(--kinekt-component-reading-width); }
+  :where(.featured-insights-allentown) :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } :where(.featured-insights-allentown) h2 { font-size: var(--kinekt-section-heading-2-size, var(--kiw--section-heading-2-size)); } :where(.featured-insights-allentown) h3 { font-size: var(--kinekt-section-heading-3-size, var(--kiw--section-heading-3-size)); }
+  :where(.featured-insights-allentown) :is(p, li, dd, td, th, label, input, textarea, button) { font: inherit; line-height: var(--kinekt-component-text-line-height); } :where(.featured-insights-allentown) :is(p, ul, ol, dl, table, form) { margin-block: 0; } :where(.featured-insights-allentown) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); color: var(--kinekt-component-muted); font-family: var(--kinekt-component-mono); font-size: var(--kinekt-component-text-xs-size); font-weight: var(--kiw--section-heading-font-weight); letter-spacing: var(--kiw--section-text-letter-spacing); text-transform: uppercase; } :where(.featured-insights-allentown) .section-intro__heading { margin: 0; } :where(.featured-insights-allentown) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-l-size); }
+  :where(.featured-insights-allentown) .button { display: inline-flex; align-items: center; justify-content: center; gap: .8ch; min-height: var(--kiw--section-button-height); padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline); border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); border-radius: calc(var(--buttons-has-radius) * var(--kiw--button-allentown-radius, var(--kiw--section-button-radius))); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-size: var(--kinekt-component-text-s-size); font-weight: var(--kiw--section-heading-font-weight); text-decoration: none; cursor: pointer; }
+  :where(.featured-insights-allentown) :is([class$='__media'], [class*='__media-'], [class*='__image']), :where(.featured-insights-allentown) picture { display: block; max-width: 100%; } :where(.featured-insights-allentown) img { display: block; width: 100%; height: auto; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); } :where(.featured-insights-allentown) :is(ul, ol)[class*='__'] { display: grid; padding: 0; list-style: none; } :where(.featured-insights-allentown) :is(ul, ol)[class*='__'] > li { min-width: 0; } :where(.featured-insights-allentown) li > article { display: grid; gap: var(--space-s); padding: var(--kinekt-component-gap); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); background: var(--kinekt-component-surface); }
+</style>
+<style is:global>
+  .featured-insights-allentown {
+    --kiw--section-site-width: var(--kiw--featured-insights-allentown-site-width, var(--website-width));
+    --kiw--section-content-width: var(--kiw--featured-insights-allentown-content-width, var(--content-width));
+    --kiw--section-reading-width: var(--kiw--featured-insights-allentown-reading-width, var(--width-m));
+    --kiw--section-inline-space: var(--kiw--featured-insights-allentown-inline-space, var(--section-gutter));
+    --kiw--section-block-space: var(--kiw--featured-insights-allentown-block-space, var(--section-space-l));
+    --kiw--section-gap: var(--kiw--featured-insights-allentown-gap, var(--content-gap));
+    --kiw--section-radius: var(--kiw--featured-insights-allentown-radius, var(--radius-none));
+    --kiw--section-border-width: var(--kiw--featured-insights-allentown-border-width, var(--border-width));
+    --kiw--section-media-filter: var(--kiw--featured-insights-allentown-media-filter, var(--media-filter));
+    --kiw--section-intro-accent-gap: var(--kiw--featured-insights-allentown-intro-accent-gap, var(--space-xxs));
+    --kiw--section-intro-description-gap: var(--kiw--featured-insights-allentown-intro-description-gap, var(--space-m));
+    --kiw--section-heading-1-size: var(--kiw--featured-insights-allentown-heading-1-size, var(--h1));
+    --kiw--section-heading-2-size: var(--kiw--featured-insights-allentown-heading-2-size, var(--h2));
+    --kiw--section-heading-3-size: var(--kiw--featured-insights-allentown-heading-3-size, var(--h3));
+    --kiw--section-heading-4-size: var(--kiw--featured-insights-allentown-heading-4-size, var(--h4));
+    --kiw--section-heading-5-size: var(--kiw--featured-insights-allentown-heading-5-size, var(--h5));
+    --kiw--section-heading-6-size: var(--kiw--featured-insights-allentown-heading-6-size, var(--h6));
+    --kiw--section-heading-font-family: var(--kiw--featured-insights-allentown-heading-font-family, var(--heading-font-family));
+    --kiw--section-heading-font-weight: var(--kiw--featured-insights-allentown-heading-font-weight, var(--heading-font-weight));
+    --kiw--section-heading-line-height: var(--kiw--featured-insights-allentown-heading-line-height, var(--heading-line-height));
+    --kiw--section-heading-letter-spacing: var(--kiw--featured-insights-allentown-heading-letter-spacing, var(--heading-letter-spacing));
+    --kiw--section-text-font-family: var(--kiw--featured-insights-allentown-text-font-family, var(--text-font-family));
+    --kiw--section-text-font-weight: var(--kiw--featured-insights-allentown-text-font-weight, var(--text-font-weight));
+    --kiw--section-text-line-height: var(--kiw--featured-insights-allentown-text-line-height, var(--text-line-height));
+    --kiw--section-text-letter-spacing: var(--kiw--featured-insights-allentown-text-letter-spacing, var(--text-letter-spacing));
+    --kiw--section-mono-font-family: var(--kiw--featured-insights-allentown-mono-font-family, var(--mono-font-family));
+    --kiw--section-text-xs-size: var(--kiw--featured-insights-allentown-text-xs-size, var(--text-xs));
+    --kiw--section-text-s-size: var(--kiw--featured-insights-allentown-text-s-size, var(--text-s));
+    --kiw--section-text-m-size: var(--kiw--featured-insights-allentown-text-m-size, var(--text-m));
+    --kiw--section-text-l-size: var(--kiw--featured-insights-allentown-text-l-size, var(--text-l));
+    --kiw--section-text-xl-size: var(--kiw--featured-insights-allentown-text-xl-size, var(--text-xl));
+    --kiw--section-text-xxl-size: var(--kiw--featured-insights-allentown-text-xxl-size, var(--text-xxl));
+    --kiw--section-carousel-gap: var(--kiw--featured-insights-allentown-carousel-gap, var(--content-gap));
+    --kiw--section-actions-gap: var(--kiw--featured-insights-allentown-actions-gap, var(--space-s));
+    --kiw--section-actions-margin: var(--kiw--featured-insights-allentown-actions-margin, var(--space-xl));
+    --kiw--section-button-height: var(--kiw--featured-insights-allentown-button-height, var(--input-height));
+    --kiw--section-button-padding-block: var(--kiw--featured-insights-allentown-button-padding-block, var(--space-s));
+    --kiw--section-button-padding-inline: var(--kiw--featured-insights-allentown-button-padding-inline, var(--space-l));
+    --kiw--section-button-radius: var(--kiw--featured-insights-allentown-button-radius, var(--buttons-radius));
+    --kiw--section-input-height: var(--kiw--featured-insights-allentown-input-height, var(--input-height));
+    --kiw--section-editorial-gap: var(--kiw--featured-insights-allentown-editorial-gap, var(--section-space-xxl));
+    --kiw--section-card-padding: var(--kiw--featured-insights-allentown-card-padding, var(--space-l));
+    --kiw--section-header-to-content-gap: var(--kiw--featured-insights-allentown-header-to-content-gap, var(--section-space-s));
+    --kiw--section-table-offset: var(--kiw--featured-insights-allentown-table-offset, var(--space-xl));
+    --kiw--section-canvas: var(--kiw--featured-insights-allentown-canvas);
+    --kiw--section-surface: var(--kiw--featured-insights-allentown-surface);
+    --kiw--section-ink: var(--kiw--featured-insights-allentown-ink);
+    --kiw--section-muted: var(--kiw--featured-insights-allentown-muted);
+    --kiw--section-line: var(--kiw--featured-insights-allentown-line);
+    --kiw--section-action: var(--kiw--featured-insights-allentown-action);
+    --kiw--section-action-text: var(--kiw--featured-insights-allentown-action-text);
+  }
+</style>
+<style is:global>
+  :where(.featured-insights-allentown[data-kinekt-section]) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-ultra-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-ultra-dark))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family)); --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family)); --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width)); --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width)); --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width)); --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space)); --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space)); --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap)); --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius)); --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width)); --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter)); --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap)); --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap)); --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height)); --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height)); }
+  :where(.featured-insights-allentown[data-kinekt-section][data-kinekt-theme='semi-light']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral))); color-scheme: light; }
+  :where(.featured-insights-allentown[data-kinekt-section][data-kinekt-theme='dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+  :where(.featured-insights-allentown[data-kinekt-section][data-kinekt-theme='semi-dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-ultra-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+</style>
+<style is:global>
+  :where(.featured-insights-allentown) {
     --kiw--featured-insights-allentown-content-width: var(--content-width);
     --kiw--featured-insights-allentown-container-gap: var(--section-space-l);
     --kiw--featured-insights-allentown-intro-gap: var(--space-m);
@@ -86,36 +155,39 @@ const kindLabel = (kind?: string): string | undefined => kind?.replace(/[-_]/g, 
     --kiw--featured-insights-allentown-column-gap: var(--section-space-xl);
   }
 
-  .featured-insights-allentown {
-    --kinekt-section-content-width: var(--kiw--featured-insights-allentown-content-width);
-    & > .featured-insights-allentown__container { display: grid; gap: var(--kiw--featured-insights-allentown-container-gap); }
-    & .featured-insights-allentown__intro { display: flex; flex-direction: column; align-items: flex-start; gap: var(--kiw--featured-insights-allentown-intro-gap); width: 100%; max-width: none; }
-    & .featured-insights-allentown__intro :global(.section-intro__description) { max-width: var(--kiw--featured-insights-allentown-intro-width); }
-    & .featured-insights-allentown__content { display: grid; width: 100%; max-width: none; gap: var(--kiw--featured-insights-allentown-container-gap); }
-    & :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent article) { display: grid; align-content: start; gap: var(--kiw--featured-insights-allentown-card-gap); }
-    & :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent article) :is(h3, p) { margin: 0; }
-    & .featured-insights-allentown__media img { aspect-ratio: 4 / 3; object-fit: cover; }
-    & .featured-insights-allentown__eyebrow, & .featured-insights-allentown__recent-header p { color: var(--kiw--featured-insights-allentown-action-color); font-family: var(--kiw--featured-insights-allentown-mono-font); font-size: var(--kiw--featured-insights-allentown-label-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); line-height: var(--kiw--featured-insights-allentown-text-line-height); letter-spacing: var(--kiw--featured-insights-allentown-text-letter-spacing); text-transform: uppercase; }
-    & .featured-insights-allentown__kind { color: var(--kiw--featured-insights-allentown-action-color); font-size: var(--kiw--featured-insights-allentown-label-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); }
-    & :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent) > :is(p, h3), & .featured-insights-allentown__recent article > :is(p, h3) { max-width: var(--kiw--featured-insights-allentown-copy-width); }
-    & .featured-insights-allentown__link { display: inline-flex; align-items: center; gap: var(--kiw--featured-insights-allentown-link-gap); width: max-content; color: var(--kiw--featured-insights-allentown-ink-color); font-size: var(--kiw--featured-insights-allentown-link-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); text-decoration: none; }
-    & .featured-insights-allentown__link:hover { color: var(--kiw--featured-insights-allentown-action-color); }
-    & .featured-insights-allentown__recent { display: none; }
-    & .featured-insights-allentown__featured-header, & .featured-insights-allentown__recent-header { display: flex; align-items: center; gap: var(--kiw--featured-insights-allentown-card-gap); }
-    & .featured-insights-allentown__featured-header p, & .featured-insights-allentown__recent-header p { flex: 0 0 auto; margin: 0; }
-    & .featured-insights-allentown__featured-header span, & .featured-insights-allentown__recent-header span { flex: 1; height: var(--kiw--featured-insights-allentown-border-width); background: var(--kiw--featured-insights-allentown-line-color); }
-    & .featured-insights-allentown__recent ol { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
-    & .featured-insights-allentown__recent li > article { min-height: 0; padding: 0; border: 0; background: transparent; box-shadow: none; }
-    & .featured-insights-allentown__recent li > article h3 { font-size: var(--kiw--featured-insights-allentown-recent-heading-size); line-height: var(--kiw--featured-insights-allentown-heading-line-height); }
-    & .featured-insights-allentown__recent li > article > p:not(.featured-insights-allentown__kind) { color: var(--kiw--featured-insights-allentown-muted-color); font-size: var(--kiw--featured-insights-allentown-link-size); }
-    & .featured-insights-allentown__recent li { padding-block: var(--kiw--featured-insights-allentown-recent-space); border-bottom: var(--kiw--featured-insights-allentown-border-width) solid var(--kiw--featured-insights-allentown-line-color); }
-    & .featured-insights-allentown__recent li:first-child { padding-top: 0; }
-    & .featured-insights-allentown__recent li:last-child { border-bottom: 0; }
+  .featured-insights-allentown > .featured-insights-allentown__container { display: grid; gap: var(--kiw--featured-insights-allentown-container-gap); }
+  .featured-insights-allentown .featured-insights-allentown__intro { display: flex; flex-direction: column; align-items: flex-start; gap: var(--kiw--featured-insights-allentown-intro-gap); width: 100%; max-width: none; }
+  .featured-insights-allentown .featured-insights-allentown__intro .section-intro__description { max-width: var(--kiw--featured-insights-allentown-intro-width); }
+  .featured-insights-allentown .featured-insights-allentown__content { display: grid; width: 100%; max-width: none; gap: var(--kiw--featured-insights-allentown-container-gap); }
+  .featured-insights-allentown :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent article) { display: grid; align-content: start; gap: var(--kiw--featured-insights-allentown-card-gap); }
+  .featured-insights-allentown :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent article) :is(h3, p) { margin: 0; }
+  .featured-insights-allentown .featured-insights-allentown__media img { aspect-ratio: 4 / 3; object-fit: cover; }
+  .featured-insights-allentown :is(.featured-insights-allentown__eyebrow, .featured-insights-allentown__recent-header p) { color: var(--kiw--featured-insights-allentown-action-color); font-family: var(--kiw--featured-insights-allentown-mono-font); font-size: var(--kiw--featured-insights-allentown-label-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); line-height: var(--kiw--featured-insights-allentown-text-line-height); letter-spacing: var(--kiw--featured-insights-allentown-text-letter-spacing); text-transform: uppercase; }
+  .featured-insights-allentown .featured-insights-allentown__kind { color: var(--kiw--featured-insights-allentown-action-color); font-size: var(--kiw--featured-insights-allentown-label-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); }
+  .featured-insights-allentown :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent) > :is(p, h3), .featured-insights-allentown .featured-insights-allentown__recent article > :is(p, h3) { max-width: var(--kiw--featured-insights-allentown-copy-width); }
+  .featured-insights-allentown .featured-insights-allentown__link { display: inline-flex; align-items: center; gap: var(--kiw--featured-insights-allentown-link-gap); width: max-content; min-height: auto; padding: 0; border-color: transparent; color: var(--kiw--featured-insights-allentown-ink-color); background: transparent; font-size: var(--kiw--featured-insights-allentown-link-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); text-decoration: none; }
+  .featured-insights-allentown .featured-insights-allentown__link:hover { color: var(--kiw--featured-insights-allentown-action-color); }
+  .featured-insights-allentown .featured-insights-allentown__recent { display: none; }
+  .featured-insights-allentown :is(.featured-insights-allentown__featured-header, .featured-insights-allentown__recent-header) { display: flex; align-items: center; gap: var(--kiw--featured-insights-allentown-card-gap); }
+  .featured-insights-allentown :is(.featured-insights-allentown__featured-header p, .featured-insights-allentown__recent-header p) { flex: 0 0 auto; margin: 0; }
+  .featured-insights-allentown :is(.featured-insights-allentown__featured-header span, .featured-insights-allentown__recent-header span) { flex: 1; height: var(--kiw--featured-insights-allentown-border-width); background: var(--kiw--featured-insights-allentown-line-color); }
+  .featured-insights-allentown .featured-insights-allentown__recent ol { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+  .featured-insights-allentown .featured-insights-allentown__recent li > article { min-height: 0; padding: 0; border: 0; background: transparent; box-shadow: none; }
+  .featured-insights-allentown .featured-insights-allentown__recent li > article h3 { font-size: var(--kiw--featured-insights-allentown-recent-heading-size); line-height: var(--kiw--featured-insights-allentown-heading-line-height); }
+  .featured-insights-allentown .featured-insights-allentown__recent li > article > p:not(.featured-insights-allentown__kind) { color: var(--kiw--featured-insights-allentown-muted-color); font-size: var(--kiw--featured-insights-allentown-link-size); }
+  .featured-insights-allentown .featured-insights-allentown__recent li { padding-block: var(--kiw--featured-insights-allentown-recent-space); border-bottom: var(--kiw--featured-insights-allentown-border-width) solid var(--kiw--featured-insights-allentown-line-color); }
+  .featured-insights-allentown .featured-insights-allentown__recent li:first-child { padding-top: 0; }
+  .featured-insights-allentown .featured-insights-allentown__recent li:last-child { border-bottom: 0; }
 
-    @media (min-width: 50rem) {
-      & .featured-insights-allentown__intro { flex-direction: row; align-items: end; justify-content: space-between; column-gap: var(--kiw--featured-insights-allentown-column-gap); }
-      & .featured-insights-allentown__content { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); column-gap: var(--kiw--featured-insights-allentown-container-gap); }
-      & .featured-insights-allentown__recent { display: grid; align-content: start; gap: var(--kiw--featured-insights-allentown-recent-space); }
-    }
+  @media (min-width: 50rem) {
+    .featured-insights-allentown .featured-insights-allentown__intro { flex-direction: row; align-items: end; justify-content: space-between; column-gap: var(--kiw--featured-insights-allentown-column-gap); }
+    .featured-insights-allentown .featured-insights-allentown__content { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); column-gap: var(--kiw--featured-insights-allentown-container-gap); }
+    .featured-insights-allentown .featured-insights-allentown__recent { display: grid; align-content: start; gap: var(--kiw--featured-insights-allentown-recent-space); }
+  }
+  .featured-insights-allentown .section-intro__accent { font: inherit; letter-spacing: inherit; }
+
+  @media (max-width: 49.99rem) {
+    .featured-insights-allentown .featured-insights-allentown__intro-content :is(.section-intro, .section-intro__accent, .section-intro__heading, .section-intro__description) { width: 100%; max-width: none; }
+    .featured-insights-allentown .featured-insights-allentown__intro-content .section-intro__heading { max-width: var(--content-width); }
   }
 </style>

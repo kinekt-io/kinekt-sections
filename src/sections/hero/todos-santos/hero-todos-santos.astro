@@ -1,6 +1,5 @@
 ---
-import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
-import '../../../styles/wireframe.css'
+import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
@@ -41,7 +40,7 @@ for (const cta of [ctas?.primary, ctas?.secondary]) if (cta && !isSafeWebUrl(cta
 assertSafeImage(image, 'image')
 if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 ---
-<section class="hero-todos-santos" id={id} data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('hero-todos-santos')}>
+<section class="hero-todos-santos" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="hero-todos-santos__container">
     <div class="hero-todos-santos__content">
       <header class="hero-todos-santos__header">
@@ -65,3 +64,128 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
     <KinektMedia class="hero-todos-santos__media" imageClass="hero-todos-santos__image" media={image} mobileMedia={mobileImage} loading="eager" fetchpriority="high" />
   </div>
 </section>
+<style is:global>
+  :where(.hero-todos-santos) { box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--kiw--section-text-m-size); font-weight: var(--kiw--section-text-font-weight); line-height: var(--kiw--section-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing); }
+  :where(.hero-todos-santos) { --kinekt-component-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--section-heading-1-size)); --kinekt-component-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--section-heading-2-size)); --kinekt-component-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--section-heading-3-size)); --kinekt-component-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--section-heading-4-size)); --kinekt-component-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--section-heading-5-size)); --kinekt-component-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--section-heading-6-size)); --kinekt-component-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--section-text-xs-size)); --kinekt-component-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--section-text-s-size)); --kinekt-component-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--section-text-m-size)); --kinekt-component-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--section-text-l-size)); --kinekt-component-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--section-text-xl-size)); --kinekt-component-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--section-text-xxl-size)); }
+  :where(.hero-todos-santos) *, :where(.hero-todos-santos) *::before, :where(.hero-todos-santos) *::after { box-sizing: border-box; }
+  :where(.hero-todos-santos) > [class$='__container'] { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
+  :where(.hero-todos-santos) :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } :where(.hero-todos-santos) h1 { font-size: var(--kinekt-section-heading-1-size, var(--kiw--section-heading-1-size)); } :where(.hero-todos-santos) h2 { font-size: var(--kinekt-section-heading-2-size, var(--kiw--section-heading-2-size)); } :where(.hero-todos-santos) h3 { font-size: var(--kinekt-section-heading-3-size, var(--kiw--section-heading-3-size)); }
+  :where(.hero-todos-santos) :is(p, li, dd, td, th, label, input, textarea, button) { font: inherit; line-height: var(--kinekt-component-text-line-height); } :where(.hero-todos-santos) :is(p, ul, ol, dl, table, form) { margin-block: 0; }
+  :where(.hero-todos-santos) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); color: var(--kinekt-component-muted); font-family: var(--kinekt-component-mono); font-size: var(--kinekt-component-text-xs-size); font-weight: var(--kiw--section-heading-font-weight); letter-spacing: var(--kiw--section-text-letter-spacing); text-transform: uppercase; } :where(.hero-todos-santos) .section-intro__heading { margin: 0; } :where(.hero-todos-santos) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-l-size); line-height: var(--kinekt-component-text-line-height); }
+  :where(.hero-todos-santos) :is([class$='__actions'], [class*='__cta-group']) { display: flex; flex-wrap: wrap; gap: var(--kiw--section-actions-gap); margin-top: var(--kiw--section-actions-margin); } :where(.hero-todos-santos) .button { display: inline-flex; align-items: center; justify-content: center; gap: .8ch; min-height: var(--kiw--section-button-height); padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline); border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); border-radius: calc(var(--buttons-has-radius) * var(--kiw--button-allentown-radius, var(--kiw--section-button-radius))); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-size: var(--kinekt-component-text-s-size); font-weight: var(--kiw--section-heading-font-weight); text-decoration: none; cursor: pointer; } :where(.hero-todos-santos) .button--secondary { color: var(--kinekt-component-ink); background: transparent; }
+  :where(.hero-todos-santos) :is([class$='__media'], [class*='__media-'], [class*='__image']), :where(.hero-todos-santos) picture { display: block; max-width: 100%; } :where(.hero-todos-santos) img { display: block; width: 100%; height: auto; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+</style>
+<style is:global>
+  .hero-todos-santos {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-ultra-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral-semi-light)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-ultra-dark)));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+    --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family));
+    --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family));
+    --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width));
+    --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width));
+    --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width));
+    --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space));
+    --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space));
+    --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap));
+    --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius));
+    --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width));
+    --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter));
+    --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap));
+    --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap));
+    --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height));
+    --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height));
+    box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--kiw--section-text-m-size); font-weight: var(--kiw--section-text-font-weight); line-height: var(--kiw--section-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing);
+  }
+  .hero-todos-santos[data-kinekt-theme='semi-light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral))); color-scheme: light; }
+  .hero-todos-santos[data-kinekt-theme='dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+  .hero-todos-santos[data-kinekt-theme='semi-dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-ultra-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+  .hero-todos-santos, .hero-todos-santos[data-kinekt-theme='light'] { color-scheme: light; }
+  .hero-todos-santos *, .hero-todos-santos *::before, .hero-todos-santos *::after { box-sizing: border-box; }
+  .hero-todos-santos [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .hero-todos-santos {
+    --kiw--section-site-width: var(--kiw--hero-todos-santos-site-width, var(--website-width));
+    --kiw--section-content-width: var(--kiw--hero-todos-santos-content-width, var(--content-width));
+    --kiw--section-reading-width: var(--kiw--hero-todos-santos-reading-width, var(--width-m));
+    --kiw--section-inline-space: var(--kiw--hero-todos-santos-inline-space, var(--section-gutter));
+    --kiw--section-block-space: var(--kiw--hero-todos-santos-block-space, var(--section-space-l));
+    --kiw--section-gap: var(--kiw--hero-todos-santos-gap, var(--content-gap));
+    --kiw--section-radius: var(--kiw--hero-todos-santos-radius, var(--radius-none));
+    --kiw--section-border-width: var(--kiw--hero-todos-santos-border-width, var(--border-width));
+    --kiw--section-media-filter: var(--kiw--hero-todos-santos-media-filter, var(--media-filter));
+    --kiw--section-intro-accent-gap: var(--kiw--hero-todos-santos-intro-accent-gap, var(--space-xxs));
+    --kiw--section-intro-description-gap: var(--kiw--hero-todos-santos-intro-description-gap, var(--space-m));
+    --kiw--section-heading-1-size: var(--kiw--hero-todos-santos-heading-1-size, var(--h1));
+    --kiw--section-heading-2-size: var(--kiw--hero-todos-santos-heading-2-size, var(--h2));
+    --kiw--section-heading-3-size: var(--kiw--hero-todos-santos-heading-3-size, var(--h3));
+    --kiw--section-heading-4-size: var(--kiw--hero-todos-santos-heading-4-size, var(--h4));
+    --kiw--section-heading-5-size: var(--kiw--hero-todos-santos-heading-5-size, var(--h5));
+    --kiw--section-heading-6-size: var(--kiw--hero-todos-santos-heading-6-size, var(--h6));
+    --kiw--section-heading-font-family: var(--kiw--hero-todos-santos-heading-font-family, var(--heading-font-family));
+    --kiw--section-heading-font-weight: var(--kiw--hero-todos-santos-heading-font-weight, var(--heading-font-weight));
+    --kiw--section-heading-line-height: var(--kiw--hero-todos-santos-heading-line-height, var(--heading-line-height));
+    --kiw--section-heading-letter-spacing: var(--kiw--hero-todos-santos-heading-letter-spacing, var(--heading-letter-spacing));
+    --kiw--section-text-font-family: var(--kiw--hero-todos-santos-text-font-family, var(--text-font-family));
+    --kiw--section-text-font-weight: var(--kiw--hero-todos-santos-text-font-weight, var(--text-font-weight));
+    --kiw--section-text-line-height: var(--kiw--hero-todos-santos-text-line-height, var(--text-line-height));
+    --kiw--section-text-letter-spacing: var(--kiw--hero-todos-santos-text-letter-spacing, var(--text-letter-spacing));
+    --kiw--section-mono-font-family: var(--kiw--hero-todos-santos-mono-font-family, var(--mono-font-family));
+    --kiw--section-text-xs-size: var(--kiw--hero-todos-santos-text-xs-size, var(--text-xs));
+    --kiw--section-text-s-size: var(--kiw--hero-todos-santos-text-s-size, var(--text-s));
+    --kiw--section-text-m-size: var(--kiw--hero-todos-santos-text-m-size, var(--text-m));
+    --kiw--section-text-l-size: var(--kiw--hero-todos-santos-text-l-size, var(--text-l));
+    --kiw--section-text-xl-size: var(--kiw--hero-todos-santos-text-xl-size, var(--text-xl));
+    --kiw--section-text-xxl-size: var(--kiw--hero-todos-santos-text-xxl-size, var(--text-xxl));
+    --kiw--section-carousel-gap: var(--kiw--hero-todos-santos-carousel-gap, var(--content-gap));
+    --kiw--section-actions-gap: var(--kiw--hero-todos-santos-actions-gap, var(--space-s));
+    --kiw--section-actions-margin: var(--kiw--hero-todos-santos-actions-margin, var(--space-xl));
+    --kiw--section-button-height: var(--kiw--hero-todos-santos-button-height, var(--input-height));
+    --kiw--section-button-padding-block: var(--kiw--hero-todos-santos-button-padding-block, var(--space-s));
+    --kiw--section-button-padding-inline: var(--kiw--hero-todos-santos-button-padding-inline, var(--space-l));
+    --kiw--section-button-radius: var(--kiw--hero-todos-santos-button-radius, var(--buttons-radius));
+    --kiw--section-input-height: var(--kiw--hero-todos-santos-input-height, var(--input-height));
+    --kiw--section-editorial-gap: var(--kiw--hero-todos-santos-editorial-gap, var(--section-space-xxl));
+    --kiw--section-card-padding: var(--kiw--hero-todos-santos-card-padding, var(--space-l));
+    --kiw--section-header-to-content-gap: var(--kiw--hero-todos-santos-header-to-content-gap, var(--section-space-s));
+    --kiw--section-table-offset: var(--kiw--hero-todos-santos-table-offset, var(--space-xl));
+    --kiw--section-canvas: var(--kiw--hero-todos-santos-canvas);
+    --kiw--section-surface: var(--kiw--hero-todos-santos-surface);
+    --kiw--section-ink: var(--kiw--hero-todos-santos-ink);
+    --kiw--section-muted: var(--kiw--hero-todos-santos-muted);
+    --kiw--section-line: var(--kiw--hero-todos-santos-line);
+    --kiw--section-action: var(--kiw--hero-todos-santos-action);
+    --kiw--section-action-text: var(--kiw--hero-todos-santos-action-text);
+  }
+
+  .hero-todos-santos {
+    --kinekt-section-content-width: var(--content-width);
+    --kinekt-section-reading-width: var(--width-m);
+    --kinekt-section-media-ratio: 1 / 1;
+    --kinekt-section-gap: var(--section-space-xl);
+  }
+  .hero-todos-santos [class$='__container'] { align-items: stretch; }
+  .hero-todos-santos :is([class$='__content'], [class$='__header']) { align-content: center; padding-block: var(--section-space-xs); }
+  .hero-todos-santos { --hero-todos-santos-content-width: var(--kinekt-section-hero-todos-santos-content-width, clamp(var(--mobile-content-width), 100%, var(--desktop-width-m))); --kiw--hero-todos-santos-block-space: var(--section-space-m); --hero-todos-santos-block-space: var(--kinekt-section-hero-todos-santos-block-space, var(--kiw--hero-todos-santos-block-space)); --hero-todos-santos-content-gap: var(--kinekt-section-hero-todos-santos-content-gap, var(--section-space-m)); --hero-todos-santos-feature-gap: var(--kinekt-section-hero-todos-santos-feature-gap, var(--space-s)); --hero-todos-santos-feature-heading-size: var(--kinekt-section-hero-todos-santos-feature-heading-size, var(--kinekt-component-text-m-size)); --hero-todos-santos-feature-row-gap: var(--kinekt-section-hero-todos-santos-feature-row-gap, var(--space-xs)); --kiw--hero-todos-santos-media-height: var(--width-m); --hero-todos-santos-media-height: var(--kinekt-section-hero-todos-santos-media-height, var(--kiw--hero-todos-santos-media-height)); padding-block: var(--hero-todos-santos-block-space); }
+  .hero-todos-santos .hero-todos-santos__container { grid-template-columns: minmax(0, 1fr); gap: var(--section-space-m); max-inline-size: var(--kinekt-component-content-width); }
+  .hero-todos-santos .hero-todos-santos__content { display: grid; grid-template-columns: minmax(0, 1fr); min-inline-size: 0; gap: var(--hero-todos-santos-content-gap); max-inline-size: var(--hero-todos-santos-content-width); padding: 0; }
+  .hero-todos-santos .hero-todos-santos__header { max-inline-size: none; padding: 0; }
+  .hero-todos-santos .section-intro__accent { font: inherit; }
+  .hero-todos-santos .hero-todos-santos__feature-table { inline-size: 100%; max-inline-size: 100%; overflow: visible; border: 0; border-radius: 0; border-collapse: collapse; text-align: start; }
+  .hero-todos-santos .hero-todos-santos__feature-table caption { margin-block-end: var(--hero-todos-santos-feature-gap); color: inherit; font-size: var(--hero-todos-santos-feature-heading-size); font-weight: var(--heading-font-weight); letter-spacing: var(--heading-letter-spacing); text-align: start; }
+  .hero-todos-santos .hero-todos-santos__feature-table tr + tr { border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+  .hero-todos-santos .hero-todos-santos__feature-table :is(th, td) { padding-block: var(--hero-todos-santos-feature-row-gap); padding-inline: var(--space-s); border: 0; background: transparent; vertical-align: top; }
+  .hero-todos-santos .hero-todos-santos__feature-table th { padding-inline-end: var(--space-m); font-weight: var(--text-font-weight); }
+  .hero-todos-santos .hero-todos-santos__feature-table td { color: var(--kinekt-component-muted); }
+  .hero-todos-santos .hero-todos-santos__actions { display: flex; flex-wrap: wrap; gap: var(--space-l); }
+  .hero-todos-santos .button--clear { min-height: auto; padding: 0; border-color: transparent; color: var(--kinekt-component-ink); background: transparent; }
+  .hero-todos-santos .hero-todos-santos__media { align-self: stretch; }
+  .hero-todos-santos .hero-todos-santos__image { aspect-ratio: var(--kinekt-section-media-ratio); block-size: 100%; object-fit: cover; }
+  @media (min-width: 50rem) { .hero-todos-santos .hero-todos-santos__container { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; justify-content: space-between; gap: var(--section-space-xxl); } .hero-todos-santos .hero-todos-santos__feature { grid-template-columns: minmax(0, 12.5rem) minmax(0, 1fr); gap: var(--space-m); } .hero-todos-santos .hero-todos-santos__media { block-size: var(--hero-todos-santos-media-height); } }
+  @media (max-width: 49.99rem) { .hero-todos-santos { --kinekt-component-reading-width: var(--content-width); } }
+</style>

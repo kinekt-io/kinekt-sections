@@ -1,9 +1,8 @@
 ---
 import Button from '../controls/button/allentown/button-allentown.astro'
-import '../styles/wireframe.css'
 import SectionIntro from '../primitives/section-intro/section-intro.astro'
 import StructuralContent from './structural-content.astro'
-import { sectionTokenBridgeStyle } from './section-token-bridge.js'
+
 
 interface Cta {
   label?: string
@@ -66,9 +65,8 @@ const theme = content.theme === 'dark' || content.theme === 'semi-dark' || conte
 const actions = collectCtas(ctas)
 const caseStudyAction = block.includes('case-studies') ? collectCtas(content.cta)[0] : undefined
 const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta'] : ['theme', 'intro', 'ctas', 'media']
-const sectionStyle = sectionTokenBridgeStyle(block.startsWith('beta-') ? block.slice(5) : block)
 ---
-<section class={block} id={id} data-kinekt-section data-kinekt-theme={theme} style={sectionStyle}>
+<section class={block} id={id} data-kinekt-section data-kinekt-structural-section data-kinekt-theme={theme}>
   <div class={`${block}__container`}>
     {(intro || actions.length > 0 || caseStudyAction) && (
       <header class={`${block}__header`}>
@@ -90,6 +88,216 @@ const sectionStyle = sectionTokenBridgeStyle(block.startsWith('beta-') ? block.s
     )}
   </div>
 </section>
+
+<style is:global>
+  :where([data-kinekt-structural-section]) {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-ultra-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral-semi-light)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-ultra-dark)));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+    --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family, var(--text-font-family)));
+    --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family, var(--mono-font-family)));
+    --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width, var(--website-width)));
+    --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width, var(--content-width)));
+    --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width, var(--width-m)));
+    --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space, var(--section-gutter)));
+    --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space, var(--section-space-l)));
+    --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap, var(--content-gap)));
+    --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius, var(--radius-none)));
+    --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width, var(--border-width)));
+    --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter, var(--media-filter)));
+    --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap, var(--space-xxs)));
+    --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap, var(--space-m)));
+    --kinekt-component-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--section-heading-1-size, var(--h1)));
+    --kinekt-component-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--section-heading-2-size, var(--h2)));
+    --kinekt-component-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--section-heading-3-size, var(--h3)));
+    --kinekt-component-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--section-heading-4-size, var(--h4)));
+    --kinekt-component-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--section-heading-5-size, var(--h5)));
+    --kinekt-component-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--section-heading-6-size, var(--h6)));
+    --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height, var(--heading-line-height)));
+    --kinekt-component-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--section-text-xs-size, var(--text-xs)));
+    --kinekt-component-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--section-text-s-size, var(--text-s)));
+    --kinekt-component-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--section-text-m-size, var(--text-m)));
+    --kinekt-component-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--section-text-l-size, var(--text-l)));
+    --kinekt-component-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--section-text-xl-size, var(--text-xl)));
+    --kinekt-component-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--section-text-xxl-size, var(--text-xxl)));
+    --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height, var(--text-line-height)));
+    box-sizing: border-box;
+    padding-block: var(--kinekt-component-block-space);
+    color: var(--kinekt-component-ink);
+    background: var(--kinekt-component-canvas);
+    font-family: var(--kinekt-component-font);
+    font-size: var(--kinekt-component-text-m-size);
+    font-weight: var(--kinekt-section-text-font-weight, var(--kiw--section-text-font-weight, var(--text-font-weight)));
+    line-height: var(--kinekt-component-text-line-height);
+    letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--section-text-letter-spacing, var(--text-letter-spacing)));
+  }
+
+  :where([data-kinekt-structural-section][data-kinekt-theme='light'], [data-kinekt-structural-section][data-kinekt-theme='semi-light']) { color-scheme: light; }
+  :where([data-kinekt-structural-section][data-kinekt-theme='semi-light']) {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral)));
+  }
+  :where([data-kinekt-structural-section][data-kinekt-theme='dark'], [data-kinekt-structural-section][data-kinekt-theme='semi-dark']) {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-dark)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white)));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark)));
+    color-scheme: dark;
+  }
+  :where([data-kinekt-structural-section][data-kinekt-theme='semi-dark']) {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-ultra-dark)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light)));
+  }
+
+  :where([data-kinekt-structural-section]) *,
+  :where([data-kinekt-structural-section]) *::before,
+  :where([data-kinekt-structural-section]) *::after { box-sizing: border-box; }
+  :where([data-kinekt-structural-section]) [hidden] { display: none !important; }
+  :where([data-kinekt-structural-section]) > [class$='__container'] {
+    display: grid;
+    width: 100%;
+    max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2)));
+    gap: var(--kinekt-component-gap);
+    margin-inline: auto;
+    padding-inline: var(--kinekt-component-inline-space);
+  }
+  :where([data-kinekt-structural-section]) :is([class$='__header'], [class$='__intro']) { max-width: none; }
+  :where([data-kinekt-structural-section]) [class$='__header-content'] { max-width: var(--kinekt-component-reading-width); }
+  :where([data-kinekt-structural-section]) :is(h1, h2, h3, h4, h5, h6):not(.section-intro__heading) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kinekt-section-heading-font-family, var(--kiw--section-heading-font-family, var(--heading-font-family))); font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--section-heading-font-weight, var(--heading-font-weight))); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--section-heading-letter-spacing, var(--heading-letter-spacing))); text-wrap: balance; }
+  :where([data-kinekt-structural-section]) h1:not(.section-intro__heading) { font-size: var(--kinekt-component-heading-1-size); }
+  :where([data-kinekt-structural-section]) h2:not(.section-intro__heading) { font-size: var(--kinekt-component-heading-2-size); }
+  :where([data-kinekt-structural-section]) h3:not(.section-intro__heading) { font-size: var(--kinekt-component-heading-3-size); }
+  :where([data-kinekt-structural-section]) h4:not(.section-intro__heading) { font-size: var(--kinekt-component-heading-4-size); }
+  :where([data-kinekt-structural-section]) h5:not(.section-intro__heading) { font-size: var(--kinekt-component-heading-5-size); }
+  :where([data-kinekt-structural-section]) h6:not(.section-intro__heading) { font-size: var(--kinekt-component-heading-6-size); }
+  :where([data-kinekt-structural-section]) :is(p, li, dd, td, th, label, input, textarea, button):where(:not(.callout-allentown__label, .button, .section-intro__description)) { font: inherit; line-height: var(--kinekt-component-text-line-height); }
+  :where([data-kinekt-structural-section]) button.button { width: fit-content; font-family: var(--kinekt-component-font); }
+  :where([data-kinekt-structural-section]) :is(p, ul, ol, dl, table, form):where(:not(.section-intro__description, .section-intro__accent)) { margin-block: 0; }
+  :where([data-kinekt-structural-section]) :is([class$='__actions'], [class*='__cta-group']) { display: flex; flex-wrap: wrap; gap: var(--kinekt-section-actions-gap, var(--kiw--section-actions-gap, var(--space-s))); margin-top: var(--kinekt-section-actions-margin, var(--kiw--section-actions-margin, var(--space-xl))); }
+  :where([data-kinekt-structural-section]) [class$='__header'] > :is([class$='__actions'], [class$='__cta']) { margin-top: 0; }
+  /* Button owns its defaults; sections only set its inherited token context. */
+  :where([data-kinekt-structural-section]) :is([class$='__media'], [class*='__media-'], [class*='__image']) { display: block; max-width: 100%; }
+  :where([data-kinekt-structural-section]) picture { display: block; }
+  :where([data-kinekt-structural-section]) img { display: block; width: 100%; height: auto; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+  :where([data-kinekt-structural-section]) [class$='__media'] img,
+  :where([data-kinekt-structural-section]) [class$='__image'] { aspect-ratio: var(--kinekt-section-media-ratio, 4 / 3); object-fit: cover; }
+  :where([data-kinekt-structural-section]) :is(ul, ol)[class*='__'] { display: grid; padding: 0; list-style: none; }
+  :where([data-kinekt-structural-section]) :is(ul, ol)[class*='__'] > li { min-width: 0; }
+  :where([data-kinekt-structural-section]) :is(ul, ol):not([class]) { display: grid; gap: var(--space-xs); padding-left: var(--space-l); }
+  :where([data-kinekt-structural-section]) :is([class$='__cards'], [class$='__insight-sources']) { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+  :where([data-kinekt-structural-section]) li > article { display: grid; gap: var(--space-s); padding: var(--kinekt-component-gap); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); background: var(--kinekt-component-surface); }
+  :where([data-kinekt-structural-section]) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) > li > article { align-content: start; gap: var(--space-m); padding: var(--kinekt-section-card-padding, var(--kiw--section-card-padding, var(--space-l))); }
+  :where([data-kinekt-structural-section]) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) > li > article > picture:first-child img { aspect-ratio: var(--kinekt-section-card-media-ratio, 4 / 3); object-fit: cover; }
+  :where([data-kinekt-structural-section]) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) > li > article :is(h3, h4) { font-size: var(--h4); line-height: var(--heading-line-height); }
+  :where([data-kinekt-structural-section]) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) > li > article :is(p, [class*='__description']) { color: var(--kinekt-component-muted); }
+  :where([data-kinekt-structural-section]) [class$='__cards'] { gap: var(--border-width); background: var(--kinekt-component-line); }
+  :where([data-kinekt-structural-section]) [class$='__cards'] > li > article { min-height: 100%; padding: var(--kinekt-section-card-padding, var(--kiw--section-card-padding, var(--space-l))); border: 0; border-radius: 0; background: var(--kinekt-component-canvas); }
+  :where([data-kinekt-structural-section]) :is([class$='__features'], [class$='__checklist'], [class$='__specifications'], [class$='__facts'], [class$='__metrics']) { border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+  :where([data-kinekt-structural-section]) :is([class$='__features'], [class$='__checklist'], [class$='__specifications'], [class$='__facts'], [class$='__metrics']) > li { padding-block: var(--space-l); border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+  :where([data-kinekt-structural-section]) :is([class$='__features'], [class$='__checklist'], [class$='__specifications'], [class$='__facts'], [class$='__metrics']) > li > article { padding: 0; border: 0; background: transparent; }
+  :where([data-kinekt-structural-section]) [class$='__features'] { gap: 0; margin-top: var(--section-space-xs); }
+  :where([data-kinekt-structural-section]) [class$='__features'] > li > article { padding: var(--space-m) 0; border-width: var(--kinekt-component-border-width) 0 0; border-radius: 0; background: transparent; }
+  :where([data-kinekt-structural-section]) dl > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-m); padding: var(--space-m) 0; border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+  :where([data-kinekt-structural-section]) dl > div:first-child { border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+  :where([data-kinekt-structural-section]) :is(dt, dd) { margin: 0; }
+  :where([data-kinekt-structural-section]) dd { font-weight: var(--heading-font-weight); }
+  :where([data-kinekt-structural-section]) aside:not(.callout-allentown) { display: grid; gap: var(--space-m); margin-top: var(--section-space-xs); padding: var(--space-l); background: var(--kinekt-component-surface); }
+  :where([data-kinekt-structural-section]) table { width: 100%; border-collapse: collapse; overflow: hidden; border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); }
+  :where([data-kinekt-structural-section]) :is(th, td) { padding: var(--space-s); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); text-align: left; vertical-align: top; }
+  :where([data-kinekt-structural-section]) th { font-weight: var(--heading-font-weight); background: var(--kinekt-component-surface); }
+  :where([data-kinekt-structural-section]) form[class*='__'] { display: grid; gap: var(--kinekt-component-gap); }
+  :where([data-kinekt-structural-section]) form label { display: grid; gap: var(--space-xxs); font-weight: var(--heading-font-weight); }
+  :where([data-kinekt-structural-section]) :is(input, textarea) { width: 100%; padding: var(--space-s); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); }
+  :where([data-kinekt-structural-section]) textarea { min-height: var(--section-space-s); resize: vertical; }
+  :where([data-kinekt-structural-section]) button:not(.button) { display: inline-flex; align-items: center; justify-content: center; gap: .8ch; width: fit-content; min-height: var(--kiw--section-button-height); padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline); border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-weight: var(--kiw--section-heading-font-weight); cursor: pointer; }
+  :where([data-kinekt-structural-section]) :is(a, button, input, textarea):focus-visible { outline: calc(var(--border-width) * 3) solid var(--kinekt-section-focus, var(--kinekt-component-action)); outline-offset: var(--space-xxs); }
+  :where([data-kinekt-structural-section]) a:not([class]) { color: inherit; font-weight: var(--heading-font-weight); text-underline-offset: var(--space-xxs); }
+  :where([data-kinekt-structural-section]) details { border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); background: var(--kinekt-component-surface); }
+  :where([data-kinekt-structural-section]) summary { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-m); padding: var(--kinekt-component-gap); cursor: pointer; font-weight: var(--heading-font-weight); }
+  :where([data-kinekt-structural-section]) summary::-webkit-details-marker { display: none; }
+  :where([data-kinekt-structural-section]) summary::after { flex: none; content: '+'; font-size: var(--text-xl); line-height: var(--text-line-height); }
+  :where([data-kinekt-structural-section]) details[open] summary::after { content: '−'; }
+  :where([data-kinekt-structural-section]) [class$='-subtitle'] { color: var(--kinekt-component-muted); font-weight: var(--text-font-weight); }
+  :where([data-kinekt-structural-section]) [class$='-body'] { padding: 0 var(--kinekt-component-gap) var(--kinekt-component-gap); }
+  :where([data-kinekt-structural-section]) [data-kinekt-tabs] { display: grid; gap: var(--kinekt-component-gap); }
+  :where([data-kinekt-structural-section]) [role='tablist'] { display: flex; flex-wrap: wrap; gap: var(--space-xs); border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+  :where([data-kinekt-structural-section]) [role='tab'] { color: var(--kinekt-component-ink); background: transparent; }
+  :where([data-kinekt-structural-section]) [role='tab'][aria-selected='true'] { color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); }
+  :where([data-kinekt-structural-section]) [role='tabpanel'] { padding: var(--kinekt-component-gap); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-viewport] { overflow: hidden; }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel] { --kinekt-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--section-carousel-gap, var(--content-gap))); }
+  :where([data-kinekt-structural-section]) ul[data-kinekt-carousel-container] { display: flex; gap: var(--kinekt-carousel-gap); }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-slide] { flex: 0 0 var(--kinekt-carousel-slide-basis, 100%); }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-loop='true'] ul[data-kinekt-carousel-container] { gap: 0; }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-loop='true'] [data-kinekt-carousel-slide] { margin-inline-start: var(--kinekt-carousel-gap); }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-pagination] { display: grid; grid-template: 'counter next' 'indicators indicators' / minmax(0, 1fr) auto; align-items: center; gap: var(--space-l); }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-controls='previous-next'] [data-kinekt-carousel-pagination] { grid-template: 'counter previous next' 'indicators indicators indicators' / minmax(0, 1fr) auto auto; }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-counter] { grid-area: counter; margin: 0; color: var(--kinekt-component-action); font: var(--heading-font-weight) var(--text-xl)/var(--heading-line-height) var(--kinekt-carousel-counter-font, var(--kinekt-component-font)); letter-spacing: var(--kinekt-carousel-counter-tracking, var(--heading-letter-spacing)); }
+  :where([data-kinekt-structural-section]) :is([data-kinekt-carousel-separator], [data-kinekt-carousel-total]) { color: var(--kinekt-component-muted); }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-previous] { grid-area: previous; }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-next] { grid-area: next; }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-indicators] { display: grid; grid-area: indicators; grid-template-columns: repeat(auto-fit, minmax(var(--width-xs), 1fr)); gap: var(--space-xs); }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-dot] { position: relative; width: auto; min-height: var(--kinekt-carousel-indicator-hit-area, var(--input-height)); padding: 0; border: 0; border-radius: 0; color: transparent; background: transparent; touch-action: manipulation; }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-dot]::after { position: absolute; inset: 50% 0 auto; height: var(--kinekt-carousel-indicator-size, var(--border-width)); transform: translateY(-50%); background: var(--kinekt-component-line); content: ''; }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-dot][aria-current='true']::after { background: var(--kinekt-component-action); }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-control-style='icon'] [data-kinekt-carousel-control-text],
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-control-style='text'] [data-kinekt-carousel-control-icon],
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-controls='next'] [data-kinekt-carousel-previous] { display: none; }
+  :where([data-kinekt-structural-section]) [data-kinekt-carousel-status] { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  :where([data-kinekt-structural-section]) button:disabled { opacity: .45; cursor: not-allowed; }
+  :where([data-kinekt-structural-section]) [data-kinekt-search-grid] { display: grid; gap: var(--kinekt-component-gap); }
+  :where([data-kinekt-structural-section]) [data-kinekt-search-form] { display: flex; flex-wrap: wrap; align-items: end; max-width: none; }
+  :where([data-kinekt-structural-section]) [data-kinekt-search-form] label { min-width: min(100%, 12rem); flex: 1 1 12rem; }
+  :where([data-kinekt-structural-section]) select { min-height: var(--input-height); padding: var(--space-s); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font: inherit; }
+  :where([data-kinekt-structural-section]) [data-kinekt-search-status] { margin: 0; color: var(--kinekt-component-muted); }
+
+  :where([data-kinekt-structural-section]) [class$='__header']:has(> [class$='__header-content']) { margin-bottom: var(--kinekt-section-header-to-content, var(--kiw--section-header-to-content-gap, var(--section-space-s))); }
+  :where([data-kinekt-structural-section] :is([class$='__highlight'], [class$='__callout'], [class$='__note'])) { max-width: var(--kinekt-component-reading-width); padding: var(--kiw--section-card-padding); border-left: var(--kinekt-component-border-width) solid var(--kinekt-component-action); background: var(--kinekt-component-surface); }
+  :where([data-kinekt-structural-section][class*='checklist-feature-list-allentown'], [data-kinekt-structural-section][class*='solution-list-allentown'], [data-kinekt-structural-section][class*='hd-cells-engineering-allentown']) :is([class$='__items'], [class$='__features'], [class$='__metrics'], [class$='__cell-items'], [class$='__engineering-topics']),
+  :where([data-kinekt-structural-section][class*='compliance-detail-allentown'], [data-kinekt-structural-section][class*='compliance-overview-allentown'], [data-kinekt-structural-section][class*='compliance-text-allentown']) :is([class$='__items'], [class$='__details']) { gap: 0; border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+  :where([data-kinekt-structural-section][class*='checklist-feature-list-allentown'], [data-kinekt-structural-section][class*='solution-list-allentown'], [data-kinekt-structural-section][class*='hd-cells-engineering-allentown']) :is([class$='__items'], [class$='__features'], [class$='__metrics'], [class$='__cell-items'], [class$='__engineering-topics']) > li > article,
+  :where([data-kinekt-structural-section][class*='compliance-detail-allentown'], [data-kinekt-structural-section][class*='compliance-overview-allentown'], [data-kinekt-structural-section][class*='compliance-text-allentown']) :is([class$='__items'], [class$='__details']) > li > article { padding: var(--space-l) 0; border-width: 0 0 var(--kinekt-component-border-width); background: transparent; }
+  :where([data-kinekt-structural-section][class*='featured-insights-allentown'], [data-kinekt-structural-section][class*='event-overview-allentown'], [data-kinekt-structural-section][class*='facilities-overview-allentown'], [data-kinekt-structural-section][class*='insight-index-allentown']) :is([class$='__cards'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__results'], [class$='__insight-sources']) { gap: var(--border-width); background: var(--kinekt-component-line); }
+  :where([data-kinekt-structural-section][class*='featured-insights-allentown'], [data-kinekt-structural-section][class*='event-overview-allentown'], [data-kinekt-structural-section][class*='facilities-overview-allentown'], [data-kinekt-structural-section][class*='insight-index-allentown']) :is([class$='__cards'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__results'], [class$='__insight-sources']) > li > article { min-height: 100%; padding: var(--kinekt-section-card-padding, var(--kiw--section-card-padding, var(--space-l))); border: 0; background: var(--kinekt-component-canvas); }
+  :where([data-kinekt-structural-section][class*='intake-form-allentown'], [data-kinekt-structural-section][class*='product-finder-form-allentown']) form[class*='__'] { padding: var(--kinekt-section-form-padding, var(--space-l)); border-radius: 0; }
+  :where([data-kinekt-structural-section][class*='featured-event-allentown'], [data-kinekt-structural-section][class*='featured-page-header-allentown'], [data-kinekt-structural-section][class*='process-story-allentown'], [data-kinekt-structural-section][class*='media-fact-grid-allentown']) :is([class$='__media'], [class$='__image']) img { aspect-ratio: var(--kinekt-section-media-ratio); object-fit: cover; }
+
+  @media (max-width: 49.99rem) {
+    :where([data-kinekt-structural-section]) { --kinekt-component-reading-width: var(--content-width); }
+  }
+  @media (min-width: 50rem) {
+    :where([data-kinekt-structural-section]) > [class$='__container']:has(> [class$='__media']) { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: var(--section-space-xxl); }
+    :where([data-kinekt-structural-section][data-kinekt-direction='mediaRight']) > [class$='__container'] > [class$='__media'] { order: 2; }
+    :where([data-kinekt-structural-section][data-kinekt-direction='mediaLeft']) > [class$='__container'] > [class$='__media'] { order: -1; }
+    :where([data-kinekt-structural-section]) [class$='__cards'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    :where([data-kinekt-structural-section][class*='featured-insights-allentown'], [data-kinekt-structural-section][class*='event-overview-allentown'], [data-kinekt-structural-section][class*='facilities-overview-allentown'], [data-kinekt-structural-section][class*='insight-index-allentown']) :is([class$='__cards'], [class$='__results'], [class$='__items'], [class$='__models'], [class$='__options'], [class$='__insight-sources']) { grid-template-columns: repeat(var(--kinekt-section-card-columns, 3), minmax(0, 1fr)); }
+    :where([data-kinekt-structural-section]) > [class$='__container']:has(> [class$='__cards']):not(:has(> [class$='__media'])) { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: var(--section-space-xxl); }
+    :where([data-kinekt-structural-section]) > [class$='__container'] > [class$='__cards'] { grid-column: 1 / -1; }
+    :where([data-kinekt-structural-section]) > [class$='__container']:has(> dl) { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: var(--section-space-xxl); }
+    :where([data-kinekt-structural-section]) > [class$='__container']:has(> dl) > :is([class$='__header'], [class$='__intro']) { grid-row: span 2; }
+    :where([data-kinekt-structural-section]) > [class$='__container']:has(> [class$='__header']):has(> [class$='__media']) > [class$='__header'] { grid-column: 1; grid-row: 1; }
+    :where([data-kinekt-structural-section]) > [class$='__container']:has(> [class$='__header']):has(> [class$='__media']) > :not([class$='__header'], [class$='__media']) { grid-column: 1; grid-row: 2; }
+    :where([data-kinekt-structural-section]) > [class$='__container']:has(> [class$='__header']):has(> [class$='__media']) > [class$='__media'] { grid-column: 2; grid-row: 1 / span 2; }
+    :where([data-kinekt-structural-section][data-kinekt-direction='mediaLeft']) > [class$='__container']:has(> [class$='__header']):has(> [class$='__media']) > [class$='__media'] { grid-column: 1; }
+    :where([data-kinekt-structural-section][data-kinekt-direction='mediaLeft']) > [class$='__container']:has(> [class$='__header']):has(> [class$='__media']) > :not([class$='__media']) { grid-column: 2; }
+    :where([data-kinekt-structural-section]) [class$='__header']:has(> [class$='__header-content']):has(> :is([class$='__actions'], [class$='__cta'])) { grid-template-columns: minmax(0, var(--kinekt-component-reading-width)) auto; justify-content: space-between; column-gap: var(--kiw--section-editorial-gap); }
+    :where([data-kinekt-structural-section][class*='intake-form-allentown'], [data-kinekt-structural-section][class*='product-finder-form-allentown']) > [class$='__container'] { grid-template-columns: minmax(0, .8fr) minmax(20rem, .7fr); align-items: start; }
+    :where([data-kinekt-structural-section][class*='hd-cells-engineering-allentown'], [data-kinekt-structural-section][class*='homepage-problem-solution-allentown']) > [class$='__container'] { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
+    :where([data-kinekt-structural-section][class*='checklist-feature-list-allentown'], [data-kinekt-structural-section][class*='solution-list-allentown']) :is([class$='__items'], [class$='__features'], [class$='__metrics']) > li > article { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); column-gap: var(--section-space-xl); }
+    :where([data-kinekt-structural-section][class*='tabs-allentown']) [role='tablist'] { gap: 0; }
+    :where([data-kinekt-structural-section][class*='tabs-allentown']) [role='tab'] { padding-inline: var(--space-m); }
+  }
+</style>
 
 <script>
   import { initializeKinektInteractions } from './interactions'

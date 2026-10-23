@@ -47,6 +47,156 @@ const previewCopy = {
   ],
 }
 
+const sectionTokenRoles = [
+  ['site-width', 'website-width'],
+  ['content-width', 'content-width'],
+  ['reading-width', 'width-m'],
+  ['inline-space', 'section-gutter'],
+  ['block-space', 'section-space-l'],
+  ['gap', 'content-gap'],
+  ['radius', 'radius-none'],
+  ['border-width', 'border-width'],
+  ['media-filter', 'media-filter'],
+  ['intro-accent-gap', 'space-xxs'],
+  ['intro-description-gap', 'space-m'],
+  ['heading-1-size', 'h1'],
+  ['heading-2-size', 'h2'],
+  ['heading-3-size', 'h3'],
+  ['heading-4-size', 'h4'],
+  ['heading-5-size', 'h5'],
+  ['heading-6-size', 'h6'],
+  ['heading-font-family', 'heading-font-family'],
+  ['heading-font-weight', 'heading-font-weight'],
+  ['heading-line-height', 'heading-line-height'],
+  ['heading-letter-spacing', 'heading-letter-spacing'],
+  ['text-font-family', 'text-font-family'],
+  ['text-font-weight', 'text-font-weight'],
+  ['text-line-height', 'text-line-height'],
+  ['text-letter-spacing', 'text-letter-spacing'],
+  ['mono-font-family', 'mono-font-family'],
+  ['text-xs-size', 'text-xs'],
+  ['text-s-size', 'text-s'],
+  ['text-m-size', 'text-m'],
+  ['text-l-size', 'text-l'],
+  ['text-xl-size', 'text-xl'],
+  ['text-xxl-size', 'text-xxl'],
+  ['carousel-gap', 'content-gap'],
+  ['actions-gap', 'space-s'],
+  ['actions-margin', 'space-xl'],
+  ['button-height', 'input-height'],
+  ['button-padding-block', 'space-s'],
+  ['button-padding-inline', 'space-l'],
+  ['button-radius', 'buttons-radius'],
+  ['input-height', 'input-height'],
+  ['editorial-gap', 'section-space-xxl'],
+  ['card-padding', 'space-l'],
+  ['header-to-content-gap', 'section-space-s'],
+  ['table-offset', 'space-xl'],
+]
+
+const sectionColorRoles = ['canvas', 'surface', 'ink', 'muted', 'line', 'action', 'action-text']
+
+function sectionTokenBridgeCss(block) {
+  const tokenBlock = block.startsWith('beta-') ? block.slice(5) : block
+  const declarations = [
+    ...sectionTokenRoles.map(([role, token]) => `  --kiw--section-${role}: var(--kinekt-section-${role}, var(--kiw--${tokenBlock}-${role}, var(--${token})));`),
+    ...sectionColorRoles.map((role) => `  --kiw--section-${role}: var(--kinekt-section-${role}, var(--kiw--${tokenBlock}-${role}));`),
+  ].join('\n')
+
+  return `<style is:global>\n.${block}[data-kinekt-section] {\n${declarations}\n}\n</style>`
+}
+
+const generatedComponentRules = {
+  'beta-action-contact-allentown': `:where(.beta-action-contact-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }`,
+  'beta-support-contact-allentown': `:where(.beta-support-contact-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }`,
+  'beta-checklist-feature-list-allentown': `:where(.beta-checklist-feature-list-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
+  'beta-solution-list-allentown': `:where(.beta-solution-list-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
+  'beta-comparison-overview-allentown': `:where(.beta-comparison-overview-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
+:where(.beta-comparison-overview-allentown[data-kinekt-structural-section]) .beta-comparison-overview-allentown__header { text-align: center; }
+:where(.beta-comparison-overview-allentown[data-kinekt-structural-section]) .beta-comparison-overview-allentown__header-content { margin-inline: auto; }
+:where(.beta-comparison-overview-allentown[data-kinekt-structural-section]) [class$='__table'] { margin-top: var(--kinekt-section-table-offset, var(--kiw--section-table-offset, var(--space-xl))); font-size: var(--text-m); }`,
+  'beta-density-comparison-allentown': `:where(.beta-density-comparison-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
+:where(.beta-density-comparison-allentown[data-kinekt-structural-section]) .beta-density-comparison-allentown__header { text-align: center; }
+:where(.beta-density-comparison-allentown[data-kinekt-structural-section]) .beta-density-comparison-allentown__header-content { margin-inline: auto; }
+:where(.beta-density-comparison-allentown[data-kinekt-structural-section]) [class$='__table'] { margin-top: var(--kinekt-section-table-offset, var(--kiw--section-table-offset, var(--space-xl))); font-size: var(--text-m); }`,
+  'beta-compliance-detail-allentown': `:where(.beta-compliance-detail-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
+  'beta-compliance-overview-allentown': `:where(.beta-compliance-overview-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
+  'beta-compliance-text-allentown': `:where(.beta-compliance-text-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
+  'beta-faq-allentown': `:where(.beta-faq-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
+:where(.beta-faq-allentown[data-kinekt-structural-section]) .beta-faq-allentown__header { text-align: center; }
+:where(.beta-faq-allentown[data-kinekt-structural-section]) .beta-faq-allentown__header-content { margin-inline: auto; }`,
+  'beta-faq-index-allentown': `:where(.beta-faq-index-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
+:where(.beta-faq-index-allentown[data-kinekt-structural-section]) .beta-faq-index-allentown__header { text-align: center; }
+:where(.beta-faq-index-allentown[data-kinekt-structural-section]) .beta-faq-index-allentown__header-content { margin-inline: auto; }
+:where(.beta-faq-index-allentown[data-kinekt-structural-section]) details { border-width: 0 0 var(--kinekt-component-border-width); border-radius: 0; background: transparent; }
+:where(.beta-faq-index-allentown[data-kinekt-structural-section]) [class$='__items'] { gap: 0; border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }`,
+  'beta-product-details-allentown': `:where(.beta-product-details-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }`,
+  'beta-media-accordion-allentown': `:where(.beta-media-accordion-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }`,
+  'beta-featured-event-allentown': `:where(.beta-featured-event-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }`,
+  'beta-featured-page-header-allentown': `:where(.beta-featured-page-header-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }`,
+  'beta-process-story-allentown': `:where(.beta-process-story-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }
+:where(.beta-process-story-allentown[data-kinekt-structural-section]) .beta-process-story-allentown__label { text-transform: uppercase; }`,
+  'beta-media-fact-grid-allentown': `:where(.beta-media-fact-grid-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }`,
+  'beta-media-metrics-allentown': `:where(.beta-media-metrics-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }`,
+  'beta-form-section-allentown': `:where(.beta-form-section-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
+  'beta-intake-form-allentown': `:where(.beta-intake-form-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
+  'beta-product-finder-form-allentown': `:where(.beta-product-finder-form-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
+  'beta-hd-cells-engineering-allentown': `:where(.beta-hd-cells-engineering-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }`,
+  'beta-homepage-problem-solution-allentown': `:where(.beta-homepage-problem-solution-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }`,
+  'beta-insight-index-allentown': `:where(.beta-insight-index-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-gap: var(--section-space-xl); }`,
+  'beta-tabs-allentown': `:where(.beta-tabs-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }`,
+  'beta-steps-stage': `:where(.beta-steps-stage[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-xl); }
+:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__container { display: grid; gap: var(--section-space-l); }
+:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps { display: grid; gap: var(--section-space-s); margin: 0; }
+:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps-item { border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-border); }
+:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps summary { padding-block: var(--space-s); }
+:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps-body { padding: 0 0 var(--space-m); }
+@media (min-width: 50rem) {
+  :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps { grid-column: 2; grid-row: 1 / span 2; }
+  :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__media { grid-column: 1; }
+}`,
+  'beta-facilities-overview-allentown': `:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) { --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-card-media-ratio: 3 / 2; --kinekt-section-gap: var(--section-space-xl); }
+:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__container { gap: var(--section-space-l); }
+:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__facts { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--section-space-s) var(--section-space-m); border: 0; }
+:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__facts > li { padding: 0; border: 0; }
+:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__media img { aspect-ratio: 17 / 10; object-fit: cover; }
+@media (min-width: 50rem) {
+  :where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; }
+  :where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__header { grid-column: 1 / -1; }
+  :where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}`,
+  'beta-featured-insights-allentown': `:where(.beta-featured-insights-allentown[data-kinekt-structural-section]) { --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-card-media-ratio: 3 / 2; --kinekt-section-gap: var(--section-space-xl); }
+:where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; background: transparent; }
+:where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources > li > article { padding: var(--section-space-s) 0; border-width: 0 0 var(--kinekt-component-border-width); background: transparent; }
+:where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources > li:first-child > article { padding-top: 0; }
+@media (min-width: 50rem) {
+  :where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--section-space-l); }
+  :where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources > li:first-child { grid-row: span 3; }
+  :where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources > li:first-child > article { gap: var(--space-xl); }
+}`,
+  'beta-event-overview-allentown': `:where(.beta-event-overview-allentown[data-kinekt-structural-section]) { --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-card-media-ratio: 3 / 2; --kinekt-section-gap: var(--section-space-xl); }`,
+  'beta-product-hero-allentown': `:where(.beta-product-hero-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-media-ratio: 1 / 1; --kinekt-section-gap: var(--section-space-xl); }
+:where(.beta-product-hero-allentown[data-kinekt-structural-section]) .beta-product-hero-allentown__label { color: var(--kinekt-component-muted); text-transform: uppercase; }`,
+  'beta-not-found-hero-allentown': `:where(.beta-not-found-hero-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-media-ratio: 1 / 1; --kinekt-section-gap: var(--section-space-xl); }
+:where(.beta-not-found-hero-allentown[data-kinekt-structural-section]) .beta-not-found-hero-allentown__header { justify-self: center; max-inline-size: var(--kinekt-section-reading-width); text-align: center; }`,
+  'beta-thank-you-hero-allentown': `:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-media-ratio: 1 / 1; --kinekt-section-gap: var(--section-space-xl); }
+  :where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) [class$='__container'] { gap: var(--section-space-l); }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__header { justify-self: center; max-inline-size: var(--kinekt-section-reading-width); text-align: center; }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps-heading { display: flex; align-items: center; gap: var(--space-s); margin: 0; }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps-heading::after { flex: 1; block-size: var(--kinekt-component-border-width); background: var(--kinekt-component-border); content: ''; }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps { display: grid; gap: var(--section-space-m); margin: 0; }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps > li > article { padding: 0; border: 0; background: transparent; }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__media { justify-self: center; inline-size: min(100%, var(--kinekt-section-thank-you-hero-media-width, var(--width-m))); }
+:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__media img { aspect-ratio: 16 / 9; object-fit: cover; }
+@media (min-width: 50rem) { :where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }`,
+}
+
+function generatedComponentStyle(block) {
+  const rules = generatedComponentRules[block]
+  return rules ? `<style is:global>\n${rules}\n</style>` : ''
+}
+
 function from(values, index) {
   return values[index % values.length]
 }
@@ -410,7 +560,7 @@ const content = {
   const solutionListPayload = `// Solution List native Payload contract entrypoint.\nexport { createSolutionListAllentownBlock, solutionListAllentownToProps } from './solution-list-allentown.contract.js'\nexport type { CreateSolutionListAllentownBlockOptions, PayloadSolutionListAllentownDocument, SolutionListAllentownAdapterOptions, SolutionListAllentownContent, SolutionListAllentownItem } from './solution-list-allentown.contract.js'\n`
   const formSectionTypes = `// Form Section native Payload contract type entrypoint.\nexport type { BetaFormSectionAllentownContent, ContactMethod, ContactMethodIcon, FormSectionImagePosition, PayloadBetaFormSectionAllentownDocument } from './form-section-allentown.contract.js'\n`
 
-  await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\nconst fields = ${JSON.stringify(fields, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(block)} fields={fields} {...props} />\n`)
+  await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\nconst fields = ${JSON.stringify(fields, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(block)} fields={fields} {...props} />\n${sectionTokenBridgeCss(block)}\n${generatedComponentStyle(block)}\n`)
   await materialize(path.join(directory, `${base}.types.ts`), manifest.slug === 'media-metrics-allentown'
     ? mediaMetricsTypes
     : caseStudiesContract
@@ -463,6 +613,8 @@ function resolveCatalogueAssets(value: unknown): unknown {
 const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
 ---
 <StructuralSection block=${JSON.stringify(block)} intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+${sectionTokenBridgeCss(block)}
+${generatedComponentStyle(block)}
 `
   await materialize(path.join(directory, `${base}.preview.astro`), previewSource, manifest.slug === 'media-metrics-allentown')
 }

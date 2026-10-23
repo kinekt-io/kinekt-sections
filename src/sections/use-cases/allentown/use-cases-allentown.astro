@@ -1,6 +1,5 @@
 ---
-import { sectionTokenBridgeStyle } from '../../../shared/section-token-bridge.js'
-import '../../../styles/wireframe.css'
+import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
 
@@ -39,7 +38,7 @@ const {
 const sectionLabel = advantageHeading || gridHeading
 ---
 
-<section class="beta-use-cases-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} style={sectionTokenBridgeStyle('use-cases-allentown')}>
+<section class="beta-use-cases-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="beta-use-cases-allentown__container">
     <header class="beta-use-cases-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
@@ -70,3 +69,161 @@ const sectionLabel = advantageHeading || gridHeading
     </div>
   </div>
 </section>
+<style is:global>
+  .beta-use-cases-allentown {
+    --kiw--section-site-width: var(--kiw--use-cases-allentown-site-width, var(--website-width));
+    --kiw--section-content-width: var(--kiw--use-cases-allentown-content-width, var(--content-width));
+    --kiw--section-reading-width: var(--kiw--use-cases-allentown-reading-width, var(--width-m));
+    --kiw--section-inline-space: var(--kiw--use-cases-allentown-inline-space, var(--section-gutter));
+    --kiw--section-block-space: var(--kiw--use-cases-allentown-block-space, var(--section-space-l));
+    --kiw--section-gap: var(--kiw--use-cases-allentown-gap, var(--content-gap));
+    --kiw--section-radius: var(--kiw--use-cases-allentown-radius, var(--radius-none));
+    --kiw--section-border-width: var(--kiw--use-cases-allentown-border-width, var(--border-width));
+    --kiw--section-media-filter: var(--kiw--use-cases-allentown-media-filter, var(--media-filter));
+    --kiw--section-intro-accent-gap: var(--kiw--use-cases-allentown-intro-accent-gap, var(--space-xxs));
+    --kiw--section-intro-description-gap: var(--kiw--use-cases-allentown-intro-description-gap, var(--space-m));
+    --kiw--section-heading-1-size: var(--kiw--use-cases-allentown-heading-1-size, var(--h1));
+    --kiw--section-heading-2-size: var(--kiw--use-cases-allentown-heading-2-size, var(--h2));
+    --kiw--section-heading-3-size: var(--kiw--use-cases-allentown-heading-3-size, var(--h3));
+    --kiw--section-heading-4-size: var(--kiw--use-cases-allentown-heading-4-size, var(--h4));
+    --kiw--section-heading-5-size: var(--kiw--use-cases-allentown-heading-5-size, var(--h5));
+    --kiw--section-heading-6-size: var(--kiw--use-cases-allentown-heading-6-size, var(--h6));
+    --kiw--section-heading-font-family: var(--kiw--use-cases-allentown-heading-font-family, var(--heading-font-family));
+    --kiw--section-heading-font-weight: var(--kiw--use-cases-allentown-heading-font-weight, var(--heading-font-weight));
+    --kiw--section-heading-line-height: var(--kiw--use-cases-allentown-heading-line-height, var(--heading-line-height));
+    --kiw--section-heading-letter-spacing: var(--kiw--use-cases-allentown-heading-letter-spacing, var(--heading-letter-spacing));
+    --kiw--section-text-font-family: var(--kiw--use-cases-allentown-text-font-family, var(--text-font-family));
+    --kiw--section-text-font-weight: var(--kiw--use-cases-allentown-text-font-weight, var(--text-font-weight));
+    --kiw--section-text-line-height: var(--kiw--use-cases-allentown-text-line-height, var(--text-line-height));
+    --kiw--section-text-letter-spacing: var(--kiw--use-cases-allentown-text-letter-spacing, var(--text-letter-spacing));
+    --kiw--section-mono-font-family: var(--kiw--use-cases-allentown-mono-font-family, var(--mono-font-family));
+    --kiw--section-text-xs-size: var(--kiw--use-cases-allentown-text-xs-size, var(--text-xs));
+    --kiw--section-text-s-size: var(--kiw--use-cases-allentown-text-s-size, var(--text-s));
+    --kiw--section-text-m-size: var(--kiw--use-cases-allentown-text-m-size, var(--text-m));
+    --kiw--section-text-l-size: var(--kiw--use-cases-allentown-text-l-size, var(--text-l));
+    --kiw--section-text-xl-size: var(--kiw--use-cases-allentown-text-xl-size, var(--text-xl));
+    --kiw--section-text-xxl-size: var(--kiw--use-cases-allentown-text-xxl-size, var(--text-xxl));
+    --kiw--section-carousel-gap: var(--kiw--use-cases-allentown-carousel-gap, var(--content-gap));
+    --kiw--section-actions-gap: var(--kiw--use-cases-allentown-actions-gap, var(--space-s));
+    --kiw--section-actions-margin: var(--kiw--use-cases-allentown-actions-margin, var(--space-xl));
+    --kiw--section-button-height: var(--kiw--use-cases-allentown-button-height, var(--input-height));
+    --kiw--section-button-padding-block: var(--kiw--use-cases-allentown-button-padding-block, var(--space-s));
+    --kiw--section-button-padding-inline: var(--kiw--use-cases-allentown-button-padding-inline, var(--space-l));
+    --kiw--section-button-radius: var(--kiw--use-cases-allentown-button-radius, var(--buttons-radius));
+    --kiw--section-input-height: var(--kiw--use-cases-allentown-input-height, var(--input-height));
+    --kiw--section-editorial-gap: var(--kiw--use-cases-allentown-editorial-gap, var(--section-space-xxl));
+    --kiw--section-card-padding: var(--kiw--use-cases-allentown-card-padding, var(--space-l));
+    --kiw--section-header-to-content-gap: var(--kiw--use-cases-allentown-header-to-content-gap, var(--section-space-s));
+    --kiw--section-table-offset: var(--kiw--use-cases-allentown-table-offset, var(--space-xl));
+    --kiw--section-canvas: var(--kiw--use-cases-allentown-canvas);
+    --kiw--section-surface: var(--kiw--use-cases-allentown-surface);
+    --kiw--section-ink: var(--kiw--use-cases-allentown-ink);
+    --kiw--section-muted: var(--kiw--use-cases-allentown-muted);
+    --kiw--section-line: var(--kiw--use-cases-allentown-line);
+    --kiw--section-action: var(--kiw--use-cases-allentown-action);
+    --kiw--section-action-text: var(--kiw--use-cases-allentown-action-text);
+  }
+  :where(.beta-use-cases-allentown[data-kinekt-section]) { --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width)); --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width)); --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap)); --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius)); --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter)); --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap)); --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap)); --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height)); }
+  :where(.beta-use-cases-allentown[data-kinekt-section]) > .beta-use-cases-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
+  :where(.beta-use-cases-allentown) :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } :where(.beta-use-cases-allentown) h2 { font-size: var(--kiw--section-heading-2-size); } :where(.beta-use-cases-allentown) h3 { font-size: var(--kiw--section-heading-3-size); } :where(.beta-use-cases-allentown) :is(p, li) { font: inherit; line-height: var(--kinekt-component-text-line-height); } :where(.beta-use-cases-allentown) :is(p, ul, ol) { margin-block: 0; } :where(.beta-use-cases-allentown) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); } :where(.beta-use-cases-allentown) .section-intro__heading { margin: 0; } :where(.beta-use-cases-allentown) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: var(--kiw--section-text-l-size); }
+  .beta-use-cases-allentown[data-kinekt-section] > .beta-use-cases-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
+  .beta-use-cases-allentown :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } .beta-use-cases-allentown h2 { font-size: var(--kiw--section-heading-2-size); } .beta-use-cases-allentown h3 { font-size: var(--kiw--section-heading-3-size); }
+  .beta-use-cases-allentown h1 { font-size: var(--kiw--section-heading-1-size); } .beta-use-cases-allentown h2 { font-size: var(--kiw--section-heading-2-size); } .beta-use-cases-allentown h3 { font-size: var(--kiw--section-heading-3-size); } .beta-use-cases-allentown h4 { font-size: var(--kiw--section-heading-4-size); } .beta-use-cases-allentown h5 { font-size: var(--kiw--section-heading-5-size); } .beta-use-cases-allentown h6 { font-size: var(--kiw--section-heading-6-size); }
+
+  .beta-use-cases-allentown[data-kinekt-section] {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-ultra-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral-semi-light)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-ultra-dark)));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+    --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family));
+    --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family));
+    --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width));
+    --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space));
+    --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space));
+    --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width));
+    --kiw--use-cases-section-space: var(--section-space-xl);
+    --kiw--use-cases-container-width: var(--content-width);
+    --kiw--use-cases-inline-space: var(--section-gutter);
+    --kiw--use-cases-intro-width: var(--width-l);
+    --kiw--use-cases-content-gap: var(--section-space-xl);
+    --kiw--use-cases-column-gap: var(--section-space-xxl);
+    --kiw--use-cases-row-gap: var(--section-space-s);
+    --kiw--use-cases-heading-size: var(--h2);
+    --kiw--use-cases-item-heading-size: var(--h3);
+    --kiw--use-cases-description-size: var(--text-m);
+    --use-cases-section-space: var(--kinekt-section-use-cases-section-space, var(--kiw--use-cases-section-space));
+    --use-cases-container-width: var(--kinekt-section-use-cases-container-width, var(--kiw--use-cases-container-width));
+    --use-cases-inline-space: var(--kinekt-section-use-cases-inline-space, var(--kiw--use-cases-inline-space));
+    --use-cases-intro-width: var(--kinekt-section-use-cases-intro-width, var(--kiw--use-cases-intro-width));
+    --use-cases-content-gap: var(--kinekt-section-use-cases-content-gap, var(--kiw--use-cases-content-gap));
+    --use-cases-column-gap: var(--kinekt-section-use-cases-column-gap, var(--kiw--use-cases-column-gap));
+    --use-cases-row-gap: var(--kinekt-section-use-cases-row-gap, var(--kiw--use-cases-row-gap));
+    --use-cases-heading-size: var(--kinekt-section-use-cases-heading-size, var(--kiw--use-cases-heading-size));
+    --use-cases-item-heading-size: var(--kinekt-section-use-cases-item-heading-size, var(--kiw--use-cases-item-heading-size));
+    --use-cases-description-size: var(--kinekt-section-use-cases-description-size, var(--kiw--use-cases-description-size));
+    --kinekt-component-block-space: var(--use-cases-section-space);
+    --kinekt-component-inline-space: var(--use-cases-inline-space);
+    --kinekt-section-card-columns: 3;
+    --kinekt-section-card-min-width: var(--width-s);
+    --kinekt-section-card-media-ratio: 3 / 2;
+    --kinekt-section-gap: var(--section-space-xl);
+    box-sizing: border-box;
+    padding-block: var(--kinekt-component-block-space);
+    color: var(--kinekt-component-ink);
+    background: var(--kinekt-component-canvas);
+    font-family: var(--kinekt-component-font);
+    font-size: var(--kiw--section-text-m-size);
+    font-weight: var(--kiw--section-text-font-weight);
+    line-height: var(--kiw--section-text-line-height);
+    letter-spacing: var(--kiw--section-text-letter-spacing);
+  }
+
+  .beta-use-cases-allentown[data-kinekt-section][data-kinekt-theme='light'] { color-scheme: light; }
+  .beta-use-cases-allentown[data-kinekt-section][data-kinekt-theme='semi-light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral))); color-scheme: light; }
+  .beta-use-cases-allentown[data-kinekt-section][data-kinekt-theme='dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+  .beta-use-cases-allentown[data-kinekt-section][data-kinekt-theme='semi-dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-ultra-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark))); color-scheme: dark; }
+  .beta-use-cases-allentown[data-kinekt-section] *, .beta-use-cases-allentown[data-kinekt-section] *::before, .beta-use-cases-allentown[data-kinekt-section] *::after { box-sizing: border-box; }
+  .beta-use-cases-allentown[data-kinekt-section] [hidden] { display: none !important; }
+
+  .beta-use-cases-allentown__container { display: grid; max-width: var(--use-cases-container-width); gap: var(--use-cases-content-gap); margin-inline: auto; }
+  .beta-use-cases-allentown__intro { max-width: var(--use-cases-intro-width); }
+  .beta-use-cases-allentown__intro .section-intro__heading { font-size: var(--use-cases-heading-size); line-height: var(--heading-line-height); }
+  .beta-use-cases-allentown__intro .section-intro__description { max-width: none; font-size: var(--text-l); }
+  .beta-use-cases-allentown__content { display: grid; gap: var(--section-space-s); }
+  .beta-use-cases-allentown__label { display: flex; align-items: center; gap: var(--space-m); }
+  .beta-use-cases-allentown__label p { flex: none; margin: 0; color: var(--kinekt-component-muted); font-family: var(--kinekt-component-mono); font-size: var(--text-xs); font-weight: var(--heading-font-weight); letter-spacing: var(--text-letter-spacing); text-transform: uppercase; }
+  .beta-use-cases-allentown__label span { width: 100%; height: var(--kinekt-component-border-width); background: var(--kinekt-component-line); }
+  .beta-use-cases-allentown__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--kinekt-section-card-min-width, 17rem)), 1fr)); gap: var(--use-cases-row-gap) var(--use-cases-column-gap); background: var(--kinekt-component-line); }
+  .beta-use-cases-allentown__item { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-s); padding: var(--kinekt-section-card-padding, var(--space-l)); border: 0; background: var(--kinekt-component-canvas); }
+  .beta-use-cases-allentown__item :is(h3, p), .beta-use-cases-allentown__description :is(p, ul, ol) { margin: 0; }
+  .beta-use-cases-allentown__item h3 { font-size: var(--use-cases-item-heading-size); line-height: var(--heading-line-height); letter-spacing: var(--heading-letter-spacing); }
+  .beta-use-cases-allentown__item > :is(p, .beta-use-cases-allentown__description) { max-width: var(--kiw--use-cases-allentown-description-width, var(--kinekt-component-reading-width)); color: var(--kinekt-component-muted); font-size: var(--use-cases-description-size); line-height: var(--text-line-height); }
+  .beta-use-cases-allentown__cta { margin-top: var(--kiw--use-cases-allentown-action-space, var(--space-xxxs)); color: inherit; font-size: var(--text-m); font-weight: var(--heading-font-weight); text-underline-offset: var(--space-xxs); }
+  .beta-use-cases-allentown__cta:hover { color: var(--kinekt-component-muted); }
+
+  @media (min-width: 48rem) {
+    .beta-use-cases-allentown[data-kinekt-section] { --use-cases-inline-space: var(--kinekt-section-use-cases-inline-space, var(--kiw--use-cases-inline-space)); --use-cases-section-space: var(--kinekt-section-use-cases-section-space, var(--kiw--use-cases-section-space)); }
+    .beta-use-cases-allentown__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+</style>
+<style is:global>
+  .beta-use-cases-allentown .beta-use-cases-allentown__label p { flex: none; margin: 0; color: var(--kinekt-component-muted); font-family: var(--kinekt-component-mono); font-size: var(--kiw--section-text-xs-size); font-weight: var(--kiw--section-heading-font-weight); letter-spacing: var(--kiw--section-text-letter-spacing); line-height: var(--kinekt-component-text-line-height); text-transform: uppercase; }
+  .beta-use-cases-allentown .beta-use-cases-allentown__grid { background: transparent; }
+  .beta-use-cases-allentown .beta-use-cases-allentown__item { padding: 0; background: transparent; }
+  @media (max-width: 49.99rem) { .beta-use-cases-allentown .beta-use-cases-allentown__grid { grid-template-columns: minmax(0, 1fr); } }
+</style>
+<style is:global>
+  .beta-use-cases-allentown[data-kinekt-section] { --kinekt-component-content-width: var(--use-cases-container-width); }
+  .beta-use-cases-allentown .beta-use-cases-allentown__label { color: var(--kinekt-component-muted); font-family: var(--kinekt-component-mono); font-size: var(--kiw--section-text-xs-size); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing); text-transform: uppercase; }
+  .beta-use-cases-allentown .beta-use-cases-allentown__container { max-width: var(--use-cases-container-width); }
+  .beta-use-cases-allentown[data-kinekt-section] > .beta-use-cases-allentown__container { max-width: var(--use-cases-container-width); }
+</style>
+<style is:global>
+  @media (max-width: 49.99rem) {
+    .beta-use-cases-allentown[data-kinekt-section] { --kinekt-component-reading-width: var(--content-width); }
+  }
+</style>

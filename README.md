@@ -100,15 +100,14 @@ if (!hero) throw new Error('The homepage has no Allentown hero block.')
 
 Shared sections use the canonical contract in [`src/styles/wireframe-tokens.css`](src/styles/wireframe-tokens.css), based on the supplied wireframe token file. Defaults are grayscale with system fonts. Customer colors and fonts belong in one customer stylesheet, not in section renderers.
 
-Import the styles once in the consuming layout:
+Import the shared canonical tokens once in the consuming layout:
 
 ```ts
 import '@kinekt-io/components/styles/wireframe-tokens.css'
-import '@kinekt-io/components/styles/wireframe.css'
 import '../styles/customer-tokens.css'
 ```
 
-Section renderers also load the shared stylesheet. Canonical defaults are inside `@layer kinekt.tokens`; unlayered customer declarations take precedence even when loaded before those defaults. Use root declarations for canonical inputs and a component class for component-specific overrides:
+Each section renderer owns its semantic aliases, theme fallbacks, reset, typography and layout in Astro `<style is:global>` blocks; static token redeclarations never belong in HTML `style` attributes. Every selector is anchored to its owning component root. Reusable children keep low-specificity global bases so root-anchored parent overrides win without cross-component leakage. Canonical defaults are inside `@layer kinekt.tokens`; unlayered customer declarations take precedence even when loaded before those defaults. Use root declarations for canonical inputs and a component class for component-specific overrides:
 
 ```css
 :root {
@@ -147,11 +146,11 @@ Radius values are `--radius-none` (0), `--radius-xs` (2px), `--radius-s` (4px), 
 
 ### Component defaults and theme roles
 
-Each section root carries `data-kinekt-section`. Its token bridge maps `--kiw--<section-slug>-<role>` overrides to canonical defaults. Renderers with local styles define additional component aliases beside those styles. Use the nearest scale value instead of introducing a second spacing or typography scale.
+Each section root carries `data-kinekt-section`. Its owning Astro component maps `--kiw--<section-slug>-<role>` overrides to canonical defaults in a static root rule inside its `<style is:global>` block; static mappings never use a root `style` attribute. Renderers define additional component aliases beside those styles. Use the nearest scale value instead of introducing a second spacing or typography scale.
 
 The four semantic themes retain their meaning: `light` uses `--neutral-ultra-light`, `semi-light` uses `--neutral-light`, `dark` uses `--primary-ultra-dark`, and `semi-dark` uses `--primary-dark`. Existing explicit `--kinekt-section-*` hooks remain available; old generic `--kinekt-color-*`, `--kinekt-font-*` and `--kinekt-space-*` site contracts have been replaced.
 
-Keep component defaults low-specificity. Inside scoped Astro CSS, use `:global(:where(.component))` for variable declarations and a separate scoped class selector for layout rules. Never point a bridged component alias back to the semantic variable that consumes it: that creates a CSS custom-property cycle.
+Keep component defaults low-specificity while exceeding generic `:where([data-kinekt-section])` defaults. Use a root-class selector in `<style is:global>` where needed, and keep each component's layout and responsive rules beside that component. Never point a bridged component alias back to the semantic variable that consumes it: that creates a CSS custom-property cycle.
 
 The token migration is part of this source revision. Installing it through a published package still requires an authorized new package release and updated consumer pins; older consumer pins do not provide the new CSS exports.
 
