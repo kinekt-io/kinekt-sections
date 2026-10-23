@@ -1,5 +1,11 @@
 # Changelog
 
+## 26.10.2-beta.23 — 2026-10-23
+
+### Fixed
+
+- Normalize migrated Callout CTA records with a valid URL and no content relationship back to URL mode during Payload reads.
+
 ## 26.10.2-beta.22 — 2026-10-23
 
 ### Fixed

@@ -87,7 +87,7 @@ function ctaGroupFields(targetRelation: CollectionSlug | CollectionSlug[]): Fiel
     type: 'group',
     fields: [
       { name: 'label', label: 'Link label', type: 'text' },
-      { name: 'destinationType', label: 'Link type', type: 'select', defaultValue: 'url', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }] },
+      { name: 'destinationType', label: 'Link type', type: 'select', defaultValue: 'url', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }], hooks: { afterRead: [({ value, siblingData }) => value === 'page' && !siblingData?.page && isSafeWebUrl(siblingData?.href) ? 'url' : value] } },
       { name: 'href', label: 'URL', type: 'text', admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeWebUrl(value) || 'Enter an absolute HTTP(S) URL or a site-root-relative path.' },
       targetField(targetRelation),
       { name: 'icon', label: 'Icon', type: 'select', options: [{ label: 'Arrow right', value: 'arrow-right' }, { label: 'Arrow down', value: 'arrow-down' }] },
