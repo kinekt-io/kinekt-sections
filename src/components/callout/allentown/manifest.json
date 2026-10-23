@@ -16,6 +16,6 @@
   },
   "fields": {
     "intro": { "kind": "component", "componentId": "components/intro/allentown", "required": true, "localized": true },
-    "ctaGroup": { "kind": "component", "componentId": "components/cta-group/allentown", "required": true, "localized": true }
+    "ctaGroup": { "kind": "component", "componentId": "components/cta-group/allentown", "required": false, "localized": true }
   }
 }

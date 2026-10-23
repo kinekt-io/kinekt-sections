@@ -107,7 +107,7 @@ const manifest = {
         "ctaGroup": {
           "kind": "component",
           "componentId": "components/cta-group/allentown",
-          "required": true,
+          "required": false,
           "localized": true,
           "fields": {
             "primaryButton": {

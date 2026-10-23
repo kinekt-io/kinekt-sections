@@ -68,7 +68,7 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
     case 'media':
     case 'video': return { ...common, type: 'upload', relationTo: options.mediaCollection }
     case 'mediaList': return { ...common, type: 'array', minRows: field.minItems, fields: [{ name: 'media', type: 'upload', relationTo: options.mediaCollection, required: true }] }
-    case 'cta': return { ...common, type: 'group', fields: ctaFields(options.targetCollections, true) }
+    case 'cta': return { ...common, type: 'group', fields: ctaFields(options.targetCollections, field.required) }
     case 'ctaGroup': return { ...common, type: 'group', fields: ctaGroupFields(options.targetCollections) }
     case 'sectionIntro': return { ...common, type: 'group', fields: introFields() }
     case 'component': return { ...common, type: 'group', fields: childFields(field, options, descendantsLocalized) }

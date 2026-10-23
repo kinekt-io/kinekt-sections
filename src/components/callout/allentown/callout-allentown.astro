@@ -7,15 +7,19 @@ import type {
 } from "../../../shared/content.js";
 
 interface Props {
-  callout: { intro: SectionIntroContent; ctaGroup: CtaGroup | { primaryButton?: CtaGroup['primary']; secondaryButton?: CtaGroup['secondary'] } };
+  callout: {
+    intro: SectionIntroContent;
+    ctaGroup?: CtaGroup | { primaryButton?: CtaGroup['primary']; secondaryButton?: CtaGroup['secondary'] };
+  };
   headingLevel?: "h1" | "h2" | "h3";
   class?: string;
 }
 
 const { callout, headingLevel = "h3", class: className } = Astro.props;
-const actions = callout.ctaGroup as CtaGroup & { primaryButton?: CtaGroup['primary']; secondaryButton?: CtaGroup['secondary'] };
+const actions = (callout.ctaGroup ?? {}) as CtaGroup & { primaryButton?: CtaGroup['primary']; secondaryButton?: CtaGroup['secondary'] };
 const primary = actions.primary ?? actions.primaryButton;
 const secondary = actions.secondary ?? actions.secondaryButton;
+const hasActions = Boolean(primary || secondary);
 const classes = ["callout-allentown", className].filter(Boolean).join(" ");
 const contentIntro = { ...callout.intro, accentHeading: undefined };
 ---
@@ -35,10 +39,14 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
     <div class="callout-allentown__content">
       <SectionIntro intro={contentIntro} headingLevel={headingLevel} />
     </div>
-    <div class="callout-allentown__action">
-      {primary && <Button href={primary.href} label={primary.label} />}
-      {secondary && <Button href={secondary.href} label={secondary.label} style="secondary" />}
-    </div>
+    {
+      hasActions && (
+        <div class="callout-allentown__action">
+          {primary && <Button href={primary.href} label={primary.label} />}
+          {secondary && <Button href={secondary.href} label={secondary.label} style="secondary" />}
+        </div>
+      )
+    }
   </div>
 </aside>
 
