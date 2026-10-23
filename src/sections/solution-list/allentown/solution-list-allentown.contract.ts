@@ -2,7 +2,7 @@ import type { Block, CollectionSlug, Field } from 'payload'
 
 import type { Cta, CtaGroup, Media, SectionIntro } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
-import { ctaGroupToProps, mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { isSafeWebUrl } from '../../../urls.js'
 
 export interface SolutionListAllentownItem {
@@ -25,15 +25,15 @@ export type PayloadSolutionListAllentownDocument = Record<string, unknown> & { i
 
 export interface CreateSolutionListAllentownBlockOptions {
   mediaCollection?: CollectionSlug
-  pageCollection?: CollectionSlug
+  targetCollections?: CollectionSlug[]
 }
 
 export interface SolutionListAllentownAdapterOptions extends PayloadAdapterOptions {
-  pageHref: (pageID: string) => string | undefined
+  contentHref: (collection: string, documentID: string) => string | undefined
 }
 
-
-export function createSolutionListAllentownBlock({ mediaCollection = 'media', pageCollection = 'pages' }: CreateSolutionListAllentownBlockOptions = {}): Block {
+export function createSolutionListAllentownBlock({ mediaCollection = 'media', targetCollections = ['pages'] }: CreateSolutionListAllentownBlockOptions = {}): Block {
+  const targetRelation = targetCollections.length === 1 ? targetCollections[0] : targetCollections
 
   return {
     slug: 'beta-solution-list-allentown',
@@ -50,25 +50,25 @@ export function createSolutionListAllentownBlock({ mediaCollection = 'media', pa
           { name: 'heading', label: 'Heading', type: 'text', localized: true, required: true, validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' },
           { name: 'label', label: 'Label', type: 'group', localized: true, fields: [{ name: 'text', label: 'Text', type: 'text' }, { name: 'icon', label: 'Icon', type: 'text' }] },
           { name: 'description', label: 'Description', type: 'textarea', localized: true, required: true },
-          { name: 'destinationType', label: 'Link type', type: 'select', localized: true, required: true, defaultValue: 'page', options: [{ label: 'Page', value: 'page' }, { label: 'URL', value: 'url' }] },
+          { name: 'destinationType', label: 'Link type', type: 'select', localized: true, required: true, defaultValue: 'page', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }] },
           { name: 'linkLabel', label: 'Link label', type: 'text', localized: true, required: true, validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' },
           { name: 'href', label: 'URL', type: 'text', localized: true, admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeWebUrl(value) || 'Enter an absolute HTTP(S) URL or a site-root-relative path.' },
-          { name: 'page', label: 'Page', type: 'relationship', relationTo: pageCollection, localized: true, admin: { condition: (_, siblingData) => siblingData?.destinationType === 'page' } },
+          targetField(targetRelation, true),
         ],
       },
-      { name: 'callout', label: 'Callout', type: 'group', localized: true, fields: [{ name: 'intro', label: 'Intro block', type: 'group', required: true, fields: introFields() }, { name: 'ctaGroup', label: 'CTA group', type: 'group', required: true, fields: ctaGroupFields() }] },
+      { name: 'callout', label: 'Callout', type: 'group', localized: true, fields: [{ name: 'intro', label: 'Intro block', type: 'group', required: true, fields: introFields() }, { name: 'ctaGroup', label: 'CTA group', type: 'group', required: true, fields: ctaGroupFields(targetRelation) }] },
     ],
   }
 }
 
-export function solutionListAllentownToProps(data: PayloadSolutionListAllentownDocument, { pageHref, ...payloadOptions }: SolutionListAllentownAdapterOptions): SolutionListAllentownContent {
+export function solutionListAllentownToProps(data: PayloadSolutionListAllentownDocument, { contentHref, ...payloadOptions }: SolutionListAllentownAdapterOptions): SolutionListAllentownContent {
   const intro = introToProps(data.intro, 'intro')
 
   return {
     theme: requireTheme(data.theme),
     intro,
-    items: requireArray(data.items, 'items').map((item, index) => itemToProps(item, index, pageHref, payloadOptions)),
-    ...(data.callout ? { callout: calloutToProps(data.callout) } : {}),
+    items: requireArray(data.items, 'items').map((item, index) => itemToProps(item, index, contentHref, payloadOptions)),
+    ...(data.callout ? { callout: calloutToProps(data.callout, contentHref) } : {}),
   }
 }
 
@@ -80,8 +80,26 @@ function introFields(): Field[] {
   ]
 }
 
-function ctaGroupFields(): Field[] {
-  return [['primaryButton', 'Primary CTA'], ['secondaryButton', 'Secondary CTA']].map(([name, label]) => ({ name, label, type: 'group', fields: [{ name: 'label', label: 'Link label', type: 'text' }, { name: 'href', label: 'URL', type: 'text', validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeWebUrl(value) || 'Enter an absolute HTTP(S) URL or a site-root-relative path.' }, { name: 'icon', label: 'Icon', type: 'select', options: [{ label: 'Arrow right', value: 'arrow-right' }, { label: 'Arrow down', value: 'arrow-down' }] }] })) as Field[]
+function ctaGroupFields(targetRelation: CollectionSlug | CollectionSlug[]): Field[] {
+  return [['primaryButton', 'Primary CTA'], ['secondaryButton', 'Secondary CTA']].map(([name, label]) => ({
+    name,
+    label,
+    type: 'group',
+    fields: [
+      { name: 'label', label: 'Link label', type: 'text' },
+      { name: 'destinationType', label: 'Link type', type: 'select', defaultValue: 'page', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }] },
+      { name: 'href', label: 'URL', type: 'text', admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeWebUrl(value) || 'Enter an absolute HTTP(S) URL or a site-root-relative path.' },
+      targetField(targetRelation),
+      { name: 'icon', label: 'Icon', type: 'select', options: [{ label: 'Arrow right', value: 'arrow-right' }, { label: 'Arrow down', value: 'arrow-down' }] },
+    ],
+  })) as Field[]
+}
+
+function targetField(targetRelation: CollectionSlug | CollectionSlug[], localized = false): Field {
+  const common = { name: 'page', label: 'Content target', type: 'relationship' as const, localized, admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'page' } }
+  return Array.isArray(targetRelation)
+    ? { ...common, relationTo: targetRelation }
+    : { ...common, relationTo: targetRelation }
 }
 
 function introToProps(value: unknown, field: string): SectionIntro {
@@ -93,10 +111,10 @@ function introToProps(value: unknown, field: string): SectionIntro {
   }
 }
 
-function itemToProps(value: unknown, index: number, pageHref: SolutionListAllentownAdapterOptions['pageHref'], options: PayloadAdapterOptions): SolutionListAllentownItem {
+function itemToProps(value: unknown, index: number, contentHref: SolutionListAllentownAdapterOptions['contentHref'], options: PayloadAdapterOptions): SolutionListAllentownItem {
   const item = requireObject(value, `items[${index}]`)
   const label = item.label ? requireObject(item.label, `items[${index}].label`) : undefined
-  const destination = destinationToProps(item, index, pageHref)
+  const destination = destinationToProps(item, `items[${index}]`, 'linkLabel', contentHref)
 
   return {
     image: mediaToProps(item.image, `items[${index}].image`, options),
@@ -108,30 +126,52 @@ function itemToProps(value: unknown, index: number, pageHref: SolutionListAllent
   }
 }
 
-function destinationToProps(item: Record<string, unknown>, index: number, pageHref: SolutionListAllentownAdapterOptions['pageHref']): Cta {
-  const label = requireText(item.linkLabel, `items[${index}].linkLabel`)
-  if (item.destinationType === 'page') {
-    const pageID = typeof item.page === 'string'
-      ? item.page
-      : requireText(requireObject(item.page, `items[${index}].page`).id, `items[${index}].page.id`)
-    const href = pageHref(pageID)
-    if (!href) throw new Error(`items[${index}].page is not available in this static build.`)
-    return { label, href }
+function destinationToProps(value: Record<string, unknown>, field: string, labelField: string, contentHref: SolutionListAllentownAdapterOptions['contentHref']): Cta {
+  const label = requireText(value[labelField], `${field}.${labelField}`)
+  const icon = value.icon
+  if (icon !== undefined && icon !== 'arrow-right' && icon !== 'arrow-down') throw new Error(`${field}.icon must be arrow-right or arrow-down.`)
+
+  if (value.destinationType === 'page') {
+    const target = relationshipTarget(value.page, `${field}.page`)
+    const href = contentHref(target.collection, target.id)
+    if (!href) throw new Error(`${field}.page is not available in this static build.`)
+    return { label, href, ...(icon ? { icon } : {}) }
   }
-  if (item.destinationType === 'url') {
-    const href = requireText(item.href, `items[${index}].href`)
-    if (!isSafeWebUrl(href)) throw new Error(`items[${index}].href must be an HTTP(S) or root-relative URL.`)
-    return { label, href }
+  if (value.destinationType === 'url') {
+    const href = requireText(value.href, `${field}.href`)
+    if (!isSafeWebUrl(href)) throw new Error(`${field}.href must be an HTTP(S) or root-relative URL.`)
+    return { label, href, ...(icon ? { icon } : {}) }
   }
-  throw new Error(`items[${index}].destinationType must be page or url.`)
+  throw new Error(`${field}.destinationType must be page or url.`)
 }
 
-function calloutToProps(value: unknown): NonNullable<SolutionListAllentownContent['callout']> {
+function relationshipTarget(value: unknown, field: string): { collection: string; id: string } {
+  if (typeof value === 'string') return { collection: 'pages', id: value }
+  const relation = requireObject(value, field)
+  if (typeof relation.relationTo === 'string') {
+    const document = relation.value
+    const id = typeof document === 'string' ? document : requireText(requireObject(document, `${field}.value`).id, `${field}.value.id`)
+    return { collection: relation.relationTo, id }
+  }
+  return { collection: 'pages', id: requireText(relation.id, `${field}.id`) }
+}
+
+function optionalButtonToProps(value: unknown, field: string, contentHref: SolutionListAllentownAdapterOptions['contentHref']): Cta | undefined {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return undefined
+  const button = value as Record<string, unknown>
+  if (!optionalText(button.label, `${field}.label`)) return undefined
+  return destinationToProps(button, field, 'label', contentHref)
+}
+
+function calloutToProps(value: unknown, contentHref: SolutionListAllentownAdapterOptions['contentHref']): NonNullable<SolutionListAllentownContent['callout']> {
   const callout = requireObject(value, 'callout')
   const ctaGroup = requireObject(callout.ctaGroup, 'callout.ctaGroup')
+  const primary = optionalButtonToProps(ctaGroup.primaryButton, 'callout.ctaGroup.primaryButton', contentHref)
+  const secondary = optionalButtonToProps(ctaGroup.secondaryButton, 'callout.ctaGroup.secondaryButton', contentHref)
+  if (!primary && !secondary) throw new Error('callout.ctaGroup requires a primary or secondary action.')
   return {
     intro: introToProps(callout.intro, 'callout.intro'),
-    ctaGroup: ctaGroupToProps({ primary: ctaGroup.primaryButton, secondary: ctaGroup.secondaryButton }, 'callout.ctaGroup', true)!,
+    ctaGroup: { primary, secondary },
   }
 }
 

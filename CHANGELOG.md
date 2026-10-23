@@ -1,5 +1,11 @@
 # Changelog
 
+## 26.10.2-beta.21 — 2026-10-23
+
+### Changed
+
+- Solution List item links and Callout CTA links can now target any configured routeable Payload content collection or an external URL.
+
 ## 26.10.2-beta.20 — 2026-10-23
 
 ### Changed
