@@ -14,6 +14,9 @@ const classes = ['button', `button--${style}`, className].filter(Boolean).join('
 
 <style is:global>
   :where([data-kinekt-section], [data-kinekt-structural-section]) .button {
+
+    --kiw--section-button-padding-block:var(--space-xxs);
+    --kiw--section-button-padding-inline:var(--space-xs);
     min-height: var(--kiw--section-button-height);
     padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline);
     border: var(--kinekt-component-border-width) solid var(--kinekt-component-action);
