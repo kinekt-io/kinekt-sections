@@ -148,6 +148,8 @@ Radius values are `--radius-none` (0), `--radius-xs` (2px), `--radius-s` (4px), 
 
 Each section root carries `data-kinekt-section`. Its owning Astro component maps `--kiw--<section-slug>-<role>` overrides to canonical defaults in a static root rule inside its `<style is:global>` block; static mappings never use a root `style` attribute. Renderers define additional component aliases beside those styles. Use the nearest scale value instead of introducing a second spacing or typography scale.
 
+Hero Trinity's image frame fills the available width up to the site-width token (`--website-width` by default), then remains centered at that width. It does not use the narrower `--content-width` as its frame limit. `--kiw--hero-trinity-site-width` and the explicit `--kiw--hero-trinity-frame-width` hook support component-specific limits.
+
 The four semantic themes retain their meaning: `light` uses `--neutral-ultra-light`, `semi-light` uses `--neutral-light`, `dark` uses `--primary-ultra-dark`, and `semi-dark` uses `--primary-dark`. Existing explicit `--kinekt-section-*` hooks remain available; old generic `--kinekt-color-*`, `--kinekt-font-*` and `--kinekt-space-*` site contracts have been replaced.
 
 Keep component defaults low-specificity while exceeding generic `:where([data-kinekt-section])` defaults. Use a root-class selector in `<style is:global>` where needed, and keep each component's layout and responsive rules beside that component. Never point a bridged component alias back to the semantic variable that consumes it: that creates a CSS custom-property cycle.
