@@ -1,5 +1,6 @@
 ---
 import '../../../styles/wireframe-tokens.css'
+import ResultItem from '../../../components/result-item/allentown/result-item-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { MediaMetricsAllentownContent } from './media-metrics-allentown.types.js'
@@ -13,7 +14,7 @@ const { theme, intro, metrics, media, headingLevel = 'h2' } = Astro.props as Pro
 <section class="media-metrics-allentown" data-kinekt-section data-kinekt-theme={theme}>
   <div class="media-metrics-allentown__container">
     <header class="media-metrics-allentown__intro">
-      <SectionIntro intro={intro} headingLevel={headingLevel} />
+      <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
     </header>
 
     <div class="media-metrics-allentown__content">
@@ -21,8 +22,7 @@ const { theme, intro, metrics, media, headingLevel = 'h2' } = Astro.props as Pro
         {metrics.map((metric) => (
           <li class="media-metrics-allentown__metric">
             <article>
-              <p class="media-metrics-allentown__metric-value">{metric.value.text}</p>
-              <h5 class="media-metrics-allentown__metric-label">{metric.label}</h5>
+              <ResultItem class="media-metrics-allentown__result" size="xl" swap labelAs="h5" label={metric.label} value={metric.value} />
             </article>
           </li>
         ))}
@@ -101,31 +101,37 @@ const { theme, intro, metrics, media, headingLevel = 'h2' } = Astro.props as Pro
     --kiw--media-metrics-section-space: var(--section-gutter);
     --kiw--media-metrics-content-width: var(--content-width);
     --kiw--media-metrics-intro-width: var(--width-l);
-    --kiw--media-metrics-major-gap: var(--section-space-xl);
-    --kiw--media-metrics-column-gap: var(--section-space-l);
-    --kiw--media-metrics-metric-column-gap: var(--section-space-s);
-    --kiw--media-metrics-metric-row-gap: var(--section-space-l);
+    --kiw--media-metrics-major-gap: var(--section-space-l);
+    --kiw--media-metrics-intro-gap: var(--space-m);
+    --kiw--media-metrics-heading-stack-gap: var(--space-xxs);
+    --kiw--media-metrics-description-font-size: var(--text-l);
+    --kiw--media-metrics-column-gap: var(--section-space-m);
+    --kiw--media-metrics-metric-column-gap: var(--section-space-xs);
+    --kiw--media-metrics-metric-row-gap: var(--section-space-m);
     --kiw--media-metrics-metric-width: var(--width-s);
-    --kiw--media-metrics-value-gap: var(--space-s);
     --kiw--media-metrics-media-ratio: 688 / 406;
     padding-block: var(--kiw--media-metrics-section-space);
 
-    .media-metrics-allentown__container { display: grid; max-width: var(--kiw--media-metrics-content-width); gap: var(--kiw--media-metrics-major-gap); padding-inline: var(--kiw--media-metrics-inline-space); }
-    .media-metrics-allentown__intro { max-width: var(--kiw--media-metrics-intro-width); }
+    .media-metrics-allentown__container { display: grid; max-width: min(var(--kinekt-component-site-width), calc(var(--kiw--media-metrics-content-width) + (var(--kiw--media-metrics-inline-space) * 2))); gap: var(--kiw--media-metrics-major-gap); padding-inline: var(--kiw--media-metrics-inline-space); }
+    .section-intro { display: grid; justify-items: start; gap: var(--kiw--media-metrics-intro-gap); }
+    .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
+    .section-intro__heading-group { display: grid; gap: var(--kiw--media-metrics-heading-stack-gap); }
+    .section-intro__heading { max-width: none; }
+    .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--kiw--media-metrics-description-font-size); line-height: var(--kinekt-component-text-line-height); }
+    .section-intro__description > * { margin-block: 0; }
     .media-metrics-allentown__content { display: grid; align-items: center; gap: var(--kiw--media-metrics-column-gap); }
-    .media-metrics-allentown__metrics { display: grid; grid-template-columns: repeat(2, minmax(0, var(--kiw--media-metrics-metric-width))); gap: var(--kiw--media-metrics-metric-row-gap) var(--kiw--media-metrics-metric-column-gap); margin: 0; padding: 0; border: 0; list-style: none; }
-    .media-metrics-allentown__metric { min-width: 0; padding-block: var(--space-l); border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
-    .media-metrics-allentown__metric > article { display: grid; align-content: start; gap: var(--kiw--media-metrics-value-gap); padding: 0; border: 0; background: transparent; }
-    :is(.media-metrics-allentown__metric-value, .media-metrics-allentown__metric-label) { margin: 0; }
-    .media-metrics-allentown__metric-value { color: var(--kinekt-component-action); font: var(--heading-font-weight) var(--h3)/var(--heading-line-height) var(--heading-font-family); letter-spacing: var(--heading-letter-spacing); }
-    .media-metrics-allentown__metric-label { color: var(--kinekt-component-ink); font-size: var(--text-m); font-weight: var(--text-font-weight); line-height: var(--text-line-height); }
-    .media-metrics-allentown__media { align-self: stretch; }
+    .media-metrics-allentown__metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--kiw--media-metrics-metric-row-gap) var(--kiw--media-metrics-metric-column-gap); margin: 0; padding: 0; border: 0; list-style: none; }
+    .media-metrics-allentown__metric { min-width: 0; }
+    .media-metrics-allentown__metric > article { padding: 0; border: 0; background: transparent; }
     :is(.media-metrics-allentown__media, .media-metrics-allentown__image) { display: block; width: 100%; max-width: 100%; }
-    .media-metrics-allentown__image { aspect-ratio: 4 / 5; object-fit: cover; }
-    @media (min-width: 50rem) { .media-metrics-allentown__content { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .media-metrics-allentown__image { aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--media-metrics-media-ratio)); object-fit: cover; }
+    @media (min-width: 50rem) {
+      .media-metrics-allentown__intro { max-width: var(--kiw--media-metrics-intro-width); }
+      .media-metrics-allentown__content { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .media-metrics-allentown__metrics { grid-template-columns: repeat(2, minmax(0, var(--kiw--media-metrics-metric-width))); }
+    }
     @media (max-width: 49.99rem) { &[data-kinekt-section] { --kinekt-component-reading-width: var(--kinekt-component-content-width); } }
-  }
-</style>
+  }</style>
 <style is:global>
   .media-metrics-allentown {
     --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light)));

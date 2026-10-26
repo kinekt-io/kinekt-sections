@@ -3,19 +3,19 @@ import MediaMetricsAllentown from './media-metrics-allentown.astro'
 
 const rawContent = {
   intro: {
-    accentHeading: 'Operational proof points',
-    heading: 'The figures that support the next technical decision',
-    description: 'A concise view of measurable outcomes, engineering context and the system evidence teams need to compare options.'
+    accentHeading: '/ Production base',
+    heading: 'Built to scale from the Netherlands',
+    description: 'Tulip’s production facilities in the Netherlands are set up to turn validated battery designs into repeatable, scalable production. From controlled assembly and testing to traceable production records, the focus is on delivering consistent quality as customer programs grow.'
   },
   metrics: [
-    { label: 'Validated test plans', value: { text: '24' } },
-    { label: 'Configured systems', value: { text: '180+' } },
-    { label: 'Operating range', value: { text: '−20 to 55 °C' } },
-    { label: 'Engineering support', value: { text: 'From concept to release' } }
+    { label: 'Units / month capacity', value: { text: 'XX,000+' } },
+    { label: 'Packs / year potential', value: { text: 'XX M' } },
+    { label: 'Individual pack testing', value: { text: '100%' } },
+    { label: 'Qualified suppliers', value: { text: 'XXX+' } }
   ],
   media: {
     url: 'catalogue-asset:placeholder-688x406.svg',
-    alt: 'Abstract grayscale placeholder for supporting media',
+    alt: 'Battery pack production line in the Netherlands',
     width: 688,
     height: 406
   }
@@ -34,4 +34,4 @@ function resolveCatalogueAssets(value: unknown): unknown {
 
 const content = resolveCatalogueAssets(rawContent) as typeof rawContent
 ---
-<MediaMetricsAllentown theme="light" {...content} />
+<MediaMetricsAllentown theme="semi-light" {...content} />
