@@ -1,0 +1,65 @@
+---
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import type { RichText } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+
+export interface HomepageProblemItemContent {
+  /** Font Awesome icon key (e.g. `xmark`). */
+  icon?: string | null
+  title: string
+  description: string | RichText | Record<string, unknown>
+}
+
+interface Props {
+  item: HomepageProblemItemContent
+  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  class?: string
+}
+
+const { item, headingLevel = 'h3', class: className } = Astro.props
+const Heading = headingLevel
+const classes = ['homepage-problem-item-allentown', className].filter(Boolean).join(' ')
+const fontAwesomeIcon = (name?: string | null) => {
+  if (!name || !/^[a-z0-9-]+$/.test(name)) return undefined
+  const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
+  return fas[key]
+}
+const icon = fontAwesomeIcon(item.icon)
+const descriptionHtml = item.description == null || item.description === ''
+  ? undefined
+  : typeof item.description === 'object' && typeof (item.description as RichText).html === 'string'
+    ? (item.description as RichText).html
+    : richTextToHtml(item.description, 'homepage problem item description')
+---
+<article class={classes}>
+  <Heading class="homepage-problem-item-allentown__title-row">
+    {icon && <svg class="homepage-problem-item-allentown__icon" aria-hidden="true" focusable="false" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`}><path d={icon.icon[4] as string} /></svg>}
+    <span class="homepage-problem-item-allentown__title">{item.title}</span>
+  </Heading>
+  {descriptionHtml && <div class="homepage-problem-item-allentown__description" set:html={descriptionHtml} />}
+</article>
+<style is:global>
+  /* Figma "Content Item" in "Section - The problem + The Solution" (5240:411378): FA icon (h6, error) + title (h5, line-height 1), XS gaps, description text-m 1.5. */
+  :where(.homepage-problem-item-allentown) {
+    --kiw--homepage-problem-item-allentown-gap: var(--space-xs);
+    --kiw--homepage-problem-item-allentown-title-gap: var(--space-xs);
+    --kiw--homepage-problem-item-allentown-icon-size: var(--h6);
+    --kiw--homepage-problem-item-allentown-icon-color: var(--error, var(--kinekt-component-accent, currentColor));
+    --kiw--homepage-problem-item-allentown-title-size: var(--h5);
+    --kiw--homepage-problem-item-allentown-title-color: var(--kinekt-component-ink, currentColor);
+    --kiw--homepage-problem-item-allentown-description-size: var(--text-m);
+    --kiw--homepage-problem-item-allentown-description-line-height: 1.5;
+    --kiw--homepage-problem-item-allentown-description-color: var(--kinekt-component-subtle, var(--kinekt-component-muted, currentColor));
+  }
+
+  .homepage-problem-item-allentown { display: grid; gap: var(--kiw--homepage-problem-item-allentown-gap); align-content: start; min-width: 0; }
+  .homepage-problem-item-allentown .homepage-problem-item-allentown__title-row { display: flex; align-items: center; gap: var(--kiw--homepage-problem-item-allentown-title-gap); max-width: none; margin: 0; color: var(--kiw--homepage-problem-item-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--homepage-problem-item-allentown-title-size); font-weight: var(--heading-font-weight); line-height: 1; letter-spacing: var(--heading-letter-spacing); text-wrap: balance; }
+  .homepage-problem-item-allentown .homepage-problem-item-allentown__icon { flex: none; display: block; inline-size: auto; block-size: var(--kiw--homepage-problem-item-allentown-icon-size); max-inline-size: 1.25em; fill: var(--kiw--homepage-problem-item-allentown-icon-color); }
+  .homepage-problem-item-allentown .homepage-problem-item-allentown__title { min-width: 0; }
+  .homepage-problem-item-allentown .homepage-problem-item-allentown__description { color: var(--kiw--homepage-problem-item-allentown-description-color); font-size: var(--kiw--homepage-problem-item-allentown-description-size); line-height: var(--kiw--homepage-problem-item-allentown-description-line-height); }
+  .homepage-problem-item-allentown .homepage-problem-item-allentown__description > * { margin-block: 0; }
+  .homepage-problem-item-allentown .homepage-problem-item-allentown__description > * + * { margin-block-start: var(--space-xs); }
+  @media (max-width: 49.999rem) {
+    .homepage-problem-item-allentown .homepage-problem-item-allentown__title-row { line-height: 1.2; }
+  }
+</style>

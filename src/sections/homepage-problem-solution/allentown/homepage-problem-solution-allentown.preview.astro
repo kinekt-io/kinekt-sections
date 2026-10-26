@@ -1,227 +1,47 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import HomepageProblemSolution from './homepage-problem-solution-allentown.astro'
+const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
 
+// Copy from Figma "Section - The problem + The Solution" (5240:411370). The two infographics are fixed implementation
+// assets the renderer will ship (runtime props problemMedia / solutionMedia); the preview uses local placeholders.
 const content = {
-  "theme": "light",
-  "problemIntro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  theme: 'dark' as const,
+  problemIntro: {
+    accentHeading: '/ The low-density problem',
+    heading: 'Low-density batteries force compromises',
+    description: 'Every gram and every millimeter matters. When battery systems take up too much space or add unnecessary weight, platform designers are forced to compromise on payload, range, endurance or overall system design.',
   },
-  "problemItems": [
-    {
-      "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "title": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-    },
-    {
-      "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "title": "Designed for the constraints that shape delivery",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-    },
-    {
-      "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "title": "Performance data teams can use with confidence",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-    }
+  problemItems: [
+    { icon: 'xmark', title: 'Less payload', description: 'More battery weight leaves less capacity for mission equipment.' },
+    { icon: 'xmark', title: 'Shorter endurance', description: 'Limited energy density reduces time in operation.' },
+    { icon: 'xmark', title: 'Restricted range', description: 'Less usable energy limits how far the platform can operate.' },
+    { icon: 'xmark', title: 'More redesign', description: 'Extra capacity often requires a larger or heavier battery system.' },
   ],
-  "solutionIntro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  solutionIntro: {
+    accentHeading: '/ The high-density solution',
+    heading: 'More performance from the same battery space',
+    description: 'High-density cells and a pack engineered around them deliver more usable energy in the same envelope, so platforms gain range, endurance and payload instead of trading one for another.',
   },
-  "solutionSteps": [
-    {
-      "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "title": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-    },
-    {
-      "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "title": "Designed for the constraints that shape delivery",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-    },
-    {
-      "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "title": "Performance data teams can use with confidence",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-    }
+  solutionSteps: [
+    { icon: 'microchip', title: 'High-density cell technology', description: 'Selected high-energy cells store more energy per gram and per litre than conventional packs.' },
+    { icon: 'gears', title: 'High-density engineering', description: 'Pack structure, thermal design and electronics are optimised to keep that density at system level.' },
+    { icon: 'shield-halved', title: 'Battle tested & developed', description: 'Validated in demanding field conditions before a design moves into series production.' },
   ],
-  "solutionCtaGroup": {
-    "primaryButton": {
-      "label": "Explore the specification",
-      "href": "#"
-    },
-    "secondaryButton": {
-      "label": "Explore the specification",
-      "href": "#"
-    }
-  }
+  solutionCtaGroup: {
+    primaryButton: { label: 'Read more about high-density tech', href: '/technology/high-density', icon: 'arrow-right' as const },
+  },
+  problemMedia: {
+    url: placeholder('placeholder-1000x1000.svg'),
+    alt: 'Infographic: flight range of a low-density battery',
+    width: 1000,
+    height: 1000,
+  },
+  solutionMedia: {
+    url: placeholder('placeholder-1000x1000.svg'),
+    alt: 'Infographic: the larger flight range of a high-density battery',
+    width: 1000,
+    height: 1000,
+  },
 }
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "problemIntro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "problemItems": {
-    "kind": "componentList",
-    "id": "components/homepage-problem-item/allentown",
-    "role": "homepage-problem-item",
-    "fields": {
-      "icon": {
-        "kind": "text"
-      },
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "solutionIntro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "solutionSteps": {
-    "kind": "componentList",
-    "id": "components/homepage-solution-step/allentown",
-    "role": "homepage-solution-step",
-    "fields": {
-      "icon": {
-        "kind": "text"
-      },
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "solutionCtaGroup": {
-    "kind": "component",
-    "id": "components/cta-group/allentown",
-    "role": "cta-group",
-    "fields": {
-      "primaryButton": {
-        "kind": "cta"
-      },
-      "secondaryButton": {
-        "kind": "cta"
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Section overview",
-  "heading": "Homepage Problem Solution Allentown",
-  "description": "A reusable content structure for technical decisions."
-}
-const ctas = undefined
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
-const resolvedMedia = resolveCatalogueAssets(media) as typeof media
 ---
-<StructuralSection block="beta-homepage-problem-solution-allentown" intro={intro} ctas={ctas} media={resolvedMedia} content={resolvedContent} fields={fields} />
-<style is:global>
-.beta-homepage-problem-solution-allentown[data-kinekt-section] {
-  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--homepage-problem-solution-allentown-site-width, var(--website-width)));
-  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--homepage-problem-solution-allentown-content-width, var(--content-width)));
-  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--homepage-problem-solution-allentown-reading-width, var(--width-m)));
-  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--homepage-problem-solution-allentown-inline-space, var(--section-gutter)));
-  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--homepage-problem-solution-allentown-block-space, var(--section-space-l)));
-  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--homepage-problem-solution-allentown-gap, var(--content-gap)));
-  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--homepage-problem-solution-allentown-radius, var(--radius-none)));
-  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--homepage-problem-solution-allentown-border-width, var(--border-width)));
-  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--homepage-problem-solution-allentown-media-filter, var(--media-filter)));
-  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--homepage-problem-solution-allentown-intro-accent-gap, var(--space-xxs)));
-  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--homepage-problem-solution-allentown-intro-description-gap, var(--space-m)));
-  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--homepage-problem-solution-allentown-heading-1-size, var(--h1)));
-  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--homepage-problem-solution-allentown-heading-2-size, var(--h2)));
-  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--homepage-problem-solution-allentown-heading-3-size, var(--h3)));
-  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--homepage-problem-solution-allentown-heading-4-size, var(--h4)));
-  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--homepage-problem-solution-allentown-heading-5-size, var(--h5)));
-  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--homepage-problem-solution-allentown-heading-6-size, var(--h6)));
-  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--homepage-problem-solution-allentown-heading-font-family, var(--heading-font-family)));
-  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--homepage-problem-solution-allentown-heading-font-weight, var(--heading-font-weight)));
-  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--homepage-problem-solution-allentown-heading-line-height, var(--heading-line-height)));
-  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--homepage-problem-solution-allentown-heading-letter-spacing, var(--heading-letter-spacing)));
-  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--homepage-problem-solution-allentown-text-font-family, var(--text-font-family)));
-  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--homepage-problem-solution-allentown-text-font-weight, var(--text-font-weight)));
-  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--homepage-problem-solution-allentown-text-line-height, var(--text-line-height)));
-  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--homepage-problem-solution-allentown-text-letter-spacing, var(--text-letter-spacing)));
-  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--homepage-problem-solution-allentown-mono-font-family, var(--mono-font-family)));
-  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--homepage-problem-solution-allentown-text-xs-size, var(--text-xs)));
-  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--homepage-problem-solution-allentown-text-s-size, var(--text-s)));
-  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--homepage-problem-solution-allentown-text-m-size, var(--text-m)));
-  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--homepage-problem-solution-allentown-text-l-size, var(--text-l)));
-  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--homepage-problem-solution-allentown-text-xl-size, var(--text-xl)));
-  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--homepage-problem-solution-allentown-text-xxl-size, var(--text-xxl)));
-  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--homepage-problem-solution-allentown-carousel-gap, var(--content-gap)));
-  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--homepage-problem-solution-allentown-actions-gap, var(--space-s)));
-  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--homepage-problem-solution-allentown-actions-margin, var(--space-xl)));
-  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--homepage-problem-solution-allentown-button-height, var(--input-height)));
-  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--homepage-problem-solution-allentown-button-padding-block, var(--space-s)));
-  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--homepage-problem-solution-allentown-button-padding-inline, var(--space-l)));
-  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--homepage-problem-solution-allentown-button-radius, var(--buttons-radius)));
-  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--homepage-problem-solution-allentown-input-height, var(--input-height)));
-  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--homepage-problem-solution-allentown-editorial-gap, var(--section-space-xxl)));
-  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--homepage-problem-solution-allentown-card-padding, var(--space-l)));
-  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--homepage-problem-solution-allentown-header-to-content-gap, var(--section-space-s)));
-  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--homepage-problem-solution-allentown-table-offset, var(--space-xl)));
-  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--homepage-problem-solution-allentown-canvas));
-  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--homepage-problem-solution-allentown-surface));
-  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--homepage-problem-solution-allentown-ink));
-  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--homepage-problem-solution-allentown-muted));
-  --kiw--section-subtle: var(--kinekt-section-subtle, var(--kiw--homepage-problem-solution-allentown-subtle));
-  --kiw--section-line: var(--kinekt-section-line, var(--kiw--homepage-problem-solution-allentown-line));
-  --kiw--section-action: var(--kinekt-section-action, var(--kiw--homepage-problem-solution-allentown-action));
-  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--homepage-problem-solution-allentown-action-text));
-  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--homepage-problem-solution-allentown-accent));
-  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--homepage-problem-solution-allentown-action-icon));
-}
-</style>
-<style is:global>
-:where(.beta-homepage-problem-solution-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }
-</style>
+<HomepageProblemSolution {...content} />
