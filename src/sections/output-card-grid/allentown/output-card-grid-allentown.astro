@@ -1,8 +1,10 @@
 ---
 import '../../../styles/wireframe-tokens.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
-import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import OutputCard from '../../../components/output-card/allentown/output-card-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import type { OutputCardGridContent } from './output-card-grid-allentown.types.js'
 
 interface Props extends OutputCardGridContent {
@@ -10,33 +12,28 @@ interface Props extends OutputCardGridContent {
 }
 
 const { theme, intro, ctas, label, cards, headingLevel = 'h2' } = Astro.props as Props
+const primaryIcon = ctas?.primary?.icon ? ctaIconPaths[ctas.primary.icon] : undefined
+const secondaryIcon = ctas?.secondary?.icon ? ctaIconPaths[ctas.secondary.icon] : undefined
+const cardHeadingLevel = ('h' + Math.min(Number(headingLevel.slice(1)) + 1, 6)) as 'h2' | 'h3' | 'h4'
 ---
 <section class="output-card-grid output-card-grid--allentown" data-kinekt-section data-kinekt-theme={theme}>
   <div class="output-card-grid__container">
     <header class="output-card-grid__header">
       <div class="output-card-grid__header-content">
-        <SectionIntro intro={intro} headingLevel={headingLevel} />
+        <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
       </div>
       {(ctas?.primary || ctas?.secondary) && (
         <nav class="output-card-grid__actions" aria-label="Section actions">
-          {ctas.primary && <Button class="output-card-grid__action output-card-grid__action--primary" href={ctas.primary.href} label={ctas.primary.label} />}
-          {ctas.secondary && <Button class="output-card-grid__action output-card-grid__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="secondary" />}
+          {ctas.primary && <Button class="output-card-grid__action output-card-grid__action--primary" href={ctas.primary.href} label={ctas.primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+          {ctas.secondary && <Button class="output-card-grid__action output-card-grid__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="clear">{secondaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
         </nav>
       )}
     </header>
 
     <div class="output-card-grid__content">
-      {label && <p class="output-card-grid__label">{label}</p>}
+      {label && <SubtitleFlightPath class="output-card-grid__label" text={label} />}
       <div class="output-card-grid__cards">
-        {cards.map((card) => (
-          <article class="output-card-grid__card">
-            <KinektMedia class="output-card-grid__media" imageClass="output-card-grid__image" media={card.image} />
-            <div class="output-card-grid__card-content">
-              <h3 class="output-card-grid__title">{card.title}</h3>
-              <div class="output-card-grid__description" set:html={card.description.html} />
-            </div>
-          </article>
-        ))}
+        {cards.map((card) => <OutputCard class="output-card-grid__card" card={card} headingLevel={cardHeadingLevel} />)}
       </div>
     </div>
   </div>
@@ -108,46 +105,45 @@ const { theme, intro, ctas, label, cards, headingLevel = 'h2' } = Astro.props as
   .output-card-grid--allentown[data-kinekt-section] > .output-card-grid__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); } .output-card-grid--allentown :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } .output-card-grid--allentown h2 { font-size: var(--kiw--section-heading-2-size); } .output-card-grid--allentown h3 { font-size: var(--kiw--section-heading-3-size); }
 </style>
 <style is:global>
+  /* Figma "Section - Customized Batteries" (5255:537962, semi-light). */
   .output-card-grid.output-card-grid--allentown[data-kinekt-section] {
-    --kiw--section-media-ratio: 4 / 3;
     --kiw--output-card-grid-block-space: var(--section-gutter);
     --kiw--output-card-grid-content-width: var(--width-xxl);
-    --kiw--output-card-grid-major-gap: var(--section-space-xl);
-    --kiw--output-card-grid-grid-column-gap: var(--section-space-l);
-    --kiw--output-card-grid-grid-row-gap: var(--space-xl);
-    --kiw--output-card-grid-label-to-grid-gap: var(--section-space-m);
-    --kiw--output-card-grid-card-media-size: var(--width-xs);
-    --kiw--output-card-grid-card-content-gap: var(--space-xl);
-    --kiw--output-card-grid-card-heading-size: var(--h3);
+    --kiw--output-card-grid-major-gap: var(--section-space-l);
+    --kiw--output-card-grid-header-width: var(--width-l);
+    --kiw--output-card-grid-header-gap: var(--space-xl);
+    --kiw--output-card-grid-header-column-gap: var(--space-m);
+    --kiw--output-card-grid-intro-gap: var(--space-m);
+    --kiw--output-card-grid-heading-stack-gap: var(--space-xxs);
+    --kiw--output-card-grid-description-font-size: var(--text-l);
+    --kiw--output-card-grid-actions-gap: var(--space-m);
+    --kiw--output-card-grid-label-to-grid-gap: var(--section-space-s);
+    --kiw--output-card-grid-grid-column-gap: var(--section-space-m);
+    --kiw--output-card-grid-grid-row-gap: var(--section-space-s);
     --kinekt-section-output-card-grid-block-space: var(--kiw--output-card-grid-block-space);
     --kinekt-section-output-card-grid-content-width: var(--kiw--output-card-grid-content-width);
     --kinekt-section-output-card-grid-major-gap: var(--kiw--output-card-grid-major-gap);
     --kinekt-section-output-card-grid-grid-column-gap: var(--kiw--output-card-grid-grid-column-gap);
     --kinekt-section-output-card-grid-grid-row-gap: var(--kiw--output-card-grid-grid-row-gap);
     --kinekt-section-output-card-grid-label-to-grid-gap: var(--kiw--output-card-grid-label-to-grid-gap);
-    --kinekt-section-output-card-grid-card-media-size: var(--kiw--output-card-grid-card-media-size);
-    --kinekt-section-output-card-grid-card-content-gap: var(--kiw--output-card-grid-card-content-gap);
-    --kinekt-section-output-card-grid-card-heading-size: var(--kiw--output-card-grid-card-heading-size);
     --kinekt-component-block-space: var(--kinekt-section-output-card-grid-block-space);
     --kinekt-component-content-width: var(--kinekt-section-output-card-grid-content-width);
   }
   .output-card-grid.output-card-grid--allentown[data-kinekt-section] > .output-card-grid__container { gap: var(--kinekt-section-output-card-grid-major-gap); }
-  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__header { display: grid; gap: var(--kinekt-section-output-card-grid-major-gap); margin-bottom: var(--section-space-s); }
-  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__header-content { max-width: var(--width-l); }
-  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__actions { display: flex; flex-wrap: wrap; gap: var(--space-m); align-self: end; }
-  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__content { display: grid; gap: var(--kinekt-section-output-card-grid-label-to-grid-gap); }
-  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__label { display: flex; align-items: center; gap: var(--space-m); margin: 0; color: var(--kinekt-component-muted); font-family: var(--kinekt-component-mono); font-size: var(--kinekt-component-text-xs-size); font-weight: var(--heading-font-weight); letter-spacing: var(--text-letter-spacing); line-height: var(--text-line-height); text-transform: uppercase; }
-  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__label::after { flex: 1; min-width: var(--width-xs); border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line); content: ''; }
-  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--kinekt-section-output-card-grid-grid-row-gap) var(--kinekt-section-output-card-grid-grid-column-gap); background: var(--kinekt-component-line); }
-  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__card { display: flex; gap: var(--kinekt-section-output-card-grid-card-content-gap); min-width: 0; }
-  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__media { display: block; flex: 0 0 var(--kinekt-section-output-card-grid-card-media-size); width: var(--kinekt-section-output-card-grid-card-media-size); }
-  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__image { display: block; width: 100%; max-width: 100%; aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--section-media-ratio)); object-fit: cover; }
-  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__card-content { display: grid; align-content: start; gap: var(--kinekt-section-output-card-grid-card-content-gap); min-width: 0; }
-  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__title { font-size: var(--kinekt-section-output-card-grid-card-heading-size); line-height: var(--heading-line-height); }
-  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__description { color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-l-size); line-height: var(--kinekt-component-text-line-height); }
+  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__header { display: grid; gap: var(--kiw--output-card-grid-header-gap); }
+  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__header-content { min-width: 0; }
+  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .section-intro { display: grid; justify-items: start; gap: var(--kiw--output-card-grid-intro-gap); }
+  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
+  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .section-intro__heading-group { display: grid; gap: var(--kiw--output-card-grid-heading-stack-gap); }
+  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .section-intro__heading { max-width: none; }
+  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--kiw--output-card-grid-description-font-size); line-height: var(--kinekt-component-text-line-height); }
+  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .section-intro__description > * { margin-block: 0; }
+  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--kiw--output-card-grid-actions-gap); }
+  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__content { display: grid; gap: var(--kinekt-section-output-card-grid-label-to-grid-gap); min-width: 0; }
+  .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--kinekt-section-output-card-grid-grid-row-gap) var(--kinekt-section-output-card-grid-grid-column-gap); }
   @media (min-width: 50rem) {
-    .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__header { grid-template-columns: minmax(0, var(--width-m)) auto; justify-content: space-between; column-gap: var(--section-space-xxl); }
-    .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__header-content { max-width: var(--width-l); }
+    .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__header { grid-template-columns: minmax(0, var(--kiw--output-card-grid-header-width)) auto; justify-content: space-between; align-items: end; column-gap: var(--kiw--output-card-grid-header-column-gap); }
+    .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__actions { justify-content: end; }
     .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
   @media (max-width: 49.99rem) {

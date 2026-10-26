@@ -1,32 +1,30 @@
 ---
 import OutputCardGrid from './output-card-grid-allentown.astro'
+import type { OutputCardGridContent } from './output-card-grid-allentown.types.js'
 
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-const placeholder = (name: string, alt: string) => ({
-  url: `${catalogueBase}placeholders/${name}`,
-  alt,
-  width: 144,
-  height: 144,
-})
+const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
+const square = (alt: string) => ({ url: placeholder('placeholder-200x200.svg'), alt, width: 200, height: 200 })
 
-const content = {
-  theme: 'semi-light' as const,
+const content: OutputCardGridContent = {
+  theme: 'semi-light',
   intro: {
-    accentHeading: 'System overview',
-    heading: 'Explore the capabilities that support your project.',
-    description: 'Use this section to introduce a focused set of services, features, or technical considerations.',
+    accentHeading: '/ Customized batteries',
+    heading: 'Need a different fit?',
+    description: {
+      html: '<p>If a standard pack doesn’t match your platform, Tulip can customize the battery around your required dimensions, voltage, capacity and power needs.</p>',
+    },
   },
   ctas: {
-    primary: { label: 'Start a conversation', href: '#' },
+    primary: { label: 'Contact us', href: '#', icon: 'arrow-right' },
   },
-  label: 'Explore capabilities',
+  label: 'What we can tailor',
   cards: [
-    { image: placeholder('case-study-observatory.webp', 'Abstract technical placeholder'), title: 'Capability one', description: { html: '<p>A concise summary of the first capability or outcome.</p>' } },
-    { image: placeholder('case-study-towers.webp', 'Abstract technical placeholder'), title: 'Capability two', description: { html: '<p>A concise summary of the second capability or outcome.</p>' } },
-    { image: placeholder('case-study-buses.webp', 'Abstract technical placeholder'), title: 'Capability three', description: { html: '<p>A concise summary of the third capability or outcome.</p>' } },
-    { image: placeholder('case-study-motorcycle.webp', 'Abstract technical placeholder'), title: 'Capability four', description: { html: '<p>A concise summary of the fourth capability or outcome.</p>' } },
-    { image: placeholder('hero-trinity-street.webp', 'Abstract technical placeholder'), title: 'Capability five', description: { html: '<p>A concise summary of the fifth capability or outcome.</p>' } },
-    { image: placeholder('pexels-industrial-building.webp', 'Abstract technical placeholder'), title: 'Capability six', description: { html: '<p>A concise summary of the sixth capability or outcome.</p>' } },
+    { image: square('Power output icon'), title: 'Power output', description: { html: '<p>Continuous and peak discharge matched to your motors, payload and flight profile.</p>' } },
+    { image: square('Form factor icon'), title: 'Form factor', description: { html: '<p>Pack dimensions, connectors and mounting points shaped around your airframe.</p>' } },
+    { image: square('Cycle life icon'), title: 'Cycle life', description: { html: '<p>Cell chemistry and charge limits tuned for the service life your fleet needs.</p>' } },
+    { image: square('Materials icon'), title: 'Materials', description: { html: '<p>Enclosures, insulation and cell sourcing chosen for your operating environment.</p>' } },
+    { image: square('Energy density icon'), title: 'Energy density', description: { html: '<p>More capacity per kilogram, so your platform flies longer on the same weight.</p>' } },
+    { image: square('Weight icon'), title: 'Weight', description: { html: '<p>Every gram counted, from cell selection to the busbars and housing.</p>' } },
   ],
 }
 ---
