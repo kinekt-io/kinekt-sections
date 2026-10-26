@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- Render configured arrow-right and arrow-down icons for Case Studies Allentown header and slide CTAs, retaining the current content-target contract and component-owned styles.
+
 ## 26.10.2-beta.25 — 2026-10-23
 
 ### Changed
