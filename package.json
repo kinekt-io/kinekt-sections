@@ -22,6 +22,8 @@
   "exports": {
     "./atoms/label-allentown.astro": "./src/atoms/label/allentown/label-allentown.astro",
     "./components/callout-allentown.astro": "./src/components/callout/allentown/callout-allentown.astro",
+    "./components/facility-fact-allentown.astro": "./src/components/facility-fact/allentown/facility-fact-allentown.astro",
+    "./components/next-step-allentown.astro": "./src/components/next-step/allentown/next-step-allentown.astro",
     "./components/output-card-allentown.astro": "./src/components/output-card/allentown/output-card-allentown.astro",
     "./components/result-item-allentown.astro": "./src/components/result-item/allentown/result-item-allentown.astro",
     "./components/spec-pair-allentown.astro": "./src/components/spec-pair/allentown/spec-pair-allentown.astro",

@@ -65,6 +65,79 @@
     }
   },
   {
+    "id": "components/facility-fact/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "facility-fact-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "facility-fact",
+    "variation": "allentown",
+    "title": "Facility Fact Allentown",
+    "description": "A reusable facility fact with a title and localized rich-text description.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-543726&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "richText",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/facility-fact-allentown.astro"
+    }
+  },
+  {
+    "id": "components/next-step/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "next-step-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "next-step",
+    "variation": "allentown",
+    "title": "Next Step Allentown",
+    "description": "A follow-up step with a renderer-derived number, required localized title and description, and optional CTA group.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-425121&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "textarea",
+        "required": true,
+        "localized": true
+      },
+      "ctaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "number": {
+        "kind": "derived",
+        "source": "listPosition"
+      }
+    },
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/next-step-allentown.astro"
+    }
+  },
+  {
     "id": "components/output-card/allentown",
     "version": "26.10.0-beta.0",
     "slug": "output-card-allentown",
