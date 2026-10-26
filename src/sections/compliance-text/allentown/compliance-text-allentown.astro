@@ -1,6 +1,6 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import ChecklistItem from '../../../components/checklist-item/allentown/checklist-item-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { Media, RichText, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
@@ -19,7 +19,6 @@ interface Props {
 }
 
 const { theme = 'light', id, headingLevel = 'h2', intro, checklistItems = [], closingText, certImage, mediaLoading = 'lazy' } = Astro.props as Props
-const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
 const items = checklistItems.filter((item) => item?.text)
 ---
 <section class="compliance-text-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
@@ -28,12 +27,7 @@ const items = checklistItems.filter((item) => item?.text)
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
       {items.length > 0 && (
         <ul class="compliance-text-allentown__checklist">
-          {items.map((item) => (
-            <li class="compliance-text-allentown__checklist-item">
-              <svg class="compliance-text-allentown__check" aria-hidden="true" focusable="false" viewBox={`0 0 ${checkWidth} ${checkHeight}`}><path d={checkPath as string} /></svg>
-              <span class="compliance-text-allentown__checklist-text">{item.text}</span>
-            </li>
-          ))}
+          {items.map((item) => <ChecklistItem item={item} class="compliance-text-allentown__checklist-item" />)}
         </ul>
       )}
       {typeof closingText === 'string' && closingText && <p class="compliance-text-allentown__closing">{closingText}</p>}
@@ -105,10 +99,6 @@ const items = checklistItems.filter((item) => item?.text)
     --kiw--compliance-text-allentown-copy-color: var(--kinekt-component-muted);
     --kiw--compliance-text-allentown-copy-font-size: var(--kiw--section-text-l-size);
     --kiw--compliance-text-allentown-checklist-gap: var(--space-s);
-    --kiw--compliance-text-allentown-checklist-item-gap: var(--space-xs);
-    --kiw--compliance-text-allentown-checklist-line-height: 1;
-    --kiw--compliance-text-allentown-check-size: var(--kiw--section-text-m-size);
-    --kiw--compliance-text-allentown-check-color: var(--kinekt-component-accent);
     --kiw--compliance-text-allentown-media-size: var(--desktop-width-xs);
     --kiw--compliance-text-allentown-media-ratio: 1 / 1;
     --kiw--compliance-text-allentown-media-fit: contain;
@@ -135,17 +125,10 @@ const items = checklistItems.filter((item) => item?.text)
   .compliance-text-allentown :is(.section-intro__description, .compliance-text-allentown__closing) { max-width: none; color: var(--kiw--compliance-text-allentown-copy-color); font-size: var(--kiw--compliance-text-allentown-copy-font-size); line-height: var(--kinekt-component-text-line-height); }
   .compliance-text-allentown .compliance-text-allentown__closing > * { margin-block: 0; }
   .compliance-text-allentown .compliance-text-allentown__closing > * + * { margin-block-start: var(--space-s); }
-  .compliance-text-allentown .compliance-text-allentown__checklist { display: grid; gap: var(--kiw--compliance-text-allentown-checklist-gap); margin: 0; padding: 0; list-style: none; }
-  .compliance-text-allentown .compliance-text-allentown__checklist-item { display: flex; align-items: flex-start; gap: var(--kiw--compliance-text-allentown-checklist-item-gap); min-width: 0; color: var(--kiw--compliance-text-allentown-copy-color); font-size: var(--kiw--compliance-text-allentown-copy-font-size); line-height: var(--kiw--compliance-text-allentown-checklist-line-height); }
-  .compliance-text-allentown .compliance-text-allentown__check { flex: none; inline-size: var(--kiw--compliance-text-allentown-check-size); block-size: var(--kiw--compliance-text-allentown-check-size); fill: var(--kiw--compliance-text-allentown-check-color); }
-  .compliance-text-allentown .compliance-text-allentown__checklist-text { flex: 1 1 0; min-width: 0; }
+  /* Rows are the shared checklist-item renderer; the section sets the list gap and passes its copy colour and size through the renderer's hooks. */
+  .compliance-text-allentown .compliance-text-allentown__checklist { --kiw--checklist-item-allentown-text-color: var(--kiw--compliance-text-allentown-copy-color); --kiw--checklist-item-allentown-font-size: var(--kiw--compliance-text-allentown-copy-font-size); display: grid; gap: var(--kiw--compliance-text-allentown-checklist-gap); margin: 0; padding: 0; list-style: none; }
   .compliance-text-allentown .compliance-text-allentown__media { display: block; inline-size: var(--kiw--compliance-text-allentown-media-size); max-inline-size: 100%; }
   .compliance-text-allentown .compliance-text-allentown__image { display: block; inline-size: 100%; block-size: auto; aspect-ratio: var(--kiw--compliance-text-allentown-media-ratio); object-fit: var(--kiw--compliance-text-allentown-media-fit); border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
-  @media (max-width: 49.999rem) {
-    /* Figma's line-height 1 assumes single-line items; give wrapped items room on narrow screens and centre the check on the first line. */
-    .compliance-text-allentown { --kiw--compliance-text-allentown-checklist-line-height: 1.3; }
-    .compliance-text-allentown .compliance-text-allentown__check { margin-block-start: calc((1lh - var(--kiw--compliance-text-allentown-check-size)) / 2); }
-  }
   @media (min-width: 50rem) {
     .compliance-text-allentown { --kiw--section-content-width: var(--kiw--compliance-text-allentown-content-width, var(--width-xxl)); }
     .compliance-text-allentown > .compliance-text-allentown__container { grid-template-columns: minmax(0, var(--kiw--compliance-text-allentown-content-max-width)) auto; justify-content: space-between; align-items: start; column-gap: var(--kiw--compliance-text-allentown-column-gap); }

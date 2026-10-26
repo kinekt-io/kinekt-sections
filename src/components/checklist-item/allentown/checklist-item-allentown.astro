@@ -1,0 +1,57 @@
+---
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+
+export interface ChecklistItemContent {
+  text: string
+}
+
+interface Props {
+  item: ChecklistItemContent
+  /** `l` (default): text-l, as in compliance-text, compliance-overview and checklist-feature-list. `m`: text-m, as in compliance-detail. */
+  size?: 'm' | 'l'
+  /** Rendered element. The section renders the surrounding `<ul>` and sets the gap between items. */
+  as?: 'li' | 'div'
+  class?: string
+}
+
+const { item, size = 'l', as = 'li', class: className } = Astro.props
+const Element = as
+const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
+const classes = ['checklist-item-allentown', `checklist-item-allentown--${size}`, className].filter(Boolean).join(' ')
+---
+{item?.text && (
+  <Element class={classes}>
+    <svg class="checklist-item-allentown__check" aria-hidden="true" focusable="false" viewBox={`0 0 ${checkWidth} ${checkHeight}`}><path d={checkPath as string} /></svg>
+    <span class="checklist-item-allentown__text">{item.text}</span>
+  </Element>
+)}
+<style is:global>
+  /*
+   * Figma checklist rows (plain frames, no library component: 5240:415194 in "The 5 steps", "Features Column" in Compliance Overview,
+   * 5240:413484 in Compliance Detail, Compliance Text): flex row, top-aligned, check (FA, text-m, accent) + space-xs + text (line-height 1, muted).
+   * Every hook below falls back to its default inside the rule, so a section can set it on any ancestor (the list or the section root).
+   */
+  .checklist-item-allentown {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--kiw--checklist-item-allentown-gap, var(--space-xs));
+    min-width: 0;
+    margin: 0;
+    color: var(--kiw--checklist-item-allentown-text-color, var(--kinekt-component-muted, currentColor));
+    font-size: var(--kiw--checklist-item-allentown-font-size, var(--text-l));
+    line-height: var(--kiw--checklist-item-allentown-line-height, 1);
+  }
+  .checklist-item-allentown.checklist-item-allentown--m { font-size: var(--kiw--checklist-item-allentown-font-size, var(--text-m)); }
+  .checklist-item-allentown .checklist-item-allentown__check {
+    flex: none;
+    inline-size: var(--kiw--checklist-item-allentown-icon-size, var(--text-m));
+    block-size: var(--kiw--checklist-item-allentown-icon-size, var(--text-m));
+    fill: var(--kiw--checklist-item-allentown-icon-color, var(--kinekt-component-accent, currentColor));
+  }
+  .checklist-item-allentown .checklist-item-allentown__text { flex: 1 1 0; min-width: 0; }
+  @media (max-width: 49.999rem) {
+    /* Figma's line-height 1 assumes single-line items; give wrapped items room on narrow screens and centre the check on the first line. */
+    .checklist-item-allentown { line-height: var(--kiw--checklist-item-allentown-wrap-line-height, 1.3); }
+    .checklist-item-allentown .checklist-item-allentown__check { margin-block-start: calc((1lh - var(--kiw--checklist-item-allentown-icon-size, var(--text-m))) / 2); }
+  }
+</style>
