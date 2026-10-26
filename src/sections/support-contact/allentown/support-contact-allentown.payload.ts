@@ -85,10 +85,10 @@ const manifest = {
       "localized": true
     },
     "form": {
-      "kind": "formReference",
+      "kind": "formEmbed",
       "required": true,
       "localized": true,
-      "description": "Only active Support Request forms available to the current region are selectable. The Form record owns conditional fields, managed dropdowns, uploads, validation and submission."
+      "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
     }
   }
 } as const

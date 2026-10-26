@@ -1,0 +1,25 @@
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "version": "26.10.0-beta.0",
+  "id": "components/form-embed/allentown",
+  "slug": "form-embed-allentown",
+  "title": "Form Embed Allentown",
+  "description": "The shared form block for sections: hosts the production HubSpot embed and a non-submitting catalogue placeholder, with all field styling (inputs, selects, textareas, framed radios, disclosure, submit) from the Figma forms.",
+  "category": "components",
+  "role": "form-embed",
+  "variation": "allentown",
+  "status": "beta",
+  "figma": {
+    "url": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411427&t=mG3L6xlBzomA03GY-11",
+    "nodeId": "5240:411427"
+  },
+  "fields": {
+    "form": {
+      "kind": "formEmbed",
+      "required": true,
+      "localized": true,
+      "description": "HubSpot embed code. The catalogue renders a safe placeholder; the integration owns execution of the embed."
+    }
+  }
+}

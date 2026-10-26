@@ -31,23 +31,23 @@ const content = {
     { image: placeholder('Energy density placeholder'), title: 'Energy density', description: 'Balance gravimetric and volumetric energy to extend endurance without compromising safety margins or power delivery.', benefits: ['High-density cell options', 'Optimised pack architecture', 'Safety margins built in'] },
     { image: placeholder('Weight placeholder'), title: 'Weight', description: 'Reduce mass across cells, structure and electronics so every gram goes to payload, range or flight time.', benefits: ['Weight-optimised structures', 'Integrated electronics', 'Mass budget per component'] },
   ],
-  form: { name: 'Configuration preference' },
+  form: '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>',
 }
 ---
 <ProductOptionsAllentown {...content}>
-  <form slot="form" class="product-options-allentown__form" action="#" method="post">
-    <div class="product-options-allentown__form-fields">
+  <form slot="form" action="#" method="post">
+    <div class="form-embed-allentown__fields">
       <fieldset>
         <legend>Choose your primary performance priority</legend>
-        <div class="product-options-allentown__form-options">
+        <div class="form-embed-allentown__options">
           <label><input type="radio" name="priority" value="endurance" checked /> Endurance</label>
           <label><input type="radio" name="priority" value="power" /> Power</label>
           <label><input type="radio" name="priority" value="weight" /> Weight</label>
           <label><input type="radio" name="priority" value="lifetime" /> Lifetime</label>
         </div>
       </fieldset>
-      <div class="product-options-allentown__form-group">
-        <div class="product-options-allentown__form-row">
+      <div class="form-embed-allentown__group">
+        <div class="form-embed-allentown__row">
           <label>Your name <input name="name" autocomplete="name" placeholder="Name" required /></label>
           <label>Your email address <input name="email" type="email" autocomplete="email" placeholder="Email address" required /></label>
         </div>
@@ -58,12 +58,12 @@ const content = {
       </div>
       <fieldset>
         <legend>How would you like to continue?</legend>
-        <div class="product-options-allentown__form-options">
+        <div class="form-embed-allentown__options">
           <label><input type="radio" name="follow-up" value="expert" /> I want to get in touch with an expert</label>
           <label><input type="radio" name="follow-up" value="specs" checked /> I want personalised specs</label>
         </div>
       </fieldset>
     </div>
-    <button class="button button--primary" type="submit">Send request <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={sendIcon.viewBox} fill="none"><path d={sendIcon.path} stroke="currentColor" stroke-width="2" /></svg></button>
+    <button type="submit">Send request <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={sendIcon.viewBox} fill="none"><path d={sendIcon.path} stroke="currentColor" stroke-width="2" /></svg></button>
   </form>
 </ProductOptionsAllentown>

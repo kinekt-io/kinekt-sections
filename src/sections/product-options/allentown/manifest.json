@@ -43,10 +43,10 @@
       "minItems": 1
     },
     "form": {
-      "kind": "formReference",
+      "kind": "formEmbed",
       "required": false,
       "localized": true,
-      "description": "Only active forms available to the current region are selectable."
+      "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
     }
   }
 }

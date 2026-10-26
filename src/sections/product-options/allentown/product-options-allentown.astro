@@ -1,6 +1,7 @@
 ---
 import '../../../styles/wireframe-tokens.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
+import FormEmbed from '../../../components/form-embed/allentown/form-embed-allentown.astro'
 import OutputCard from '../../../components/output-card/allentown/output-card-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { Cta } from '../../../shared/content.js'
@@ -50,9 +51,9 @@ const ChildHeading = `h${Number(headingLevel.slice(1)) + 1}` as ChildHeading
             <ChildHeading class="product-options-allentown__form-heading" id="product-options-form-heading">Discuss your requirements</ChildHeading>
             <p class="product-options-allentown__form-description">Share the operating context and priorities for your project. The selected form manages the questions, validation, and submission.</p>
           </div>
-          <div class="product-options-allentown__form-embed" data-kinekt-form-reference>
+          <FormEmbed class="product-options-allentown__form-embed" form={form}>
             <slot name="form" />
-          </div>
+          </FormEmbed>
         </section>
       </>
     )}
@@ -145,9 +146,8 @@ const ChildHeading = `h${Number(headingLevel.slice(1)) + 1}` as ChildHeading
  * Product Options Allentown: Figma "Section - Product and cell options"
  * (5240:411550, light). Intro + CTAs, divider, option cards (Figma "Battery
  * Output Card", rendered by the shared components/output-card/allentown), divider, and the
- * form block: copy column + the selected form embed. The embed is styled
- * through its native controls (inputs, framed radio options, submit), like
- * form-section/allentown, so any referenced form picks up the Figma fields.
+ * form block: copy column + the HubSpot form embed, rendered by the shared
+ * components/form-embed/allentown (which owns all field styling).
  */
   :where(.product-options-allentown) {
     --kiw--product-options-block-space: var(--section-space-xl);
@@ -164,46 +164,11 @@ const ChildHeading = `h${Number(headingLevel.slice(1)) + 1}` as ChildHeading
     --kiw--product-options-form-intro-width: var(--width-m);
     --kiw--product-options-form-intro-gap: var(--space-xs);
     --kiw--product-options-form-heading-size: var(--h3);
-    --kiw--product-options-form-actions-gap: var(--space-xxl);
-    --kiw--product-options-form-groups-gap: var(--section-space-xs);
-    --kiw--product-options-form-group-gap: var(--space-m);
-    --kiw--product-options-form-fields-gap: var(--space-xs);
-    --kiw--product-options-form-row-gap: var(--space-m);
-    --kiw--product-options-form-options-gap: var(--space-xxs);
-    --kiw--product-options-form-option-min-width: 10rem;
-    --kiw--product-options-field-label-gap: var(--space-s);
-    --kiw--product-options-field-font-size: var(--text-l);
-    --kiw--product-options-field-padding-block: var(--space-s);
-    --kiw--product-options-field-padding-inline: var(--space-m);
-    --kiw--product-options-field-gap: var(--space-xs);
-    --kiw--product-options-field-radius: var(--radius-m);
-    --kiw--product-options-radio-size: 1rem;
-    --kiw--product-options-radio-dot-size: 0.625rem;
-    --kiw--product-options-radio-ring-width: 1.2px;
-    --kiw--product-options-toggle-font-size: var(--text-m);
-    --kiw--product-options-toggle-icon-size: var(--text-s);
-    /* Off-role Figma colours (light frame); dark fallbacks below are inferred. */
+    /* Off-role Figma colour (light frame). */
     --kiw--product-options-secondary-text: var(--kinekt-component-subtle);
-    --kiw--product-options-option-text: var(--primary-dark);
-    --kiw--product-options-field-background: var(--neutral-light);
-    --kiw--product-options-field-border: var(--neutral-semi-light);
-    --kiw--product-options-field-placeholder: var(--primary-light);
-    --kiw--product-options-radio-ring: var(--primary);
-    --kiw--product-options-radio-dot: var(--kinekt-component-accent);
-    --kiw--product-options-toggle-text: var(--primary-semi-light);
     --kinekt-section-block-space: var(--kiw--product-options-block-space);
     --kinekt-section-content-width: var(--kiw--product-options-container-width);
     --kinekt-section-gap: var(--kiw--product-options-major-gap);
-  }
-  :where(.product-options-allentown[data-kinekt-theme='semi-light']) {
-    --kiw--product-options-field-background: var(--kinekt-component-surface);
-  }
-  :where(.product-options-allentown:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark'])) {
-    --kiw--product-options-option-text: var(--kinekt-component-ink);
-    --kiw--product-options-field-background: var(--kinekt-component-surface);
-    --kiw--product-options-field-border: var(--kinekt-component-line);
-    --kiw--product-options-radio-ring: var(--kinekt-component-muted);
-    --kiw--product-options-toggle-text: var(--kinekt-component-muted);
   }
 
   .product-options-allentown .product-options-allentown__container { gap: var(--kiw--product-options-major-gap); }
@@ -224,41 +189,6 @@ const ChildHeading = `h${Number(headingLevel.slice(1)) + 1}` as ChildHeading
   .product-options-allentown .product-options-allentown__form-heading { max-width: none; font-size: var(--kiw--product-options-form-heading-size); line-height: 1; }
   .product-options-allentown .product-options-allentown__form-description { color: var(--kiw--product-options-secondary-text); font-size: var(--text-l); }
 
-  /* Form embed: native controls of whichever form the CMS references. */
-  .product-options-allentown .product-options-allentown__form-embed { min-width: 0; }
-  .product-options-allentown .product-options-allentown__form-embed form { display: grid; justify-items: stretch; gap: var(--kiw--product-options-form-actions-gap); }
-  .product-options-allentown .product-options-allentown__form-embed .product-options-allentown__form-fields { display: grid; gap: var(--kiw--product-options-form-groups-gap); min-width: 0; }
-  .product-options-allentown .product-options-allentown__form-embed .product-options-allentown__form-group { display: grid; gap: var(--kiw--product-options-form-fields-gap); min-width: 0; }
-  .product-options-allentown .product-options-allentown__form-embed fieldset { display: grid; gap: var(--kiw--product-options-form-group-gap); min-inline-size: 0; margin: 0; padding: 0; border: 0; }
-  .product-options-allentown .product-options-allentown__form-embed legend { float: left; width: 100%; padding: 0; color: var(--kinekt-component-ink); font-size: var(--kiw--product-options-field-font-size); font-weight: var(--kiw--section-heading-font-weight); line-height: 1; }
-  .product-options-allentown .product-options-allentown__form-embed legend + * { clear: both; }
-  .product-options-allentown .product-options-allentown__form-embed .product-options-allentown__form-row { display: grid; gap: var(--kiw--product-options-form-row-gap); }
-  .product-options-allentown .product-options-allentown__form-embed .product-options-allentown__form-options { display: flex; flex-wrap: wrap; gap: var(--kiw--product-options-form-options-gap); }
-
-  .product-options-allentown .product-options-allentown__form-embed label { display: grid; gap: var(--kiw--product-options-field-label-gap); min-width: 0; color: var(--kinekt-component-ink); font-size: var(--kiw--product-options-field-font-size); font-weight: var(--kiw--section-heading-font-weight); line-height: 1; }
-  .product-options-allentown .product-options-allentown__form-embed :is(input:not([type='radio'], [type='checkbox'], [type='submit'], [type='button']), select, textarea) { display: block; width: 100%; min-width: 0; margin: 0; padding: var(--kiw--product-options-field-padding-block) var(--kiw--product-options-field-padding-inline); border: var(--kinekt-component-border-width) solid var(--kiw--product-options-field-border); border-radius: var(--kiw--product-options-field-radius); color: var(--kinekt-component-ink); background: var(--kiw--product-options-field-background); font-size: var(--kiw--product-options-field-font-size); font-weight: var(--kiw--section-text-font-weight); line-height: 1; }
-  /* Figma field height: one line at line-height 1 plus padding (Chrome would otherwise use the font's normal line height). */
-  .product-options-allentown .product-options-allentown__form-embed :is(input:not([type='radio'], [type='checkbox'], [type='submit'], [type='button']), select) { block-size: calc(var(--kiw--product-options-field-font-size) + (var(--kiw--product-options-field-padding-block) + var(--kinekt-component-border-width)) * 2); }
-  .product-options-allentown .product-options-allentown__form-embed textarea { line-height: var(--kinekt-component-text-line-height); resize: vertical; }
-  .product-options-allentown .product-options-allentown__form-embed :is(input, textarea)::placeholder { color: var(--kiw--product-options-field-placeholder); opacity: 1; }
-
-  /* Figma "Radio Button" (Framed=yes): the label is the framed option. */
-  .product-options-allentown .product-options-allentown__form-embed label:has(> input:is([type='radio'], [type='checkbox'])) { display: flex; flex: 1 1 var(--kiw--product-options-form-option-min-width); align-items: center; gap: var(--kiw--product-options-field-gap); padding: var(--kiw--product-options-field-padding-block) var(--kiw--product-options-field-padding-inline); border: var(--kinekt-component-border-width) solid var(--kiw--product-options-field-border); border-radius: var(--kiw--product-options-field-radius); color: var(--kiw--product-options-option-text); background: var(--kiw--product-options-field-background); font-weight: var(--kiw--section-text-font-weight); cursor: pointer; }
-  .product-options-allentown .product-options-allentown__form-embed input:is([type='radio'], [type='checkbox']) { display: grid; flex: none; place-content: center; width: var(--kiw--product-options-radio-size); height: var(--kiw--product-options-radio-size); margin: 0; border: var(--kiw--product-options-radio-ring-width) solid var(--kiw--product-options-radio-ring); border-radius: 50%; background: transparent; appearance: none; cursor: pointer; }
-  .product-options-allentown .product-options-allentown__form-embed input[type='checkbox'] { border-radius: var(--kiw--product-options-field-radius); }
-  .product-options-allentown .product-options-allentown__form-embed input:is([type='radio'], [type='checkbox'])::before { width: var(--kiw--product-options-radio-dot-size); height: var(--kiw--product-options-radio-dot-size); border-radius: inherit; background: var(--kiw--product-options-radio-dot); content: ''; transform: scale(0); }
-  .product-options-allentown .product-options-allentown__form-embed input:is([type='radio'], [type='checkbox']):checked::before { transform: scale(1); }
-
-  /* Figma "Add phone number" text button, as a native disclosure. */
-  .product-options-allentown .product-options-allentown__form-embed details[open] > summary { margin-block-end: var(--kiw--product-options-form-fields-gap); }
-  .product-options-allentown .product-options-allentown__form-embed summary { display: flex; align-items: center; gap: var(--kiw--product-options-field-gap); width: fit-content; color: var(--kiw--product-options-toggle-text); font-size: var(--kiw--product-options-toggle-font-size); line-height: 1; list-style: none; cursor: pointer; }
-  .product-options-allentown .product-options-allentown__form-embed summary::-webkit-details-marker { display: none; }
-  .product-options-allentown .product-options-allentown__form-embed summary > svg { flex: none; width: var(--kiw--product-options-toggle-icon-size); height: var(--kiw--product-options-toggle-icon-size); }
-
-  /* Submit: the shared Button classes (`button button--primary`) style it; plain submits get the same roles. */
-  .product-options-allentown .product-options-allentown__form-embed :is(button, input[type='submit']) { justify-self: start; width: auto; font-family: inherit; }
-  .product-options-allentown .product-options-allentown__form-embed :is(button[type='submit'], input[type='submit']):not(.button) { display: inline-flex; align-items: center; gap: .8ch; min-height: var(--kiw--section-button-height); padding: var(--space-xxs) var(--space-xs); border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); border-radius: calc(var(--buttons-has-radius) * var(--kiw--section-button-radius)); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-size: var(--text-s); font-weight: var(--kiw--section-heading-font-weight); cursor: pointer; }
-
   @media (min-width: 50rem) {
     .product-options-allentown {
       --kiw--product-options-block-space: var(--section-gutter);
@@ -266,7 +196,6 @@ const ChildHeading = `h${Number(headingLevel.slice(1)) + 1}` as ChildHeading
       --kiw--product-options-options-columns: 2;
     }
     .product-options-allentown .product-options-allentown__form-section { grid-template-columns: minmax(0, var(--kiw--product-options-form-intro-width)) minmax(0, 1fr); align-items: start; column-gap: var(--kiw--product-options-major-gap); }
-    .product-options-allentown .product-options-allentown__form-embed .product-options-allentown__form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (min-width: 75rem) {
     .product-options-allentown { --kiw--product-options-options-columns: 3; }
