@@ -1,7 +1,5 @@
 ---
 import PreviewToolsHead from '../../../components/PreviewToolsHead.astro'
-import BrandSwitch from '../../../components/BrandSwitch.astro'
-import EmbedPreviewToolbar from '../../../components/EmbedPreviewToolbar.astro'
 import '@package-src/styles/wireframe-tokens.css'
 import components from '../../../generated/components.json'
 
@@ -29,9 +27,7 @@ const Preview = (previewModule as { default: any }).default
     <PreviewToolsHead />
   </head>
   <body class="component-embed-page">
-    <EmbedPreviewToolbar />
     <Preview />
-    <BrandSwitch />
   </body>
 </html>
 

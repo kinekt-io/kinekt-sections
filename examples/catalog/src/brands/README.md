@@ -11,9 +11,10 @@ Every `*.css` file in this folder becomes an option in the catalogue's **Brand**
 
 ## Using the switch
 
-- **Local dev** (`pnpm dev:catalog`): the Brand switch (bottom right) and the embed-page Theme switch (bottom left) are always visible.
+- **Local dev** (`pnpm dev:catalog`): the Brand switch (bottom right) is always visible on the catalogue index, the all-sections page and each component page. Check themes with the component page's "Inspect options".
 - **Built/deployed catalogue:** the tools are hidden. Turn them on in your browser with `?tools=on` on any catalogue URL, and off with `?tools=off`. The choice is remembered per browser. With tools off, every preview renders with the neutral tokens.
-- Direct links: `?brand=<file-name>` or `?brand=neutral`, and `?theme=light|semi-light|semi-dark|dark` on embed pages.
+- Direct links: `?brand=<file-name>` or `?brand=neutral`.
+- Embed pages (`/components/embed/…`, used for the index thumbnails) show only the component, without controls. They still follow the selected brand.
 
 The gate keeps the tools out of the way; it is not access control. Anyone who knows `?tools=on` can enable them.
 
