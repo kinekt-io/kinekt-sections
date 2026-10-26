@@ -1,5 +1,6 @@
 import type { CollectionSlug, Field } from 'payload'
 import { isSafeWebUrl } from '../urls.js'
+import { ctaIconOptions } from './cta-icons.js'
 
 export const requiredTextMessage = 'Enter non-empty text.'
 export const actionableHrefMessage = 'Enter an HTTP(S), root-relative, mailto:, or tel: link.'
@@ -80,7 +81,7 @@ export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], 
       validate: (value: unknown, { siblingData }: { siblingData?: unknown }) => validateOptionalCtaHref(value, siblingData),
     },
     ctaContentTargetField(targetCollections),
-    { name: 'icon', type: 'select', label: 'Icon', options: [{ label: 'Arrow right', value: 'arrow-right' }, { label: 'Arrow down', value: 'arrow-down' }] },
+    { name: 'icon', type: 'select', label: 'Icon', options: ctaIconOptions },
   ]
 }
 

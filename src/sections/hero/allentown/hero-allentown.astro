@@ -2,7 +2,8 @@
 import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
-import type { CtaIcon, Media } from '../../../shared/content.js'
+import type { Media } from '../../../shared/content.js'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import type { HeroContent } from './hero-allentown.types.js'
 import { isSafeWebUrl } from '../../../urls.js'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
@@ -12,10 +13,6 @@ function assertSafeImage(image: Media, name: string): void {
   if (image.fallbackUrl !== undefined && !isSafeWebUrl(image.fallbackUrl)) throw new Error(`${name}.fallbackUrl must be an HTTP(S) or root-relative URL.`)
   if (!Number.isSafeInteger(image.width) || image.width <= 0) throw new Error(`${name}.width must be a positive integer.`)
   if (!Number.isSafeInteger(image.height) || image.height <= 0) throw new Error(`${name}.height must be a positive integer.`)
-}
-const ctaIconPaths: Record<CtaIcon, { viewBox: string; path: string }> = {
-  'arrow-right': { viewBox: '0 0 11 18', path: 'm2 2 7 7-7 7' },
-  'arrow-down': { viewBox: '0 0 18 18', path: 'm2 9 7 7 7-7M9 2v14' },
 }
 const { id, theme = 'dark', headingLevel = 'h1', intro, ctas, image, mobileImage } = Astro.props
 for (const cta of [ctas?.primary, ctas?.secondary]) if (cta && !isSafeWebUrl(cta.href)) throw new Error('ctas must use an HTTP(S) or root-relative URL.')
