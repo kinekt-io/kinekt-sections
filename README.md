@@ -268,6 +268,12 @@ The workflow targets [kinekt-io.github.io/kinekt-sections](https://kinekt-io.git
 
 GitHub Pages MUST be available for private repositories on the organization plan before the deployment can succeed. If it is unavailable, run `pnpm build:catalog` or `pnpm dev:catalog` locally; neither command requires GitHub Pages.
 
+### Netlify deploy previews
+
+`netlify.toml` builds `examples/catalog/dist` with Node `22.12.0` and pnpm `10.18.0`. On Netlify, import `kinekt-io/kinekt-sections`, set `main` as the production branch, and enable **Deploy Previews** for pull requests. Netlify uses this file, creates one preview URL per pull request, and posts the URL through its GitHub integration.
+
+The catalogue keeps its `/kinekt-sections` base only outside Netlify. Netlify production and pull-request previews use their own root URL, preventing GitHub Pages paths from leaking into preview links.
+
 ## Publish a release
 
 The package publishes to GitHub Packages, not npmjs.com.
