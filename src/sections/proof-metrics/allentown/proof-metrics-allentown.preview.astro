@@ -1,5 +1,6 @@
 ---
 import ProofMetricsAllentown from './proof-metrics-allentown.astro'
+const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
 
 const content = {
   "theme": "light" as const,
@@ -35,7 +36,7 @@ const content = {
     }
   ],
   "media": {
-    "url": "https://placehold.co/1296x406/png?text=Proof+media",
+    "url": placeholder('placeholder-1296x406.svg'),
     "alt": "Abstract grayscale placeholder for proof media",
     "width": 1296,
     "height": 406

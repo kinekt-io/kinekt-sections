@@ -1,0 +1,49 @@
+---
+// Catalogue preview tools: brand stylesheets and the gate for dev/designer tools.
+//
+// Tools are on automatically in `astro dev`. On a built catalogue they are
+// opt-in per browser: `?tools=on` enables them (remembered), `?tools=off`
+// disables them. While off, previews always render with the neutral tokens.
+//
+// Brands come from `src/brands/*.css`. Each one is embedded disabled
+// (`media="not all"`) and switched on without a network request, so framed
+// thumbnails follow along. `?brand=<id>` or `?brand=neutral` selects one.
+import { brands } from '../brands'
+
+const brandIds = brands.map((brand) => brand.id)
+const toolsByDefault = import.meta.env.DEV
+---
+{brands.map((brand) => <style is:inline data-catalogue-brand-style={brand.id} media="not all" set:html={brand.css} />)}
+<script is:inline define:vars={{ brandIds, toolsByDefault }}>
+  if (window.self !== window.top) document.documentElement.dataset.catalogueFramed = ''
+  const toolsKey = 'kinekt-catalogue-tools'
+  const brandKey = 'kinekt-catalogue-brand'
+  const read = (key) => { try { return localStorage.getItem(key) } catch { return null } }
+  const store = (key, value) => { try { localStorage.setItem(key, value) } catch {} }
+  const params = new URLSearchParams(location.search)
+  if (params.get('tools') === 'on' || params.get('tools') === 'off') store(toolsKey, params.get('tools'))
+  if (params.get('brand')) store(brandKey, params.get('brand'))
+
+  const toolsEnabled = () => (read(toolsKey) ?? (toolsByDefault ? 'on' : 'off')) === 'on'
+  const apply = () => {
+    const root = document.documentElement
+    const enabled = toolsEnabled()
+    const stored = read(brandKey)
+    const brand = enabled && brandIds.includes(stored) ? stored : 'neutral'
+    if (enabled) root.dataset.catalogueTools = ''
+    else delete root.dataset.catalogueTools
+    if (brand === 'neutral') delete root.dataset.catalogueBrand
+    else root.dataset.catalogueBrand = brand
+    document.querySelectorAll('style[data-catalogue-brand-style]').forEach((style) => {
+      style.media = style.dataset.catalogueBrandStyle === brand ? 'all' : 'not all'
+    })
+    document.dispatchEvent(new CustomEvent('kinekt:catalogue-brand', { detail: { brand, enabled } }))
+  }
+  window.kinektCatalogueBrand = {
+    ids: brandIds,
+    select(brand) { store(brandKey, brand); apply() },
+    current() { return document.documentElement.dataset.catalogueBrand ?? 'neutral' },
+  }
+  apply()
+  addEventListener('storage', (event) => { if (event.key === toolsKey || event.key === brandKey) apply() })
+</script>

@@ -46,4 +46,13 @@ const classes = ['button', `button--${style}`, className].filter(Boolean).join('
     color: var(--kinekt-component-ink);
     background: transparent;
   }
+
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .button > svg[aria-hidden='true'] {
+    flex: none;
+    color: var(--kinekt-component-action-icon, currentColor);
+  }
+
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .button:is(.button--secondary, .button--clear) > svg[aria-hidden='true'] {
+    color: var(--kinekt-component-accent, currentColor);
+  }
 </style>

@@ -1,4 +1,6 @@
 ---
+import PreviewToolsHead from '../../components/PreviewToolsHead.astro'
+import BrandSwitch from '../../components/BrandSwitch.astro'
 import '@package-src/styles/wireframe-tokens.css'
 import components from '../../generated/components.json'
 
@@ -29,6 +31,7 @@ const previewFallbackAsset = `${catalogueBase}placeholders/hero-trinity-street.w
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={`Preview of ${component.title}.`} />
     <title>{component.title} · Kinekt components</title>
+    <PreviewToolsHead />
   </head>
   <body class="component-preview-page">
     <header class="bar">
@@ -275,6 +278,7 @@ const previewFallbackAsset = `${catalogueBase}placeholders/hero-trinity-street.w
         })
       })
     </script>
+    <BrandSwitch />
   </body>
 </html>
 

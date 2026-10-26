@@ -94,9 +94,9 @@ const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta']
     --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light)));
     --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
     --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark)));
-    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-ultra-dark)));
-    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral-semi-light)));
-    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-ultra-dark)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-semi-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-ultra-light)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary)));
     --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
     --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family, var(--text-font-family)));
     --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family, var(--mono-font-family)));
@@ -125,6 +125,8 @@ const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta']
     --kinekt-component-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--section-text-xl-size, var(--text-xl)));
     --kinekt-component-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--section-text-xxl-size, var(--text-xxl)));
     --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height, var(--text-line-height)));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent-semi-dark)));
+    --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent)));
     box-sizing: border-box;
     padding-block: var(--kinekt-component-block-space);
     color: var(--kinekt-component-ink);
@@ -140,23 +142,36 @@ const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta']
   :where([data-kinekt-structural-section][data-kinekt-theme='semi-light']) {
     --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light)));
     --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
-    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--neutral-dark)));
-    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--neutral)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-semi-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-ultra-light)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-semi-dark)));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent-semi-dark)));
+    --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent)));
   }
   :where([data-kinekt-structural-section][data-kinekt-theme='dark'], [data-kinekt-structural-section][data-kinekt-theme='semi-dark']) {
     --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark)));
-    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-dark)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-semi-dark)));
     --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white)));
     --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light)));
-    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-semi-light)));
-    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--white)));
-    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--primary-ultra-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary)));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent)));
+    --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent)));
     color-scheme: dark;
   }
   :where([data-kinekt-structural-section][data-kinekt-theme='semi-dark']) {
     --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark)));
-    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-ultra-dark)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-semi-dark)));
     --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary)));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent)));
+    --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent)));
   }
 
   :where([data-kinekt-structural-section]) *,

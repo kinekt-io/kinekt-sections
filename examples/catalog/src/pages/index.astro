@@ -1,4 +1,6 @@
 ---
+import PreviewToolsHead from '../components/PreviewToolsHead.astro'
+import BrandSwitch from '../components/BrandSwitch.astro'
 import '@package-src/styles/wireframe-tokens.css'
 import components from '../generated/components.json'
 
@@ -15,6 +17,7 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content="Private Kinekt component package catalogue." />
     <title>Kinekt components</title>
+    <PreviewToolsHead />
   </head>
   <body class="catalogue-page">
     <main>
@@ -207,6 +210,7 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
       filterCards()
       if (query?.value.trim()) void searchPagefind()
     </script>
+    <BrandSwitch />
   </body>
 </html>
 

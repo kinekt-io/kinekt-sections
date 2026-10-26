@@ -1,6 +1,7 @@
 ---
 import SolutionListAllentown from './solution-list-allentown.astro'
-const image = (text: string) => ({ url: `https://placehold.co/1600x900/png?text=${encodeURIComponent(text)}`, alt: `${text} preview`, width: 1600, height: 900 })
+const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
+const image = (text: string) => ({ url: placeholder('placeholder-1600x900.svg'), alt: `${text} preview`, width: 1600, height: 900 })
 ---
 <SolutionListAllentown
   intro={{

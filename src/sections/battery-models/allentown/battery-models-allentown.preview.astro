@@ -1,5 +1,6 @@
 ---
 import BatteryModelsAllentown from './battery-models-allentown.astro'
+const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
 ---
 
 <BatteryModelsAllentown
@@ -15,7 +16,7 @@ import BatteryModelsAllentown from './battery-models-allentown.astro'
   }}
   models={[
     {
-      image: { url: 'https://placehold.co/1600x900/png?text=Model+01', alt: 'Neutral wireframe placeholder for a compact battery module', width: 1600, height: 900 },
+      image: { url: placeholder('placeholder-1600x900.svg'), alt: 'Neutral wireframe placeholder for a compact battery module', width: 1600, height: 900 },
       title: 'Compact module',
       description: 'A space-conscious module for early integration work and applications with a tightly defined enclosure.',
       specs: [
@@ -25,7 +26,7 @@ import BatteryModelsAllentown from './battery-models-allentown.astro'
       ],
     },
     {
-      image: { url: 'https://placehold.co/1600x900/png?text=Model+02', alt: 'Neutral wireframe placeholder for a standard battery module', width: 1600, height: 900 },
+      image: { url: placeholder('placeholder-1600x900.svg'), alt: 'Neutral wireframe placeholder for a standard battery module', width: 1600, height: 900 },
       title: 'Standard module',
       description: 'A balanced format for teams that need repeatable energy delivery and straightforward mechanical integration.',
       specs: [
@@ -35,7 +36,7 @@ import BatteryModelsAllentown from './battery-models-allentown.astro'
       ],
     },
     {
-      image: { url: 'https://placehold.co/1600x900/png?text=Model+03', alt: 'Neutral wireframe placeholder for a high-capacity battery module', width: 1600, height: 900 },
+      image: { url: placeholder('placeholder-1600x900.svg'), alt: 'Neutral wireframe placeholder for a high-capacity battery module', width: 1600, height: 900 },
       title: 'High-capacity module',
       description: 'A higher-energy option for systems that need longer operating windows without changing the integration approach.',
       specs: [
@@ -45,7 +46,7 @@ import BatteryModelsAllentown from './battery-models-allentown.astro'
       ],
     },
     {
-      image: { url: 'https://placehold.co/1600x900/png?text=Model+04', alt: 'Neutral wireframe placeholder for a scalable battery module', width: 1600, height: 900 },
+      image: { url: placeholder('placeholder-1600x900.svg'), alt: 'Neutral wireframe placeholder for a scalable battery module', width: 1600, height: 900 },
       title: 'Scalable platform',
       description: 'A configurable foundation for applications moving from validated prototypes into repeatable deployment.',
       specs: [
@@ -63,12 +64,12 @@ import BatteryModelsAllentown from './battery-models-allentown.astro'
     },
     items: [
       {
-        image: { url: 'https://placehold.co/200x200/png?text=Support', alt: 'Neutral wireframe placeholder for engineering support', width: 200, height: 200 },
+        image: { url: placeholder('placeholder-200x200.svg'), alt: 'Neutral wireframe placeholder for engineering support', width: 200, height: 200 },
         title: 'Engineering support',
         cta: { cta: { label: 'Explore support', href: '/' } },
       },
       {
-        image: { url: 'https://placehold.co/200x200/png?text=Systems', alt: 'Neutral wireframe placeholder for configured energy systems', width: 200, height: 200 },
+        image: { url: placeholder('placeholder-200x200.svg'), alt: 'Neutral wireframe placeholder for configured energy systems', width: 200, height: 200 },
         title: 'Configured systems',
         cta: { cta: { label: 'Explore systems', href: '/' } },
       },

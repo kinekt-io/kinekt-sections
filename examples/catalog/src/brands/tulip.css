@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&display=swap');
+
+/* Tulip Tech customer tokens. Source: customer-tokens.css (updated to match Figma 2026-10-26). */
+:root {
+  --primary-ultra-light: #cdd3d2;
+  --primary-light: #9aa6a6;
+  --primary-semi-light: #687a79;
+  --primary: #354d4d;
+  --primary-dark: #102c2b;
+  --primary-semi-dark: #1c3736;
+  --primary-ultra-dark: #032120;
+
+  --accent-ultra-light: #edfcf4;
+  --accent-light: #ccfce1;
+  --accent-semi-light: #90f2bd;
+  --accent: #49e38e;
+  --accent-semi-dark: #0aa650;
+  --accent-dark: #088540;
+  --accent-ultra-dark: #125b33;
+
+  --neutral-ultra-light: #ebf2ee;
+  --neutral-light: #e1e6e3;
+  --neutral-semi-light: #d2d9d5;
+  --neutral: #c4ccc7;
+  --neutral-semi-dark: #a5aba7;
+  --neutral-dark: #818784;
+  --neutral-ultra-dark: #555957;
+
+  --white: #ffffff;
+  --base: #021b1a;
+  --success: #00bf56;
+  --warning: #ffc936;
+  --error: #ff5e36;
+  --info: #369bff;
+
+  --desktop-content-width: 1440px;
+  --mobile-content-width: 390px;
+  --desktop-section-gutter: 140px;
+  --mobile-section-gutter: 16px;
+  --desktop-base-spacing-value: 20px;
+  --mobile-base-spacing-value: 16px;
+  --desktop-spacing-scale-ratio: 1.25;
+  --mobile-spacing-scale-ratio: 1.25;
+  --desktop-section-spacing-multiplier: 3.2;
+  --mobile-section-spacing-multiplier: 3.2;
+
+  --heading-font-family: 'Aeonik Pro', system-ui, sans-serif;
+  --heading-font-weight: 500;
+  --heading-letter-spacing: 0;
+  --text-font-family: 'Aeonik Pro', system-ui, sans-serif;
+  --text-font-weight: 400;
+  --text-letter-spacing: 0;
+  --media-filter: none;
+
+  --mobile-h1: 44px;
+  --desktop-h1: 56px;
+  --mobile-h2: 36px;
+  --desktop-h2: 48px;
+  --mobile-h3: 28px;
+  --desktop-h3: 32px;
+  --mobile-h4: 26px;
+  --desktop-h4: 28px;
+  --mobile-h5: 20px;
+  --desktop-h5: 24px;
+  --mobile-h6: 18px;
+  --desktop-h6: 20px;
+
+  --mobile-text-xs: 12px;
+  --desktop-text-xs: 12px;
+  --mobile-text-s: 14px;
+  --desktop-text-s: 14px;
+  --mobile-text-m: 16px;
+  --desktop-text-m: 16px;
+  --mobile-text-l: 18px;
+  --desktop-text-l: 18px;
+  --mobile-text-xl: 20px;
+  --desktop-text-xl: 20px;
+  --mobile-text-xxl: 22px;
+  --desktop-text-xxl: 22px;
+
+  /* Added 2026-10-26 from the Figma variables (KSW-1 Tulip Tech Website). */
+  --mono-font-family: 'Space Grotesk', ui-monospace, monospace;
+  --heading-line-height: 1.1;
+  --radius-m: 2px;
+  --radius-l: 2.666px;
+  --buttons-has-radius: 1;
+  --buttons-radius: var(--radius-m);
+  /* Figma's space-xs (8.96) and space-xxs (3.84) deviate from the 1.25 scale
+     that its section spacing uses, so only these two outputs are overridden. */
+  --space-xs: calc(var(--mobile-space-xs) + (8.96px - var(--mobile-space-xs)) * var(--fluid-progress));
+  --space-xxs: calc(var(--mobile-space-xxs) + (3.84px - var(--mobile-space-xxs)) * var(--fluid-progress));
+}

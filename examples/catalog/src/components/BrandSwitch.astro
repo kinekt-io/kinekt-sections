@@ -1,0 +1,33 @@
+---
+// Floating brand switch for catalogue previews (dev/designer tool). One option
+// per `src/brands/*.css` file plus Neutral. Only visible while preview tools are
+// enabled (see PreviewToolsHead.astro); hidden inside framed thumbnails.
+import { brands } from '../brands'
+---
+<div class="brand-switch" role="group" aria-label="Preview brand">
+  <span class="brand-switch__label">Brand</span>
+  <button type="button" data-catalogue-brand-option="neutral" aria-pressed="true">Neutral</button>
+  {brands.map((brand) => <button type="button" data-catalogue-brand-option={brand.id} aria-pressed="false">{brand.label}</button>)}
+</div>
+<script>
+  type BrandApi = { select: (brand: string) => void; current: () => string }
+  const api = (window as unknown as { kinektCatalogueBrand?: BrandApi }).kinektCatalogueBrand
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-catalogue-brand-option]')
+  const sync = () => {
+    const active = api?.current() ?? 'neutral'
+    buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.catalogueBrandOption === active)))
+  }
+  buttons.forEach((button) => button.addEventListener('click', () => {
+    api?.select(button.dataset.catalogueBrandOption ?? 'neutral')
+  }))
+  document.addEventListener('kinekt:catalogue-brand', sync)
+  sync()
+</script>
+<style is:global>
+  .brand-switch { position: fixed; right: 1rem; bottom: 1rem; z-index: 1000; display: none; flex-wrap: wrap; align-items: center; gap: 0.25rem; max-width: calc(100% - 2rem); padding: 0.25rem 0.25rem 0.25rem 0.75rem; border: 1px solid #d4d4d4; border-radius: 999px; color: #111; background: #fff; box-shadow: 0 4px 16px rgb(0 0 0 / 0.15); font: 500 0.8125rem/1.2 system-ui, sans-serif; }
+  :root[data-catalogue-tools]:not([data-catalogue-framed]) .brand-switch { display: flex; }
+  .brand-switch__label { margin-right: 0.25rem; }
+  .brand-switch button { min-height: 2rem; padding: 0.25rem 0.75rem; border: 0; border-radius: 999px; color: inherit; background: transparent; font: inherit; cursor: pointer; }
+  .brand-switch button[aria-pressed='true'] { color: #fff; background: #111; }
+  .brand-switch button:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+</style>

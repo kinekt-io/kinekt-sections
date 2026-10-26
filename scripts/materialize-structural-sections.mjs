@@ -94,7 +94,7 @@ const sectionTokenRoles = [
   ['table-offset', 'space-xl'],
 ]
 
-const sectionColorRoles = ['canvas', 'surface', 'ink', 'muted', 'line', 'action', 'action-text']
+const sectionColorRoles = ['canvas', 'surface', 'ink', 'muted', 'line', 'action', 'action-text', 'accent', 'action-icon']
 
 function sectionTokenBridgeCss(block) {
   const tokenBlock = block.startsWith('beta-') ? block.slice(5) : block
@@ -236,14 +236,14 @@ function sampleField(field, key, depth = 0, index = 0) {
   if (field.kind === 'componentList' && child && depth < 4) return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => sampleContent(child, depth + 1, itemIndex))
   if (field.kind === 'text' || field.kind === 'textarea' || field.kind === 'richText') return previewText(key, index)
   if (field.kind === 'select' || field.kind === 'theme') return field.options?.[0] ?? 'light'
-  if (field.kind === 'media' || field.kind === 'video') return { url: `https://placehold.co/1600x900/png?text=${encodeURIComponent(labelFor(key))}`, alt: 'Battery module and electrical interface', width: 1600, height: 900 }
-  if (field.kind === 'mediaList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ url: `https://placehold.co/1200x800/png?text=${encodeURIComponent(`${labelFor(key)}+${itemIndex + 1}`)}`, alt: from(['Battery enclosure on a workbench', 'Cell assembly detail', 'System integration test'], itemIndex), width: 1200, height: 800 }))
+  if (field.kind === 'media' || field.kind === 'video') return { url: `catalogue-asset:placeholder-1600x900.svg`, alt: 'Battery module and electrical interface', width: 1600, height: 900 }
+  if (field.kind === 'mediaList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ url: `catalogue-asset:placeholder-1200x800.svg`, alt: from(['Battery enclosure on a workbench', 'Cell assembly detail', 'System integration test'], itemIndex), width: 1200, height: 800 }))
   if (field.kind === 'cta') return { label: 'Explore the specification', href: '#' }
   if (field.kind === 'ctaGroup') return { primary: { label: 'Talk to an expert', href: '#' }, secondary: { label: 'View technical details', href: '#' } }
   if (field.kind === 'formReference') return { name: 'Project enquiry', description: 'A governed form reference for product, engineering and partnership enquiries.' }
   if (field.kind === 'infoItems' || field.kind === 'featureItems') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => from(['Validated operating range', 'Traceable test data', 'Integration-ready documentation'], itemIndex))
-  if (field.kind === 'insightSourceList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: from(['How system constraints shape battery design', 'Making validation data useful for integration teams', 'A practical guide to energy-storage specifications'], itemIndex), excerpt: from(previewCopy.descriptions, itemIndex), href: '#', publishedAt: `2026-10-${String(itemIndex + 1).padStart(2, '0')}`, image: { url: `https://placehold.co/1200x800/png?text=Insight+${itemIndex + 1}`, alt: from(['Engineering team reviewing test data', 'Battery system integration', 'Technical documentation review'], itemIndex), width: 1200, height: 800 } }))
-  if (field.kind === 'contentReferenceList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: from(['How system constraints shape battery design', 'Making validation data useful for integration teams', 'A practical guide to energy-storage specifications'], itemIndex), excerpt: from(previewCopy.descriptions, itemIndex), href: '#', featured: itemIndex === 0, image: { url: `https://placehold.co/1200x800/png?text=Insight+${itemIndex + 1}`, alt: from(['Engineering team reviewing test data', 'Battery system integration', 'Technical documentation review'], itemIndex), width: 1200, height: 800 } }))
+  if (field.kind === 'insightSourceList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: from(['How system constraints shape battery design', 'Making validation data useful for integration teams', 'A practical guide to energy-storage specifications'], itemIndex), excerpt: from(previewCopy.descriptions, itemIndex), href: '#', publishedAt: `2026-10-${String(itemIndex + 1).padStart(2, '0')}`, image: { url: `catalogue-asset:placeholder-1200x800.svg`, alt: from(['Engineering team reviewing test data', 'Battery system integration', 'Technical documentation review'], itemIndex), width: 1200, height: 800 } }))
+  if (field.kind === 'contentReferenceList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: from(['How system constraints shape battery design', 'Making validation data useful for integration teams', 'A practical guide to energy-storage specifications'], itemIndex), excerpt: from(previewCopy.descriptions, itemIndex), href: '#', featured: itemIndex === 0, image: { url: `catalogue-asset:placeholder-1200x800.svg`, alt: from(['Engineering team reviewing test data', 'Battery system integration', 'Technical documentation review'], itemIndex), width: 1200, height: 800 } }))
   return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: from(previewCopy.headings, itemIndex), description: from(previewCopy.descriptions, itemIndex) }))
 }
 
@@ -307,7 +307,7 @@ function caseStudiesPreview() {
     sectionLabel: 'Field report',
     carousel: {
       items: studies.map((study, index) => ({
-        logo: { url: `https://placehold.co/180x48/png?text=Organisation+${index + 1}`, alt: `Organisation ${index + 1} mark`, width: 180, height: 48 },
+        logo: { url: `catalogue-asset:placeholder-180x48.svg`, alt: `Organisation ${index + 1} mark`, width: 180, height: 48 },
         title: study.title,
         description: study.description,
         image: { ...images[index], width: 680, height: 544 },
@@ -386,7 +386,7 @@ function proofMetricsPreview() {
       { label: 'Direct support', value: { text: 'Expert guidance at each decision point.' } },
     ],
     media: {
-      url: 'https://placehold.co/1296x406/png?text=Proof+media',
+      url: 'catalogue-asset:placeholder-1296x406.svg',
       alt: 'Abstract grayscale placeholder for proof media',
       width: 1296,
       height: 406,
@@ -527,10 +527,21 @@ export function mediaMetricsAllentownToProps(data: PayloadMediaMetricsAllentownD
   }
 }
 `
+  const catalogueAssetResolver = `const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : \`\${import.meta.env.BASE_URL}/\`
+
+function resolveCatalogueAssets(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
+  if (!value || typeof value !== 'object') return value
+  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
+  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
+    record.url = \`\${catalogueBase}placeholders/\${record.url.slice('catalogue-asset:'.length)}\`
+  }
+  return record
+}`
   const mediaMetricsPreview = `---
 import MediaMetricsAllentown from './${base}.astro'
 
-const content = {
+const rawContent = {
   intro: {
     accentHeading: 'Operational proof points',
     heading: 'The figures that support the next technical decision',
@@ -543,12 +554,15 @@ const content = {
     { label: 'Engineering support', value: { text: 'From concept to release' } }
   ],
   media: {
-    url: 'https://placehold.co/688x406/png?text=Supporting+media',
+    url: 'catalogue-asset:placeholder-688x406.svg',
     alt: 'Abstract grayscale placeholder for supporting media',
     width: 688,
     height: 406
   }
 }
+${catalogueAssetResolver}
+
+const content = resolveCatalogueAssets(rawContent) as typeof rawContent
 ---
 <MediaMetricsAllentown theme="light" {...content} />
 `
@@ -585,7 +599,10 @@ const content = {
       ? `---
 import ProofMetricsAllentown from './${base}.astro'
 
-const content = ${JSON.stringify(previewContent, null, 2)}
+const rawContent = ${JSON.stringify(previewContent, null, 2)}
+${catalogueAssetResolver}
+
+const content = resolveCatalogueAssets(rawContent) as typeof rawContent
 ---
 <ProofMetricsAllentown {...content} />
 `
@@ -598,21 +615,12 @@ const fields = ${JSON.stringify(fields, null, 2)}
 const intro = ${JSON.stringify(previewIntro, null, 2)}
 const ctas = ${JSON.stringify(previewCtas, null, 2)}
 const media = ${JSON.stringify(previewMedia, null, 2)}
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : \`\${import.meta.env.BASE_URL}/\`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = \`\${catalogueBase}placeholders/\${record.url.slice('catalogue-asset:'.length)}\`
-  }
-  return record
-}
+${catalogueAssetResolver}
 
 const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
+const resolvedMedia = resolveCatalogueAssets(media) as typeof media
 ---
-<StructuralSection block=${JSON.stringify(block)} intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<StructuralSection block=${JSON.stringify(block)} intro={intro} ctas={ctas} media={resolvedMedia} content={resolvedContent} fields={fields} />
 ${sectionTokenBridgeCss(block)}
 ${generatedComponentStyle(block)}
 `
