@@ -1,10 +1,10 @@
 ---
 import type { SectionIntro } from '../../shared/content.js'
-interface Props { intro: SectionIntro; headingLevel?: 'h1' | 'h2' | 'h3' }
-const { intro, headingLevel = 'h2' } = Astro.props
+interface Props { intro: SectionIntro; headingLevel?: 'h1' | 'h2' | 'h3'; accentStyle?: 'inherit' | 'heading' }
+const { intro, headingLevel = 'h2', accentStyle = 'inherit' } = Astro.props
 const Heading = headingLevel
 ---
-<div class="section-intro">
+<div class:list={['section-intro', accentStyle === 'heading' && 'section-intro--accent-heading']}>
   <div class="section-intro__heading-group">
     {intro.accentHeading && <p class="section-intro__accent">{intro.accentHeading}</p>}
     <Heading class="section-intro__heading">{intro.heading}</Heading>
@@ -21,6 +21,21 @@ const Heading = headingLevel
     font: inherit;
     line-height: var(--kinekt-component-text-line-height, var(--text-line-height));
     text-transform: uppercase;
+  }
+
+  /* Figma intro "Column" accent heading: heading font, 500, text-m, 0.05em, line-height 1, uppercase. */
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .section-intro--accent-heading .section-intro__heading-group {
+    display: grid;
+    gap: var(--kinekt-component-intro-accent-gap, var(--space-xxs));
+  }
+
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .section-intro--accent-heading .section-intro__accent {
+    margin: 0;
+    font-family: var(--kiw--section-intro-accent-font-family, var(--heading-font-family));
+    font-size: var(--kiw--section-intro-accent-font-size, var(--text-m));
+    font-weight: var(--kiw--section-intro-accent-font-weight, var(--heading-font-weight));
+    line-height: 1;
+    letter-spacing: var(--kiw--section-intro-accent-letter-spacing, 0.05em);
   }
 
   :where([data-kinekt-section], [data-kinekt-structural-section]) .section-intro__heading {

@@ -1,5 +1,6 @@
 import { isSafeWebUrl } from '../urls.js'
-import type { Cta, CtaGroup, CtaIcon, Media } from './content.js'
+import type { Cta, CtaGroup, Media } from './content.js'
+import { ctaIconOptions, isCtaIcon } from './cta-icons.js'
 export type BetaTheme = 'light' | 'semi-light' | 'dark' | 'semi-dark'
 export type PayloadAdapterOptions = {
   mediaBaseUrl?: string
@@ -69,10 +70,10 @@ export const ctaToProps = (value: unknown, field: string, options: PayloadAdapte
     throw new Error(`${field}.destinationType must be content or url.`)
   }
   const icon = cta.icon
-  if (icon !== undefined && icon !== null && icon !== '' && icon !== 'arrow-right' && icon !== 'arrow-down') {
-    throw new Error(`${field}.icon must be arrow-right or arrow-down.`)
+  if (icon !== undefined && icon !== null && icon !== '' && !isCtaIcon(icon)) {
+    throw new Error(`${field}.icon must be one of ${ctaIconOptions.map((option) => option.value).join(', ')}.`)
   }
-  return { label: requireText(cta.label, `${field}.label`), href, ...(icon === 'arrow-right' || icon === 'arrow-down' ? { icon: icon as CtaIcon } : {}) }
+  return { label: requireText(cta.label, `${field}.label`), href, ...(isCtaIcon(icon) ? { icon } : {}) }
 }
 
 export const optionalCtaToProps = (value: unknown, field: string, options: PayloadAdapterOptions = {}): Cta | undefined => {

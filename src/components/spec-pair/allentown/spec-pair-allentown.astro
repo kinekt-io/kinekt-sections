@@ -1,0 +1,62 @@
+---
+interface Props {
+  label: string;
+  value: string;
+  class?: string;
+}
+
+const { label, value, class: className } = Astro.props;
+const classes = ["spec-pair-allentown", className].filter(Boolean).join(" ");
+---
+
+<div class={classes}><dt class="spec-pair-allentown__label">{label}</dt><dd class="spec-pair-allentown__value">{value}</dd></div>
+
+<style is:global>
+  :where(.spec-pair-allentown) {
+    --kiw--spec-pair-allentown-ink: var(--kinekt-component-subtle, var(--primary));
+    --kiw--spec-pair-allentown-label-width: 6.25rem;
+    --kiw--spec-pair-allentown-gap: var(--space-xxl);
+    --kiw--spec-pair-allentown-font-size: var(--text-m);
+    --kiw--spec-pair-allentown-line-height: 1.4;
+    --kiw--spec-pair-allentown-font-weight: var(--text-font-weight);
+    --kiw--spec-pair-allentown-label-font-family: var(--text-font-family);
+    --kiw--spec-pair-allentown-value-font-family: var(--mono-font-family);
+    --kiw--spec-pair-allentown-divider-gap: var(--space-xxs);
+    --kiw--spec-pair-allentown-divider-width: var(--border-width);
+    --kiw--spec-pair-allentown-divider-color: var(--kinekt-component-line, var(--primary-ultra-light));
+  }
+
+  .spec-pair-allentown {
+    display: grid;
+    grid-template-columns: var(--kiw--spec-pair-allentown-label-width) minmax(0, 1fr);
+    align-items: start;
+    column-gap: var(--kiw--spec-pair-allentown-gap);
+    margin: 0;
+    color: var(--kiw--spec-pair-allentown-ink);
+    font-size: var(--kiw--spec-pair-allentown-font-size);
+    font-weight: var(--kiw--spec-pair-allentown-font-weight);
+    line-height: var(--kiw--spec-pair-allentown-line-height);
+  }
+
+  .spec-pair-allentown + .spec-pair-allentown {
+    margin-top: var(--kiw--spec-pair-allentown-divider-gap);
+    padding-top: var(--kiw--spec-pair-allentown-divider-gap);
+    border-top: var(--kiw--spec-pair-allentown-divider-width) solid var(--kiw--spec-pair-allentown-divider-color);
+  }
+
+  .spec-pair-allentown :is(.spec-pair-allentown__label, .spec-pair-allentown__value) {
+    min-width: 0;
+    margin: 0;
+    font: inherit;
+    font-weight: var(--kiw--spec-pair-allentown-font-weight);
+    line-height: var(--kiw--spec-pair-allentown-line-height);
+  }
+
+  .spec-pair-allentown .spec-pair-allentown__label {
+    font-family: var(--kiw--spec-pair-allentown-label-font-family);
+  }
+
+  .spec-pair-allentown .spec-pair-allentown__value {
+    font-family: var(--kiw--spec-pair-allentown-value-font-family);
+  }
+</style>

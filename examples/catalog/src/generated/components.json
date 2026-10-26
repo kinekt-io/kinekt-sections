@@ -65,6 +65,105 @@
     }
   },
   {
+    "id": "components/output-card/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "output-card-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "output-card",
+    "variation": "allentown",
+    "title": "Output Card Allentown",
+    "description": "A localized output card (Figma \"Battery Output Card\", component set 4700:59363): square media, title, description and an optional check-mark benefit list (Bullets=yes). Also renders components/option-card/allentown.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4700-59363&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "image": {
+        "kind": "media",
+        "required": true,
+        "localized": true
+      },
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "richText",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/output-card-allentown.astro"
+    }
+  },
+  {
+    "id": "components/result-item/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "result-item-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "result-item",
+    "variation": "allentown",
+    "title": "Result Item Allentown",
+    "description": "A reusable named result: a localised label above (or, swapped, below) a value rendered through Label Allentown. Figma: Label with Title=yes.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4706-98511&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "label": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "value": {
+        "kind": "component",
+        "componentId": "atoms/label/allentown",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/result-item-allentown.astro"
+    }
+  },
+  {
+    "id": "components/spec-pair/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "spec-pair-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "spec-pair",
+    "variation": "allentown",
+    "title": "Spec Pair Allentown",
+    "description": "A reusable localised product specification label and value pair.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411518&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "label": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "value": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/spec-pair-allentown.astro"
+    }
+  },
+  {
     "id": "controls/button/allentown",
     "version": "26.10.0-beta.0",
     "slug": "button-allentown",

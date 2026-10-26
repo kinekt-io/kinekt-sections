@@ -1,0 +1,80 @@
+---
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import type { Media, RichText } from '../../../shared/content.js'
+
+/*
+ * Figma "Battery Output Card" (component set 4700:59363). Without benefits it is the `Bullets=no` variant
+ * (output-card-grid); with benefits it is `Bullets=yes` (product-options, manifest components/option-card).
+ */
+interface Props {
+  card: { image: Media; title: string; description: string | RichText; benefits?: string[] | null }
+  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  mediaLoading?: 'eager' | 'lazy'
+  class?: string
+}
+
+const { card, headingLevel = 'h3', mediaLoading = 'lazy', class: className } = Astro.props
+const Heading = headingLevel
+const classes = ['output-card-allentown', className].filter(Boolean).join(' ')
+const benefits = (card.benefits ?? []).filter(Boolean)
+const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
+const checkViewBox = ['0 0', checkWidth, checkHeight].join(' ')
+---
+<article class={classes}>
+  <KinektMedia class="output-card-allentown__media" imageClass="output-card-allentown__image" media={card.image} loading={mediaLoading} />
+  <div class="output-card-allentown__content">
+    <Heading class="output-card-allentown__title">{card.title}</Heading>
+    {typeof card.description === 'string'
+      ? <p class="output-card-allentown__description">{card.description}</p>
+      : <div class="output-card-allentown__description" set:html={card.description.html} />}
+    {benefits.length > 0 && (
+      <ul class="output-card-allentown__benefits">
+        {benefits.map((benefit) => (
+          <li class="output-card-allentown__benefit">
+            <svg class="output-card-allentown__check" aria-hidden="true" focusable="false" viewBox={checkViewBox}><path d={checkPath as string} /></svg>
+            <span>{benefit}</span>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</article>
+<style is:global>
+  :where(.output-card-allentown) {
+    --kiw--output-card-allentown-gap: var(--space-l);
+    --kiw--output-card-allentown-copy-gap: var(--space-l);
+    /* Figma 144 (D Width XS). --width-xs is fluid (about 39 px on phones), so it only applies from 50rem. */
+    --kiw--output-card-allentown-media-size: var(--desktop-width-xs);
+    --kiw--output-card-allentown-media-ratio: 1 / 1;
+    --kiw--output-card-allentown-media-radius: var(--kinekt-component-radius, var(--radius-none));
+    --kiw--output-card-allentown-title-size: var(--h3);
+    --kiw--output-card-allentown-title-line-height: 1;
+    --kiw--output-card-allentown-title-color: var(--kinekt-component-ink, inherit);
+    --kiw--output-card-allentown-description-size: var(--text-l);
+    --kiw--output-card-allentown-description-line-height: 1.5;
+    --kiw--output-card-allentown-description-color: var(--kinekt-component-subtle, var(--primary));
+    --kiw--output-card-allentown-benefits-gap: var(--space-s);
+    --kiw--output-card-allentown-benefit-gap: var(--space-xs);
+    --kiw--output-card-allentown-benefit-size: var(--text-m);
+    --kiw--output-card-allentown-benefit-line-height: 1;
+    --kiw--output-card-allentown-benefit-color: var(--kiw--output-card-allentown-description-color);
+    --kiw--output-card-allentown-check-size: var(--text-s);
+    --kiw--output-card-allentown-check-color: var(--kinekt-component-accent, currentColor);
+  }
+  @media (min-width: 50rem) {
+    :where(.output-card-allentown) { --kiw--output-card-allentown-media-size: var(--width-xs); }
+  }
+
+  .output-card-allentown { display: grid; align-content: start; justify-items: start; gap: var(--kiw--output-card-allentown-gap); min-width: 0; margin: 0; padding: 0; border: 0; background: transparent; }
+  .output-card-allentown .output-card-allentown__media { display: block; inline-size: var(--kiw--output-card-allentown-media-size); max-inline-size: 100%; }
+  .output-card-allentown .output-card-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; block-size: auto; aspect-ratio: var(--kiw--output-card-allentown-media-ratio); object-fit: cover; border-radius: var(--kiw--output-card-allentown-media-radius); filter: var(--kinekt-component-media-filter, none); }
+  .output-card-allentown .output-card-allentown__content { display: grid; gap: var(--kiw--output-card-allentown-copy-gap); inline-size: 100%; min-width: 0; }
+  .output-card-allentown .output-card-allentown__title { max-width: none; margin: 0; color: var(--kiw--output-card-allentown-title-color); font-family: var(--kinekt-component-heading-font-family, var(--heading-font-family)); font-size: var(--kiw--output-card-allentown-title-size); font-weight: var(--kinekt-component-heading-font-weight, var(--heading-font-weight)); line-height: var(--kiw--output-card-allentown-title-line-height); letter-spacing: var(--kinekt-component-heading-letter-spacing, var(--heading-letter-spacing)); text-wrap: balance; }
+  .output-card-allentown .output-card-allentown__description { margin: 0; color: var(--kiw--output-card-allentown-description-color); font-size: var(--kiw--output-card-allentown-description-size); line-height: var(--kiw--output-card-allentown-description-line-height); }
+  .output-card-allentown .output-card-allentown__description > * { margin-block: 0; }
+  .output-card-allentown .output-card-allentown__description > * + * { margin-block-start: var(--space-s); }
+  .output-card-allentown .output-card-allentown__benefits { display: grid; gap: var(--kiw--output-card-allentown-benefits-gap); margin: 0; padding: 0; list-style: none; }
+  .output-card-allentown .output-card-allentown__benefit { display: flex; align-items: flex-start; gap: var(--kiw--output-card-allentown-benefit-gap); min-width: 0; color: var(--kiw--output-card-allentown-benefit-color); font-size: var(--kiw--output-card-allentown-benefit-size); line-height: var(--kiw--output-card-allentown-benefit-line-height); }
+  .output-card-allentown .output-card-allentown__check { flex: none; inline-size: var(--kiw--output-card-allentown-check-size); block-size: var(--kiw--output-card-allentown-check-size); fill: var(--kiw--output-card-allentown-check-color); }
+</style>
