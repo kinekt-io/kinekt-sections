@@ -301,6 +301,37 @@
     }
   },
   {
+    "id": "components/intake-step/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "intake-step-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "intake-step",
+    "variation": "allentown",
+    "title": "Intake Step Allentown",
+    "description": "A localized intake-process step with a renderer-derived sequence number.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-416707&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "text": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "number": {
+        "kind": "derived",
+        "source": "listPosition"
+      }
+    },
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/intake-step-allentown.astro"
+    }
+  },
+  {
     "id": "components/next-step/allentown",
     "version": "26.10.0-beta.0",
     "slug": "next-step-allentown",
@@ -376,6 +407,42 @@
     "previewSource": null,
     "entries": {
       "astro": "@kinekt-io/components/components/output-card-allentown.astro"
+    }
+  },
+  {
+    "id": "components/process-item/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "process-item-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "process-item",
+    "variation": "allentown",
+    "title": "Process Item Allentown",
+    "description": "A reusable process-story item with label, title and description.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4779-130248&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "label": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "textarea",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/process-item-allentown.astro"
     }
   },
   {
@@ -2845,7 +2912,7 @@
     "title": "Process Story Allentown",
     "description": "A reusable process-story section with optional media and labelled narrative items.",
     "status": "beta",
-    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4817-416529&t=mG3L6xlBzomA03GY-11",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4779-129512&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
       "theme": {
