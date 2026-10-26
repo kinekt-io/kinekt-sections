@@ -109,7 +109,6 @@ function sectionTokenBridgeCss(block) {
 const generatedComponentRules = {
   'beta-action-contact-allentown': `:where(.beta-action-contact-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }`,
   'beta-support-contact-allentown': `:where(.beta-support-contact-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }`,
-  'beta-checklist-feature-list-allentown': `:where(.beta-checklist-feature-list-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
   'beta-solution-list-allentown': `:where(.beta-solution-list-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
   'beta-comparison-overview-allentown': `:where(.beta-comparison-overview-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
 :where(.beta-comparison-overview-allentown[data-kinekt-structural-section]) .beta-comparison-overview-allentown__header { text-align: center; }
