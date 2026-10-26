@@ -3,5 +3,5 @@
   publish = "examples/catalog/dist"
 
 [build.environment]
-  NODE_VERSION = "22.12.0"
+  NODE_VERSION = "22"
   PNPM_VERSION = "10.18.0"

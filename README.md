@@ -270,7 +270,7 @@ GitHub Pages MUST be available for private repositories on the organization plan
 
 ### Netlify deploy previews
 
-`netlify.toml` builds `examples/catalog/dist` with Node `22.12.0` and pnpm `10.18.0`. On Netlify, import `kinekt-io/kinekt-sections`, set `main` as the production branch, and enable **Deploy Previews** for pull requests. Netlify uses this file, creates one preview URL per pull request, and posts the URL through its GitHub integration.
+`netlify.toml` builds `examples/catalog/dist` with the current Node 22 release and pnpm `10.18.0`. On Netlify, import `kinekt-io/kinekt-sections`, set `main` as the production branch, and enable **Deploy Previews** for pull requests. Netlify uses this file, creates one preview URL per pull request, and posts the URL through its GitHub integration.
 
 The catalogue keeps its `/kinekt-sections` base only outside Netlify. Netlify production and pull-request previews use their own root URL, preventing GitHub Pages paths from leaking into preview links.
 
