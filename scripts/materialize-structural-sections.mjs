@@ -123,7 +123,6 @@ const generatedComponentRules = {
 :where(.beta-faq-allentown[data-kinekt-structural-section]) .beta-faq-allentown__header-content { margin-inline: auto; }`,
   'beta-media-metrics-allentown': `:where(.beta-media-metrics-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }`,
   'beta-form-section-allentown': `:where(.beta-form-section-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
-  'beta-insight-index-allentown': `:where(.beta-insight-index-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-gap: var(--section-space-xl); }`,
   'beta-tabs-allentown': `:where(.beta-tabs-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }`,
   'beta-featured-insights-allentown': `:where(.beta-featured-insights-allentown[data-kinekt-structural-section]) { --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-card-media-ratio: 3 / 2; --kinekt-section-gap: var(--section-space-xl); }
 :where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; background: transparent; }
