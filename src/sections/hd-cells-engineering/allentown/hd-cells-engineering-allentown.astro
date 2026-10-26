@@ -1,153 +1,360 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe-tokens.css'
+import HdCellItem, { type HdCellItemContent } from '../../../components/hd-cell-item/allentown/hd-cell-item-allentown.astro'
+import HdEngineeringTopic, { type HdEngineeringTopicContent } from '../../../components/hd-engineering-topic/allentown/hd-engineering-topic-allentown.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { RichText, SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import type { BetaHdCellsEngineeringAllentownContent } from './hd-cells-engineering-allentown.types.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "cellsIntro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "cellItems": {
-    "kind": "componentList",
-    "id": "components/hd-cell-item/allentown",
-    "role": "hd-cell-item",
-    "fields": {
-      "media": {
-        "kind": "media"
-      },
-      "title": {
-        "kind": "text"
-      },
-      "subtitle": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "engineeringIntro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "engineeringTopics": {
-    "kind": "componentList",
-    "id": "components/hd-engineering-topic/allentown",
-    "role": "hd-engineering-topic",
-    "fields": {
-      "media": {
-        "kind": "media"
-      },
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      },
-      "ctaGroup": {
-        "kind": "component",
-        "id": "components/cta-group/allentown",
-        "role": "cta-group",
-        "fields": {
-          "primaryButton": {
-            "kind": "cta"
-          },
-          "secondaryButton": {
-            "kind": "cta"
-          }
-        }
-      }
-    }
-  }
+/** Rich text as it arrives: a plain string, pre-rendered `{ html }`, or raw Lexical JSON from the identity Payload adapter. */
+type RichTextInput = string | RichText | Record<string, unknown>
+type IntroInput = Omit<SectionIntroContent, 'description'> & { description?: RichTextInput | null }
+
+// The generated .types.ts is still generic (Record<string, unknown>), so the renderer types its props from the manifest here.
+interface Props extends BetaHdCellsEngineeringAllentownContent {
+  id?: string
+  theme?: SectionTheme
+  headingLevel?: 'h2' | 'h3'
+  cellsIntro: IntroInput
+  cellItems: HdCellItemContent[]
+  engineeringIntro: IntroInput
+  engineeringTopics: HdEngineeringTopicContent[]
+  /** Localised label of the control that reveals a topic's details. */
+  moreInformationLabel?: string
+  /** Accessible name of the topic tabs; defaults to the engineering heading. */
+  topicsLabel?: string
+  mediaLoading?: 'eager' | 'lazy'
 }
+
+const {
+  id,
+  theme = 'light',
+  headingLevel = 'h2',
+  cellsIntro,
+  cellItems = [],
+  engineeringIntro,
+  engineeringTopics = [],
+  moreInformationLabel = 'More information',
+  topicsLabel,
+  mediaLoading = 'lazy',
+} = Astro.props as Props
+
+const toHtml = (value: RichTextInput, field: string): string => {
+  if (typeof value === 'string') return value.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).map((part) => richTextToHtml(part, field)).join('')
+  if (typeof value.html === 'string') return value.html
+  return richTextToHtml(value, field)
+}
+const normaliseIntro = (value: IntroInput, field: string): SectionIntroContent => ({
+  ...value,
+  description: value.description == null || typeof value.description === 'string' ? value.description ?? undefined : { html: toHtml(value.description, field) },
+})
+const cellsIntroContent = normaliseIntro(cellsIntro, 'cellsIntro.description')
+const engineeringIntroContent = normaliseIntro(engineeringIntro, 'engineeringIntro.description')
+const topicHeadingLevel = headingLevel === 'h2' ? 'h3' : 'h4'
+
+const hasMedia = (media: unknown): boolean => Boolean(media && typeof media === 'object' && typeof (media as { url?: unknown }).url === 'string' && (media as { url: string }).url !== '')
+const cells = cellItems.filter((item) => item && typeof item.title === 'string' && item.title !== '')
+const cellMedia = cells.map((item, index) => ({ media: item.media, index })).filter((entry) => hasMedia(entry.media))
+const topics = engineeringTopics.filter((topic) => topic && typeof topic.title === 'string' && topic.title !== '')
+// Figma places the topics on both sides of the image: the first half on the start side, the rest on the end side (DOM order = tab order).
+const startCount = Math.ceil(topics.length / 2)
+const baseId = id ?? `hd-cells-engineering-${Math.random().toString(36).slice(2, 8)}`
+const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
 ---
-<StructuralSection block="beta-hd-cells-engineering-allentown" fields={fields} {...props} />
+<section class="hd-cells-engineering-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="hd-cells-engineering-allentown__container">
+    <div class="hd-cells-engineering-allentown__cells">
+      <header class="hd-cells-engineering-allentown__header">
+        <SectionIntro intro={cellsIntroContent} headingLevel={headingLevel} accentStyle="heading" />
+      </header>
+      <div class:list={['hd-cells-engineering-allentown__cells-body', { 'hd-cells-engineering-allentown__cells-body--media': cellMedia.length > 0 }]}>
+        {cellMedia.length > 0 && (
+          <div class="hd-cells-engineering-allentown__cells-media">
+            {cellMedia.map(({ media, index }, position) => (
+              <div class="hd-cells-engineering-allentown__cell-media" data-hd-cell-media={index} hidden={position !== 0}>
+                <KinektMedia media={media} imageClass="hd-cells-engineering-allentown__cell-image" loading={mediaLoading} />
+              </div>
+            ))}
+          </div>
+        )}
+        <ul class="hd-cells-engineering-allentown__cells-list" data-kinekt-disclosure-group>
+          {cells.map((item, index) => (
+            <li class="hd-cells-engineering-allentown__cell">
+              <HdCellItem item={item} index={index} open={index === 0} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="hd-cells-engineering-allentown__engineering">
+      <header class="hd-cells-engineering-allentown__header">
+        <SectionIntro intro={engineeringIntroContent} headingLevel={headingLevel} accentStyle="heading" />
+      </header>
+      {topics.length > 0 && (
+        <div class="hd-cells-engineering-allentown__topics" data-hd-engineering-tabs>
+          <!-- runtimeProps.activeEngineeringTopic = firstListItem. The tablist stays hidden until the script turns these buttons into tabs; without JavaScript every topic panel shows. -->
+          {topics.length > 1 && (
+            <div class="hd-cells-engineering-allentown__tablist" aria-label={topicsLabel ?? engineeringIntroContent.heading} data-hd-engineering-tablist hidden>
+              {[topics.slice(0, startCount), topics.slice(startCount)].map((group, side) => (
+                <div class:list={['hd-cells-engineering-allentown__tab-column', side === 0 ? 'hd-cells-engineering-allentown__tab-column--start' : 'hd-cells-engineering-allentown__tab-column--end']}>
+                  {group.map((topic, groupIndex) => {
+                    const index = side === 0 ? groupIndex : startCount + groupIndex
+                    return <button class="hd-cells-engineering-allentown__tab" type="button" id={`${topicIds[index]}-tab`} aria-controls={`${topicIds[index]}-panel`} aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1} data-hd-engineering-tab>{topic.title}</button>
+                  })}
+                </div>
+              ))}
+            </div>
+          )}
+          <div class="hd-cells-engineering-allentown__panels">
+            {topics.map((topic, index) => (
+              <div class="hd-cells-engineering-allentown__panel" id={`${topicIds[index]}-panel`} aria-labelledby={topics.length > 1 ? `${topicIds[index]}-tab` : undefined} data-hd-engineering-panel>
+                <HdEngineeringTopic topic={topic} id={topicIds[index]} moreInformationLabel={moreInformationLabel} titleAs={topicHeadingLevel} mediaLoading={mediaLoading} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+<script>
+  import { initializeKinektInteractions } from '../../../shared/interactions'
+
+  // runtimeProps.engineeringInteraction = handImplementedTopicHotspotsAndTransitions (progressive enhancement; transitions in CSS honour prefers-reduced-motion).
+  document.querySelectorAll<HTMLElement>('.hd-cells-engineering-allentown[data-kinekt-section]').forEach((section) => {
+    if (section.hasAttribute('data-hd-cells-engineering-enhanced')) return
+    section.setAttribute('data-hd-cells-engineering-enhanced', '')
+
+    // Cells: the media column follows the open cell (single-open via the shared disclosure group).
+    const media = Array.from(section.querySelectorAll<HTMLElement>('[data-hd-cell-media]'))
+    section.querySelectorAll<HTMLDetailsElement>('details[data-hd-cell-item]').forEach((details) => {
+      details.addEventListener('toggle', () => {
+        const index = details.dataset.hdCellItem
+        if (!details.open || !media.some((item) => item.dataset.hdCellMedia === index)) return
+        media.forEach((item) => { item.hidden = item.dataset.hdCellMedia !== index })
+      })
+    })
+
+    // Topics: turn the buttons into a tablist (first topic active) for the shared tabs helper.
+    const tabsRoot = section.querySelector<HTMLElement>('[data-hd-engineering-tabs]')
+    const tablist = tabsRoot?.querySelector<HTMLElement>('[data-hd-engineering-tablist]')
+    const tabs = Array.from(tabsRoot?.querySelectorAll<HTMLButtonElement>('[data-hd-engineering-tab]') ?? [])
+    const panels = Array.from(tabsRoot?.querySelectorAll<HTMLElement>('[data-hd-engineering-panel]') ?? [])
+    if (tabsRoot && tablist && tabs.length > 1 && tabs.length === panels.length) {
+      tablist.setAttribute('role', 'tablist')
+      tablist.hidden = false
+      tabs.forEach((tab, index) => {
+        tab.setAttribute('role', 'tab')
+        tab.setAttribute('aria-selected', String(index === 0))
+        tab.tabIndex = index === 0 ? 0 : -1
+      })
+      panels.forEach((panel, index) => {
+        panel.setAttribute('role', 'tabpanel')
+        panel.hidden = index !== 0
+      })
+      tabsRoot.setAttribute('data-kinekt-tabs', '')
+    }
+
+    // Topic details: collapsed behind the "More information" toggle.
+    section.querySelectorAll<HTMLButtonElement>('[data-hd-engineering-topic-toggle]').forEach((toggle) => {
+      const details = document.getElementById(toggle.getAttribute('aria-controls') ?? '')
+      if (!details) return
+      const setExpanded = (expanded: boolean) => {
+        toggle.setAttribute('aria-expanded', String(expanded))
+        details.hidden = !expanded
+      }
+      setExpanded(false)
+      toggle.hidden = false
+      toggle.addEventListener('click', () => setExpanded(toggle.getAttribute('aria-expanded') !== 'true'))
+    })
+
+    initializeKinektInteractions(section)
+  })
+</script>
 <style is:global>
-.beta-hd-cells-engineering-allentown[data-kinekt-section] {
-  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--hd-cells-engineering-allentown-site-width, var(--website-width)));
-  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--hd-cells-engineering-allentown-content-width, var(--content-width)));
-  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--hd-cells-engineering-allentown-reading-width, var(--width-m)));
-  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--hd-cells-engineering-allentown-inline-space, var(--section-gutter)));
-  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--hd-cells-engineering-allentown-block-space, var(--section-space-l)));
-  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--hd-cells-engineering-allentown-gap, var(--content-gap)));
-  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--hd-cells-engineering-allentown-radius, var(--radius-none)));
-  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--hd-cells-engineering-allentown-border-width, var(--border-width)));
-  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--hd-cells-engineering-allentown-media-filter, var(--media-filter)));
-  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--hd-cells-engineering-allentown-intro-accent-gap, var(--space-xxs)));
-  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--hd-cells-engineering-allentown-intro-description-gap, var(--space-m)));
-  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--hd-cells-engineering-allentown-heading-1-size, var(--h1)));
-  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--hd-cells-engineering-allentown-heading-2-size, var(--h2)));
-  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--hd-cells-engineering-allentown-heading-3-size, var(--h3)));
-  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--hd-cells-engineering-allentown-heading-4-size, var(--h4)));
-  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--hd-cells-engineering-allentown-heading-5-size, var(--h5)));
-  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--hd-cells-engineering-allentown-heading-6-size, var(--h6)));
-  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--hd-cells-engineering-allentown-heading-font-family, var(--heading-font-family)));
-  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--hd-cells-engineering-allentown-heading-font-weight, var(--heading-font-weight)));
-  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--hd-cells-engineering-allentown-heading-line-height, var(--heading-line-height)));
-  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--hd-cells-engineering-allentown-heading-letter-spacing, var(--heading-letter-spacing)));
-  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--hd-cells-engineering-allentown-text-font-family, var(--text-font-family)));
-  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--hd-cells-engineering-allentown-text-font-weight, var(--text-font-weight)));
-  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--hd-cells-engineering-allentown-text-line-height, var(--text-line-height)));
-  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--hd-cells-engineering-allentown-text-letter-spacing, var(--text-letter-spacing)));
-  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--hd-cells-engineering-allentown-mono-font-family, var(--mono-font-family)));
-  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--hd-cells-engineering-allentown-text-xs-size, var(--text-xs)));
-  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--hd-cells-engineering-allentown-text-s-size, var(--text-s)));
-  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--hd-cells-engineering-allentown-text-m-size, var(--text-m)));
-  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--hd-cells-engineering-allentown-text-l-size, var(--text-l)));
-  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--hd-cells-engineering-allentown-text-xl-size, var(--text-xl)));
-  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--hd-cells-engineering-allentown-text-xxl-size, var(--text-xxl)));
-  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--hd-cells-engineering-allentown-carousel-gap, var(--content-gap)));
-  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--hd-cells-engineering-allentown-actions-gap, var(--space-s)));
-  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--hd-cells-engineering-allentown-actions-margin, var(--space-xl)));
-  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--hd-cells-engineering-allentown-button-height, var(--input-height)));
-  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--hd-cells-engineering-allentown-button-padding-block, var(--space-s)));
-  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--hd-cells-engineering-allentown-button-padding-inline, var(--space-l)));
-  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--hd-cells-engineering-allentown-button-radius, var(--buttons-radius)));
-  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--hd-cells-engineering-allentown-input-height, var(--input-height)));
-  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--hd-cells-engineering-allentown-editorial-gap, var(--section-space-xxl)));
-  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--hd-cells-engineering-allentown-card-padding, var(--space-l)));
-  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--hd-cells-engineering-allentown-header-to-content-gap, var(--section-space-s)));
-  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--hd-cells-engineering-allentown-table-offset, var(--space-xl)));
-  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--hd-cells-engineering-allentown-canvas));
-  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--hd-cells-engineering-allentown-surface));
-  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--hd-cells-engineering-allentown-ink));
-  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--hd-cells-engineering-allentown-muted));
-  --kiw--section-subtle: var(--kinekt-section-subtle, var(--kiw--hd-cells-engineering-allentown-subtle));
-  --kiw--section-line: var(--kinekt-section-line, var(--kiw--hd-cells-engineering-allentown-line));
-  --kiw--section-action: var(--kinekt-section-action, var(--kiw--hd-cells-engineering-allentown-action));
-  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--hd-cells-engineering-allentown-action-text));
-  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--hd-cells-engineering-allentown-accent));
-  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--hd-cells-engineering-allentown-action-icon));
-}
+  .hd-cells-engineering-allentown {
+    --kiw--section-site-width: var(--kiw--hd-cells-engineering-allentown-site-width, var(--website-width));
+    --kiw--section-content-width: var(--kiw--hd-cells-engineering-allentown-content-width, var(--content-width));
+    --kiw--section-reading-width: var(--kiw--hd-cells-engineering-allentown-reading-width, var(--width-m));
+    --kiw--section-inline-space: var(--kiw--hd-cells-engineering-allentown-inline-space, var(--section-gutter));
+    --kiw--section-block-space: var(--kiw--hd-cells-engineering-allentown-block-space, var(--section-space-l));
+    --kiw--section-gap: var(--kiw--hd-cells-engineering-allentown-gap, var(--content-gap));
+    --kiw--section-radius: var(--kiw--hd-cells-engineering-allentown-radius, var(--radius-none));
+    --kiw--section-border-width: var(--kiw--hd-cells-engineering-allentown-border-width, var(--border-width));
+    --kiw--section-media-filter: var(--kiw--hd-cells-engineering-allentown-media-filter, var(--media-filter));
+    --kiw--section-intro-accent-gap: var(--kiw--hd-cells-engineering-allentown-intro-accent-gap, var(--space-xxs));
+    --kiw--section-intro-description-gap: var(--kiw--hd-cells-engineering-allentown-intro-description-gap, var(--space-m));
+    --kiw--section-heading-1-size: var(--kiw--hd-cells-engineering-allentown-heading-1-size, var(--h1));
+    --kiw--section-heading-2-size: var(--kiw--hd-cells-engineering-allentown-heading-2-size, var(--h2));
+    --kiw--section-heading-3-size: var(--kiw--hd-cells-engineering-allentown-heading-3-size, var(--h3));
+    --kiw--section-heading-4-size: var(--kiw--hd-cells-engineering-allentown-heading-4-size, var(--h4));
+    --kiw--section-heading-5-size: var(--kiw--hd-cells-engineering-allentown-heading-5-size, var(--h5));
+    --kiw--section-heading-6-size: var(--kiw--hd-cells-engineering-allentown-heading-6-size, var(--h6));
+    --kiw--section-heading-font-family: var(--kiw--hd-cells-engineering-allentown-heading-font-family, var(--heading-font-family));
+    --kiw--section-heading-font-weight: var(--kiw--hd-cells-engineering-allentown-heading-font-weight, var(--heading-font-weight));
+    --kiw--section-heading-line-height: var(--kiw--hd-cells-engineering-allentown-heading-line-height, var(--heading-line-height));
+    --kiw--section-heading-letter-spacing: var(--kiw--hd-cells-engineering-allentown-heading-letter-spacing, var(--heading-letter-spacing));
+    --kiw--section-text-font-family: var(--kiw--hd-cells-engineering-allentown-text-font-family, var(--text-font-family));
+    --kiw--section-text-font-weight: var(--kiw--hd-cells-engineering-allentown-text-font-weight, var(--text-font-weight));
+    --kiw--section-text-line-height: var(--kiw--hd-cells-engineering-allentown-text-line-height, var(--text-line-height));
+    --kiw--section-text-letter-spacing: var(--kiw--hd-cells-engineering-allentown-text-letter-spacing, var(--text-letter-spacing));
+    --kiw--section-mono-font-family: var(--kiw--hd-cells-engineering-allentown-mono-font-family, var(--mono-font-family));
+    --kiw--section-text-xs-size: var(--kiw--hd-cells-engineering-allentown-text-xs-size, var(--text-xs));
+    --kiw--section-text-s-size: var(--kiw--hd-cells-engineering-allentown-text-s-size, var(--text-s));
+    --kiw--section-text-m-size: var(--kiw--hd-cells-engineering-allentown-text-m-size, var(--text-m));
+    --kiw--section-text-l-size: var(--kiw--hd-cells-engineering-allentown-text-l-size, var(--text-l));
+    --kiw--section-text-xl-size: var(--kiw--hd-cells-engineering-allentown-text-xl-size, var(--text-xl));
+    --kiw--section-text-xxl-size: var(--kiw--hd-cells-engineering-allentown-text-xxl-size, var(--text-xxl));
+    --kiw--section-carousel-gap: var(--kiw--hd-cells-engineering-allentown-carousel-gap, var(--content-gap));
+    --kiw--section-actions-gap: var(--kiw--hd-cells-engineering-allentown-actions-gap, var(--space-s));
+    --kiw--section-actions-margin: var(--kiw--hd-cells-engineering-allentown-actions-margin, var(--space-xl));
+    --kiw--section-button-height: var(--kiw--hd-cells-engineering-allentown-button-height, var(--input-height));
+    --kiw--section-button-padding-block: var(--kiw--hd-cells-engineering-allentown-button-padding-block, var(--space-s));
+    --kiw--section-button-padding-inline: var(--kiw--hd-cells-engineering-allentown-button-padding-inline, var(--space-l));
+    --kiw--section-button-radius: var(--kiw--hd-cells-engineering-allentown-button-radius, var(--buttons-radius));
+    --kiw--section-input-height: var(--kiw--hd-cells-engineering-allentown-input-height, var(--input-height));
+    --kiw--section-editorial-gap: var(--kiw--hd-cells-engineering-allentown-editorial-gap, var(--section-space-xxl));
+    --kiw--section-card-padding: var(--kiw--hd-cells-engineering-allentown-card-padding, var(--space-l));
+    --kiw--section-header-to-content-gap: var(--kiw--hd-cells-engineering-allentown-header-to-content-gap, var(--section-space-s));
+    --kiw--section-table-offset: var(--kiw--hd-cells-engineering-allentown-table-offset, var(--space-xl));
+    --kiw--section-canvas: var(--kiw--hd-cells-engineering-allentown-canvas);
+    --kiw--section-surface: var(--kiw--hd-cells-engineering-allentown-surface);
+    --kiw--section-ink: var(--kiw--hd-cells-engineering-allentown-ink);
+    --kiw--section-muted: var(--kiw--hd-cells-engineering-allentown-muted);
+    --kiw--section-line: var(--kiw--hd-cells-engineering-allentown-line);
+    --kiw--section-action: var(--kiw--hd-cells-engineering-allentown-action);
+    --kiw--section-action-text: var(--kiw--hd-cells-engineering-allentown-action-text);
+    --kiw--section-accent: var(--kiw--hd-cells-engineering-allentown-accent);
+    --kiw--section-action-icon: var(--kiw--hd-cells-engineering-allentown-action-icon);
+    --kiw--section-subtle: var(--kiw--hd-cells-engineering-allentown-subtle);
+  }
 </style>
 <style is:global>
-:where(.beta-hd-cells-engineering-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }
+  .hd-cells-engineering-allentown[data-kinekt-section] > .hd-cells-engineering-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
+  .hd-cells-engineering-allentown :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; }
+  .hd-cells-engineering-allentown :is(p, ul, ol) { margin-block: 0; }
+</style>
+<style is:global>
+  /* Figma "Section - HD Cells + Engineering" (5240:412556), dark (+ a faint accent gradient, not reproduced): two stacked parts, 210 apart.
+     "High-density cells" (1296): centred intro Column 864 → section-l → 5:4 image 608 + section-l + cell list 608 (gap section-s).
+     "High-density engineering" (1440): centred intro Column 864 → section-l → topics | 576 × 720 image | topics (gap section-m),
+     each side a centred column of h4 topic tabs (gap section-xxl), the active one in ink with an accent underline. */
+  :where(.hd-cells-engineering-allentown) {
+    --kiw--hd-cells-engineering-major-gap: var(--section-space-xxl);
+    --kiw--hd-cells-engineering-part-gap: var(--section-space-l);
+    --kiw--hd-cells-engineering-header-width: var(--width-l);
+    --kiw--hd-cells-engineering-intro-gap: var(--space-m);
+    --kiw--hd-cells-engineering-heading-stack-gap: var(--space-xxs);
+    --kiw--hd-cells-engineering-heading-size: var(--h2);
+    --kiw--hd-cells-engineering-description-font-size: var(--text-xl);
+    --kiw--hd-cells-engineering-cells-width: var(--width-xxl);
+    --kiw--hd-cells-engineering-cells-gap: var(--section-space-l);
+    --kiw--hd-cells-engineering-cells-media-ratio: 5 / 4;
+    --kiw--hd-cells-engineering-cells-media-background: var(--kinekt-component-surface);
+    --kiw--hd-cells-engineering-cells-list-gap: var(--section-space-s);
+    --kiw--hd-cells-engineering-topics-gap: var(--section-space-m);
+    --kiw--hd-cells-engineering-topics-media-width: var(--width-m);
+    --kiw--hd-cells-engineering-tabs-gap: var(--section-space-xxl);
+    --kiw--hd-cells-engineering-tab-size: var(--h4);
+    --kiw--hd-cells-engineering-tab-padding-block: calc((var(--space-xxs) + var(--space-xs)) / 2);
+    --kiw--hd-cells-engineering-tab-color: var(--kinekt-component-muted);
+    --kiw--hd-cells-engineering-tab-active-color: var(--kinekt-component-ink);
+    --kiw--hd-cells-engineering-tab-indicator-color: var(--kinekt-component-accent);
+    --kinekt-section-gap: var(--kiw--hd-cells-engineering-major-gap);
+  }
+
+  .hd-cells-engineering-allentown :is(.hd-cells-engineering-allentown__cells, .hd-cells-engineering-allentown__engineering) { display: grid; gap: var(--kiw--hd-cells-engineering-part-gap); min-width: 0; }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__header { display: grid; justify-items: center; width: 100%; margin-inline: auto; text-align: center; }
+  .hd-cells-engineering-allentown .section-intro { display: grid; justify-items: center; gap: var(--kiw--hd-cells-engineering-intro-gap); }
+  .hd-cells-engineering-allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
+  .hd-cells-engineering-allentown .section-intro__heading-group { display: grid; justify-items: center; gap: var(--kiw--hd-cells-engineering-heading-stack-gap); }
+  .hd-cells-engineering-allentown .section-intro__heading { max-width: none; font-size: var(--kiw--hd-cells-engineering-heading-size); }
+  .hd-cells-engineering-allentown .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--kiw--hd-cells-engineering-description-font-size); line-height: var(--kinekt-component-text-line-height); }
+  .hd-cells-engineering-allentown .section-intro__description > * { margin-block: 0; }
+
+  /* High-density cells */
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__cells { inline-size: 100%; margin-inline: auto; }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__cells-body { display: grid; gap: var(--kiw--hd-cells-engineering-cells-gap); min-width: 0; }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__cells-media { display: grid; min-width: 0; }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__cell-media { grid-area: 1 / 1; min-width: 0; background: var(--kiw--hd-cells-engineering-cells-media-background); }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__cell-media > .kinekt-media { display: block; }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__cell-image { display: block; inline-size: 100%; max-inline-size: 100%; block-size: auto; aspect-ratio: var(--kiw--hd-cells-engineering-cells-media-ratio); object-fit: cover; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__cells-list { display: grid; align-content: start; gap: var(--kiw--hd-cells-engineering-cells-list-gap); min-width: 0; margin: 0; padding: 0; list-style: none; }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__cell { min-width: 0; }
+
+  /* High-density engineering */
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__topics { display: grid; gap: var(--kiw--hd-cells-engineering-topics-gap); min-width: 0; }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__tablist { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-xs) var(--space-xl); min-width: 0; }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__tab-column { display: contents; }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__tab { padding: var(--kiw--hd-cells-engineering-tab-padding-block) 0; border: 0; border-block-end: var(--kinekt-component-border-width) solid transparent; border-radius: 0; color: var(--kiw--hd-cells-engineering-tab-color); background: transparent; font-family: var(--kiw--section-heading-font-family); font-size: var(--kiw--hd-cells-engineering-tab-size); font-weight: var(--kiw--section-heading-font-weight); line-height: 1; letter-spacing: var(--kiw--section-heading-letter-spacing); text-align: inherit; white-space: nowrap; cursor: pointer; }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__tab:hover { color: var(--kiw--hd-cells-engineering-tab-active-color); }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__tab[aria-selected='true'] { border-block-end-color: var(--kiw--hd-cells-engineering-tab-indicator-color); color: var(--kiw--hd-cells-engineering-tab-active-color); }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__tab:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kiw--hd-cells-engineering-tab-indicator-color); outline-offset: var(--space-xxs); }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__panels { display: grid; gap: var(--kiw--hd-cells-engineering-topics-gap); min-width: 0; }
+  .hd-cells-engineering-allentown .hd-cells-engineering-allentown__panel { min-width: 0; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hd-cells-engineering-allentown[data-hd-cells-engineering-enhanced] :is(.hd-cells-engineering-allentown__cell-media, .hd-cells-engineering-allentown__panel):not([hidden]) { animation: hd-cells-engineering-allentown-fade 320ms ease-out; }
+    .hd-cells-engineering-allentown .hd-cells-engineering-allentown__tab { transition: color 200ms ease-out, border-color 200ms ease-out; }
+  }
+  @keyframes hd-cells-engineering-allentown-fade { from { opacity: 0; } to { opacity: 1; } }
+
+  @media (min-width: 50rem) {
+    :where(.hd-cells-engineering-allentown) { --kiw--hd-cells-engineering-allentown-content-width: var(--content-width); }
+    .hd-cells-engineering-allentown .hd-cells-engineering-allentown__header { max-inline-size: var(--kiw--hd-cells-engineering-header-width); }
+    .hd-cells-engineering-allentown .hd-cells-engineering-allentown__cells { max-inline-size: var(--kiw--hd-cells-engineering-cells-width); }
+    .hd-cells-engineering-allentown .hd-cells-engineering-allentown__cells-body--media { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+    /* No Figma frame without cell media: the list keeps the intro's reading width, centred (inferred). */
+    .hd-cells-engineering-allentown .hd-cells-engineering-allentown__cells-body:not(.hd-cells-engineering-allentown__cells-body--media) .hd-cells-engineering-allentown__cells-list { inline-size: 100%; max-inline-size: var(--kiw--hd-cells-engineering-header-width); margin-inline: auto; }
+
+    .hd-cells-engineering-allentown .hd-cells-engineering-allentown__topics { grid-template-columns: minmax(0, 1fr) minmax(0, var(--kiw--hd-cells-engineering-topics-media-width)) minmax(0, 1fr); }
+    .hd-cells-engineering-allentown .hd-cells-engineering-allentown__tablist { display: grid; grid-column: 1 / -1; grid-row: 1; grid-template-columns: subgrid; column-gap: var(--kiw--hd-cells-engineering-topics-gap); }
+    .hd-cells-engineering-allentown .hd-cells-engineering-allentown__tab-column { display: flex; flex-direction: column; justify-content: center; gap: var(--kiw--hd-cells-engineering-tabs-gap); min-width: 0; }
+    .hd-cells-engineering-allentown .hd-cells-engineering-allentown__tab-column--start { grid-column: 1; align-items: flex-end; text-align: end; }
+    .hd-cells-engineering-allentown .hd-cells-engineering-allentown__tab-column--end { grid-column: 3; align-items: flex-start; text-align: start; }
+    .hd-cells-engineering-allentown .hd-cells-engineering-allentown__tab { max-inline-size: 100%; white-space: normal; }
+    .hd-cells-engineering-allentown .hd-cells-engineering-allentown__panels { grid-column: 2; grid-row: 1; }
+  }
+  @media (max-width: 49.999rem) {
+    .hd-cells-engineering-allentown :is(h1, h2, h3, h4, h5, h6) { max-width: 100vw; }
+  }
+</style>
+<style is:global>
+  .hd-cells-engineering-allentown {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-semi-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-ultra-light)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary)));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent-semi-dark)));
+    --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent)));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary)));
+    --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family));
+    --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family));
+    --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width));
+    --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width));
+    --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width));
+    --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space));
+    --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space));
+    --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap));
+    --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius));
+    --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width));
+    --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter));
+    --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap));
+    --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap));
+    --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height));
+    --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height));
+    box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--kiw--section-text-m-size); font-weight: var(--kiw--section-text-font-weight); line-height: var(--kiw--section-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing);
+  }
+  .hd-cells-engineering-allentown[data-kinekt-theme='semi-light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-semi-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-ultra-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-semi-dark))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent-semi-dark))); --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent))); --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary))); color-scheme: light; }
+  .hd-cells-engineering-allentown[data-kinekt-theme='dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-semi-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent))); --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent))); --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary-ultra-light))); color-scheme: dark; }
+  .hd-cells-engineering-allentown[data-kinekt-theme='semi-dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-semi-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent))); --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent))); --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary-light))); color-scheme: dark; }
+  .hd-cells-engineering-allentown, .hd-cells-engineering-allentown[data-kinekt-theme='light'] { color-scheme: light; }
+  .hd-cells-engineering-allentown *, .hd-cells-engineering-allentown *::before, .hd-cells-engineering-allentown *::after { box-sizing: border-box; }
+  .hd-cells-engineering-allentown [hidden] { display: none !important; }
 </style>

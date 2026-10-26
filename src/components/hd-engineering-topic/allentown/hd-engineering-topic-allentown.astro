@@ -1,0 +1,113 @@
+---
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
+import type { Cta, Media, RichText } from '../../../shared/content.js'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+
+type TopicCta = Partial<Cta> | null | undefined
+
+export interface HdEngineeringTopicContent {
+  media: Media
+  title: string
+  /** Rich text as it arrives: a plain string, pre-rendered `{ html }`, or raw Lexical JSON from the identity Payload adapter. */
+  description: string | RichText | Record<string, unknown>
+  ctaGroup?: { primary?: TopicCta; secondary?: TopicCta; primaryButton?: TopicCta; secondaryButton?: TopicCta } | null
+}
+
+interface Props {
+  topic: HdEngineeringTopicContent
+  /** Unique id prefix (the section passes its own id plus the topic index). */
+  id: string
+  /** Localised label of the control that reveals the topic details. */
+  moreInformationLabel?: string
+  titleAs?: 'p' | 'h3' | 'h4'
+  mediaLoading?: 'eager' | 'lazy'
+  class?: string
+}
+
+const { topic, id, moreInformationLabel = 'More information', titleAs = 'h3', mediaLoading = 'lazy', class: className } = Astro.props
+const classes = ['hd-engineering-topic-allentown', className].filter(Boolean).join(' ')
+const descriptionHtml = typeof topic.description === 'string'
+  ? topic.description.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).map((part) => richTextToHtml(part, 'hd engineering topic description')).join('')
+  : typeof topic.description?.html === 'string'
+    ? topic.description.html
+    : richTextToHtml(topic.description, 'hd engineering topic description')
+const usableCta = (cta: TopicCta): Cta | undefined => (typeof cta?.label === 'string' && cta.label !== '' && typeof cta.href === 'string' && cta.href !== '' ? (cta as Cta) : undefined)
+const actions = [topic.ctaGroup?.primary ?? topic.ctaGroup?.primaryButton, topic.ctaGroup?.secondary ?? topic.ctaGroup?.secondaryButton].map(usableCta).filter((cta): cta is Cta => Boolean(cta))
+const hasMedia = Boolean(topic.media && typeof topic.media.url === 'string' && topic.media.url !== '')
+const plus = ctaIconPaths.plus
+---
+<div class={classes} data-hd-engineering-topic>
+  {hasMedia && <KinektMedia media={topic.media} class="hd-engineering-topic-allentown__media" imageClass="hd-engineering-topic-allentown__image" loading={mediaLoading} />}
+  <div class="hd-engineering-topic-allentown__card">
+    <div class="hd-engineering-topic-allentown__details" id={`${id}-details`} data-hd-engineering-topic-details>
+      <SubtitleFlightPath text={topic.title} as={titleAs} class="hd-engineering-topic-allentown__title" />
+      <div class="hd-engineering-topic-allentown__body">
+        <div class="hd-engineering-topic-allentown__description" set:html={descriptionHtml} />
+        {actions.length > 0 && (
+          <div class="hd-engineering-topic-allentown__actions">
+            {actions.map((cta) => {
+              const icon = isCtaIcon(cta.icon) ? ctaIconPaths[cta.icon] : undefined
+              return <Button href={cta.href} label={cta.label} style="clear">{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="none"><path d={icon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+    <!-- Progressive enhancement: the details are readable without JavaScript; the section script reveals this toggle and collapses them. -->
+    <button class="button button--clear hd-engineering-topic-allentown__toggle" type="button" aria-expanded="true" aria-controls={`${id}-details`} data-hd-engineering-topic-toggle hidden>{moreInformationLabel}<svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={plus.viewBox} fill="none"><path d={plus.path} stroke="currentColor" stroke-width="2" /></svg></button>
+  </div>
+</div>
+<style is:global>
+  /* Figma "Frame 44827" (5240:412598): a 576 × 720 (4:5) image with a "Content Item Description" card (5240:412600) inset space-m at the
+     bottom. Collapsed it holds a clear-alt "More information +" Button; expanded (5240:412580) a Subtile + Flight Path Small header,
+     space-xxl, then the topic copy (text-m, 1.5), a divider and the topic's results (here: its CTAs). */
+  :where(.hd-engineering-topic-allentown) {
+    --kiw--hd-engineering-topic-allentown-media-ratio: 4 / 5;
+    --kiw--hd-engineering-topic-allentown-media-background: var(--kinekt-component-surface, transparent);
+    --kiw--hd-engineering-topic-allentown-card-inset: var(--space-m);
+    --kiw--hd-engineering-topic-allentown-card-padding: var(--space-l);
+    --kiw--hd-engineering-topic-allentown-card-gap: var(--space-xxl);
+    --kiw--hd-engineering-topic-allentown-card-radius: var(--radius-l);
+    --kiw--hd-engineering-topic-allentown-card-background: var(--kinekt-component-surface, transparent);
+    /* Figma adds a soft black drop shadow and a faint gradient; not reproduced (no shadow token; colours come from roles). */
+    --kiw--hd-engineering-topic-allentown-card-shadow: none;
+    --kiw--hd-engineering-topic-allentown-body-gap: var(--space-m);
+    --kiw--hd-engineering-topic-allentown-description-size: var(--text-m);
+    --kiw--hd-engineering-topic-allentown-description-color: var(--kinekt-component-muted, inherit);
+    --kiw--hd-engineering-topic-allentown-divider-color: var(--kinekt-component-line, currentColor);
+    --kiw--hd-engineering-topic-allentown-actions-gap: var(--space-xl);
+  }
+
+  .hd-engineering-topic-allentown { position: relative; display: grid; min-width: 0; }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__media { display: block; min-width: 0; background: var(--kiw--hd-engineering-topic-allentown-media-background); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; block-size: auto; aspect-ratio: var(--kiw--hd-engineering-topic-allentown-media-ratio); object-fit: cover; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__card { display: grid; gap: var(--kiw--hd-engineering-topic-allentown-card-gap); padding: var(--kiw--hd-engineering-topic-allentown-card-padding); border-radius: var(--kiw--hd-engineering-topic-allentown-card-radius); background: var(--kiw--hd-engineering-topic-allentown-card-background); box-shadow: var(--kiw--hd-engineering-topic-allentown-card-shadow); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__details { display: grid; gap: var(--kiw--hd-engineering-topic-allentown-card-gap); min-width: 0; }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__title { margin: 0; }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__body { display: grid; gap: var(--kiw--hd-engineering-topic-allentown-body-gap); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__description { color: var(--kiw--hd-engineering-topic-allentown-description-color); font-size: var(--kiw--hd-engineering-topic-allentown-description-size); line-height: var(--kinekt-component-text-line-height, var(--text-line-height)); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__description > * { margin-block: 0; }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__description > * + * { margin-block-start: var(--space-xs); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--kiw--hd-engineering-topic-allentown-actions-gap); padding-block-start: var(--kiw--hd-engineering-topic-allentown-body-gap); border-block-start: var(--kinekt-component-border-width, var(--border-width)) solid var(--kiw--hd-engineering-topic-allentown-divider-color); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__toggle { justify-self: start; font-family: inherit; }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__toggle:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kinekt-component-accent, currentColor); outline-offset: var(--space-xxs); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__toggle[aria-expanded='true'] > svg { transform: rotate(45deg); }
+  /* Collapsed (enhanced) state: only the toggle shows, as in the Figma frame. */
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__details[hidden] { display: none; }
+
+  @media (min-width: 50rem) {
+    /* The card overlays the bottom of the image and grows upwards when expanded. */
+    .hd-engineering-topic-allentown .hd-engineering-topic-allentown__media + .hd-engineering-topic-allentown__card { position: absolute; inset-inline: var(--kiw--hd-engineering-topic-allentown-card-inset); inset-block-end: var(--kiw--hd-engineering-topic-allentown-card-inset); }
+  }
+  @media (max-width: 49.999rem) {
+    .hd-engineering-topic-allentown .hd-engineering-topic-allentown__card { border-start-start-radius: 0; border-start-end-radius: 0; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hd-engineering-topic-allentown .hd-engineering-topic-allentown__toggle > svg { transition: transform 200ms ease-out; }
+    .hd-engineering-topic-allentown .hd-engineering-topic-allentown__details:not([hidden]) { animation: hd-engineering-topic-allentown-reveal 240ms ease-out; }
+  }
+  @keyframes hd-engineering-topic-allentown-reveal { from { opacity: 0; transform: translateY(var(--space-xxs)); } to { opacity: 1; transform: none; } }
+</style>

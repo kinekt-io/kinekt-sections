@@ -1,283 +1,64 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import HdCellsEngineering from './hd-cells-engineering-allentown.astro'
+const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
+const cellMedia = (alt: string) => ({ url: placeholder('placeholder-1000x800.svg'), alt, width: 1000, height: 800 })
+const topicMedia = (alt: string) => ({ url: placeholder('placeholder-800x1000.svg'), alt, width: 800, height: 1000 })
 
 const content = {
-  "theme": "light",
-  "cellsIntro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  theme: 'dark' as const,
+  cellsIntro: {
+    accentHeading: '/ High-density cells',
+    heading: 'More energy starts at cell level',
+    description: 'The performance of a battery pack begins with the cells inside it. Tulip selects high-density cell technologies that store more usable energy within the same weight.',
   },
-  "cellItems": [
+  cellItems: [
     {
-      "media": {
-        "url": "catalogue-asset:placeholder-1600x900.svg",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "title": "Energy systems built around real operating conditions",
-      "subtitle": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+      media: cellMedia('High-density cylindrical cells arranged in a module'),
+      title: 'Higher energy density',
+      subtitle: 'Smarter use of space',
+      description: 'High-density cells increase the amount of usable energy available per kilogram and per liter. That creates more performance potential without simply making the battery larger or heavier.',
     },
     {
-      "media": {
-        "url": "catalogue-asset:placeholder-1600x900.svg",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "title": "Designed for the constraints that shape delivery",
-      "subtitle": "Designed for the constraints that shape delivery",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
+      media: cellMedia('Compact battery module inside a drone airframe'),
+      title: 'Smarter use of space',
+      subtitle: 'Get more from the space you already have',
+      description: 'More energy in the same envelope lets platforms fly longer or carry more payload without redesigning the airframe around the battery.',
     },
     {
-      "media": {
-        "url": "catalogue-asset:placeholder-1600x900.svg",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "title": "Performance data teams can use with confidence",
-      "subtitle": "Performance data teams can use with confidence",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-    }
+      media: cellMedia('Cell samples on a test bench'),
+      title: 'Selected for the mission',
+      subtitle: 'The right cell depends on what the platform needs',
+      description: 'Cell chemistry and format are chosen for the duty cycle: high discharge for lift-off and manoeuvres, or maximum capacity for long endurance missions.',
+    },
   ],
-  "engineeringIntro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  engineeringIntro: {
+    accentHeading: '/ High-density engineering',
+    heading: 'Turn cell performance into platform performance',
+    description: 'High-density cells are only part of the equation. The way they are configured, packaged, cooled and integrated determines how much of that performance reaches the platform.',
   },
-  "engineeringTopics": [
+  engineeringTopics: [
     {
-      "media": {
-        "url": "catalogue-asset:placeholder-1600x900.svg",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "title": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "ctaGroup": {
-        "primaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        },
-        "secondaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        }
-      }
+      media: topicMedia('Exploded view of the pack architecture'),
+      title: 'Pack architecture',
+      description: 'Cell layout, enclosure and internal architecture are optimized to maximize usable energy within available space and weight.',
+      ctaGroup: { primaryButton: { label: 'View pack options', href: '#', icon: 'arrow-right' as const } },
     },
     {
-      "media": {
-        "url": "catalogue-asset:placeholder-1600x900.svg",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "title": "Designed for the constraints that shape delivery",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "ctaGroup": {
-        "primaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        },
-        "secondaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        }
-      }
+      media: topicMedia('Battery management system board'),
+      title: 'Electrical optimization',
+      description: 'Interconnects, busbars and the battery management system are tuned to keep losses low and deliver stable power under peak load.',
     },
     {
-      "media": {
-        "url": "catalogue-asset:placeholder-1600x900.svg",
-        "alt": "Battery module and electrical interface",
-        "width": 1600,
-        "height": 900
-      },
-      "title": "Performance data teams can use with confidence",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "ctaGroup": {
-        "primaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        },
-        "secondaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        }
-      }
-    }
-  ]
+      media: topicMedia('Thermal image of a pack under load'),
+      title: 'Thermal performance',
+      description: 'Heat paths and spacing between cells keep temperatures even, so the pack sustains high discharge rates without derating.',
+    },
+    {
+      media: topicMedia('Battery pack mounted in a platform'),
+      title: 'System integration',
+      description: 'Connectors, mounting points and communication interfaces are matched to the platform, so the pack drops in without rework.',
+    },
+  ],
 }
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "cellsIntro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "cellItems": {
-    "kind": "componentList",
-    "id": "components/hd-cell-item/allentown",
-    "role": "hd-cell-item",
-    "fields": {
-      "media": {
-        "kind": "media"
-      },
-      "title": {
-        "kind": "text"
-      },
-      "subtitle": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "engineeringIntro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "engineeringTopics": {
-    "kind": "componentList",
-    "id": "components/hd-engineering-topic/allentown",
-    "role": "hd-engineering-topic",
-    "fields": {
-      "media": {
-        "kind": "media"
-      },
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      },
-      "ctaGroup": {
-        "kind": "component",
-        "id": "components/cta-group/allentown",
-        "role": "cta-group",
-        "fields": {
-          "primaryButton": {
-            "kind": "cta"
-          },
-          "secondaryButton": {
-            "kind": "cta"
-          }
-        }
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Section overview",
-  "heading": "HD Cells Engineering Allentown",
-  "description": "A reusable content structure for technical decisions."
-}
-const ctas = undefined
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
-const resolvedMedia = resolveCatalogueAssets(media) as typeof media
 ---
-<StructuralSection block="beta-hd-cells-engineering-allentown" intro={intro} ctas={ctas} media={resolvedMedia} content={resolvedContent} fields={fields} />
-<style is:global>
-.beta-hd-cells-engineering-allentown[data-kinekt-section] {
-  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--hd-cells-engineering-allentown-site-width, var(--website-width)));
-  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--hd-cells-engineering-allentown-content-width, var(--content-width)));
-  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--hd-cells-engineering-allentown-reading-width, var(--width-m)));
-  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--hd-cells-engineering-allentown-inline-space, var(--section-gutter)));
-  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--hd-cells-engineering-allentown-block-space, var(--section-space-l)));
-  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--hd-cells-engineering-allentown-gap, var(--content-gap)));
-  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--hd-cells-engineering-allentown-radius, var(--radius-none)));
-  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--hd-cells-engineering-allentown-border-width, var(--border-width)));
-  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--hd-cells-engineering-allentown-media-filter, var(--media-filter)));
-  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--hd-cells-engineering-allentown-intro-accent-gap, var(--space-xxs)));
-  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--hd-cells-engineering-allentown-intro-description-gap, var(--space-m)));
-  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--hd-cells-engineering-allentown-heading-1-size, var(--h1)));
-  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--hd-cells-engineering-allentown-heading-2-size, var(--h2)));
-  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--hd-cells-engineering-allentown-heading-3-size, var(--h3)));
-  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--hd-cells-engineering-allentown-heading-4-size, var(--h4)));
-  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--hd-cells-engineering-allentown-heading-5-size, var(--h5)));
-  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--hd-cells-engineering-allentown-heading-6-size, var(--h6)));
-  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--hd-cells-engineering-allentown-heading-font-family, var(--heading-font-family)));
-  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--hd-cells-engineering-allentown-heading-font-weight, var(--heading-font-weight)));
-  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--hd-cells-engineering-allentown-heading-line-height, var(--heading-line-height)));
-  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--hd-cells-engineering-allentown-heading-letter-spacing, var(--heading-letter-spacing)));
-  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--hd-cells-engineering-allentown-text-font-family, var(--text-font-family)));
-  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--hd-cells-engineering-allentown-text-font-weight, var(--text-font-weight)));
-  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--hd-cells-engineering-allentown-text-line-height, var(--text-line-height)));
-  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--hd-cells-engineering-allentown-text-letter-spacing, var(--text-letter-spacing)));
-  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--hd-cells-engineering-allentown-mono-font-family, var(--mono-font-family)));
-  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--hd-cells-engineering-allentown-text-xs-size, var(--text-xs)));
-  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--hd-cells-engineering-allentown-text-s-size, var(--text-s)));
-  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--hd-cells-engineering-allentown-text-m-size, var(--text-m)));
-  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--hd-cells-engineering-allentown-text-l-size, var(--text-l)));
-  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--hd-cells-engineering-allentown-text-xl-size, var(--text-xl)));
-  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--hd-cells-engineering-allentown-text-xxl-size, var(--text-xxl)));
-  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--hd-cells-engineering-allentown-carousel-gap, var(--content-gap)));
-  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--hd-cells-engineering-allentown-actions-gap, var(--space-s)));
-  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--hd-cells-engineering-allentown-actions-margin, var(--space-xl)));
-  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--hd-cells-engineering-allentown-button-height, var(--input-height)));
-  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--hd-cells-engineering-allentown-button-padding-block, var(--space-s)));
-  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--hd-cells-engineering-allentown-button-padding-inline, var(--space-l)));
-  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--hd-cells-engineering-allentown-button-radius, var(--buttons-radius)));
-  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--hd-cells-engineering-allentown-input-height, var(--input-height)));
-  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--hd-cells-engineering-allentown-editorial-gap, var(--section-space-xxl)));
-  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--hd-cells-engineering-allentown-card-padding, var(--space-l)));
-  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--hd-cells-engineering-allentown-header-to-content-gap, var(--section-space-s)));
-  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--hd-cells-engineering-allentown-table-offset, var(--space-xl)));
-  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--hd-cells-engineering-allentown-canvas));
-  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--hd-cells-engineering-allentown-surface));
-  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--hd-cells-engineering-allentown-ink));
-  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--hd-cells-engineering-allentown-muted));
-  --kiw--section-subtle: var(--kinekt-section-subtle, var(--kiw--hd-cells-engineering-allentown-subtle));
-  --kiw--section-line: var(--kinekt-section-line, var(--kiw--hd-cells-engineering-allentown-line));
-  --kiw--section-action: var(--kinekt-section-action, var(--kiw--hd-cells-engineering-allentown-action));
-  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--hd-cells-engineering-allentown-action-text));
-  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--hd-cells-engineering-allentown-accent));
-  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--hd-cells-engineering-allentown-action-icon));
-}
-</style>
-<style is:global>
-:where(.beta-hd-cells-engineering-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }
-</style>
+<HdCellsEngineering {...content} />
