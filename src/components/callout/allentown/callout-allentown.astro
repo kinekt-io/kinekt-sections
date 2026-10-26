@@ -1,8 +1,10 @@
 ---
 import SectionIntro from "../../../primitives/section-intro/section-intro.astro";
+import SubtitleFlightPath from "../../../primitives/subtitle-flight-path/subtitle-flight-path.astro";
 import Button from "../../../controls/button/allentown/button-allentown.astro";
 import type {
   CtaGroup,
+  CtaIcon,
   SectionIntro as SectionIntroContent,
 } from "../../../shared/content.js";
 
@@ -12,15 +14,23 @@ interface Props {
     ctaGroup?: CtaGroup | { primaryButton?: CtaGroup['primary']; secondaryButton?: CtaGroup['secondary'] };
   };
   headingLevel?: "h1" | "h2" | "h3";
+  size?: "medium" | "large";
   class?: string;
 }
 
-const { callout, headingLevel = "h3", class: className } = Astro.props;
+const ctaIconPaths: Record<CtaIcon, { viewBox: string; path: string }> = {
+  "arrow-right": { viewBox: "0 0 11 18", path: "m2 2 7 7-7 7" },
+  "arrow-down": { viewBox: "0 0 18 18", path: "m2 9 7 7 7-7M9 2v14" },
+};
+const { callout, headingLevel = "h3", size = "large", class: className } = Astro.props;
 const actions = (callout.ctaGroup ?? {}) as CtaGroup & { primaryButton?: CtaGroup['primary']; secondaryButton?: CtaGroup['secondary'] };
 const primary = actions.primary ?? actions.primaryButton;
 const secondary = actions.secondary ?? actions.secondaryButton;
-const hasActions = Boolean(primary || secondary);
-const classes = ["callout-allentown", className].filter(Boolean).join(" ");
+const primaryIcon = primary?.icon ? ctaIconPaths[primary.icon] : undefined;
+const secondaryIcon = secondary?.icon ? ctaIconPaths[secondary.icon] : undefined;
+const hasCustomActions = Astro.slots.has("actions");
+const hasActions = hasCustomActions || Boolean(primary || secondary);
+const classes = ["callout-allentown", `callout-allentown--${size}`, className].filter(Boolean).join(" ");
 const contentIntro = { ...callout.intro, accentHeading: undefined };
 ---
 
@@ -28,10 +38,7 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
   {
     callout.intro.accentHeading && (
       <header class="callout-allentown__header">
-        <>
-          <p class="callout-allentown__label">{callout.intro.accentHeading}</p>
-          <span class="callout-allentown__line" aria-hidden="true" />
-        </>
+        <SubtitleFlightPath text={callout.intro.accentHeading} labelClass="callout-allentown__label" />
       </header>
     )
   }
@@ -42,8 +49,12 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
     {
       hasActions && (
         <div class="callout-allentown__action">
-          {primary && <Button href={primary.href} label={primary.label} />}
-          {secondary && <Button href={secondary.href} label={secondary.label} style="secondary" />}
+          {hasCustomActions ? <slot name="actions" /> : (
+            <>
+              {primary && <Button href={primary.href} label={primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+              {secondary && <Button href={secondary.href} label={secondary.label} style="clear">{secondaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+            </>
+          )}
         </div>
       )
     }
@@ -52,24 +63,23 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
 
 <style is:global>
   :where(.callout-allentown) {
-    --kiw--callout-allentown-header-align-items: center;
     --kiw--callout-allentown-gap: var(--space-l);
-    --kiw--callout-allentown-header-gap: var(--space-xs);
-    --kiw--callout-allentown-label-ink: var(--kinekt-component-action);
-    --kiw--callout-allentown-label-font-family: var(--mono-font-family);
-    --kiw--callout-allentown-label-font-size: var(--text-xs);
-    --kiw--callout-allentown-label-font-weight: var(--heading-font-weight);
-    --kiw--callout-allentown-label-line-height: var(--text-line-height);
-    --kiw--callout-allentown-label-letter-spacing: var(--heading-letter-spacing);
-    --kiw--callout-allentown-label-text-transform: uppercase;
-    --kiw--callout-allentown-line-width: var(--border-width);
-    --kiw--callout-allentown-line-color: var(--kinekt-component-line);
-    --kiw--callout-allentown-body-gap: var(--space-l);
-    --kiw--callout-allentown-content-width: var(--kinekt-component-reading-width);
-    --kiw--callout-allentown-action-align-items: end;
-    --kiw--callout-allentown-action-gap: var(--space-s);
+    --kiw--callout-allentown-body-gap: var(--section-space-xs);
+    --kiw--callout-allentown-copy-gap: var(--space-xs);
+    --kiw--callout-allentown-title-size: var(--h3);
+    --kiw--callout-allentown-title-line-height: 1.2;
+    --kiw--callout-allentown-description-size: var(--text-l);
+    --kiw--callout-allentown-description-width: var(--width-l);
+    --kiw--callout-allentown-content-width: none;
+    --kiw--callout-allentown-action-align-items: center;
+    --kiw--callout-allentown-action-gap: var(--space-l);
     --kiw--callout-allentown-desktop-body-align-items: end;
-    --kiw--callout-allentown-desktop-body-gap: var(--section-space-m);
+    --kiw--callout-allentown-desktop-body-gap: var(--section-space-xxl);
+  }
+
+  :where(.callout-allentown--medium) {
+    --kiw--callout-allentown-title-size: var(--h5);
+    --kiw--callout-allentown-description-size: var(--text-m);
   }
 
   .callout-allentown {
@@ -84,27 +94,7 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
   }
 
   .callout-allentown .callout-allentown__header {
-    display: flex;
-    align-items: var(--kiw--callout-allentown-header-align-items);
-    gap: var(--kiw--callout-allentown-header-gap);
     margin: 0;
-  }
-
-  .callout-allentown .callout-allentown__label {
-    margin: 0;
-    color: var(--kiw--callout-allentown-label-ink);
-    font-family: var(--kiw--callout-allentown-label-font-family);
-    font-size: var(--kiw--callout-allentown-label-font-size);
-    font-weight: var(--kiw--callout-allentown-label-font-weight);
-    line-height: var(--kiw--callout-allentown-label-line-height);
-    letter-spacing: var(--kiw--callout-allentown-label-letter-spacing);
-    text-transform: var(--kiw--callout-allentown-label-text-transform);
-  }
-
-  .callout-allentown .callout-allentown__line {
-    flex: 1;
-    height: var(--kiw--callout-allentown-line-width);
-    background: var(--kiw--callout-allentown-line-color);
   }
 
   .callout-allentown .callout-allentown__body {
@@ -113,7 +103,27 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
   }
 
   .callout-allentown .callout-allentown__content {
+    min-width: 0;
     max-width: var(--kiw--callout-allentown-content-width);
+  }
+
+  .callout-allentown .callout-allentown__content .section-intro {
+    display: grid;
+    gap: var(--kiw--callout-allentown-copy-gap);
+  }
+
+  .callout-allentown .callout-allentown__content :is(.section-intro__heading, .section-intro__description) {
+    max-width: none;
+    margin: 0;
+  }
+
+  .callout-allentown .callout-allentown__content .section-intro__heading {
+    font-size: var(--kiw--callout-allentown-title-size);
+    line-height: var(--kiw--callout-allentown-title-line-height);
+  }
+
+  .callout-allentown .callout-allentown__content .section-intro__description {
+    font-size: var(--kiw--callout-allentown-description-size);
   }
 
   .callout-allentown .callout-allentown__action {
@@ -128,6 +138,10 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
       grid-template-columns: minmax(0, 1fr) auto;
       align-items: var(--kiw--callout-allentown-desktop-body-align-items);
       gap: var(--kiw--callout-allentown-desktop-body-gap);
+    }
+
+    .callout-allentown .callout-allentown__content .section-intro__description {
+      max-width: var(--kiw--callout-allentown-description-width);
     }
   }
 </style>

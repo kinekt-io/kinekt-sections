@@ -114,7 +114,6 @@ const { theme, direction, intro, label, media, features, headingLevel = 'h2', me
     --kiw--media-feature-list-accent-font-weight: var(--kiw--section-heading-font-weight);
     --kiw--media-feature-list-accent-letter-spacing: 0.05em;
     --kiw--media-feature-list-description-font-size: var(--text-xl);
-    --kiw--media-feature-list-label-tint: 8%;
     --kiw--media-feature-list-feature-gap: var(--section-space-s);
     --kiw--media-feature-list-feature-copy-gap: var(--space-xs);
     --kiw--media-feature-list-feature-title-size: var(--h4);
@@ -124,7 +123,6 @@ const { theme, direction, intro, label, media, features, headingLevel = 'h2', me
     --kinekt-section-content-width: var(--kiw--media-feature-list-container-width);
     --kinekt-section-gap: var(--kiw--media-feature-list-major-gap);
   }
-  :where(.media-feature-list--allentown:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark'])) { --kiw--media-feature-list-label-tint: 15%; }
   .media-feature-list--allentown .media-feature-list__container { gap: var(--kiw--media-feature-list-major-gap); }
   .media-feature-list--allentown .section-intro { display: grid; justify-items: start; gap: var(--kiw--media-feature-list-header-group-gap); }
   .media-feature-list--allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
@@ -132,7 +130,6 @@ const { theme, direction, intro, label, media, features, headingLevel = 'h2', me
   .media-feature-list--allentown .section-intro__accent { color: var(--kiw--media-feature-list-accent-color); font-family: var(--kiw--media-feature-list-accent-font-family); font-size: var(--kiw--media-feature-list-accent-font-size); font-weight: var(--kiw--media-feature-list-accent-font-weight); line-height: 1; letter-spacing: var(--kiw--media-feature-list-accent-letter-spacing); text-transform: uppercase; }
   .media-feature-list--allentown .section-intro__heading { max-width: none; font-size: var(--h2); }
   .media-feature-list--allentown .section-intro__description { max-width: none; font-size: var(--kiw--media-feature-list-description-font-size); line-height: var(--kinekt-component-text-line-height); }
-  .media-feature-list--allentown .media-feature-list__label { --kiw--label-allentown-background: color-mix(in srgb, var(--kiw--label-allentown-accent) var(--kiw--media-feature-list-label-tint), transparent); }
   .media-feature-list--allentown .media-feature-list__body { display: grid; gap: var(--kiw--media-feature-list-major-gap); }
   .media-feature-list--allentown .media-feature-list__media { display: block; }
   .media-feature-list--allentown .media-feature-list__image { display: block; inline-size: 100%; max-inline-size: 100%; aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--media-feature-list-media-ratio)); object-fit: cover; filter: var(--kinekt-component-media-filter); }

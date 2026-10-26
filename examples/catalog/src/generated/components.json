@@ -163,6 +163,32 @@
     }
   },
   {
+    "id": "primitives/subtitle-flight-path",
+    "version": "26.10.0-beta.0",
+    "slug": "subtitle-flight-path",
+    "category": "primitives",
+    "tags": [],
+    "role": "subtitle-flight-path",
+    "variation": null,
+    "title": "Subtitle + Flight Path",
+    "description": "An uppercase accent subtitle followed by a fading flight-path line (arrowhead to dot), used above callouts and grouped content.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4649-23717&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "text": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/primitives/subtitle-flight-path.astro"
+    }
+  },
+  {
     "id": "sections/action-contact/allentown",
     "version": "26.10.0-beta.0",
     "slug": "action-contact-allentown",

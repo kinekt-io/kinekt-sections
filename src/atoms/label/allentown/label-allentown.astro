@@ -1,9 +1,9 @@
 ---
 import { fas } from '@fortawesome/free-solid-svg-icons'
 
-interface Props { text: string; icon?: string; class?: string }
-const { text, icon, class: className } = Astro.props
-const classes = ['label-allentown', className].filter(Boolean).join(' ')
+interface Props { text: string; icon?: string; size?: 's' | 'm' | 'l' | 'xl'; class?: string }
+const { text, icon, size = 'm', class: className } = Astro.props
+const classes = ['label-allentown', `label-allentown--${size}`, className].filter(Boolean).join(' ')
 const fontAwesomeIcon = (name?: string) => {
   if (!name || !/^[a-z0-9-]+$/.test(name)) return undefined
   const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
@@ -23,7 +23,8 @@ const iconDefinition = fontAwesomeIcon(icon)
     --kiw--label-allentown-border-width: var(--border-width);
     --kiw--label-allentown-border-color: color-mix(in srgb, var(--kiw--label-allentown-accent) 25%, transparent);
     --kiw--label-allentown-ink: var(--kiw--label-allentown-accent);
-    --kiw--label-allentown-background: color-mix(in srgb, var(--kiw--label-allentown-accent) 8%, transparent);
+    --kiw--label-allentown-tint: var(--kinekt-label-tint, 8%);
+    --kiw--label-allentown-background: color-mix(in srgb, var(--kiw--label-allentown-accent) var(--kiw--label-allentown-tint), transparent);
     --kiw--label-allentown-font-family: var(--mono-font-family);
     --kiw--label-allentown-font-size: var(--text-l);
     --kiw--label-allentown-font-weight: var(--heading-font-weight);
@@ -33,6 +34,15 @@ const iconDefinition = fontAwesomeIcon(icon)
     --kiw--label-allentown-text-transform: uppercase;
     --kiw--label-allentown-icon-size: var(--text-m);
   }
+
+  /* Figma Label "Light" variant: dark canvases use a stronger tint (accent 15% instead of 8%). */
+  :where([data-kinekt-theme='light'], [data-kinekt-theme='semi-light']) { --kinekt-label-tint: 8%; }
+  :where([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) { --kinekt-label-tint: 15%; }
+
+  /* Figma Label sizes: Small, Medium (default), Large, Extra Large. */
+  :where(.label-allentown--s) { --kiw--label-allentown-font-size: var(--text-m); --kiw--label-allentown-icon-size: var(--text-s); }
+  :where(.label-allentown--l) { --kiw--label-allentown-font-size: var(--text-xl); --kiw--label-allentown-icon-size: var(--text-l); }
+  :where(.label-allentown--xl) { --kiw--label-allentown-font-size: var(--h5); --kiw--label-allentown-icon-size: var(--text-xxl); }
 
   .label-allentown {
     display: inline-flex;
