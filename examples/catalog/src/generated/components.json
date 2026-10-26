@@ -32,6 +32,59 @@
     }
   },
   {
+    "id": "components/accordion-item/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "accordion-item-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "accordion-item",
+    "variation": "allentown",
+    "title": "Accordion Item Allentown",
+    "description": "A reusable accordion item with an optional automatic number or Font Awesome marker, required title and description, and optional subtitle.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412615&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "markerType": {
+        "kind": "select",
+        "required": true,
+        "localized": true,
+        "options": [
+          "none",
+          "number",
+          "icon"
+        ],
+        "description": "When number is selected, the renderer derives the marker from the item's list position. When icon is selected, icon is required."
+      },
+      "icon": {
+        "kind": "text",
+        "required": false,
+        "localized": true,
+        "description": "Required when markerType is icon. Font Awesome icon key."
+      },
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "subtitle": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "description": {
+        "kind": "richText",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/accordion-item-allentown.astro"
+    }
+  },
+  {
     "id": "components/callout/allentown",
     "version": "26.10.0-beta.0",
     "slug": "callout-allentown",
@@ -65,6 +118,95 @@
     }
   },
   {
+    "id": "components/event-card/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "event-card-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "event-card",
+    "variation": "allentown",
+    "title": "Event Card Allentown",
+    "description": "A platform-managed Event record rendered as a localized featured or grid event card.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415963&t=mG3L6xlBzomA03GY-11",
+    "variants": {
+      "presentation": [
+        "grid",
+        "featured"
+      ]
+    },
+    "fields": {
+      "eventType": {
+        "kind": "select",
+        "required": true,
+        "localized": true,
+        "options": [
+          "tulip",
+          "national",
+          "international"
+        ]
+      },
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "location": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "startDateTime": {
+        "kind": "dateTime",
+        "required": true,
+        "localized": true
+      },
+      "endDateTime": {
+        "kind": "dateTime",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "textarea",
+        "required": true,
+        "localized": true
+      },
+      "media": {
+        "kind": "media",
+        "required": true,
+        "localized": true
+      },
+      "button": {
+        "kind": "component",
+        "componentId": "controls/button/allentown",
+        "required": true,
+        "localized": true
+      },
+      "regions": {
+        "kind": "select",
+        "required": true,
+        "localized": true,
+        "options": [
+          "platformManagedRegion"
+        ]
+      }
+    },
+    "runtimeProps": {
+      "dateFormatting": {
+        "kind": "localizedDateRange",
+        "source": "renderer"
+      },
+      "flightPath": {
+        "kind": "eventType",
+        "source": "renderer"
+      }
+    },
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/event-card-allentown.astro"
+    }
+  },
+  {
     "id": "components/facility-fact/allentown",
     "version": "26.10.0-beta.0",
     "slug": "facility-fact-allentown",
@@ -93,6 +235,42 @@
     "previewSource": null,
     "entries": {
       "astro": "@kinekt-io/components/components/facility-fact-allentown.astro"
+    }
+  },
+  {
+    "id": "components/fact-card/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "fact-card-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "fact-card",
+    "variation": "allentown",
+    "title": "Fact Card Allentown",
+    "description": "A fact card with a required localized heading, description, and highlighted value.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414443&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "richText",
+        "required": true,
+        "localized": true
+      },
+      "value": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/fact-card-allentown.astro"
     }
   },
   {
@@ -198,6 +376,54 @@
     "previewSource": null,
     "entries": {
       "astro": "@kinekt-io/components/components/output-card-allentown.astro"
+    }
+  },
+  {
+    "id": "components/product-detail-item/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "product-detail-item-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "product-detail-item",
+    "variation": "allentown",
+    "title": "Product Detail Item Allentown",
+    "description": "A reusable technical product detail accordion item.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411610&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "subtitle": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "description": {
+        "kind": "textarea",
+        "required": true,
+        "localized": true
+      },
+      "detailHeading": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "details": {
+        "kind": "componentList",
+        "componentId": "atoms/label/allentown",
+        "required": false,
+        "localized": true,
+        "minItems": 0
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/product-detail-item-allentown.astro"
     }
   },
   {
@@ -2783,6 +3009,10 @@
       }
     },
     "runtimeProps": {
+      "accordionMode": {
+        "kind": "singleOpen",
+        "source": "renderer"
+      },
       "initialOpenItem": {
         "kind": "fixedIndex",
         "value": 0
