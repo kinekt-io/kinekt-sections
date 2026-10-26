@@ -124,11 +124,6 @@ const generatedComponentRules = {
   'beta-faq-allentown': `:where(.beta-faq-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
 :where(.beta-faq-allentown[data-kinekt-structural-section]) .beta-faq-allentown__header { text-align: center; }
 :where(.beta-faq-allentown[data-kinekt-structural-section]) .beta-faq-allentown__header-content { margin-inline: auto; }`,
-  'beta-faq-index-allentown': `:where(.beta-faq-index-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) .beta-faq-index-allentown__header { text-align: center; }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) .beta-faq-index-allentown__header-content { margin-inline: auto; }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) details { border-width: 0 0 var(--kinekt-component-border-width); border-radius: 0; background: transparent; }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) [class$='__items'] { gap: 0; border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }`,
   'beta-process-story-allentown': `:where(.beta-process-story-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }
 :where(.beta-process-story-allentown[data-kinekt-structural-section]) .beta-process-story-allentown__label { text-transform: uppercase; }`,
   'beta-media-metrics-allentown': `:where(.beta-media-metrics-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }`,
