@@ -3,7 +3,8 @@ import '../../../styles/wireframe-tokens.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import Label from '../../../atoms/label/allentown/label-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { Cta, CtaIcon, Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import type { Cta, Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 interface Props {
@@ -16,10 +17,6 @@ interface Props {
   mediaLoading?: 'eager' | 'lazy'
 }
 
-const ctaIconPaths: Record<CtaIcon, { viewBox: string; path: string }> = {
-  'arrow-right': { viewBox: '0 0 11 18', path: 'm2 2 7 7-7 7' },
-  'arrow-down': { viewBox: '0 0 18 18', path: 'm2 9 7 7 7-7M9 2v14' },
-}
 const { theme = 'light', intro, label, ctas, media, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props
 const hasActions = Boolean(ctas.primary || ctas.secondary)
 const primaryIcon = ctas.primary?.icon ? ctaIconPaths[ctas.primary.icon] : undefined

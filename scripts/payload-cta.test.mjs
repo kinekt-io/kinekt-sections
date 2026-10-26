@@ -135,6 +135,6 @@ test('CTA adapters reject malformed relationships and unsupported populated icon
   )
   assert.throws(
     () => ctaToProps({ label: 'Browse products', destinationType: 'url', href: '/products', icon: 'external' }, 'cta'),
-    /cta\.icon must be arrow-right or arrow-down/,
+    /cta\.icon must be one of arrow-right, arrow-down/,
   )
 })
