@@ -11,13 +11,14 @@ interface Props {
 }
 
 const { label, value, size = "m", swap = false, labelAs: Title = "p", class: className } = Astro.props;
+const hasValue = Boolean(value?.text);
 const classes = ["result-item-allentown", `result-item-allentown--${size}`, className].filter(Boolean).join(" ");
 ---
 
 <div class={classes}>
-  {swap && <Label class="result-item-allentown__value" size={size} text={value.text} icon={value.icon} />}
+  {swap && hasValue && <Label class="result-item-allentown__value" size={size} text={value.text} icon={value.icon} />}
   <Title class="result-item-allentown__label">{label}</Title>
-  {!swap && <Label class="result-item-allentown__value" size={size} text={value.text} icon={value.icon} />}
+  {!swap && hasValue && <Label class="result-item-allentown__value" size={size} text={value.text} icon={value.icon} />}
 </div>
 
 <style is:global>
@@ -52,5 +53,6 @@ const classes = ["result-item-allentown", `result-item-allentown--${size}`, clas
     line-height: var(--kiw--result-item-allentown-label-line-height);
     letter-spacing: normal;
     text-transform: none;
+    text-wrap: var(--kiw--result-item-allentown-label-text-wrap, wrap);
   }
 </style>

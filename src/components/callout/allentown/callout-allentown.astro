@@ -73,8 +73,12 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
     --kiw--callout-allentown-content-width: none;
     --kiw--callout-allentown-action-align-items: center;
     --kiw--callout-allentown-action-gap: var(--space-l);
+    --kiw--callout-allentown-action-item-flex: 0 1 auto;
+    --kiw--callout-allentown-desktop-body-columns: minmax(0, 1fr) auto;
     --kiw--callout-allentown-desktop-body-align-items: end;
     --kiw--callout-allentown-desktop-body-gap: var(--section-space-xxl);
+    --kiw--callout-allentown-wide-body-columns: var(--kiw--callout-allentown-desktop-body-columns);
+    --kiw--callout-allentown-wide-body-gap: var(--kiw--callout-allentown-desktop-body-gap);
   }
 
   :where(.callout-allentown--medium) {
@@ -133,15 +137,27 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
     gap: var(--kiw--callout-allentown-action-gap);
   }
 
+  .callout-allentown .callout-allentown__action > * {
+    flex: var(--kiw--callout-allentown-action-item-flex);
+  }
+
   @media (min-width: 50rem) {
     .callout-allentown .callout-allentown__body {
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: var(--kiw--callout-allentown-desktop-body-columns);
       align-items: var(--kiw--callout-allentown-desktop-body-align-items);
       gap: var(--kiw--callout-allentown-desktop-body-gap);
     }
 
     .callout-allentown .callout-allentown__content .section-intro__description {
       max-width: var(--kiw--callout-allentown-description-width);
+    }
+  }
+
+  /* Wide layouts, e.g. a fixed copy column next to actions that fill the rest (set both columns variables). */
+  @media (min-width: 90rem) {
+    .callout-allentown .callout-allentown__body {
+      grid-template-columns: var(--kiw--callout-allentown-wide-body-columns);
+      gap: var(--kiw--callout-allentown-wide-body-gap);
     }
   }
 </style>
