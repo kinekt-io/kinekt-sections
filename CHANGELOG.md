@@ -8,6 +8,7 @@
 - Accept empty optional Case Studies results and quotes without an author name. Author role and avatar require a name, and author details require quote text.
 - Validate partial CTA and quote input before publication while allowing incomplete drafts. Keep empty CTA groups optional, normalize numeric content IDs, and accept an unset CTA icon.
 - Omit incomplete optional CTAs during frontend conversion, including nested callouts, without dropping their section or page. Keep publish-time validation, required CTA validation and URL safety checks intact.
+- Correct the Product Hero Allentown design reference to [Hero Section - Battery Packs](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538028&t=OtYEVTRRdAJJYQ0v-11); content fields and rendering are unchanged.
 
 ## 26.10.2-beta.25 — 2026-10-23
 
