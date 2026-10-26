@@ -11,7 +11,7 @@ const content = {
       "href": "#",
       "publishedAt": "2026-10-01",
       "image": {
-        "url": "https://placehold.co/1200x800/png?text=Insight+1",
+        "url": "catalogue-asset:placeholder-1200x800.svg",
         "alt": "Engineering team reviewing test data",
         "width": 1200,
         "height": 800
@@ -23,7 +23,7 @@ const content = {
       "href": "#",
       "publishedAt": "2026-10-02",
       "image": {
-        "url": "https://placehold.co/1200x800/png?text=Insight+2",
+        "url": "catalogue-asset:placeholder-1200x800.svg",
         "alt": "Battery system integration",
         "width": 1200,
         "height": 800
@@ -35,7 +35,7 @@ const content = {
       "href": "#",
       "publishedAt": "2026-10-03",
       "image": {
-        "url": "https://placehold.co/1200x800/png?text=Insight+3",
+        "url": "catalogue-asset:placeholder-1200x800.svg",
         "alt": "Technical documentation review",
         "width": 1200,
         "height": 800
@@ -71,8 +71,9 @@ function resolveCatalogueAssets(value: unknown): unknown {
 }
 
 const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
+const resolvedMedia = resolveCatalogueAssets(media) as typeof media
 ---
-<StructuralSection block="beta-insight-index-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<StructuralSection block="beta-insight-index-allentown" intro={intro} ctas={ctas} media={resolvedMedia} content={resolvedContent} fields={fields} />
 <style is:global>
 .beta-insight-index-allentown[data-kinekt-section] {
   --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--insight-index-allentown-site-width, var(--website-width)));
@@ -126,6 +127,8 @@ const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknow
   --kiw--section-line: var(--kinekt-section-line, var(--kiw--insight-index-allentown-line));
   --kiw--section-action: var(--kinekt-section-action, var(--kiw--insight-index-allentown-action));
   --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--insight-index-allentown-action-text));
+  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--insight-index-allentown-accent));
+  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--insight-index-allentown-action-icon));
 }
 </style>
 <style is:global>

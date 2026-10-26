@@ -35,13 +35,13 @@ const content = {
     }
   },
   "media": {
-    "url": "https://placehold.co/1600x900/png?text=Media",
+    "url": "catalogue-asset:placeholder-1600x900.svg",
     "alt": "Battery module and electrical interface",
     "width": 1600,
     "height": 900
   },
   "mobileMedia": {
-    "url": "https://placehold.co/1600x900/png?text=Mobile%20Media",
+    "url": "catalogue-asset:placeholder-1600x900.svg",
     "alt": "Battery module and electrical interface",
     "width": 1600,
     "height": 900
@@ -119,7 +119,7 @@ const ctas = {
   }
 }
 const media = {
-  "url": "https://placehold.co/1600x900/png?text=Media",
+  "url": "catalogue-asset:placeholder-1600x900.svg",
   "alt": "Battery module and electrical interface",
   "width": 1600,
   "height": 900
@@ -137,8 +137,9 @@ function resolveCatalogueAssets(value: unknown): unknown {
 }
 
 const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
+const resolvedMedia = resolveCatalogueAssets(media) as typeof media
 ---
-<StructuralSection block="beta-product-hero-allentown" intro={intro} ctas={ctas} media={media} content={resolvedContent} fields={fields} />
+<StructuralSection block="beta-product-hero-allentown" intro={intro} ctas={ctas} media={resolvedMedia} content={resolvedContent} fields={fields} />
 <style is:global>
 .beta-product-hero-allentown[data-kinekt-section] {
   --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--product-hero-allentown-site-width, var(--website-width)));
@@ -192,6 +193,8 @@ const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknow
   --kiw--section-line: var(--kinekt-section-line, var(--kiw--product-hero-allentown-line));
   --kiw--section-action: var(--kinekt-section-action, var(--kiw--product-hero-allentown-action));
   --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--product-hero-allentown-action-text));
+  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--product-hero-allentown-accent));
+  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--product-hero-allentown-action-icon));
 }
 </style>
 <style is:global>

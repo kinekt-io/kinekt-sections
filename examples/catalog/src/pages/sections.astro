@@ -1,4 +1,6 @@
 ---
+import PreviewToolsHead from '../components/PreviewToolsHead.astro'
+import BrandSwitch from '../components/BrandSwitch.astro'
 import '@package-src/styles/wireframe-tokens.css'
 import components from '../generated/components.json'
 
@@ -23,6 +25,7 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content="Rendered structural preview of every Kinekt section." />
     <title>All sections · Kinekt components</title>
+    <PreviewToolsHead />
   </head>
   <body class="sections-page">
     <header class="masthead">
@@ -79,6 +82,7 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
         setPreviewTheme(preview, theme)
       })
     </script>
+    <BrandSwitch />
   </body>
 </html>
 
