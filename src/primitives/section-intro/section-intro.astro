@@ -24,7 +24,13 @@ const Heading = headingLevel
   }
 
   /* Figma intro "Column" accent heading: heading font, 500, text-m, 0.05em, line-height 1, uppercase. */
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .section-intro--accent-heading .section-intro__heading-group {
+    display: grid;
+    gap: var(--kinekt-component-intro-accent-gap, var(--space-xxs));
+  }
+
   :where([data-kinekt-section], [data-kinekt-structural-section]) .section-intro--accent-heading .section-intro__accent {
+    margin: 0;
     font-family: var(--kiw--section-intro-accent-font-family, var(--heading-font-family));
     font-size: var(--kiw--section-intro-accent-font-size, var(--text-m));
     font-weight: var(--kiw--section-intro-accent-font-weight, var(--heading-font-weight));
