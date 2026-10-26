@@ -1,0 +1,38 @@
+---
+/*
+ * Intake Step Allentown: one row of Figma "The next steps" (5240:416707) in
+ * Intake Form Allentown: a renderer-derived, zero-padded number in the mono
+ * font and accent colour, followed by the step text. The parent list (`ol`)
+ * carries the order, so the number is decorative.
+ */
+export interface IntakeStepContent {
+  text: string
+}
+
+interface Props {
+  step: IntakeStepContent
+  /** Renderer-derived list position (1-based); shown as a zero-padded number. */
+  number: number
+  class?: string
+}
+
+const { step, number, class: className } = Astro.props
+const displayNumber = String(number).padStart(2, '0')
+const classes = ['intake-step-allentown', className].filter(Boolean).join(' ')
+---
+<p class={classes}><span class="intake-step-allentown__number" aria-hidden="true">{displayNumber}</span><span class="intake-step-allentown__text">{step.text}</span></p>
+<style is:global>
+  :where(.intake-step-allentown) {
+    --kiw--intake-step-allentown-gap: var(--space-xxs);
+    --kiw--intake-step-allentown-font-size: var(--text-xxl);
+    --kiw--intake-step-allentown-line-height: var(--kinekt-component-text-line-height, var(--text-line-height));
+    --kiw--intake-step-allentown-number-color: var(--kinekt-component-accent, var(--accent-semi-dark));
+    --kiw--intake-step-allentown-number-font-family: var(--mono-font-family);
+    --kiw--intake-step-allentown-number-font-weight: var(--text-font-weight);
+    --kiw--intake-step-allentown-text-color: var(--kinekt-component-muted, inherit);
+  }
+
+  .intake-step-allentown { display: flex; align-items: flex-start; gap: var(--kiw--intake-step-allentown-gap); min-width: 0; margin: 0; font-size: var(--kiw--intake-step-allentown-font-size); line-height: var(--kiw--intake-step-allentown-line-height); }
+  .intake-step-allentown .intake-step-allentown__number { flex: none; color: var(--kiw--intake-step-allentown-number-color); font-family: var(--kiw--intake-step-allentown-number-font-family); font-weight: var(--kiw--intake-step-allentown-number-font-weight); font-variant-numeric: tabular-nums; }
+  .intake-step-allentown .intake-step-allentown__text { min-width: 0; color: var(--kiw--intake-step-allentown-text-color); }
+</style>
