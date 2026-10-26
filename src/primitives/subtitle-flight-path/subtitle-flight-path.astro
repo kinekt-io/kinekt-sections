@@ -1,0 +1,79 @@
+---
+interface Props { text: string; size?: 'small' | 'medium'; class?: string; labelClass?: string }
+const { text, size = 'small', class: className, labelClass } = Astro.props
+const classes = ['subtitle-flight-path', `subtitle-flight-path--${size}`, className].filter(Boolean).join(' ')
+const labelClasses = ['subtitle-flight-path__label', labelClass].filter(Boolean).join(' ')
+---
+<div class={classes}><p class={labelClasses}>{text}</p><span class="subtitle-flight-path__path" aria-hidden="true" /></div>
+<style is:global>
+  :where(.subtitle-flight-path) {
+    --kiw--subtitle-flight-path-color: var(--kinekt-component-accent, var(--accent-semi-dark));
+    --kiw--subtitle-flight-path-gap: var(--space-s);
+    --kiw--subtitle-flight-path-padding-end: 0.375rem;
+    --kiw--subtitle-flight-path-font-family: var(--heading-font-family);
+    --kiw--subtitle-flight-path-font-size: var(--text-s);
+    --kiw--subtitle-flight-path-font-weight: var(--heading-font-weight);
+    --kiw--subtitle-flight-path-letter-spacing: 0.05em;
+    --kiw--subtitle-flight-path-line-width: var(--border-width);
+    --kiw--subtitle-flight-path-fade-opacity: 25%;
+    --kiw--subtitle-flight-path-fade-at: 70%;
+    --kiw--subtitle-flight-path-arrow-width: 0.3125rem;
+    --kiw--subtitle-flight-path-arrow-height: 0.36rem;
+    --kiw--subtitle-flight-path-dot-size: 0.333rem;
+  }
+
+  :where(.subtitle-flight-path--medium) { --kiw--subtitle-flight-path-font-size: var(--text-m); }
+
+  .subtitle-flight-path {
+    display: flex;
+    align-items: center;
+    gap: var(--kiw--subtitle-flight-path-gap);
+    min-width: 0;
+    padding-inline-end: var(--kiw--subtitle-flight-path-padding-end);
+  }
+
+  .subtitle-flight-path .subtitle-flight-path__label {
+    flex: 0 1 auto;
+    min-width: 0;
+    margin: 0;
+    color: var(--kiw--subtitle-flight-path-color);
+    font-family: var(--kiw--subtitle-flight-path-font-family);
+    font-size: var(--kiw--subtitle-flight-path-font-size);
+    font-weight: var(--kiw--subtitle-flight-path-font-weight);
+    line-height: 1;
+    letter-spacing: var(--kiw--subtitle-flight-path-letter-spacing);
+    text-transform: uppercase;
+  }
+
+  .subtitle-flight-path .subtitle-flight-path__path {
+    position: relative;
+    flex: 1 1 var(--space-xxl);
+    min-width: var(--space-xxl);
+    height: var(--kiw--subtitle-flight-path-line-width);
+    background: linear-gradient(to right, var(--kiw--subtitle-flight-path-color), color-mix(in srgb, var(--kiw--subtitle-flight-path-color) var(--kiw--subtitle-flight-path-fade-opacity), transparent) var(--kiw--subtitle-flight-path-fade-at));
+  }
+
+  .subtitle-flight-path .subtitle-flight-path__path::before,
+  .subtitle-flight-path .subtitle-flight-path__path::after {
+    position: absolute;
+    top: 50%;
+    content: '';
+    translate: 0 -50%;
+  }
+
+  .subtitle-flight-path .subtitle-flight-path__path::before {
+    left: 0;
+    width: var(--kiw--subtitle-flight-path-arrow-width);
+    height: var(--kiw--subtitle-flight-path-arrow-height);
+    background: var(--kiw--subtitle-flight-path-color);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
+
+  .subtitle-flight-path .subtitle-flight-path__path::after {
+    right: 0;
+    width: var(--kiw--subtitle-flight-path-dot-size);
+    height: var(--kiw--subtitle-flight-path-dot-size);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--kiw--subtitle-flight-path-color) var(--kiw--subtitle-flight-path-fade-opacity), transparent);
+  }
+</style>

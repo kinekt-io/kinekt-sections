@@ -25,6 +25,7 @@
     "./controls/button-allentown.astro": "./src/controls/button/allentown/button-allentown.astro",
     "./primitives/contact-icon.astro": "./src/primitives/contact-icon/contact-icon.astro",
     "./primitives/section-intro.astro": "./src/primitives/section-intro/section-intro.astro",
+    "./primitives/subtitle-flight-path.astro": "./src/primitives/subtitle-flight-path/subtitle-flight-path.astro",
     "./sections/action-contact-allentown.astro": "./src/sections/action-contact/allentown/action-contact-allentown.astro",
     "./sections/action-contact-allentown.payload": {
       "default": "./dist/sections/action-contact/allentown/action-contact-allentown.payload.js",
