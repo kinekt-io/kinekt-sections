@@ -1,0 +1,56 @@
+---
+import Label from "../../../atoms/label/allentown/label-allentown.astro";
+
+interface Props {
+  label: string;
+  value: { text: string; icon?: string };
+  size?: "s" | "m" | "l" | "xl";
+  swap?: boolean;
+  labelAs?: "p" | "h3" | "h4" | "h5" | "h6";
+  class?: string;
+}
+
+const { label, value, size = "m", swap = false, labelAs: Title = "p", class: className } = Astro.props;
+const classes = ["result-item-allentown", `result-item-allentown--${size}`, className].filter(Boolean).join(" ");
+---
+
+<div class={classes}>
+  {swap && <Label class="result-item-allentown__value" size={size} text={value.text} icon={value.icon} />}
+  <Title class="result-item-allentown__label">{label}</Title>
+  {!swap && <Label class="result-item-allentown__value" size={size} text={value.text} icon={value.icon} />}
+</div>
+
+<style is:global>
+  :where(.result-item-allentown) {
+    --kiw--result-item-allentown-gap: var(--space-xs);
+    --kiw--result-item-allentown-label-ink: var(--kinekt-component-ink, currentColor);
+    --kiw--result-item-allentown-label-font-family: var(--heading-font-family);
+    --kiw--result-item-allentown-label-font-size: var(--text-l);
+    --kiw--result-item-allentown-label-font-weight: var(--heading-font-weight);
+    --kiw--result-item-allentown-label-line-height: 1;
+  }
+
+  /* Figma Label "Title=yes" sizes: Small 16, Medium 18, Large 18, Extra Large 24. */
+  :where(.result-item-allentown--s) { --kiw--result-item-allentown-label-font-size: var(--text-m); }
+  :where(.result-item-allentown--xl) { --kiw--result-item-allentown-label-font-size: var(--h5); }
+
+  .result-item-allentown {
+    display: grid;
+    justify-items: start;
+    align-content: start;
+    gap: var(--kiw--result-item-allentown-gap);
+    min-width: 0;
+  }
+
+  .result-item-allentown .result-item-allentown__label {
+    max-width: none;
+    margin: 0;
+    color: var(--kiw--result-item-allentown-label-ink);
+    font-family: var(--kiw--result-item-allentown-label-font-family);
+    font-size: var(--kiw--result-item-allentown-label-font-size);
+    font-weight: var(--kiw--result-item-allentown-label-font-weight);
+    line-height: var(--kiw--result-item-allentown-label-line-height);
+    letter-spacing: normal;
+    text-transform: none;
+  }
+</style>
