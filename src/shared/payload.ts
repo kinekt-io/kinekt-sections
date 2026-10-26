@@ -75,21 +75,26 @@ export const ctaToProps = (value: unknown, field: string, options: PayloadAdapte
   return { label: requireText(cta.label, `${field}.label`), href, ...(icon === 'arrow-right' || icon === 'arrow-down' ? { icon: icon as CtaIcon } : {}) }
 }
 
-const hasCtaInput = (value: unknown): boolean => {
-  if (value === undefined || value === null) return false
-  if (typeof value !== 'object' || Array.isArray(value)) return true
+export const optionalCtaToProps = (value: unknown, field: string, options: PayloadAdapterOptions = {}): Cta | undefined => {
+  if (value === undefined || value === null) return undefined
+  const cta = requireObject(value, field)
+  if (typeof cta.label !== 'string' || cta.label.trim().length === 0) return undefined
 
-  const cta = value as Record<string, unknown>
-  return (cta.label !== undefined && cta.label !== null && cta.label !== '')
-    || (cta.href !== undefined && cta.href !== null && cta.href !== '')
-    || (cta.page !== undefined && cta.page !== null)
+  const destinationType = cta.destinationType ?? 'url'
+  if (destinationType === 'content' || destinationType === 'page') {
+    if (cta.page === undefined || cta.page === null || cta.page === '') return undefined
+  } else if (destinationType === 'url') {
+    if (typeof cta.href !== 'string' || cta.href.trim().length === 0) return undefined
+  }
+
+  return ctaToProps(cta, field, options)
 }
 
 export const ctaGroupToProps = (value: unknown, field: string, options: PayloadAdapterOptions = {}): CtaGroup | undefined => {
   if (value === undefined || value === null) return undefined
   const group = requireObject(value, field)
-  const primary = hasCtaInput(group.primary) ? ctaToProps(group.primary, `${field}.primary`, options) : undefined
-  const secondary = hasCtaInput(group.secondary) ? ctaToProps(group.secondary, `${field}.secondary`, options) : undefined
+  const primary = optionalCtaToProps(group.primary, `${field}.primary`, options)
+  const secondary = optionalCtaToProps(group.secondary, `${field}.secondary`, options)
   if (!primary && !secondary) return undefined
   return { primary, secondary }
 }

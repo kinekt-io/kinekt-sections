@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { ctaGroupToProps, ctaToProps } from '../dist/shared/payload.js'
 import { ctaFields } from '../dist/shared/payload-fields.js'
+import { structuralSectionToProps } from '../dist/shared/structural-props.js'
 
 function ctaField(name) {
   const field = ctaFields(['pages', 'articles']).find((candidate) => candidate.name === name)
@@ -63,14 +64,58 @@ test('CTA validators reject partial publish values while allowing an omitted CTA
   assert.equal(validate(label, 'Read more', { destinationType: 'content', page: { relationTo: 'articles', value: 42 } }), true)
   assert.equal(validate(page, 42, { destinationType: 'content', label: 'Read more' }), true)
   assert.equal(validate(href, '/products', { destinationType: 'url', label: 'Browse products' }), true)
+})
 
+test('optional CTA groups omit incomplete buttons without discarding their complete sibling', () => {
+  const complete = { label: 'Browse services', href: '/services' }
+  for (const partial of [
+    { label: null, destinationType: null, href: '/contact' },
+    { label: ' ', destinationType: 'url', href: '/contact' },
+    { label: 'Contact us', destinationType: 'url', href: null },
+    { label: 'Read more', destinationType: 'content', page: null },
+    { label: 'Read more', destinationType: 'page', page: '' },
+  ]) {
+    assert.deepEqual(ctaGroupToProps({ primary: complete, secondary: partial }, 'ctas'), {
+      primary: complete,
+      secondary: undefined,
+    })
+    assert.deepEqual(ctaGroupToProps({ primary: partial, secondary: complete }, 'ctas'), {
+      primary: undefined,
+      secondary: complete,
+    })
+    assert.equal(ctaGroupToProps({ primary: partial, secondary: partial }, 'ctas'), undefined)
+  }
+})
+
+test('recursive section conversion preserves content around incomplete nested CTAs', () => {
+  const result = structuralSectionToProps({
+    theme: 'light',
+    intro: { heading: 'Compare service plans' },
+    callout: {
+      heading: 'Talk to a specialist',
+      ctaGroup: {
+        primaryButton: { label: 'Book a call', href: '/contact' },
+        secondaryButton: { label: '', destinationType: null, href: '/services' },
+      },
+    },
+    items: [{ heading: 'Plan together', ctaGroup: { secondaryButton: { label: 'Read more', destinationType: 'page', page: null } } }],
+  })
+  assert.equal(result.intro.heading, 'Compare service plans')
+  assert.equal(result.callout.heading, 'Talk to a specialist')
+  assert.deepEqual(result.callout.ctaGroup.primaryButton, { label: 'Book a call', href: '/contact' })
+  assert.equal(result.callout.ctaGroup.secondaryButton, undefined)
+  assert.equal(result.items[0].heading, 'Plan together')
+  assert.equal(result.items[0].ctaGroup.secondaryButton, undefined)
+})
+
+test('optional CTA handling does not weaken required CTA or URL safety validation', () => {
   assert.throws(
-    () => ctaGroupToProps({ primary: { destinationType: 'url', href: '/products' } }, 'ctas'),
-    /ctas\.primary\.label must be non-empty text/,
+    () => ctaToProps({ label: '', href: '/services' }, 'required'),
+    /required\.label must be non-empty text/,
   )
   assert.throws(
-    () => ctaGroupToProps({ secondary: { destinationType: 'content', label: 'Read more' } }, 'ctas'),
-    /ctas\.secondary\.page must be an object/,
+    () => ctaGroupToProps({ primary: { label: 'Contact', href: 'javascript:alert(1)' } }, 'ctas'),
+    /ctas\.primary\.href must be an HTTP\(S\) or root-relative URL/,
   )
 })
 

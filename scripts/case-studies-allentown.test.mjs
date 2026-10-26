@@ -133,16 +133,13 @@ test('quote sibling validation enforces publish dependencies but bypasses drafts
   }
 })
 
-test('header CTA omits an empty group but rejects a destination without a label', () => {
+test('header CTA omits empty and incomplete groups while retaining complete links', () => {
   assert.equal('cta' in toProps(documentWith({ cta: {} })), false)
   assert.deepEqual(toProps(documentWith({ cta: { label: 'Browse reports', destinationType: 'url', href: '/reports' } })).cta, {
     label: 'Browse reports',
     href: '/reports',
   })
-  assert.throws(
-    () => toProps(documentWith({ cta: { destinationType: 'url', href: '/reports' } })),
-    Error,
-  )
+  assert.equal('cta' in toProps(documentWith({ cta: { destinationType: 'url', href: '/reports' } })), false)
 })
 
 test('results validation allows empty optional state and drafts but rejects non-arrays on publish', () => {
