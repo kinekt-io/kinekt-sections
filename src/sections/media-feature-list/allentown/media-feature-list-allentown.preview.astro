@@ -4,42 +4,42 @@ import type { MediaFeatureListContent } from './media-feature-list-allentown.typ
 const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
 
 const content: MediaFeatureListContent = {
-  theme: 'dark',
+  theme: 'semi-dark',
   direction: 'mediaLeft',
   intro: {
-    accentHeading: 'Engineered energy systems',
-    heading: 'Energy systems built around real operating conditions',
+    accentHeading: '/ EU headquarters',
+    heading: 'European roots. Global ambitions.',
     description: {
-      html: '<p>Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.</p>',
+      html: '<p>From our headquarters in the Netherlands, our engineering, commercial and program teams work closely with customers across Europe and beyond. Direct access to our specialists keeps communication short, decisions fast and development moving.</p>',
     },
   },
   label: {
-    text: 'Validated for demanding deployments',
-    icon: '↗',
+    text: 'The Netherlands',
+    icon: 'location-dot',
   },
   media: {
-    url: placeholder('placeholder-1376x812.svg'),
-    alt: 'Battery module and electrical interface',
-    width: 1376,
-    height: 812,
+    url: placeholder('placeholder-688x406.svg'),
+    alt: 'Engineering team at the European headquarters',
+    width: 688,
+    height: 406,
   },
   features: [
     {
-      title: 'Designed for the constraints that shape delivery',
+      title: 'Direct access to expertise',
       description: {
-        html: '<p>The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.</p>',
+        html: '<p>Work closely with the specialists behind our battery technology.</p>',
       },
     },
     {
-      title: 'Performance data teams can use with confidence',
+      title: 'Short communication lines',
       description: {
-        html: '<p>Structured content keeps performance requirements, technical context and implementation choices easy to compare.</p>',
+        html: '<p>Direct collaboration keeps projects moving and decisions fast.</p>',
       },
     },
     {
-      title: 'Support from specification to integration',
+      title: 'Strategically located in Europe',
       description: {
-        html: '<p>Expert input connects technical decisions with the evidence and documentation each project needs.</p>',
+        html: '<p>A strong European base for programs operating across global markets.</p>',
       },
     },
   ],

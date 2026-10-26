@@ -1,5 +1,6 @@
 ---
 import '../../../styles/wireframe-tokens.css'
+import Label from '../../../atoms/label/allentown/label-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { MediaFeatureListContent } from './media-feature-list-allentown.types.js'
@@ -15,7 +16,7 @@ const { theme, direction, intro, label, media, features, headingLevel = 'h2', me
   <div class="media-feature-list__container">
     <header class="media-feature-list__header">
       <SectionIntro intro={intro} headingLevel={headingLevel}>
-        {label && <p slot="after-heading" class="media-feature-list__label">{label.icon && <span class="media-feature-list__label-icon" aria-hidden="true">{label.icon}</span>}{label.text}</p>}
+        {label?.text && <Label slot="after-heading" class="media-feature-list__label" text={label.text} icon={label.icon} />}
       </SectionIntro>
     </header>
 
@@ -102,39 +103,47 @@ const { theme, direction, intro, label, media, features, headingLevel = 'h2', me
   :where(.media-feature-list--allentown) {
     --kiw--media-feature-list-section-padding: var(--section-gutter);
     --kiw--media-feature-list-container-width: var(--content-width);
-    --kiw--media-feature-list-major-gap: var(--section-space-l);
+    --kiw--media-feature-list-major-gap: var(--section-space-m);
+    --kiw--media-feature-list-column-gap: var(--section-space-m);
     --kiw--media-feature-list-header-width: var(--width-l);
     --kiw--media-feature-list-header-group-gap: var(--space-xl);
     --kiw--media-feature-list-heading-stack-gap: var(--space-xxs);
+    --kiw--media-feature-list-accent-color: var(--kinekt-component-accent);
+    --kiw--media-feature-list-accent-font-family: var(--kiw--section-heading-font-family);
+    --kiw--media-feature-list-accent-font-size: var(--text-m);
+    --kiw--media-feature-list-accent-font-weight: var(--kiw--section-heading-font-weight);
+    --kiw--media-feature-list-accent-letter-spacing: 0.05em;
+    --kiw--media-feature-list-description-font-size: var(--text-xl);
+    --kiw--media-feature-list-label-tint: 8%;
     --kiw--media-feature-list-feature-gap: var(--section-space-s);
-    --kiw--media-feature-list-feature-copy-gap: var(--space-s);
+    --kiw--media-feature-list-feature-copy-gap: var(--space-xs);
+    --kiw--media-feature-list-feature-title-size: var(--h4);
+    --kiw--media-feature-list-feature-description-size: var(--text-l);
     --kiw--media-feature-list-media-ratio: 688 / 406;
     --kinekt-section-block-space: var(--kiw--media-feature-list-section-padding);
     --kinekt-section-content-width: var(--kiw--media-feature-list-container-width);
     --kinekt-section-gap: var(--kiw--media-feature-list-major-gap);
   }
-  .media-feature-list--allentown { --kinekt-component-text-s-size: var(--kiw--section-text-s-size); --kinekt-section-media-ratio: 4 / 5; }
+  :where(.media-feature-list--allentown:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark'])) { --kiw--media-feature-list-label-tint: 15%; }
   .media-feature-list--allentown .media-feature-list__container { gap: var(--kiw--media-feature-list-major-gap); }
-  .media-feature-list--allentown .media-feature-list__header { max-inline-size: var(--kiw--media-feature-list-header-width); }
-  .media-feature-list--allentown .section-intro { display: grid; gap: var(--kiw--media-feature-list-header-group-gap); }
+  .media-feature-list--allentown .section-intro { display: grid; justify-items: start; gap: var(--kiw--media-feature-list-header-group-gap); }
+  .media-feature-list--allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
   .media-feature-list--allentown .section-intro__heading-group { display: grid; gap: var(--kiw--media-feature-list-heading-stack-gap); }
-  .media-feature-list--allentown :is(.section-intro__accent, .media-feature-list__label) { margin: 0; color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-s-size); line-height: var(--kinekt-component-text-line-height); text-transform: uppercase; }
-  .media-feature-list--allentown .section-intro__accent { color: var(--kinekt-component-accent); }
-  .media-feature-list--allentown .media-feature-list__label { display: flex; align-items: baseline; gap: var(--space-xs); }
-  .media-feature-list--allentown .media-feature-list__label-icon { flex: none; font-family: var(--kiw--section-mono-font-family); font-size: var(--kiw--section-text-xs-size); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kiw--section-text-line-height); }
-  .media-feature-list--allentown .media-feature-list__feature { min-width: 0; }
-  .media-feature-list--allentown .section-intro__heading { font-size: var(--h2); }
-  .media-feature-list--allentown .section-intro__description { max-inline-size: var(--width-l); margin: 0; font-size: var(--text-xl); line-height: var(--text-line-height); }
+  .media-feature-list--allentown .section-intro__accent { color: var(--kiw--media-feature-list-accent-color); font-family: var(--kiw--media-feature-list-accent-font-family); font-size: var(--kiw--media-feature-list-accent-font-size); font-weight: var(--kiw--media-feature-list-accent-font-weight); line-height: 1; letter-spacing: var(--kiw--media-feature-list-accent-letter-spacing); text-transform: uppercase; }
+  .media-feature-list--allentown .section-intro__heading { max-width: none; font-size: var(--h2); }
+  .media-feature-list--allentown .section-intro__description { max-width: none; font-size: var(--kiw--media-feature-list-description-font-size); line-height: var(--kinekt-component-text-line-height); }
+  .media-feature-list--allentown .media-feature-list__label { --kiw--label-allentown-background: color-mix(in srgb, var(--kiw--label-allentown-accent) var(--kiw--media-feature-list-label-tint), transparent); }
   .media-feature-list--allentown .media-feature-list__body { display: grid; gap: var(--kiw--media-feature-list-major-gap); }
-  .media-feature-list--allentown .media-feature-list__media { display: block; align-self: stretch; }
-  .media-feature-list--allentown .media-feature-list__image { display: block; inline-size: 100%; max-inline-size: 100%; aspect-ratio: var(--kinekt-section-media-ratio); object-fit: cover; filter: var(--kinekt-component-media-filter); }
-  .media-feature-list--allentown .media-feature-list__features { display: grid; gap: var(--kiw--media-feature-list-feature-gap); margin: 0; padding: 0; list-style: none; border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
-  .media-feature-list--allentown .media-feature-list__feature { display: grid; gap: var(--kiw--media-feature-list-feature-copy-gap); border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
-  .media-feature-list--allentown .media-feature-list__feature { padding-block: var(--space-l); }
-  .media-feature-list--allentown .media-feature-list__feature-title { font-size: var(--h3); line-height: var(--heading-line-height); }
-  .media-feature-list--allentown .media-feature-list__feature-description { color: var(--kinekt-component-muted); font-size: var(--text-l); line-height: var(--text-line-height); }
+  .media-feature-list--allentown .media-feature-list__media { display: block; }
+  .media-feature-list--allentown .media-feature-list__image { display: block; inline-size: 100%; max-inline-size: 100%; aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--media-feature-list-media-ratio)); object-fit: cover; filter: var(--kinekt-component-media-filter); }
+  .media-feature-list--allentown .media-feature-list__features { display: grid; gap: var(--kiw--media-feature-list-feature-gap); margin: 0; padding: 0; list-style: none; }
+  .media-feature-list--allentown .media-feature-list__feature { display: grid; gap: var(--kiw--media-feature-list-feature-copy-gap); min-width: 0; }
+  .media-feature-list--allentown .media-feature-list__feature-title { max-width: none; font-size: var(--kiw--media-feature-list-feature-title-size); line-height: 1; }
+  .media-feature-list--allentown .media-feature-list__feature-description { color: var(--kinekt-component-muted); font-size: var(--kiw--media-feature-list-feature-description-size); line-height: var(--kinekt-component-text-line-height); }
+  .media-feature-list--allentown .media-feature-list__feature-description > * { margin-block: 0; }
   @media (min-width: 50rem) {
-    .media-feature-list--allentown .media-feature-list__body { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; }
+    .media-feature-list--allentown .media-feature-list__header { max-inline-size: var(--kiw--media-feature-list-header-width); }
+    .media-feature-list--allentown .media-feature-list__body { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; column-gap: var(--kiw--media-feature-list-column-gap); }
     .media-feature-list--allentown.media-feature-list--mediaRight .media-feature-list__media { order: 2; }
   }
   @media (max-width: 49.999rem) {
