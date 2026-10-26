@@ -5,6 +5,8 @@
 ### Fixed
 
 - Render configured arrow-right and arrow-down icons for Case Studies Allentown header and slide CTAs, retaining the current content-target contract and component-owned styles.
+- Accept empty optional Case Studies results and quotes without an author name. Author role and avatar require a name, and author details require quote text.
+- Validate partial CTA and quote input before publication while allowing incomplete drafts. Keep empty CTA groups optional, normalize numeric content IDs, and accept an unset CTA icon.
 
 ## 26.10.2-beta.25 — 2026-10-23
 

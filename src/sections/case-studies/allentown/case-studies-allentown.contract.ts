@@ -2,7 +2,7 @@ import type { Block, CollectionSlug } from 'payload'
 
 import type { Cta, CtaIcon, Media, SectionIntro } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
-import { ctaToProps, mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { ctaGroupToProps, ctaToProps, mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { contentTargetField, ctaFields } from '../../../shared/payload-fields.js'
 
 export type CaseStudyResult = {
@@ -19,7 +19,7 @@ export type CaseStudySlide = {
   results?: CaseStudyResult[]
   quote?: {
     quote: string
-    authorName: string
+    authorName?: string
     authorRole?: string
     avatar?: Media
   }
@@ -99,6 +99,7 @@ export function createCaseStudiesAllentownBlock({
             { name: 'image', type: 'upload', label: 'Image', relationTo: mediaCollection, localized: true, required: true },
             {
               name: 'results', type: 'array', label: 'Results', localized: true,
+              validate: (value: unknown, { data }) => (data as Record<string, unknown> | undefined)?._status === 'draft' || value === undefined || value === null || Array.isArray(value) || 'Results must be a list.',
               fields: [
                 { name: 'label', type: 'text', label: 'Label', required: true, validate: textRequired },
                 { name: 'value', type: 'group', label: 'Value', required: true, fields: [
@@ -110,10 +111,10 @@ export function createCaseStudiesAllentownBlock({
             {
               name: 'quote', type: 'group', label: 'Quote', localized: true,
               fields: [
-                { name: 'quote', type: 'textarea', label: 'Quote' },
-                { name: 'authorName', type: 'text', label: 'Author name' },
-                { name: 'authorRole', type: 'text', label: 'Author role' },
-                { name: 'avatar', type: 'upload', label: 'Author portrait', relationTo: mediaCollection },
+                { name: 'quote', type: 'textarea', label: 'Quote', validate: validateQuoteSibling },
+                { name: 'authorName', type: 'text', label: 'Author name', validate: validateQuoteSibling },
+                { name: 'authorRole', type: 'text', label: 'Author role', validate: validateQuoteSibling },
+                { name: 'avatar', type: 'upload', label: 'Author portrait', relationTo: mediaCollection, validate: validateQuoteSibling },
               ],
             },
             {
@@ -160,7 +161,9 @@ function slideToProps(value: unknown, index: number, options: PayloadAdapterOpti
   const action = ctaToProps({ ...cta, destinationType, page: item.page, href: item.href }, `carousel.items[${index}].cta`, options)
   const page = item.page ? relationshipID(item.page, `carousel.items[${index}].page`) : undefined
   const quote = optionalQuote(item.quote, `carousel.items[${index}].quote`, options)
-  const results = item.results === undefined || item.results === null ? undefined : requireArray(item.results, `carousel.items[${index}].results`).map((result, resultIndex) => resultToProps(result, index, resultIndex))
+  const results = item.results === undefined || item.results === null || (Array.isArray(item.results) && item.results.length === 0)
+    ? undefined
+    : requireArray(item.results, `carousel.items[${index}].results`).map((result, resultIndex) => resultToProps(result, index, resultIndex))
 
   return {
     ...(page ? { page } : {}),
@@ -191,22 +194,21 @@ function optionalQuote(value: unknown, field: string, options: PayloadAdapterOpt
   const quote = requireObject(value, field)
   const text = optionalText(quote.quote, `${field}.quote`)
   const authorName = optionalText(quote.authorName, `${field}.authorName`)
-  if (!text && !authorName) return undefined
-  if (!text || !authorName) throw new Error(`${field} requires both quote and author name.`)
+  const authorRole = optionalText(quote.authorRole, `${field}.authorRole`)
+  const avatar = quote.avatar ?? undefined
+  if (!text && !authorName && !authorRole && !avatar) return undefined
+  if (!text) throw new Error(`${field} author details require a quote.`)
+  if ((authorRole || avatar) && !authorName) throw new Error(`${field} author role and portrait require an author name.`)
   return {
     quote: text,
-    authorName,
-    ...(optionalText(quote.authorRole, `${field}.authorRole`) ? { authorRole: optionalText(quote.authorRole, `${field}.authorRole`) } : {}),
-    ...(quote.avatar ? { avatar: mediaToProps(quote.avatar, `${field}.avatar`, options) } : {}),
+    ...(authorName ? { authorName } : {}),
+    ...(authorRole ? { authorRole } : {}),
+    ...(avatar ? { avatar: mediaToProps(avatar, `${field}.avatar`, options) } : {}),
   }
 }
 
 function optionalLinkedCta(value: unknown, field: string, options: PayloadAdapterOptions): Cta | undefined {
-  if (!value) return undefined
-  const cta = requireObject(value, field)
-  const label = optionalText(cta.label, `${field}.label`)
-  if (!label) return undefined
-  return ctaToProps(cta, field, options)
+  return ctaGroupToProps({ primary: value }, field, options)?.primary ?? undefined
 }
 
 
@@ -224,4 +226,19 @@ function relationshipID(value: unknown, field: string): string {
 
 function hasText(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0
+}
+
+function validateQuoteSibling(
+  _value: unknown,
+  { data, siblingData }: { data?: unknown; siblingData?: unknown },
+): true | string {
+  if ((data as Record<string, unknown> | undefined)?._status === 'draft') return true
+  const siblings = requireObject(siblingData ?? {}, 'quote')
+  const quote = hasText(siblings.quote)
+  const authorName = hasText(siblings.authorName)
+  const hasAuthorRole = hasText(siblings.authorRole)
+  const hasAvatar = siblings.avatar !== undefined && siblings.avatar !== null
+  if (!quote && (authorName || hasAuthorRole || hasAvatar)) return 'Author details require a quote.'
+  if (quote && (hasAuthorRole || hasAvatar) && !authorName) return 'Author role and portrait require an author name.'
+  return true
 }

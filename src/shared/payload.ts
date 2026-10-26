@@ -30,17 +30,30 @@ export const mediaToProps = (value: unknown, field: string, { mediaBaseUrl }: Pa
   return { url: withMediaBaseUrl(url, mediaBaseUrl), alt, width, height, ...(sources.length ? { sources } : {}) }
 }
 const relationshipTarget = (value: unknown, field: string): { collection: string; id: string } => {
-  if (typeof value === 'string') return { collection: 'pages', id: value }
-  const relation = requireObject(value, field)
-  if (typeof relation.relationTo === 'string') {
-    const document = relation.value
-    const id = typeof document === 'string' || typeof document === 'number'
-      ? String(document)
-      : String(requireObject(document, `${field}.value`).id)
-    return { collection: relation.relationTo, id }
+  const relationshipID = (candidate: unknown, identifierField: string): string => {
+    if (typeof candidate === 'string' && candidate.trim().length > 0) return candidate
+    if (typeof candidate === 'number' && Number.isSafeInteger(candidate)) return String(candidate)
+    throw new Error(`${identifierField} must reference content.`)
   }
-  return { collection: 'pages', id: String(relation.id) }
+
+  if (typeof value === 'string' || typeof value === 'number') {
+    return { collection: 'pages', id: relationshipID(value, field) }
+  }
+
+  const relation = requireObject(value, field)
+  if ('relationTo' in relation) {
+    if (typeof relation.relationTo !== 'string' || relation.relationTo.trim().length === 0) {
+      throw new Error(`${field}.relationTo must name a content collection.`)
+    }
+    const document = relation.value
+    if (typeof document === 'object' && document !== null && !Array.isArray(document)) {
+      return { collection: relation.relationTo, id: relationshipID(requireObject(document, `${field}.value`).id, `${field}.value.id`) }
+    }
+    return { collection: relation.relationTo, id: relationshipID(document, `${field}.value`) }
+  }
+  return { collection: 'pages', id: relationshipID(relation.id, `${field}.id`) }
 }
+
 export const ctaToProps = (value: unknown, field: string, options: PayloadAdapterOptions = {}): Cta => {
   const cta = requireObject(value, field)
   const destinationType = cta.destinationType ?? 'url'
@@ -49,25 +62,34 @@ export const ctaToProps = (value: unknown, field: string, options: PayloadAdapte
     const target = relationshipTarget(cta.page, `${field}.page`)
     href = options.contentHref?.(target.collection, target.id) ?? ''
     if (!href) throw new Error(`${field}.page is not available in this static build.`)
-  } else {
+  } else if (destinationType === 'url') {
     href = requireText(cta.href, `${field}.href`)
     if (!isSafeWebUrl(href)) throw new Error(`${field}.href must be an HTTP(S) or root-relative URL.`)
+  } else {
+    throw new Error(`${field}.destinationType must be content or url.`)
   }
   const icon = cta.icon
-  if (icon !== undefined && icon !== 'arrow-right' && icon !== 'arrow-down') throw new Error(`${field}.icon must be arrow-right or arrow-down.`)
-  return { label: requireText(cta.label, `${field}.label`), href, ...(icon ? { icon: icon as CtaIcon } : {}) }
+  if (icon !== undefined && icon !== null && icon !== '' && icon !== 'arrow-right' && icon !== 'arrow-down') {
+    throw new Error(`${field}.icon must be arrow-right or arrow-down.`)
+  }
+  return { label: requireText(cta.label, `${field}.label`), href, ...(icon === 'arrow-right' || icon === 'arrow-down' ? { icon: icon as CtaIcon } : {}) }
 }
-const hasCompleteCta = (value: unknown): boolean => {
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) return false
+
+const hasCtaInput = (value: unknown): boolean => {
+  if (value === undefined || value === null) return false
+  if (typeof value !== 'object' || Array.isArray(value)) return true
+
   const cta = value as Record<string, unknown>
-  return typeof cta.label === 'string' && cta.label.trim().length > 0
-    && (cta.page !== undefined || (typeof cta.href === 'string' && cta.href.trim().length > 0))
+  return (cta.label !== undefined && cta.label !== null && cta.label !== '')
+    || (cta.href !== undefined && cta.href !== null && cta.href !== '')
+    || (cta.page !== undefined && cta.page !== null)
 }
+
 export const ctaGroupToProps = (value: unknown, field: string, options: PayloadAdapterOptions = {}): CtaGroup | undefined => {
   if (value === undefined || value === null) return undefined
   const group = requireObject(value, field)
-  const primary = hasCompleteCta(group.primary) ? ctaToProps(group.primary, `${field}.primary`, options) : undefined
-  const secondary = hasCompleteCta(group.secondary) ? ctaToProps(group.secondary, `${field}.secondary`, options) : undefined
+  const primary = hasCtaInput(group.primary) ? ctaToProps(group.primary, `${field}.primary`, options) : undefined
+  const secondary = hasCtaInput(group.secondary) ? ctaToProps(group.secondary, `${field}.secondary`, options) : undefined
   if (!primary && !secondary) return undefined
   return { primary, secondary }
 }

@@ -167,30 +167,30 @@ const actionIcon = ctaIcon(action?.icon);
                                 {item.quote.quote}
                               </p>
                             </blockquote>
-                            <figcaption class="case-studies-allentown__quote-attribution">
-                              {item.quote.avatar?.url && (
-                                <picture class="case-studies-allentown__quote-avatar">
-                                  <img
-                                    src={item.quote.avatar.url}
-                                    alt={item.quote.avatar.alt ?? ""}
-                                    width={item.quote.avatar.width}
-                                    height={item.quote.avatar.height}
-                                  />
-                                </picture>
-                              )}
-                              <div class="case-studies-allentown__quote-author">
-                                {item.quote.authorName && (
+                            {item.quote.authorName && (
+                              <figcaption class="case-studies-allentown__quote-attribution">
+                                {item.quote.avatar?.url && (
+                                  <picture class="case-studies-allentown__quote-avatar">
+                                    <img
+                                      src={item.quote.avatar.url}
+                                      alt={item.quote.avatar.alt ?? ""}
+                                      width={item.quote.avatar.width}
+                                      height={item.quote.avatar.height}
+                                    />
+                                  </picture>
+                                )}
+                                <div class="case-studies-allentown__quote-author">
                                   <p class="case-studies-allentown__quote-author-name">
                                     {item.quote.authorName}
                                   </p>
-                                )}
-                                {item.quote.authorRole && (
-                                  <p class="case-studies-allentown__quote-author-role">
-                                    {item.quote.authorRole}
-                                  </p>
-                                )}
-                              </div>
-                            </figcaption>
+                                  {item.quote.authorRole && (
+                                    <p class="case-studies-allentown__quote-author-role">
+                                      {item.quote.authorRole}
+                                    </p>
+                                  )}
+                                </div>
+                              </figcaption>
+                            )}
                           </figure>
                         )}
                         {itemAction?.label && (
