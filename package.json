@@ -22,6 +22,7 @@
   "exports": {
     "./atoms/label-allentown.astro": "./src/atoms/label/allentown/label-allentown.astro",
     "./components/callout-allentown.astro": "./src/components/callout/allentown/callout-allentown.astro",
+    "./components/result-item-allentown.astro": "./src/components/result-item/allentown/result-item-allentown.astro",
     "./controls/button-allentown.astro": "./src/controls/button/allentown/button-allentown.astro",
     "./primitives/contact-icon.astro": "./src/primitives/contact-icon/contact-icon.astro",
     "./primitives/section-intro.astro": "./src/primitives/section-intro/section-intro.astro",

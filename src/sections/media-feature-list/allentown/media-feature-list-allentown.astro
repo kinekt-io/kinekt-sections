@@ -15,7 +15,7 @@ const { theme, direction, intro, label, media, features, headingLevel = 'h2', me
 <section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-section data-kinekt-theme={theme} data-kinekt-direction={direction}>
   <div class="media-feature-list__container">
     <header class="media-feature-list__header">
-      <SectionIntro intro={intro} headingLevel={headingLevel}>
+      <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading">
         {label?.text && <Label slot="after-heading" class="media-feature-list__label" text={label.text} icon={label.icon} />}
       </SectionIntro>
     </header>
@@ -108,11 +108,6 @@ const { theme, direction, intro, label, media, features, headingLevel = 'h2', me
     --kiw--media-feature-list-header-width: var(--width-l);
     --kiw--media-feature-list-header-group-gap: var(--space-xl);
     --kiw--media-feature-list-heading-stack-gap: var(--space-xxs);
-    --kiw--media-feature-list-accent-color: var(--kinekt-component-accent);
-    --kiw--media-feature-list-accent-font-family: var(--kiw--section-heading-font-family);
-    --kiw--media-feature-list-accent-font-size: var(--text-m);
-    --kiw--media-feature-list-accent-font-weight: var(--kiw--section-heading-font-weight);
-    --kiw--media-feature-list-accent-letter-spacing: 0.05em;
     --kiw--media-feature-list-description-font-size: var(--text-xl);
     --kiw--media-feature-list-feature-gap: var(--section-space-s);
     --kiw--media-feature-list-feature-copy-gap: var(--space-xs);
@@ -127,7 +122,6 @@ const { theme, direction, intro, label, media, features, headingLevel = 'h2', me
   .media-feature-list--allentown .section-intro { display: grid; justify-items: start; gap: var(--kiw--media-feature-list-header-group-gap); }
   .media-feature-list--allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
   .media-feature-list--allentown .section-intro__heading-group { display: grid; gap: var(--kiw--media-feature-list-heading-stack-gap); }
-  .media-feature-list--allentown .section-intro__accent { color: var(--kiw--media-feature-list-accent-color); font-family: var(--kiw--media-feature-list-accent-font-family); font-size: var(--kiw--media-feature-list-accent-font-size); font-weight: var(--kiw--media-feature-list-accent-font-weight); line-height: 1; letter-spacing: var(--kiw--media-feature-list-accent-letter-spacing); text-transform: uppercase; }
   .media-feature-list--allentown .section-intro__heading { max-width: none; font-size: var(--h2); }
   .media-feature-list--allentown .section-intro__description { max-width: none; font-size: var(--kiw--media-feature-list-description-font-size); line-height: var(--kinekt-component-text-line-height); }
   .media-feature-list--allentown .media-feature-list__body { display: grid; gap: var(--kiw--media-feature-list-major-gap); }
