@@ -98,7 +98,10 @@ test('recursive section conversion preserves content around incomplete nested CT
         secondaryButton: { label: '', destinationType: null, href: '/services' },
       },
     },
-    items: [{ heading: 'Plan together', ctaGroup: { secondaryButton: { label: 'Read more', destinationType: 'page', page: null } } }],
+    items: [
+      { heading: 'Plan together', ctaGroup: { secondaryButton: { label: 'Read more', destinationType: 'page', page: null } } },
+      { heading: 'Build together', ctaGroup: { secondaryButton: { destinationType: 'page' } } },
+    ],
   })
   assert.equal(result.intro.heading, 'Compare service plans')
   assert.equal(result.callout.heading, 'Talk to a specialist')
@@ -106,6 +109,8 @@ test('recursive section conversion preserves content around incomplete nested CT
   assert.equal(result.callout.ctaGroup.secondaryButton, undefined)
   assert.equal(result.items[0].heading, 'Plan together')
   assert.equal(result.items[0].ctaGroup.secondaryButton, undefined)
+  assert.equal(result.items[1].heading, 'Build together')
+  assert.equal(result.items[1].ctaGroup.secondaryButton, undefined)
 })
 
 test('optional CTA handling does not weaken required CTA or URL safety validation', () => {
