@@ -2,14 +2,15 @@
 import '../../../styles/wireframe-tokens.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import Label from '../../../atoms/label/allentown/label-allentown.astro'
-import type { Media, RichText, SectionIntro } from '../../../shared/content.js'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 type Cta = { label: string; href: string }
 interface Props {
   theme?: Theme
   headingLevel?: 'h1' | 'h2' | 'h3'
-  intro: SectionIntro
+  intro: SectionIntroContent
   label?: { text: string; icon?: string }
   ctas: { primary?: Cta; secondary?: Cta }
   media: Media
@@ -17,16 +18,13 @@ interface Props {
 }
 
 const { theme = 'light', intro, label, ctas, media, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props
-const Heading = headingLevel
-const description = (value: string | RichText | undefined) => typeof value === 'string' ? value : value?.html
 ---
 <section class="read-more-allentown" data-kinekt-section data-kinekt-theme={theme}>
   <div class="read-more-allentown__container">
     <header class="read-more-allentown__content">
-      {intro.accentHeading && <p class="read-more-allentown__accent">{intro.accentHeading}</p>}
-      <Heading class="read-more-allentown__heading" data-kinekt-intro-heading>{intro.heading}</Heading>
-      {label?.text && <Label class="read-more-allentown__label" text={label.text} icon={label.icon} />}
-      {description(intro.description) && <div class="read-more-allentown__description" set:html={description(intro.description)} />}
+      <SectionIntro intro={intro} headingLevel={headingLevel}>
+        {label?.text && <Label slot="after-heading" class="read-more-allentown__label" text={label.text} icon={label.icon} />}
+      </SectionIntro>
       {(ctas.primary || ctas.secondary) && <div class="read-more-allentown__actions">
         {ctas.primary && <Button href={ctas.primary.href} label={ctas.primary.label} />}
         {ctas.secondary && <Button href={ctas.secondary.href} label={ctas.secondary.label} style="secondary" />}
@@ -125,18 +123,19 @@ const description = (value: string | RichText | undefined) => typeof value === '
 
   .read-more-allentown > .read-more-allentown__container { gap: var(--kiw--read-more-allentown-container-gap); }
   .read-more-allentown .read-more-allentown__content { display: grid; align-content: center; gap: var(--kiw--read-more-allentown-content-gap); }
-  .read-more-allentown :is(.read-more-allentown__accent, .read-more-allentown__heading, .read-more-allentown__description) { margin: 0; }
-  .read-more-allentown .read-more-allentown__accent { color: var(--kiw--read-more-allentown-accent-color); font-family: var(--kiw--read-more-allentown-accent-font-family); font-size: var(--kiw--read-more-allentown-accent-font-size); font-weight: var(--kiw--read-more-allentown-accent-font-weight); letter-spacing: var(--kiw--read-more-allentown-accent-letter-spacing); text-transform: uppercase; }
-  .read-more-allentown .read-more-allentown__heading { max-width: var(--kinekt-component-reading-width); }
+  .read-more-allentown .section-intro { display: grid; gap: var(--kiw--read-more-allentown-content-gap); }
+  .read-more-allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
+  .read-more-allentown .section-intro__accent { color: var(--kiw--read-more-allentown-accent-color); font-family: var(--kiw--read-more-allentown-accent-font-family); font-size: var(--kiw--read-more-allentown-accent-font-size); font-weight: var(--kiw--read-more-allentown-accent-font-weight); letter-spacing: var(--kiw--read-more-allentown-accent-letter-spacing); text-transform: uppercase; }
+  .read-more-allentown .section-intro__heading { max-width: var(--kinekt-component-reading-width); }
   @media (max-width: 49.99rem) { .read-more-allentown { --kinekt-component-reading-width: var(--content-width); } }
-  .read-more-allentown .read-more-allentown__description { max-width: var(--kiw--read-more-allentown-reading-width); color: var(--kiw--read-more-allentown-muted-color); }
-  .read-more-allentown .read-more-allentown__description :first-child { margin-top: 0; }
-  .read-more-allentown .read-more-allentown__description :last-child { margin-bottom: 0; }
+  .read-more-allentown .section-intro__description { max-width: var(--kiw--read-more-allentown-reading-width); color: var(--kiw--read-more-allentown-muted-color); }
+  .read-more-allentown .section-intro__description :first-child { margin-top: 0; }
+  .read-more-allentown .section-intro__description :last-child { margin-bottom: 0; }
   .read-more-allentown .read-more-allentown__actions { display: flex; flex-wrap: wrap; gap: var(--kiw--read-more-allentown-actions-gap); margin: 0; }
   .read-more-allentown .read-more-allentown__media { display: block; width: 100%; }
   .read-more-allentown .read-more-allentown__image { aspect-ratio: 4 / 5; object-fit: cover; }
   @media (min-width: 50rem) {
     .read-more-allentown > .read-more-allentown__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; column-gap: var(--kiw--read-more-allentown-column-gap); }
-    .read-more-allentown .read-more-allentown__heading { max-width: var(--kinekt-component-reading-width); }
+    .read-more-allentown .section-intro__heading { max-width: var(--kinekt-component-reading-width); }
   }
 </style>

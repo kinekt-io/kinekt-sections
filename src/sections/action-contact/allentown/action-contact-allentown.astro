@@ -176,7 +176,7 @@ const actionList = Object.values(actions).filter((action): action is Cta => Bool
     .beta-action-contact-allentown__image { display: block; width: 100%; height: 100%; aspect-ratio: var(--kiw--action-contact-allentown-image-ratio, 4 / 3); object-fit: cover; }
     .beta-action-contact-allentown__content { display: flex; flex: 0 1 var(--action-contact-content-width); flex-direction: column; align-items: flex-start; width: 100%; max-width: var(--action-contact-content-width); gap: var(--action-contact-content-gap); }
     .beta-action-contact-allentown__header { display: flex; flex-direction: column; align-items: flex-start; max-width: none; margin: 0; }
-    .beta-action-contact-allentown__header > :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
+    .beta-action-contact-allentown__header .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
     .beta-action-contact-allentown__header .section-intro__accent { margin-block-end: var(--action-contact-accent-gap); font-size: var(--text-m); line-height: var(--heading-line-height); }
     .beta-action-contact-allentown__header .section-intro__heading { max-width: none; }
     .beta-action-contact-allentown__header .section-intro__description { max-width: none; margin-block-start: var(--action-contact-header-gap); font-size: var(--text-l); line-height: var(--text-line-height); }

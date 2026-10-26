@@ -1,6 +1,7 @@
 ---
 import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
 import type { SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
 
 interface Cta {
@@ -59,9 +60,12 @@ const sectionLabel = advantageHeading || gridHeading
             {typeof item.description === 'string' && <p>{item.description}</p>}
             {item.description && typeof item.description === 'object' && <div class="beta-use-cases-allentown__description" set:html={item.description.html} />}
             {item.ctaGroup?.primaryButton?.label && item.ctaGroup.primaryButton.href && (
-              <a class="beta-use-cases-allentown__cta" href={item.ctaGroup.primaryButton.href}>
-                {item.ctaGroup.primaryButton.label}
-              </a>
+              <Button
+                class="beta-use-cases-allentown__cta"
+                href={item.ctaGroup.primaryButton.href}
+                label={item.ctaGroup.primaryButton.label}
+                style="clear"
+              />
             )}
           </article>
         ))}
@@ -201,7 +205,7 @@ const sectionLabel = advantageHeading || gridHeading
   .beta-use-cases-allentown__item :is(h3, p), .beta-use-cases-allentown__description :is(p, ul, ol) { margin: 0; }
   .beta-use-cases-allentown__item h3 { font-size: var(--use-cases-item-heading-size); line-height: var(--heading-line-height); letter-spacing: var(--heading-letter-spacing); }
   .beta-use-cases-allentown__item > :is(p, .beta-use-cases-allentown__description) { max-width: var(--kiw--use-cases-allentown-description-width, var(--kinekt-component-reading-width)); color: var(--kinekt-component-muted); font-size: var(--use-cases-description-size); line-height: var(--text-line-height); }
-  .beta-use-cases-allentown__cta { margin-top: var(--kiw--use-cases-allentown-action-space, var(--space-xxxs)); color: inherit; font-size: var(--text-m); font-weight: var(--heading-font-weight); text-underline-offset: var(--space-xxs); }
+  .beta-use-cases-allentown__cta { margin-top: var(--kiw--use-cases-allentown-action-space, var(--space-xxxs)); color: inherit; font-size: var(--text-m); font-weight: var(--heading-font-weight); text-decoration: underline; text-underline-offset: var(--space-xxs); }
   .beta-use-cases-allentown__cta:hover { color: var(--kinekt-component-muted); }
 
   @media (min-width: 48rem) {

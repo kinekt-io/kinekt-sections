@@ -1,6 +1,7 @@
 ---
 import '../../../styles/wireframe-tokens.css'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { MediaFeatureListContent } from './media-feature-list-allentown.types.js'
 
 interface Props extends MediaFeatureListContent {
@@ -9,18 +10,13 @@ interface Props extends MediaFeatureListContent {
 }
 
 const { theme, direction, intro, label, media, features, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
-const Heading = headingLevel
 ---
 <section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-section data-kinekt-theme={theme} data-kinekt-direction={direction}>
   <div class="media-feature-list__container">
     <header class="media-feature-list__header">
-      <div class="media-feature-list__heading-stack">
-        {intro.accentHeading && <p class="media-feature-list__accent">{intro.accentHeading}</p>}
-        <Heading class="media-feature-list__heading">{intro.heading}</Heading>
-      </div>
-      {label && <p class="media-feature-list__label">{label.icon && <span class="media-feature-list__label-icon" aria-hidden="true">{label.icon}</span>}{label.text}</p>}
-      {typeof intro.description === 'string' && <p class="media-feature-list__description">{intro.description}</p>}
-      {typeof intro.description === 'object' && <div class="media-feature-list__description" set:html={intro.description.html} />}
+      <SectionIntro intro={intro} headingLevel={headingLevel}>
+        {label && <p slot="after-heading" class="media-feature-list__label">{label.icon && <span class="media-feature-list__label-icon" aria-hidden="true">{label.icon}</span>}{label.text}</p>}
+      </SectionIntro>
     </header>
 
     <div class="media-feature-list__body">
@@ -117,14 +113,15 @@ const Heading = headingLevel
   }
   .media-feature-list--allentown { --kinekt-component-text-s-size: var(--kiw--section-text-s-size); --kinekt-section-media-ratio: 4 / 5; }
   .media-feature-list--allentown .media-feature-list__container { gap: var(--kiw--media-feature-list-major-gap); }
-  .media-feature-list--allentown .media-feature-list__header { display: grid; max-inline-size: var(--kiw--media-feature-list-header-width); gap: var(--kiw--media-feature-list-header-group-gap); }
-  .media-feature-list--allentown .media-feature-list__heading-stack { display: grid; gap: var(--kiw--media-feature-list-heading-stack-gap); }
-  .media-feature-list--allentown :is(.media-feature-list__accent, .media-feature-list__label) { color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-s-size); line-height: var(--kinekt-component-text-line-height); text-transform: uppercase; }
+  .media-feature-list--allentown .media-feature-list__header { max-inline-size: var(--kiw--media-feature-list-header-width); }
+  .media-feature-list--allentown .section-intro { display: grid; gap: var(--kiw--media-feature-list-header-group-gap); }
+  .media-feature-list--allentown .section-intro__heading-group { display: grid; gap: var(--kiw--media-feature-list-heading-stack-gap); }
+  .media-feature-list--allentown :is(.section-intro__accent, .media-feature-list__label) { margin: 0; color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-s-size); line-height: var(--kinekt-component-text-line-height); text-transform: uppercase; }
   .media-feature-list--allentown .media-feature-list__label { display: flex; align-items: baseline; gap: var(--space-xs); }
   .media-feature-list--allentown .media-feature-list__label-icon { flex: none; font-family: var(--kiw--section-mono-font-family); font-size: var(--kiw--section-text-xs-size); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kiw--section-text-line-height); }
   .media-feature-list--allentown .media-feature-list__feature { min-width: 0; }
-  .media-feature-list--allentown .media-feature-list__heading { font-size: var(--h2); }
-  .media-feature-list--allentown .media-feature-list__description { max-inline-size: var(--width-l); font-size: var(--text-xl); line-height: var(--text-line-height); }
+  .media-feature-list--allentown .section-intro__heading { font-size: var(--h2); }
+  .media-feature-list--allentown .section-intro__description { max-inline-size: var(--width-l); margin: 0; font-size: var(--text-xl); line-height: var(--text-line-height); }
   .media-feature-list--allentown .media-feature-list__body { display: grid; gap: var(--kiw--media-feature-list-major-gap); }
   .media-feature-list--allentown .media-feature-list__media { display: block; align-self: stretch; }
   .media-feature-list--allentown .media-feature-list__image { display: block; inline-size: 100%; max-inline-size: 100%; aspect-ratio: var(--kinekt-section-media-ratio); object-fit: cover; filter: var(--kinekt-component-media-filter); }
