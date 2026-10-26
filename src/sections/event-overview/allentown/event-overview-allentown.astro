@@ -1,89 +1,210 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe-tokens.css'
+import EventCard from '../../../components/event-card/allentown/event-card-allentown.astro'
+import type { EventCardContent, EventType } from '../../../components/event-card/allentown/event-card-allentown.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  }
+type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
+type HeadingLevel = 'h1' | 'h2' | 'h3'
+
+interface Props {
+  id?: string
+  theme?: Theme
+  headingLevel?: HeadingLevel
+  intro: SectionIntroContent
+  /** runtimeProps.eventSelection: future published Events for the active region and locale (selected by the platform). */
+  events?: EventCardContent[]
+  /** Localised flight-path labels per event type, passed to each card. */
+  eventTypeLabels?: Partial<Record<EventType, string>>
+  /** Label of the load-more control (runtimeProps.pagination = sixPerPageLoadMore). */
+  loadMoreLabel?: string
+  /** IANA time zone used for the card dates. */
+  timeZone?: string
 }
+
+const { id, theme = 'light', headingLevel = 'h2', intro, events = [], eventTypeLabels, loadMoreLabel = 'Load more future events', timeZone } = Astro.props as Props
+
+// runtimeProps.pagination: six cards per page, revealed by the load-more control (every card renders without JavaScript).
+const pageSize = 6
+// runtimeProps.sort = startDateTimeAscending; events without a valid start date go last, ties keep their order.
+const startTime = (event: EventCardContent): number => {
+  const time = Date.parse(event.startDateTime)
+  return Number.isNaN(time) ? Number.POSITIVE_INFINITY : time
+}
+const valid = events.filter((event) => event && typeof event.title === 'string' && event.title !== '' && typeof event.location === 'string' && typeof event.startDateTime === 'string')
+const sorted = valid.map((event, index) => ({ event, index })).sort((a, b) => startTime(a.event) - startTime(b.event) || a.index - b.index).map(({ event }) => event)
+const CardHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' : 'h4'
+const loadMoreIcon = ctaIconPaths.plus
 ---
-<StructuralSection block="beta-event-overview-allentown" fields={fields} {...props} />
+<section class="event-overview-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-event-overview data-event-overview-page-size={pageSize}>
+  <div class="event-overview-allentown__container">
+    <header class="event-overview-allentown__intro">
+      <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
+    </header>
+    {sorted.length > 0 && <ul class="event-overview-allentown__events" data-event-overview-list>
+      {sorted.map((event) => <li class="event-overview-allentown__event"><EventCard event={event} headingLevel={CardHeading} eventTypeLabels={eventTypeLabels} timeZone={timeZone} /></li>)}
+    </ul>}
+    {sorted.length > pageSize && <button class="button button--clear event-overview-allentown__load-more" type="button" data-event-overview-load-more hidden>{loadMoreLabel}<svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={loadMoreIcon.viewBox} fill="none"><path d={loadMoreIcon.path} stroke="currentColor" stroke-width="2" /></svg></button>}
+  </div>
+</section>
+<script>
+  // Progressive enhancement: without JavaScript every event stays visible and the control stays hidden.
+  for (const section of document.querySelectorAll<HTMLElement>('[data-event-overview]')) {
+    const button = section.querySelector<HTMLButtonElement>('[data-event-overview-load-more]')
+    const items = [...section.querySelectorAll<HTMLElement>('[data-event-overview-list] > li')]
+    const pageSize = Number(section.dataset.eventOverviewPageSize) || 6
+    if (!button || button.dataset.eventOverviewReady || items.length <= pageSize) continue
+    button.dataset.eventOverviewReady = 'true'
+    items.slice(pageSize).forEach((item) => { item.hidden = true })
+    button.hidden = false
+    button.addEventListener('click', () => {
+      const next = items.filter((item) => item.hidden).slice(0, pageSize)
+      next.forEach((item) => { item.hidden = false })
+      if (!items.some((item) => item.hidden)) button.hidden = true
+      const first = next[0]
+      if (first) { first.tabIndex = -1; first.focus() }
+    })
+  }
+</script>
 <style is:global>
-.beta-event-overview-allentown[data-kinekt-section] {
-  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--event-overview-allentown-site-width, var(--website-width)));
-  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--event-overview-allentown-content-width, var(--content-width)));
-  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--event-overview-allentown-reading-width, var(--width-m)));
-  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--event-overview-allentown-inline-space, var(--section-gutter)));
-  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--event-overview-allentown-block-space, var(--section-space-l)));
-  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--event-overview-allentown-gap, var(--content-gap)));
-  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--event-overview-allentown-radius, var(--radius-none)));
-  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--event-overview-allentown-border-width, var(--border-width)));
-  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--event-overview-allentown-media-filter, var(--media-filter)));
-  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--event-overview-allentown-intro-accent-gap, var(--space-xxs)));
-  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--event-overview-allentown-intro-description-gap, var(--space-m)));
-  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--event-overview-allentown-heading-1-size, var(--h1)));
-  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--event-overview-allentown-heading-2-size, var(--h2)));
-  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--event-overview-allentown-heading-3-size, var(--h3)));
-  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--event-overview-allentown-heading-4-size, var(--h4)));
-  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--event-overview-allentown-heading-5-size, var(--h5)));
-  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--event-overview-allentown-heading-6-size, var(--h6)));
-  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--event-overview-allentown-heading-font-family, var(--heading-font-family)));
-  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--event-overview-allentown-heading-font-weight, var(--heading-font-weight)));
-  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--event-overview-allentown-heading-line-height, var(--heading-line-height)));
-  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--event-overview-allentown-heading-letter-spacing, var(--heading-letter-spacing)));
-  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--event-overview-allentown-text-font-family, var(--text-font-family)));
-  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--event-overview-allentown-text-font-weight, var(--text-font-weight)));
-  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--event-overview-allentown-text-line-height, var(--text-line-height)));
-  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--event-overview-allentown-text-letter-spacing, var(--text-letter-spacing)));
-  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--event-overview-allentown-mono-font-family, var(--mono-font-family)));
-  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--event-overview-allentown-text-xs-size, var(--text-xs)));
-  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--event-overview-allentown-text-s-size, var(--text-s)));
-  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--event-overview-allentown-text-m-size, var(--text-m)));
-  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--event-overview-allentown-text-l-size, var(--text-l)));
-  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--event-overview-allentown-text-xl-size, var(--text-xl)));
-  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--event-overview-allentown-text-xxl-size, var(--text-xxl)));
-  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--event-overview-allentown-carousel-gap, var(--content-gap)));
-  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--event-overview-allentown-actions-gap, var(--space-s)));
-  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--event-overview-allentown-actions-margin, var(--space-xl)));
-  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--event-overview-allentown-button-height, var(--input-height)));
-  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--event-overview-allentown-button-padding-block, var(--space-s)));
-  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--event-overview-allentown-button-padding-inline, var(--space-l)));
-  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--event-overview-allentown-button-radius, var(--buttons-radius)));
-  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--event-overview-allentown-input-height, var(--input-height)));
-  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--event-overview-allentown-editorial-gap, var(--section-space-xxl)));
-  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--event-overview-allentown-card-padding, var(--space-l)));
-  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--event-overview-allentown-header-to-content-gap, var(--section-space-s)));
-  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--event-overview-allentown-table-offset, var(--space-xl)));
-  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--event-overview-allentown-canvas));
-  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--event-overview-allentown-surface));
-  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--event-overview-allentown-ink));
-  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--event-overview-allentown-muted));
-  --kiw--section-subtle: var(--kinekt-section-subtle, var(--kiw--event-overview-allentown-subtle));
-  --kiw--section-line: var(--kinekt-section-line, var(--kiw--event-overview-allentown-line));
-  --kiw--section-action: var(--kinekt-section-action, var(--kiw--event-overview-allentown-action));
-  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--event-overview-allentown-action-text));
-  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--event-overview-allentown-accent));
-  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--event-overview-allentown-action-icon));
-}
+  .event-overview-allentown {
+    --kiw--section-site-width: var(--kiw--event-overview-allentown-site-width, var(--website-width));
+    --kiw--section-content-width: var(--kiw--event-overview-allentown-content-width, var(--content-width));
+    --kiw--section-reading-width: var(--kiw--event-overview-allentown-reading-width, var(--width-m));
+    --kiw--section-inline-space: var(--kiw--event-overview-allentown-inline-space, var(--section-gutter));
+    --kiw--section-block-space: var(--kiw--event-overview-allentown-block-space, var(--section-space-l));
+    --kiw--section-gap: var(--kiw--event-overview-allentown-gap, var(--content-gap));
+    --kiw--section-radius: var(--kiw--event-overview-allentown-radius, var(--radius-none));
+    --kiw--section-border-width: var(--kiw--event-overview-allentown-border-width, var(--border-width));
+    --kiw--section-media-filter: var(--kiw--event-overview-allentown-media-filter, var(--media-filter));
+    --kiw--section-intro-accent-gap: var(--kiw--event-overview-allentown-intro-accent-gap, var(--space-xxs));
+    --kiw--section-intro-description-gap: var(--kiw--event-overview-allentown-intro-description-gap, var(--space-m));
+    --kiw--section-heading-1-size: var(--kiw--event-overview-allentown-heading-1-size, var(--h1));
+    --kiw--section-heading-2-size: var(--kiw--event-overview-allentown-heading-2-size, var(--h2));
+    --kiw--section-heading-3-size: var(--kiw--event-overview-allentown-heading-3-size, var(--h3));
+    --kiw--section-heading-4-size: var(--kiw--event-overview-allentown-heading-4-size, var(--h4));
+    --kiw--section-heading-5-size: var(--kiw--event-overview-allentown-heading-5-size, var(--h5));
+    --kiw--section-heading-6-size: var(--kiw--event-overview-allentown-heading-6-size, var(--h6));
+    --kiw--section-heading-font-family: var(--kiw--event-overview-allentown-heading-font-family, var(--heading-font-family));
+    --kiw--section-heading-font-weight: var(--kiw--event-overview-allentown-heading-font-weight, var(--heading-font-weight));
+    --kiw--section-heading-line-height: var(--kiw--event-overview-allentown-heading-line-height, var(--heading-line-height));
+    --kiw--section-heading-letter-spacing: var(--kiw--event-overview-allentown-heading-letter-spacing, var(--heading-letter-spacing));
+    --kiw--section-text-font-family: var(--kiw--event-overview-allentown-text-font-family, var(--text-font-family));
+    --kiw--section-text-font-weight: var(--kiw--event-overview-allentown-text-font-weight, var(--text-font-weight));
+    --kiw--section-text-line-height: var(--kiw--event-overview-allentown-text-line-height, var(--text-line-height));
+    --kiw--section-text-letter-spacing: var(--kiw--event-overview-allentown-text-letter-spacing, var(--text-letter-spacing));
+    --kiw--section-mono-font-family: var(--kiw--event-overview-allentown-mono-font-family, var(--mono-font-family));
+    --kiw--section-text-xs-size: var(--kiw--event-overview-allentown-text-xs-size, var(--text-xs));
+    --kiw--section-text-s-size: var(--kiw--event-overview-allentown-text-s-size, var(--text-s));
+    --kiw--section-text-m-size: var(--kiw--event-overview-allentown-text-m-size, var(--text-m));
+    --kiw--section-text-l-size: var(--kiw--event-overview-allentown-text-l-size, var(--text-l));
+    --kiw--section-text-xl-size: var(--kiw--event-overview-allentown-text-xl-size, var(--text-xl));
+    --kiw--section-text-xxl-size: var(--kiw--event-overview-allentown-text-xxl-size, var(--text-xxl));
+    --kiw--section-carousel-gap: var(--kiw--event-overview-allentown-carousel-gap, var(--content-gap));
+    --kiw--section-actions-gap: var(--kiw--event-overview-allentown-actions-gap, var(--space-s));
+    --kiw--section-actions-margin: var(--kiw--event-overview-allentown-actions-margin, var(--space-xl));
+    --kiw--section-button-height: var(--kiw--event-overview-allentown-button-height, var(--input-height));
+    --kiw--section-button-padding-block: var(--kiw--event-overview-allentown-button-padding-block, var(--space-s));
+    --kiw--section-button-padding-inline: var(--kiw--event-overview-allentown-button-padding-inline, var(--space-l));
+    --kiw--section-button-radius: var(--kiw--event-overview-allentown-button-radius, var(--buttons-radius));
+    --kiw--section-input-height: var(--kiw--event-overview-allentown-input-height, var(--input-height));
+    --kiw--section-editorial-gap: var(--kiw--event-overview-allentown-editorial-gap, var(--section-space-xxl));
+    --kiw--section-card-padding: var(--kiw--event-overview-allentown-card-padding, var(--space-l));
+    --kiw--section-header-to-content-gap: var(--kiw--event-overview-allentown-header-to-content-gap, var(--section-space-s));
+    --kiw--section-table-offset: var(--kiw--event-overview-allentown-table-offset, var(--space-xl));
+    --kiw--section-canvas: var(--kiw--event-overview-allentown-canvas);
+    --kiw--section-surface: var(--kiw--event-overview-allentown-surface);
+    --kiw--section-ink: var(--kiw--event-overview-allentown-ink);
+    --kiw--section-muted: var(--kiw--event-overview-allentown-muted);
+    --kiw--section-line: var(--kiw--event-overview-allentown-line);
+    --kiw--section-action: var(--kiw--event-overview-allentown-action);
+    --kiw--section-action-text: var(--kiw--event-overview-allentown-action-text);
+    --kiw--section-accent: var(--kiw--event-overview-allentown-accent);
+    --kiw--section-action-icon: var(--kiw--event-overview-allentown-action-icon);
+    --kiw--section-subtle: var(--kiw--event-overview-allentown-subtle);
+  }
 </style>
 <style is:global>
-:where(.beta-event-overview-allentown[data-kinekt-structural-section]) { --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-card-media-ratio: 3 / 2; --kinekt-section-gap: var(--section-space-xl); }
+  :where(.event-overview-allentown) {
+    --kiw--event-overview-container-width: var(--width-xxl);
+    --kiw--event-overview-group-gap: var(--section-space-l);
+    --kiw--event-overview-intro-width: var(--width-l);
+    --kiw--event-overview-heading-stack-gap: var(--space-xxs);
+    --kiw--event-overview-intro-group-gap: var(--space-m);
+    --kiw--event-overview-heading-size: var(--kiw--section-heading-3-size);
+    --kiw--event-overview-description-size: var(--text-l);
+    --kiw--event-overview-column-gap: var(--section-space-l);
+    --kiw--event-overview-divider-gap: var(--section-space-s);
+    --kiw--event-overview-divider-width: var(--kinekt-component-border-width);
+    --kiw--event-overview-divider-color: var(--kinekt-component-line);
+  }
+
+  .event-overview-allentown > .event-overview-allentown__container { display: grid; justify-items: start; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kiw--event-overview-group-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
+  .event-overview-allentown :is(h1, h2, h3, h4, h5, h6, p) { margin: 0; }
+  .event-overview-allentown :where(button) { font-family: inherit; letter-spacing: inherit; }
+  .event-overview-allentown .event-overview-allentown__intro { width: 100%; min-width: 0; }
+  .event-overview-allentown .section-intro { display: grid; justify-items: start; gap: var(--kiw--event-overview-intro-group-gap); }
+  .event-overview-allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
+  .event-overview-allentown .section-intro__heading-group { display: grid; gap: var(--kiw--event-overview-heading-stack-gap); }
+  .event-overview-allentown .section-intro__heading { max-width: none; font-size: var(--kiw--event-overview-heading-size); }
+  .event-overview-allentown .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--kiw--event-overview-description-size); line-height: var(--kinekt-component-text-line-height); }
+  .event-overview-allentown .section-intro__description > * { margin-block: 0; }
+  .event-overview-allentown .event-overview-allentown__events { --kiw--event-overview-columns: 1; display: grid; grid-template-columns: repeat(var(--kiw--event-overview-columns), minmax(0, 1fr)); column-gap: var(--kiw--event-overview-column-gap); row-gap: calc((var(--kiw--event-overview-divider-gap) * 2) + var(--kiw--event-overview-divider-width)); justify-self: stretch; margin: 0; padding: 0; list-style: none; }
+  .event-overview-allentown .event-overview-allentown__event { position: relative; min-width: 0; }
+  .event-overview-allentown .event-overview-allentown__event:focus { outline: none; }
+  /* Figma "Divider" between card rows (line role): each card after the first row draws its part and bridges the column gap to its right neighbour. */
+  .event-overview-allentown .event-overview-allentown__event::before { position: absolute; inset-block-start: calc(-1 * (var(--kiw--event-overview-divider-gap) + var(--kiw--event-overview-divider-width))); inset-inline: 0; block-size: var(--kiw--event-overview-divider-width); background: var(--kiw--event-overview-divider-color); content: none; }
+  .event-overview-allentown .event-overview-allentown__event:nth-child(n + 2)::before { content: ''; }
+  .event-overview-allentown .event-overview-allentown__load-more { justify-self: start; }
+  @media (min-width: 50rem) {
+    .event-overview-allentown { --kiw--event-overview-allentown-content-width: var(--kiw--event-overview-container-width); }
+    .event-overview-allentown .event-overview-allentown__intro { max-width: var(--kiw--event-overview-intro-width); }
+    .event-overview-allentown .event-overview-allentown__events { --kiw--event-overview-columns: 2; }
+    .event-overview-allentown .event-overview-allentown__event:nth-child(2)::before { content: none; }
+    .event-overview-allentown .event-overview-allentown__event:nth-child(2n + 1)::before { inset-inline-end: calc(-1 * var(--kiw--event-overview-column-gap)); }
+  }
+  @media (min-width: 75rem) {
+    .event-overview-allentown .event-overview-allentown__events { --kiw--event-overview-columns: 3; }
+    .event-overview-allentown .event-overview-allentown__event:nth-child(3)::before { content: none; }
+    .event-overview-allentown .event-overview-allentown__event:nth-child(n)::before { inset-inline-end: 0; }
+    .event-overview-allentown .event-overview-allentown__event:is(:nth-child(3n + 1), :nth-child(3n + 2))::before { inset-inline-end: calc(-1 * var(--kiw--event-overview-column-gap)); }
+  }
+</style>
+<style is:global>
+  .event-overview-allentown {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-semi-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-ultra-light)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary)));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent-semi-dark)));
+    --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent)));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary)));
+    --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family));
+    --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family));
+    --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width));
+    --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width));
+    --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width));
+    --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space));
+    --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space));
+    --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap));
+    --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius));
+    --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width));
+    --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter));
+    --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap));
+    --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap));
+    --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height));
+    --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height));
+    box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--kiw--section-text-m-size); font-weight: var(--kiw--section-text-font-weight); line-height: var(--kiw--section-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing);
+  }
+  .event-overview-allentown[data-kinekt-theme='semi-light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-semi-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-ultra-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-semi-dark))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent-semi-dark))); --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent))); --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary))); color-scheme: light; }
+  .event-overview-allentown[data-kinekt-theme='dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-semi-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent))); --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent))); --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary-ultra-light))); color-scheme: dark; }
+  .event-overview-allentown[data-kinekt-theme='semi-dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-semi-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent))); --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent))); --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary-light))); color-scheme: dark; }
+  .event-overview-allentown, .event-overview-allentown[data-kinekt-theme='light'] { color-scheme: light; }
+  .event-overview-allentown *, .event-overview-allentown *::before, .event-overview-allentown *::after { box-sizing: border-box; }
+  .event-overview-allentown [hidden] { display: none !important; }
 </style>
