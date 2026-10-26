@@ -129,7 +129,6 @@ const generatedComponentRules = {
 :where(.beta-faq-index-allentown[data-kinekt-structural-section]) .beta-faq-index-allentown__header-content { margin-inline: auto; }
 :where(.beta-faq-index-allentown[data-kinekt-structural-section]) details { border-width: 0 0 var(--kinekt-component-border-width); border-radius: 0; background: transparent; }
 :where(.beta-faq-index-allentown[data-kinekt-structural-section]) [class$='__items'] { gap: 0; border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }`,
-  'beta-product-details-allentown': `:where(.beta-product-details-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }`,
   'beta-featured-event-allentown': `:where(.beta-featured-event-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }`,
   'beta-process-story-allentown': `:where(.beta-process-story-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }
 :where(.beta-process-story-allentown[data-kinekt-structural-section]) .beta-process-story-allentown__label { text-transform: uppercase; }`,
