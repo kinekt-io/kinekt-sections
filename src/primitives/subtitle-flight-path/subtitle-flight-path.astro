@@ -1,10 +1,10 @@
 ---
-interface Props { text: string; size?: 'small' | 'medium'; class?: string; labelClass?: string }
-const { text, size = 'small', class: className, labelClass } = Astro.props
+interface Props { text: string; size?: 'small' | 'medium'; as?: 'p' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'; id?: string; class?: string; labelClass?: string }
+const { text, size = 'small', as: Label = 'p', id, class: className, labelClass } = Astro.props
 const classes = ['subtitle-flight-path', `subtitle-flight-path--${size}`, className].filter(Boolean).join(' ')
 const labelClasses = ['subtitle-flight-path__label', labelClass].filter(Boolean).join(' ')
 ---
-<div class={classes}><p class={labelClasses}>{text}</p><span class="subtitle-flight-path__path" aria-hidden="true" /></div>
+<div class={classes}><Label class={labelClasses} id={id}>{text}</Label><span class="subtitle-flight-path__path" aria-hidden="true" /></div>
 <style is:global>
   :where(.subtitle-flight-path) {
     --kiw--subtitle-flight-path-color: var(--kinekt-component-accent, var(--accent-semi-dark));
