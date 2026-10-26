@@ -154,16 +154,6 @@ const generatedComponentRules = {
   :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps { grid-column: 2; grid-row: 1 / span 2; }
   :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__media { grid-column: 1; }
 }`,
-  'beta-facilities-overview-allentown': `:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) { --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-card-media-ratio: 3 / 2; --kinekt-section-gap: var(--section-space-xl); }
-:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__container { gap: var(--section-space-l); }
-:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__facts { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--section-space-s) var(--section-space-m); border: 0; }
-:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__facts > li { padding: 0; border: 0; }
-:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__media img { aspect-ratio: 17 / 10; object-fit: cover; }
-@media (min-width: 50rem) {
-  :where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; }
-  :where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__header { grid-column: 1 / -1; }
-  :where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}`,
   'beta-featured-insights-allentown': `:where(.beta-featured-insights-allentown[data-kinekt-structural-section]) { --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-card-media-ratio: 3 / 2; --kinekt-section-gap: var(--section-space-xl); }
 :where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; background: transparent; }
 :where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources > li > article { padding: var(--section-space-s) 0; border-width: 0 0 var(--kinekt-component-border-width); background: transparent; }
