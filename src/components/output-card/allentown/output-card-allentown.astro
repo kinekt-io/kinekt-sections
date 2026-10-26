@@ -53,8 +53,7 @@ const checkViewBox = ['0 0', checkWidth, checkHeight].join(' ')
     --kiw--output-card-allentown-title-color: var(--kinekt-component-ink, inherit);
     --kiw--output-card-allentown-description-size: var(--text-l);
     --kiw--output-card-allentown-description-line-height: 1.5;
-    /* Figma sets the description in --primary (off-role); dark themes fall back to the muted role. */
-    --kiw--output-card-allentown-description-color: var(--primary);
+    --kiw--output-card-allentown-description-color: var(--kinekt-component-subtle, var(--primary));
     --kiw--output-card-allentown-benefits-gap: var(--space-s);
     --kiw--output-card-allentown-benefit-gap: var(--space-xs);
     --kiw--output-card-allentown-benefit-size: var(--text-m);
@@ -65,9 +64,6 @@ const checkViewBox = ['0 0', checkWidth, checkHeight].join(' ')
   }
   @media (min-width: 50rem) {
     :where(.output-card-allentown) { --kiw--output-card-allentown-media-size: var(--width-xs); }
-  }
-  :where([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) :where(.output-card-allentown) {
-    --kiw--output-card-allentown-description-color: var(--kinekt-component-muted, var(--primary-light));
   }
 
   .output-card-allentown { display: grid; align-content: start; justify-items: start; gap: var(--kiw--output-card-allentown-gap); min-width: 0; margin: 0; padding: 0; border: 0; background: transparent; }

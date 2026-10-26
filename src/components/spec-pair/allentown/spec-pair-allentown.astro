@@ -13,7 +13,7 @@ const classes = ["spec-pair-allentown", className].filter(Boolean).join(" ");
 
 <style is:global>
   :where(.spec-pair-allentown) {
-    --kiw--spec-pair-allentown-ink: var(--kinekt-spec-pair-ink, var(--primary));
+    --kiw--spec-pair-allentown-ink: var(--kinekt-component-subtle, var(--primary));
     --kiw--spec-pair-allentown-label-width: 6.25rem;
     --kiw--spec-pair-allentown-gap: var(--space-xxl);
     --kiw--spec-pair-allentown-font-size: var(--text-m);
@@ -25,10 +25,6 @@ const classes = ["spec-pair-allentown", className].filter(Boolean).join(" ");
     --kiw--spec-pair-allentown-divider-width: var(--border-width);
     --kiw--spec-pair-allentown-divider-color: var(--kinekt-component-line, var(--primary-ultra-light));
   }
-
-  /* Figma uses --primary for spec text on light canvases; dark canvases fall back to the muted role. */
-  :where([data-kinekt-theme='light'], [data-kinekt-theme='semi-light']) { --kinekt-spec-pair-ink: var(--primary); }
-  :where([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) { --kinekt-spec-pair-ink: var(--kinekt-component-muted); }
 
   .spec-pair-allentown {
     display: grid;
