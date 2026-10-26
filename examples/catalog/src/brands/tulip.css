@@ -84,9 +84,4 @@
   --radius-m: 2px;
   --radius-l: 2.666px;
   --buttons-has-radius: 1;
-  --buttons-radius: var(--radius-m);
-  /* Figma's space-xs (8.96) and space-xxs (3.84) deviate from the 1.25 scale
-     that its section spacing uses, so only these two outputs are overridden. */
-  --space-xs: calc(var(--mobile-space-xs) + (8.96px - var(--mobile-space-xs)) * var(--fluid-progress));
-  --space-xxs: calc(var(--mobile-space-xxs) + (3.84px - var(--mobile-space-xxs)) * var(--fluid-progress));
 }
