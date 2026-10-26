@@ -1,0 +1,45 @@
+---
+/*
+ * Step Stage: one step of Figma "Section - 01 Light Battery Packs" (5240:414399, "Text Container" 5240:414406).
+ * A "Subtile + Flight Path" (Small) stage label above the numbered step. The numbered step itself is the
+ * same pattern as Next Step Allentown (accent mono number + title, description in `subtle`, clear CTAs),
+ * so it reuses that renderer and only retunes its variables to this frame: h4 instead of h5, number
+ * line-height 1.2, and space-m (not space-l) between copy and CTAs.
+ */
+import NextStep, { type NextStepContent } from '../../next-step/allentown/next-step-allentown.astro'
+import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
+
+export interface StepStageContent extends NextStepContent {
+  stage: string
+}
+
+interface Props {
+  step: StepStageContent
+  /** Renderer-derived list position (1-based); shown as a zero-padded number. */
+  number: number
+  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  class?: string
+}
+
+const { step, number, headingLevel = 'h3', class: className } = Astro.props
+const classes = ['step-stage', className].filter(Boolean).join(' ')
+---
+<div class={classes}>
+  {step.stage && <SubtitleFlightPath text={step.stage} size="small" class="step-stage__stage" />}
+  <NextStep step={step} number={number} headingLevel={headingLevel} class="step-stage__step" />
+</div>
+<style is:global>
+  :where(.step-stage) {
+    --kiw--step-stage-gap: var(--space-s);
+    --kiw--step-stage-heading-size: var(--h4);
+    --kiw--step-stage-number-line-height: 1.2;
+    --kiw--step-stage-actions-offset: var(--space-m);
+  }
+
+  .step-stage { display: grid; align-content: start; gap: var(--kiw--step-stage-gap); min-width: 0; }
+  .step-stage .step-stage__step {
+    --kiw--next-step-allentown-heading-size: var(--kiw--step-stage-heading-size);
+    --kiw--next-step-allentown-number-line-height: var(--kiw--step-stage-number-line-height);
+    --kiw--next-step-allentown-gap: var(--kiw--step-stage-actions-offset);
+  }
+</style>

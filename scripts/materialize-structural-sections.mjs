@@ -126,17 +126,6 @@ const generatedComponentRules = {
   'beta-hd-cells-engineering-allentown': `:where(.beta-hd-cells-engineering-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }`,
   'beta-insight-index-allentown': `:where(.beta-insight-index-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-gap: var(--section-space-xl); }`,
   'beta-tabs-allentown': `:where(.beta-tabs-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }`,
-  'beta-steps-stage': `:where(.beta-steps-stage[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-xl); }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__container { display: grid; gap: var(--section-space-l); }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps { display: grid; gap: var(--section-space-s); margin: 0; }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps-item { border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-border); }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps summary { padding-block: var(--space-s); }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps-body { padding: 0 0 var(--space-m); }
-@media (min-width: 50rem) {
-  :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
-  :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps { grid-column: 2; grid-row: 1 / span 2; }
-  :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__media { grid-column: 1; }
-}`,
   'beta-featured-insights-allentown': `:where(.beta-featured-insights-allentown[data-kinekt-structural-section]) { --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-card-media-ratio: 3 / 2; --kinekt-section-gap: var(--section-space-xl); }
 :where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; background: transparent; }
 :where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources > li > article { padding: var(--section-space-s) 0; border-width: 0 0 var(--kinekt-component-border-width); background: transparent; }
