@@ -94,7 +94,7 @@ const sectionTokenRoles = [
   ['table-offset', 'space-xl'],
 ]
 
-const sectionColorRoles = ['canvas', 'surface', 'ink', 'muted', 'line', 'action', 'action-text', 'accent', 'action-icon']
+const sectionColorRoles = ['canvas', 'surface', 'ink', 'muted', 'subtle', 'line', 'action', 'action-text', 'accent', 'action-icon']
 
 function sectionTokenBridgeCss(block) {
   const tokenBlock = block.startsWith('beta-') ? block.slice(5) : block

@@ -127,6 +127,7 @@ const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta']
     --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height, var(--text-line-height)));
     --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent-semi-dark)));
     --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent)));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary)));
     box-sizing: border-box;
     padding-block: var(--kinekt-component-block-space);
     color: var(--kinekt-component-ink);
@@ -149,6 +150,7 @@ const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta']
     --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
     --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent-semi-dark)));
     --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent)));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary)));
   }
   :where([data-kinekt-structural-section][data-kinekt-theme='dark'], [data-kinekt-structural-section][data-kinekt-theme='semi-dark']) {
     --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark)));
@@ -160,6 +162,7 @@ const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta']
     --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
     --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent)));
     --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent)));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary-ultra-light)));
     color-scheme: dark;
   }
   :where([data-kinekt-structural-section][data-kinekt-theme='semi-dark']) {
@@ -172,6 +175,7 @@ const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta']
     --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
     --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent)));
     --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent)));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary-light)));
   }
 
   :where([data-kinekt-structural-section]) *,
