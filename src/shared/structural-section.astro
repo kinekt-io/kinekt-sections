@@ -202,7 +202,7 @@ const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta']
   :where([data-kinekt-structural-section]) :is(p, li, dd, td, th, label, input, textarea, button):where(:not(.callout-allentown__label, .button, .section-intro__description)) { font: inherit; line-height: var(--kinekt-component-text-line-height); }
   :where([data-kinekt-structural-section]) button.button { width: fit-content; font-family: var(--kinekt-component-font); }
   :where([data-kinekt-structural-section]) :is(p, ul, ol, dl, table, form):where(:not(.section-intro__description, .section-intro__accent)) { margin-block: 0; }
-  :where([data-kinekt-structural-section]) :is([class$='__actions'], [class*='__cta-group']) { display: flex; flex-wrap: wrap; gap: var(--kinekt-section-actions-gap, var(--kiw--section-actions-gap, var(--space-s))); margin-top: var(--kinekt-section-actions-margin, var(--kiw--section-actions-margin, var(--space-xl))); }
+  :where([data-kinekt-structural-section]) :is([class$='__actions'], [class*='__cta-group']) { display: flex; flex-wrap: wrap; gap: var(--kinekt-section-actions-gap, var(--kiw--section-actions-gap, var(--space-l))); margin-top: var(--kinekt-section-actions-margin, var(--kiw--section-actions-margin, var(--section-space-xs))); }
   :where([data-kinekt-structural-section]) [class$='__header'] > :is([class$='__actions'], [class$='__cta']) { margin-top: 0; }
   /* Button owns its defaults; sections only set its inherited token context. */
   :where([data-kinekt-structural-section]) :is([class$='__media'], [class*='__media-'], [class*='__image']) { display: block; max-width: 100%; }

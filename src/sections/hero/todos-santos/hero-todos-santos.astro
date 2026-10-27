@@ -146,8 +146,8 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
     --kiw--section-text-xl-size: var(--kiw--hero-todos-santos-text-xl-size, var(--text-xl));
     --kiw--section-text-xxl-size: var(--kiw--hero-todos-santos-text-xxl-size, var(--text-xxl));
     --kiw--section-carousel-gap: var(--kiw--hero-todos-santos-carousel-gap, var(--content-gap));
-    --kiw--section-actions-gap: var(--kiw--hero-todos-santos-actions-gap, var(--space-s));
-    --kiw--section-actions-margin: var(--kiw--hero-todos-santos-actions-margin, var(--space-xl));
+    --kiw--section-actions-gap: var(--kiw--hero-todos-santos-actions-gap, var(--space-l));
+    --kiw--section-actions-margin: var(--kiw--hero-todos-santos-actions-margin, var(--section-space-xs));
     --kiw--section-button-height: var(--kiw--hero-todos-santos-button-height, var(--input-height));
     --kiw--section-button-padding-block: var(--kiw--hero-todos-santos-button-padding-block, var(--space-s));
     --kiw--section-button-padding-inline: var(--kiw--hero-todos-santos-button-padding-inline, var(--space-l));
@@ -187,7 +187,7 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
   .hero-todos-santos .hero-todos-santos__feature-table :is(th, td) { padding-block: var(--hero-todos-santos-feature-row-gap); padding-inline: var(--space-s); border: 0; background: transparent; vertical-align: top; }
   .hero-todos-santos .hero-todos-santos__feature-table th { padding-inline-end: var(--space-m); font-weight: var(--text-font-weight); }
   .hero-todos-santos .hero-todos-santos__feature-table td { color: var(--kinekt-component-muted); }
-  .hero-todos-santos .hero-todos-santos__actions { display: flex; flex-wrap: wrap; gap: var(--space-l); }
+  .hero-todos-santos .hero-todos-santos__actions { display: flex; flex-wrap: wrap; gap: var(--space-l); margin-block-start: 0; }
   .hero-todos-santos .hero-todos-santos__media { align-self: stretch; }
   .hero-todos-santos .hero-todos-santos__image { aspect-ratio: var(--kinekt-section-media-ratio); block-size: 100%; object-fit: cover; }
   @media (min-width: 50rem) { .hero-todos-santos .hero-todos-santos__container { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; justify-content: space-between; gap: var(--section-space-xxl); } .hero-todos-santos .hero-todos-santos__feature { grid-template-columns: minmax(0, 12.5rem) minmax(0, 1fr); gap: var(--space-m); } .hero-todos-santos .hero-todos-santos__media { block-size: var(--hero-todos-santos-media-height); } }

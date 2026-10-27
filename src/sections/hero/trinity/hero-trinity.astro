@@ -107,8 +107,8 @@ assertSafeImage(image, 'image'); if (mobileImage) assertSafeImage(mobileImage, '
     --kiw--section-text-xl-size: var(--kiw--hero-trinity-text-xl-size, var(--text-xl));
     --kiw--section-text-xxl-size: var(--kiw--hero-trinity-text-xxl-size, var(--text-xxl));
     --kiw--section-carousel-gap: var(--kiw--hero-trinity-carousel-gap, var(--content-gap));
-    --kiw--section-actions-gap: var(--kiw--hero-trinity-actions-gap, var(--space-s));
-    --kiw--section-actions-margin: var(--kiw--hero-trinity-actions-margin, var(--space-xl));
+    --kiw--section-actions-gap: var(--kiw--hero-trinity-actions-gap, var(--space-l));
+    --kiw--section-actions-margin: var(--kiw--hero-trinity-actions-margin, var(--section-space-xs));
     --kiw--section-button-height: var(--kiw--hero-trinity-button-height, var(--input-height));
     --kiw--section-button-padding-block: var(--kiw--hero-trinity-button-padding-block, var(--space-s));
     --kiw--section-button-padding-inline: var(--kiw--hero-trinity-button-padding-inline, var(--space-l));
@@ -157,7 +157,7 @@ assertSafeImage(image, 'image'); if (mobileImage) assertSafeImage(mobileImage, '
   .hero-trinity .hero-trinity__image { display: block; inline-size: 100%; block-size: 100%; border-radius: 0; object-fit: cover; }
   .hero-trinity .hero-trinity__content { z-index: 0; align-content: end; inline-size: 100%; max-inline-size: none; min-block-size: var(--hero-trinity-frame-min-block-size); padding: var(--section-space-m) var(--kinekt-component-inline-space); }
   .hero-trinity .hero-trinity__content > :is(.section-intro, .hero-trinity__actions) { inline-size: min(100%, var(--hero-trinity-copy-width)); }
-  .hero-trinity .hero-trinity__actions { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-block-start: var(--space-xl); }
+  .hero-trinity .hero-trinity__actions { display: flex; flex-wrap: wrap; gap: var(--kiw--section-actions-gap); margin-block-start: var(--kiw--section-actions-margin); }
   .hero-trinity :is(.section-intro__heading, .section-intro__description) { max-width: var(--kinekt-component-reading-width); }
   @media (max-width: 49.99rem) { .hero-trinity { --kinekt-component-reading-width: var(--content-width); } }
   .hero-trinity .hero-trinity__image { aspect-ratio: 1 / 1; }
