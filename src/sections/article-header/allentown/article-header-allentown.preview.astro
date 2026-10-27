@@ -2,12 +2,14 @@
 import ArticleHeaderAllentown from './article-header-allentown.astro'
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-const placeholder = `${base}placeholders/placeholder-1600x900.svg`
+const placeholder = (name: string) => `${base}placeholders/${name}`
+const description = { html: '<p>The operating decisions that turn an early battery brief into a credible integration plan, from mission profile and payload to the certification path.</p><p>Use it as a checklist before the first engineering call: each step names the data your battery partner needs and why it changes the pack design.</p>' }
 ---
 <ArticleHeaderAllentown
-  theme="light"
-  intro={{ accentHeading: 'Engineering notes', heading: 'How to specify a battery system for sustained flight', description: 'The operating decisions that turn an early battery brief into a credible integration plan.' }}
-  readingTime="6 min read"
-  heroMedia={{ sourceType: 'image', image: { url: placeholder, alt: 'Battery module on an engineering bench', width: 1600, height: 900 } }}
+  theme="semi-light"
+  breadcrumb={[{ label: 'Articles', href: '/articles' }, { label: 'Specifying a battery system' }]}
+  intro={{ accentHeading: '/ Engineering notes', heading: 'How to specify a battery system for sustained flight', description }}
+  readingTime="6 min reading time"
+  heroMedia={{ sourceType: 'image', image: { url: placeholder('placeholder-1000x800.svg'), alt: 'Battery module on an engineering bench', width: 1000, height: 800 } }}
   mediaLoading="eager"
 />
