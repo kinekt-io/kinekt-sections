@@ -1,174 +1,55 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import FaqIndex from './faq-index-allentown.astro'
 
 const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  theme: 'semi-light' as const,
+  intro: {
+    accentHeading: '/ FAQ',
+    heading: 'Find your answer',
   },
-  "callout": {
-    "intro": {
-      "accentHeading": "Energy systems built around real operating conditions",
-      "heading": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  subjects: [
+    { id: 'selection', label: 'Selection' },
+    { id: 'integration', label: 'Integration' },
+    { id: 'certification', label: 'Certification' },
+    { id: 'ordering', label: 'Ordering' },
+  ],
+  faqs: [
+    {
+      question: 'How do I know which battery pack is right for my platform?',
+      answer: 'The right pack depends on your platform architecture, voltage, energy requirements, available space, weight budget and mission profile. Tulip can help compare available standard packs and determine whether a standard or custom solution is the better fit.',
+      subjects: ['selection'],
     },
-    "ctaGroup": {
-      "primaryButton": {
-        "label": "Explore the specification",
-        "href": "#"
-      },
-      "secondaryButton": {
-        "label": "Explore the specification",
-        "href": "#"
-      }
-    }
-  }
-}
-const fields = {
-  "theme": {
-    "kind": "select"
+    {
+      question: 'Can I use a Tulip battery pack in an existing platform?',
+      answer: 'Yes. Standard packs are available in common voltages and connector options, and our engineers check mechanical fit, power draw and communication protocols against your existing platform before you order.',
+      subjects: ['integration', 'selection'],
+    },
+    {
+      question: 'What is the difference between a standard and custom battery pack?',
+      answer: 'Standard packs are qualified, in stock and ready to integrate. Custom packs are engineered around your platform when space, energy or environmental requirements fall outside the standard range.',
+      subjects: ['selection'],
+    },
+    {
+      question: 'Are Tulip battery packs certified for use in Europe?',
+      answer: 'Our packs are designed and tested to meet UN 38.3 transport requirements and the relevant IEC safety standards. Certificates and test reports are available on request for every pack in the standard range.',
+      subjects: ['certification'],
+    },
+    {
+      question: 'What information do you need to recommend a battery pack?',
+      answer: 'Share your platform type, operating voltage, expected power draw, flight or mission time, available space and weight budget. Environmental conditions and expected order volumes help us refine the recommendation.',
+      subjects: ['ordering', 'selection'],
+    },
+  ],
+  callout: {
+    intro: {
+      accentHeading: 'Did you not find your answer?',
+      heading: 'Talk to a battery engineer',
+      description: 'Send us your question and an engineer will get back to you within one working day.',
+    },
+    ctaGroup: {
+      primaryButton: { label: 'Ask an expert', href: '/contact', icon: 'arrow-right' as const },
+    },
   },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "callout": {
-    "kind": "component",
-    "id": "components/callout/allentown",
-    "role": "callout",
-    "fields": {
-      "intro": {
-        "kind": "component",
-        "id": "components/intro/allentown",
-        "role": "intro",
-        "fields": {
-          "accentHeading": {
-            "kind": "text"
-          },
-          "heading": {
-            "kind": "text"
-          },
-          "description": {
-            "kind": "richText"
-          }
-        }
-      },
-      "ctaGroup": {
-        "kind": "component",
-        "id": "components/cta-group/allentown",
-        "role": "cta-group",
-        "fields": {
-          "primaryButton": {
-            "kind": "cta"
-          },
-          "secondaryButton": {
-            "kind": "cta"
-          }
-        }
-      }
-    }
-  }
 }
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
-const resolvedMedia = resolveCatalogueAssets(media) as typeof media
 ---
-<StructuralSection block="beta-faq-index-allentown" intro={intro} ctas={ctas} media={resolvedMedia} content={resolvedContent} fields={fields} />
-<style is:global>
-.beta-faq-index-allentown[data-kinekt-section] {
-  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--faq-index-allentown-site-width, var(--website-width)));
-  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--faq-index-allentown-content-width, var(--content-width)));
-  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--faq-index-allentown-reading-width, var(--width-m)));
-  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--faq-index-allentown-inline-space, var(--section-gutter)));
-  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--faq-index-allentown-block-space, var(--section-space-l)));
-  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--faq-index-allentown-gap, var(--content-gap)));
-  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--faq-index-allentown-radius, var(--radius-none)));
-  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--faq-index-allentown-border-width, var(--border-width)));
-  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--faq-index-allentown-media-filter, var(--media-filter)));
-  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--faq-index-allentown-intro-accent-gap, var(--space-xxs)));
-  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--faq-index-allentown-intro-description-gap, var(--space-m)));
-  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--faq-index-allentown-heading-1-size, var(--h1)));
-  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--faq-index-allentown-heading-2-size, var(--h2)));
-  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--faq-index-allentown-heading-3-size, var(--h3)));
-  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--faq-index-allentown-heading-4-size, var(--h4)));
-  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--faq-index-allentown-heading-5-size, var(--h5)));
-  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--faq-index-allentown-heading-6-size, var(--h6)));
-  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--faq-index-allentown-heading-font-family, var(--heading-font-family)));
-  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--faq-index-allentown-heading-font-weight, var(--heading-font-weight)));
-  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--faq-index-allentown-heading-line-height, var(--heading-line-height)));
-  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--faq-index-allentown-heading-letter-spacing, var(--heading-letter-spacing)));
-  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--faq-index-allentown-text-font-family, var(--text-font-family)));
-  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--faq-index-allentown-text-font-weight, var(--text-font-weight)));
-  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--faq-index-allentown-text-line-height, var(--text-line-height)));
-  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--faq-index-allentown-text-letter-spacing, var(--text-letter-spacing)));
-  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--faq-index-allentown-mono-font-family, var(--mono-font-family)));
-  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--faq-index-allentown-text-xs-size, var(--text-xs)));
-  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--faq-index-allentown-text-s-size, var(--text-s)));
-  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--faq-index-allentown-text-m-size, var(--text-m)));
-  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--faq-index-allentown-text-l-size, var(--text-l)));
-  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--faq-index-allentown-text-xl-size, var(--text-xl)));
-  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--faq-index-allentown-text-xxl-size, var(--text-xxl)));
-  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--faq-index-allentown-carousel-gap, var(--content-gap)));
-  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--faq-index-allentown-actions-gap, var(--space-s)));
-  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--faq-index-allentown-actions-margin, var(--space-xl)));
-  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--faq-index-allentown-button-height, var(--input-height)));
-  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--faq-index-allentown-button-padding-block, var(--space-s)));
-  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--faq-index-allentown-button-padding-inline, var(--space-l)));
-  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--faq-index-allentown-button-radius, var(--buttons-radius)));
-  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--faq-index-allentown-input-height, var(--input-height)));
-  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--faq-index-allentown-editorial-gap, var(--section-space-xxl)));
-  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--faq-index-allentown-card-padding, var(--space-l)));
-  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--faq-index-allentown-header-to-content-gap, var(--section-space-s)));
-  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--faq-index-allentown-table-offset, var(--space-xl)));
-  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--faq-index-allentown-canvas));
-  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--faq-index-allentown-surface));
-  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--faq-index-allentown-ink));
-  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--faq-index-allentown-muted));
-  --kiw--section-subtle: var(--kinekt-section-subtle, var(--kiw--faq-index-allentown-subtle));
-  --kiw--section-line: var(--kinekt-section-line, var(--kiw--faq-index-allentown-line));
-  --kiw--section-action: var(--kinekt-section-action, var(--kiw--faq-index-allentown-action));
-  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--faq-index-allentown-action-text));
-  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--faq-index-allentown-accent));
-  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--faq-index-allentown-action-icon));
-}
-</style>
-<style is:global>
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) .beta-faq-index-allentown__header { text-align: center; }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) .beta-faq-index-allentown__header-content { margin-inline: auto; }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) details { border-width: 0 0 var(--kinekt-component-border-width); border-radius: 0; background: transparent; }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) [class$='__items'] { gap: 0; border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
-</style>
+<FaqIndex {...content} />

@@ -1,217 +1,48 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import StepsStage from './steps-stage.astro'
+const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
 
+// Copy from Figma "Section - 01 Light Battery Packs" (5240:414399).
 const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  theme: 'light' as const,
+  intro: {
+    accentHeading: '/ From design to deployment',
+    heading: 'Tulip’s R&D methods',
+    description: {
+      html: '<p>We design every pack around your application, selecting the ideal cell from thousands across 50+ suppliers, or building a custom one tailored to your needs.</p>',
+    },
   },
-  "media": {
-    "url": "catalogue-asset:placeholder-1600x900.svg",
-    "alt": "Battery module and electrical interface",
-    "width": 1600,
-    "height": 900
+  media: {
+    url: placeholder('placeholder-1600x900.svg'),
+    alt: 'Battery pack prototype on the test bench',
+    width: 1600,
+    height: 900,
   },
-  "steps": [
+  steps: [
     {
-      "stage": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "title": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "ctaGroup": {
-        "primaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        },
-        "secondaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        }
-      }
+      stage: 'Design',
+      title: 'Engineer around the platform',
+      description: 'We model performance on your platform before anything is built. Designing for manufacturing from the start means production takes shape while you test.',
+      ctaGroup: {
+        primaryButton: { label: 'Read more about high-density engineering', href: '#', icon: 'arrow-right' as const },
+      },
     },
     {
-      "stage": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "title": "Designed for the constraints that shape delivery",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "ctaGroup": {
-        "primaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        },
-        "secondaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        }
-      }
+      stage: 'Prototype',
+      title: 'Validate the design early',
+      description: 'Your pack should run reliably, every time. That’s why we build a prototype and send it to you, after fast iterations to the lowest-weight build your platform can carry.',
     },
     {
-      "stage": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "title": "Performance data teams can use with confidence",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "ctaGroup": {
-        "primaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        },
-        "secondaryButton": {
-          "label": "Explore the specification",
-          "href": "#"
-        }
-      }
-    }
-  ]
+      stage: 'Test',
+      title: 'Prove performance before deployment',
+      description: 'We test the battery itself, and then you test it too. Every pack goes through extensive laboratory and field evaluation before it reaches your platform.',
+    },
+    {
+      stage: 'Scale',
+      title: 'Scale with confidence',
+      description: 'The moment your pack is proven, it’s refined, certified to UN38.3, and produced at volume: up to 100,000 packs per year per product.',
+    },
+  ],
 }
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "media": {
-    "kind": "media"
-  },
-  "steps": {
-    "kind": "componentList",
-    "id": "components/step/stage",
-    "role": "step",
-    "fields": {
-      "stage": {
-        "kind": "text"
-      },
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "textarea"
-      },
-      "ctaGroup": {
-        "kind": "component",
-        "id": "components/cta-group/allentown",
-        "role": "cta-group",
-        "fields": {
-          "primaryButton": {
-            "kind": "cta"
-          },
-          "secondaryButton": {
-            "kind": "cta"
-          }
-        }
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = {
-  "url": "catalogue-asset:placeholder-1600x900.svg",
-  "alt": "Battery module and electrical interface",
-  "width": 1600,
-  "height": 900
-}
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
-const resolvedMedia = resolveCatalogueAssets(media) as typeof media
 ---
-<StructuralSection block="beta-steps-stage" intro={intro} ctas={ctas} media={resolvedMedia} content={resolvedContent} fields={fields} />
-<style is:global>
-.beta-steps-stage[data-kinekt-section] {
-  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--steps-stage-site-width, var(--website-width)));
-  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--steps-stage-content-width, var(--content-width)));
-  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--steps-stage-reading-width, var(--width-m)));
-  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--steps-stage-inline-space, var(--section-gutter)));
-  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--steps-stage-block-space, var(--section-space-l)));
-  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--steps-stage-gap, var(--content-gap)));
-  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--steps-stage-radius, var(--radius-none)));
-  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--steps-stage-border-width, var(--border-width)));
-  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--steps-stage-media-filter, var(--media-filter)));
-  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--steps-stage-intro-accent-gap, var(--space-xxs)));
-  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--steps-stage-intro-description-gap, var(--space-m)));
-  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--steps-stage-heading-1-size, var(--h1)));
-  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--steps-stage-heading-2-size, var(--h2)));
-  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--steps-stage-heading-3-size, var(--h3)));
-  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--steps-stage-heading-4-size, var(--h4)));
-  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--steps-stage-heading-5-size, var(--h5)));
-  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--steps-stage-heading-6-size, var(--h6)));
-  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--steps-stage-heading-font-family, var(--heading-font-family)));
-  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--steps-stage-heading-font-weight, var(--heading-font-weight)));
-  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--steps-stage-heading-line-height, var(--heading-line-height)));
-  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--steps-stage-heading-letter-spacing, var(--heading-letter-spacing)));
-  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--steps-stage-text-font-family, var(--text-font-family)));
-  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--steps-stage-text-font-weight, var(--text-font-weight)));
-  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--steps-stage-text-line-height, var(--text-line-height)));
-  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--steps-stage-text-letter-spacing, var(--text-letter-spacing)));
-  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--steps-stage-mono-font-family, var(--mono-font-family)));
-  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--steps-stage-text-xs-size, var(--text-xs)));
-  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--steps-stage-text-s-size, var(--text-s)));
-  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--steps-stage-text-m-size, var(--text-m)));
-  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--steps-stage-text-l-size, var(--text-l)));
-  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--steps-stage-text-xl-size, var(--text-xl)));
-  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--steps-stage-text-xxl-size, var(--text-xxl)));
-  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--steps-stage-carousel-gap, var(--content-gap)));
-  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--steps-stage-actions-gap, var(--space-s)));
-  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--steps-stage-actions-margin, var(--space-xl)));
-  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--steps-stage-button-height, var(--input-height)));
-  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--steps-stage-button-padding-block, var(--space-s)));
-  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--steps-stage-button-padding-inline, var(--space-l)));
-  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--steps-stage-button-radius, var(--buttons-radius)));
-  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--steps-stage-input-height, var(--input-height)));
-  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--steps-stage-editorial-gap, var(--section-space-xxl)));
-  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--steps-stage-card-padding, var(--space-l)));
-  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--steps-stage-header-to-content-gap, var(--section-space-s)));
-  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--steps-stage-table-offset, var(--space-xl)));
-  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--steps-stage-canvas));
-  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--steps-stage-surface));
-  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--steps-stage-ink));
-  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--steps-stage-muted));
-  --kiw--section-subtle: var(--kinekt-section-subtle, var(--kiw--steps-stage-subtle));
-  --kiw--section-line: var(--kinekt-section-line, var(--kiw--steps-stage-line));
-  --kiw--section-action: var(--kinekt-section-action, var(--kiw--steps-stage-action));
-  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--steps-stage-action-text));
-  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--steps-stage-accent));
-  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--steps-stage-action-icon));
-}
-</style>
-<style is:global>
-:where(.beta-steps-stage[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-xl); }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__container { display: grid; gap: var(--section-space-l); }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps { display: grid; gap: var(--section-space-s); margin: 0; }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps-item { border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-border); }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps summary { padding-block: var(--space-s); }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps-body { padding: 0 0 var(--space-m); }
-@media (min-width: 50rem) {
-  :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
-  :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps { grid-column: 2; grid-row: 1 / span 2; }
-  :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__media { grid-column: 1; }
-}
-</style>
+<StepsStage {...content} />

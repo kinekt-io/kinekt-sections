@@ -1,38 +1,52 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import Callout from '../../../components/callout/allentown/callout-allentown.astro'
+import ResultItem from '../../../components/result-item/allentown/result-item-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { Media, SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
+import type { Cta, CtaGroup, Media, SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
 
+type CalloutCta = Partial<Cta> | null | undefined
 interface Props {
   id?: string
   theme?: SectionTheme
   intro: SectionIntroContent
-  metrics: Array<{ label: string; value: { text: string } }>
+  metrics: Array<{ label: string; value: { text: string; icon?: string } }>
   media?: Media | null
-  callout: {
+  callout?: {
+    /** Legacy preview shape; the Payload contract puts this in `intro.accentHeading`. */
     label?: string
     intro: SectionIntroContent
-    cta: { cta: { label: string; href: string } }
-  }
+    /** Payload contract (`components/cta-group/allentown`). */
+    ctaGroup?: { primary?: CalloutCta; secondary?: CalloutCta; primaryButton?: CalloutCta; secondaryButton?: CalloutCta } | null
+    /** Legacy preview shape. */
+    cta?: { cta?: CalloutCta } | null
+  } | null
   headingLevel?: 'h1' | 'h2' | 'h3'
 }
 
-const { id, theme = 'light', intro, metrics, media, callout, headingLevel = 'h2' } = Astro.props as Props
+const { id, theme = 'light', intro, metrics = [], media, callout, headingLevel = 'h2' } = Astro.props as Props
+// Normalise the Payload shape and the legacy preview shape into the shared Callout's `{ intro, ctaGroup }`.
+const usableCta = (cta: CalloutCta): Cta | undefined => (cta?.label && cta.href ? (cta as Cta) : undefined)
+const calloutGroup: CtaGroup = {
+  primary: usableCta(callout?.ctaGroup?.primary ?? callout?.ctaGroup?.primaryButton ?? callout?.cta?.cta),
+  secondary: usableCta(callout?.ctaGroup?.secondary ?? callout?.ctaGroup?.secondaryButton),
+}
+const calloutContent = callout?.intro
+  ? { intro: { ...callout.intro, accentHeading: callout.intro.accentHeading ?? callout.label }, ctaGroup: calloutGroup }
+  : undefined
 ---
 <section class="proof-metrics-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="proof-metrics-allentown__container">
     <div class="proof-metrics-allentown__intro-and-metrics">
       <header class="proof-metrics-allentown__intro">
-        <SectionIntro intro={intro} headingLevel={headingLevel} />
+        <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
       </header>
 
       <ul class="proof-metrics-allentown__metrics" aria-label="Proof points">
         {metrics.map((metric) => (
           <li class="proof-metrics-allentown__metric">
-            <p class="proof-metrics-allentown__metric-label">{metric.label}</p>
-            <p class="proof-metrics-allentown__metric-value">{metric.value.text}</p>
+            <ResultItem class="proof-metrics-allentown__result" size="xl" labelAs="p" label={metric.label} value={metric.value ?? { text: '' }} />
           </li>
         ))}
       </ul>
@@ -40,19 +54,7 @@ const { id, theme = 'light', intro, metrics, media, callout, headingLevel = 'h2'
 
     {media && <KinektMedia class="proof-metrics-allentown__media" imageClass="proof-metrics-allentown__image" media={media} />}
 
-    <div class="proof-metrics-allentown__callout">
-      {callout.label && (
-        <div class="proof-metrics-allentown__callout-label" aria-hidden="true">
-          <span>{callout.label}</span>
-        </div>
-      )}
-      <div class="proof-metrics-allentown__callout-body">
-        <div class="proof-metrics-allentown__callout-content">
-          <SectionIntro intro={callout.intro} headingLevel="h3" />
-        </div>
-        <Button class="proof-metrics-allentown__callout-action" href={callout.cta.cta.href} label={callout.cta.cta.label} />
-      </div>
-    </div>
+    {calloutContent && <Callout class="proof-metrics-allentown__callout" callout={calloutContent} />}
   </div>
 </section>
 <style is:global>
@@ -141,71 +143,82 @@ const { id, theme = 'light', intro, metrics, media, callout, headingLevel = 'h2'
 </style>
 <style is:global>
 /*
- * Proof Metrics follows the source composition: editorial introduction,
- * four unboxed proof values, a wide proof image, then one clear action.
- * The aliases let a site retune this composition without replacing markup.
+ * Proof Metrics follows its Figma frame (5240:412607): an intro column, four
+ * proof values (shared result-item, Figma Label "Title=yes", Extra Large), a wide proof image, then
+ * the shared Call to Action Block (callout-allentown, large). The aliases let
+ * a site retune this composition without replacing markup.
  */
 .proof-metrics-allentown[data-kinekt-section] {
   --kiw--proof-metrics-inline-space: var(--section-gutter);
   --kiw--proof-metrics-section-space: var(--section-gutter);
   --kiw--proof-metrics-content-width: var(--width-xxl);
-  --kiw--proof-metrics-major-gap: var(--section-space-xl);
+  --kiw--proof-metrics-major-gap: var(--section-space-l);
+  --kiw--proof-metrics-intro-gap: var(--section-space-m);
+  --kiw--proof-metrics-intro-width: var(--width-l);
+  --kiw--proof-metrics-intro-group-gap: var(--space-m);
+  --kiw--proof-metrics-heading-stack-gap: var(--space-xxs);
   --kiw--proof-metrics-metric-gap: var(--section-space-xxl);
-  --kiw--proof-metrics-callout-gap: var(--section-space-xxl);
-  --kiw--proof-metrics-value-gap: var(--space-s);
+  --kiw--proof-metrics-metric-row-gap: var(--section-space-s);
   --kiw--proof-metrics-media-ratio: 1296 / 406;
   padding-block: var(--kiw--proof-metrics-section-space);
 }
 
-.proof-metrics-allentown .proof-metrics-allentown__container {
+.proof-metrics-allentown[data-kinekt-section] > .proof-metrics-allentown__container {
   display: grid;
-  max-width: var(--kiw--proof-metrics-content-width);
+  width: 100%;
+  max-width: none;
   gap: var(--kiw--proof-metrics-major-gap);
+  margin-inline: auto;
   padding-inline: var(--kiw--proof-metrics-inline-space);
 }
 
 .proof-metrics-allentown .proof-metrics-allentown__intro-and-metrics {
   display: grid;
-  gap: var(--section-space-l);
-  max-width: var(--width-l);
+  gap: var(--kiw--proof-metrics-intro-gap);
+  min-width: 0;
 }
 
 .proof-metrics-allentown .proof-metrics-allentown__intro {
+  max-width: none;
+}
+
+.proof-metrics-allentown .proof-metrics-allentown__intro .section-intro {
   display: grid;
-  gap: var(--kinekt-component-intro-description-gap);
+  justify-items: start;
+  gap: var(--kiw--proof-metrics-intro-group-gap);
+}
+
+.proof-metrics-allentown .proof-metrics-allentown__intro .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) {
+  max-width: none;
+  margin: 0;
+}
+
+.proof-metrics-allentown .proof-metrics-allentown__intro .section-intro__heading-group {
+  display: grid;
+  gap: var(--kiw--proof-metrics-heading-stack-gap);
+}
+
+.proof-metrics-allentown .proof-metrics-allentown__intro .section-intro__description {
+  color: var(--kinekt-component-muted);
+  font-size: var(--kinekt-component-text-l-size);
+  line-height: var(--kinekt-component-text-line-height);
+}
+
+.proof-metrics-allentown .proof-metrics-allentown__intro .section-intro__description > * {
+  margin-block: 0;
 }
 
 .proof-metrics-allentown .proof-metrics-allentown__metrics {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--section-space-xs) var(--kiw--proof-metrics-metric-gap);
+  gap: var(--kiw--proof-metrics-metric-row-gap);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .proof-metrics-allentown .proof-metrics-allentown__metric {
-  display: grid;
-  align-content: start;
-  gap: var(--kiw--proof-metrics-value-gap);
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__metric-label,
-.proof-metrics-allentown .proof-metrics-allentown__metric-value {
-  margin: 0;
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__metric-label {
-  font-size: var(--text-xl);
-  font-weight: var(--text-font-weight);
-  line-height: var(--heading-line-height);
-  letter-spacing: var(--heading-letter-spacing);
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__metric-value {
-  color: var(--kinekt-component-muted);
-  font-size: var(--text-s);
-  line-height: var(--text-line-height);
+  min-width: 0;
 }
 
 .proof-metrics-allentown .proof-metrics-allentown__media {
@@ -216,120 +229,24 @@ const { id, theme = 'light', intro, metrics, media, callout, headingLevel = 'h2'
 .proof-metrics-allentown .proof-metrics-allentown__image {
   display: block;
   width: 100%;
-  aspect-ratio: var(--kiw--proof-metrics-media-ratio);
+  aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--proof-metrics-media-ratio));
   object-fit: cover;
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__callout {
-  display: grid;
-  gap: var(--section-space-xs);
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__callout-label {
-  display: flex;
-  align-items: center;
-  gap: var(--space-m);
-  color: var(--kinekt-component-muted);
-  font-family: var(--kinekt-component-mono);
-  font-size: var(--text-xs);
-  font-weight: var(--heading-font-weight);
-  letter-spacing: var(--text-letter-spacing);
-  text-transform: uppercase;
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__callout-label::after {
-  width: 100%;
-  height: var(--kinekt-component-border-width);
-  background: var(--kinekt-component-line);
-  content: '';
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__callout-label span {
-  flex: none;
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__callout-body {
-  display: grid;
-  gap: var(--section-space-xs);
-  align-items: end;
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__callout-content {
-  max-width: var(--kiw--proof-metrics-allentown-callout-width, var(--kinekt-component-reading-width));
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__callout-content h3 {
-  font-size: var(--h3);
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__callout-content .section-intro__description {
-  margin-top: var(--space-m);
-  font-size: var(--text-l);
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__callout-action {
-  justify-self: start;
 }
 
 @media (min-width: 48rem) {
   .proof-metrics-allentown .proof-metrics-allentown__metrics {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: var(--kiw--proof-metrics-metric-gap);
   }
-
-  .proof-metrics-allentown .proof-metrics-allentown__callout-body {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: var(--kiw--proof-metrics-callout-gap);
-  }
-
-  .proof-metrics-allentown .proof-metrics-allentown__callout-action {
-    justify-self: end;
-  }
-}
-.proof-metrics-allentown[data-kinekt-section] {
-  --kiw--section-card-padding: var(--space-l);
-  --kiw--section-media-ratio: 4 / 3;
 }
 
 @media (min-width: 50rem) {
-  .proof-metrics-allentown[data-kinekt-section] > .proof-metrics-allentown__container:has(> .proof-metrics-allentown__media) {
-    align-items: center;
-    gap: var(--section-space-xxl);
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  .proof-metrics-allentown[data-kinekt-section] > .proof-metrics-allentown__container {
+    max-width: calc(var(--kiw--proof-metrics-content-width) + (var(--kiw--proof-metrics-inline-space) * 2));
   }
-}
 
-.proof-metrics-allentown :is(.proof-metrics-allentown__intro, .proof-metrics-allentown__header) {
-  max-width: none;
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__metrics {
-  border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__metrics > li {
-  padding-block: var(--space-l);
-  border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__media img,
-.proof-metrics-allentown .proof-metrics-allentown__image {
-  aspect-ratio: var(--kiw--section-media-ratio);
-  object-fit: cover;
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__callout {
-  max-width: var(--kinekt-component-reading-width);
-  padding: var(--kiw--section-card-padding);
-  border-left: var(--kinekt-component-border-width) solid var(--kinekt-component-action);
-  background: var(--kinekt-component-surface);
-}
-
-.proof-metrics-allentown .proof-metrics-allentown__callout-body {
-  padding: 0 var(--kinekt-component-gap) var(--kinekt-component-gap);
-}
-@media (max-width: 49.99rem) {
-  .proof-metrics-allentown[data-kinekt-section] {
-    --kinekt-component-reading-width: var(--content-width);
+  .proof-metrics-allentown .proof-metrics-allentown__intro {
+    max-width: var(--kiw--proof-metrics-intro-width);
   }
 }
 </style>

@@ -248,6 +248,16 @@ Avoid custom-property cycles. A bridged inline-space alias should terminate in `
 
 Heading level is renderer-owned. Let the shared heading reset derive size from the heading element; do not force one size for all heading levels. Verify heading inspection options on the rendered preview.
 
+### Forms
+
+Production forms are HubSpot embeds. Every form in a section or component uses the shared Form Embed (`src/components/form-embed/allentown/form-embed-allentown.astro`), the same block Form Section Allentown uses. Do not write form field markup or field CSS inside a section.
+
+- **Contract:** declare the field as `"kind": "formEmbed"` (the HubSpot embed code; Payload renders it as a textarea). Do not use `formReference` or a section-specific form shape.
+- **Renderer:** pass the code to `<FormEmbed form={form}>`. The integration executes the embed inside `[data-kinekt-hubspot-form-placeholder]`; the catalogue never runs it.
+- **Preview placeholder:** put non-submitting placeholder fields in FormEmbed's default slot (or omit the slot for the generic placeholder). Structure them with the helper classes `form-embed-allentown__fields`, `__group`, `__row`, `__inline`, `__options` and `__select`, plus plain `<label>`, `<input>`, `<select>`, `<textarea>`, `<fieldset>`, `<details>` and `<button type="submit">`. Placeholder fields are content; their look comes from FormEmbed.
+- **Styling:** FormEmbed owns every field style (and styles a real HubSpot form the same way). A section may only tune the documented `--kiw--form-embed-allentown-*` variables. If a Figma frame shows a different field design, change FormEmbed for everyone, not one section.
+- Generated (structural) sections render `formEmbed` fields through FormEmbed automatically.
+
 ## 6. Build useful previews
 
 Add `<slug>.preview.astro` with valid representative props, then run `pnpm exports:generate`. The generator records `previewSource` in `examples/catalog/src/generated/components.json`; routes discover the preview automatically.
@@ -287,6 +297,7 @@ This matches the current GitHub Check workflow. `test` also builds the package. 
 - [ ] Manifest, Payload fields, adapter output and Astro props describe the same contract.
 - [ ] Editor-owned fields are localized; runtime props remain renderer-owned.
 - [ ] Standard groups, repeatable lists, media and Content/URL links use reusable helpers.
+- [ ] Forms use the shared Form Embed with a `formEmbed` (HubSpot embed code) field; no section-local form fields or field CSS.
 - [ ] Both CTA buttons are independently optional; the fully empty group also works.
 - [ ] Adapter smoke covers valid data, absent optional fields and invalid required references.
 - [ ] The preview renders real props rather than bypassing conversion failures with casts.

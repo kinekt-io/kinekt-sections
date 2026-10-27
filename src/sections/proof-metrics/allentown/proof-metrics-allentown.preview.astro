@@ -3,35 +3,35 @@ import ProofMetricsAllentown from './proof-metrics-allentown.astro'
 const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
 
 const content = {
-  "theme": "light" as const,
+  "theme": "semi-light" as const,
   "intro": {
-    "accentHeading": "Proof in practice",
-    "heading": "Evidence that supports confident technical decisions",
-    "description": "Use measurable proof points to connect the work, its operating context and its outcome."
+    "accentHeading": "/ Battle tested battery packs",
+    "heading": "Proven under real-world conditions",
+    "description": "High-density performance only matters when it remains reliable in demanding conditions. Tulip validates its battery packs through extensive laboratory testing, platform validation and real-world operation to prove performance beyond the specification sheet."
   },
   "metrics": [
     {
-      "label": "Validated process",
+      "label": "Operating hours",
       "value": {
-        "text": "Documented from review through release."
+        "text": "XX,000+"
       }
     },
     {
-      "label": "Clear inputs",
+      "label": "Packs tested",
       "value": {
-        "text": "Requirements visible to every stakeholder."
+        "text": "XX,000+"
       }
     },
     {
-      "label": "Measured outcomes",
+      "label": "Field failure rate",
       "value": {
-        "text": "Evidence ready for practical comparison."
+        "text": "< XX%"
       }
     },
     {
-      "label": "Direct support",
+      "label": "Platforms powered",
       "value": {
-        "text": "Expert guidance at each decision point."
+        "text": "XXX+"
       }
     }
   ],
@@ -42,15 +42,16 @@ const content = {
     "height": 406
   },
   "callout": {
-    "label": "Next step",
     "intro": {
-      "heading": "Turn evidence into a clear next decision",
-      "description": "Review the relevant details with the people responsible for the next stage."
+      "accentHeading": "Validation & testing",
+      "heading": "The things we test in the field",
+      "description": "Temperature, vibration and environmental conditions are evaluated to understand how battery performance holds up beyond controlled laboratory environments."
     },
-    "cta": {
-      "cta": {
-        "label": "Start a conversation",
-        "href": "#"
+    "ctaGroup": {
+      "primaryButton": {
+        "label": "Download test report",
+        "href": "#",
+        "icon": "download" as const
       }
     }
   }

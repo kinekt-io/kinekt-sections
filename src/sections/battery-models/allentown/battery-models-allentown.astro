@@ -1,8 +1,11 @@
 ---
 import '../../../styles/wireframe-tokens.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
+import Callout from '../../../components/callout/allentown/callout-allentown.astro'
+import SpecPair from '../../../components/spec-pair/allentown/spec-pair-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import type { Cta, CtaGroup, Media, RichText, SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
 
 interface BatteryModel {
@@ -37,68 +40,76 @@ const {
   crossSell,
   headingLevel = 'h2',
 } = Astro.props as Props
+
+const iconFor = (cta?: Cta | null) => (cta?.icon ? ctaIconPaths[cta.icon] : undefined)
+const primaryIcon = iconFor(ctas?.primary)
+const secondaryIcon = iconFor(ctas?.secondary)
+
+type ChildHeading = 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+const level = Number(headingLevel.slice(1))
+const ModelHeading = `h${Math.min(level + 1, 6)}` as ChildHeading
+const crossSellHeadingLevel = `h${Math.min(level + 1, 3)}` as 'h2' | 'h3'
+const ItemHeading = `h${Math.min(level + 2, 6)}` as ChildHeading
+// The manifest's cross-sell is an Intro component, so the shared Callout renders its header from intro.accentHeading; the older `label` prop still wins when set.
+const crossSellIntro = crossSell ? { ...crossSell.intro, accentHeading: crossSell.label ?? crossSell.intro.accentHeading } : undefined
 ---
 
 <section class="beta-battery-models-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="beta-battery-models-allentown__container">
-    <header class="beta-battery-models-allentown__intro">
-      <SectionIntro intro={intro} headingLevel={headingLevel} />
-      {(ctas?.primary || ctas?.secondary) && (
-        <nav class="beta-battery-models-allentown__actions" aria-label="Section actions">
-          {ctas.primary && <Button class="beta-battery-models-allentown__action beta-battery-models-allentown__action--primary" href={ctas.primary.href} label={ctas.primary.label} />}
-          {ctas.secondary && <Button class="beta-battery-models-allentown__action beta-battery-models-allentown__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="secondary" />}
-        </nav>
-      )}
-    </header>
+    <div class="beta-battery-models-allentown__catalogue">
+      <header class="beta-battery-models-allentown__intro">
+        <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
+        {(ctas?.primary || ctas?.secondary) && (
+          <nav class="beta-battery-models-allentown__actions" aria-label="Section actions">
+            {ctas.primary && <Button class="beta-battery-models-allentown__action beta-battery-models-allentown__action--primary" href={ctas.primary.href} label={ctas.primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+            {ctas.secondary && <Button class="beta-battery-models-allentown__action beta-battery-models-allentown__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="clear">{secondaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+          </nav>
+        )}
+      </header>
 
-    <ul class="beta-battery-models-allentown__models">
-      {models.map((model) => (
-        <li class="beta-battery-models-allentown__model">
-          <article>
-            <KinektMedia class="beta-battery-models-allentown__model-media" imageClass="beta-battery-models-allentown__model-image" media={model.image} />
-            <div class="beta-battery-models-allentown__model-content">
-              <h4 class="beta-battery-models-allentown__model-title">{model.title}</h4>
-              {typeof model.description === 'string'
-                ? <p class="beta-battery-models-allentown__model-description">{model.description}</p>
-                : <div class="beta-battery-models-allentown__model-description" set:html={model.description.html} />}
-            </div>
-            {model.specs.length > 0 && (
-              <dl class="beta-battery-models-allentown__specifications">
-                {model.specs.map((specification) => (
-                  <div>
-                    <dt>{specification.label}</dt>
-                    <dd>{specification.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
-          </article>
-        </li>
-      ))}
-    </ul>
+      <ul class="beta-battery-models-allentown__models">
+        {models.map((model) => (
+          <li class="beta-battery-models-allentown__model">
+            <article class="beta-battery-models-allentown__model-card">
+              <KinektMedia class="beta-battery-models-allentown__model-media" imageClass="beta-battery-models-allentown__model-image" media={model.image} />
+              <div class="beta-battery-models-allentown__model-text">
+                <div class="beta-battery-models-allentown__model-content">
+                  <ModelHeading class="beta-battery-models-allentown__model-title">{model.title}</ModelHeading>
+                  {typeof model.description === 'string'
+                    ? <p class="beta-battery-models-allentown__model-description">{model.description}</p>
+                    : <div class="beta-battery-models-allentown__model-description" set:html={model.description.html} />}
+                </div>
+                {model.specs.length > 0 && (
+                  <dl class="beta-battery-models-allentown__specifications">
+                    {model.specs.map((specification) => <SpecPair class="beta-battery-models-allentown__specification" label={specification.label} value={specification.value} />)}
+                  </dl>
+                )}
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
+    </div>
 
-    {crossSell && crossSell.items.length > 0 && (
-      <section class="beta-battery-models-allentown__cross-sell">
-        {crossSell.label && <p class="beta-battery-models-allentown__cross-sell-label">{crossSell.label}</p>}
-        <div class="beta-battery-models-allentown__cross-sell-content-row">
-          <div class="beta-battery-models-allentown__cross-sell-intro">
-            <SectionIntro intro={crossSell.intro} headingLevel="h2" />
-          </div>
+    {crossSell && crossSellIntro && crossSell.items.length > 0 && (
+      <Callout class="beta-battery-models-allentown__cross-sell" callout={{ intro: crossSellIntro }} size="medium" headingLevel={crossSellHeadingLevel}>
+        <Fragment slot="actions">
           <ul class="beta-battery-models-allentown__cross-sell-items">
-            {crossSell.items.map((item) => (
-              <li>
-                <article class="beta-battery-models-allentown__cross-sell-item">
+            {crossSell.items.map((item) => {
+              const itemIcon = iconFor(item.cta.cta)
+              return (
+                <li class="beta-battery-models-allentown__cross-sell-item">
                   <KinektMedia class="beta-battery-models-allentown__cross-sell-media" imageClass="beta-battery-models-allentown__cross-sell-image" media={item.image} />
                   <div class="beta-battery-models-allentown__cross-sell-content">
-                    <h3 class="beta-battery-models-allentown__cross-sell-title">{item.title}</h3>
-                    <Button class="beta-battery-models-allentown__cross-sell-action" href={item.cta.cta.href} label={item.cta.cta.label} style="clear" />
+                    <ItemHeading class="beta-battery-models-allentown__cross-sell-title">{item.title}</ItemHeading>
+                    <Button class="beta-battery-models-allentown__cross-sell-action" href={item.cta.cta.href} label={item.cta.cta.label} style="clear">{itemIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={itemIcon.viewBox} fill="none"><path d={itemIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>
                   </div>
-                </article>
-              </li>
-            ))}
+                </li>
+              )
+            })}
           </ul>
-        </div>
-      </section>
+        </Fragment>
+      </Callout>
     )}
   </div>
 </section>
@@ -161,12 +172,10 @@ const {
   }
   :where(.beta-battery-models-allentown[data-kinekt-section]) { --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width)); --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width)); --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius)); --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter)); --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap)); --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap)); }
   :where(.beta-battery-models-allentown[data-kinekt-section]) > .beta-battery-models-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
-  :where(.beta-battery-models-allentown) :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } :where(.beta-battery-models-allentown) h1 { font-size: var(--kiw--section-heading-1-size); } :where(.beta-battery-models-allentown) h2 { font-size: var(--kiw--section-heading-2-size); } :where(.beta-battery-models-allentown) h3 { font-size: var(--kiw--section-heading-3-size); } :where(.beta-battery-models-allentown) h4 { font-size: var(--kiw--section-heading-4-size); }
   .beta-battery-models-allentown[data-kinekt-section] > .beta-battery-models-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
   .beta-battery-models-allentown :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; }
-  .beta-battery-models-allentown h1 { font-size: var(--kiw--section-heading-1-size); } .beta-battery-models-allentown h2 { font-size: var(--kiw--section-heading-2-size); } .beta-battery-models-allentown h3 { font-size: var(--kiw--section-heading-3-size); } .beta-battery-models-allentown h4 { font-size: var(--kiw--section-heading-4-size); }
   .beta-battery-models-allentown h1 { font-size: var(--kiw--section-heading-1-size); } .beta-battery-models-allentown h2 { font-size: var(--kiw--section-heading-2-size); } .beta-battery-models-allentown h3 { font-size: var(--kiw--section-heading-3-size); } .beta-battery-models-allentown h4 { font-size: var(--kiw--section-heading-4-size); } .beta-battery-models-allentown h5 { font-size: var(--kiw--section-heading-5-size); } .beta-battery-models-allentown h6 { font-size: var(--kiw--section-heading-6-size); }
-  :where(.beta-battery-models-allentown) :is(p, li, label, input, textarea, button) { font: inherit; line-height: var(--kinekt-component-text-line-height); } :where(.beta-battery-models-allentown) :is(p, ul, ol, dl, table, form) { margin-block: 0; } :where(.beta-battery-models-allentown) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); } :where(.beta-battery-models-allentown) .section-intro__heading { margin: 0; } :where(.beta-battery-models-allentown) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: var(--kiw--section-text-l-size); } :where(.beta-battery-models-allentown) :is([class$='__actions'], [class*='__cta-group']) { display: flex; flex-wrap: wrap; gap: var(--kiw--section-actions-gap); margin-top: var(--kiw--section-actions-margin); } :where(.beta-battery-models-allentown) img { display: block; width: 100%; height: auto; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+  :where(.beta-battery-models-allentown) :is(p, li, dt, dd, label, input, textarea, button) { font: inherit; line-height: var(--kinekt-component-text-line-height); } :where(.beta-battery-models-allentown) :is(p, ul, ol, dl, dd, table, form) { margin-block: 0; } :where(.beta-battery-models-allentown) dd { margin-inline: 0; } :where(.beta-battery-models-allentown) img { display: block; width: 100%; height: auto; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
 
   .beta-battery-models-allentown[data-kinekt-section] {
     --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light)));
@@ -186,43 +195,10 @@ const {
     --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space));
     --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap));
     --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width));
-    --kinekt-component-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--section-heading-4-size));
     --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height));
-    --kinekt-component-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--section-text-xs-size));
     --kinekt-component-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--section-text-s-size));
-    --kinekt-component-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--section-text-m-size));
+    --kinekt-component-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--section-text-l-size));
     --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height));
-    --kinekt-section-battery-models-canvas: var(--neutral-light);
-    --kinekt-section-battery-models-inner-width: var(--content-width);
-    --kinekt-section-battery-models-inline-space: var(--section-gutter);
-    --kinekt-section-battery-models-outer-block-space: var(--section-space-xs);
-    --kinekt-section-battery-models-major-gap: var(--section-space-xs);
-    --kinekt-section-battery-models-intro-width: var(--width-l);
-    --kinekt-section-battery-models-models-gap: var(--space-xl);
-    --kinekt-section-battery-models-model-media-to-text-gap: var(--space-l);
-    --kinekt-section-battery-models-model-text-gap: var(--space-xs);
-    --kinekt-section-battery-models-model-text-to-specifications-gap: var(--space-xl);
-    --kinekt-section-battery-models-specification-gap: var(--space-xs);
-    --kinekt-section-battery-models-specification-row-space: var(--space-s);
-    --kinekt-section-battery-models-specification-label-width: var(--section-space-xxl);
-    --kinekt-section-battery-models-cross-sell-gap: var(--space-l);
-    --kinekt-section-battery-models-cross-sell-content-row-gap: var(--space-l);
-    --kinekt-section-battery-models-cross-sell-copy-width: var(--width-m);
-    --kinekt-section-battery-models-cross-sell-item-gap: var(--space-l);
-    --kinekt-section-battery-models-cross-sell-media-size: var(--section-space-xxl);
-    --kinekt-section-battery-models-cross-sell-label-gap: var(--space-s);
-    --kinekt-section-battery-models-cross-sell-offset: var(--space-m);
-    --kinekt-section-battery-models-cross-sell-item-content-gap: var(--space-l);
-    --kinekt-section-battery-models-intro-actions-gap: var(--section-space-xs);
-    --kinekt-section-battery-models-cross-sell-heading: var(--kinekt-section-battery-models-cross-sell-heading-size, var(--kinekt-component-heading-4-size));
-    --kinekt-section-battery-models-cross-sell-description: var(--kinekt-section-battery-models-cross-sell-description-size, var(--kinekt-component-text-s-size));
-    --kinekt-section-battery-models-cross-sell-item-title: var(--kinekt-section-battery-models-cross-sell-item-title-size, var(--kinekt-component-text-m-size));
-    --kinekt-section-canvas: var(--kinekt-section-battery-models-canvas);
-    --kinekt-section-content-width: var(--kinekt-section-battery-models-inner-width);
-    --kinekt-section-inline-space: var(--kinekt-section-battery-models-inline-space);
-    --kinekt-section-block-space: var(--kinekt-section-battery-models-outer-block-space);
-    --kinekt-section-gap: var(--kinekt-section-battery-models-major-gap);
-    --kinekt-section-reading-width: var(--kinekt-section-battery-models-intro-width);
     box-sizing: border-box;
     padding-block: var(--kinekt-component-block-space);
     color: var(--kinekt-component-ink);
@@ -240,61 +216,95 @@ const {
   .beta-battery-models-allentown[data-kinekt-section][data-kinekt-theme='semi-dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-semi-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent))); --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent))); --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary-light))); color-scheme: dark; }
   .beta-battery-models-allentown[data-kinekt-section] *, .beta-battery-models-allentown[data-kinekt-section] *::before, .beta-battery-models-allentown[data-kinekt-section] *::after { box-sizing: border-box; }
   .beta-battery-models-allentown[data-kinekt-section] [hidden] { display: none !important; }
+</style>
+<style is:global>
+  :where(.beta-battery-models-allentown) {
+    --kiw--battery-models-block-space: var(--section-space-xs);
+    --kiw--battery-models-container-width: var(--content-width);
+    --kiw--battery-models-inline-space: var(--section-gutter);
+    --kiw--battery-models-major-gap: var(--section-space-xl);
+    --kiw--battery-models-catalogue-gap: var(--section-space-l);
+    --kiw--battery-models-intro-width: var(--width-l);
+    --kiw--battery-models-intro-gap: var(--section-space-xs);
+    --kiw--battery-models-intro-group-gap: var(--space-xl);
+    --kiw--battery-models-heading-stack-gap: var(--space-xxs);
+    --kiw--battery-models-actions-gap: var(--space-l);
+    --kiw--battery-models-models-gap: var(--space-xl);
+    --kiw--battery-models-model-gap: var(--space-l);
+    --kiw--battery-models-model-text-gap: var(--space-xl);
+    --kiw--battery-models-model-copy-gap: var(--space-xs);
+    --kiw--battery-models-model-title-size: var(--h4);
+    --kiw--battery-models-model-description-size: var(--text-m);
+    --kiw--battery-models-media-ratio: 16 / 9;
+    --kiw--battery-models-cross-sell-column-gap: var(--section-gutter);
+    --kiw--battery-models-cross-sell-copy-width: var(--width-m);
+    --kiw--battery-models-cross-sell-copy-gap: var(--space-s);
+    --kiw--battery-models-cross-sell-title-color: var(--primary-dark);
+    --kiw--battery-models-cross-sell-title-line-height: 1.2;
+    --kiw--battery-models-cross-sell-items-gap: var(--space-l);
+    --kiw--battery-models-cross-sell-item-gap: var(--space-m);
+    --kiw--battery-models-cross-sell-item-copy-gap: var(--space-s);
+    --kiw--battery-models-cross-sell-item-title-size: var(--h6);
+    --kiw--battery-models-cross-sell-media-size: 6.25rem;
+    --kinekt-section-block-space: var(--kiw--battery-models-block-space);
+    --kinekt-section-content-width: var(--kiw--battery-models-container-width);
+    --kinekt-section-inline-space: var(--kiw--battery-models-inline-space);
+    --kinekt-section-gap: var(--kiw--battery-models-major-gap);
+  }
+  :where(.beta-battery-models-allentown:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark'])) {
+    --kiw--battery-models-cross-sell-title-color: var(--kinekt-component-ink);
+  }
 
-  .beta-battery-models-allentown__container { gap: var(--kinekt-section-battery-models-major-gap); }
-  .beta-battery-models-allentown__intro { max-width: var(--kinekt-section-battery-models-intro-width); }
-  .beta-battery-models-allentown__actions { flex-wrap: wrap; margin-top: var(--kinekt-section-battery-models-intro-actions-gap); }
-  .beta-battery-models-allentown__models { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--kinekt-section-battery-models-models-gap); margin: 0; padding: 0; background: transparent; list-style: none; }
-  .beta-battery-models-allentown[data-kinekt-section] .beta-battery-models-allentown__models > .beta-battery-models-allentown__model > article { display: grid; gap: 0; min-height: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; }
-  .beta-battery-models-allentown__model-media { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; }
-  .beta-battery-models-allentown__model-image { width: 100%; height: 100%; object-fit: cover; }
-  .beta-battery-models-allentown__model-content { display: grid; gap: var(--kinekt-section-battery-models-model-text-gap); margin-top: var(--kinekt-section-battery-models-model-media-to-text-gap); }
-  .beta-battery-models-allentown__model-description { margin: 0; color: var(--kinekt-component-muted); }
-  .beta-battery-models-allentown__specifications { margin: var(--kinekt-section-battery-models-model-text-to-specifications-gap) 0 0; }
-  .beta-battery-models-allentown__specifications > div { grid-template-columns: var(--kinekt-section-battery-models-specification-label-width) minmax(0, 1fr); gap: var(--kinekt-section-battery-models-specification-gap); padding-block: var(--kinekt-section-battery-models-specification-row-space); }
-  .beta-battery-models-allentown__specifications dt { color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-xs-size); }
-  .beta-battery-models-allentown__cross-sell { display: grid; gap: var(--kinekt-section-battery-models-cross-sell-gap); margin-top: var(--kinekt-section-battery-models-cross-sell-offset); }
-  .beta-battery-models-allentown__cross-sell-intro { max-width: var(--kinekt-section-battery-models-cross-sell-copy-width); }
-  .beta-battery-models-allentown__cross-sell-intro .section-intro__heading { font-size: var(--kinekt-section-battery-models-cross-sell-heading); line-height: var(--kinekt-component-heading-line-height); }
-  .beta-battery-models-allentown__cross-sell-intro .section-intro__description { font-size: var(--kinekt-section-battery-models-cross-sell-description); line-height: var(--kinekt-component-text-line-height); }
-  .beta-battery-models-allentown__cross-sell-label { display: flex; align-items: center; gap: var(--kinekt-section-battery-models-cross-sell-label-gap); margin: 0; }
-  .beta-battery-models-allentown__cross-sell-label::after { flex: 1; height: var(--kinekt-component-border-width); background: var(--kinekt-component-line); content: ''; }
-  .beta-battery-models-allentown__cross-sell-content-row { display: grid; gap: var(--kinekt-section-battery-models-cross-sell-content-row-gap); }
-  .beta-battery-models-allentown__cross-sell-items { display: grid; gap: var(--kinekt-section-battery-models-cross-sell-item-gap); margin: 0; padding: 0; list-style: none; }
-  .beta-battery-models-allentown__cross-sell-item { display: grid; grid-template-columns: var(--kinekt-section-battery-models-cross-sell-media-size) minmax(0, 1fr); gap: var(--kinekt-section-battery-models-cross-sell-item-content-gap); align-items: center; padding: 0; border: 0; background: transparent; }
-  .beta-battery-models-allentown__cross-sell-media { width: var(--kinekt-section-battery-models-cross-sell-media-size); aspect-ratio: 1; overflow: hidden; }
-  .beta-battery-models-allentown__cross-sell-image { width: 100%; height: 100%; object-fit: cover; }
-  .beta-battery-models-allentown__cross-sell-content { display: grid; gap: var(--kinekt-section-battery-models-cross-sell-item-content-gap); }
-  .beta-battery-models-allentown__cross-sell-title { margin: 0; font-size: var(--kinekt-section-battery-models-cross-sell-item-title); line-height: var(--kinekt-component-text-line-height); }
-  .beta-battery-models-allentown__cross-sell-action { justify-self: start; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__catalogue { display: grid; gap: var(--kiw--battery-models-catalogue-gap); min-width: 0; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__intro { display: grid; justify-items: start; gap: var(--kiw--battery-models-intro-gap); }
+  .beta-battery-models-allentown .section-intro { display: grid; justify-items: start; gap: var(--kiw--battery-models-intro-group-gap); }
+  .beta-battery-models-allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { max-width: none; margin: 0; }
+  .beta-battery-models-allentown .section-intro__heading-group { display: grid; gap: var(--kiw--battery-models-heading-stack-gap); }
+  .beta-battery-models-allentown .beta-battery-models-allentown__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--kiw--battery-models-actions-gap); margin: 0; }
+
+  .beta-battery-models-allentown .beta-battery-models-allentown__models { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--kiw--battery-models-models-gap); margin: 0; padding: 0; list-style: none; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__model { min-width: 0; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__model-card { display: grid; align-content: start; gap: var(--kiw--battery-models-model-gap); height: 100%; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__model-media { display: block; max-width: none; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__model-image { aspect-ratio: var(--kiw--battery-models-media-ratio); object-fit: cover; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__model-text { display: grid; gap: var(--kiw--battery-models-model-text-gap); }
+  .beta-battery-models-allentown .beta-battery-models-allentown__model-content { display: grid; gap: var(--kiw--battery-models-model-copy-gap); }
+  .beta-battery-models-allentown .beta-battery-models-allentown__model-title { max-width: none; font-size: var(--kiw--battery-models-model-title-size); line-height: 1; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__model-description { color: var(--kinekt-component-muted); font-size: var(--kiw--battery-models-model-description-size); line-height: var(--kinekt-component-text-line-height); }
+  .beta-battery-models-allentown .beta-battery-models-allentown__model-description > * { margin-block: 0; }
+
+  .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell {
+    --kiw--callout-allentown-copy-gap: var(--kiw--battery-models-cross-sell-copy-gap);
+    --kiw--callout-allentown-desktop-body-columns: minmax(0, 1fr);
+    --kiw--callout-allentown-desktop-body-gap: var(--section-space-xs);
+    --kiw--callout-allentown-wide-body-columns: minmax(0, var(--kiw--battery-models-cross-sell-copy-width)) minmax(0, 1fr);
+    --kiw--callout-allentown-wide-body-gap: var(--kiw--battery-models-cross-sell-column-gap);
+    --kiw--callout-allentown-action-item-flex: 1 1 auto;
+    min-width: 0;
+  }
+  .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell .section-intro__heading { color: var(--kiw--battery-models-cross-sell-title-color); }
+  .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell .section-intro__description { color: var(--kinekt-component-ink); }
+  .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell-items { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--kiw--battery-models-cross-sell-items-gap); min-width: 0; margin: 0; padding: 0; list-style: none; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell-item { display: grid; grid-template-columns: var(--kiw--battery-models-cross-sell-media-size) minmax(0, 1fr); align-items: center; gap: var(--kiw--battery-models-cross-sell-item-gap); min-width: 0; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell-media { display: block; max-width: none; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell-image { aspect-ratio: 1; object-fit: cover; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell-content { display: grid; justify-items: start; gap: var(--kiw--battery-models-cross-sell-item-copy-gap); min-width: 0; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell-title { max-width: none; color: var(--kiw--battery-models-cross-sell-title-color); font-size: var(--kiw--battery-models-cross-sell-item-title-size); line-height: var(--kiw--battery-models-cross-sell-title-line-height); }
 
   @media (min-width: 50rem) {
-    .beta-battery-models-allentown[data-kinekt-section] { --kinekt-section-battery-models-inline-space: var(--section-gutter); --kinekt-section-battery-models-outer-block-space: var(--section-space-l); --kinekt-section-battery-models-major-gap: var(--section-space-xs); --kinekt-section-battery-models-models-gap: var(--space-xxl); --kinekt-section-battery-models-model-media-to-text-gap: var(--space-l); --kinekt-section-battery-models-model-text-gap: var(--space-xs); --kinekt-section-battery-models-model-text-to-specifications-gap: var(--space-xl); --kinekt-section-battery-models-specification-gap: var(--space-xxl); --kinekt-section-battery-models-specification-row-space: var(--space-xxs); --kinekt-section-battery-models-cross-sell-gap: var(--space-l); --kinekt-section-battery-models-cross-sell-content-row-gap: var(--section-gutter); --kinekt-section-battery-models-cross-sell-offset: var(--space-m); --kinekt-section-battery-models-cross-sell-item-gap: var(--space-l); --kinekt-section-battery-models-cross-sell-item-content-gap: var(--space-m); --kinekt-section-battery-models-cross-sell-label-gap: var(--space-l); --kinekt-section-battery-models-intro-actions-gap: var(--section-space-xs); --kinekt-section-intro-description-gap: var(--space-m); }
-    .beta-battery-models-allentown__models, .beta-battery-models-allentown__cross-sell-items { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    :where(.beta-battery-models-allentown) { --kiw--battery-models-block-space: var(--section-space-l); --kiw--battery-models-models-gap: var(--space-xxl); }
+    .beta-battery-models-allentown .beta-battery-models-allentown__intro { max-inline-size: var(--kiw--battery-models-intro-width); }
+    .beta-battery-models-allentown .beta-battery-models-allentown__models { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell { --kiw--callout-allentown-content-width: var(--kiw--battery-models-cross-sell-copy-width); }
+    .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell-items { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   @media (min-width: 90rem) {
-    .beta-battery-models-allentown__models { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .beta-battery-models-allentown__cross-sell-content-row { grid-template-columns: minmax(0, var(--kinekt-section-battery-models-cross-sell-copy-width)) minmax(0, 1fr); align-items: start; }
+    .beta-battery-models-allentown .beta-battery-models-allentown__models { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell-items { column-gap: 0; }
   }
-  
-</style>
-<style is:global>
-  .beta-battery-models-allentown .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); }
-  .beta-battery-models-allentown .section-intro__description { margin-block: var(--kinekt-component-intro-description-gap) 0; }
-  .beta-battery-models-allentown .beta-battery-models-allentown__models > .beta-battery-models-allentown__model { min-width: 0; }
-  .beta-battery-models-allentown .beta-battery-models-allentown__model-media { max-width: none; }
-  .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell-items > li { min-width: 0; }
-  .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell-media { max-width: none; }
-  .beta-battery-models-allentown .beta-battery-models-allentown__model-image { height: 100%; aspect-ratio: 4 / 3; }
-  .beta-battery-models-allentown .beta-battery-models-allentown__specifications { border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
-  .beta-battery-models-allentown .beta-battery-models-allentown__specifications > div { display: grid; border-bottom: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
-  .beta-battery-models-allentown .beta-battery-models-allentown__specifications > div:first-child { border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
-  .beta-battery-models-allentown .beta-battery-models-allentown__specifications :is(dt, dd) { margin: 0; }
-  .beta-battery-models-allentown .beta-battery-models-allentown__specifications dd { font-weight: var(--kiw--section-heading-font-weight); }
-  .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell-title { font-size: var(--kinekt-section-battery-models-cross-sell-item-title); line-height: var(--kinekt-component-text-line-height); }
 
-  @media (max-width: 49.99rem) {
-    .beta-battery-models-allentown[data-kinekt-section] { --kinekt-component-reading-width: var(--content-width); }
+  @media (max-width: 49.999rem) {
+    .beta-battery-models-allentown :is(h1, h2, h3, h4, h5, h6) { max-width: 100vw; }
   }
 </style>

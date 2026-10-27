@@ -68,10 +68,10 @@ const manifest = {
       "localized": true
     },
     "form": {
-      "kind": "formReference",
+      "kind": "formEmbed",
       "required": true,
       "localized": true,
-      "description": "Only active Battery Intake forms available to the current region are selectable. The Form record owns fields, validation, scheduling and submission."
+      "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
     }
   }
 } as const

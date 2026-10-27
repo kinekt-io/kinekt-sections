@@ -32,6 +32,59 @@
     }
   },
   {
+    "id": "components/accordion-item/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "accordion-item-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "accordion-item",
+    "variation": "allentown",
+    "title": "Accordion Item Allentown",
+    "description": "A reusable accordion item with an optional automatic number or Font Awesome marker, required title and description, and optional subtitle.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412615&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "markerType": {
+        "kind": "select",
+        "required": true,
+        "localized": true,
+        "options": [
+          "none",
+          "number",
+          "icon"
+        ],
+        "description": "When number is selected, the renderer derives the marker from the item's list position. When icon is selected, icon is required."
+      },
+      "icon": {
+        "kind": "text",
+        "required": false,
+        "localized": true,
+        "description": "Required when markerType is icon. Font Awesome icon key."
+      },
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "subtitle": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "description": {
+        "kind": "richText",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/accordion-item-allentown.astro"
+    }
+  },
+  {
     "id": "components/callout/allentown",
     "version": "26.10.0-beta.0",
     "slug": "callout-allentown",
@@ -62,6 +115,445 @@
     "previewSource": null,
     "entries": {
       "astro": "@kinekt-io/components/components/callout-allentown.astro"
+    }
+  },
+  {
+    "id": "components/checklist-item/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "checklist-item-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "checklist-item",
+    "variation": "allentown",
+    "title": "Checklist Item Allentown",
+    "description": "A localized checklist text item; the renderer supplies the checkmark presentation.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415194&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "text": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/checklist-item-allentown.astro"
+    }
+  },
+  {
+    "id": "components/event-card/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "event-card-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "event-card",
+    "variation": "allentown",
+    "title": "Event Card Allentown",
+    "description": "A platform-managed Event record rendered as a localized featured or grid event card.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415963&t=mG3L6xlBzomA03GY-11",
+    "variants": {
+      "presentation": [
+        "grid",
+        "featured"
+      ]
+    },
+    "fields": {
+      "eventType": {
+        "kind": "select",
+        "required": true,
+        "localized": true,
+        "options": [
+          "tulip",
+          "national",
+          "international"
+        ]
+      },
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "location": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "startDateTime": {
+        "kind": "dateTime",
+        "required": true,
+        "localized": true
+      },
+      "endDateTime": {
+        "kind": "dateTime",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "textarea",
+        "required": true,
+        "localized": true
+      },
+      "media": {
+        "kind": "media",
+        "required": true,
+        "localized": true
+      },
+      "button": {
+        "kind": "component",
+        "componentId": "controls/button/allentown",
+        "required": true,
+        "localized": true
+      },
+      "regions": {
+        "kind": "select",
+        "required": true,
+        "localized": true,
+        "options": [
+          "platformManagedRegion"
+        ]
+      }
+    },
+    "runtimeProps": {
+      "dateFormatting": {
+        "kind": "localizedDateRange",
+        "source": "renderer"
+      },
+      "flightPath": {
+        "kind": "eventType",
+        "source": "renderer"
+      }
+    },
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/event-card-allentown.astro"
+    }
+  },
+  {
+    "id": "components/facility-fact/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "facility-fact-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "facility-fact",
+    "variation": "allentown",
+    "title": "Facility Fact Allentown",
+    "description": "A reusable facility fact with a title and localized rich-text description.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-543726&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "richText",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/facility-fact-allentown.astro"
+    }
+  },
+  {
+    "id": "components/fact-card/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "fact-card-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "fact-card",
+    "variation": "allentown",
+    "title": "Fact Card Allentown",
+    "description": "A fact card with a required localized heading, description, and highlighted value.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414443&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "richText",
+        "required": true,
+        "localized": true
+      },
+      "value": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/fact-card-allentown.astro"
+    }
+  },
+  {
+    "id": "components/form-embed/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "form-embed-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "form-embed",
+    "variation": "allentown",
+    "title": "Form Embed Allentown",
+    "description": "The shared form block for sections: hosts the production HubSpot embed and a non-submitting catalogue placeholder, with all field styling (inputs, selects, textareas, framed radios, disclosure, submit) from the Figma forms.",
+    "status": "beta",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411427&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "form": {
+        "kind": "formEmbed",
+        "required": true,
+        "localized": true,
+        "description": "HubSpot embed code. The catalogue renders a safe placeholder; the integration owns execution of the embed."
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/form-embed-allentown.astro"
+    }
+  },
+  {
+    "id": "components/hd-cell-item/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "hd-cell-item-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "hd-cell-item",
+    "variation": "allentown",
+    "title": "HD Cell Item Allentown",
+    "description": "A reusable high-density component content point.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412563&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "media": {
+        "kind": "media",
+        "required": true,
+        "localized": true
+      },
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "subtitle": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "description": {
+        "kind": "richText",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/hd-cell-item-allentown.astro"
+    }
+  },
+  {
+    "id": "components/hd-engineering-topic/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "hd-engineering-topic-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "hd-engineering-topic",
+    "variation": "allentown",
+    "title": "HD Engineering Topic Allentown",
+    "description": "A reusable interactive engineering topic.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412594&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "media": {
+        "kind": "media",
+        "required": true,
+        "localized": true
+      },
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "richText",
+        "required": true,
+        "localized": true
+      },
+      "ctaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/hd-engineering-topic-allentown.astro"
+    }
+  },
+  {
+    "id": "components/homepage-problem-item/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "homepage-problem-item-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "homepage-problem-item",
+    "variation": "allentown",
+    "title": "Homepage Problem Item Allentown",
+    "description": "A reusable problem item with an editor-selected icon, title and rich-text description.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411378&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "icon": {
+        "kind": "text",
+        "required": true,
+        "localized": true,
+        "description": "Allowed icon key selected by the editor."
+      },
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "richText",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/homepage-problem-item-allentown.astro"
+    }
+  },
+  {
+    "id": "components/homepage-solution-step/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "homepage-solution-step-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "homepage-solution-step",
+    "variation": "allentown",
+    "title": "Homepage Solution Step Allentown",
+    "description": "A reusable solution step with an editor-selected icon, title and rich-text description.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411405&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "icon": {
+        "kind": "text",
+        "required": true,
+        "localized": true,
+        "description": "Allowed icon key selected by the editor."
+      },
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "richText",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/homepage-solution-step-allentown.astro"
+    }
+  },
+  {
+    "id": "components/intake-step/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "intake-step-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "intake-step",
+    "variation": "allentown",
+    "title": "Intake Step Allentown",
+    "description": "A localized intake-process step with a renderer-derived sequence number.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-416707&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "text": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "number": {
+        "kind": "derived",
+        "source": "listPosition"
+      }
+    },
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/intake-step-allentown.astro"
+    }
+  },
+  {
+    "id": "components/next-step/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "next-step-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "next-step",
+    "variation": "allentown",
+    "title": "Next Step Allentown",
+    "description": "A follow-up step with a renderer-derived number, required localized title and description, and optional CTA group.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-425121&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "textarea",
+        "required": true,
+        "localized": true
+      },
+      "ctaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "number": {
+        "kind": "derived",
+        "source": "listPosition"
+      }
+    },
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/next-step-allentown.astro"
     }
   },
   {
@@ -98,6 +590,90 @@
     "previewSource": null,
     "entries": {
       "astro": "@kinekt-io/components/components/output-card-allentown.astro"
+    }
+  },
+  {
+    "id": "components/process-item/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "process-item-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "process-item",
+    "variation": "allentown",
+    "title": "Process Item Allentown",
+    "description": "A reusable process-story item with label, title and description.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4779-130248&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "label": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "textarea",
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/process-item-allentown.astro"
+    }
+  },
+  {
+    "id": "components/product-detail-item/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "product-detail-item-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "product-detail-item",
+    "variation": "allentown",
+    "title": "Product Detail Item Allentown",
+    "description": "A reusable technical product detail accordion item.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411610&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "subtitle": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "description": {
+        "kind": "textarea",
+        "required": true,
+        "localized": true
+      },
+      "detailHeading": {
+        "kind": "text",
+        "required": false,
+        "localized": true
+      },
+      "details": {
+        "kind": "componentList",
+        "componentId": "atoms/label/allentown",
+        "required": false,
+        "localized": true,
+        "minItems": 0
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/product-detail-item-allentown.astro"
     }
   },
   {
@@ -161,6 +737,53 @@
     "previewSource": null,
     "entries": {
       "astro": "@kinekt-io/components/components/spec-pair-allentown.astro"
+    }
+  },
+  {
+    "id": "components/step/stage",
+    "version": "26.10.0-beta.0",
+    "slug": "step-stage",
+    "category": "components",
+    "tags": [],
+    "role": "step",
+    "variation": "stage",
+    "title": "Step Stage",
+    "description": "A visible process step with a required localized stage label, derived sequence number, title, description, and optional CTA group.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414405&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "stage": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "textarea",
+        "required": true,
+        "localized": true
+      },
+      "ctaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "number": {
+        "kind": "derived",
+        "source": "listPosition"
+      }
+    },
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/step-stage.astro"
     }
   },
   {
@@ -2025,10 +2648,10 @@
         "localized": true
       },
       "form": {
-        "kind": "formReference",
+        "kind": "formEmbed",
         "required": true,
         "localized": true,
-        "description": "Only active Battery Intake forms available to the current region are selectable. The Form record owns fields, validation, scheduling and submission."
+        "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
       }
     },
     "runtimeProps": {
@@ -2519,7 +3142,7 @@
     "title": "Process Story Allentown",
     "description": "A reusable process-story section with optional media and labelled narrative items.",
     "status": "beta",
-    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4817-416529&t=mG3L6xlBzomA03GY-11",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4779-129512&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
       "theme": {
@@ -2683,6 +3306,10 @@
       }
     },
     "runtimeProps": {
+      "accordionMode": {
+        "kind": "singleOpen",
+        "source": "renderer"
+      },
       "initialOpenItem": {
         "kind": "fixedIndex",
         "value": 0
@@ -2736,10 +3363,10 @@
         "localized": true
       },
       "form": {
-        "kind": "formReference",
+        "kind": "formEmbed",
         "required": true,
         "localized": true,
-        "description": "The platform-managed localized Form record owns questions, choices, validation, submission and success behavior."
+        "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
       }
     },
     "runtimeProps": {
@@ -2889,10 +3516,10 @@
         "minItems": 1
       },
       "form": {
-        "kind": "formReference",
+        "kind": "formEmbed",
         "required": false,
         "localized": true,
-        "description": "Only active forms available to the current region are selectable."
+        "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
       }
     },
     "runtimeProps": {},
@@ -3223,10 +3850,10 @@
         "localized": true
       },
       "form": {
-        "kind": "formReference",
+        "kind": "formEmbed",
         "required": true,
         "localized": true,
-        "description": "Only active Support Request forms available to the current region are selectable. The Form record owns conditional fields, managed dropdowns, uploads, validation and submission."
+        "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
       }
     },
     "runtimeProps": {

@@ -1,129 +1,365 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe-tokens.css'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import Callout from '../../../components/callout/allentown/callout-allentown.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { Cta, RichText, SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import type { BetaFaqIndexAllentownContent } from './faq-index-allentown.types.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "callout": {
-    "kind": "component",
-    "id": "components/callout/allentown",
-    "role": "callout",
-    "fields": {
-      "intro": {
-        "kind": "component",
-        "id": "components/intro/allentown",
-        "role": "intro",
-        "fields": {
-          "accentHeading": {
-            "kind": "text"
-          },
-          "heading": {
-            "kind": "text"
-          },
-          "description": {
-            "kind": "richText"
-          }
-        }
-      },
-      "ctaGroup": {
-        "kind": "component",
-        "id": "components/cta-group/allentown",
-        "role": "cta-group",
-        "fields": {
-          "primaryButton": {
-            "kind": "cta"
-          },
-          "secondaryButton": {
-            "kind": "cta"
-          }
-        }
-      }
-    }
-  }
+type HeadingLevel = 'h1' | 'h2' | 'h3'
+/** Rich text as it arrives: a plain string, pre-rendered `{ html }`, or raw Lexical JSON from the identity Payload adapter. */
+type RichTextInput = string | RichText | Record<string, unknown>
+type IntroInput = Omit<SectionIntroContent, 'description'> & { description?: RichTextInput | null }
+type CalloutCta = Partial<Cta> | null | undefined
+
+/** A governed FAQ subject (runtimeProps.subjectFilters = presentFaqSubjects). */
+export interface FaqIndexSubject { id: string; label: string }
+/** A published FAQ record for the active region and locale (runtimeProps.faqSelection = publishedFaqRecords); question and answer follow components/faq-item/allentown. */
+export interface FaqIndexRecord {
+  id?: string
+  question: string
+  answer: RichTextInput
+  /** Subject ids (or subject records) the FAQ belongs to. */
+  subjects?: Array<string | FaqIndexSubject> | null
 }
+
+// The generated .types.ts is still generic (Record<string, unknown>), so the renderer types its props from the manifest here.
+interface Props extends BetaFaqIndexAllentownContent {
+  id?: string
+  theme?: SectionTheme
+  headingLevel?: HeadingLevel
+  intro: IntroInput
+  callout?: { intro: IntroInput; ctaGroup?: { primary?: CalloutCta; secondary?: CalloutCta; primaryButton?: CalloutCta; secondaryButton?: CalloutCta } | null } | null
+  /** runtimeProps.faqSelection: published FAQ records for the active region and locale, in platform order. */
+  faqs?: FaqIndexRecord[]
+  /** runtimeProps.subjectFilters: subjects present in the selected FAQs, in display order. Derived from `faqs` when omitted. */
+  subjects?: FaqIndexSubject[]
+  /** Localised label of the "all" filter. */
+  allSubjectsLabel?: string
+  /** Accessible name of the filter group. */
+  filterLabel?: string
+  /** Localised live-region text after filtering; `{count}` is replaced with the number of visible questions. */
+  resultCountLabel?: string
+  /** Singular form of `resultCountLabel`, used when one question is visible. */
+  resultCountOneLabel?: string
+}
+
+const {
+  id,
+  theme = 'light',
+  headingLevel = 'h2',
+  intro,
+  callout,
+  faqs = [],
+  subjects,
+  allSubjectsLabel = 'All questions',
+  filterLabel = 'Filter questions by subject',
+  resultCountLabel = '{count} questions',
+  resultCountOneLabel = '{count} question',
+} = Astro.props as Props
+
+const toHtml = (value: RichTextInput, field: string): string => {
+  if (typeof value === 'string') return value.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).map((part) => richTextToHtml(part, field)).join('')
+  if (typeof value.html === 'string') return value.html
+  return richTextToHtml(value, field)
+}
+const normaliseIntro = (value: IntroInput, field: string): SectionIntroContent => ({
+  ...value,
+  description: value.description == null || typeof value.description === 'string' ? value.description ?? undefined : { html: toHtml(value.description, field) },
+})
+const introContent = normaliseIntro(intro, 'intro.description')
+
+// runtimeProps.faqSelection: keep records with a question and an answer, in the platform's order.
+const subjectId = (subject: string | FaqIndexSubject): string => (typeof subject === 'string' ? subject : subject?.id ?? '').trim()
+const records = faqs
+  .filter((faq) => faq && typeof faq.question === 'string' && faq.question.trim() !== '' && faq.answer != null && faq.answer !== '')
+  .map((faq) => ({ question: faq.question, answerHtml: toHtml(faq.answer, 'faq answer'), subjects: [...new Set((faq.subjects ?? []).map(subjectId).filter(Boolean))] }))
+// runtimeProps.subjectFilters = presentFaqSubjects: only subjects used by at least one shown FAQ get a filter.
+const present = new Set(records.flatMap((record) => record.subjects))
+const subjectList: FaqIndexSubject[] = subjects
+  ? subjects.filter((subject) => subject && typeof subject.id === 'string' && typeof subject.label === 'string' && present.has(subject.id))
+  : [...new Map(faqs.flatMap((faq) => faq?.subjects ?? []).map((subject) => (typeof subject === 'string' ? { id: subject.trim(), label: subject.trim() } : subject)).filter((subject) => subject?.id && present.has(subject.id)).map((subject) => [subject.id, subject])).values()]
+const showFilters = subjectList.length > 1 || (subjectList.length === 1 && records.some((record) => !record.subjects.includes(subjectList[0].id)))
+
+// Callout: normalise the Payload shape (`primaryButton`/`secondaryButton`, raw rich text) for the shared Call to Action Block.
+const usableCta = (cta: CalloutCta): Cta | undefined => (typeof cta?.label === 'string' && cta.label !== '' && typeof cta.href === 'string' && cta.href !== '' ? (cta as Cta) : undefined)
+const calloutActions = callout ? [callout.ctaGroup?.primary ?? callout.ctaGroup?.primaryButton, callout.ctaGroup?.secondary ?? callout.ctaGroup?.secondaryButton].map(usableCta).filter((cta): cta is Cta => Boolean(cta)) : []
+const calloutContent = callout?.intro && typeof callout.intro.heading === 'string' ? { intro: normaliseIntro(callout.intro, 'callout.intro.description') } : undefined
+const CalloutHeading: HeadingLevel = headingLevel === 'h1' ? 'h2' : 'h3'
+const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]}`, path: faChevronDown.icon[4] as string }
 ---
-<StructuralSection block="beta-faq-index-allentown" fields={fields} {...props} />
+<section class="faq-index-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-faq-index data-faq-index-count-label={resultCountLabel} data-faq-index-count-one-label={resultCountOneLabel}>
+  <div class="faq-index-allentown__container">
+    <div class="faq-index-allentown__main">
+      <header class="faq-index-allentown__intro">
+        <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
+      </header>
+
+      {records.length > 0 && (
+        <div class="faq-index-allentown__body">
+          {showFilters && (
+            <div class="faq-index-allentown__filters" role="group" aria-label={filterLabel} data-faq-index-filters hidden>
+              <button class="faq-index-allentown__filter" type="button" aria-pressed="true" data-faq-index-filter="">{allSubjectsLabel}</button>
+              {subjectList.map((subject) => <button class="faq-index-allentown__filter" type="button" aria-pressed="false" data-faq-index-filter={subject.id}>{subject.label}</button>)}
+            </div>
+          )}
+          <ul class="faq-index-allentown__items" data-kinekt-disclosure-group data-faq-index-list>
+            {records.map((record, index) => (
+              <li class="faq-index-allentown__item" data-faq-index-subjects={JSON.stringify(record.subjects)}>
+                <details class="faq-index-allentown__faq" open={index === 0} data-kinekt-disclosure>
+                  <summary class="faq-index-allentown__question">
+                    <span class="faq-index-allentown__question-text">{record.question}</span>
+                    <svg class="faq-index-allentown__toggle" aria-hidden="true" focusable="false" viewBox={chevron.viewBox}><path d={chevron.path} fill="currentColor" /></svg>
+                  </summary>
+                  <div class="faq-index-allentown__answer" set:html={record.answerHtml} />
+                </details>
+              </li>
+            ))}
+          </ul>
+          {showFilters && <p class="faq-index-allentown__status" role="status" aria-live="polite" data-faq-index-status></p>}
+        </div>
+      )}
+    </div>
+
+    {calloutContent && (
+      <Callout class="faq-index-allentown__callout" callout={calloutContent} size="medium" headingLevel={CalloutHeading}>
+        {calloutActions.length > 0 && (
+          <Fragment slot="actions">
+            {calloutActions.map((cta) => {
+              const icon = isCtaIcon(cta.icon) ? ctaIconPaths[cta.icon] : undefined
+              return <Button href={cta.href} label={cta.label} style="clear">{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="none"><path d={icon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>
+            })}
+          </Fragment>
+        )}
+      </Callout>
+    )}
+  </div>
+</section>
+<script>
+  import { initializeKinektInteractions } from '../../../shared/interactions'
+
+  // runtimeProps.accordion = firstOpenSingleOpen (shared disclosure group: opening one FAQ closes the others).
+  initializeKinektInteractions()
+
+  // Progressive enhancement: without JavaScript every FAQ stays visible and the subject filters stay hidden.
+  for (const section of document.querySelectorAll<HTMLElement>('[data-faq-index]')) {
+    const filters = section.querySelector<HTMLElement>('[data-faq-index-filters]')
+    if (!filters || filters.dataset.faqIndexReady) continue
+    filters.dataset.faqIndexReady = 'true'
+    const buttons = [...filters.querySelectorAll<HTMLButtonElement>('[data-faq-index-filter]')]
+    const items = [...section.querySelectorAll<HTMLElement>('[data-faq-index-list] > li')]
+    const status = section.querySelector<HTMLElement>('[data-faq-index-status]')
+    const countLabel = section.dataset.faqIndexCountLabel || '{count} questions'
+    const countOneLabel = section.dataset.faqIndexCountOneLabel || countLabel
+    const subjectsOf = (item: HTMLElement): string[] => {
+      try {
+        const value: unknown = JSON.parse(item.dataset.faqIndexSubjects || '[]')
+        return Array.isArray(value) ? value.filter((entry): entry is string => typeof entry === 'string') : []
+      } catch {
+        return []
+      }
+    }
+    const itemSubjects = new Map(items.map((item) => [item, subjectsOf(item)]))
+    const select = (button: HTMLButtonElement) => {
+      const subject = button.dataset.faqIndexFilter || ''
+      buttons.forEach((entry) => entry.setAttribute('aria-pressed', String(entry === button)))
+      const visible = items.filter((item) => {
+        const show = subject === '' || (itemSubjects.get(item) ?? []).includes(subject)
+        item.hidden = !show
+        return show
+      })
+      // firstOpen applies to each filtered view: the first visible question opens and every other one closes.
+      items.forEach((item) => { const details = item.querySelector('details'); if (details) details.open = item === visible[0] })
+      if (status) status.textContent = (visible.length === 1 ? countOneLabel : countLabel).replace('{count}', String(visible.length))
+    }
+    buttons.forEach((button) => button.addEventListener('click', () => select(button)))
+    filters.hidden = false
+  }
+</script>
 <style is:global>
-.beta-faq-index-allentown[data-kinekt-section] {
-  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--faq-index-allentown-site-width, var(--website-width)));
-  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--faq-index-allentown-content-width, var(--content-width)));
-  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--faq-index-allentown-reading-width, var(--width-m)));
-  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--faq-index-allentown-inline-space, var(--section-gutter)));
-  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--faq-index-allentown-block-space, var(--section-space-l)));
-  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--faq-index-allentown-gap, var(--content-gap)));
-  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--faq-index-allentown-radius, var(--radius-none)));
-  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--faq-index-allentown-border-width, var(--border-width)));
-  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--faq-index-allentown-media-filter, var(--media-filter)));
-  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--faq-index-allentown-intro-accent-gap, var(--space-xxs)));
-  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--faq-index-allentown-intro-description-gap, var(--space-m)));
-  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--faq-index-allentown-heading-1-size, var(--h1)));
-  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--faq-index-allentown-heading-2-size, var(--h2)));
-  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--faq-index-allentown-heading-3-size, var(--h3)));
-  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--faq-index-allentown-heading-4-size, var(--h4)));
-  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--faq-index-allentown-heading-5-size, var(--h5)));
-  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--faq-index-allentown-heading-6-size, var(--h6)));
-  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--faq-index-allentown-heading-font-family, var(--heading-font-family)));
-  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--faq-index-allentown-heading-font-weight, var(--heading-font-weight)));
-  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--faq-index-allentown-heading-line-height, var(--heading-line-height)));
-  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--faq-index-allentown-heading-letter-spacing, var(--heading-letter-spacing)));
-  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--faq-index-allentown-text-font-family, var(--text-font-family)));
-  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--faq-index-allentown-text-font-weight, var(--text-font-weight)));
-  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--faq-index-allentown-text-line-height, var(--text-line-height)));
-  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--faq-index-allentown-text-letter-spacing, var(--text-letter-spacing)));
-  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--faq-index-allentown-mono-font-family, var(--mono-font-family)));
-  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--faq-index-allentown-text-xs-size, var(--text-xs)));
-  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--faq-index-allentown-text-s-size, var(--text-s)));
-  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--faq-index-allentown-text-m-size, var(--text-m)));
-  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--faq-index-allentown-text-l-size, var(--text-l)));
-  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--faq-index-allentown-text-xl-size, var(--text-xl)));
-  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--faq-index-allentown-text-xxl-size, var(--text-xxl)));
-  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--faq-index-allentown-carousel-gap, var(--content-gap)));
-  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--faq-index-allentown-actions-gap, var(--space-s)));
-  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--faq-index-allentown-actions-margin, var(--space-xl)));
-  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--faq-index-allentown-button-height, var(--input-height)));
-  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--faq-index-allentown-button-padding-block, var(--space-s)));
-  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--faq-index-allentown-button-padding-inline, var(--space-l)));
-  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--faq-index-allentown-button-radius, var(--buttons-radius)));
-  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--faq-index-allentown-input-height, var(--input-height)));
-  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--faq-index-allentown-editorial-gap, var(--section-space-xxl)));
-  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--faq-index-allentown-card-padding, var(--space-l)));
-  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--faq-index-allentown-header-to-content-gap, var(--section-space-s)));
-  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--faq-index-allentown-table-offset, var(--space-xl)));
-  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--faq-index-allentown-canvas));
-  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--faq-index-allentown-surface));
-  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--faq-index-allentown-ink));
-  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--faq-index-allentown-muted));
-  --kiw--section-subtle: var(--kinekt-section-subtle, var(--kiw--faq-index-allentown-subtle));
-  --kiw--section-line: var(--kinekt-section-line, var(--kiw--faq-index-allentown-line));
-  --kiw--section-action: var(--kinekt-section-action, var(--kiw--faq-index-allentown-action));
-  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--faq-index-allentown-action-text));
-  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--faq-index-allentown-accent));
-  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--faq-index-allentown-action-icon));
-}
+  .faq-index-allentown {
+    --kiw--section-site-width: var(--kiw--faq-index-allentown-site-width, var(--website-width));
+    --kiw--section-content-width: var(--kiw--faq-index-allentown-content-width, var(--content-width));
+    --kiw--section-reading-width: var(--kiw--faq-index-allentown-reading-width, var(--width-m));
+    --kiw--section-inline-space: var(--kiw--faq-index-allentown-inline-space, var(--section-gutter));
+    --kiw--section-block-space: var(--kiw--faq-index-allentown-block-space, var(--section-space-l));
+    --kiw--section-gap: var(--kiw--faq-index-allentown-gap, var(--content-gap));
+    --kiw--section-radius: var(--kiw--faq-index-allentown-radius, var(--radius-none));
+    --kiw--section-border-width: var(--kiw--faq-index-allentown-border-width, var(--border-width));
+    --kiw--section-media-filter: var(--kiw--faq-index-allentown-media-filter, var(--media-filter));
+    --kiw--section-intro-accent-gap: var(--kiw--faq-index-allentown-intro-accent-gap, var(--space-xxs));
+    --kiw--section-intro-description-gap: var(--kiw--faq-index-allentown-intro-description-gap, var(--space-m));
+    --kiw--section-heading-1-size: var(--kiw--faq-index-allentown-heading-1-size, var(--h1));
+    --kiw--section-heading-2-size: var(--kiw--faq-index-allentown-heading-2-size, var(--h2));
+    --kiw--section-heading-3-size: var(--kiw--faq-index-allentown-heading-3-size, var(--h3));
+    --kiw--section-heading-4-size: var(--kiw--faq-index-allentown-heading-4-size, var(--h4));
+    --kiw--section-heading-5-size: var(--kiw--faq-index-allentown-heading-5-size, var(--h5));
+    --kiw--section-heading-6-size: var(--kiw--faq-index-allentown-heading-6-size, var(--h6));
+    --kiw--section-heading-font-family: var(--kiw--faq-index-allentown-heading-font-family, var(--heading-font-family));
+    --kiw--section-heading-font-weight: var(--kiw--faq-index-allentown-heading-font-weight, var(--heading-font-weight));
+    --kiw--section-heading-line-height: var(--kiw--faq-index-allentown-heading-line-height, var(--heading-line-height));
+    --kiw--section-heading-letter-spacing: var(--kiw--faq-index-allentown-heading-letter-spacing, var(--heading-letter-spacing));
+    --kiw--section-text-font-family: var(--kiw--faq-index-allentown-text-font-family, var(--text-font-family));
+    --kiw--section-text-font-weight: var(--kiw--faq-index-allentown-text-font-weight, var(--text-font-weight));
+    --kiw--section-text-line-height: var(--kiw--faq-index-allentown-text-line-height, var(--text-line-height));
+    --kiw--section-text-letter-spacing: var(--kiw--faq-index-allentown-text-letter-spacing, var(--text-letter-spacing));
+    --kiw--section-mono-font-family: var(--kiw--faq-index-allentown-mono-font-family, var(--mono-font-family));
+    --kiw--section-text-xs-size: var(--kiw--faq-index-allentown-text-xs-size, var(--text-xs));
+    --kiw--section-text-s-size: var(--kiw--faq-index-allentown-text-s-size, var(--text-s));
+    --kiw--section-text-m-size: var(--kiw--faq-index-allentown-text-m-size, var(--text-m));
+    --kiw--section-text-l-size: var(--kiw--faq-index-allentown-text-l-size, var(--text-l));
+    --kiw--section-text-xl-size: var(--kiw--faq-index-allentown-text-xl-size, var(--text-xl));
+    --kiw--section-text-xxl-size: var(--kiw--faq-index-allentown-text-xxl-size, var(--text-xxl));
+    --kiw--section-carousel-gap: var(--kiw--faq-index-allentown-carousel-gap, var(--content-gap));
+    --kiw--section-actions-gap: var(--kiw--faq-index-allentown-actions-gap, var(--space-s));
+    --kiw--section-actions-margin: var(--kiw--faq-index-allentown-actions-margin, var(--space-xl));
+    --kiw--section-button-height: var(--kiw--faq-index-allentown-button-height, var(--input-height));
+    --kiw--section-button-padding-block: var(--kiw--faq-index-allentown-button-padding-block, var(--space-s));
+    --kiw--section-button-padding-inline: var(--kiw--faq-index-allentown-button-padding-inline, var(--space-l));
+    --kiw--section-button-radius: var(--kiw--faq-index-allentown-button-radius, var(--buttons-radius));
+    --kiw--section-input-height: var(--kiw--faq-index-allentown-input-height, var(--input-height));
+    --kiw--section-editorial-gap: var(--kiw--faq-index-allentown-editorial-gap, var(--section-space-xxl));
+    --kiw--section-card-padding: var(--kiw--faq-index-allentown-card-padding, var(--space-l));
+    --kiw--section-header-to-content-gap: var(--kiw--faq-index-allentown-header-to-content-gap, var(--section-space-s));
+    --kiw--section-table-offset: var(--kiw--faq-index-allentown-table-offset, var(--space-xl));
+    --kiw--section-canvas: var(--kiw--faq-index-allentown-canvas);
+    --kiw--section-surface: var(--kiw--faq-index-allentown-surface);
+    --kiw--section-ink: var(--kiw--faq-index-allentown-ink);
+    --kiw--section-muted: var(--kiw--faq-index-allentown-muted);
+    --kiw--section-line: var(--kiw--faq-index-allentown-line);
+    --kiw--section-action: var(--kiw--faq-index-allentown-action);
+    --kiw--section-action-text: var(--kiw--faq-index-allentown-action-text);
+    --kiw--section-accent: var(--kiw--faq-index-allentown-accent);
+    --kiw--section-action-icon: var(--kiw--faq-index-allentown-action-icon);
+    --kiw--section-subtle: var(--kiw--faq-index-allentown-subtle);
+  }
 </style>
 <style is:global>
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) .beta-faq-index-allentown__header { text-align: center; }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) .beta-faq-index-allentown__header-content { margin-inline: auto; }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) details { border-width: 0 0 var(--kinekt-component-border-width); border-radius: 0; background: transparent; }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) [class$='__items'] { gap: 0; border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+  /* Figma "Section - FAQ" (5240:414307; inner Container 5240:414308), semi-light: an 864 column. A centred title-only intro "Column",
+     subject filter pills, the FAQ list with dividers, then the "Call to Action wrapper" (shared Call to Action Block, medium). */
+  :where(.faq-index-allentown) {
+    --kiw--faq-index-container-width: var(--width-l);
+    --kiw--faq-index-callout-gap: var(--section-space-xl);
+    --kiw--faq-index-intro-gap: var(--section-space-m);
+    --kiw--faq-index-heading-stack-gap: var(--space-xxs);
+    --kiw--faq-index-intro-group-gap: var(--space-m);
+    --kiw--faq-index-heading-size: var(--kiw--section-heading-2-size);
+    --kiw--faq-index-heading-line-height: var(--kinekt-component-heading-line-height);
+    --kiw--faq-index-description-size: var(--text-l);
+    --kiw--faq-index-filters-gap: var(--section-space-xs);
+    --kiw--faq-index-filter-gap: var(--space-xxs);
+    --kiw--faq-index-filter-padding-block: var(--space-xs);
+    --kiw--faq-index-filter-padding-inline: var(--space-s);
+    --kiw--faq-index-filter-radius: var(--radius-m);
+    --kiw--faq-index-filter-size: var(--text-m);
+    --kiw--faq-index-filter-background: var(--neutral-semi-light);
+    --kiw--faq-index-filter-color: var(--primary-semi-light);
+    --kiw--faq-index-filter-active-background: var(--neutral);
+    --kiw--faq-index-filter-active-color: var(--kinekt-component-ink);
+    --kiw--faq-index-filter-hover-color: var(--kinekt-component-ink);
+    --kiw--faq-index-item-gap: var(--space-xl);
+    --kiw--faq-index-divider-width: var(--kinekt-component-border-width);
+    --kiw--faq-index-divider-color: var(--kinekt-component-line);
+    --kiw--faq-index-question-size: var(--text-xl);
+    --kiw--faq-index-question-gap: var(--space-l);
+    --kiw--faq-index-question-color: var(--kinekt-component-ink);
+    --kiw--faq-index-toggle-color: var(--kinekt-component-accent);
+    --kiw--faq-index-answer-gap: var(--space-m);
+    --kiw--faq-index-answer-size: var(--text-l);
+    --kiw--faq-index-answer-color: var(--kinekt-component-muted);
+    --kiw--faq-index-focus-color: var(--kinekt-component-action);
+    --kiw--faq-index-callout-copy-gap: var(--space-s);
+  }
+  /* Off-role filter pill colours (Figma neutral-semi-light / primary-semi-light, active neutral). Dark themes are inferred: surface pills, muted text, an action-coloured active pill. */
+  :where(.faq-index-allentown[data-kinekt-theme='semi-dark'], .faq-index-allentown[data-kinekt-theme='dark']) {
+    --kiw--faq-index-filter-background: var(--kinekt-component-surface);
+    --kiw--faq-index-filter-color: var(--kinekt-component-muted);
+    --kiw--faq-index-filter-active-background: var(--primary);
+  }
+
+  .faq-index-allentown > .faq-index-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kiw--faq-index-callout-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
+  .faq-index-allentown :is(h1, h2, h3, h4, h5, h6, p) { margin: 0; }
+  /* Call to Action wrapper: copy gap space-s (Figma 16; the shared block defaults to space-xs). */
+  .faq-index-allentown .faq-index-allentown__callout { --kiw--callout-allentown-copy-gap: var(--kiw--faq-index-callout-copy-gap); }
+  .faq-index-allentown .faq-index-allentown__main { display: grid; gap: var(--kiw--faq-index-intro-gap); min-width: 0; }
+
+  .faq-index-allentown .faq-index-allentown__intro { min-width: 0; text-align: center; }
+  .faq-index-allentown .faq-index-allentown__intro .section-intro { display: grid; justify-items: center; gap: var(--kiw--faq-index-intro-group-gap); }
+  .faq-index-allentown .faq-index-allentown__intro .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
+  .faq-index-allentown .faq-index-allentown__intro .section-intro__heading-group { display: grid; justify-items: center; gap: var(--kiw--faq-index-heading-stack-gap); }
+  .faq-index-allentown .faq-index-allentown__intro .section-intro__heading { max-width: none; font-size: var(--kiw--faq-index-heading-size); line-height: var(--kiw--faq-index-heading-line-height); }
+  .faq-index-allentown .faq-index-allentown__intro .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--kiw--faq-index-description-size); line-height: var(--kinekt-component-text-line-height); }
+  .faq-index-allentown .faq-index-allentown__intro .section-intro__description > * { margin-block: 0; }
+
+  .faq-index-allentown .faq-index-allentown__body { display: grid; gap: var(--kiw--faq-index-filters-gap); min-width: 0; }
+  .faq-index-allentown .faq-index-allentown__filters { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--kiw--faq-index-filter-gap); }
+  .faq-index-allentown .faq-index-allentown__filter { display: inline-flex; align-items: center; justify-content: center; margin: 0; padding: var(--kiw--faq-index-filter-padding-block) var(--kiw--faq-index-filter-padding-inline); border: 0; border-radius: var(--kiw--faq-index-filter-radius); color: var(--kiw--faq-index-filter-color); background: var(--kiw--faq-index-filter-background); font-family: var(--kinekt-component-font); font-size: var(--kiw--faq-index-filter-size); font-weight: var(--kiw--section-text-font-weight); line-height: 1; letter-spacing: inherit; text-align: center; white-space: nowrap; cursor: pointer; }
+  .faq-index-allentown .faq-index-allentown__filter:hover { color: var(--kiw--faq-index-filter-hover-color); }
+  .faq-index-allentown .faq-index-allentown__filter[aria-pressed='true'] { color: var(--kiw--faq-index-filter-active-color); background: var(--kiw--faq-index-filter-active-background); font-weight: var(--kiw--section-heading-font-weight); }
+  .faq-index-allentown .faq-index-allentown__filter:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kiw--faq-index-focus-color); outline-offset: calc(var(--border-width) * 2); }
+
+  .faq-index-allentown .faq-index-allentown__items { display: grid; min-width: 0; margin: 0; padding: 0; list-style: none; }
+  .faq-index-allentown .faq-index-allentown__item { min-width: 0; }
+  /* Figma "Divider" between rows (line role, primary-ultra-light): space-xl above and below, only between visible rows. */
+  .faq-index-allentown .faq-index-allentown__item:not([hidden]) ~ .faq-index-allentown__item:not([hidden]) { margin-block-start: var(--kiw--faq-index-item-gap); padding-block-start: var(--kiw--faq-index-item-gap); border-block-start: var(--kiw--faq-index-divider-width) solid var(--kiw--faq-index-divider-color); }
+  .faq-index-allentown .faq-index-allentown__faq { display: block; margin: 0; }
+  .faq-index-allentown .faq-index-allentown__question { display: flex; align-items: center; justify-content: space-between; gap: var(--kiw--faq-index-question-gap); color: var(--kiw--faq-index-question-color); font-family: var(--kiw--section-heading-font-family); font-size: var(--kiw--faq-index-question-size); font-weight: var(--kiw--section-heading-font-weight); line-height: 1; letter-spacing: var(--kiw--section-heading-letter-spacing); list-style: none; cursor: pointer; }
+  .faq-index-allentown .faq-index-allentown__question::-webkit-details-marker { display: none; }
+  .faq-index-allentown .faq-index-allentown__question:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kiw--faq-index-focus-color); outline-offset: var(--space-xxs); }
+  .faq-index-allentown .faq-index-allentown__question-text { min-width: 0; }
+  .faq-index-allentown .faq-index-allentown__toggle { flex: none; inline-size: 1em; block-size: 1em; color: var(--kiw--faq-index-toggle-color); transition: transform 150ms ease; }
+  .faq-index-allentown .faq-index-allentown__faq[open] .faq-index-allentown__toggle { transform: rotate(180deg); }
+  .faq-index-allentown .faq-index-allentown__answer { margin-block-start: var(--kiw--faq-index-answer-gap); color: var(--kiw--faq-index-answer-color); font-size: var(--kiw--faq-index-answer-size); line-height: var(--kinekt-component-text-line-height); }
+  .faq-index-allentown .faq-index-allentown__answer > * { margin-block: 0; }
+  .faq-index-allentown .faq-index-allentown__answer > * + * { margin-block-start: var(--space-s); }
+  .faq-index-allentown .faq-index-allentown__status { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  @media (min-width: 50rem) {
+    :where(.faq-index-allentown) { --kiw--faq-index-allentown-content-width: var(--kiw--faq-index-container-width); }
+  }
+  @media (max-width: 49.999rem) {
+    .faq-index-allentown .faq-index-allentown__question { line-height: 1.3; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-index-allentown .faq-index-allentown__toggle { transition: none; }
+  }
+</style>
+<style is:global>
+  .faq-index-allentown {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-semi-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-ultra-light)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary)));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent-semi-dark)));
+    --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent)));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary)));
+    --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family));
+    --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family));
+    --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width));
+    --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width));
+    --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width));
+    --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space));
+    --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space));
+    --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap));
+    --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius));
+    --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width));
+    --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter));
+    --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap));
+    --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap));
+    --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height));
+    --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height));
+    box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--kiw--section-text-m-size); font-weight: var(--kiw--section-text-font-weight); line-height: var(--kiw--section-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing);
+  }
+  .faq-index-allentown[data-kinekt-theme='semi-light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-semi-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-ultra-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-semi-dark))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent-semi-dark))); --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent))); --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary))); color-scheme: light; }
+  .faq-index-allentown[data-kinekt-theme='dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-semi-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent))); --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent))); --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary-ultra-light))); color-scheme: dark; }
+  .faq-index-allentown[data-kinekt-theme='semi-dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-semi-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent))); --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent))); --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary-light))); color-scheme: dark; }
+  .faq-index-allentown, .faq-index-allentown[data-kinekt-theme='light'] { color-scheme: light; }
+  .faq-index-allentown *, .faq-index-allentown *::before, .faq-index-allentown *::after { box-sizing: border-box; }
+  .faq-index-allentown [hidden] { display: none !important; }
 </style>

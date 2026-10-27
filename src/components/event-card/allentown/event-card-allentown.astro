@@ -1,0 +1,129 @@
+---
+import { faCalendarDays, faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
+import type { Cta, Media } from '../../../shared/content.js'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+
+/*
+ * Figma "Content Item" (component set 4705:34467, Event=Tulip|National|International) is the `grid`
+ * presentation: event-type flight path, title, location and date rows, clear button (event-overview).
+ * The `featured` presentation follows the featured-event frame (5240:415942): 4:3 media beside the title,
+ * the same rows, a description and the button; its "Featured event" flight path belongs to the section.
+ */
+export type EventType = 'tulip' | 'national' | 'international'
+
+export interface EventCardContent {
+  eventType: EventType
+  title: string
+  location: string
+  startDateTime: string
+  endDateTime?: string | null
+  description?: string | null
+  /** Media object or an unresolved upload ID (only rendered by the `featured` presentation). */
+  media?: unknown
+  button?: Cta | null
+}
+
+interface Props {
+  event: EventCardContent
+  presentation?: 'grid' | 'featured'
+  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  /** Localised flight-path labels per event type (runtimeProps.flightPath = eventType). */
+  eventTypeLabels?: Partial<Record<EventType, string>>
+  /** IANA time zone used to derive the calendar date (runtimeProps.dateFormatting). */
+  timeZone?: string
+  mediaLoading?: 'eager' | 'lazy'
+  class?: string
+}
+
+const defaultEventTypeLabels: Record<EventType, string> = { tulip: 'Tulip event', national: 'National event', international: 'International event' }
+
+const { event, presentation = 'grid', headingLevel = 'h3', eventTypeLabels, timeZone = 'UTC', mediaLoading = 'lazy', class: className } = Astro.props
+const Heading = headingLevel
+const featured = presentation === 'featured'
+const eventTypeLabel = { ...defaultEventTypeLabels, ...eventTypeLabels }[event.eventType] ?? defaultEventTypeLabels.tulip
+
+// Figma shows the date as "2026 / 10 / 24"; a multi-day event becomes "start – end".
+const dateParts = (value?: string | null) => {
+  if (!value) return undefined
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return undefined
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(date).map((part) => [part.type, part.value]))
+  return { iso: `${parts.year}-${parts.month}-${parts.day}`, label: `${parts.year} / ${parts.month} / ${parts.day}` }
+}
+const start = dateParts(event.startDateTime)
+const endCandidate = dateParts(event.endDateTime)
+const end = endCandidate && start && endCandidate.iso !== start.iso ? endCandidate : undefined
+
+const isMedia = (value: unknown): value is Media => typeof value === 'object' && value !== null && typeof (value as Media).url === 'string'
+const media = featured && isMedia(event.media) ? { ...event.media, alt: typeof event.media.alt === 'string' ? event.media.alt : '' } : undefined
+const button = event.button && typeof event.button.label === 'string' && event.button.label !== '' && typeof event.button.href === 'string' ? event.button : undefined
+const buttonIcon = button ? ctaIconPaths[isCtaIcon(button.icon) ? button.icon : 'arrow-right'] : undefined
+const description = featured && typeof event.description === 'string' && event.description.trim() ? event.description : undefined
+
+const icon = (definition: typeof faLocationDot) => ({ viewBox: `0 0 ${definition.icon[0]} ${definition.icon[1]}`, path: definition.icon[4] as string })
+const locationIcon = icon(faLocationDot)
+const dateIcon = icon(faCalendarDays)
+const classes = ['event-card-allentown', `event-card-allentown--${presentation}`, media && 'event-card-allentown--media', className].filter(Boolean).join(' ')
+---
+<article class={classes} data-event-type={event.eventType}>
+  {!featured && <SubtitleFlightPath class="event-card-allentown__type" text={eventTypeLabel} size="small" />}
+  {media && <KinektMedia media={media} class="event-card-allentown__media" imageClass="event-card-allentown__image" loading={mediaLoading} />}
+  <div class="event-card-allentown__body">
+    <Heading class="event-card-allentown__title">{event.title}</Heading>
+    <ul class="event-card-allentown__meta">
+      <li class="event-card-allentown__meta-item">
+        <span class="event-card-allentown__meta-icon" aria-hidden="true"><svg focusable="false" viewBox={locationIcon.viewBox}><path d={locationIcon.path} /></svg></span>
+        <span class="event-card-allentown__meta-text">{event.location}</span>
+      </li>
+      {start && (
+        <li class="event-card-allentown__meta-item">
+          <span class="event-card-allentown__meta-icon" aria-hidden="true"><svg focusable="false" viewBox={dateIcon.viewBox}><path d={dateIcon.path} /></svg></span>
+          <span class="event-card-allentown__meta-text"><time datetime={start.iso}>{start.label}</time>{end && <> – <time datetime={end.iso}>{end.label}</time></>}</span>
+        </li>
+      )}
+    </ul>
+    {description && <p class="event-card-allentown__description">{description}</p>}
+    {button && buttonIcon && <Button class="event-card-allentown__button" href={button.href} label={button.label} style="clear"><svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={buttonIcon.viewBox} fill="none"><path d={buttonIcon.path} stroke="currentColor" stroke-width="2" /></svg></Button>}
+  </div>
+</article>
+<style is:global>
+  :where(.event-card-allentown) {
+    --kiw--event-card-allentown-gap: var(--space-l);
+    --kiw--event-card-allentown-body-gap: var(--space-xl);
+    --kiw--event-card-allentown-title-size: var(--h4);
+    --kiw--event-card-allentown-title-line-height: 1.2;
+    --kiw--event-card-allentown-title-color: var(--kinekt-component-ink, inherit);
+    --kiw--event-card-allentown-meta-gap: var(--space-s);
+    --kiw--event-card-allentown-meta-item-gap: var(--space-xs);
+    --kiw--event-card-allentown-meta-size: var(--text-l);
+    --kiw--event-card-allentown-meta-line-height: 1;
+    --kiw--event-card-allentown-meta-color: var(--kinekt-component-muted, inherit);
+    --kiw--event-card-allentown-icon-size: var(--text-m);
+    --kiw--event-card-allentown-icon-color: var(--kinekt-component-accent, var(--accent-semi-dark));
+    --kiw--event-card-allentown-description-size: var(--text-m);
+    --kiw--event-card-allentown-description-color: var(--kinekt-component-muted, inherit);
+    --kiw--event-card-allentown-media-ratio: 4 / 3;
+    --kiw--event-card-allentown-media-gap: var(--space-xxl);
+  }
+
+  /* Featured (featured-event frame): one gap of space-l between title, rows, description and button. */
+  :where(.event-card-allentown--featured) { --kiw--event-card-allentown-body-gap: var(--space-l); }
+
+  .event-card-allentown { display: grid; align-content: start; gap: var(--kiw--event-card-allentown-gap); min-width: 0; }
+  .event-card-allentown .event-card-allentown__body { display: grid; justify-items: start; align-content: start; gap: var(--kiw--event-card-allentown-body-gap); min-width: 0; }
+  .event-card-allentown .event-card-allentown__title { max-width: none; margin: 0; color: var(--kiw--event-card-allentown-title-color); font-family: var(--kinekt-component-heading-font-family, var(--heading-font-family)); font-size: var(--kiw--event-card-allentown-title-size); font-weight: var(--kinekt-component-heading-font-weight, var(--heading-font-weight)); line-height: var(--kiw--event-card-allentown-title-line-height); letter-spacing: var(--kinekt-component-heading-letter-spacing, var(--heading-letter-spacing)); text-wrap: balance; }
+  .event-card-allentown .event-card-allentown__meta { display: grid; gap: var(--kiw--event-card-allentown-meta-gap); justify-self: stretch; margin: 0; padding: 0; list-style: none; }
+  .event-card-allentown .event-card-allentown__meta-item { display: flex; align-items: start; gap: var(--kiw--event-card-allentown-meta-item-gap); min-width: 0; color: var(--kiw--event-card-allentown-meta-color); font-size: var(--kiw--event-card-allentown-meta-size); line-height: var(--kiw--event-card-allentown-meta-line-height); }
+  .event-card-allentown .event-card-allentown__meta-icon { display: flex; flex: none; align-items: center; block-size: calc(var(--kiw--event-card-allentown-meta-size) * var(--kiw--event-card-allentown-meta-line-height)); color: var(--kiw--event-card-allentown-icon-color); }
+  .event-card-allentown .event-card-allentown__meta-icon > svg { display: block; block-size: var(--kiw--event-card-allentown-icon-size); inline-size: auto; fill: currentColor; }
+  .event-card-allentown .event-card-allentown__meta-text { min-width: 0; overflow-wrap: anywhere; }
+  .event-card-allentown .event-card-allentown__description { margin: 0; color: var(--kiw--event-card-allentown-description-color); font-size: var(--kiw--event-card-allentown-description-size); line-height: var(--kinekt-component-text-line-height, var(--text-line-height)); }
+  .event-card-allentown .event-card-allentown__media { display: block; min-width: 0; }
+  .event-card-allentown .event-card-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; height: auto; aspect-ratio: var(--kiw--event-card-allentown-media-ratio); object-fit: cover; border-radius: var(--kinekt-component-radius, var(--radius-none)); filter: var(--kinekt-component-media-filter, none); }
+  @media (min-width: 50rem) {
+    .event-card-allentown--featured.event-card-allentown--media { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; column-gap: var(--kiw--event-card-allentown-media-gap); }
+  }
+</style>

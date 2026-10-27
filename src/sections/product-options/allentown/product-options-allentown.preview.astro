@@ -1,53 +1,69 @@
 ---
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import ProductOptionsAllentown from './product-options-allentown.astro'
 
 const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-const placeholder = (name: string, alt: string) => ({
-  url: `${catalogueBase}placeholders/${name}`,
+const placeholder = (alt: string) => ({
+  url: catalogueBase + 'placeholders/placeholder-200x200.svg',
   alt,
-  width: 144,
-  height: 144,
+  width: 200,
+  height: 200,
 })
+const plusIcon = ctaIconPaths.plus
+const sendIcon = ctaIconPaths['paper-plane']
 
 const content = {
   theme: 'light' as const,
   intro: {
-    accentHeading: 'Product options',
-    heading: 'Choose the configuration that fits your application.',
-    description: 'Compare the core options, then share your operating context to start a focused technical conversation.',
+    accentHeading: '/ Configuration options',
+    heading: 'Choose the right foundation for your custom battery pack',
+    description: 'Every custom battery starts with the right combination of cell technology, pack architecture and system requirements. Tulip helps determine the configuration that best balances energy density, power, weight, dimensions and mission performance.',
   },
   ctas: {
-    primary: { label: 'Discuss a project', href: '#' },
-    secondary: { label: 'View specifications', href: '#' },
+    primary: { label: 'Get in touch to order', href: '#', icon: 'arrow-right' as const },
+    secondary: { label: 'Download specs', href: '#', icon: 'download' as const },
   },
   options: [
-    { image: placeholder('case-study-observatory.webp', 'Abstract technical placeholder'), title: 'Energy capacity', description: 'Select a capacity range that supports the required operating window.', benefits: ['Defined usable energy', 'Clear duty-cycle fit', 'Documented assumptions'] },
-    { image: placeholder('case-study-towers.webp', 'Abstract technical placeholder'), title: 'Power delivery', description: 'Match peak and continuous output to the equipment and load profile.', benefits: ['Validated power range', 'Thermal considerations', 'Integration-ready data'] },
-    { image: placeholder('case-study-buses.webp', 'Abstract technical placeholder'), title: 'Mechanical format', description: 'Choose a proven enclosure approach for the available installation space.', benefits: ['Practical packaging', 'Serviceable layout', 'Environmental protection'] },
-    { image: placeholder('case-study-motorcycle.webp', 'Abstract technical placeholder'), title: 'Control interface', description: 'Connect the system to the controls and monitoring already in use.', benefits: ['Documented signals', 'Clear system status', 'Supported integration'] },
-    { image: placeholder('hero-trinity-street.webp', 'Abstract technical placeholder'), title: 'Operating environment', description: 'Adapt the specification for temperature, vibration, and duty conditions.', benefits: ['Defined limits', 'Relevant validation', 'Traceable evidence'] },
-    { image: placeholder('pexels-industrial-building.webp', 'Abstract technical placeholder'), title: 'Project support', description: 'Plan the reviews and documentation needed to make the next decision.', benefits: ['Focused technical review', 'Clear deliverables', 'Named next steps'] },
+    { image: placeholder('Power output placeholder'), title: 'Power output', description: 'Match peak and continuous discharge to the motors, payload and flight profile, with thermal headroom for demanding missions.', benefits: ['High continuous discharge rates', 'Validated peak power bursts', 'Thermal behaviour documented'] },
+    { image: placeholder('Form factor placeholder'), title: 'Form factor', description: 'Shape the pack around the available airframe space, mounting points and centre of gravity instead of the other way round.', benefits: ['Custom dimensions and layouts', 'Integrated mounting options', 'Serviceable construction'] },
+    { image: placeholder('Cycle life placeholder'), title: 'Cycle life', description: 'Choose cell chemistry and operating windows that keep capacity stable across the number of missions you plan to fly.', benefits: ['Chemistry matched to duty cycle', 'Defined end-of-life criteria', 'Lifetime data per configuration'] },
+    { image: placeholder('Materials placeholder'), title: 'Materials', description: 'Select enclosure, insulation and interconnect materials for the environment, from salt spray to extreme temperatures.', benefits: ['Lightweight enclosure options', 'Environmental sealing', 'Traceable material sourcing'] },
+    { image: placeholder('Energy density placeholder'), title: 'Energy density', description: 'Balance gravimetric and volumetric energy to extend endurance without compromising safety margins or power delivery.', benefits: ['High-density cell options', 'Optimised pack architecture', 'Safety margins built in'] },
+    { image: placeholder('Weight placeholder'), title: 'Weight', description: 'Reduce mass across cells, structure and electronics so every gram goes to payload, range or flight time.', benefits: ['Weight-optimised structures', 'Integrated electronics', 'Mass budget per component'] },
   ],
-  form: { name: 'Project enquiry' },
+  form: '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>',
 }
 ---
 <ProductOptionsAllentown {...content}>
-  <form slot="form" class="product-options-allentown__form" action="#" method="post">
-    <fieldset>
-      <legend>Project details</legend>
-      <label>
-        Name
-        <input name="name" autocomplete="name" required />
-      </label>
-      <label>
-        Work email
-        <input name="email" type="email" autocomplete="email" required />
-      </label>
-      <label>
-        Project summary
-        <textarea name="summary" rows="4"></textarea>
-      </label>
-    </fieldset>
-    <button type="submit">Send enquiry</button>
+  <form slot="form" action="#" method="post">
+    <div class="form-embed-allentown__fields">
+      <fieldset>
+        <legend>Choose your primary performance priority</legend>
+        <div class="form-embed-allentown__options">
+          <label><input type="radio" name="priority" value="endurance" checked /> Endurance</label>
+          <label><input type="radio" name="priority" value="power" /> Power</label>
+          <label><input type="radio" name="priority" value="weight" /> Weight</label>
+          <label><input type="radio" name="priority" value="lifetime" /> Lifetime</label>
+        </div>
+      </fieldset>
+      <div class="form-embed-allentown__group">
+        <div class="form-embed-allentown__row">
+          <label>Your name <input name="name" autocomplete="name" placeholder="Name" required /></label>
+          <label>Your email address <input name="email" type="email" autocomplete="email" placeholder="Email address" required /></label>
+        </div>
+        <details>
+          <summary>Add phone number <svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={plusIcon.viewBox} fill="none"><path d={plusIcon.path} stroke="currentColor" stroke-width="2" /></svg></summary>
+          <label>Your phone number <input name="phone" type="tel" autocomplete="tel" placeholder="Phone number" /></label>
+        </details>
+      </div>
+      <fieldset>
+        <legend>How would you like to continue?</legend>
+        <div class="form-embed-allentown__options">
+          <label><input type="radio" name="follow-up" value="expert" /> I want to get in touch with an expert</label>
+          <label><input type="radio" name="follow-up" value="specs" checked /> I want personalised specs</label>
+        </div>
+      </fieldset>
+    </div>
+    <button type="submit">Send request <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={sendIcon.viewBox} fill="none"><path d={sendIcon.path} stroke="currentColor" stroke-width="2" /></svg></button>
   </form>
 </ProductOptionsAllentown>

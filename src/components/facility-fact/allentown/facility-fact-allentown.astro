@@ -1,0 +1,66 @@
+---
+import type { RichText } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+
+interface Props {
+  title: string
+  description: string | RichText | Record<string, unknown>
+  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  class?: string
+}
+
+const { title, description, headingLevel = 'h3', class: className } = Astro.props
+const Heading = headingLevel
+const classes = ['facility-fact-allentown', className].filter(Boolean).join(' ')
+const descriptionHtml = typeof description === 'string'
+  ? richTextToHtml(description, 'facility fact description')
+  : typeof description?.html === 'string'
+    ? description.html
+    : richTextToHtml(description, 'facility fact description')
+---
+<div class={classes}>
+  <Heading class="facility-fact-allentown__title">{title}</Heading>
+  <div class="facility-fact-allentown__description" set:html={descriptionHtml} />
+</div>
+<style is:global>
+  /* Figma "Content Item" (5255:543726): h4 title at line-height 1, space-xs gap, text-m description at 1.5. */
+  :where(.facility-fact-allentown) {
+    --kiw--facility-fact-allentown-gap: var(--space-xs);
+    --kiw--facility-fact-allentown-title-size: var(--h4);
+    --kiw--facility-fact-allentown-title-line-height: 1;
+    --kiw--facility-fact-allentown-title-color: inherit;
+    --kiw--facility-fact-allentown-description-size: var(--text-m);
+    --kiw--facility-fact-allentown-description-line-height: var(--kinekt-component-text-line-height, var(--text-line-height));
+    --kiw--facility-fact-allentown-description-color: var(--kinekt-component-muted, currentColor);
+  }
+
+  .facility-fact-allentown {
+    display: grid;
+    align-content: start;
+    gap: var(--kiw--facility-fact-allentown-gap);
+    min-width: 0;
+    margin: 0;
+  }
+
+  .facility-fact-allentown .facility-fact-allentown__title {
+    max-width: none;
+    margin: 0;
+    color: var(--kiw--facility-fact-allentown-title-color);
+    font-family: var(--kiw--section-heading-font-family, var(--heading-font-family));
+    font-size: var(--kiw--facility-fact-allentown-title-size);
+    font-weight: var(--kiw--section-heading-font-weight, var(--heading-font-weight));
+    line-height: var(--kiw--facility-fact-allentown-title-line-height);
+    letter-spacing: var(--kiw--section-heading-letter-spacing, var(--heading-letter-spacing));
+    text-wrap: balance;
+  }
+
+  .facility-fact-allentown .facility-fact-allentown__description {
+    color: var(--kiw--facility-fact-allentown-description-color);
+    font-size: var(--kiw--facility-fact-allentown-description-size);
+    line-height: var(--kiw--facility-fact-allentown-description-line-height);
+  }
+
+  .facility-fact-allentown .facility-fact-allentown__description > * {
+    margin-block: 0;
+  }
+</style>

@@ -1,224 +1,85 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import ProductDetails from './product-details-allentown.astro'
+const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
 
 const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  theme: 'light' as const,
+  intro: {
+    accentHeading: '/ Use cases',
+    heading: 'When is a smart battery pack the right fit?',
+    description: {
+      html: '<p>Some platforms need more than energy alone. Tulip smart battery packs combine high-density performance with monitoring, communication and battery intelligence to give operators and engineering teams more visibility and control.</p>',
+    },
   },
-  "image": {
-    "url": "catalogue-asset:placeholder-1600x900.svg",
-    "alt": "Battery module and electrical interface",
-    "width": 1600,
-    "height": 900
+  image: {
+    url: placeholder('placeholder-1600x900.svg'),
+    alt: 'Smart battery pack on an integration bench',
+    width: 1600,
+    height: 900,
   },
-  "detailLabel": "System engineering",
-  "items": [
+  detailLabel: 'Technical building',
+  items: [
     {
-      "title": "Energy systems built around real operating conditions",
-      "subtitle": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "detailHeading": "Energy systems built around real operating conditions",
-      "details": [
-        {
-          "text": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-          "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-        },
-        {
-          "text": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-          "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-        },
-        {
-          "text": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-          "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-        }
-      ]
+      title: 'Electrical performance',
+      subtitle: 'Built around the power profile of your platform',
+      description: 'Review the electrical characteristics that determine how the battery performs in your application, including voltage, capacity, energy content and continuous or peak discharge capability.',
+      detailHeading: 'Electrical characteristics:',
+      details: [
+        { text: 'Nominal voltage' },
+        { text: 'Capacity' },
+        { text: 'Energy' },
+        { text: 'Continuous discharge' },
+        { text: 'Peak discharge' },
+        { text: 'Operating voltage range' },
+      ],
     },
     {
-      "title": "Designed for the constraints that shape delivery",
-      "subtitle": "Designed for the constraints that shape delivery",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "detailHeading": "Designed for the constraints that shape delivery",
-      "details": [
-        {
-          "text": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-          "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-        },
-        {
-          "text": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-          "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-        },
-        {
-          "text": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-          "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-        }
-      ]
+      title: 'Battery management',
+      subtitle: 'Integrated monitoring and protection',
+      description: 'The battery management system monitors every cell group and protects the pack against over-current, over-voltage and temperature limits during operation and charging.',
+      detailHeading: 'Monitoring and protection:',
+      details: [
+        { text: 'Cell balancing' },
+        { text: 'Over-current protection' },
+        { text: 'Temperature monitoring' },
+        { text: 'State of charge' },
+      ],
     },
     {
-      "title": "Performance data teams can use with confidence",
-      "subtitle": "Performance data teams can use with confidence",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "detailHeading": "Performance data teams can use with confidence",
-      "details": [
-        {
-          "text": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-          "icon": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-        },
-        {
-          "text": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-          "icon": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
-        },
-        {
-          "text": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-          "icon": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-        }
-      ]
-    }
-  ]
+      title: 'Communication',
+      subtitle: 'Battery data available to the platform',
+      description: 'Live battery data is shared with the platform over standard interfaces, so flight controllers and ground stations can act on accurate state information.',
+      detailHeading: 'Interfaces:',
+      details: [
+        { text: 'CAN bus' },
+        { text: 'SMBus' },
+        { text: 'UART' },
+      ],
+    },
+    {
+      title: 'Mechanical integration',
+      subtitle: 'Designed to fit the complete system',
+      description: 'Enclosure, connectors and mounting points are designed around the available space, weight targets and service access of the platform.',
+      detailHeading: 'Mechanical characteristics:',
+      details: [
+        { text: 'Dimensions' },
+        { text: 'Weight' },
+        { text: 'Connectors' },
+        { text: 'Mounting' },
+      ],
+    },
+    {
+      title: 'Diagnostics & lifecycle',
+      subtitle: 'Visibility beyond a single mission',
+      description: 'Logged usage, cycle counts and fault history help teams plan maintenance and retire packs at the right moment.',
+      detailHeading: 'Lifecycle data:',
+      details: [
+        { text: 'Cycle count' },
+        { text: 'State of health' },
+        { text: 'Fault log' },
+      ],
+    },
+  ],
 }
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "image": {
-    "kind": "media"
-  },
-  "detailLabel": {
-    "kind": "text"
-  },
-  "items": {
-    "kind": "componentList",
-    "id": "components/product-detail-item/allentown",
-    "role": "product-detail-item",
-    "fields": {
-      "title": {
-        "kind": "text"
-      },
-      "subtitle": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "textarea"
-      },
-      "detailHeading": {
-        "kind": "text"
-      },
-      "details": {
-        "kind": "componentList",
-        "id": "atoms/label/allentown",
-        "role": "label",
-        "fields": {
-          "text": {
-            "kind": "text"
-          },
-          "icon": {
-            "kind": "text"
-          }
-        }
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
-const resolvedMedia = resolveCatalogueAssets(media) as typeof media
 ---
-<StructuralSection block="beta-product-details-allentown" intro={intro} ctas={ctas} media={resolvedMedia} content={resolvedContent} fields={fields} />
-<style is:global>
-.beta-product-details-allentown[data-kinekt-section] {
-  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--product-details-allentown-site-width, var(--website-width)));
-  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--product-details-allentown-content-width, var(--content-width)));
-  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--product-details-allentown-reading-width, var(--width-m)));
-  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--product-details-allentown-inline-space, var(--section-gutter)));
-  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--product-details-allentown-block-space, var(--section-space-l)));
-  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--product-details-allentown-gap, var(--content-gap)));
-  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--product-details-allentown-radius, var(--radius-none)));
-  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--product-details-allentown-border-width, var(--border-width)));
-  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--product-details-allentown-media-filter, var(--media-filter)));
-  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--product-details-allentown-intro-accent-gap, var(--space-xxs)));
-  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--product-details-allentown-intro-description-gap, var(--space-m)));
-  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--product-details-allentown-heading-1-size, var(--h1)));
-  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--product-details-allentown-heading-2-size, var(--h2)));
-  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--product-details-allentown-heading-3-size, var(--h3)));
-  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--product-details-allentown-heading-4-size, var(--h4)));
-  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--product-details-allentown-heading-5-size, var(--h5)));
-  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--product-details-allentown-heading-6-size, var(--h6)));
-  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--product-details-allentown-heading-font-family, var(--heading-font-family)));
-  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--product-details-allentown-heading-font-weight, var(--heading-font-weight)));
-  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--product-details-allentown-heading-line-height, var(--heading-line-height)));
-  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--product-details-allentown-heading-letter-spacing, var(--heading-letter-spacing)));
-  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--product-details-allentown-text-font-family, var(--text-font-family)));
-  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--product-details-allentown-text-font-weight, var(--text-font-weight)));
-  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--product-details-allentown-text-line-height, var(--text-line-height)));
-  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--product-details-allentown-text-letter-spacing, var(--text-letter-spacing)));
-  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--product-details-allentown-mono-font-family, var(--mono-font-family)));
-  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--product-details-allentown-text-xs-size, var(--text-xs)));
-  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--product-details-allentown-text-s-size, var(--text-s)));
-  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--product-details-allentown-text-m-size, var(--text-m)));
-  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--product-details-allentown-text-l-size, var(--text-l)));
-  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--product-details-allentown-text-xl-size, var(--text-xl)));
-  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--product-details-allentown-text-xxl-size, var(--text-xxl)));
-  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--product-details-allentown-carousel-gap, var(--content-gap)));
-  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--product-details-allentown-actions-gap, var(--space-s)));
-  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--product-details-allentown-actions-margin, var(--space-xl)));
-  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--product-details-allentown-button-height, var(--input-height)));
-  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--product-details-allentown-button-padding-block, var(--space-s)));
-  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--product-details-allentown-button-padding-inline, var(--space-l)));
-  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--product-details-allentown-button-radius, var(--buttons-radius)));
-  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--product-details-allentown-input-height, var(--input-height)));
-  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--product-details-allentown-editorial-gap, var(--section-space-xxl)));
-  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--product-details-allentown-card-padding, var(--space-l)));
-  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--product-details-allentown-header-to-content-gap, var(--section-space-s)));
-  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--product-details-allentown-table-offset, var(--space-xl)));
-  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--product-details-allentown-canvas));
-  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--product-details-allentown-surface));
-  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--product-details-allentown-ink));
-  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--product-details-allentown-muted));
-  --kiw--section-subtle: var(--kinekt-section-subtle, var(--kiw--product-details-allentown-subtle));
-  --kiw--section-line: var(--kinekt-section-line, var(--kiw--product-details-allentown-line));
-  --kiw--section-action: var(--kinekt-section-action, var(--kiw--product-details-allentown-action));
-  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--product-details-allentown-action-text));
-  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--product-details-allentown-accent));
-  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--product-details-allentown-action-icon));
-}
-</style>
-<style is:global>
-:where(.beta-product-details-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
-</style>
+<ProductDetails {...content} />

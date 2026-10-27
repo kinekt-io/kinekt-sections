@@ -1,7 +1,11 @@
 ---
 import '../../../styles/wireframe-tokens.css'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import FormEmbed from '../../../components/form-embed/allentown/form-embed-allentown.astro'
 import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import type { SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
 interface ContactMethod {
@@ -17,6 +21,8 @@ interface Props {
   contactHeading?: string
   contactMethods?: ContactMethod[]
   formHeading?: string
+  /** HubSpot embed code (manifest kind formEmbed). */
+  form?: string
   headingLevel?: 'h1' | 'h2' | 'h3'
 }
 
@@ -27,16 +33,19 @@ const {
   contactHeading,
   contactMethods = [],
   formHeading = 'Send a support request',
+  form,
   headingLevel = 'h2',
 } = Astro.props as Props
 
 const methods = contactMethods.filter((method) => method.label && method.href)
+const chevronDown = fas.faChevronDown.icon
+const submitIcon = ctaIconPaths['paper-plane']
 ---
 
 <section class="beta-support-contact-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="beta-support-contact-allentown__container">
     <header class="beta-support-contact-allentown__intro">
-      <SectionIntro intro={intro} headingLevel={headingLevel} />
+      <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
     </header>
 
     <div class="beta-support-contact-allentown__support">
@@ -46,10 +55,9 @@ const methods = contactMethods.filter((method) => method.label && method.href)
           <ul class="beta-support-contact-allentown__contact-methods">
             {methods.map((method) => (
               <li class="beta-support-contact-allentown__contact-method">
-                <a href={method.href}>
+                <Button href={method.href} label={method.label} class="beta-support-contact-allentown__contact-link">
                   {method.icon && <ContactIcon name={method.icon} />}
-                  <span>{method.label}</span>
-                </a>
+                </Button>
               </li>
             ))}
           </ul>
@@ -58,23 +66,37 @@ const methods = contactMethods.filter((method) => method.label && method.href)
 
       <section class="beta-support-contact-allentown__request">
         <h3 class="beta-support-contact-allentown__request-heading">{formHeading}</h3>
-        <form class="beta-support-contact-allentown__form" action="#" method="post">
-          <div class="beta-support-contact-allentown__form-row">
-            <label>First name <input name="given-name" autocomplete="given-name" required /></label>
-            <label>Last name <input name="family-name" autocomplete="family-name" required /></label>
-          </div>
-          <div class="beta-support-contact-allentown__form-row">
-            <label>Company name <input name="organization" autocomplete="organization" /></label>
-            <label>Email address <input name="email" type="email" autocomplete="email" required /></label>
-          </div>
-          <label>Subject <input name="subject" required /></label>
-          <div class="beta-support-contact-allentown__form-row">
-            <label>Type of battery <select name="battery-type"><option>Select type of battery</option></select></label>
-            <label>Support category <select name="support-category"><option>Choose a category</option></select></label>
-          </div>
-          <label>How can we help? <textarea name="message" required></textarea></label>
-          <button class="button button--primary" type="submit">Send request</button>
-        </form>
+        <FormEmbed form={form}>
+          <form action="#" method="post">
+            <div class="form-embed-allentown__fields">
+              <div class="form-embed-allentown__row">
+                <label>First name <input name="given-name" autocomplete="given-name" placeholder="Morgan" required /></label>
+                <label>Last name <input name="family-name" autocomplete="family-name" placeholder="Reed" required /></label>
+              </div>
+              <div class="form-embed-allentown__row">
+                <label>Company name <input name="organization" autocomplete="organization" placeholder="Company X" /></label>
+                <label>Email address <input name="email" type="email" autocomplete="email" placeholder="morgan.reed@example.com" required /></label>
+              </div>
+              <label>Subject <input name="subject" placeholder="What is it about?" required /></label>
+              <div class="form-embed-allentown__row">
+                <label>Type of battery
+                  <span class="form-embed-allentown__select">
+                    <select name="battery-type"><option value="">Select type of battery</option></select>
+                    <svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={`0 0 ${chevronDown[0]} ${chevronDown[1]}`} fill="currentColor"><path d={chevronDown[4] as string} /></svg>
+                  </span>
+                </label>
+                <label>Support category
+                  <span class="form-embed-allentown__select">
+                    <select name="support-category"><option value="">Choose a category</option></select>
+                    <svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={`0 0 ${chevronDown[0]} ${chevronDown[1]}`} fill="currentColor"><path d={chevronDown[4] as string} /></svg>
+                  </span>
+                </label>
+              </div>
+              <label>How can we help? <textarea name="message" placeholder="Type here..." required></textarea></label>
+            </div>
+            <button type="submit">Send request <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={submitIcon.viewBox} fill="none"><path d={submitIcon.path} stroke="currentColor" stroke-width="2" /></svg></button>
+          </form>
+        </FormEmbed>
       </section>
     </div>
   </div>
@@ -139,42 +161,52 @@ const methods = contactMethods.filter((method) => method.label && method.href)
 </style>
 <style is:global>
   :where(.beta-support-contact-allentown[data-kinekt-section]) > .beta-support-contact-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
-  :where(.beta-support-contact-allentown) :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } :where(.beta-support-contact-allentown) h2 { font-size: var(--kiw--section-heading-2-size); } :where(.beta-support-contact-allentown) h3 { font-size: var(--kiw--section-heading-3-size); } :where(.beta-support-contact-allentown) :is(p, li, label, input, textarea, button) { font: inherit; line-height: var(--kinekt-component-text-line-height); } :where(.beta-support-contact-allentown) :is(p, ul, ol, form) { margin-block: 0; } :where(.beta-support-contact-allentown) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); } :where(.beta-support-contact-allentown) .section-intro__heading { margin: 0; } :where(.beta-support-contact-allentown) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: var(--kiw--section-text-l-size); } :where(.beta-support-contact-allentown) .button { display: inline-flex; align-items: center; justify-content: center; gap: .8ch; min-height: var(--kiw--section-button-height); padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline); border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); border-radius: calc(var(--buttons-has-radius) * var(--kiw--section-button-radius)); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-size: var(--kiw--section-text-s-size); font-weight: var(--kiw--section-heading-font-weight); text-decoration: none; cursor: pointer; }
+  :where(.beta-support-contact-allentown) :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } :where(.beta-support-contact-allentown) h2 { font-size: var(--kiw--section-heading-2-size); } :where(.beta-support-contact-allentown) h3 { font-size: var(--kiw--section-heading-3-size); } :where(.beta-support-contact-allentown) :is(p, li, label, input, textarea, button) { font: inherit; line-height: var(--kinekt-component-text-line-height); } :where(.beta-support-contact-allentown) :is(p, ul, ol, form) { margin-block: 0; } :where(.beta-support-contact-allentown) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); } :where(.beta-support-contact-allentown) .section-intro__heading { margin: 0; } :where(.beta-support-contact-allentown) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: var(--kiw--section-text-l-size); }
   :where(.beta-support-contact-allentown) h1 { font-size: var(--kiw--section-heading-1-size); } :where(.beta-support-contact-allentown) h2 { font-size: var(--kiw--section-heading-2-size); } :where(.beta-support-contact-allentown) h3 { font-size: var(--kiw--section-heading-3-size); } :where(.beta-support-contact-allentown) h4 { font-size: var(--kiw--section-heading-4-size); } :where(.beta-support-contact-allentown) h5 { font-size: var(--kiw--section-heading-5-size); } :where(.beta-support-contact-allentown) h6 { font-size: var(--kiw--section-heading-6-size); }
 </style>
 <style is:global>
-  .beta-support-contact-allentown {
-    --support-contact-column-gap: var(--kinekt-section-support-contact-column-gap, var(--section-space-xxl));
-    --support-contact-panel-gap: var(--kinekt-section-support-contact-panel-gap, var(--section-space-s));
-    --support-contact-group-gap: var(--kinekt-section-support-contact-group-gap, var(--space-xxl));
-    --support-contact-control-gap: var(--kinekt-section-support-contact-control-gap, var(--space-s));
-    --support-contact-control-padding-inline: var(--kinekt-section-support-contact-control-padding-inline, var(--space-m));
-    --support-contact-control-padding-block: var(--kinekt-section-support-contact-control-padding-block, var(--space-s));
-    --support-contact-textarea-size: var(--kinekt-section-support-contact-textarea-size, var(--section-space-xl));
+  :where(.beta-support-contact-allentown) {
+    --kiw--support-contact-allentown-column-gap: var(--section-space-xxl);
+    --kiw--support-contact-allentown-support-offset: var(--space-xl);
+    --kiw--support-contact-allentown-panel-gap: var(--section-space-s);
+    --kiw--support-contact-allentown-group-gap: var(--space-xxl);
+    --kiw--support-contact-allentown-intro-gap: var(--space-m);
+    --kiw--support-contact-allentown-heading-stack-gap: var(--space-xxs);
+    --kiw--support-contact-allentown-heading-size: var(--h1);
+    --kiw--support-contact-allentown-accent-font-size: var(--text-l);
+    --kiw--section-intro-accent-font-size: var(--kiw--support-contact-allentown-accent-font-size);
+    --kiw--support-contact-allentown-description-font-size: var(--text-l);
+    --kiw--support-contact-allentown-subheading-size: var(--h5);
+    --kiw--support-contact-allentown-subheading-line-height: 1.2;
+    --kiw--support-contact-allentown-contact-gap: var(--space-s);
+    --kiw--support-contact-allentown-border-width: var(--border-width);
+    --kiw--support-contact-allentown-field-border-color: var(--kinekt-component-line);
     --kinekt-component-block-space: var(--kiw--section-block-space);
-    --kinekt-component-text-l-size: var(--kiw--section-text-l-size);
     padding-block: var(--kinekt-component-block-space);
+  }
 
-    &[data-kinekt-section] > .beta-support-contact-allentown__container { gap: var(--support-contact-column-gap); }
-    .beta-support-contact-allentown__container { gap: var(--support-contact-column-gap); }
-    .beta-support-contact-allentown__intro { align-self: start; max-inline-size: var(--kinekt-component-reading-width); }
-    :is(.beta-support-contact-allentown__support, .beta-support-contact-allentown__direct, .beta-support-contact-allentown__request) { display: grid; gap: var(--support-contact-group-gap); }
-    .beta-support-contact-allentown__request { padding-block-start: var(--support-contact-panel-gap); border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
-    :is(.beta-support-contact-allentown__direct-heading, .beta-support-contact-allentown__request-heading) { margin: 0; font-size: var(--kinekt-component-text-l-size); line-height: var(--kinekt-component-text-line-height); }
-    ul.beta-support-contact-allentown__contact-methods { display: flex; flex-wrap: wrap; gap: var(--support-contact-control-gap); margin: 0; padding: 0; list-style: none; }
+  .beta-support-contact-allentown {
+    &[data-kinekt-section] > .beta-support-contact-allentown__container { gap: var(--kiw--support-contact-allentown-panel-gap); }
+    .beta-support-contact-allentown__intro { align-self: start; min-width: 0; }
+    .section-intro { display: grid; justify-items: start; gap: var(--kiw--support-contact-allentown-intro-gap); }
+    .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { max-width: none; margin: 0; }
+    .section-intro__heading-group { display: grid; gap: var(--kiw--support-contact-allentown-heading-stack-gap); }
+    .section-intro__heading { font-size: var(--kiw--support-contact-allentown-heading-size); }
+    .section-intro__description { color: var(--kinekt-component-muted); font-size: var(--kiw--support-contact-allentown-description-font-size); line-height: var(--kinekt-component-text-line-height); }
+    .section-intro__description > * { margin-block: 0; }
+
+    .beta-support-contact-allentown__support { display: grid; gap: var(--kiw--support-contact-allentown-panel-gap); min-width: 0; }
+    :is(.beta-support-contact-allentown__direct, .beta-support-contact-allentown__request) { display: grid; gap: var(--kiw--support-contact-allentown-group-gap); }
+    .beta-support-contact-allentown__direct + .beta-support-contact-allentown__request { padding-block-start: var(--kiw--support-contact-allentown-panel-gap); border-block-start: var(--kiw--support-contact-allentown-border-width) solid var(--kiw--support-contact-allentown-field-border-color); }
+    :is(.beta-support-contact-allentown__direct-heading, .beta-support-contact-allentown__request-heading) { max-width: none; margin: 0; font-size: var(--kiw--support-contact-allentown-subheading-size); line-height: var(--kiw--support-contact-allentown-subheading-line-height); }
+    ul.beta-support-contact-allentown__contact-methods { display: flex; flex-wrap: wrap; gap: var(--kiw--support-contact-allentown-contact-gap); margin: 0; padding: 0; list-style: none; }
     .beta-support-contact-allentown__contact-method { min-width: 0; }
-    .beta-support-contact-allentown__contact-method a { display: inline-flex; align-items: center; gap: .8ch; padding: var(--support-contact-control-padding-block) var(--support-contact-control-padding-inline); color: var(--kinekt-component-ink); background: var(--kinekt-component-surface); font-weight: var(--heading-font-weight); text-decoration: none; }
-    .beta-support-contact-allentown__contact-method svg { flex: none; color: var(--kinekt-component-muted); }
-    :is(form.beta-support-contact-allentown__form, .beta-support-contact-allentown__form-row) { display: grid; gap: var(--support-contact-control-gap); }
-    .beta-support-contact-allentown__form label { display: grid; gap: var(--support-contact-control-gap); font-size: var(--kinekt-component-text-l-size); font-weight: var(--heading-font-weight); line-height: var(--kinekt-component-text-line-height); }
-    .beta-support-contact-allentown__form :is(input, select, textarea) { box-sizing: border-box; inline-size: 100%; padding: var(--support-contact-control-padding-block) var(--support-contact-control-padding-inline); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: 0; color: var(--kinekt-component-ink); background: var(--kinekt-component-surface); font-family: inherit; font-size: var(--kinekt-component-text-l-size); font-weight: var(--text-font-weight); line-height: var(--kinekt-component-text-line-height); }
-    .beta-support-contact-allentown__form textarea { min-block-size: var(--support-contact-textarea-size); resize: vertical; }
-    .beta-support-contact-allentown__form select { min-block-size: var(--kiw--section-input-height); }
-    .beta-support-contact-allentown__form .button { justify-self: start; min-block-size: var(--kiw--section-button-height); font-size: var(--kinekt-component-text-l-size); font-weight: var(--heading-font-weight); }
+    .beta-support-contact-allentown__contact-link > svg { order: -1; }
+
+
     @media (min-width: 50rem) {
-      .beta-support-contact-allentown__container { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: start; }
-      .beta-support-contact-allentown__support { padding-block-start: var(--space-xl); }
-      .beta-support-contact-allentown__form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      &[data-kinekt-section] > .beta-support-contact-allentown__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; column-gap: var(--kiw--support-contact-allentown-column-gap); }
+      .beta-support-contact-allentown__support { padding-block-start: var(--kiw--support-contact-allentown-support-offset); }
     }
     @media (max-width: 49.99rem) { &[data-kinekt-section] { --kinekt-component-reading-width: var(--kinekt-component-content-width); } }
   }

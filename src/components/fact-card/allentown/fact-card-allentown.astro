@@ -1,0 +1,67 @@
+---
+import ResultItem from '../../../components/result-item/allentown/result-item-allentown.astro'
+import type { RichText } from '../../../shared/content.js'
+
+interface Props {
+  title: string
+  description: string | RichText | Record<string, unknown>
+  value: string
+  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  class?: string
+}
+
+const { title, description, value, headingLevel = 'h3', class: className } = Astro.props
+const Heading = headingLevel
+const classes = ['fact-card-allentown', className].filter(Boolean).join(' ')
+
+// The Figma Label "Title=yes" title is a single line of plain text, so the rich-text description is flattened to its text.
+const entities: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', '#39': "'" }
+const htmlToText = (html: string) => html.replace(/<[^>]*>/g, ' ').replace(/&(amp|lt|gt|quot|apos|nbsp|#39);/g, (_, name: string) => entities[name])
+const lexicalToText = (node: unknown): string => {
+  if (!node || typeof node !== 'object') return ''
+  const record = node as { text?: unknown; children?: unknown; root?: unknown }
+  if (typeof record.text === 'string') return record.text
+  if (record.root) return lexicalToText(record.root)
+  return Array.isArray(record.children) ? record.children.map(lexicalToText).join(' ') : ''
+}
+const descriptionText = (typeof description === 'string'
+  ? description
+  : typeof description?.html === 'string'
+    ? htmlToText(description.html)
+    : lexicalToText(description)
+).replace(/\s+/g, ' ').trim()
+---
+<div class={classes}>
+  <Heading class="fact-card-allentown__title">{title}</Heading>
+  <ResultItem class="fact-card-allentown__result" size="l" label={descriptionText} value={{ text: value }} />
+</div>
+<style is:global>
+  /* Figma "Feature" (5240:414443): h5 title at line-height 1, space-xl gap, then a Label instance (Title=yes, Size=Large). */
+  :where(.fact-card-allentown) {
+    --kiw--fact-card-allentown-gap: var(--space-xl);
+    --kiw--fact-card-allentown-title-size: var(--h5);
+    --kiw--fact-card-allentown-title-line-height: 1;
+    --kiw--fact-card-allentown-title-color: inherit;
+  }
+
+  .fact-card-allentown {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: var(--kiw--fact-card-allentown-gap);
+    min-width: 0;
+    margin: 0;
+  }
+
+  .fact-card-allentown .fact-card-allentown__title {
+    max-width: none;
+    margin: 0;
+    color: var(--kiw--fact-card-allentown-title-color);
+    font-family: var(--kiw--section-heading-font-family, var(--heading-font-family));
+    font-size: var(--kiw--fact-card-allentown-title-size);
+    font-weight: var(--kiw--section-heading-font-weight, var(--heading-font-weight));
+    line-height: var(--kiw--fact-card-allentown-title-line-height);
+    letter-spacing: var(--kiw--section-heading-letter-spacing, var(--heading-letter-spacing));
+    text-wrap: balance;
+  }
+</style>

@@ -41,10 +41,10 @@ const manifest = {
       "minItems": 1
     },
     "form": {
-      "kind": "formReference",
+      "kind": "formEmbed",
       "required": false,
       "localized": true,
-      "description": "Only active forms available to the current region are selectable."
+      "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
     }
   }
 } as const
@@ -56,17 +56,8 @@ export function createBetaProductOptionsAllentownBlock(options: CreateBetaProduc
 }
 
 function formToProps(value: PayloadProductOptionsAllentownDocument['form']): ProductOptionsAllentownContent['form'] | undefined {
-  if (value === undefined || value === null || typeof value === 'string' || typeof value === 'number') return value
-
-  const form = requireObject(value, 'form')
-  const id = form.id
-  if (id !== undefined && typeof id !== 'string' && typeof id !== 'number') throw new Error('form.id must be a string or number.')
-
-  const name = optionalText(form.name, 'form.name')
-  return {
-    ...(id === undefined ? {} : { id }),
-    ...(name === undefined ? {} : { name }),
-  }
+  if (value === undefined || value === null) return undefined
+  return optionalText(value, 'form')
 }
 
 export function betaProductOptionsAllentownToProps(data: PayloadProductOptionsAllentownDocument, options: PayloadAdapterOptions = {}): ProductOptionsAllentownContent {

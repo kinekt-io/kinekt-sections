@@ -61,10 +61,10 @@ const manifest = {
           "localized": true
         },
         "form": {
-          "kind": "formReference",
+          "kind": "formEmbed",
           "required": false,
           "localized": true,
-          "description": "The selected Form record owns actions, inputs, validation, submission, success behavior and optional footnote."
+          "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
         }
       }
     }

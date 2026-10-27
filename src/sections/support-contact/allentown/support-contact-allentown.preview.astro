@@ -4,17 +4,18 @@ import SupportContactAllentown from './support-contact-allentown.astro'
 const intro = {
   accentHeading: 'Technical support',
   heading: 'Get support from our team',
-  description: 'Need help with a battery, integration question or technical issue? Share the details with our team and we will connect you with the right person.',
+  description: 'Need help with a battery, integration question or technical issue? Submit a support ticket and share the details with our team. We will review your request and connect you with the right person to help move it forward.',
 }
 ---
 
 <SupportContactAllentown
-  theme="semi-dark"
+  theme="dark"
   intro={intro}
-  contactHeading="Get in touch with us directly"
+  contactHeading="Get in touch with us directly:"
   contactMethods={[
     { icon: 'email', label: 'support@example.com', href: 'mailto:support@example.com' },
     { icon: 'phone', label: '+31 6 123 456 78', href: 'tel:+31612345678' },
   ]}
-  formHeading="Or send a support request"
+  formHeading="Or send a support request:"
+  form={'<script src="https://js.hsforms.net/forms/embed/v2.js"></script>'}
 />

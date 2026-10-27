@@ -1,0 +1,65 @@
+---
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import type { RichText } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+
+export interface HomepageSolutionStepContent {
+  /** Font Awesome icon key (e.g. `microchip`, `gears`, `shield-halved`). */
+  icon?: string | null
+  title: string
+  description: string | RichText | Record<string, unknown>
+}
+
+interface Props {
+  item: HomepageSolutionStepContent
+  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  class?: string
+}
+
+const { item, headingLevel = 'h3', class: className } = Astro.props
+const Heading = headingLevel
+const classes = ['homepage-solution-step-allentown', className].filter(Boolean).join(' ')
+const fontAwesomeIcon = (name?: string | null) => {
+  if (!name || !/^[a-z0-9-]+$/.test(name)) return undefined
+  const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
+  return fas[key]
+}
+const icon = fontAwesomeIcon(item.icon)
+const descriptionHtml = item.description == null || item.description === ''
+  ? undefined
+  : typeof item.description === 'object' && typeof (item.description as RichText).html === 'string'
+    ? (item.description as RichText).html
+    : richTextToHtml(item.description, 'homepage solution step description')
+---
+<article class={classes}>
+  <Heading class="homepage-solution-step-allentown__title-row">
+    {icon && <svg class="homepage-solution-step-allentown__icon" aria-hidden="true" focusable="false" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`}><path d={icon.icon[4] as string} /></svg>}
+    <span class="homepage-solution-step-allentown__title">{item.title}</span>
+  </Heading>
+  {descriptionHtml && <div class="homepage-solution-step-allentown__description" set:html={descriptionHtml} />}
+</article>
+<style is:global>
+  /* Figma "Step" in "Section - The problem + The Solution" (5240:411405): FA icon (h6, accent) + title (h5, line-height 1) with an XS gap, space-s to the description (text-m 1.5). */
+  :where(.homepage-solution-step-allentown) {
+    --kiw--homepage-solution-step-allentown-gap: var(--space-s);
+    --kiw--homepage-solution-step-allentown-title-gap: var(--space-xs);
+    --kiw--homepage-solution-step-allentown-icon-size: var(--h6);
+    --kiw--homepage-solution-step-allentown-icon-color: var(--kinekt-component-accent, currentColor);
+    --kiw--homepage-solution-step-allentown-title-size: var(--h5);
+    --kiw--homepage-solution-step-allentown-title-color: var(--kinekt-component-ink, currentColor);
+    --kiw--homepage-solution-step-allentown-description-size: var(--text-m);
+    --kiw--homepage-solution-step-allentown-description-line-height: 1.5;
+    --kiw--homepage-solution-step-allentown-description-color: var(--kinekt-component-subtle, var(--kinekt-component-muted, currentColor));
+  }
+
+  .homepage-solution-step-allentown { display: grid; gap: var(--kiw--homepage-solution-step-allentown-gap); align-content: start; min-width: 0; }
+  .homepage-solution-step-allentown .homepage-solution-step-allentown__title-row { display: flex; align-items: center; gap: var(--kiw--homepage-solution-step-allentown-title-gap); max-width: none; margin: 0; color: var(--kiw--homepage-solution-step-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--homepage-solution-step-allentown-title-size); font-weight: var(--heading-font-weight); line-height: 1; letter-spacing: var(--heading-letter-spacing); text-wrap: balance; }
+  .homepage-solution-step-allentown .homepage-solution-step-allentown__icon { flex: none; display: block; inline-size: auto; block-size: var(--kiw--homepage-solution-step-allentown-icon-size); max-inline-size: 1.25em; fill: var(--kiw--homepage-solution-step-allentown-icon-color); }
+  .homepage-solution-step-allentown .homepage-solution-step-allentown__title { min-width: 0; }
+  .homepage-solution-step-allentown .homepage-solution-step-allentown__description { color: var(--kiw--homepage-solution-step-allentown-description-color); font-size: var(--kiw--homepage-solution-step-allentown-description-size); line-height: var(--kiw--homepage-solution-step-allentown-description-line-height); }
+  .homepage-solution-step-allentown .homepage-solution-step-allentown__description > * { margin-block: 0; }
+  .homepage-solution-step-allentown .homepage-solution-step-allentown__description > * + * { margin-block-start: var(--space-xs); }
+  @media (max-width: 49.999rem) {
+    .homepage-solution-step-allentown .homepage-solution-step-allentown__title-row { line-height: 1.2; }
+  }
+</style>

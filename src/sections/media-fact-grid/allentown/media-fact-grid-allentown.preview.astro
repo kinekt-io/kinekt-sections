@@ -1,164 +1,44 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
+import MediaFactGrid from './media-fact-grid-allentown.astro'
+const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
 
 const content = {
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+  theme: 'semi-light' as const,
+  intro: {
+    accentHeading: '/ Strongly tested',
+    heading: 'Reliable and thoroughly tested batteries',
+    description: {
+      html: '<p>Every battery system is validated against the conditions it will meet in operation, from early prototypes through to series production and field deployment.</p><p>Test evidence is documented for each stage, so integration teams can review performance, safety and endurance before release.</p>',
+    },
   },
-  "media": {
-    "url": "catalogue-asset:placeholder-1600x900.svg",
-    "alt": "Battery module and electrical interface",
-    "width": 1600,
-    "height": 900
+  media: {
+    url: placeholder('placeholder-688x406.svg'),
+    alt: 'Battery pack on a test bench',
+    width: 688,
+    height: 406,
   },
-  "facts": [
+  facts: [
     {
-      "title": "Energy systems built around real operating conditions",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "value": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
+      title: 'Tested early',
+      description: { html: '<p>Validation &amp; test time</p>' },
+      value: 'XX+ hours',
     },
     {
-      "title": "Designed for the constraints that shape delivery",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "value": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release."
+      title: 'Tested under load',
+      description: { html: '<p>Validation &amp; test time</p>' },
+      value: 'XX+ hours',
     },
     {
-      "title": "Performance data teams can use with confidence",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "value": "Structured content keeps performance requirements, technical context and implementation choices easy to compare."
-    }
-  ]
+      title: 'Tested every pack',
+      description: { html: '<p>Packs tested before delivery</p>' },
+      value: '100%',
+    },
+    {
+      title: 'Tested in the field',
+      description: { html: '<p>Operational hours validated</p>' },
+      value: 'XX,000+ hours',
+    },
+  ],
 }
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "media": {
-    "kind": "media"
-  },
-  "facts": {
-    "kind": "componentList",
-    "id": "components/fact-card/allentown",
-    "role": "fact-card",
-    "fields": {
-      "title": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      },
-      "value": {
-        "kind": "text"
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = {
-  "url": "catalogue-asset:placeholder-1600x900.svg",
-  "alt": "Battery module and electrical interface",
-  "width": 1600,
-  "height": 900
-}
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
-const resolvedMedia = resolveCatalogueAssets(media) as typeof media
 ---
-<StructuralSection block="beta-media-fact-grid-allentown" intro={intro} ctas={ctas} media={resolvedMedia} content={resolvedContent} fields={fields} />
-<style is:global>
-.beta-media-fact-grid-allentown[data-kinekt-section] {
-  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--media-fact-grid-allentown-site-width, var(--website-width)));
-  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--media-fact-grid-allentown-content-width, var(--content-width)));
-  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--media-fact-grid-allentown-reading-width, var(--width-m)));
-  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--media-fact-grid-allentown-inline-space, var(--section-gutter)));
-  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--media-fact-grid-allentown-block-space, var(--section-space-l)));
-  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--media-fact-grid-allentown-gap, var(--content-gap)));
-  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--media-fact-grid-allentown-radius, var(--radius-none)));
-  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--media-fact-grid-allentown-border-width, var(--border-width)));
-  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--media-fact-grid-allentown-media-filter, var(--media-filter)));
-  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--media-fact-grid-allentown-intro-accent-gap, var(--space-xxs)));
-  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--media-fact-grid-allentown-intro-description-gap, var(--space-m)));
-  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--media-fact-grid-allentown-heading-1-size, var(--h1)));
-  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--media-fact-grid-allentown-heading-2-size, var(--h2)));
-  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--media-fact-grid-allentown-heading-3-size, var(--h3)));
-  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--media-fact-grid-allentown-heading-4-size, var(--h4)));
-  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--media-fact-grid-allentown-heading-5-size, var(--h5)));
-  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--media-fact-grid-allentown-heading-6-size, var(--h6)));
-  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--media-fact-grid-allentown-heading-font-family, var(--heading-font-family)));
-  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--media-fact-grid-allentown-heading-font-weight, var(--heading-font-weight)));
-  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--media-fact-grid-allentown-heading-line-height, var(--heading-line-height)));
-  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--media-fact-grid-allentown-heading-letter-spacing, var(--heading-letter-spacing)));
-  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--media-fact-grid-allentown-text-font-family, var(--text-font-family)));
-  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--media-fact-grid-allentown-text-font-weight, var(--text-font-weight)));
-  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--media-fact-grid-allentown-text-line-height, var(--text-line-height)));
-  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--media-fact-grid-allentown-text-letter-spacing, var(--text-letter-spacing)));
-  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--media-fact-grid-allentown-mono-font-family, var(--mono-font-family)));
-  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--media-fact-grid-allentown-text-xs-size, var(--text-xs)));
-  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--media-fact-grid-allentown-text-s-size, var(--text-s)));
-  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--media-fact-grid-allentown-text-m-size, var(--text-m)));
-  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--media-fact-grid-allentown-text-l-size, var(--text-l)));
-  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--media-fact-grid-allentown-text-xl-size, var(--text-xl)));
-  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--media-fact-grid-allentown-text-xxl-size, var(--text-xxl)));
-  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--media-fact-grid-allentown-carousel-gap, var(--content-gap)));
-  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--media-fact-grid-allentown-actions-gap, var(--space-s)));
-  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--media-fact-grid-allentown-actions-margin, var(--space-xl)));
-  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--media-fact-grid-allentown-button-height, var(--input-height)));
-  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--media-fact-grid-allentown-button-padding-block, var(--space-s)));
-  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--media-fact-grid-allentown-button-padding-inline, var(--space-l)));
-  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--media-fact-grid-allentown-button-radius, var(--buttons-radius)));
-  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--media-fact-grid-allentown-input-height, var(--input-height)));
-  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--media-fact-grid-allentown-editorial-gap, var(--section-space-xxl)));
-  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--media-fact-grid-allentown-card-padding, var(--space-l)));
-  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--media-fact-grid-allentown-header-to-content-gap, var(--section-space-s)));
-  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--media-fact-grid-allentown-table-offset, var(--space-xl)));
-  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--media-fact-grid-allentown-canvas));
-  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--media-fact-grid-allentown-surface));
-  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--media-fact-grid-allentown-ink));
-  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--media-fact-grid-allentown-muted));
-  --kiw--section-subtle: var(--kinekt-section-subtle, var(--kiw--media-fact-grid-allentown-subtle));
-  --kiw--section-line: var(--kinekt-section-line, var(--kiw--media-fact-grid-allentown-line));
-  --kiw--section-action: var(--kinekt-section-action, var(--kiw--media-fact-grid-allentown-action));
-  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--media-fact-grid-allentown-action-text));
-  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--media-fact-grid-allentown-accent));
-  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--media-fact-grid-allentown-action-icon));
-}
-</style>
-<style is:global>
-:where(.beta-media-fact-grid-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }
-</style>
+<MediaFactGrid {...content} />

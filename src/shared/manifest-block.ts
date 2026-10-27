@@ -1,7 +1,7 @@
 import type { Block, CollectionSlug, Field } from 'payload'
 import { ctaFields, ctaGroupFields } from './payload-fields.js'
 
-type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'insightSourceList' | 'contentReferenceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
+type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'insightSourceList' | 'contentReferenceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
 
 interface ManifestField {
   kind: FieldKind
@@ -11,6 +11,7 @@ interface ManifestField {
   minItems?: number
   componentId?: string
   fields?: Readonly<Record<string, ManifestField>>
+  description?: string
 }
 
 type SectionStatus = 'planned' | 'alpha' | 'beta' | 'prerelease' | 'release' | 'released' | 'deprecated'
@@ -120,6 +121,8 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
         { name: 'featured', type: 'checkbox', defaultValue: false },
       ],
     }
+    // HubSpot embed code (production forms are embeds). Rendered by components/form-embed/allentown.
+    case 'formEmbed': return { ...common, type: 'textarea', admin: { rows: 8, description: field.description ?? 'Paste the HubSpot form embed code. The component preview keeps using a non-submitting placeholder form.' } }
     case 'formReference': {
       if (!options.formCollection) throw new Error(`Field ${name} requires a formCollection; JSON fallback is forbidden.`)
       return { ...common, type: 'relationship', relationTo: options.formCollection }

@@ -1,0 +1,157 @@
+---
+/*
+ * Form Embed Allentown: the one building block for forms in sections.
+ *
+ * Production forms are HubSpot embeds. Sections take the embed code as a
+ * `formEmbed` field (Payload textarea, see shared/manifest-block.ts) and pass
+ * it here; the integration owns executing it inside
+ * `[data-kinekt-hubspot-form-placeholder]`. The catalogue never runs the code
+ * and shows the non-submitting placeholder from the default slot instead.
+ *
+ * All field styling lives here and targets native controls (label, input,
+ * select, textarea, fieldset, radio/checkbox, details, submit), so the
+ * placeholder and the real HubSpot form look the same. Sections only choose
+ * placeholder fields and may tune the --kiw--form-embed-allentown-* variables.
+ *
+ * Placeholder helpers: __fields (stacked groups), __group (tight group, e.g.
+ * a row plus a disclosure), __row (two columns from 50rem), __inline (field + attached submit), __options (framed radios),
+ * __select (select with chevron).
+ */
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
+
+interface Props {
+  /** HubSpot embed code. Executed by the integration, never in the catalogue. */
+  form?: string | null
+  /** Accessible name of the placeholder while the embed loads. */
+  loadingLabel?: string
+  class?: string
+}
+
+const { loadingLabel = 'Form is loading', class: className } = Astro.props
+const classes = ['form-embed-allentown', className].filter(Boolean).join(' ')
+const hasPlaceholder = Astro.slots.has('default')
+const chevronDown = fas.faChevronDown.icon
+const sendIcon = ctaIconPaths['paper-plane']
+---
+<div class={classes} data-kinekt-form-embed data-kinekt-hubspot-form-placeholder aria-label={loadingLabel}>
+  {hasPlaceholder ? <slot /> : (
+    <form class="form-embed-allentown__form" action="#" method="post">
+      <div class="form-embed-allentown__fields">
+        <div class="form-embed-allentown__row">
+          <label>Name <input name="name" autocomplete="name" placeholder="Morgan Reed" required /></label>
+          <label>Email address <input name="email" type="email" autocomplete="email" placeholder="morgan.reed@example.com" required /></label>
+        </div>
+        <label>Topic
+          <span class="form-embed-allentown__select">
+            <select name="topic"><option value="">Choose a topic</option></select>
+            <svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={`0 0 ${chevronDown[0]} ${chevronDown[1]}`} fill="currentColor"><path d={chevronDown[4] as string} /></svg>
+          </span>
+        </label>
+        <label>Message <textarea name="message" placeholder="Type here..." required></textarea></label>
+      </div>
+      <button type="submit">Send enquiry <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={sendIcon.viewBox} fill="none"><path d={sendIcon.path} stroke="currentColor" stroke-width="2" /></svg></button>
+    </form>
+  )}
+</div>
+
+<style is:global>
+  :where(.form-embed-allentown) {
+    --kiw--form-embed-allentown-actions-gap: var(--space-xxl);
+    --kiw--form-embed-allentown-fields-gap: var(--section-space-xs);
+    --kiw--form-embed-allentown-group-gap: var(--space-m);
+    --kiw--form-embed-allentown-row-gap: var(--space-m);
+    --kiw--form-embed-allentown-label-gap: var(--space-s);
+    --kiw--form-embed-allentown-label-font-size: var(--text-l);
+    --kiw--form-embed-allentown-label-font-weight: var(--heading-font-weight);
+    --kiw--form-embed-allentown-field-font-size: var(--text-l);
+    --kiw--form-embed-allentown-field-font-weight: var(--text-font-weight);
+    --kiw--form-embed-allentown-field-padding-block: var(--space-s);
+    --kiw--form-embed-allentown-field-padding-inline: var(--space-m);
+    --kiw--form-embed-allentown-field-gap: var(--space-xs);
+    --kiw--form-embed-allentown-field-radius: var(--radius-m);
+    --kiw--form-embed-allentown-border-width: var(--border-width);
+    --kiw--form-embed-allentown-textarea-lines: 4;
+    --kiw--form-embed-allentown-option-min-width: 10rem;
+    --kiw--form-embed-allentown-options-gap: var(--space-xxs);
+    --kiw--form-embed-allentown-radio-size: 1rem;
+    --kiw--form-embed-allentown-radio-dot-size: 0.625rem;
+    --kiw--form-embed-allentown-radio-ring-width: 1.2px;
+    --kiw--form-embed-allentown-toggle-font-size: var(--text-m);
+    --kiw--form-embed-allentown-toggle-icon-size: var(--text-s);
+    /* Colours: roles where Figma uses them; off-role Figma palette names on light canvases. */
+    --kiw--form-embed-allentown-ink: var(--kinekt-component-ink);
+    --kiw--form-embed-allentown-field-background: var(--neutral-light);
+    --kiw--form-embed-allentown-field-border: var(--neutral-semi-light);
+    --kiw--form-embed-allentown-placeholder: var(--primary-light);
+    --kiw--form-embed-allentown-select-placeholder: var(--primary-light);
+    --kiw--form-embed-allentown-icon: var(--kinekt-component-accent);
+    --kiw--form-embed-allentown-option-text: var(--primary-dark);
+    --kiw--form-embed-allentown-radio-ring: var(--primary);
+    --kiw--form-embed-allentown-radio-dot: var(--kinekt-component-accent);
+    --kiw--form-embed-allentown-toggle-text: var(--primary-semi-light);
+    --kiw--form-embed-allentown-field-height: calc(var(--kiw--form-embed-allentown-field-font-size) + (var(--kiw--form-embed-allentown-field-padding-block) + var(--kiw--form-embed-allentown-border-width)) * 2);
+  }
+  :where([data-kinekt-theme='semi-light']) :where(.form-embed-allentown) {
+    --kiw--form-embed-allentown-field-background: var(--kinekt-component-surface);
+  }
+  :where([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) :where(.form-embed-allentown) {
+    --kiw--form-embed-allentown-field-background: var(--kinekt-component-surface);
+    --kiw--form-embed-allentown-field-border: var(--kinekt-component-line);
+    --kiw--form-embed-allentown-placeholder: var(--primary-semi-light);
+    --kiw--form-embed-allentown-option-text: var(--kinekt-component-ink);
+    --kiw--form-embed-allentown-radio-ring: var(--kinekt-component-muted);
+    --kiw--form-embed-allentown-toggle-text: var(--kinekt-component-muted);
+  }
+
+  .form-embed-allentown { min-width: 0; }
+  .form-embed-allentown form { display: grid; justify-items: stretch; gap: var(--kiw--form-embed-allentown-actions-gap); margin: 0; }
+  .form-embed-allentown :is(.form-embed-allentown__fields, .hs-form) { display: grid; gap: var(--kiw--form-embed-allentown-fields-gap); min-width: 0; }
+  .form-embed-allentown .form-embed-allentown__group { display: grid; gap: var(--kiw--form-embed-allentown-field-gap); min-width: 0; }
+  .form-embed-allentown .form-embed-allentown__row { display: grid; gap: var(--kiw--form-embed-allentown-fields-gap); }
+  .form-embed-allentown fieldset { display: grid; gap: var(--kiw--form-embed-allentown-group-gap); min-inline-size: 0; max-width: none; margin: 0; padding: 0; border: 0; }
+  .form-embed-allentown legend { float: left; width: 100%; padding: 0; color: var(--kiw--form-embed-allentown-ink); font-size: var(--kiw--form-embed-allentown-label-font-size); font-weight: var(--kiw--form-embed-allentown-label-font-weight); line-height: 1; }
+  .form-embed-allentown legend + * { clear: both; }
+  .form-embed-allentown .form-embed-allentown__options { display: flex; flex-wrap: wrap; gap: var(--kiw--form-embed-allentown-options-gap); }
+
+  .form-embed-allentown label { display: grid; gap: var(--kiw--form-embed-allentown-label-gap); min-width: 0; margin: 0; color: var(--kiw--form-embed-allentown-ink); font-size: var(--kiw--form-embed-allentown-label-font-size); font-weight: var(--kiw--form-embed-allentown-label-font-weight); line-height: 1; }
+  .form-embed-allentown :is(input:not([type='radio'], [type='checkbox'], [type='submit'], [type='button']), select, textarea) { box-sizing: border-box; display: block; width: 100%; min-width: 0; margin: 0; padding: var(--kiw--form-embed-allentown-field-padding-block) var(--kiw--form-embed-allentown-field-padding-inline); border: var(--kiw--form-embed-allentown-border-width) solid var(--kiw--form-embed-allentown-field-border); border-radius: var(--kiw--form-embed-allentown-field-radius); color: var(--kiw--form-embed-allentown-ink); background: var(--kiw--form-embed-allentown-field-background); font-family: inherit; font-size: var(--kiw--form-embed-allentown-field-font-size); font-weight: var(--kiw--form-embed-allentown-field-font-weight); line-height: 1; }
+  /* Figma field height: one line at line-height 1 plus padding (Chrome would otherwise use the font's normal line height). */
+  .form-embed-allentown :is(input:not([type='radio'], [type='checkbox'], [type='submit'], [type='button']), select) { block-size: var(--kiw--form-embed-allentown-field-height); padding-block: 0; }
+  .form-embed-allentown textarea { min-block-size: calc((var(--kiw--form-embed-allentown-textarea-lines) * var(--kiw--form-embed-allentown-field-font-size)) + ((var(--kiw--form-embed-allentown-textarea-lines) + 1) * var(--kiw--form-embed-allentown-field-padding-block)) + (2 * var(--kiw--form-embed-allentown-border-width))); line-height: var(--kinekt-component-text-line-height, 1.5); resize: vertical; }
+  .form-embed-allentown :is(input, textarea)::placeholder { color: var(--kiw--form-embed-allentown-placeholder); opacity: 1; }
+
+  .form-embed-allentown .form-embed-allentown__select { position: relative; display: block; }
+  .form-embed-allentown .form-embed-allentown__select select { padding-inline-end: calc((var(--kiw--form-embed-allentown-field-padding-inline) * 2) + 1em); appearance: none; cursor: pointer; }
+  .form-embed-allentown select:has(option[value='']:checked) { color: var(--kiw--form-embed-allentown-select-placeholder); }
+  .form-embed-allentown select option { color: var(--kiw--form-embed-allentown-ink); background: var(--kiw--form-embed-allentown-field-background); }
+  .form-embed-allentown .form-embed-allentown__select > svg { position: absolute; inset-block-start: 50%; inset-inline-end: var(--kiw--form-embed-allentown-field-padding-inline); color: var(--kiw--form-embed-allentown-icon); font-size: var(--kiw--form-embed-allentown-field-font-size); transform: translateY(-50%); pointer-events: none; }
+
+  /* Figma "Radio Button" (Framed=yes): the label is the framed option. */
+  .form-embed-allentown label:has(> input:is([type='radio'], [type='checkbox'])) { display: flex; flex: 1 1 var(--kiw--form-embed-allentown-option-min-width); align-items: center; gap: var(--kiw--form-embed-allentown-field-gap); padding: var(--kiw--form-embed-allentown-field-padding-block) var(--kiw--form-embed-allentown-field-padding-inline); border: var(--kiw--form-embed-allentown-border-width) solid var(--kiw--form-embed-allentown-field-border); border-radius: var(--kiw--form-embed-allentown-field-radius); color: var(--kiw--form-embed-allentown-option-text); background: var(--kiw--form-embed-allentown-field-background); font-weight: var(--kiw--form-embed-allentown-field-font-weight); cursor: pointer; }
+  .form-embed-allentown input:is([type='radio'], [type='checkbox']) { display: grid; flex: none; place-content: center; width: var(--kiw--form-embed-allentown-radio-size); height: var(--kiw--form-embed-allentown-radio-size); margin: 0; border: var(--kiw--form-embed-allentown-radio-ring-width) solid var(--kiw--form-embed-allentown-radio-ring); border-radius: 50%; background: transparent; appearance: none; cursor: pointer; }
+  .form-embed-allentown input[type='checkbox'] { border-radius: var(--kiw--form-embed-allentown-field-radius); }
+  .form-embed-allentown input:is([type='radio'], [type='checkbox'])::before { width: var(--kiw--form-embed-allentown-radio-dot-size); height: var(--kiw--form-embed-allentown-radio-dot-size); border-radius: inherit; background: var(--kiw--form-embed-allentown-radio-dot); content: ''; transform: scale(0); }
+  .form-embed-allentown input:is([type='radio'], [type='checkbox']):checked::before { transform: scale(1); }
+
+  /* Figma "Add phone number" text button, as a native disclosure. */
+  .form-embed-allentown details[open] > summary { margin-block-end: var(--kiw--form-embed-allentown-field-gap); }
+  .form-embed-allentown summary { display: flex; align-items: center; gap: var(--kiw--form-embed-allentown-field-gap); width: fit-content; color: var(--kiw--form-embed-allentown-toggle-text); font-size: var(--kiw--form-embed-allentown-toggle-font-size); line-height: 1; list-style: none; cursor: pointer; }
+  .form-embed-allentown summary::-webkit-details-marker { display: none; }
+  .form-embed-allentown summary > svg { flex: none; width: var(--kiw--form-embed-allentown-toggle-icon-size); height: var(--kiw--form-embed-allentown-toggle-icon-size); }
+
+  /* Buttons: the shared Button is a link, so form buttons (placeholder or HubSpot) get the primary Button look here. */
+  .form-embed-allentown :is(button, input[type='submit'], input[type='button']) { justify-self: start; width: auto; font-family: inherit; }
+  .form-embed-allentown :is(button, input[type='submit'], input[type='button']):not(.button) { display: inline-flex; align-items: center; gap: .8ch; min-height: var(--kiw--section-button-height, var(--input-height)); padding: var(--space-xxs) var(--space-xs); border: var(--kiw--form-embed-allentown-border-width) solid var(--kinekt-component-action); border-radius: calc(var(--buttons-has-radius) * var(--buttons-radius)); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-size: var(--text-s); font-weight: var(--heading-font-weight); cursor: pointer; }
+
+  .form-embed-allentown button:not(.button) > svg[aria-hidden='true'] { flex: none; color: var(--kinekt-component-action-icon, currentColor); }
+
+  /* Field with an attached submit (Form Section "Book a call"). */
+  .form-embed-allentown .form-embed-allentown__inline { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; }
+  .form-embed-allentown .form-embed-allentown__inline > :is(input, select) { border-start-end-radius: 0; border-end-end-radius: 0; }
+  .form-embed-allentown .form-embed-allentown__inline > :is(button, input[type='submit']) { min-height: var(--kiw--form-embed-allentown-field-height); border-start-start-radius: 0; border-end-start-radius: 0; }
+
+  @media (min-width: 50rem) {
+    .form-embed-allentown .form-embed-allentown__row { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--kiw--form-embed-allentown-row-gap); }
+  }
+</style>

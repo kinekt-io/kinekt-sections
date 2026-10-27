@@ -1,0 +1,73 @@
+---
+import type { Media, RichText } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+
+export interface HdCellItemContent {
+  /** Shown in the section's media column while this item is open (the section renders it, not the item). */
+  media: Media
+  title: string
+  subtitle?: string | null
+  /** Rich text as it arrives: a plain string, pre-rendered `{ html }`, or raw Lexical JSON from the identity Payload adapter. */
+  description: string | RichText | Record<string, unknown>
+}
+
+interface Props {
+  item: HdCellItemContent
+  open?: boolean
+  /** Index of the item in its list; the section uses it to show the matching media. */
+  index?: number
+  class?: string
+}
+
+const { item, open = false, index, class: className } = Astro.props
+const classes = ['hd-cell-item-allentown', className].filter(Boolean).join(' ')
+const descriptionHtml = typeof item.description === 'string'
+  ? item.description.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).map((part) => richTextToHtml(part, 'hd cell item description')).join('')
+  : typeof item.description?.html === 'string'
+    ? item.description.html
+    : richTextToHtml(item.description, 'hd cell item description')
+---
+<details class={classes} open={open} data-kinekt-disclosure data-hd-cell-item={index}>
+  <summary class="hd-cell-item-allentown__summary">
+    <span class="hd-cell-item-allentown__title">{item.title}</span>
+    {item.subtitle && <span class="hd-cell-item-allentown__subtitle">{item.subtitle}</span>}
+  </summary>
+  <div class="hd-cell-item-allentown__description" set:html={descriptionHtml} />
+</details>
+<style is:global>
+  /* Figma "Frame 44892" rows in "Section - High-density cells" (5240:412563): a 2 px line on the start edge (primary; the open item's
+     heading part in accent), space-m to an h3 title (line-height 1), space-s to an h6-size subtitle (500, 1.5) and a text-m description. */
+  :where(.hd-cell-item-allentown) {
+    --kiw--hd-cell-item-allentown-line-width: calc(var(--border-width) * 2);
+    --kiw--hd-cell-item-allentown-line-color: var(--kinekt-component-line, currentColor);
+    --kiw--hd-cell-item-allentown-active-line-color: var(--kinekt-component-accent, var(--accent-semi-dark));
+    --kiw--hd-cell-item-allentown-indent: var(--space-m);
+    --kiw--hd-cell-item-allentown-gap: var(--space-s);
+    --kiw--hd-cell-item-allentown-title-size: var(--h3);
+    --kiw--hd-cell-item-allentown-title-line-height: 1;
+    --kiw--hd-cell-item-allentown-title-color: var(--kinekt-component-ink, inherit);
+    --kiw--hd-cell-item-allentown-subtitle-size: var(--h6);
+    --kiw--hd-cell-item-allentown-subtitle-color: var(--kinekt-component-muted, inherit);
+    --kiw--hd-cell-item-allentown-description-size: var(--text-m);
+    --kiw--hd-cell-item-allentown-description-color: var(--kinekt-component-muted, inherit);
+    --kiw--hd-cell-item-allentown-focus-color: var(--kinekt-component-accent, currentColor);
+  }
+
+  .hd-cell-item-allentown { position: relative; display: block; min-width: 0; margin: 0; padding-inline-start: var(--kiw--hd-cell-item-allentown-indent); }
+  .hd-cell-item-allentown::before { position: absolute; inset-block: 0; inset-inline-start: 0; inline-size: var(--kiw--hd-cell-item-allentown-line-width); background: var(--kiw--hd-cell-item-allentown-line-color); content: ''; }
+  .hd-cell-item-allentown .hd-cell-item-allentown__summary { position: relative; display: grid; gap: var(--kiw--hd-cell-item-allentown-gap); list-style: none; cursor: pointer; }
+  .hd-cell-item-allentown .hd-cell-item-allentown__summary::-webkit-details-marker { display: none; }
+  .hd-cell-item-allentown .hd-cell-item-allentown__summary:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kiw--hd-cell-item-allentown-focus-color); outline-offset: var(--space-xxs); }
+  /* The open item marks its heading part with an accent segment over the line (Figma "Line 130", 84 px). */
+  .hd-cell-item-allentown[open] > .hd-cell-item-allentown__summary::before { position: absolute; z-index: 1; inset-block: 0; inset-inline-start: calc(var(--kiw--hd-cell-item-allentown-indent) * -1); inline-size: var(--kiw--hd-cell-item-allentown-line-width); background: var(--kiw--hd-cell-item-allentown-active-line-color); content: ''; }
+  .hd-cell-item-allentown .hd-cell-item-allentown__title { color: var(--kiw--hd-cell-item-allentown-title-color); font-family: var(--kinekt-component-heading-font-family, var(--heading-font-family)); font-size: var(--kiw--hd-cell-item-allentown-title-size); font-weight: var(--kinekt-component-heading-font-weight, var(--heading-font-weight)); line-height: var(--kiw--hd-cell-item-allentown-title-line-height); letter-spacing: var(--kinekt-component-heading-letter-spacing, var(--heading-letter-spacing)); text-wrap: balance; }
+  .hd-cell-item-allentown .hd-cell-item-allentown__subtitle { color: var(--kiw--hd-cell-item-allentown-subtitle-color); font-family: var(--kinekt-component-heading-font-family, var(--heading-font-family)); font-size: var(--kiw--hd-cell-item-allentown-subtitle-size); font-weight: var(--kinekt-component-heading-font-weight, var(--heading-font-weight)); line-height: var(--kinekt-component-text-line-height, var(--text-line-height)); }
+  .hd-cell-item-allentown:not([open]) .hd-cell-item-allentown__summary:hover .hd-cell-item-allentown__title { color: var(--kiw--hd-cell-item-allentown-active-line-color); }
+  .hd-cell-item-allentown .hd-cell-item-allentown__description { margin-block-start: var(--kiw--hd-cell-item-allentown-gap); color: var(--kiw--hd-cell-item-allentown-description-color); font-size: var(--kiw--hd-cell-item-allentown-description-size); line-height: var(--kinekt-component-text-line-height, var(--text-line-height)); }
+  .hd-cell-item-allentown .hd-cell-item-allentown__description > * { margin-block: 0; }
+  .hd-cell-item-allentown .hd-cell-item-allentown__description > * + * { margin-block-start: var(--space-s); }
+  @media (prefers-reduced-motion: no-preference) {
+    .hd-cell-item-allentown[open] .hd-cell-item-allentown__description { animation: hd-cell-item-allentown-reveal 240ms ease-out; }
+  }
+  @keyframes hd-cell-item-allentown-reveal { from { opacity: 0; transform: translateY(calc(var(--space-xxs) * -1)); } to { opacity: 1; transform: none; } }
+</style>

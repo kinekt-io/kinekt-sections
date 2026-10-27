@@ -1,6 +1,7 @@
 ---
 import Button from '../controls/button/allentown/button-allentown.astro'
 import Label from '../atoms/label/allentown/label-allentown.astro'
+import FormEmbed from '../components/form-embed/allentown/form-embed-allentown.astro'
 interface Field {
   kind: string
   id?: string
@@ -203,6 +204,10 @@ function buttonStyle(value: Record<string, unknown>, key: string): 'primary' | '
   }
   if (field.kind === 'ctaGroup' && isRecord(value)) {
     return <nav class={className} aria-label="Section actions">{Object.entries(value).map(([style, cta]) => isRecord(cta) && typeof cta.href === 'string' && typeof cta.label === 'string' && <Button href={cta.href} label={cta.label} style={buttonStyle(cta, style)} />)}</nav>
+  }
+
+  if (field.kind === 'formEmbed') {
+    return <FormEmbed class={className} form={typeof value === 'string' ? value : undefined} />
   }
 
   if (field.kind === 'formReference' && isRecord(value)) {

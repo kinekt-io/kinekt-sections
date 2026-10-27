@@ -1,76 +1,837 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe-tokens.css'
+import { faChevronDown, faChevronLeft, faChevronRight, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
+import Label from '../../../atoms/label/allentown/label-allentown.astro'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import type { Media, SectionTheme } from '../../../shared/content.js'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
+import type { BetaInsightIndexAllentownContent } from './insight-index-allentown.types.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "insightSources": {
-    "kind": "insightSourceList"
-  }
+type HeadingLevel = 'h1' | 'h2' | 'h3'
+
+/** A governed insight subject. Subjects aren't in the `insightSourceList` contract yet (renderer-side extension, see the section report). */
+export interface InsightIndexSubject { id: string; label: string }
+
+/**
+ * Mirrors the manifest's `insightSourceList` item (see `createManifestBlock`). The identity Payload adapter passes items
+ * through unchanged, so `image` may be a Media object or an upload ID. `type` is the generic renderer's old name for `kind`.
+ */
+export interface InsightIndexSource {
+  title: string
+  excerpt?: string | null
+  href: string
+  publishedAt?: string | null
+  kind?: string | null
+  type?: string | null
+  featured?: boolean | null
+  image?: unknown
+  /** Subject ids, labels or subject records (runtimeProps.facets = mediaTypeAndInsightSubject). */
+  subjects?: Array<string | InsightIndexSubject> | null
 }
+
+export interface InsightIndexLabels {
+  filters: string
+  search: string
+  searchPlaceholder: string
+  mediaType: string
+  subject: string
+  sort: string
+  sortNewest: string
+  sortOldest: string
+  sortTitle: string
+  /** `{filter}` is replaced with e.g. "Media type: Articles". */
+  removeFilter: string
+  pagination: string
+  previousPage: string
+  nextPage: string
+  /** `{page}` is replaced with the page number. */
+  page: string
+  /** `{count}` is replaced with the number of matching insights. */
+  resultCount: string
+  resultCountOne: string
+  noResults: string
+}
+
+// The generated .types.ts is still generic (Record<string, unknown>), so the renderer types its props from the manifest here.
+interface Props extends BetaInsightIndexAllentownContent {
+  id?: string
+  theme?: SectionTheme
+  /** Level of the "Filters" heading; card titles use the next level. */
+  headingLevel?: HeadingLevel
+  /** Active Insight Sources for the active region and locale (runtimeProps.contentScope is applied by the platform). */
+  insightSources?: InsightIndexSource[]
+  /** Subject order and labels; derived from the insights when omitted. Only subjects used by an insight get a filter. */
+  subjects?: InsightIndexSubject[]
+  /** Facet labels per media type (`kind`), e.g. { Article: 'Articles' }. */
+  mediaTypeLabels?: Record<string, string>
+  /** Card link label per media type (`kind`); `default` is used for other kinds. */
+  linkLabels?: Record<string, string>
+  /** Localised interface copy. */
+  labels?: Partial<InsightIndexLabels>
+  /** Pagefind bundle loaded at runtime for the text search (default `/pagefind/pagefind.js`); not bundled with the package. */
+  pagefindUrl?: string
+  /** Pagefind filters that scope the search to the active region and locale, e.g. { region: 'eu', locale: 'en' }. */
+  pagefindFilters?: Record<string, unknown>
+  mediaLoading?: 'eager' | 'lazy'
+}
+
+const {
+  id,
+  theme = 'light',
+  headingLevel = 'h2',
+  insightSources = [],
+  subjects,
+  mediaTypeLabels,
+  linkLabels,
+  labels: labelOverrides,
+  pagefindUrl,
+  pagefindFilters,
+  mediaLoading = 'lazy',
+} = Astro.props as Props
+
+const labels: InsightIndexLabels = {
+  filters: 'Filters',
+  search: 'Search insights',
+  searchPlaceholder: 'Search',
+  mediaType: 'Media type',
+  subject: 'Subject',
+  sort: 'Sort insights by',
+  sortNewest: 'Newest first',
+  sortOldest: 'Oldest first',
+  sortTitle: 'Title (A–Z)',
+  removeFilter: 'Remove filter {filter}',
+  pagination: 'Insight pages',
+  previousPage: 'Previous page',
+  nextPage: 'Next page',
+  page: 'Page {page}',
+  resultCount: '{count} insights',
+  resultCountOne: '{count} insight',
+  noResults: 'No insights match your search and filters.',
+  ...labelOverrides,
+}
+const facetLabels: Record<string, string> = { Article: 'Articles', Case: 'Cases', ...mediaTypeLabels }
+const cardLinkLabels: Record<string, string> = { Article: 'Read article', Case: 'View case', default: 'Read insight', ...linkLabels }
+// Figma "Label Icon" (4650:28087) icons per media type; Font Awesome free solid names for the Label atom.
+const kindIcons: Record<string, string> = { article: 'newspaper', case: 'suitcase', 'white paper': 'file-lines', video: 'circle-play', blog: 'pen-nib', interview: 'microphone', news: 'bullhorn' }
+
+// runtimeProps.pageSize = four
+const pageSize = 4
+const text = (value: unknown): string => (typeof value === 'string' ? value.trim() : '')
+const isMedia = (value: unknown): value is Media => typeof value === 'object' && value !== null && typeof (value as Media).url === 'string'
+const publishedTime = (value: unknown): number => {
+  const time = typeof value === 'string' ? Date.parse(value) : Number.NaN
+  return Number.isNaN(time) ? Number.NEGATIVE_INFINITY : time
+}
+const subjectRecord = (subject: string | InsightIndexSubject): InsightIndexSubject | undefined => {
+  if (typeof subject === 'string') return subject.trim() ? { id: subject.trim(), label: subject.trim() } : undefined
+  return subject && typeof subject.id === 'string' && subject.id.trim() ? { id: subject.id.trim(), label: text(subject.label) || subject.id.trim() } : undefined
+}
+
+// runtimeProps.sorting: the server order is the default sort (newest published first; ties keep their order).
+const records = insightSources
+  .filter((source) => source && text(source.title) !== '' && text(source.href) !== '')
+  .map((source, index) => {
+    const kind = text(source.kind) || text(source.type)
+    const sourceSubjects = (source.subjects ?? []).map(subjectRecord).filter((subject): subject is InsightIndexSubject => Boolean(subject))
+    return {
+      index,
+      title: text(source.title),
+      excerpt: text(source.excerpt),
+      href: text(source.href),
+      published: publishedTime(source.publishedAt),
+      kind,
+      icon: kindIcons[kind.toLowerCase()],
+      subjects: sourceSubjects,
+      media: isMedia(source.image) ? { ...source.image, alt: typeof source.image.alt === 'string' ? source.image.alt : '' } : undefined,
+    }
+  })
+  .sort((a, b) => b.published - a.published || a.index - b.index)
+
+// Facets (runtimeProps.facets = mediaTypeAndInsightSubject): only values used by a shown insight get a checkbox,
+// and a facet is offered only when it can narrow the list.
+const usefulFacet = (options: string[], valuesOf: (record: (typeof records)[number]) => string[]) => options.length > 1 || (options.length === 1 && records.some((record) => !valuesOf(record).includes(options[0])))
+const mediaTypeOptions = [...new Set(records.map((record) => record.kind).filter(Boolean))].map((kind) => ({ id: kind, label: facetLabels[kind] ?? kind }))
+const presentSubjects = new Map(records.flatMap((record) => record.subjects).map((subject) => [subject.id, subject]))
+const subjectOptions = subjects
+  ? subjects.map(subjectRecord).filter((subject): subject is InsightIndexSubject => Boolean(subject && presentSubjects.has(subject.id)))
+  : [...presentSubjects.values()]
+const facets = [
+  { name: 'mediaType', legend: labels.mediaType, options: usefulFacet(mediaTypeOptions.map((option) => option.id), (record) => [record.kind]) ? mediaTypeOptions : [] },
+  { name: 'subject', legend: labels.subject, options: usefulFacet(subjectOptions.map((option) => option.id), (record) => record.subjects.map((subject) => subject.id)) ? subjectOptions : [] },
+].filter((facet) => facet.options.length > 0)
+
+const uid = id ?? `insight-index-${Math.random().toString(36).slice(2, 10)}`
+const FiltersHeading = headingLevel
+const CardHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' : 'h4'
+const fa = (definition: typeof faXmark) => ({ viewBox: `0 0 ${definition.icon[0]} ${definition.icon[1]}`, path: definition.icon[4] as string })
+const icons = { search: fa(faMagnifyingGlass), xmark: fa(faXmark), chevronDown: fa(faChevronDown), chevronLeft: fa(faChevronLeft), chevronRight: fa(faChevronRight) }
+const linkIcon = ctaIconPaths['arrow-right']
+const sortOptions = [
+  { value: 'newest', label: labels.sortNewest },
+  { value: 'oldest', label: labels.sortOldest },
+  { value: 'title', label: labels.sortTitle },
+]
+const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, resultCount: labels.resultCount, resultCountOne: labels.resultCountOne, facets: Object.fromEntries(facets.map((facet) => [facet.name, facet.legend])) }
 ---
-<StructuralSection block="beta-insight-index-allentown" fields={fields} {...props} />
+<section
+  class="insight-index-allentown"
+  id={id}
+  data-kinekt-section
+  data-kinekt-theme={theme}
+  data-insight-index
+  data-insight-index-page-size={pageSize}
+  data-insight-index-labels={JSON.stringify(clientLabels)}
+  data-insight-index-pagefind-url={pagefindUrl}
+  data-insight-index-pagefind-filters={pagefindFilters ? JSON.stringify(pagefindFilters) : undefined}
+>
+  <div class="insight-index-allentown__container">
+    {records.length > 0 && (
+      <div class="insight-index-allentown__header" data-insight-index-controls hidden>
+        <div class="insight-index-allentown__summary">
+          <FiltersHeading class="insight-index-allentown__filters-title">{labels.filters} <span class="insight-index-allentown__filters-count" data-insight-index-count hidden></span></FiltersHeading>
+          <ul class="insight-index-allentown__active" data-insight-index-active hidden></ul>
+        </div>
+        <div class="insight-index-allentown__sort" data-insight-index-sort>
+          <button class="insight-index-allentown__sort-toggle" type="button" aria-expanded="false" aria-controls={`${uid}-sort`} data-insight-index-sort-toggle>
+            <span>{labels.sort}</span><span class="insight-index-allentown__visually-hidden" data-insight-index-sort-current>: {labels.sortNewest}</span>
+            <svg class="insight-index-allentown__icon" aria-hidden="true" focusable="false" viewBox={icons.chevronDown.viewBox}><path d={icons.chevronDown.path} fill="currentColor" /></svg>
+          </button>
+          <fieldset class="insight-index-allentown__sort-panel" id={`${uid}-sort`} data-insight-index-sort-panel hidden>
+            <legend class="insight-index-allentown__visually-hidden">{labels.sort}</legend>
+            {sortOptions.map((option, index) => (
+              <label class="insight-index-allentown__option">
+                <input class="insight-index-allentown__control insight-index-allentown__control--radio" type="radio" name={`${uid}-sort`} value={option.value} checked={index === 0} data-insight-index-sort-option data-label={option.label} />
+                <span>{option.label}</span>
+              </label>
+            ))}
+          </fieldset>
+        </div>
+      </div>
+    )}
+
+    <div class="insight-index-allentown__body">
+      {records.length > 0 && (
+        <div class="insight-index-allentown__sidebar" data-insight-index-controls hidden>
+          <label class="insight-index-allentown__search">
+            <svg class="insight-index-allentown__icon" aria-hidden="true" focusable="false" viewBox={icons.search.viewBox}><path d={icons.search.path} fill="currentColor" /></svg>
+            <span class="insight-index-allentown__visually-hidden">{labels.search}</span>
+            <input class="insight-index-allentown__search-input" type="search" name="query" placeholder={labels.searchPlaceholder} autocomplete="off" data-insight-index-query />
+          </label>
+          {facets.map((facet) => (
+            <fieldset class="insight-index-allentown__facet">
+              <legend class="insight-index-allentown__facet-title">{facet.legend}</legend>
+              <div class="insight-index-allentown__options">
+                {facet.options.map((option) => (
+                  <label class="insight-index-allentown__option">
+                    <input class="insight-index-allentown__control" type="checkbox" value={option.id} data-insight-index-facet={facet.name} data-label={option.label} />
+                    <span>{option.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          ))}
+        </div>
+      )}
+
+      <div class="insight-index-allentown__results">
+        <p class="insight-index-allentown__visually-hidden" role="status" aria-live="polite" data-insight-index-status></p>
+        <p class="insight-index-allentown__empty" data-insight-index-empty hidden>{labels.noResults}</p>
+        {records.length > 0 && (
+          <ul class="insight-index-allentown__items" data-insight-index-list>
+            {records.map((record) => (
+              <li
+                class="insight-index-allentown__item"
+                data-insight-index-item
+                data-insight-index-href={record.href}
+                data-insight-index-kind={record.kind}
+                data-insight-index-subjects={JSON.stringify(record.subjects.map((subject) => subject.id))}
+                data-insight-index-published={Number.isFinite(record.published) ? record.published : ''}
+                data-insight-index-title={record.title}
+                data-insight-index-text={`${record.title} ${record.excerpt}`.toLowerCase()}
+              >
+                <article class="insight-index-allentown__card">
+                  {record.media && <KinektMedia media={record.media} class="insight-index-allentown__media" imageClass="insight-index-allentown__image" loading={mediaLoading} />}
+                  <div class="insight-index-allentown__entry">
+                    <div class="insight-index-allentown__meta">
+                      <div class="insight-index-allentown__heading-group">
+                        {record.kind && <Label class="insight-index-allentown__kind" text={record.kind} icon={record.icon} size="s" />}
+                        <CardHeading class="insight-index-allentown__title">{record.title}</CardHeading>
+                      </div>
+                      {record.excerpt && <p class="insight-index-allentown__excerpt">{record.excerpt}</p>}
+                    </div>
+                    <Button class="insight-index-allentown__link" href={record.href} label={cardLinkLabels[record.kind] ?? cardLinkLabels.default} style="clear"><span class="insight-index-allentown__visually-hidden">: {record.title}</span><svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={linkIcon.viewBox} fill="none"><path d={linkIcon.path} stroke="currentColor" stroke-width="2" /></svg></Button>
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
+        )}
+        {records.length > pageSize && (
+          <nav class="insight-index-allentown__pagination" aria-label={labels.pagination} data-insight-index-pagination hidden>
+            <button class="insight-index-allentown__page-step" type="button" aria-label={labels.previousPage} data-insight-index-page-step="-1">
+              <svg class="insight-index-allentown__icon" aria-hidden="true" focusable="false" viewBox={icons.chevronLeft.viewBox}><path d={icons.chevronLeft.path} fill="currentColor" /></svg>
+            </button>
+            <ol class="insight-index-allentown__pages" data-insight-index-pages></ol>
+            <button class="insight-index-allentown__page-step" type="button" aria-label={labels.nextPage} data-insight-index-page-step="1">
+              <svg class="insight-index-allentown__icon" aria-hidden="true" focusable="false" viewBox={icons.chevronRight.viewBox}><path d={icons.chevronRight.path} fill="currentColor" /></svg>
+            </button>
+          </nav>
+        )}
+      </div>
+    </div>
+  </div>
+  <template data-insight-index-chip-template>
+    <li class="insight-index-allentown__chip-item">
+      <button class="insight-index-allentown__chip" type="button">
+        <span class="insight-index-allentown__chip-text"><span class="insight-index-allentown__chip-facet"></span> <span class="insight-index-allentown__chip-value"></span></span>
+        <svg class="insight-index-allentown__chip-icon" aria-hidden="true" focusable="false" viewBox={icons.xmark.viewBox}><path d={icons.xmark.path} fill="currentColor" /></svg>
+      </button>
+    </li>
+  </template>
+</section>
+<script>
+  /**
+   * Insight Index: progressively enhanced search, facets, sorting and pagination over the server-rendered cards.
+   * Without JavaScript every card stays visible in the default order (newest first) and the controls stay hidden.
+   *
+   * Search (runtimeProps.searchEngine = pagefind): the text query runs through Pagefind's JavaScript API, loaded at runtime
+   * from `pagefindUrl` (default `/pagefind/pagefind.js`; not bundled, the consumer indexes its own built site). The search is
+   * scoped by `pagefindFilters` (region/locale) combined with the selected Media type (`type`) and Subject (`subject`)
+   * filters (OR). Result URLs are matched to the rendered cards; facets, sorting and pagination still run here. While
+   * Pagefind loads, or when the bundle is unavailable, the query matches the cards' title + excerpt locally.
+   * Override hook: a consumer can set `section.kinektInsightIndexSearch = async (request) => urls | null` to replace the
+   * default Pagefind provider (`null` keeps the local match). After every update the section dispatches
+   * `kinekt:insight-index-change` with the current state and result count.
+   * The loader and filter shape mirror `loadPagefind` / `pagefindFilters` in `src/shared/interactions.ts`.
+   */
+  type SortValue = 'newest' | 'oldest' | 'title'
+  interface SearchRequest { query: string; mediaTypes: string[]; subjects: string[]; pagefindUrl: string; pagefindFilters?: Record<string, unknown>; filters?: Record<string, unknown> }
+  type SearchProvider = (request: SearchRequest) => Promise<string[] | null | undefined> | string[] | null | undefined
+  interface InsightIndexElement extends HTMLElement { kinektInsightIndexSearch?: SearchProvider }
+  interface ClientLabels { removeFilter: string; page: string; resultCount: string; resultCountOne: string; facets: Record<string, string> }
+  interface PagefindResult { data: () => Promise<{ url: string }> }
+  interface PagefindModule {
+    init: () => Promise<void> | void
+    search: (query: string | null, options?: { filters?: Record<string, unknown> }) => Promise<{ results: PagefindResult[] }>
+  }
+
+  const defaultPagefindUrl = '/pagefind/pagefind.js'
+  /** Upper bound of Pagefind results whose data is fetched to match the rendered cards. */
+  const pagefindResultLimit = 200
+  const pagefindModules = new Map<string, Promise<PagefindModule>>()
+
+  const parse = <T,>(value: string | undefined, fallback: T): T => {
+    try { return value ? JSON.parse(value) as T : fallback } catch { return fallback }
+  }
+  async function loadPagefind(url: string) {
+    let loaded = pagefindModules.get(url)
+    if (!loaded) {
+      // The Pagefind bundle location is a consumer runtime setting, not a package import.
+      loaded = import(/* @vite-ignore */ url) as Promise<PagefindModule>
+      pagefindModules.set(url, loaded)
+    }
+    const pagefind = await loaded
+    await pagefind.init()
+    return pagefind
+  }
+  /** Base scope (`pagefindFilters`) combined with the selected facets; within the selection any value matches. */
+  function pagefindFilters(selected: Record<string, string[]>, base?: Record<string, unknown>) {
+    const grouped = Object.fromEntries(Object.entries(selected).filter(([, values]) => values.length > 0))
+    const selectedFilter = Object.keys(grouped).length ? { any: grouped } : undefined
+    if (!base) return selectedFilter
+    if (!selectedFilter) return base
+    return { all: [base, selectedFilter] }
+  }
+  const pagefindProvider: SearchProvider = async ({ query, pagefindUrl, filters }) => {
+    const pagefind = await loadPagefind(pagefindUrl)
+    const result = await pagefind.search(query || null, { filters })
+    const data = await Promise.all(result.results.slice(0, pagefindResultLimit).map((item) => item.data()))
+    return data.map((item) => item.url)
+  }
+  // Cards and Pagefind results are matched by origin + path (trailing slash ignored) + hash; query strings are ignored.
+  const pathKey = (href: string): string => {
+    try { const url = new URL(href, window.location.href); return `${url.origin}${url.pathname.replace(/\/$/, '')}${url.hash}` } catch { return href }
+  }
+
+  for (const section of document.querySelectorAll<InsightIndexElement>('[data-insight-index]')) {
+    const list = section.querySelector<HTMLElement>('[data-insight-index-list]')
+    if (!list || section.dataset.insightIndexReady) continue
+    section.dataset.insightIndexReady = 'true'
+
+    const labels = parse<ClientLabels>(section.dataset.insightIndexLabels, { removeFilter: 'Remove filter {filter}', page: 'Page {page}', resultCount: '{count} insights', resultCountOne: '{count} insight', facets: {} })
+    const pageSize = Number(section.dataset.insightIndexPageSize) || 4
+    const collator = new Intl.Collator(document.documentElement.lang || undefined, { sensitivity: 'base', numeric: true })
+    const items = [...list.querySelectorAll<HTMLElement>(':scope > [data-insight-index-item]')].map((element, order) => ({
+      element,
+      order,
+      key: pathKey(element.dataset.insightIndexHref || ''),
+      kind: element.dataset.insightIndexKind || '',
+      subjects: parse<string[]>(element.dataset.insightIndexSubjects, []),
+      published: element.dataset.insightIndexPublished ? Number(element.dataset.insightIndexPublished) : Number.NEGATIVE_INFINITY,
+      title: element.dataset.insightIndexTitle || '',
+      text: element.dataset.insightIndexText || '',
+    }))
+    const query = section.querySelector<HTMLInputElement>('[data-insight-index-query]')
+    const checkboxes = [...section.querySelectorAll<HTMLInputElement>('[data-insight-index-facet]')]
+    const count = section.querySelector<HTMLElement>('[data-insight-index-count]')
+    const active = section.querySelector<HTMLElement>('[data-insight-index-active]')
+    const chipTemplate = section.querySelector<HTMLTemplateElement>('[data-insight-index-chip-template]')
+    const status = section.querySelector<HTMLElement>('[data-insight-index-status]')
+    const empty = section.querySelector<HTMLElement>('[data-insight-index-empty]')
+    const pagination = section.querySelector<HTMLElement>('[data-insight-index-pagination]')
+    const pages = section.querySelector<HTMLElement>('[data-insight-index-pages]')
+    const steps = [...section.querySelectorAll<HTMLButtonElement>('[data-insight-index-page-step]')]
+    const sortToggle = section.querySelector<HTMLButtonElement>('[data-insight-index-sort-toggle]')
+    const sortPanel = section.querySelector<HTMLElement>('[data-insight-index-sort-panel]')
+    const sortCurrent = section.querySelector<HTMLElement>('[data-insight-index-sort-current]')
+    const sortOptions = [...section.querySelectorAll<HTMLInputElement>('[data-insight-index-sort-option]')]
+
+    const state = { query: '', sort: 'newest' as SortValue, page: 1, providerMatches: null as Set<string> | null }
+    let searchRun = 0
+    let searchTimer: number | undefined
+
+    const selected = (facet: string) => checkboxes.filter((box) => box.dataset.insightIndexFacet === facet && box.checked).map((box) => box.value)
+    const matchesQuery = (item: (typeof items)[number]) => {
+      if (!state.query) return true
+      if (state.providerMatches) return state.providerMatches.has(item.key)
+      return state.query.toLowerCase().split(/\s+/).filter(Boolean).every((token) => item.text.includes(token))
+    }
+    const compare = (a: (typeof items)[number], b: (typeof items)[number]) => {
+      if (state.sort === 'title') return collator.compare(a.title, b.title) || a.order - b.order
+      if (state.sort === 'oldest') return (a.published === b.published ? 0 : a.published === Number.NEGATIVE_INFINITY ? 1 : b.published === Number.NEGATIVE_INFINITY ? -1 : a.published - b.published) || a.order - b.order
+      return a.order - b.order
+    }
+    const pageList = (current: number, total: number): Array<number | null> => {
+      if (total <= 7) return Array.from({ length: total }, (_, index) => index + 1)
+      const shown = new Set([1, total, current - 1, current, current + 1].filter((page) => page >= 1 && page <= total))
+      return [...shown].sort((a, b) => a - b).flatMap((page, index, all) => (index > 0 && page - all[index - 1] > 1 ? [null, page] : [page]))
+    }
+
+    const render = (focusResults = false) => {
+      const mediaTypes = selected('mediaType')
+      const subjects = selected('subject')
+      // runtimeProps.facetMatching = orWithinFacetAndAcrossFacets: any selected value of any facet matches.
+      const facetsActive = mediaTypes.length + subjects.length > 0
+      const matched = items
+        .filter((item) => matchesQuery(item) && (!facetsActive || mediaTypes.includes(item.kind) || item.subjects.some((subject) => subjects.includes(subject))))
+        .sort(compare)
+      const total = Math.max(1, Math.ceil(matched.length / pageSize))
+      state.page = Math.min(Math.max(1, state.page), total)
+      const start = (state.page - 1) * pageSize
+      const visible = new Set(matched.slice(start, start + pageSize).map((item) => item.element))
+      const order = [...matched, ...items.filter((item) => !matched.includes(item))]
+      list.append(...order.map((item) => item.element))
+      order.forEach((item) => { item.element.hidden = !visible.has(item.element) })
+      list.hidden = matched.length === 0
+      if (empty) empty.hidden = matched.length > 0
+      if (status) status.textContent = (matched.length === 1 ? labels.resultCountOne : labels.resultCount).replace('{count}', String(matched.length))
+
+      // Active filter chips and the "Filters (n)" count.
+      const checked = checkboxes.filter((box) => box.checked)
+      if (count) { count.textContent = `(${checked.length})`; count.hidden = checked.length === 0 }
+      if (active && chipTemplate) {
+        active.replaceChildren(...checked.map((box) => {
+          const chip = chipTemplate.content.firstElementChild!.cloneNode(true) as HTMLElement
+          const facetLabel = labels.facets[box.dataset.insightIndexFacet || ''] || ''
+          const button = chip.querySelector('button')!
+          chip.querySelector('.insight-index-allentown__chip-facet')!.textContent = `${facetLabel}:`
+          chip.querySelector('.insight-index-allentown__chip-value')!.textContent = box.dataset.label || box.value
+          button.setAttribute('aria-label', labels.removeFilter.replace('{filter}', `${facetLabel}: ${box.dataset.label || box.value}`))
+          button.addEventListener('click', () => { box.checked = false; state.page = 1; render(); (query ?? box).focus() })
+          return chip
+        }))
+        active.hidden = checked.length === 0
+      }
+
+      // Pagination (runtimeProps.pageSize = four).
+      if (pagination && pages) {
+        pagination.hidden = total <= 1
+        pages.replaceChildren(...pageList(state.page, total).map((page) => {
+          const item = document.createElement('li')
+          if (page === null) { item.textContent = '…'; item.className = 'insight-index-allentown__page-gap'; item.setAttribute('aria-hidden', 'true'); return item }
+          const button = document.createElement('button')
+          button.type = 'button'
+          button.className = 'insight-index-allentown__page'
+          button.textContent = String(page)
+          button.setAttribute('aria-label', labels.page.replace('{page}', String(page)))
+          if (page === state.page) button.setAttribute('aria-current', 'page')
+          button.addEventListener('click', () => { state.page = page; render(true) })
+          item.append(button)
+          return item
+        }))
+        steps.forEach((step) => { step.disabled = Number(step.dataset.insightIndexPageStep) < 0 ? state.page <= 1 : state.page >= total })
+      }
+      if (focusResults) {
+        const first = matched[start]?.element
+        if (first) { first.tabIndex = -1; first.focus() }
+      }
+      section.dispatchEvent(new CustomEvent('kinekt:insight-index-change', { bubbles: true, detail: { query: state.query, mediaTypes, subjects, sort: state.sort, page: state.page, pages: total, count: matched.length } }))
+    }
+
+    const runSearch = async () => {
+      const run = ++searchRun
+      state.providerMatches = null
+      render()
+      if (!state.query) return
+      const provider = section.kinektInsightIndexSearch ?? pagefindProvider
+      const base = parse<Record<string, unknown> | undefined>(section.dataset.insightIndexPagefindFilters, undefined)
+      // Pagefind filter values: the media type (`type:Case`) and the subject label (`subject:High-density`).
+      const filterValues = (facet: string) => checkboxes.filter((box) => box.dataset.insightIndexFacet === facet && box.checked).map((box) => (facet === 'subject' ? box.dataset.label || box.value : box.value))
+      try {
+        const result = await provider({
+          query: state.query,
+          mediaTypes: selected('mediaType'),
+          subjects: selected('subject'),
+          pagefindUrl: pagefindUrl(),
+          pagefindFilters: base,
+          filters: pagefindFilters({ type: filterValues('mediaType'), subject: filterValues('subject') }, base),
+        })
+        if (run !== searchRun || !Array.isArray(result)) return
+        state.providerMatches = new Set(result.map(pathKey))
+        render()
+      } catch {
+        // Bundle unavailable or provider failed: keep the local title + excerpt match.
+      }
+    }
+    const pagefindUrl = () => section.dataset.insightIndexPagefindUrl || defaultPagefindUrl
+
+    query?.addEventListener('input', () => {
+      state.query = query.value.trim()
+      state.page = 1
+      window.clearTimeout(searchTimer)
+      searchTimer = window.setTimeout(() => { void runSearch() }, 150)
+    })
+    // Preload the Pagefind bundle on first focus (unless a consumer provider replaces it).
+    query?.addEventListener('focus', () => {
+      if (!section.kinektInsightIndexSearch) void loadPagefind(pagefindUrl()).catch(() => undefined)
+    }, { once: true })
+    // Facet changes re-run the query so the Pagefind filters follow the selection.
+    checkboxes.forEach((box) => box.addEventListener('change', () => { state.page = 1; if (state.query) void runSearch(); else render() }))
+    steps.forEach((step) => step.addEventListener('click', () => { state.page += Number(step.dataset.insightIndexPageStep); render(true) }))
+
+    // Sort: a disclosure button with a native radio group.
+    const setSortOpen = (open: boolean, returnFocus = false) => {
+      if (!sortToggle || !sortPanel) return
+      sortToggle.setAttribute('aria-expanded', String(open))
+      sortPanel.hidden = !open
+      if (open) sortOptions.find((option) => option.checked)?.focus()
+      else if (returnFocus) sortToggle.focus()
+    }
+    sortToggle?.addEventListener('click', () => setSortOpen(sortToggle.getAttribute('aria-expanded') !== 'true'))
+    sortOptions.forEach((option) => {
+      option.addEventListener('change', () => {
+        state.sort = (option.value as SortValue) || 'newest'
+        state.page = 1
+        if (sortCurrent) sortCurrent.textContent = `: ${option.dataset.label || option.value}`
+        render()
+      })
+      option.addEventListener('click', (event) => { if ((event as MouseEvent).detail > 0) setSortOpen(false, true) })
+    })
+    sortPanel?.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' || event.key === 'Enter') { event.preventDefault(); setSortOpen(false, true) }
+    })
+    document.addEventListener('click', (event) => {
+      const sort = section.querySelector('[data-insight-index-sort]')
+      if (sort && !sort.contains(event.target as Node)) setSortOpen(false)
+    })
+    section.querySelector('[data-insight-index-sort]')?.addEventListener('focusout', (event) => {
+      const next = (event as FocusEvent).relatedTarget as Node | null
+      if (next && !section.querySelector('[data-insight-index-sort]')!.contains(next)) setSortOpen(false)
+    })
+
+    section.querySelectorAll<HTMLElement>('[data-insight-index-controls]').forEach((element) => { element.hidden = false })
+    section.dataset.insightIndexEnhanced = 'true'
+    render()
+  }
+</script>
 <style is:global>
-.beta-insight-index-allentown[data-kinekt-section] {
-  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--insight-index-allentown-site-width, var(--website-width)));
-  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--insight-index-allentown-content-width, var(--content-width)));
-  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--insight-index-allentown-reading-width, var(--width-m)));
-  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--insight-index-allentown-inline-space, var(--section-gutter)));
-  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--insight-index-allentown-block-space, var(--section-space-l)));
-  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--insight-index-allentown-gap, var(--content-gap)));
-  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--insight-index-allentown-radius, var(--radius-none)));
-  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--insight-index-allentown-border-width, var(--border-width)));
-  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--insight-index-allentown-media-filter, var(--media-filter)));
-  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--insight-index-allentown-intro-accent-gap, var(--space-xxs)));
-  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--insight-index-allentown-intro-description-gap, var(--space-m)));
-  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--insight-index-allentown-heading-1-size, var(--h1)));
-  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--insight-index-allentown-heading-2-size, var(--h2)));
-  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--insight-index-allentown-heading-3-size, var(--h3)));
-  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--insight-index-allentown-heading-4-size, var(--h4)));
-  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--insight-index-allentown-heading-5-size, var(--h5)));
-  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--insight-index-allentown-heading-6-size, var(--h6)));
-  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--insight-index-allentown-heading-font-family, var(--heading-font-family)));
-  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--insight-index-allentown-heading-font-weight, var(--heading-font-weight)));
-  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--insight-index-allentown-heading-line-height, var(--heading-line-height)));
-  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--insight-index-allentown-heading-letter-spacing, var(--heading-letter-spacing)));
-  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--insight-index-allentown-text-font-family, var(--text-font-family)));
-  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--insight-index-allentown-text-font-weight, var(--text-font-weight)));
-  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--insight-index-allentown-text-line-height, var(--text-line-height)));
-  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--insight-index-allentown-text-letter-spacing, var(--text-letter-spacing)));
-  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--insight-index-allentown-mono-font-family, var(--mono-font-family)));
-  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--insight-index-allentown-text-xs-size, var(--text-xs)));
-  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--insight-index-allentown-text-s-size, var(--text-s)));
-  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--insight-index-allentown-text-m-size, var(--text-m)));
-  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--insight-index-allentown-text-l-size, var(--text-l)));
-  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--insight-index-allentown-text-xl-size, var(--text-xl)));
-  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--insight-index-allentown-text-xxl-size, var(--text-xxl)));
-  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--insight-index-allentown-carousel-gap, var(--content-gap)));
-  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--insight-index-allentown-actions-gap, var(--space-s)));
-  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--insight-index-allentown-actions-margin, var(--space-xl)));
-  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--insight-index-allentown-button-height, var(--input-height)));
-  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--insight-index-allentown-button-padding-block, var(--space-s)));
-  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--insight-index-allentown-button-padding-inline, var(--space-l)));
-  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--insight-index-allentown-button-radius, var(--buttons-radius)));
-  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--insight-index-allentown-input-height, var(--input-height)));
-  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--insight-index-allentown-editorial-gap, var(--section-space-xxl)));
-  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--insight-index-allentown-card-padding, var(--space-l)));
-  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--insight-index-allentown-header-to-content-gap, var(--section-space-s)));
-  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--insight-index-allentown-table-offset, var(--space-xl)));
-  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--insight-index-allentown-canvas));
-  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--insight-index-allentown-surface));
-  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--insight-index-allentown-ink));
-  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--insight-index-allentown-muted));
-  --kiw--section-subtle: var(--kinekt-section-subtle, var(--kiw--insight-index-allentown-subtle));
-  --kiw--section-line: var(--kinekt-section-line, var(--kiw--insight-index-allentown-line));
-  --kiw--section-action: var(--kinekt-section-action, var(--kiw--insight-index-allentown-action));
-  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--insight-index-allentown-action-text));
-  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--insight-index-allentown-accent));
-  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--insight-index-allentown-action-icon));
-}
+  .insight-index-allentown {
+    --kiw--section-site-width: var(--kiw--insight-index-allentown-site-width, var(--website-width));
+    --kiw--section-content-width: var(--kiw--insight-index-allentown-content-width, var(--content-width));
+    --kiw--section-reading-width: var(--kiw--insight-index-allentown-reading-width, var(--width-m));
+    --kiw--section-inline-space: var(--kiw--insight-index-allentown-inline-space, var(--section-gutter));
+    --kiw--section-block-space: var(--kiw--insight-index-allentown-block-space, var(--section-space-l));
+    --kiw--section-gap: var(--kiw--insight-index-allentown-gap, var(--content-gap));
+    --kiw--section-radius: var(--kiw--insight-index-allentown-radius, var(--radius-none));
+    --kiw--section-border-width: var(--kiw--insight-index-allentown-border-width, var(--border-width));
+    --kiw--section-media-filter: var(--kiw--insight-index-allentown-media-filter, var(--media-filter));
+    --kiw--section-intro-accent-gap: var(--kiw--insight-index-allentown-intro-accent-gap, var(--space-xxs));
+    --kiw--section-intro-description-gap: var(--kiw--insight-index-allentown-intro-description-gap, var(--space-m));
+    --kiw--section-heading-1-size: var(--kiw--insight-index-allentown-heading-1-size, var(--h1));
+    --kiw--section-heading-2-size: var(--kiw--insight-index-allentown-heading-2-size, var(--h2));
+    --kiw--section-heading-3-size: var(--kiw--insight-index-allentown-heading-3-size, var(--h3));
+    --kiw--section-heading-4-size: var(--kiw--insight-index-allentown-heading-4-size, var(--h4));
+    --kiw--section-heading-5-size: var(--kiw--insight-index-allentown-heading-5-size, var(--h5));
+    --kiw--section-heading-6-size: var(--kiw--insight-index-allentown-heading-6-size, var(--h6));
+    --kiw--section-heading-font-family: var(--kiw--insight-index-allentown-heading-font-family, var(--heading-font-family));
+    --kiw--section-heading-font-weight: var(--kiw--insight-index-allentown-heading-font-weight, var(--heading-font-weight));
+    --kiw--section-heading-line-height: var(--kiw--insight-index-allentown-heading-line-height, var(--heading-line-height));
+    --kiw--section-heading-letter-spacing: var(--kiw--insight-index-allentown-heading-letter-spacing, var(--heading-letter-spacing));
+    --kiw--section-text-font-family: var(--kiw--insight-index-allentown-text-font-family, var(--text-font-family));
+    --kiw--section-text-font-weight: var(--kiw--insight-index-allentown-text-font-weight, var(--text-font-weight));
+    --kiw--section-text-line-height: var(--kiw--insight-index-allentown-text-line-height, var(--text-line-height));
+    --kiw--section-text-letter-spacing: var(--kiw--insight-index-allentown-text-letter-spacing, var(--text-letter-spacing));
+    --kiw--section-mono-font-family: var(--kiw--insight-index-allentown-mono-font-family, var(--mono-font-family));
+    --kiw--section-text-xs-size: var(--kiw--insight-index-allentown-text-xs-size, var(--text-xs));
+    --kiw--section-text-s-size: var(--kiw--insight-index-allentown-text-s-size, var(--text-s));
+    --kiw--section-text-m-size: var(--kiw--insight-index-allentown-text-m-size, var(--text-m));
+    --kiw--section-text-l-size: var(--kiw--insight-index-allentown-text-l-size, var(--text-l));
+    --kiw--section-text-xl-size: var(--kiw--insight-index-allentown-text-xl-size, var(--text-xl));
+    --kiw--section-text-xxl-size: var(--kiw--insight-index-allentown-text-xxl-size, var(--text-xxl));
+    --kiw--section-carousel-gap: var(--kiw--insight-index-allentown-carousel-gap, var(--content-gap));
+    --kiw--section-actions-gap: var(--kiw--insight-index-allentown-actions-gap, var(--space-s));
+    --kiw--section-actions-margin: var(--kiw--insight-index-allentown-actions-margin, var(--space-xl));
+    --kiw--section-button-height: var(--kiw--insight-index-allentown-button-height, var(--input-height));
+    --kiw--section-button-padding-block: var(--kiw--insight-index-allentown-button-padding-block, var(--space-s));
+    --kiw--section-button-padding-inline: var(--kiw--insight-index-allentown-button-padding-inline, var(--space-l));
+    --kiw--section-button-radius: var(--kiw--insight-index-allentown-button-radius, var(--buttons-radius));
+    --kiw--section-input-height: var(--kiw--insight-index-allentown-input-height, var(--input-height));
+    --kiw--section-editorial-gap: var(--kiw--insight-index-allentown-editorial-gap, var(--section-space-xxl));
+    --kiw--section-card-padding: var(--kiw--insight-index-allentown-card-padding, var(--space-l));
+    --kiw--section-header-to-content-gap: var(--kiw--insight-index-allentown-header-to-content-gap, var(--section-space-s));
+    --kiw--section-table-offset: var(--kiw--insight-index-allentown-table-offset, var(--space-xl));
+    --kiw--section-canvas: var(--kiw--insight-index-allentown-canvas);
+    --kiw--section-surface: var(--kiw--insight-index-allentown-surface);
+    --kiw--section-ink: var(--kiw--insight-index-allentown-ink);
+    --kiw--section-muted: var(--kiw--insight-index-allentown-muted);
+    --kiw--section-line: var(--kiw--insight-index-allentown-line);
+    --kiw--section-action: var(--kiw--insight-index-allentown-action);
+    --kiw--section-action-text: var(--kiw--insight-index-allentown-action-text);
+    --kiw--section-accent: var(--kiw--insight-index-allentown-accent);
+    --kiw--section-action-icon: var(--kiw--insight-index-allentown-action-icon);
+    --kiw--section-subtle: var(--kiw--insight-index-allentown-subtle);
+  }
 </style>
 <style is:global>
-:where(.beta-insight-index-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-gap: var(--section-space-xl); }
+  /* Figma "Main Section - Industry Insights" (5240:411675), light: a 1440 container. Header: "Filters (n)" + active filter chips
+     on the left, "Sort insights by" on the right; then a 288 filter sidebar (search, Media type, Subject) beside a 2-column card
+     grid with pagination. Cards are built here (Figma "Product card" frames with a "Label Icon" instance, 4650:28087). */
+  :where(.insight-index-allentown) {
+    --kiw--insight-index-container-width: var(--content-width);
+    --kiw--insight-index-group-gap: var(--section-space-s);
+    --kiw--insight-index-body-gap: var(--section-space-s);
+    --kiw--insight-index-sidebar-width: var(--width-s);
+    --kiw--insight-index-summary-gap: var(--space-m);
+    --kiw--insight-index-title-gap: var(--space-xxs);
+    --kiw--insight-index-title-size: var(--kiw--section-heading-4-size);
+    --kiw--insight-index-count-size: var(--kiw--section-heading-5-size);
+    --kiw--insight-index-count-color: var(--kinekt-component-accent);
+    --kiw--insight-index-chips-gap: var(--space-xs);
+    --kiw--insight-index-chip-gap: var(--space-s);
+    --kiw--insight-index-chip-padding-block: var(--space-xxs);
+    --kiw--insight-index-chip-padding-inline: var(--space-s);
+    --kiw--insight-index-chip-radius: var(--radius-l);
+    --kiw--insight-index-chip-size: var(--text-s);
+    --kiw--insight-index-chip-tint: var(--kinekt-label-tint, 8%);
+    --kiw--insight-index-chip-border-tint: 12%;
+    --kiw--insight-index-chip-background: color-mix(in srgb, var(--kinekt-component-accent) var(--kiw--insight-index-chip-tint), transparent);
+    --kiw--insight-index-chip-border-color: color-mix(in srgb, var(--kinekt-component-accent) var(--kiw--insight-index-chip-border-tint), transparent);
+    --kiw--insight-index-chip-facet-color: var(--primary-semi-light);
+    --kiw--insight-index-chip-value-color: var(--kinekt-component-subtle);
+    --kiw--insight-index-chip-icon-color: var(--kinekt-component-accent);
+    --kiw--insight-index-sort-gap: var(--space-xs);
+    --kiw--insight-index-sort-size: var(--text-l);
+    --kiw--insight-index-icon-size: var(--text-m);
+    --kiw--insight-index-icon-color: var(--kinekt-component-accent);
+    --kiw--insight-index-popover-gap: var(--space-s);
+    --kiw--insight-index-popover-padding: var(--space-m);
+    --kiw--insight-index-popover-background: var(--kinekt-component-surface);
+    --kiw--insight-index-popover-border-color: var(--kinekt-component-line);
+    --kiw--insight-index-sidebar-gap: var(--space-xl);
+    --kiw--insight-index-search-gap: var(--space-xs);
+    --kiw--insight-index-search-padding-block: var(--space-s);
+    --kiw--insight-index-search-padding-inline: var(--space-m);
+    --kiw--insight-index-search-size: var(--text-l);
+    --kiw--insight-index-search-radius: var(--radius-m);
+    --kiw--insight-index-search-background: var(--neutral-light);
+    --kiw--insight-index-search-border-color: var(--neutral-semi-light);
+    --kiw--insight-index-search-placeholder-color: var(--primary-semi-light);
+    --kiw--insight-index-divider-width: var(--kinekt-component-border-width);
+    --kiw--insight-index-divider-color: var(--kinekt-component-line);
+    --kiw--insight-index-facet-gap: var(--space-m);
+    --kiw--insight-index-legend-size: var(--kiw--section-heading-6-size);
+    --kiw--insight-index-options-gap: var(--space-s);
+    --kiw--insight-index-option-gap: var(--space-xs);
+    --kiw--insight-index-option-size: var(--text-m);
+    --kiw--insight-index-option-color: var(--primary-dark);
+    --kiw--insight-index-control-size: var(--text-m);
+    --kiw--insight-index-control-inset: 0.11em;
+    --kiw--insight-index-control-radius: var(--radius-xs);
+    --kiw--insight-index-control-border-color: var(--kinekt-component-subtle);
+    --kiw--insight-index-control-mark-color: var(--kinekt-component-accent);
+    --kiw--insight-index-results-gap: var(--section-space-s);
+    --kiw--insight-index-cards-column-gap: var(--section-space-xs);
+    --kiw--insight-index-cards-row-gap: var(--section-space-s);
+    --kiw--insight-index-card-gap: var(--space-l);
+    --kiw--insight-index-media-ratio: 16 / 9;
+    --kiw--insight-index-entry-gap: var(--space-l);
+    --kiw--insight-index-meta-gap: var(--space-xs);
+    --kiw--insight-index-heading-gap: var(--space-xxs);
+    --kiw--insight-index-card-title-size: var(--kiw--section-heading-4-size);
+    --kiw--insight-index-card-title-line-height: 1.25;
+    --kiw--insight-index-excerpt-size: var(--text-m);
+    --kiw--insight-index-excerpt-color: var(--kinekt-component-subtle);
+    --kiw--insight-index-pagination-gap: var(--space-xl);
+    --kiw--insight-index-pages-gap: var(--space-m);
+    --kiw--insight-index-page-size: var(--text-l);
+    --kiw--insight-index-page-color: var(--primary-semi-light);
+    --kiw--insight-index-page-opacity: 0.5;
+    --kiw--insight-index-page-current-color: var(--kinekt-component-accent);
+    --kiw--insight-index-focus-color: var(--kinekt-component-action);
+    --kinekt-section-content-width: var(--kiw--insight-index-container-width);
+  }
+  /* Off-role Figma colours (primary-semi-light, primary-dark, neutral-light/-semi-light). Semi-light: a white search field on the
+     neutral-light canvas. Dark themes are inferred: muted labels, ink options, surface field, 25% chip border. */
+  :where(.insight-index-allentown[data-kinekt-theme='semi-light']) { --kiw--insight-index-search-background: var(--kinekt-component-surface); }
+  :where(.insight-index-allentown[data-kinekt-theme='semi-dark'], .insight-index-allentown[data-kinekt-theme='dark']) {
+    --kiw--insight-index-chip-facet-color: var(--kinekt-component-muted);
+    --kiw--insight-index-chip-border-tint: 25%;
+    --kiw--insight-index-search-background: var(--kinekt-component-surface);
+    --kiw--insight-index-search-border-color: var(--kinekt-component-line);
+    --kiw--insight-index-search-placeholder-color: var(--kinekt-component-muted);
+    --kiw--insight-index-option-color: var(--kinekt-component-ink);
+    --kiw--insight-index-page-color: var(--kinekt-component-muted);
+  }
+
+  .insight-index-allentown > .insight-index-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kiw--insight-index-group-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
+  .insight-index-allentown :is(h1, h2, h3, h4, h5, h6, p, ul, ol, fieldset) { margin: 0; }
+  .insight-index-allentown :is(ul, ol) { padding: 0; list-style: none; }
+  .insight-index-allentown fieldset { min-width: 0; padding: 0; border: 0; }
+  .insight-index-allentown legend { padding: 0; }
+  .insight-index-allentown button { margin: 0; padding: 0; border: 0; color: inherit; background: none; font: inherit; letter-spacing: inherit; cursor: pointer; }
+  .insight-index-allentown :is(button, input, a):focus-visible { outline: calc(var(--border-width) * 2) solid var(--kiw--insight-index-focus-color); outline-offset: calc(var(--border-width) * 2); }
+  .insight-index-allentown .insight-index-allentown__icon { flex: none; inline-size: 1em; block-size: 1em; color: var(--kiw--insight-index-icon-color); font-size: var(--kiw--insight-index-icon-size); }
+  .insight-index-allentown .insight-index-allentown__visually-hidden { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  /* Header: "Filters (n)" + chips, sort control bottom-right. */
+  .insight-index-allentown .insight-index-allentown__header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--kiw--insight-index-summary-gap); min-width: 0; }
+  .insight-index-allentown .insight-index-allentown__summary { display: grid; justify-items: start; gap: var(--kiw--insight-index-summary-gap); min-width: 0; }
+  .insight-index-allentown .insight-index-allentown__filters-title { display: flex; align-items: center; gap: var(--kiw--insight-index-title-gap); color: var(--kinekt-component-ink); font-family: var(--kiw--section-heading-font-family); font-size: var(--kiw--insight-index-title-size); font-weight: var(--kiw--section-heading-font-weight); line-height: 1; letter-spacing: var(--kiw--section-heading-letter-spacing); }
+  .insight-index-allentown .insight-index-allentown__filters-count { color: var(--kiw--insight-index-count-color); font-size: var(--kiw--insight-index-count-size); font-weight: var(--kiw--section-text-font-weight); }
+  .insight-index-allentown .insight-index-allentown__active { display: flex; flex-wrap: wrap; gap: var(--kiw--insight-index-chips-gap); }
+  .insight-index-allentown .insight-index-allentown__chip { display: inline-flex; align-items: center; gap: var(--kiw--insight-index-chip-gap); padding: var(--kiw--insight-index-chip-padding-block) var(--kiw--insight-index-chip-padding-inline); border: var(--kinekt-component-border-width) solid var(--kiw--insight-index-chip-border-color); border-radius: var(--kiw--insight-index-chip-radius); background: var(--kiw--insight-index-chip-background); font-size: var(--kiw--insight-index-chip-size); line-height: 1; }
+  .insight-index-allentown .insight-index-allentown__chip-facet { color: var(--kiw--insight-index-chip-facet-color); }
+  .insight-index-allentown .insight-index-allentown__chip-value { color: var(--kiw--insight-index-chip-value-color); font-weight: var(--kiw--section-heading-font-weight); }
+  .insight-index-allentown .insight-index-allentown__chip-icon { flex: none; inline-size: 1em; block-size: 1em; color: var(--kiw--insight-index-chip-icon-color); }
+  .insight-index-allentown .insight-index-allentown__sort { position: relative; }
+  .insight-index-allentown .insight-index-allentown__sort-toggle { display: inline-flex; align-items: center; gap: var(--kiw--insight-index-sort-gap); color: var(--kinekt-component-ink); font-size: var(--kiw--insight-index-sort-size); font-weight: var(--kiw--section-heading-font-weight); line-height: 1; }
+  .insight-index-allentown .insight-index-allentown__sort-toggle > .insight-index-allentown__icon { transition: transform 150ms ease; }
+  .insight-index-allentown .insight-index-allentown__sort-toggle[aria-expanded='true'] > .insight-index-allentown__icon { transform: rotate(180deg); }
+  .insight-index-allentown .insight-index-allentown__sort-panel { position: absolute; z-index: 2; inset-block-start: calc(100% + var(--kiw--insight-index-sort-gap)); inset-inline-end: 0; display: grid; gap: var(--kiw--insight-index-popover-gap); inline-size: max-content; padding: var(--kiw--insight-index-popover-padding); border: var(--kinekt-component-border-width) solid var(--kiw--insight-index-popover-border-color); border-radius: var(--kiw--insight-index-search-radius); background: var(--kiw--insight-index-popover-background); }
+
+  /* Sidebar: search field, dividers, facet checkboxes. */
+  .insight-index-allentown .insight-index-allentown__sidebar { display: grid; align-content: start; gap: var(--kiw--insight-index-sidebar-gap); min-width: 0; }
+  .insight-index-allentown .insight-index-allentown__sidebar > * + * { padding-block-start: var(--kiw--insight-index-sidebar-gap); border-block-start: var(--kiw--insight-index-divider-width) solid var(--kiw--insight-index-divider-color); }
+  .insight-index-allentown .insight-index-allentown__search { display: flex; align-items: center; gap: var(--kiw--insight-index-search-gap); padding: var(--kiw--insight-index-search-padding-block) var(--kiw--insight-index-search-padding-inline); border: var(--kinekt-component-border-width) solid var(--kiw--insight-index-search-border-color); border-radius: var(--kiw--insight-index-search-radius); color: var(--kiw--insight-index-search-placeholder-color); background: var(--kiw--insight-index-search-background); cursor: text; }
+  .insight-index-allentown .insight-index-allentown__search > .insight-index-allentown__icon { color: inherit; }
+  .insight-index-allentown .insight-index-allentown__search:focus-within { outline: calc(var(--border-width) * 2) solid var(--kiw--insight-index-focus-color); outline-offset: calc(var(--border-width) * 2); }
+  .insight-index-allentown .insight-index-allentown__search-input { flex: 1; min-width: 0; margin: 0; padding: 0; border: 0; color: var(--kinekt-component-ink); background: transparent; font: inherit; font-size: var(--kiw--insight-index-search-size); line-height: 1; block-size: 1em; appearance: none; }
+  .insight-index-allentown .insight-index-allentown__search-input:focus-visible { outline: none; }
+  .insight-index-allentown .insight-index-allentown__search-input::placeholder { color: var(--kiw--insight-index-search-placeholder-color); opacity: 1; }
+  .insight-index-allentown .insight-index-allentown__facet { display: grid; gap: var(--kiw--insight-index-facet-gap); }
+  /* A legend isn't a grid item; float it so the fieldset's gap applies. */
+  .insight-index-allentown .insight-index-allentown__facet-title { float: left; inline-size: 100%; color: var(--kinekt-component-ink); font-family: var(--kiw--section-heading-font-family); font-size: var(--kiw--insight-index-legend-size); font-weight: var(--kiw--section-heading-font-weight); line-height: 1.2; letter-spacing: var(--kiw--section-heading-letter-spacing); }
+  .insight-index-allentown .insight-index-allentown__facet-title + * { clear: both; }
+  .insight-index-allentown .insight-index-allentown__options { display: grid; gap: var(--kiw--insight-index-options-gap); }
+  .insight-index-allentown .insight-index-allentown__option { display: flex; align-items: flex-start; gap: var(--kiw--insight-index-option-gap); color: var(--kiw--insight-index-option-color); font-size: var(--kiw--insight-index-option-size); line-height: 1; cursor: pointer; }
+  .insight-index-allentown .insight-index-allentown__control { flex: none; box-sizing: border-box; inline-size: var(--kiw--insight-index-control-size); block-size: var(--kiw--insight-index-control-size); margin: 0; padding: var(--kiw--insight-index-control-inset); border: var(--kinekt-component-border-width) solid var(--kiw--insight-index-control-border-color); border-radius: var(--kiw--insight-index-control-radius); background: transparent content-box; appearance: none; cursor: pointer; }
+  .insight-index-allentown .insight-index-allentown__control--radio { border-radius: 50%; }
+  .insight-index-allentown .insight-index-allentown__control:checked { background-color: var(--kiw--insight-index-control-mark-color); }
+  .insight-index-allentown .insight-index-allentown__control--radio:checked { background-clip: content-box; }
+
+  /* Results: cards, empty state, pagination. */
+  .insight-index-allentown .insight-index-allentown__body { display: grid; gap: var(--kiw--insight-index-body-gap); min-width: 0; }
+  .insight-index-allentown .insight-index-allentown__results { display: grid; justify-items: start; gap: var(--kiw--insight-index-results-gap); min-width: 0; }
+  .insight-index-allentown .insight-index-allentown__results > * { justify-self: stretch; }
+  .insight-index-allentown .insight-index-allentown__results > .insight-index-allentown__pagination { justify-self: start; }
+  .insight-index-allentown .insight-index-allentown__empty { color: var(--kinekt-component-muted); font-size: var(--text-l); }
+  .insight-index-allentown .insight-index-allentown__items { display: grid; column-gap: var(--kiw--insight-index-cards-column-gap); row-gap: var(--kiw--insight-index-cards-row-gap); min-width: 0; }
+  .insight-index-allentown .insight-index-allentown__item { min-width: 0; }
+  .insight-index-allentown .insight-index-allentown__item:focus { outline: none; }
+  .insight-index-allentown .insight-index-allentown__item:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kiw--insight-index-focus-color); outline-offset: var(--space-xxs); }
+  .insight-index-allentown .insight-index-allentown__card { display: grid; align-content: start; gap: var(--kiw--insight-index-card-gap); min-width: 0; }
+  .insight-index-allentown .insight-index-allentown__media { display: block; min-width: 0; }
+  .insight-index-allentown .insight-index-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; height: auto; aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--insight-index-media-ratio)); object-fit: cover; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+  .insight-index-allentown .insight-index-allentown__entry { display: grid; justify-items: start; gap: var(--kiw--insight-index-entry-gap); min-width: 0; }
+  .insight-index-allentown .insight-index-allentown__meta { display: grid; gap: var(--kiw--insight-index-meta-gap); min-width: 0; }
+  .insight-index-allentown .insight-index-allentown__heading-group { display: grid; justify-items: start; gap: var(--kiw--insight-index-heading-gap); min-width: 0; }
+  /* Figma "Label Icon" (Light=no): the shared Label atom without its chip (no padding, border or tint), text-s in the heading font. */
+  .insight-index-allentown .insight-index-allentown__kind {
+    --kiw--label-allentown-gap: var(--space-xxs);
+    --kiw--label-allentown-padding-block: 0;
+    --kiw--label-allentown-padding-inline: 0;
+    --kiw--label-allentown-border-width: 0;
+    --kiw--label-allentown-background: transparent;
+    --kiw--label-allentown-font-family: var(--kiw--section-heading-font-family);
+    --kiw--label-allentown-font-size: var(--text-s);
+    --kiw--label-allentown-icon-size: var(--text-xs);
+    --kiw--label-allentown-text-transform: none;
+  }
+  .insight-index-allentown .insight-index-allentown__title { color: var(--kinekt-component-ink); font-family: var(--kiw--section-heading-font-family); font-size: var(--kiw--insight-index-card-title-size); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kiw--insight-index-card-title-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; }
+  .insight-index-allentown .insight-index-allentown__excerpt { color: var(--kiw--insight-index-excerpt-color); font-size: var(--kiw--insight-index-excerpt-size); line-height: var(--kinekt-component-text-line-height); }
+  .insight-index-allentown .insight-index-allentown__link { position: relative; }
+  .insight-index-allentown .insight-index-allentown__pagination { display: flex; align-items: center; gap: var(--kiw--insight-index-pagination-gap); }
+  .insight-index-allentown .insight-index-allentown__pages { display: flex; flex-wrap: wrap; align-items: center; gap: var(--kiw--insight-index-pages-gap); }
+  .insight-index-allentown .insight-index-allentown__pages > li { display: flex; }
+  .insight-index-allentown :is(.insight-index-allentown__page, .insight-index-allentown__page-gap) { color: var(--kiw--insight-index-page-color); font-family: var(--kiw--section-heading-font-family); font-size: var(--kiw--insight-index-page-size); font-weight: var(--kiw--section-heading-font-weight); line-height: 1; opacity: var(--kiw--insight-index-page-opacity); }
+  .insight-index-allentown .insight-index-allentown__page[aria-current='page'] { color: var(--kiw--insight-index-page-current-color); opacity: 1; }
+  .insight-index-allentown .insight-index-allentown__page:hover { opacity: 1; }
+  .insight-index-allentown .insight-index-allentown__page-step { display: inline-flex; }
+  .insight-index-allentown .insight-index-allentown__page-step > .insight-index-allentown__icon { color: var(--kiw--insight-index-page-color); }
+  .insight-index-allentown .insight-index-allentown__page-step:disabled { cursor: default; opacity: var(--kiw--insight-index-page-opacity); }
+
+  @media (min-width: 50rem) {
+    :where(.insight-index-allentown) { --kiw--insight-index-allentown-content-width: var(--kiw--insight-index-container-width); }
+    .insight-index-allentown .insight-index-allentown__items { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    /* With JavaScript the filter sidebar sits beside the results (one card column until 75rem). */
+    .insight-index-allentown[data-insight-index-enhanced] .insight-index-allentown__body { grid-template-columns: var(--kiw--insight-index-sidebar-width) minmax(0, 1fr); align-items: start; }
+    .insight-index-allentown[data-insight-index-enhanced] .insight-index-allentown__items { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (min-width: 75rem) {
+    .insight-index-allentown[data-insight-index-enhanced] .insight-index-allentown__items { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 49.999rem) {
+    .insight-index-allentown .insight-index-allentown__title { line-height: 1.2; }
+    .insight-index-allentown .insight-index-allentown__sort-panel { inset-inline: 0 auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .insight-index-allentown .insight-index-allentown__sort-toggle > .insight-index-allentown__icon { transition: none; }
+  }
+</style>
+<style is:global>
+  .insight-index-allentown {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-ultra-light)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-semi-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-ultra-light)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary)));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white)));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent-semi-dark)));
+    --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent)));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary)));
+    --kinekt-component-font: var(--kinekt-section-font, var(--kiw--section-text-font-family));
+    --kinekt-component-mono: var(--kinekt-section-mono, var(--kiw--section-mono-font-family));
+    --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width));
+    --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width));
+    --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--kiw--section-reading-width));
+    --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--section-inline-space));
+    --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--section-block-space));
+    --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap));
+    --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius));
+    --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--section-border-width));
+    --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter));
+    --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap));
+    --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap));
+    --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height));
+    --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height));
+    box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--kiw--section-text-m-size); font-weight: var(--kiw--section-text-font-weight); line-height: var(--kiw--section-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing);
+  }
+  .insight-index-allentown[data-kinekt-theme='semi-light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-semi-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary-ultra-light))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary-semi-dark))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent-semi-dark))); --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent))); --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary))); color-scheme: light; }
+  .insight-index-allentown[data-kinekt-theme='dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-ultra-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-semi-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-ultra-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent))); --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent))); --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary-ultra-light))); color-scheme: dark; }
+  .insight-index-allentown[data-kinekt-theme='semi-dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--section-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--section-surface, var(--primary-semi-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--section-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--section-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--section-line, var(--primary))); --kinekt-component-action: var(--kinekt-section-action, var(--kiw--section-action, var(--primary))); --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--section-action-text, var(--white))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--section-accent, var(--accent))); --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--section-action-icon, var(--accent))); --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--section-subtle, var(--primary-light))); color-scheme: dark; }
+  .insight-index-allentown, .insight-index-allentown[data-kinekt-theme='light'] { color-scheme: light; }
+  .insight-index-allentown *, .insight-index-allentown *::before, .insight-index-allentown *::after { box-sizing: border-box; }
+  .insight-index-allentown [hidden] { display: none !important; }
 </style>

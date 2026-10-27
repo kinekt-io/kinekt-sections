@@ -109,7 +109,6 @@ function sectionTokenBridgeCss(block) {
 const generatedComponentRules = {
   'beta-action-contact-allentown': `:where(.beta-action-contact-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }`,
   'beta-support-contact-allentown': `:where(.beta-support-contact-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }`,
-  'beta-checklist-feature-list-allentown': `:where(.beta-checklist-feature-list-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
   'beta-solution-list-allentown': `:where(.beta-solution-list-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
   'beta-comparison-overview-allentown': `:where(.beta-comparison-overview-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
 :where(.beta-comparison-overview-allentown[data-kinekt-structural-section]) .beta-comparison-overview-allentown__header { text-align: center; }
@@ -119,53 +118,12 @@ const generatedComponentRules = {
 :where(.beta-density-comparison-allentown[data-kinekt-structural-section]) .beta-density-comparison-allentown__header { text-align: center; }
 :where(.beta-density-comparison-allentown[data-kinekt-structural-section]) .beta-density-comparison-allentown__header-content { margin-inline: auto; }
 :where(.beta-density-comparison-allentown[data-kinekt-structural-section]) [class$='__table'] { margin-top: var(--kinekt-section-table-offset, var(--kiw--section-table-offset, var(--space-xl))); font-size: var(--text-m); }`,
-  'beta-compliance-detail-allentown': `:where(.beta-compliance-detail-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
-  'beta-compliance-overview-allentown': `:where(.beta-compliance-overview-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
-  'beta-compliance-text-allentown': `:where(.beta-compliance-text-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
   'beta-faq-allentown': `:where(.beta-faq-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
 :where(.beta-faq-allentown[data-kinekt-structural-section]) .beta-faq-allentown__header { text-align: center; }
 :where(.beta-faq-allentown[data-kinekt-structural-section]) .beta-faq-allentown__header-content { margin-inline: auto; }`,
-  'beta-faq-index-allentown': `:where(.beta-faq-index-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) .beta-faq-index-allentown__header { text-align: center; }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) .beta-faq-index-allentown__header-content { margin-inline: auto; }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) details { border-width: 0 0 var(--kinekt-component-border-width); border-radius: 0; background: transparent; }
-:where(.beta-faq-index-allentown[data-kinekt-structural-section]) [class$='__items'] { gap: 0; border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }`,
-  'beta-product-details-allentown': `:where(.beta-product-details-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }`,
-  'beta-media-accordion-allentown': `:where(.beta-media-accordion-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }`,
-  'beta-featured-event-allentown': `:where(.beta-featured-event-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }`,
-  'beta-featured-page-header-allentown': `:where(.beta-featured-page-header-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }`,
-  'beta-process-story-allentown': `:where(.beta-process-story-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }
-:where(.beta-process-story-allentown[data-kinekt-structural-section]) .beta-process-story-allentown__label { text-transform: uppercase; }`,
-  'beta-media-fact-grid-allentown': `:where(.beta-media-fact-grid-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }`,
   'beta-media-metrics-allentown': `:where(.beta-media-metrics-allentown[data-kinekt-structural-section]) { --kinekt-section-media-ratio: 4 / 5; --kinekt-section-gap: var(--section-space-xl); }`,
   'beta-form-section-allentown': `:where(.beta-form-section-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
-  'beta-intake-form-allentown': `:where(.beta-intake-form-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
-  'beta-product-finder-form-allentown': `:where(.beta-product-finder-form-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-l); }`,
-  'beta-hd-cells-engineering-allentown': `:where(.beta-hd-cells-engineering-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }`,
-  'beta-homepage-problem-solution-allentown': `:where(.beta-homepage-problem-solution-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-gap: var(--section-space-xl); }`,
-  'beta-insight-index-allentown': `:where(.beta-insight-index-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-gap: var(--section-space-xl); }`,
   'beta-tabs-allentown': `:where(.beta-tabs-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }`,
-  'beta-steps-stage': `:where(.beta-steps-stage[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-xl); }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__container { display: grid; gap: var(--section-space-l); }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps { display: grid; gap: var(--section-space-s); margin: 0; }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps-item { border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-border); }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps summary { padding-block: var(--space-s); }
-:where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps-body { padding: 0 0 var(--space-m); }
-@media (min-width: 50rem) {
-  :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
-  :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__steps { grid-column: 2; grid-row: 1 / span 2; }
-  :where(.beta-steps-stage[data-kinekt-structural-section]) .beta-steps-stage__media { grid-column: 1; }
-}`,
-  'beta-facilities-overview-allentown': `:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) { --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-card-media-ratio: 3 / 2; --kinekt-section-gap: var(--section-space-xl); }
-:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__container { gap: var(--section-space-l); }
-:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__facts { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--section-space-s) var(--section-space-m); border: 0; }
-:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__facts > li { padding: 0; border: 0; }
-:where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__media img { aspect-ratio: 17 / 10; object-fit: cover; }
-@media (min-width: 50rem) {
-  :where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; }
-  :where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__header { grid-column: 1 / -1; }
-  :where(.beta-facilities-overview-allentown[data-kinekt-structural-section]) .beta-facilities-overview-allentown__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}`,
   'beta-featured-insights-allentown': `:where(.beta-featured-insights-allentown[data-kinekt-structural-section]) { --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-card-media-ratio: 3 / 2; --kinekt-section-gap: var(--section-space-xl); }
 :where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; background: transparent; }
 :where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources > li > article { padding: var(--section-space-s) 0; border-width: 0 0 var(--kinekt-component-border-width); background: transparent; }
@@ -175,21 +133,6 @@ const generatedComponentRules = {
   :where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources > li:first-child { grid-row: span 3; }
   :where(.beta-featured-insights-allentown[data-kinekt-structural-section]) .beta-featured-insights-allentown__insight-sources > li:first-child > article { gap: var(--space-xl); }
 }`,
-  'beta-event-overview-allentown': `:where(.beta-event-overview-allentown[data-kinekt-structural-section]) { --kinekt-section-card-columns: 3; --kinekt-section-card-min-width: var(--width-s); --kinekt-section-card-media-ratio: 3 / 2; --kinekt-section-gap: var(--section-space-xl); }`,
-  'beta-product-hero-allentown': `:where(.beta-product-hero-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-media-ratio: 1 / 1; --kinekt-section-gap: var(--section-space-xl); }
-:where(.beta-product-hero-allentown[data-kinekt-structural-section]) .beta-product-hero-allentown__label { color: var(--kinekt-component-muted); text-transform: uppercase; }`,
-  'beta-not-found-hero-allentown': `:where(.beta-not-found-hero-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-media-ratio: 1 / 1; --kinekt-section-gap: var(--section-space-xl); }
-:where(.beta-not-found-hero-allentown[data-kinekt-structural-section]) .beta-not-found-hero-allentown__header { justify-self: center; max-inline-size: var(--kinekt-section-reading-width); text-align: center; }`,
-  'beta-thank-you-hero-allentown': `:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) { --kinekt-section-content-width: var(--content-width); --kinekt-section-reading-width: var(--width-m); --kinekt-section-media-ratio: 1 / 1; --kinekt-section-gap: var(--section-space-xl); }
-  :where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) [class$='__container'] { gap: var(--section-space-l); }
-:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__header { justify-self: center; max-inline-size: var(--kinekt-section-reading-width); text-align: center; }
-:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps-heading { display: flex; align-items: center; gap: var(--space-s); margin: 0; }
-:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps-heading::after { flex: 1; block-size: var(--kinekt-component-border-width); background: var(--kinekt-component-border); content: ''; }
-:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps { display: grid; gap: var(--section-space-m); margin: 0; }
-:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps > li > article { padding: 0; border: 0; background: transparent; }
-:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__media { justify-self: center; inline-size: min(100%, var(--kinekt-section-thank-you-hero-media-width, var(--width-m))); }
-:where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__media img { aspect-ratio: 16 / 9; object-fit: cover; }
-@media (min-width: 50rem) { :where(.beta-thank-you-hero-allentown[data-kinekt-structural-section]) .beta-thank-you-hero-allentown__next-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }`,
 }
 
 function generatedComponentStyle(block) {
@@ -240,6 +183,7 @@ function sampleField(field, key, depth = 0, index = 0) {
   if (field.kind === 'mediaList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ url: `catalogue-asset:placeholder-1200x800.svg`, alt: from(['Battery enclosure on a workbench', 'Cell assembly detail', 'System integration test'], itemIndex), width: 1200, height: 800 }))
   if (field.kind === 'cta') return { label: 'Explore the specification', href: '#' }
   if (field.kind === 'ctaGroup') return { primary: { label: 'Talk to an expert', href: '#' }, secondary: { label: 'View technical details', href: '#' } }
+  if (field.kind === 'formEmbed') return '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>'
   if (field.kind === 'formReference') return { name: 'Project enquiry', description: 'A governed form reference for product, engineering and partnership enquiries.' }
   if (field.kind === 'infoItems' || field.kind === 'featureItems') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => from(['Validated operating range', 'Traceable test data', 'Integration-ready documentation'], itemIndex))
   if (field.kind === 'insightSourceList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({ title: from(['How system constraints shape battery design', 'Making validation data useful for integration teams', 'A practical guide to energy-storage specifications'], itemIndex), excerpt: from(previewCopy.descriptions, itemIndex), href: '#', publishedAt: `2026-10-${String(itemIndex + 1).padStart(2, '0')}`, image: { url: `catalogue-asset:placeholder-1200x800.svg`, alt: from(['Engineering team reviewing test data', 'Battery system integration', 'Technical documentation review'], itemIndex), width: 1200, height: 800 } }))
@@ -543,19 +487,19 @@ import MediaMetricsAllentown from './${base}.astro'
 
 const rawContent = {
   intro: {
-    accentHeading: 'Operational proof points',
-    heading: 'The figures that support the next technical decision',
-    description: 'A concise view of measurable outcomes, engineering context and the system evidence teams need to compare options.'
+    accentHeading: '/ Production base',
+    heading: 'Built to scale from the Netherlands',
+    description: 'Tulip’s production facilities in the Netherlands are set up to turn validated battery designs into repeatable, scalable production. From controlled assembly and testing to traceable production records, the focus is on delivering consistent quality as customer programs grow.'
   },
   metrics: [
-    { label: 'Validated test plans', value: { text: '24' } },
-    { label: 'Configured systems', value: { text: '180+' } },
-    { label: 'Operating range', value: { text: '−20 to 55 °C' } },
-    { label: 'Engineering support', value: { text: 'From concept to release' } }
+    { label: 'Units / month capacity', value: { text: 'XX,000+' } },
+    { label: 'Packs / year potential', value: { text: 'XX M' } },
+    { label: 'Individual pack testing', value: { text: '100%' } },
+    { label: 'Qualified suppliers', value: { text: 'XXX+' } }
   ],
   media: {
     url: 'catalogue-asset:placeholder-688x406.svg',
-    alt: 'Abstract grayscale placeholder for supporting media',
+    alt: 'Battery pack production line in the Netherlands',
     width: 688,
     height: 406
   }
@@ -564,7 +508,7 @@ ${catalogueAssetResolver}
 
 const content = resolveCatalogueAssets(rawContent) as typeof rawContent
 ---
-<MediaMetricsAllentown theme="light" {...content} />
+<MediaMetricsAllentown theme="semi-light" {...content} />
 `
   const previewCtas = previewContent.ctas ?? previewContent.ctaGroup
   const previewMedia = previewContent.media

@@ -1,0 +1,93 @@
+---
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import type { RichText } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+
+export interface AccordionItemContent {
+  markerType?: 'none' | 'number' | 'icon' | null
+  /** Font Awesome icon key (e.g. `shield-halved`); used when markerType is `icon`. */
+  icon?: string | null
+  title: string
+  subtitle?: string | null
+  description: string | RichText | Record<string, unknown>
+}
+
+interface Props {
+  item: AccordionItemContent
+  /** Renderer-derived list position (1-based); shown as a zero-padded number when markerType is `number`. */
+  number: number
+  open?: boolean
+  class?: string
+}
+
+const { item, number, open = false, class: className } = Astro.props
+const classes = ['accordion-item-allentown', className].filter(Boolean).join(' ')
+const fontAwesomeIcon = (name?: string | null) => {
+  if (!name || !/^[a-z0-9-]+$/.test(name)) return undefined
+  const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
+  return fas[key]
+}
+const markerType = item.markerType ?? 'none'
+const icon = markerType === 'icon' ? fontAwesomeIcon(item.icon) : undefined
+const showNumber = markerType === 'number'
+const descriptionHtml = typeof item.description === 'string'
+  ? richTextToHtml(item.description, 'accordion item description')
+  : typeof item.description?.html === 'string'
+    ? item.description.html
+    : richTextToHtml(item.description, 'accordion item description')
+---
+<details class={classes} open={open} data-kinekt-disclosure>
+  <summary class="accordion-item-allentown__summary">
+    {(icon || showNumber) && (
+      <span class="accordion-item-allentown__marker" aria-hidden="true">
+        {icon && <svg class="accordion-item-allentown__marker-icon" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} focusable="false"><path d={icon.icon[4] as string} /></svg>}
+        {showNumber && <span class="accordion-item-allentown__marker-number">{String(number).padStart(2, '0')}</span>}
+      </span>
+    )}
+    <span class="accordion-item-allentown__heading">
+      <span class="accordion-item-allentown__title">{item.title}</span>
+      {item.subtitle && <span class="accordion-item-allentown__subtitle">{item.subtitle}</span>}
+    </span>
+    <svg class="accordion-item-allentown__toggle" aria-hidden="true" focusable="false" width="1em" height="1em" viewBox="0 0 18 18" fill="none"><path class="accordion-item-allentown__toggle-horizontal" d="M2 9h14" stroke="currentColor" stroke-width="1.5" /><path class="accordion-item-allentown__toggle-vertical" d="M9 2v14" stroke="currentColor" stroke-width="1.5" /></svg>
+  </summary>
+  <div class="accordion-item-allentown__panel" set:html={descriptionHtml} />
+</details>
+<style is:global>
+  /* Figma "Text Container" rows in "Section - Sourcing of materials" (5240:412615): marker h4 accent, space-l to an h4 title (line-height 1)
+     with a text-l subtitle at XXS, a text-xxl plus/minus toggle at space-l, and a text-m description at space-m below. */
+  :where(.accordion-item-allentown) {
+    --kiw--accordion-item-allentown-summary-gap: var(--space-l);
+    --kiw--accordion-item-allentown-marker-gap: var(--space-l);
+    --kiw--accordion-item-allentown-heading-gap: var(--space-xxs);
+    --kiw--accordion-item-allentown-panel-gap: var(--space-m);
+    --kiw--accordion-item-allentown-marker-size: var(--h4);
+    --kiw--accordion-item-allentown-marker-color: var(--kinekt-component-accent, var(--accent-semi-dark));
+    --kiw--accordion-item-allentown-marker-font-family: var(--mono-font-family);
+    --kiw--accordion-item-allentown-title-size: var(--h4);
+    --kiw--accordion-item-allentown-title-line-height: 1;
+    --kiw--accordion-item-allentown-title-color: var(--kinekt-component-ink, inherit);
+    --kiw--accordion-item-allentown-subtitle-size: var(--text-l);
+    --kiw--accordion-item-allentown-subtitle-color: var(--kinekt-component-muted, inherit);
+    --kiw--accordion-item-allentown-toggle-size: var(--text-xxl);
+    --kiw--accordion-item-allentown-toggle-color: var(--kinekt-component-accent, var(--accent-semi-dark));
+    --kiw--accordion-item-allentown-description-size: var(--text-m);
+    --kiw--accordion-item-allentown-description-color: var(--kinekt-component-subtle, var(--kinekt-component-muted, inherit));
+    --kiw--accordion-item-allentown-focus-color: var(--kinekt-component-action, currentColor);
+  }
+
+  .accordion-item-allentown { display: block; min-width: 0; margin: 0; }
+  .accordion-item-allentown .accordion-item-allentown__summary { display: flex; align-items: center; gap: var(--kiw--accordion-item-allentown-summary-gap); list-style: none; cursor: pointer; }
+  .accordion-item-allentown .accordion-item-allentown__summary::-webkit-details-marker { display: none; }
+  .accordion-item-allentown .accordion-item-allentown__summary:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kiw--accordion-item-allentown-focus-color); outline-offset: var(--space-xxs); }
+  .accordion-item-allentown .accordion-item-allentown__marker { display: inline-flex; flex: none; align-self: flex-start; justify-content: center; align-items: center; min-inline-size: 1em; block-size: 1em; margin-inline-end: calc(var(--kiw--accordion-item-allentown-marker-gap) - var(--kiw--accordion-item-allentown-summary-gap)); color: var(--kiw--accordion-item-allentown-marker-color); font-size: var(--kiw--accordion-item-allentown-marker-size); line-height: 1; }
+  .accordion-item-allentown .accordion-item-allentown__marker-icon { display: block; inline-size: auto; block-size: 1em; max-inline-size: 1.25em; fill: currentColor; }
+  .accordion-item-allentown .accordion-item-allentown__marker-number { font-family: var(--kiw--accordion-item-allentown-marker-font-family); font-weight: var(--heading-font-weight); }
+  .accordion-item-allentown .accordion-item-allentown__heading { display: grid; flex: 1 1 0; gap: var(--kiw--accordion-item-allentown-heading-gap); min-width: 0; }
+  .accordion-item-allentown .accordion-item-allentown__title { color: var(--kiw--accordion-item-allentown-title-color); font-family: var(--kinekt-component-heading-font-family, var(--heading-font-family)); font-size: var(--kiw--accordion-item-allentown-title-size); font-weight: var(--kinekt-component-heading-font-weight, var(--heading-font-weight)); line-height: var(--kiw--accordion-item-allentown-title-line-height); letter-spacing: var(--kinekt-component-heading-letter-spacing, var(--heading-letter-spacing)); text-wrap: balance; }
+  .accordion-item-allentown .accordion-item-allentown__subtitle { color: var(--kiw--accordion-item-allentown-subtitle-color); font-size: var(--kiw--accordion-item-allentown-subtitle-size); line-height: var(--kinekt-component-text-line-height, var(--text-line-height)); }
+  .accordion-item-allentown .accordion-item-allentown__toggle { flex: none; inline-size: 1em; block-size: 1em; color: var(--kiw--accordion-item-allentown-toggle-color); font-size: var(--kiw--accordion-item-allentown-toggle-size); }
+  .accordion-item-allentown[open] .accordion-item-allentown__toggle-vertical { display: none; }
+  .accordion-item-allentown .accordion-item-allentown__panel { margin-block-start: var(--kiw--accordion-item-allentown-panel-gap); color: var(--kiw--accordion-item-allentown-description-color); font-size: var(--kiw--accordion-item-allentown-description-size); line-height: var(--kinekt-component-text-line-height, var(--text-line-height)); }
+  .accordion-item-allentown .accordion-item-allentown__panel > * { margin-block: 0; }
+  .accordion-item-allentown .accordion-item-allentown__panel > * + * { margin-block-start: var(--space-s); }
+</style>

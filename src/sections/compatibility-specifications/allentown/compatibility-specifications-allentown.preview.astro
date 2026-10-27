@@ -2,21 +2,22 @@
 import CompatibilitySpecifications from './compatibility-specifications-allentown.astro'
 
 const content = {
-  theme: 'semi-light' as const,
+  theme: 'light' as const,
   intro: {
-    accentHeading: 'System compatibility',
-    heading: 'Technical fit, made clear',
-    description: 'Review the interfaces, environmental limits and software requirements that determine whether a system can be deployed with confidence.',
+    accentHeading: '/ Drone compatibility',
+    heading: 'Is this battery compatible with your drone?',
+    description: 'Check the key requirements below to see whether this battery is a good fit for your platform. Compatibility depends on voltage, dimensions, weight, connector and power demand.',
   },
   specifications: [
-    { label: 'Integration interface', value: 'Standardized electrical and data connections' },
-    { label: 'Operating environment', value: 'Validated for defined temperature and ingress ranges' },
-    { label: 'Control protocol', value: 'Documented API and telemetry support' },
-    { label: 'Service access', value: 'Field-replaceable modules and diagnostic tooling' },
+    { label: 'Voltage', value: 'XX V / XXS' },
+    { label: 'Dimensions', value: 'XXX × XX × XX mm' },
+    { label: 'Weight', value: 'X.X kg' },
+    { label: 'Connector', value: 'XT90 / AS150 / Custom' },
+    { label: 'Power output', value: 'XX A continuous / XX A peak' },
   ],
   compatiblePlatforms: {
-    heading: 'Compatible platforms',
-    items: ['Embedded control systems', 'Remote monitoring environments', 'Service and diagnostic tools'],
+    heading: 'Compatible drones',
+    items: ['Drone 1', 'Drone 2', 'Drone 3'],
   },
 }
 ---

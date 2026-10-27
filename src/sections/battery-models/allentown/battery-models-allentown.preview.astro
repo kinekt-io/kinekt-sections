@@ -1,77 +1,82 @@
 ---
 import BatteryModelsAllentown from './battery-models-allentown.astro'
 const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
+const cardImage = (alt: string) => ({ url: placeholder('placeholder-1600x900.svg'), alt, width: 1600, height: 900 })
+const itemImage = (alt: string) => ({ url: placeholder('placeholder-200x200.svg'), alt, width: 200, height: 200 })
 ---
 
 <BatteryModelsAllentown
-  theme="semi-light"
+  theme="light"
   intro={{
-    accentHeading: 'Modular battery systems',
-    heading: 'Choose a proven starting point for your application',
-    description: 'Compare practical system formats, then work with our engineering team to configure the performance, integration and delivery details that matter.',
+    accentHeading: '/ The options',
+    heading: 'Our battery pack models',
   }}
   ctas={{
-    primary: { label: 'Discuss your application', href: '/' },
-    secondary: { label: 'Compare specifications', href: '/' },
+    primary: { label: 'Get in touch to order', href: '/', icon: 'arrow-right' },
+    secondary: { label: 'Download specs', href: '/', icon: 'download' },
   }}
   models={[
     {
-      image: { url: placeholder('placeholder-1600x900.svg'), alt: 'Neutral wireframe placeholder for a compact battery module', width: 1600, height: 900 },
-      title: 'Compact module',
-      description: 'A space-conscious module for early integration work and applications with a tightly defined enclosure.',
+      image: cardImage('16Ah 4S1P battery pack'),
+      title: '16Ah 4S1P',
+      description: 'A compact, lightweight pack for short missions and tightly packaged airframes.',
       specs: [
-        { label: 'Nominal voltage', value: '48 V' },
-        { label: 'Usable energy', value: '2.4 kWh' },
-        { label: 'Mass', value: '18 kg' },
+        { label: 'Weight', value: '573g' },
+        { label: 'Dimensions', value: '145 x 50 x 40 mm' },
+        { label: 'Configuration', value: '424 Wh/kg' },
+        { label: 'Discharge', value: '3C Peak, 1C Continuous' },
       ],
     },
     {
-      image: { url: placeholder('placeholder-1600x900.svg'), alt: 'Neutral wireframe placeholder for a standard battery module', width: 1600, height: 900 },
-      title: 'Standard module',
-      description: 'A balanced format for teams that need repeatable energy delivery and straightforward mechanical integration.',
+      image: cardImage('78Ah 6S2P battery pack'),
+      title: '78Ah 6S2P',
+      description: 'Our highest-capacity standard pack for long-endurance and heavy-lift platforms.',
       specs: [
-        { label: 'Nominal voltage', value: '96 V' },
-        { label: 'Usable energy', value: '5.1 kWh' },
-        { label: 'Mass', value: '34 kg' },
+        { label: 'Weight', value: '2,760g' },
+        { label: 'Dimensions', value: '210 x 95 x 80 mm' },
+        { label: 'Configuration', value: '424 Wh/kg' },
+        { label: 'Discharge', value: '3C Peak, 1C Continuous' },
       ],
     },
     {
-      image: { url: placeholder('placeholder-1600x900.svg'), alt: 'Neutral wireframe placeholder for a high-capacity battery module', width: 1600, height: 900 },
-      title: 'High-capacity module',
-      description: 'A higher-energy option for systems that need longer operating windows without changing the integration approach.',
+      image: cardImage('30Ah 6S1P battery pack'),
+      title: '30Ah 6S1P',
+      description: 'A balanced pack for mid-size drones that need reliable range at a moderate weight.',
       specs: [
-        { label: 'Nominal voltage', value: '144 V' },
-        { label: 'Usable energy', value: '9.8 kWh' },
-        { label: 'Mass', value: '58 kg' },
+        { label: 'Weight', value: '1,060g' },
+        { label: 'Dimensions', value: '165 x 70 x 55 mm' },
+        { label: 'Configuration', value: '424 Wh/kg' },
+        { label: 'Discharge', value: '3C Peak, 1C Continuous' },
       ],
     },
     {
-      image: { url: placeholder('placeholder-1600x900.svg'), alt: 'Neutral wireframe placeholder for a scalable battery module', width: 1600, height: 900 },
-      title: 'Scalable platform',
-      description: 'A configurable foundation for applications moving from validated prototypes into repeatable deployment.',
+      image: cardImage('40Ah 6S1P battery pack'),
+      title: '40Ah 6S1P',
+      description: 'Extra capacity in the same 6S format, for longer flights without a new integration.',
       specs: [
-        { label: 'Nominal voltage', value: '400 V' },
-        { label: 'Usable energy', value: '24 kWh' },
-        { label: 'Mass', value: '142 kg' },
+        { label: 'Weight', value: '1,420g' },
+        { label: 'Dimensions', value: '180 x 75 x 60 mm' },
+        { label: 'Configuration', value: '424 Wh/kg' },
+        { label: 'Discharge', value: '3C Peak, 1C Continuous' },
       ],
     },
   ]}
   crossSell={{
-    label: 'Related options',
     intro: {
-      heading: 'Find the support that fits your next decision',
-      description: 'Use these routes when you need deeper engineering input or a clearer path from a proven module to a configured system.',
+      accentHeading: 'Customize your battery needs',
+      heading: 'Need something different?',
+      description: 'If a standard pack does not fit your platform, our engineers can configure the cells, format and electronics around your mission profile, or add the smart features your fleet needs.',
     },
     items: [
       {
-        image: { url: placeholder('placeholder-200x200.svg'), alt: 'Neutral wireframe placeholder for engineering support', width: 200, height: 200 },
-        title: 'Engineering support',
-        cta: { cta: { label: 'Explore support', href: '/' } },
+        image: itemImage('Custom battery pack'),
+        title: 'Our Custom Packs',
+        cta: { cta: { label: 'View details', href: '/', icon: 'arrow-right' } },
       },
       {
-        image: { url: placeholder('placeholder-200x200.svg'), alt: 'Neutral wireframe placeholder for configured energy systems', width: 200, height: 200 },
-        title: 'Configured systems',
-        cta: { cta: { label: 'Explore systems', href: '/' } },
+        image: itemImage('Smart battery pack'),
+        title: 'Our Smart Packs',
+        cta: { cta: { label: 'View details', href: '/', icon: 'arrow-right' } },
       },
     ],
   }}

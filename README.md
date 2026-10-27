@@ -163,7 +163,7 @@ The structural renderers now activate the renderer-owned behaviours recorded in 
 - Accordion Item, Product Detail Item and Step lists use native `<details>` disclosures. The first item is open server-side; a small enhancement keeps each declared group single-open.
 - Tabs use the WAI-ARIA tab pattern with mouse, arrow-key, `Home` and `End` navigation. The first panel remains visible without JavaScript.
 - Case Study Carousel uses [`embla-carousel`](https://www.embla-carousel.com/): touch/drag support, previous/next buttons, disabled endpoint controls and an announced slide position. Cards remain a readable list before JavaScript.
-- Insight Index uses Pagefind’s JavaScript API for static search, filtering and four-result pagination. Its server-rendered card list remains a usable fallback; when the Pagefind bundle is unavailable, the same query and Type/Subject filters work against the rendered list.
+- Insight Index uses Pagefind’s JavaScript API for its text search, scoped by `pagefindFilters` and the selected Media type / Subject filters (OR). Result URLs are matched to the server-rendered cards, and the facets, sorting and four-per-page pagination run on that list. When the Pagefind bundle is unavailable, the same query falls back to the cards’ title and excerpt. A consumer can replace the search by setting `section.kinektInsightIndexSearch` to a function that returns result URLs.
 
 The shared package includes Embla because its API controls the generated carousel. Pagefind is deliberately not bundled: it must index the consuming frontend’s completed static output. Add Pagefind after the Astro build and pass the actual bundle location when it differs from `/pagefind/pagefind.js`:
 
