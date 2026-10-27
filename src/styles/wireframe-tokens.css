@@ -8,15 +8,16 @@
 :root {
   /* start editable colors */
   /* Color palettes: deliberately neutral until a customer theme overrides them.
-     The greys follow the lightness of the Tulip ramps the sections are designed against, so the
-     theme roles keep WCAG AA text contrast (accent-semi-dark stays darker for text on light canvases). */
-  --primary-ultra-light: #d2d2d2;
-  --primary-light: #a4a4a4;
+     The primary greys step evenly from semi-light down, so canvases and surfaces stay distinct. Semi-light is the
+     lightest step used as text on light canvases (Figma meta, breadcrumbs, placeholders), so it stays dark enough
+     for WCAG AA on neutral-semi-light; accent-semi-dark stays darker for text on light canvases too. */
+  --primary-ultra-light: #e6e6e6;
+  --primary-light: #b3b3b3;
   --primary-semi-light: #5e5e5e;
-  --primary: #494949;
-  --primary-semi-dark: #323232;
-  --primary-dark: #282828;
-  --primary-ultra-dark: #1d1d1d;
+  --primary: #4a4a4a;
+  --primary-semi-dark: #363636;
+  --primary-dark: #222222;
+  --primary-ultra-dark: #111111;
 
   --accent-ultra-light: #f8f8f8;
   --accent-light: #f1f1f1;
