@@ -1,7 +1,39 @@
 ---
 import EditorialContentAllentown from './editorial-content-allentown.astro'
+const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
+const wide = placeholder('placeholder-1600x900.svg')
+const portrait = placeholder('placeholder-800x1000.svg')
+
+// Article Template body (5639:526201) followed by the parts only the Case Template body (5639:525236) adds.
+// Inline blocks use the markup the section styles: figure (media), figure > blockquote + figcaption (quote),
+// hgroup + p (intro), [data-kinekt-editorial-columns] (columns) and hr (flight-path divider).
+const html = [
+  '<p>De term spreidingstermijn zal niet iedereen wat zeggen en kan verwarrend zijn. Het doet suggereren dat de buffers bij een overgang naar het nieuwe stelsel gespreid uitgekeerd worden onder deelnemers.</p>',
+  '<p>Dit is echter niet het geval. Wat de spreidingstermijn in het nieuwe stelsel ook wordt, de buffers worden direct bij overgang naar het nieuwe pensioenstelsel gebruikt voor een verhoging (opslag) van het pensioen van pensioengerechtigden en van het persoonlijke pensioenvermogen van deelnemers die nog niet met pensioen zijn.</p>',
+  '<p>Er wordt dus niets verspreid uitgekeerd.</p>',
+  '<figure><img src="' + wide + '" alt="Battery pack on the assembly line" width="1600" height="900"><figcaption>Hier kan evt nog een ondertitel</figcaption></figure>',
+  '<h2>Wat betekent spreidingstermijn?</h2>',
+  '<p>De spreidingstermijn kan worden gezien als de mate waarin voor de verdeling van de buffers rekening wordt gehouden met wat men onder het huidige stelsel had kunnen verwachten uit die buffers. Onder het huidige pensioenstelsel kunnen oudere deelnemers naar verwachting minder indexaties tegemoetzien dan jongere deelnemers, simpelweg omdat zij minder lang te leven hebben dan jongere deelnemers.</p>',
+  '<h3>Korte of lange spreidingstermijn?</h3>',
+  '<p>Kies je voor een korte spreidingstermijn, bijvoorbeeld het minimum van 1 jaar, dan houd je helemaal geen rekening met hoe de buffer onder het oude stelsel verdeeld zou worden en geef je alle deelnemers dezelfde procentuele verhoging. Kies je de spreidingsperiode lang, bijvoorbeeld 40 jaar, dan houd je in sterke mate rekening met hoe het vermogen onder het huidige stelsel verdeeld zou worden. In dat geval ontvangen jongere deelnemers een groter deel van de buffers dan oudere deelnemers.</p>',
+  '<p>Als Fonds willen wij de buffer, die beschikbaar is op moment van overgang, op een evenwichtige manier verdelen. Daarom hebben we zorgvuldige berekeningen gemaakt om te beoordelen wat de situatie per deelnemersgroep wordt in verschillende scenario’s. Ons uitgangspunt daarbij is en blijft: het streven naar een waardevast pensioen voor onze deelnemers. Met een spreidingstermijn van 20 jaar ontvangt iedere deelnemer een leeftijdsafhankelijke verhoging vanuit de buffer, waarbij rekening wordt gehouden met het streven naar een waardevast pensioen voor al onze deelnemers. Pensioenfonds ING is een relatief rijk fonds, waar in de huidige situatie nog veel indexaties te verdelen zouden zijn. Hoeveel de verhogingen voor de verschillende leeftijdsgroepen exact zullen zijn, hangt voor een belangrijk deel af van de hoogte van de dekkingsgraad op moment van overgaan.</p>',
+  '<figure><blockquote><p>It’s always great to have a local supplier that understands the challenges of creating a high energy dense sea system.</p></blockquote><figcaption><strong>Arthur Admiraal</strong> <span>Lead Electrical Engineer &amp; Co-Founder, Lobster Robotics</span></figcaption></figure>',
+  '<div data-kinekt-editorial-columns>',
+  '<div><h3>Geen losse conclusies</h3><p>Belangrijk om te weten is dat enkel op basis van de spreidingstermijn geen losse conclusies kunnen worden getrokken over een evenwichtige verdeling van het pensioenvermogen onder alle deelnemers en gepensioneerden bij een overgang naar het nieuwe pensioenstelsel.</p><p>De spreidingstermijn is slechts één van de instrumenten die samen tot een evenwichtige verdeling leiden. Om te bepalen of er sprake is van een evenwichtige verdeling is het noodzakelijk om te kijken naar de uitwerking van het totale plaatje.</p></div>',
+  '<div><h3>Vervolgstappen</h3><p>Naar verwachting ontvangt het Bestuur van Pensioenfonds ING in januari 2025 de transitieplannen van de sociale partners. Dan zal het Bestuur beoordelen of de afspraken evenwichtig zijn voor alle deelnemers en of de transitieplannen kunnen worden uitgevoerd. Vervolgens zal het Bestuur – na een advies van het Verantwoordingsorgaan – een definitief besluit nemen.</p><p>Houd <a href="https://example.com/transitieplan">deze website</a> in de gaten voor de laatste informatie rondom het transitieplan en een eventuele overgang van het Fonds naar het nieuwe pensioenstelsel.</p></div>',
+  '</div>',
+  '<figure><img src="' + wide + '" alt="Engineers testing a drone battery" width="1600" height="900"><figcaption>Hier kan evt nog een ondertitel</figcaption></figure>',
+  '<div data-kinekt-editorial-columns>',
+  '<div><hgroup><p>/ What did the client need</p><h2>The challenge</h2></hgroup><p>Lobster builds autonomous underwater drones — “pink torpedoes” — that glide above the seabed and turn it into detailed photographic maps. Underwater, power is the hard part: everything has to stay dry, endurance decides how much seabed you cover per dive, and the pack has to be serviceable offshore. More runtime normally means a bigger battery — and a bigger drone is exactly what they didn’t want.</p>',
+  '<hgroup><p>/ What did the client need</p><h2>The solution</h2></hgroup><p>We worked with Lobster’s engineers from the first conversation: proposing cell options, going into the design details, and giving feedback until the pack fit their platform. The result is a compact, energy-dense pack built on self-fused cells that’s easy to maintain in the field — from a Dutch supplier that understands a high energy density sea system.</p></div>',
+  '<figure><img src="' + portrait + '" alt="Engineer with an underwater drone" width="800" height="1000"></figure>',
+  '</div>',
+  '<hr>',
+  '<hgroup><p>/ What did the client need</p><h2>The results</h2></hgroup>',
+  '<p>~60% more battery life than their previous solution, with no real increase in drone size. Longer missions, more seabed per launch, easier servicing, and a battery partner in the same time zone.</p>',
+  '<figure><blockquote><p>It’s always great to have a local supplier that understands the challenges of creating a high energy dense sea system.</p></blockquote><figcaption><strong>Arthur Admiraal</strong> <span>Lead Electrical Engineer &amp; Co-Founder, Lobster Robotics</span></figcaption></figure>',
+  '<hgroup><p>/ Client info</p><h2>About Lobster Robotics</h2></hgroup>',
+  '<p>Delft-based scale-up, spun out of TU Delft, building autonomous underwater drones that map the seabed in high resolution — used for offshore inspection, ecological monitoring and seabed security, and selected for NATO’s DIANA program.</p>',
+].join('')
 ---
-<EditorialContentAllentown
-  theme="light"
-  content={{ html: '<p>Every flight profile exposes a different combination of electrical load, thermal behaviour and packaging constraints. Good engineering starts by making those conditions explicit.</p><h2>Define the operating envelope</h2><p>Teams can make earlier decisions when system requirements, integration boundaries and evidence needs are available in one clear brief.</p><blockquote><p>Evidence gathered early makes every downstream decision easier to defend.</p></blockquote><p>That creates a delivery path that remains practical as the programme moves from prototype to repeatable production.</p>' }}
-/>
+<EditorialContentAllentown theme="light" content={{ html }} />
