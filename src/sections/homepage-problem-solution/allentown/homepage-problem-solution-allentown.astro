@@ -547,4 +547,6 @@ const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice
   .homepage-problem-solution-allentown, .homepage-problem-solution-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .homepage-problem-solution-allentown *, .homepage-problem-solution-allentown *::before, .homepage-problem-solution-allentown *::after { box-sizing: border-box; }
   .homepage-problem-solution-allentown [hidden] { display: none !important; }
+  /* The problem accent (--error) is tuned for dark canvases; on light ones it is darkened to stay readable. */
+  .homepage-problem-solution-allentown:is([data-kinekt-theme='light'], [data-kinekt-theme='semi-light']) { --kiw--homepage-problem-solution-problem-accent-color: color-mix(in srgb, var(--error) 55%, var(--primary-ultra-dark)); }
 </style>

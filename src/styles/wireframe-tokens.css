@@ -7,20 +7,23 @@
 @layer kinekt.tokens {
 :root {
   /* start editable colors */
-  /* Color palettes: deliberately neutral until a customer theme overrides them. */
-  --primary-ultra-light: #f5f5f5;
-  --primary-light: #dedede;
-  --primary-semi-light: #b8b8b8;
-  --primary: #8a8a8a;
-  --primary-semi-dark: #666666;
-  --primary-dark: #3d3d3d;
-  --primary-ultra-dark: #171717;
+  /* Color palettes: deliberately neutral until a customer theme overrides them.
+     The primary greys step evenly from semi-light down, so canvases and surfaces stay distinct. Semi-light is the
+     lightest step used as text on light canvases (Figma meta, breadcrumbs, placeholders), so it stays dark enough
+     for WCAG AA on neutral-semi-light; accent-semi-dark stays darker for text on light canvases too. */
+  --primary-ultra-light: #e6e6e6;
+  --primary-light: #b3b3b3;
+  --primary-semi-light: #5e5e5e;
+  --primary: #4a4a4a;
+  --primary-semi-dark: #363636;
+  --primary-dark: #222222;
+  --primary-ultra-dark: #111111;
 
-  --accent-ultra-light: #f7f7f7;
-  --accent-light: #e5e5e5;
-  --accent-semi-light: #c9c9c9;
-  --accent: #969696;
-  --accent-semi-dark: #696969;
+  --accent-ultra-light: #f8f8f8;
+  --accent-light: #f1f1f1;
+  --accent-semi-light: #dedede;
+  --accent: #c9c9c9;
+  --accent-semi-dark: #626262;
   --accent-dark: #454545;
   --accent-ultra-dark: #242424;
 
@@ -36,7 +39,7 @@
   --base: var(--primary-ultra-dark);
   --success: var(--accent-semi-dark);
   --warning: var(--primary-semi-light);
-  --error: var(--primary-dark);
+  --error: var(--primary-light);
   --info: var(--primary-semi-dark);
 /* end editable colors */
   /* Fluid layout inputs. */

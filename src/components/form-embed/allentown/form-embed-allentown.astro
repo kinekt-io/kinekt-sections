@@ -83,8 +83,9 @@ const sendIcon = ctaIconPaths['paper-plane']
     --kiw--form-embed-allentown-ink: var(--kinekt-component-ink);
     --kiw--form-embed-allentown-field-background: var(--neutral-light);
     --kiw--form-embed-allentown-field-border: var(--neutral-semi-light);
-    --kiw--form-embed-allentown-placeholder: var(--primary-light);
-    --kiw--form-embed-allentown-select-placeholder: var(--primary-light);
+    /* Figma's light-canvas placeholders are primary-semi-light (primary-light is the Light=yes variant). */
+    --kiw--form-embed-allentown-placeholder: var(--primary-semi-light);
+    --kiw--form-embed-allentown-select-placeholder: var(--primary-semi-light);
     --kiw--form-embed-allentown-icon: var(--kinekt-component-accent);
     --kiw--form-embed-allentown-option-text: var(--primary-dark);
     --kiw--form-embed-allentown-radio-ring: var(--primary);
@@ -98,7 +99,9 @@ const sendIcon = ctaIconPaths['paper-plane']
   :where([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) :where(.form-embed-allentown) {
     --kiw--form-embed-allentown-field-background: var(--kinekt-component-surface);
     --kiw--form-embed-allentown-field-border: var(--kinekt-component-line);
-    --kiw--form-embed-allentown-placeholder: var(--primary-semi-light);
+    /* primary-light keeps placeholders readable on the dark field surface. */
+    --kiw--form-embed-allentown-placeholder: var(--primary-light);
+    --kiw--form-embed-allentown-select-placeholder: var(--primary-light);
     --kiw--form-embed-allentown-option-text: var(--kinekt-component-ink);
     --kiw--form-embed-allentown-radio-ring: var(--kinekt-component-muted);
     --kiw--form-embed-allentown-toggle-text: var(--kinekt-component-muted);

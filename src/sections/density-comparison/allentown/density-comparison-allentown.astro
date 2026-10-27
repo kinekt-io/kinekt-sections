@@ -159,4 +159,6 @@ const iconFor = (status: Status) => fas[status === 'positive' ? 'faCircleCheck' 
     margin-top: var(--kinekt-section-table-offset, var(--kiw--section-table-offset, var(--space-xl)));
     font-size: var(--text-m);
   }
+  /* The action role is a button fill; as text it needs the subtle role to stay readable on dark canvases. */
+  .density-comparison-allentown[data-kinekt-theme='semi-dark'], .density-comparison-allentown[data-kinekt-theme='dark'] { --kiw--density-comparison-allentown-action-color: var(--kinekt-component-subtle); }
 </style>
