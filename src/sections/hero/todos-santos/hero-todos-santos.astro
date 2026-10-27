@@ -56,7 +56,7 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
       )}
       {(ctas?.primary || ctas?.secondary) && (
         <nav class="hero-todos-santos__actions" aria-label="Hero actions">
-          {ctas.primary && <Button class="hero-todos-santos__action hero-todos-santos__action--primary" href={ctas.primary.href} label={ctas.primary.label} />}
+          {ctas.primary && <Button class="hero-todos-santos__action hero-todos-santos__action--primary" size="l" href={ctas.primary.href} label={ctas.primary.label} />}
           {ctas.secondary && <Button class="hero-todos-santos__action hero-todos-santos__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="clear" />}
         </nav>
       )}
@@ -72,7 +72,7 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
   :where(.hero-todos-santos) :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } :where(.hero-todos-santos) h1 { font-size: var(--kinekt-section-heading-1-size, var(--kiw--section-heading-1-size)); } :where(.hero-todos-santos) h2 { font-size: var(--kinekt-section-heading-2-size, var(--kiw--section-heading-2-size)); } :where(.hero-todos-santos) h3 { font-size: var(--kinekt-section-heading-3-size, var(--kiw--section-heading-3-size)); }
   :where(.hero-todos-santos) :is(p, li, dd, td, th, label, input, textarea, button) { font: inherit; line-height: var(--kinekt-component-text-line-height); } :where(.hero-todos-santos) :is(p, ul, ol, dl, table, form) { margin-block: 0; }
   :where(.hero-todos-santos) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); color: var(--kinekt-component-accent); font-family: var(--kinekt-component-mono); font-size: var(--kinekt-component-text-xs-size); font-weight: var(--kiw--section-heading-font-weight); letter-spacing: var(--kiw--section-text-letter-spacing); text-transform: uppercase; } :where(.hero-todos-santos) .section-intro__heading { margin: 0; } :where(.hero-todos-santos) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-l-size); line-height: var(--kinekt-component-text-line-height); }
-  :where(.hero-todos-santos) :is([class$='__actions'], [class*='__cta-group']) { display: flex; flex-wrap: wrap; gap: var(--kiw--section-actions-gap); margin-top: var(--kiw--section-actions-margin); } :where(.hero-todos-santos) .button { display: inline-flex; align-items: center; justify-content: center; gap: .8ch; min-height: var(--kiw--section-button-height); padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline); border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); border-radius: calc(var(--buttons-has-radius) * var(--kiw--button-allentown-radius, var(--kiw--section-button-radius))); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-size: var(--kinekt-component-text-s-size); font-weight: var(--kiw--section-heading-font-weight); text-decoration: none; cursor: pointer; } :where(.hero-todos-santos) .button--secondary { color: var(--kinekt-component-ink); background: transparent; }
+  :where(.hero-todos-santos) :is([class$='__actions'], [class*='__cta-group']) { display: flex; flex-wrap: wrap; gap: var(--kiw--section-actions-gap); margin-top: var(--kiw--section-actions-margin); }
   :where(.hero-todos-santos) :is([class$='__media'], [class*='__media-'], [class*='__image']), :where(.hero-todos-santos) picture { display: block; max-width: 100%; } :where(.hero-todos-santos) img { display: block; width: 100%; height: auto; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
 </style>
 <style is:global>
@@ -181,7 +181,6 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
   .hero-todos-santos .hero-todos-santos__container { grid-template-columns: minmax(0, 1fr); gap: var(--section-space-m); }
   .hero-todos-santos .hero-todos-santos__content { display: grid; grid-template-columns: minmax(0, 1fr); min-inline-size: 0; gap: var(--hero-todos-santos-content-gap); max-inline-size: var(--hero-todos-santos-content-width); padding: 0; }
   .hero-todos-santos .hero-todos-santos__header { max-inline-size: none; padding: 0; }
-  .hero-todos-santos .section-intro__accent { font: inherit; }
   .hero-todos-santos .hero-todos-santos__feature-table { inline-size: 100%; max-inline-size: 100%; overflow: visible; border: 0; border-radius: 0; border-collapse: collapse; text-align: start; }
   .hero-todos-santos .hero-todos-santos__feature-table caption { margin-block-end: var(--hero-todos-santos-feature-gap); color: inherit; font-size: var(--hero-todos-santos-feature-heading-size); font-weight: var(--heading-font-weight); letter-spacing: var(--heading-letter-spacing); text-align: start; }
   .hero-todos-santos .hero-todos-santos__feature-table tr + tr { border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
@@ -189,7 +188,6 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
   .hero-todos-santos .hero-todos-santos__feature-table th { padding-inline-end: var(--space-m); font-weight: var(--text-font-weight); }
   .hero-todos-santos .hero-todos-santos__feature-table td { color: var(--kinekt-component-muted); }
   .hero-todos-santos .hero-todos-santos__actions { display: flex; flex-wrap: wrap; gap: var(--space-l); }
-  .hero-todos-santos .button--clear { min-height: auto; padding: 0; border-color: transparent; color: var(--kinekt-component-ink); background: transparent; }
   .hero-todos-santos .hero-todos-santos__media { align-self: stretch; }
   .hero-todos-santos .hero-todos-santos__image { aspect-ratio: var(--kinekt-section-media-ratio); block-size: 100%; object-fit: cover; }
   @media (min-width: 50rem) { .hero-todos-santos .hero-todos-santos__container { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; justify-content: space-between; gap: var(--section-space-xxl); } .hero-todos-santos .hero-todos-santos__feature { grid-template-columns: minmax(0, 12.5rem) minmax(0, 1fr); gap: var(--space-m); } .hero-todos-santos .hero-todos-santos__media { block-size: var(--hero-todos-santos-media-height); } }

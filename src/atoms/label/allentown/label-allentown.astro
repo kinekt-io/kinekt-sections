@@ -54,7 +54,8 @@ const iconDefinition = fontAwesomeIcon(icon)
     min-inline-size: 0;
     text-wrap: var(--kiw--label-allentown-text-wrap);
     margin: 0;
-    padding: var(--kiw--label-allentown-padding-block) var(--kiw--label-allentown-padding-inline);
+    /* Figma draws the stroke inside, so the border comes out of the padding. */
+    padding: calc(var(--kiw--label-allentown-padding-block) - var(--kiw--label-allentown-border-width)) calc(var(--kiw--label-allentown-padding-inline) - var(--kiw--label-allentown-border-width));
     border: var(--kiw--label-allentown-border-width) solid var(--kiw--label-allentown-border-color);
     border-radius: var(--kiw--label-allentown-radius);
     color: var(--kiw--label-allentown-ink);

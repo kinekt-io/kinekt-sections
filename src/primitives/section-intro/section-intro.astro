@@ -1,7 +1,7 @@
 ---
 import type { SectionIntro } from '../../shared/content.js'
 interface Props { intro: SectionIntro; headingLevel?: 'h1' | 'h2' | 'h3'; accentStyle?: 'inherit' | 'heading' }
-const { intro, headingLevel = 'h2', accentStyle = 'inherit' } = Astro.props
+const { intro, headingLevel = 'h2', accentStyle = 'heading' } = Astro.props
 const Heading = headingLevel
 ---
 <div class:list={['section-intro', accentStyle === 'heading' && 'section-intro--accent-heading']}>
@@ -29,7 +29,8 @@ const Heading = headingLevel
     gap: var(--kinekt-component-intro-accent-gap, var(--space-xxs));
   }
 
-  :where([data-kinekt-section], [data-kinekt-structural-section]) .section-intro--accent-heading .section-intro__accent {
+  /* The heading group in the selector outranks the section bridges' generic `[class$='__accent']` rule. */
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .section-intro--accent-heading .section-intro__heading-group .section-intro__accent {
     margin: 0;
     font-family: var(--kiw--section-intro-accent-font-family, var(--heading-font-family));
     font-size: var(--kiw--section-intro-accent-font-size, var(--text-m));
