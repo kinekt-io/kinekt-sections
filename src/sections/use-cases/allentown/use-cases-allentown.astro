@@ -1,21 +1,11 @@
 ---
 import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
+import UseCaseItem, { type UseCaseItemContent } from '../../../components/use-case-item/allentown/use-case-item-allentown.astro'
 import type { SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
 
-interface Cta {
-  label: string
-  href: string
-}
-
-interface UseCase {
-  title: string
-  description?: string | { html: string }
-  ctaGroup?: {
-    primaryButton?: Cta
-  }
-}
+type UseCase = UseCaseItemContent
 
 interface Props {
   id?: string
@@ -37,6 +27,7 @@ const {
   headingLevel = 'h2',
 } = Astro.props as Props
 const sectionLabel = advantageHeading || gridHeading
+const itemHeadingLevel = (`h${Math.min(Number(headingLevel.slice(1)) + 1, 6)}`) as 'h2' | 'h3' | 'h4'
 ---
 
 <section class="beta-use-cases-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
@@ -46,28 +37,11 @@ const sectionLabel = advantageHeading || gridHeading
     </header>
 
     <div class="beta-use-cases-allentown__content">
-      {sectionLabel && (
-        <div class="beta-use-cases-allentown__label">
-          <p>{sectionLabel}</p>
-          <span aria-hidden="true"></span>
-        </div>
-      )}
+      {sectionLabel && <SubtitleFlightPath class="beta-use-cases-allentown__label" text={sectionLabel} size="small" />}
 
       <div class="beta-use-cases-allentown__grid">
         {items.map((item) => (
-          <article class="beta-use-cases-allentown__item">
-            <h3>{item.title}</h3>
-            {typeof item.description === 'string' && <p>{item.description}</p>}
-            {item.description && typeof item.description === 'object' && <div class="beta-use-cases-allentown__description" set:html={item.description.html} />}
-            {item.ctaGroup?.primaryButton?.label && item.ctaGroup.primaryButton.href && (
-              <Button
-                class="beta-use-cases-allentown__cta"
-                href={item.ctaGroup.primaryButton.href}
-                label={item.ctaGroup.primaryButton.label}
-                style="clear"
-              />
-            )}
-          </article>
+          <UseCaseItem class="beta-use-cases-allentown__item" item={item} headingLevel={itemHeadingLevel} />
         ))}
       </div>
     </div>
@@ -130,7 +104,7 @@ const sectionLabel = advantageHeading || gridHeading
     --kiw--section-action-icon: var(--kiw--use-cases-allentown-action-icon);
     --kiw--section-subtle: var(--kiw--use-cases-allentown-subtle);
   }
-  :where(.beta-use-cases-allentown[data-kinekt-section]) { --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width)); --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width)); --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap)); --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius)); --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter)); --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap)); --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap)); --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height)); }
+  :where(.beta-use-cases-allentown[data-kinekt-section]) { --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--section-site-width)); --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--section-content-width)); --kinekt-component-gap: var(--kinekt-section-gap, var(--kiw--section-gap)); --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--section-radius)); --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--kiw--section-media-filter)); --kinekt-component-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--section-intro-accent-gap)); --kinekt-component-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--section-intro-description-gap)); --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--section-text-line-height)); --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--section-heading-line-height)); }
   :where(.beta-use-cases-allentown[data-kinekt-section]) > .beta-use-cases-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
   :where(.beta-use-cases-allentown) :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } :where(.beta-use-cases-allentown) h2 { font-size: var(--kiw--section-heading-2-size); } :where(.beta-use-cases-allentown) h3 { font-size: var(--kiw--section-heading-3-size); } :where(.beta-use-cases-allentown) :is(p, li) { font: inherit; line-height: var(--kinekt-component-text-line-height); } :where(.beta-use-cases-allentown) :is(p, ul, ol) { margin-block: 0; } :where(.beta-use-cases-allentown) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); } :where(.beta-use-cases-allentown) .section-intro__heading { margin: 0; } :where(.beta-use-cases-allentown) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: var(--kiw--section-text-l-size); }
   .beta-use-cases-allentown[data-kinekt-section] > .beta-use-cases-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
@@ -158,28 +132,32 @@ const sectionLabel = advantageHeading || gridHeading
     --kiw--use-cases-container-width: var(--content-width);
     --kiw--use-cases-inline-space: var(--section-gutter);
     --kiw--use-cases-intro-width: var(--width-l);
-    --kiw--use-cases-content-gap: var(--section-space-xl);
-    --kiw--use-cases-column-gap: var(--section-space-xxl);
-    --kiw--use-cases-row-gap: var(--section-space-s);
+    --kiw--use-cases-grid-width: var(--width-xxl);
+    --kiw--use-cases-content-gap: var(--section-space-l);
+    --kiw--use-cases-label-gap: var(--space-xl);
+    --kiw--use-cases-column-gap: var(--section-space-xl);
+    --kiw--use-cases-row-gap: var(--section-space-xs);
+    --kiw--use-cases-intro-gap: var(--space-m);
     --kiw--use-cases-heading-size: var(--h2);
-    --kiw--use-cases-item-heading-size: var(--h3);
+    --kiw--use-cases-intro-description-size: var(--text-l);
+    --kiw--use-cases-item-heading-size: var(--h4);
     --kiw--use-cases-description-size: var(--text-m);
     --use-cases-section-space: var(--kinekt-section-use-cases-section-space, var(--kiw--use-cases-section-space));
     --use-cases-container-width: var(--kinekt-section-use-cases-container-width, var(--kiw--use-cases-container-width));
     --use-cases-inline-space: var(--kinekt-section-use-cases-inline-space, var(--kiw--use-cases-inline-space));
     --use-cases-intro-width: var(--kinekt-section-use-cases-intro-width, var(--kiw--use-cases-intro-width));
+    --use-cases-grid-width: var(--kinekt-section-use-cases-grid-width, var(--kiw--use-cases-grid-width));
     --use-cases-content-gap: var(--kinekt-section-use-cases-content-gap, var(--kiw--use-cases-content-gap));
+    --use-cases-label-gap: var(--kinekt-section-use-cases-label-gap, var(--kiw--use-cases-label-gap));
     --use-cases-column-gap: var(--kinekt-section-use-cases-column-gap, var(--kiw--use-cases-column-gap));
     --use-cases-row-gap: var(--kinekt-section-use-cases-row-gap, var(--kiw--use-cases-row-gap));
+    --use-cases-intro-gap: var(--kinekt-section-use-cases-intro-gap, var(--kiw--use-cases-intro-gap));
     --use-cases-heading-size: var(--kinekt-section-use-cases-heading-size, var(--kiw--use-cases-heading-size));
+    --use-cases-intro-description-size: var(--kinekt-section-use-cases-intro-description-size, var(--kiw--use-cases-intro-description-size));
     --use-cases-item-heading-size: var(--kinekt-section-use-cases-item-heading-size, var(--kiw--use-cases-item-heading-size));
     --use-cases-description-size: var(--kinekt-section-use-cases-description-size, var(--kiw--use-cases-description-size));
     --kinekt-component-block-space: var(--use-cases-section-space);
     --kinekt-component-inline-space: var(--use-cases-inline-space);
-    --kinekt-section-card-columns: 3;
-    --kinekt-section-card-min-width: var(--width-s);
-    --kinekt-section-card-media-ratio: 3 / 2;
-    --kinekt-section-gap: var(--section-space-xl);
     box-sizing: border-box;
     padding-block: var(--kinekt-component-block-space);
     color: var(--kinekt-component-ink);
@@ -198,42 +176,29 @@ const sectionLabel = advantageHeading || gridHeading
   .beta-use-cases-allentown[data-kinekt-section] *, .beta-use-cases-allentown[data-kinekt-section] *::before, .beta-use-cases-allentown[data-kinekt-section] *::after { box-sizing: border-box; }
   .beta-use-cases-allentown[data-kinekt-section] [hidden] { display: none !important; }
 
-  .beta-use-cases-allentown__container { display: grid; max-width: var(--use-cases-container-width); gap: var(--use-cases-content-gap); margin-inline: auto; }
-  .beta-use-cases-allentown__intro { max-width: var(--use-cases-intro-width); }
-  .beta-use-cases-allentown__intro .section-intro__heading { font-size: var(--use-cases-heading-size); line-height: var(--heading-line-height); }
-  .beta-use-cases-allentown__intro .section-intro__description { max-width: none; font-size: var(--text-l); }
-  .beta-use-cases-allentown__content { display: grid; gap: var(--section-space-s); }
-  .beta-use-cases-allentown__label { display: flex; align-items: center; gap: var(--space-m); }
-  .beta-use-cases-allentown__label p { flex: none; margin: 0; color: var(--kinekt-component-muted); font-family: var(--kinekt-component-mono); font-size: var(--text-xs); font-weight: var(--heading-font-weight); letter-spacing: var(--text-letter-spacing); text-transform: uppercase; }
-  .beta-use-cases-allentown__label span { width: 100%; height: var(--kinekt-component-border-width); background: var(--kinekt-component-line); }
-  .beta-use-cases-allentown__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--kinekt-section-card-min-width, 17rem)), 1fr)); gap: var(--use-cases-row-gap) var(--use-cases-column-gap); background: var(--kinekt-component-line); }
-  .beta-use-cases-allentown__item { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-s); padding: var(--kinekt-section-card-padding, var(--space-l)); border: 0; background: var(--kinekt-component-canvas); }
-  .beta-use-cases-allentown__item :is(h3, p), .beta-use-cases-allentown__description :is(p, ul, ol) { margin: 0; }
-  .beta-use-cases-allentown__item h3 { font-size: var(--use-cases-item-heading-size); line-height: var(--heading-line-height); letter-spacing: var(--heading-letter-spacing); }
-  .beta-use-cases-allentown__item > :is(p, .beta-use-cases-allentown__description) { max-width: var(--kiw--use-cases-allentown-description-width, var(--kinekt-component-reading-width)); color: var(--kinekt-component-muted); font-size: var(--use-cases-description-size); line-height: var(--text-line-height); }
-  .beta-use-cases-allentown__cta { margin-top: var(--kiw--use-cases-allentown-action-space, var(--space-xxxs)); color: inherit; font-size: var(--text-m); font-weight: var(--heading-font-weight); text-decoration: underline; text-underline-offset: var(--space-xxs); }
-  .beta-use-cases-allentown__cta:hover { color: var(--kinekt-component-muted); }
+  .beta-use-cases-allentown[data-kinekt-section] { --kinekt-component-content-width: var(--use-cases-container-width); }
 
-  @media (min-width: 48rem) {
-    .beta-use-cases-allentown[data-kinekt-section] { --use-cases-inline-space: var(--kinekt-section-use-cases-inline-space, var(--kiw--use-cases-inline-space)); --use-cases-section-space: var(--kinekt-section-use-cases-section-space, var(--kiw--use-cases-section-space)); }
-    .beta-use-cases-allentown__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Figma "Section - Use cases for the right fit" (5685:654618, semi-light): a 1440 container with a 1296 column,
+     intro → group section-l (Figma mobile 64 = section-l at phone width); intro Column 864 (accent, h2, text-l muted; gap space-m);
+     Subtile + Flight Path Small → space-xl → 2 × 598 use cases, gaps section-xl / section-xs. */
+  .beta-use-cases-allentown[data-kinekt-section] > .beta-use-cases-allentown__container { gap: var(--use-cases-content-gap); }
+  .beta-use-cases-allentown .beta-use-cases-allentown__intro .section-intro { display: grid; justify-items: start; gap: var(--use-cases-intro-gap); }
+  .beta-use-cases-allentown .beta-use-cases-allentown__intro .section-intro :is(.section-intro__heading, .section-intro__description) { margin: 0; }
+  .beta-use-cases-allentown .beta-use-cases-allentown__intro .section-intro__heading { max-width: none; font-size: var(--use-cases-heading-size); }
+  .beta-use-cases-allentown .beta-use-cases-allentown__intro .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--use-cases-intro-description-size); line-height: var(--kinekt-component-text-line-height); }
+  .beta-use-cases-allentown .beta-use-cases-allentown__intro .section-intro__description > * { margin-block: 0; }
+  .beta-use-cases-allentown .beta-use-cases-allentown__content { display: grid; gap: var(--use-cases-label-gap); min-width: 0; }
+  .beta-use-cases-allentown .beta-use-cases-allentown__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--use-cases-row-gap) var(--use-cases-column-gap); }
+  .beta-use-cases-allentown .beta-use-cases-allentown__item { --kiw--facility-fact-allentown-title-size: var(--use-cases-item-heading-size); --kiw--facility-fact-allentown-description-size: var(--use-cases-description-size); }
+
+  @media (min-width: 50rem) {
+    .beta-use-cases-allentown .beta-use-cases-allentown__intro { max-inline-size: var(--use-cases-intro-width); }
+    .beta-use-cases-allentown .beta-use-cases-allentown__content { max-inline-size: var(--use-cases-grid-width); }
+    .beta-use-cases-allentown .beta-use-cases-allentown__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
-</style>
-<style is:global>
-  .beta-use-cases-allentown .beta-use-cases-allentown__label p { flex: none; margin: 0; color: var(--kinekt-component-muted); font-family: var(--kinekt-component-mono); font-size: var(--kiw--section-text-xs-size); font-weight: var(--kiw--section-heading-font-weight); letter-spacing: var(--kiw--section-text-letter-spacing); line-height: var(--kinekt-component-text-line-height); text-transform: uppercase; }
-  .beta-use-cases-allentown .beta-use-cases-allentown__grid { background: transparent; }
-  .beta-use-cases-allentown .beta-use-cases-allentown__item { padding: 0; background: transparent; }
-  @media (max-width: 49.99rem) { .beta-use-cases-allentown .beta-use-cases-allentown__grid { grid-template-columns: minmax(0, 1fr); } }
-</style>
-<style is:global>
-  .beta-use-cases-allentown[data-kinekt-section] { --kinekt-component-content-width: var(--use-cases-container-width); }
-  .beta-use-cases-allentown .beta-use-cases-allentown__label { color: var(--kinekt-component-muted); font-family: var(--kinekt-component-mono); font-size: var(--kiw--section-text-xs-size); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing); text-transform: uppercase; }
-  .beta-use-cases-allentown .beta-use-cases-allentown__container { max-width: var(--use-cases-container-width); }
-  .beta-use-cases-allentown[data-kinekt-section] > .beta-use-cases-allentown__container { max-width: var(--use-cases-container-width); }
-</style>
-<style is:global>
-  @media (max-width: 49.99rem) {
-    .beta-use-cases-allentown[data-kinekt-section] { --kinekt-component-reading-width: var(--content-width); }
+  @media (max-width: 49.999rem) {
+    /* Figma Desktop=no: rows gap "M Section Space S" (40.96), which is our section-s at phone width. */
+    .beta-use-cases-allentown[data-kinekt-section] { --kiw--use-cases-row-gap: var(--section-space-s); --kinekt-component-reading-width: var(--content-width); }
   }
 </style>
