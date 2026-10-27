@@ -30,13 +30,13 @@ const action = (value: any) => value?.cta ?? value
               {item.label && typeof item.label === 'string' && <Label class="beta-solution-list-allentown__label" text={item.label} />}
               {description(item.description) && <div class="beta-solution-list-allentown__description" set:html={description(item.description)} />}
             </div>
-            {action(item.cta)?.label && <div class="beta-solution-list-allentown__actions"><Button href={action(item.cta).href} label={action(item.cta).label} style="clear" /></div>}
+            {action(item.cta)?.label && <div class="beta-solution-list-allentown__actions"><Button href={action(item.cta).href} label={action(item.cta).label} style="clear" size="l" /></div>}
           </div>
         </article></li>
       ))}
     </ul>
   </div>
-  {callout && <div class="beta-solution-list-allentown__callout-container"><Callout class="beta-solution-list-allentown__callout" callout={callout} /></div>}
+  {callout && <div class="beta-solution-list-allentown__callout-container"><Callout class="beta-solution-list-allentown__callout" callout={callout} size="medium" /></div>}
 </section>
 <style is:global>
   :where(.beta-solution-list-allentown) { box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--kiw--section-text-m-size); font-weight: var(--kiw--section-text-font-weight); line-height: var(--kiw--section-text-line-height); letter-spacing: var(--kiw--section-text-letter-spacing); } :where(.beta-solution-list-allentown) *, :where(.beta-solution-list-allentown) *::before, :where(.beta-solution-list-allentown) *::after { box-sizing: border-box; }
@@ -44,7 +44,7 @@ const action = (value: any) => value?.cta ?? value
   :where(.beta-solution-list-allentown) > [class$='__container'] { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kinekt-component-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); } :where(.beta-solution-list-allentown) :is([class$='__header'], [class$='__intro']) { max-width: var(--kinekt-component-reading-width); }
   :where(.beta-solution-list-allentown) :is(h1, h2, h3, h4, h5, h6) { max-width: var(--kinekt-component-reading-width); margin-block: 0; color: inherit; font-family: var(--kiw--section-heading-font-family); font-weight: var(--kiw--section-heading-font-weight); line-height: var(--kinekt-component-heading-line-height); letter-spacing: var(--kiw--section-heading-letter-spacing); text-wrap: balance; } :where(.beta-solution-list-allentown) h1 { font-size: var(--kinekt-section-heading-1-size, var(--kiw--section-heading-1-size)); } :where(.beta-solution-list-allentown) h2 { font-size: var(--kinekt-section-heading-2-size, var(--kiw--section-heading-2-size)); } :where(.beta-solution-list-allentown) h3 { font-size: var(--kinekt-section-heading-3-size, var(--kiw--section-heading-3-size)); }
   :where(.beta-solution-list-allentown) :is(p, li, dd, td, th, label, input, textarea, button) { font: inherit; line-height: var(--kinekt-component-text-line-height); } :where(.beta-solution-list-allentown) :is(p, ul, ol, dl, table, form) { margin-block: 0; } :where(.beta-solution-list-allentown) .section-intro__accent { margin-block: 0 var(--kinekt-component-intro-accent-gap); color: var(--kinekt-component-accent); font-family: var(--kinekt-component-mono); font-size: var(--kinekt-component-text-xs-size); font-weight: var(--kiw--section-heading-font-weight); letter-spacing: var(--kiw--section-text-letter-spacing); text-transform: uppercase; } :where(.beta-solution-list-allentown) .section-intro__heading { margin: 0; } :where(.beta-solution-list-allentown) .section-intro__description { max-width: var(--kinekt-component-reading-width); margin-block: var(--kinekt-component-intro-description-gap) 0; color: var(--kinekt-component-muted); font-size: var(--kinekt-component-text-l-size); }
-  :where(.beta-solution-list-allentown) :is([class$='__actions'], [class*='__cta-group']) { display: flex; flex-wrap: wrap; gap: var(--kiw--section-actions-gap); margin-top: var(--kiw--section-actions-margin); } :where(.beta-solution-list-allentown) .button { display: inline-flex; align-items: center; justify-content: center; gap: .8ch; min-height: var(--kiw--section-button-height); padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline); border: var(--kinekt-component-border-width) solid var(--kinekt-component-action); border-radius: calc(var(--buttons-has-radius) * var(--kiw--button-allentown-radius, var(--kiw--section-button-radius))); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-size: var(--kinekt-component-text-s-size); font-weight: var(--kiw--section-heading-font-weight); text-decoration: none; cursor: pointer; } :where(.beta-solution-list-allentown) .button--secondary { color: var(--kinekt-component-ink); background: transparent; }
+  :where(.beta-solution-list-allentown) :is([class$='__actions'], [class*='__cta-group']) { display: flex; flex-wrap: wrap; gap: var(--kiw--section-actions-gap); margin-top: var(--kiw--section-actions-margin); }
   :where(.beta-solution-list-allentown) :is([class$='__media'], [class*='__media-'], [class*='__image']), :where(.beta-solution-list-allentown) picture { display: block; max-width: 100%; } :where(.beta-solution-list-allentown) img { display: block; width: 100%; height: auto; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); } :where(.beta-solution-list-allentown) :is(ul, ol)[class*='__'] { display: grid; padding: 0; list-style: none; } :where(.beta-solution-list-allentown) :is(ul, ol)[class*='__'] > li { min-width: 0; } :where(.beta-solution-list-allentown) li > article { display: grid; gap: var(--space-s); padding: var(--kinekt-component-gap); border: var(--kinekt-component-border-width) solid var(--kinekt-component-line); border-radius: var(--kinekt-component-radius); background: var(--kinekt-component-surface); }
 </style>
 <style is:global>
@@ -82,8 +82,8 @@ const action = (value: any) => value?.cta ?? value
     --kiw--section-text-xl-size: var(--kiw--solution-list-allentown-text-xl-size, var(--text-xl));
     --kiw--section-text-xxl-size: var(--kiw--solution-list-allentown-text-xxl-size, var(--text-xxl));
     --kiw--section-carousel-gap: var(--kiw--solution-list-allentown-carousel-gap, var(--content-gap));
-    --kiw--section-actions-gap: var(--kiw--solution-list-allentown-actions-gap, var(--space-s));
-    --kiw--section-actions-margin: var(--kiw--solution-list-allentown-actions-margin, var(--space-xl));
+    --kiw--section-actions-gap: var(--kiw--solution-list-allentown-actions-gap, var(--space-l));
+    --kiw--section-actions-margin: var(--kiw--solution-list-allentown-actions-margin, var(--section-space-xs));
     --kiw--section-button-height: var(--kiw--solution-list-allentown-button-height, var(--input-height));
     --kiw--section-button-padding-block: var(--kiw--solution-list-allentown-button-padding-block, var(--space-s));
     --kiw--section-button-padding-inline: var(--kiw--solution-list-allentown-button-padding-inline, var(--space-l));
@@ -159,12 +159,10 @@ const action = (value: any) => value?.cta ?? value
   }
 
   .beta-solution-list-allentown { --kinekt-section-card-media-ratio: 1 / 1; --solution-list-accent-to-heading: var(--kiw--solution-list-allentown-accent-gap); --solution-list-heading-group-to-label: var(--kiw--solution-list-allentown-heading-gap); --solution-list-label-to-description: var(--kiw--solution-list-allentown-label-space); --solution-list-body-to-action: var(--kiw--solution-list-allentown-label-space); }
-  .beta-solution-list-allentown .button--clear { min-height: auto; padding: 0; border-color: transparent; color: var(--kinekt-component-ink); background: transparent; }
   .beta-solution-list-allentown .callout-allentown :is(.section-intro__heading, .section-intro__description) { max-width: var(--kinekt-component-reading-width); }
   .beta-solution-list-allentown .callout-allentown { gap: var(--space-l); }
   .beta-solution-list-allentown :is(.callout-allentown__content, .callout-allentown__header) { max-width: none; }
   .beta-solution-list-allentown :is(.beta-solution-list-allentown__intro, .section-intro__heading, .section-intro__description, h3) { max-width: none; }
-  .beta-solution-list-allentown .section-intro__accent { font: inherit; }
   .beta-solution-list-allentown > .beta-solution-list-allentown__container { gap: var(--kiw--solution-list-allentown-container-gap); }
   .beta-solution-list-allentown > .beta-solution-list-allentown__callout-container { display: grid; width: 100%; max-width: var(--kiw--solution-list-allentown-content-width); margin-block-start: var(--kiw--solution-list-allentown-content-gap); margin-inline: auto; padding-inline: var(--kiw--solution-list-allentown-inline-space); }
   .beta-solution-list-allentown :is(.beta-solution-list-allentown__content, .beta-solution-list-allentown__body, .beta-solution-list-allentown__heading-group) { display: grid; }

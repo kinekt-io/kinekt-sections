@@ -114,8 +114,8 @@ const methods = contactMethods.filter((method) => method.label && method.href)
     --kiw--section-text-xl-size: var(--kiw--form-section-allentown-text-xl-size, var(--text-xl));
     --kiw--section-text-xxl-size: var(--kiw--form-section-allentown-text-xxl-size, var(--text-xxl));
     --kiw--section-carousel-gap: var(--kiw--form-section-allentown-carousel-gap, var(--content-gap));
-    --kiw--section-actions-gap: var(--kiw--form-section-allentown-actions-gap, var(--space-s));
-    --kiw--section-actions-margin: var(--kiw--form-section-allentown-actions-margin, var(--space-xl));
+    --kiw--section-actions-gap: var(--kiw--form-section-allentown-actions-gap, var(--space-l));
+    --kiw--section-actions-margin: var(--kiw--form-section-allentown-actions-margin, var(--section-space-xs));
     --kiw--section-button-height: var(--kiw--form-section-allentown-button-height, var(--input-height));
     --kiw--section-button-padding-block: var(--kiw--form-section-allentown-button-padding-block, var(--space-s));
     --kiw--section-button-padding-inline: var(--kiw--form-section-allentown-button-padding-inline, var(--space-l));
@@ -181,7 +181,6 @@ const methods = contactMethods.filter((method) => method.label && method.href)
   }
 
   .form-section-allentown > .form-section-allentown__container { gap: var(--kiw--form-section-allentown-container-gap); }
-  .form-section-allentown .section-intro__accent { font: inherit; }
   .form-section-allentown :is(.section-intro__heading, .section-intro__description) { max-width: var(--kinekt-component-reading-width); }
   @media (max-width: 49.99rem) { .form-section-allentown { --kinekt-component-reading-width: var(--content-width); } }
   .form-section-allentown .form-section-allentown__content { display: grid; align-content: center; gap: var(--kiw--form-section-allentown-content-gap); }

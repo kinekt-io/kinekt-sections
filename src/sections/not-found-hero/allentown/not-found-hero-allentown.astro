@@ -29,7 +29,7 @@ const secondaryIcon = secondary?.icon ? ctaIconPaths[secondary.icon] : undefined
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
     </header>
     {(primary || secondary) && <div class="not-found-hero__actions">
-      {primary && <Button class="not-found-hero__action not-found-hero__action--primary" href={primary.href} label={primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+      {primary && <Button class="not-found-hero__action not-found-hero__action--primary" size="l" href={primary.href} label={primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
       {secondary && <Button class="not-found-hero__action not-found-hero__action--secondary" href={secondary.href} label={secondary.label} style="clear">{secondaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
     </div>}
   </div>
@@ -69,8 +69,8 @@ const secondaryIcon = secondary?.icon ? ctaIconPaths[secondary.icon] : undefined
     --kiw--section-text-xl-size: var(--kiw--not-found-hero-allentown-text-xl-size, var(--text-xl));
     --kiw--section-text-xxl-size: var(--kiw--not-found-hero-allentown-text-xxl-size, var(--text-xxl));
     --kiw--section-carousel-gap: var(--kiw--not-found-hero-allentown-carousel-gap, var(--content-gap));
-    --kiw--section-actions-gap: var(--kiw--not-found-hero-allentown-actions-gap, var(--space-s));
-    --kiw--section-actions-margin: var(--kiw--not-found-hero-allentown-actions-margin, var(--space-xl));
+    --kiw--section-actions-gap: var(--kiw--not-found-hero-allentown-actions-gap, var(--space-l));
+    --kiw--section-actions-margin: var(--kiw--not-found-hero-allentown-actions-margin, var(--section-space-xs));
     --kiw--section-button-height: var(--kiw--not-found-hero-allentown-button-height, var(--input-height));
     --kiw--section-button-padding-block: var(--kiw--not-found-hero-allentown-button-padding-block, var(--space-s));
     --kiw--section-button-padding-inline: var(--kiw--not-found-hero-allentown-button-padding-inline, var(--space-l));

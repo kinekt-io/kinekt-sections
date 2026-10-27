@@ -26,6 +26,7 @@ const primaryIcon = primary?.icon ? ctaIconPaths[primary.icon] : undefined;
 const secondaryIcon = secondary?.icon ? ctaIconPaths[secondary.icon] : undefined;
 const hasCustomActions = Astro.slots.has("actions");
 const hasActions = hasCustomActions || Boolean(primary || secondary);
+const buttonSize = size === "medium" ? "s" : "m";
 const classes = ["callout-allentown", `callout-allentown--${size}`, className].filter(Boolean).join(" ");
 const contentIntro = { ...callout.intro, accentHeading: undefined };
 ---
@@ -47,8 +48,8 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
         <div class="callout-allentown__action">
           {hasCustomActions ? <slot name="actions" /> : (
             <>
-              {primary && <Button href={primary.href} label={primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
-              {secondary && <Button href={secondary.href} label={secondary.label} style="clear">{secondaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+              {primary && <Button href={primary.href} label={primary.label} size={buttonSize}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+              {secondary && <Button href={secondary.href} label={secondary.label} style="clear" size={buttonSize}>{secondaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
             </>
           )}
         </div>
@@ -64,6 +65,8 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
     --kiw--callout-allentown-copy-gap: var(--space-xs);
     --kiw--callout-allentown-title-size: var(--h3);
     --kiw--callout-allentown-title-line-height: 1.2;
+    --kiw--callout-allentown-title-color: var(--kinekt-component-ink);
+    --kiw--callout-allentown-description-color: var(--kinekt-component-subtle, var(--kinekt-component-muted));
     --kiw--callout-allentown-description-size: var(--text-l);
     --kiw--callout-allentown-description-width: var(--width-l);
     --kiw--callout-allentown-content-width: none;
@@ -76,6 +79,9 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
     --kiw--callout-allentown-wide-body-columns: var(--kiw--callout-allentown-desktop-body-columns);
     --kiw--callout-allentown-wide-body-gap: var(--kiw--callout-allentown-desktop-body-gap);
   }
+
+  /* Figma Call to Action Block: title in primary-dark on light canvases (no role), ink on dark ones. */
+  :where([data-kinekt-theme='light'], [data-kinekt-theme='semi-light']) .callout-allentown { --kiw--callout-allentown-title-color: var(--primary-dark); }
 
   :where(.callout-allentown--medium) {
     --kiw--callout-allentown-title-size: var(--h5);
@@ -120,9 +126,11 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
   .callout-allentown .callout-allentown__content .section-intro__heading {
     font-size: var(--kiw--callout-allentown-title-size);
     line-height: var(--kiw--callout-allentown-title-line-height);
+    color: var(--kiw--callout-allentown-title-color);
   }
 
   .callout-allentown .callout-allentown__content .section-intro__description {
+    color: var(--kiw--callout-allentown-description-color);
     font-size: var(--kiw--callout-allentown-description-size);
   }
 

@@ -72,7 +72,7 @@ const tileIcon = ctaIconPaths['arrow-up-left']
       </div>
       {(primary || secondary) && (
         <div class="compliance-overview-allentown__actions">
-          {primary && <Button class="compliance-overview-allentown__action compliance-overview-allentown__action--primary" href={primary.href} label={primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+          {primary && <Button class="compliance-overview-allentown__action compliance-overview-allentown__action--primary" size="l" href={primary.href} label={primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
           {secondary && <Button class="compliance-overview-allentown__action compliance-overview-allentown__action--secondary" href={secondary.href} label={secondary.label} style="clear">{secondaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
         </div>
       )}

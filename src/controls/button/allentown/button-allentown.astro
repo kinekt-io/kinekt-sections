@@ -3,56 +3,84 @@ interface Props {
   href: string
   label: string
   style?: 'primary' | 'secondary' | 'clear'
+  size?: 's' | 'm' | 'l'
   class?: string
 }
 
-const { href, label, style = 'primary', class: className } = Astro.props
-const classes = ['button', `button--${style}`, className].filter(Boolean).join(' ')
+const { href, label, style = 'primary', size = 'm', class: className } = Astro.props
+const classes = ['button', `button--${style}`, size !== 'm' && `button--${size}`, className].filter(Boolean).join(' ')
 ---
 
 <a class={classes} href={href}>{label}<slot /></a>
 
 <style is:global>
+  /* Figma Button (4700:58121), Size=medium: padding S / M, icon gap XS, text-l at line-height 1, icon one step smaller.
+     Figma draws no stroke, so the border is taken out of the padding to keep its outer size. */
   :where([data-kinekt-section], [data-kinekt-structural-section]) .button {
-
-    --kiw--section-button-padding-block:var(--space-xxs);
-    --kiw--section-button-padding-inline:var(--space-xs);
+    --kiw--section-button-padding-block: var(--space-s);
+    --kiw--section-button-padding-inline: var(--space-m);
+    --kiw--button-allentown-font-size: var(--text-l);
+    --kiw--button-allentown-icon-size: var(--text-m);
+    --kiw--button-allentown-gap: var(--space-xs);
+    --kiw--button-allentown-border-width: var(--kinekt-component-border-width, var(--border-width));
     min-height: var(--kiw--section-button-height);
-    padding: var(--kiw--section-button-padding-block) var(--kiw--section-button-padding-inline);
-    border: var(--kinekt-component-border-width) solid var(--kinekt-component-action);
+    padding: calc(var(--kiw--section-button-padding-block) - var(--kiw--button-allentown-border-width)) calc(var(--kiw--section-button-padding-inline) - var(--kiw--button-allentown-border-width));
+    border: var(--kiw--button-allentown-border-width) solid var(--kinekt-component-action);
     border-radius: calc(var(--buttons-has-radius) * var(--kiw--button-allentown-radius, var(--kiw--section-button-radius)));
     color: var(--kinekt-component-action-text);
     background: var(--kinekt-component-action);
-    font-size: var(--kinekt-component-text-s-size, var(--text-s));
+    font-size: var(--kiw--button-allentown-font-size);
     font-weight: var(--kinekt-component-heading-font-weight, var(--heading-font-weight));
-    line-height: var(--kinekt-component-text-line-height, var(--text-line-height));
+    line-height: 1;
     cursor: pointer;
     justify-content: center;
     align-items: center;
-    gap: .8ch;
+    gap: var(--kiw--button-allentown-gap);
     text-decoration: none;
     display: inline-flex;
   }
 
-  :where([data-kinekt-section], [data-kinekt-structural-section]) .button.button--secondary {
-    color: var(--kinekt-component-ink);
-    background: transparent;
+  /* Figma Size=small and Size=large keep the padding and step the text and icon. */
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .button.button--s {
+    --kiw--button-allentown-font-size: var(--text-m);
+    --kiw--button-allentown-icon-size: var(--text-s);
   }
 
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .button.button--l {
+    --kiw--button-allentown-font-size: var(--text-xl);
+    --kiw--button-allentown-icon-size: var(--text-l);
+  }
+
+  /* Figma Type=secondary: a light fill with dark text in every theme. */
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .button.button--secondary {
+    --kiw--button-allentown-secondary-background: var(--neutral-light);
+    --kiw--button-allentown-secondary-text: var(--primary-ultra-dark);
+    border-color: var(--kiw--button-allentown-secondary-background);
+    color: var(--kiw--button-allentown-secondary-text);
+    background: var(--kiw--button-allentown-secondary-background);
+  }
+
+  /* Figma clear buttons are text only: no border, so the box is the line height (18 px at medium). */
   :where([data-kinekt-section], [data-kinekt-structural-section]) .button--clear {
     min-height: auto;
     padding: 0;
-    border-color: transparent;
+    border-width: 0;
     color: var(--kinekt-component-ink);
     background: transparent;
   }
 
   :where([data-kinekt-section], [data-kinekt-structural-section]) .button > svg[aria-hidden='true'] {
     flex: none;
+    inline-size: var(--kiw--button-allentown-icon-size);
+    block-size: var(--kiw--button-allentown-icon-size);
     color: var(--kinekt-component-action-icon, currentColor);
   }
 
-  :where([data-kinekt-section], [data-kinekt-structural-section]) .button:is(.button--secondary, .button--clear) > svg[aria-hidden='true'] {
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .button--clear > svg[aria-hidden='true'] {
     color: var(--kinekt-component-accent, currentColor);
+  }
+
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .button--secondary > svg[aria-hidden='true'] {
+    color: var(--kiw--button-allentown-secondary-icon, var(--accent-semi-dark));
   }
 </style>

@@ -46,7 +46,7 @@ const loadMoreIcon = ctaIconPaths.plus
     {sorted.length > 0 && <ul class="event-overview-allentown__events" data-event-overview-list>
       {sorted.map((event) => <li class="event-overview-allentown__event"><EventCard event={event} headingLevel={CardHeading} eventTypeLabels={eventTypeLabels} timeZone={timeZone} /></li>)}
     </ul>}
-    {sorted.length > pageSize && <button class="button button--clear event-overview-allentown__load-more" type="button" data-event-overview-load-more hidden>{loadMoreLabel}<svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={loadMoreIcon.viewBox} fill="none"><path d={loadMoreIcon.path} stroke="currentColor" stroke-width="2" /></svg></button>}
+    {sorted.length > pageSize && <button class="button button--clear button--l event-overview-allentown__load-more" type="button" data-event-overview-load-more hidden>{loadMoreLabel}<svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={loadMoreIcon.viewBox} fill="none"><path d={loadMoreIcon.path} stroke="currentColor" stroke-width="2" /></svg></button>}
   </div>
 </section>
 <script>
@@ -103,8 +103,8 @@ const loadMoreIcon = ctaIconPaths.plus
     --kiw--section-text-xl-size: var(--kiw--event-overview-allentown-text-xl-size, var(--text-xl));
     --kiw--section-text-xxl-size: var(--kiw--event-overview-allentown-text-xxl-size, var(--text-xxl));
     --kiw--section-carousel-gap: var(--kiw--event-overview-allentown-carousel-gap, var(--content-gap));
-    --kiw--section-actions-gap: var(--kiw--event-overview-allentown-actions-gap, var(--space-s));
-    --kiw--section-actions-margin: var(--kiw--event-overview-allentown-actions-margin, var(--space-xl));
+    --kiw--section-actions-gap: var(--kiw--event-overview-allentown-actions-gap, var(--space-l));
+    --kiw--section-actions-margin: var(--kiw--event-overview-allentown-actions-margin, var(--section-space-xs));
     --kiw--section-button-height: var(--kiw--event-overview-allentown-button-height, var(--input-height));
     --kiw--section-button-padding-block: var(--kiw--event-overview-allentown-button-padding-block, var(--space-s));
     --kiw--section-button-padding-inline: var(--kiw--event-overview-allentown-button-padding-inline, var(--space-l));

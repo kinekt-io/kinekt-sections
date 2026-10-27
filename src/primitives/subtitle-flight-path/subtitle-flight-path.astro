@@ -1,7 +1,7 @@
 ---
-interface Props { text: string; size?: 'small' | 'medium'; as?: 'p' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'; id?: string; class?: string; labelClass?: string }
-const { text, size = 'small', as: Label = 'p', id, class: className, labelClass } = Astro.props
-const classes = ['subtitle-flight-path', `subtitle-flight-path--${size}`, className].filter(Boolean).join(' ')
+interface Props { text: string; size?: 'small' | 'medium'; as?: 'p' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'; id?: string; caps?: boolean; class?: string; labelClass?: string }
+const { text, size = 'small', as: Label = 'p', id, caps = false, class: className, labelClass } = Astro.props
+const classes = ['subtitle-flight-path', `subtitle-flight-path--${size}`, caps && 'subtitle-flight-path--caps', className].filter(Boolean).join(' ')
 const labelClasses = ['subtitle-flight-path__label', labelClass].filter(Boolean).join(' ')
 ---
 <div class={classes}><Label class={labelClasses} id={id}>{text}</Label><span class="subtitle-flight-path__path" aria-hidden="true" /></div>
@@ -53,15 +53,16 @@ const labelClasses = ['subtitle-flight-path__label', labelClass].filter(Boolean)
     background: linear-gradient(to right, var(--kiw--subtitle-flight-path-color), color-mix(in srgb, var(--kiw--subtitle-flight-path-color) var(--kiw--subtitle-flight-path-fade-opacity), transparent) var(--kiw--subtitle-flight-path-fade-at));
   }
 
-  .subtitle-flight-path .subtitle-flight-path__path::before,
-  .subtitle-flight-path .subtitle-flight-path__path::after {
+  /* Optional arrow start and dot end caps; the default line has none. */
+  .subtitle-flight-path--caps .subtitle-flight-path__path::before,
+  .subtitle-flight-path--caps .subtitle-flight-path__path::after {
     position: absolute;
     top: 50%;
     content: '';
     translate: 0 -50%;
   }
 
-  .subtitle-flight-path .subtitle-flight-path__path::before {
+  .subtitle-flight-path--caps .subtitle-flight-path__path::before {
     left: 0;
     width: var(--kiw--subtitle-flight-path-arrow-width);
     height: var(--kiw--subtitle-flight-path-arrow-height);
@@ -69,7 +70,7 @@ const labelClasses = ['subtitle-flight-path__label', labelClass].filter(Boolean)
     clip-path: polygon(0 0, 100% 50%, 0 100%);
   }
 
-  .subtitle-flight-path .subtitle-flight-path__path::after {
+  .subtitle-flight-path--caps .subtitle-flight-path__path::after {
     right: 0;
     width: var(--kiw--subtitle-flight-path-dot-size);
     height: var(--kiw--subtitle-flight-path-dot-size);

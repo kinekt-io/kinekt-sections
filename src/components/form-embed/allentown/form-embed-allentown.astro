@@ -142,9 +142,9 @@ const sendIcon = ctaIconPaths['paper-plane']
 
   /* Buttons: the shared Button is a link, so form buttons (placeholder or HubSpot) get the primary Button look here. */
   .form-embed-allentown :is(button, input[type='submit'], input[type='button']) { justify-self: start; width: auto; font-family: inherit; }
-  .form-embed-allentown :is(button, input[type='submit'], input[type='button']):not(.button) { display: inline-flex; align-items: center; gap: .8ch; min-height: var(--kiw--section-button-height, var(--input-height)); padding: var(--space-xxs) var(--space-xs); border: var(--kiw--form-embed-allentown-border-width) solid var(--kinekt-component-action); border-radius: calc(var(--buttons-has-radius) * var(--buttons-radius)); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-size: var(--text-s); font-weight: var(--heading-font-weight); cursor: pointer; }
+  .form-embed-allentown :is(button, input[type='submit'], input[type='button']):not(.button) { display: inline-flex; align-items: center; gap: var(--space-xs); min-height: var(--kiw--section-button-height, var(--input-height)); padding: calc(var(--space-s) - var(--kiw--form-embed-allentown-border-width)) calc(var(--space-m) - var(--kiw--form-embed-allentown-border-width)); border: var(--kiw--form-embed-allentown-border-width) solid var(--kinekt-component-action); border-radius: calc(var(--buttons-has-radius) * var(--buttons-radius)); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-size: var(--text-l); font-weight: var(--heading-font-weight); line-height: 1; cursor: pointer; }
 
-  .form-embed-allentown button:not(.button) > svg[aria-hidden='true'] { flex: none; color: var(--kinekt-component-action-icon, currentColor); }
+  .form-embed-allentown button:not(.button) > svg[aria-hidden='true'] { flex: none; inline-size: var(--text-m); block-size: var(--text-m); color: var(--kinekt-component-action-icon, currentColor); }
 
   /* Field with an attached submit (Form Section "Book a call"). */
   .form-embed-allentown .form-embed-allentown__inline { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; }

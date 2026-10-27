@@ -63,7 +63,7 @@ const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
       </div>}
       {(primary || secondary) && <hr class="product-hero-allentown__divider" />}
       {(primary || secondary) && <div class="product-hero-allentown__actions">
-        {primary && <Button class="product-hero-allentown__action product-hero-allentown__action--primary" href={primary.href} label={primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+        {primary && <Button class="product-hero-allentown__action product-hero-allentown__action--primary" size="l" href={primary.href} label={primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
         {secondary && <Button class="product-hero-allentown__action product-hero-allentown__action--secondary" href={secondary.href} label={secondary.label} style="clear">{secondaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
       </div>}
     </div>
@@ -105,8 +105,8 @@ const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
     --kiw--section-text-xl-size: var(--kiw--product-hero-allentown-text-xl-size, var(--text-xl));
     --kiw--section-text-xxl-size: var(--kiw--product-hero-allentown-text-xxl-size, var(--text-xxl));
     --kiw--section-carousel-gap: var(--kiw--product-hero-allentown-carousel-gap, var(--content-gap));
-    --kiw--section-actions-gap: var(--kiw--product-hero-allentown-actions-gap, var(--space-s));
-    --kiw--section-actions-margin: var(--kiw--product-hero-allentown-actions-margin, var(--space-xl));
+    --kiw--section-actions-gap: var(--kiw--product-hero-allentown-actions-gap, var(--space-l));
+    --kiw--section-actions-margin: var(--kiw--product-hero-allentown-actions-margin, var(--section-space-xs));
     --kiw--section-button-height: var(--kiw--product-hero-allentown-button-height, var(--input-height));
     --kiw--section-button-padding-block: var(--kiw--product-hero-allentown-button-padding-block, var(--space-s));
     --kiw--section-button-padding-inline: var(--kiw--product-hero-allentown-button-padding-inline, var(--space-l));
