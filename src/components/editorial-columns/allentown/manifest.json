@@ -1,0 +1,35 @@
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "version": "26.10.0-beta.0",
+  "id": "components/editorial-columns/allentown",
+  "slug": "editorial-columns-allentown",
+  "title": "Editorial Columns Allentown",
+  "description": "Reusable two-column editorial inset with independently authored rich-text columns.",
+  "category": "components",
+  "role": "editorial-columns",
+  "variation": "allentown",
+  "status": "planned",
+  "figma": {
+    "url": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-526183&t=OtYEVTRRdAJJYQ0v-11",
+    "nodeId": "5639:526183"
+  },
+  "fields": {
+    "left": {
+      "kind": "richText",
+      "required": true,
+      "localized": true
+    },
+    "right": {
+      "kind": "richText",
+      "required": true,
+      "localized": true
+    }
+  },
+  "runtimeProps": {
+    "mobileLayout": {
+      "kind": "stackedColumns",
+      "source": "renderer"
+    }
+  }
+}

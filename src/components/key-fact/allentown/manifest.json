@@ -1,0 +1,31 @@
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "version": "26.10.0-beta.0",
+  "id": "components/key-fact/allentown",
+  "slug": "key-fact-allentown",
+  "title": "Key Fact Allentown",
+  "description": "Reusable labelled fact for a project-at-a-glance list.",
+  "category": "components",
+  "role": "key-fact",
+  "variation": "allentown",
+  "status": "planned",
+  "figma": {
+    "url": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-524475&t=OtYEVTRRdAJJYQ0v-11",
+    "nodeId": "5639:524475"
+  },
+  "fields": {
+    "label": {
+      "kind": "text",
+      "required": true,
+      "localized": true,
+      "description": "Short fact label, for example Challenge, Solution or Result."
+    },
+    "description": {
+      "kind": "richText",
+      "required": true,
+      "localized": true,
+      "description": "Concise explanation of the fact."
+    }
+  }
+}

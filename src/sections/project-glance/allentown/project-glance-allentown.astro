@@ -1,0 +1,56 @@
+---
+import '../../../styles/wireframe-tokens.css'
+import type { RichText } from '../../../shared/content.js'
+
+type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
+type Fact = { label?: string; description?: string | RichText | { html?: string } }
+interface Props { id?: string; theme?: Theme; headingLevel?: 'h2' | 'h3'; heading: string; facts?: Fact[] }
+
+const { id, theme = 'semi-dark', headingLevel = 'h2', heading, facts = [] } = Astro.props as Props
+const Heading = headingLevel
+const validFacts = facts.filter((fact): fact is Required<Pick<Fact, 'label'>> & Fact => typeof fact?.label === 'string' && fact.label.trim().length > 0)
+const richText = (value: Fact['description']) => typeof value === 'object' && value !== null && 'html' in value && typeof value.html === 'string' ? value.html : undefined
+---
+<section class="project-glance-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="project-glance-allentown__container">
+    <Heading class="project-glance-allentown__heading">{heading}</Heading>
+    {validFacts.length > 0 && <ul class="project-glance-allentown__facts">
+      {validFacts.map((fact) => <li class="project-glance-allentown__fact">
+        <p class="project-glance-allentown__label">{fact.label}</p>
+        {typeof fact.description === 'string' && fact.description && <p class="project-glance-allentown__description">{fact.description}</p>}
+        {richText(fact.description) && <div class="project-glance-allentown__description" set:html={richText(fact.description)} />}
+      </li>)}
+    </ul>}
+  </div>
+</section>
+
+<style is:global>
+  :where(.project-glance-allentown) { --kiw--project-glance-allentown-inline-space: var(--section-gutter); --kiw--project-glance-allentown-block-space: var(--section-space-l); --kiw--project-glance-allentown-gap: var(--section-space-l); }
+
+  .project-glance-allentown {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--primary-dark));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--white));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--primary-ultra-light));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--accent));
+    --kinekt-component-line: var(--kinekt-section-line, var(--primary));
+    padding-block: var(--kiw--project-glance-allentown-block-space);
+    color: var(--kinekt-component-ink);
+    background: var(--kinekt-component-canvas);
+
+    &[data-kinekt-theme='light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--neutral-ultra-light)); --kinekt-component-ink: var(--kinekt-section-ink, var(--primary-ultra-dark)); --kinekt-component-muted: var(--kinekt-section-muted, var(--primary-semi-dark)); --kinekt-component-accent: var(--kinekt-section-accent, var(--accent-semi-dark)); --kinekt-component-line: var(--kinekt-section-line, var(--primary-ultra-light)); }
+    &[data-kinekt-theme='semi-light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--neutral-light)); --kinekt-component-ink: var(--kinekt-section-ink, var(--primary-ultra-dark)); --kinekt-component-muted: var(--kinekt-section-muted, var(--primary-semi-dark)); --kinekt-component-accent: var(--kinekt-section-accent, var(--accent-semi-dark)); --kinekt-component-line: var(--kinekt-section-line, var(--primary-ultra-light)); }
+    &[data-kinekt-theme='dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--primary-ultra-dark)); }
+
+    & *, & *::before, & *::after { box-sizing: border-box; }
+    & .project-glance-allentown__container { display: grid; width: 100%; max-width: min(var(--website-width), calc(var(--content-width) + (var(--kiw--project-glance-allentown-inline-space) * 2))); gap: var(--kiw--project-glance-allentown-gap); margin-inline: auto; padding-inline: var(--kiw--project-glance-allentown-inline-space); }
+    & .project-glance-allentown__heading { margin: 0; font-size: var(--h3); line-height: var(--heading-line-height); }
+    & .project-glance-allentown__facts { display: grid; gap: var(--space-l); margin: 0; padding: 0; list-style: none; }
+    & .project-glance-allentown__fact { display: grid; gap: var(--space-xxs); min-width: 0; }
+    & .project-glance-allentown__label { margin: 0; color: var(--kinekt-component-accent); font-family: var(--mono-font-family); font-size: var(--text-s); font-weight: var(--heading-font-weight); text-transform: uppercase; }
+    & .project-glance-allentown__description { margin: 0; color: var(--kinekt-component-muted); }
+    & .project-glance-allentown__description > :first-child { margin-top: 0; }
+    & .project-glance-allentown__description > :last-child { margin-bottom: 0; }
+
+    @media (min-width: 50rem) { & .project-glance-allentown__facts { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--section-space-s); } }
+  }
+</style>

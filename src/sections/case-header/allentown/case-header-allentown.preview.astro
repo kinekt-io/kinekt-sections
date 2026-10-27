@@ -1,0 +1,13 @@
+---
+import CaseHeaderAllentown from './case-header-allentown.astro'
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
+const placeholder = `${base}placeholders/placeholder-1600x900.svg`
+---
+<CaseHeaderAllentown
+  theme="dark"
+  intro={{ accentHeading: 'Engineering partnership', heading: 'Building a dependable aerial platform', description: 'A collaborative development programme that turned ambitious performance targets into a repeatable flight-ready system.' }}
+  customerLogo={{ url: placeholder, alt: 'Northstar Aviation wordmark', width: 1600, height: 900 }}
+  heroMedia={{ sourceType: 'image', image: { url: placeholder, alt: 'Aerial platform in flight testing', width: 1600, height: 900 } }}
+  mediaLoading="eager"
+/>

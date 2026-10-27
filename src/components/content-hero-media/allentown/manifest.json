@@ -1,0 +1,60 @@
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "version": "26.10.0-beta.0",
+  "id": "components/content-hero-media/allentown",
+  "slug": "content-hero-media-allentown",
+  "title": "Content Hero Media Allentown",
+  "description": "Reusable hero media for articles and cases. It supports an image, an S3-uploaded video, or an external video URL; video sources carry a poster image for the initial render and content cards.",
+  "category": "components",
+  "role": "content-hero-media",
+  "variation": "allentown",
+  "status": "planned",
+  "figma": {
+    "url": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-524475&t=OtYEVTRRdAJJYQ0v-11",
+    "nodeId": "5639:524475"
+  },
+  "fields": {
+    "sourceType": {
+      "kind": "select",
+      "required": true,
+      "localized": true,
+      "options": ["image", "uploaded-video", "external-video"],
+      "description": "Select one source. The paired adapter validates the matching media field and never renders multiple source types."
+    },
+    "image": {
+      "kind": "media",
+      "required": false,
+      "localized": true,
+      "description": "Required when Source type is image. Used as the Article hero and its related-content card image."
+    },
+    "video": {
+      "kind": "video",
+      "required": false,
+      "localized": true,
+      "description": "Required when Source type is uploaded-video. Stored in the customer S3-backed Media collection."
+    },
+    "externalVideoUrl": {
+      "kind": "text",
+      "required": false,
+      "localized": true,
+      "description": "Required when Source type is external-video. The adapter validates the supported external provider URL."
+    },
+    "poster": {
+      "kind": "media",
+      "required": false,
+      "localized": true,
+      "description": "Required for either video source. Used before playback and as the Case featured image in related-content cards."
+    }
+  },
+  "runtimeProps": {
+    "sourceValidation": {
+      "kind": "discriminatedMediaSource",
+      "source": "adapter"
+    },
+    "playback": {
+      "kind": "accessibleVideoPlayback",
+      "source": "renderer"
+    }
+  }
+}
