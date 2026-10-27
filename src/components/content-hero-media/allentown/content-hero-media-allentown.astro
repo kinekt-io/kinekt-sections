@@ -1,0 +1,144 @@
+---
+import { faPlay } from '@fortawesome/free-solid-svg-icons'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import type { Media } from '../../../shared/content.js'
+import { isSafeWebUrl } from '../../../urls.js'
+
+/*
+ * Hero media for the Case and Article templates (Figma: Case "Video" 5639:525220, 16:9 with a play button;
+ * Article "Image Container" 5639:526199, 5:4). Plain frames, no library component. It renders exactly one
+ * source: an image, an uploaded video with its poster, or an external video URL. The caller wraps it in a
+ * `<figure>` and sets the aspect ratio with `--kiw--content-hero-media-allentown-ratio` (default 16:9).
+ */
+export type ContentHeroMediaSourceType = 'image' | 'uploaded-video' | 'external-video'
+
+export interface ContentHeroMediaContent {
+  sourceType?: ContentHeroMediaSourceType | string
+  image?: unknown
+  video?: unknown
+  externalVideoUrl?: unknown
+  poster?: unknown
+}
+
+interface Props {
+  media: ContentHeroMediaContent
+  /** Accessible name for the external video frame (the sections pass the intro heading). */
+  title?: string
+  /** Accessible name of the play button on uploaded video (runtimeProps.playback). */
+  playLabel?: string
+  loading?: 'eager' | 'lazy'
+  class?: string
+}
+
+const { media, title, playLabel = 'Play video', loading = 'eager', class: className } = Astro.props
+const isMedia = (value: unknown): value is Media => typeof value === 'object' && value !== null && typeof (value as Media).url === 'string' && isSafeWebUrl((value as Media).url)
+const sourceType = media?.sourceType
+const image = sourceType === 'image' && isMedia(media.image) ? media.image : undefined
+const video = sourceType === 'uploaded-video' && isMedia(media.video) ? media.video : undefined
+const poster = isMedia(media?.poster) ? media.poster : undefined
+const externalVideoUrl = sourceType === 'external-video' && typeof media.externalVideoUrl === 'string' && isSafeWebUrl(media.externalVideoUrl) ? media.externalVideoUrl : undefined
+const [playWidth, playHeight, , , playPath] = faPlay.icon
+const classes = ['content-hero-media-allentown', sourceType && `content-hero-media-allentown--${sourceType}`, className].filter(Boolean).join(' ')
+---
+{(image || video || externalVideoUrl) && (
+  <div class={classes} data-kinekt-hero-media>
+    {image && <KinektMedia media={image} class="content-hero-media-allentown__picture" imageClass="content-hero-media-allentown__image" loading={loading} fetchpriority="high" />}
+    {video && (
+      <>
+        <video class="content-hero-media-allentown__video" controls playsinline preload="metadata" poster={poster?.url} data-kinekt-hero-media-video><source src={video.url} /></video>
+        {/* Progressive: hidden until the script below takes over; without JavaScript the native controls stay. */}
+        <button class="content-hero-media-allentown__play" type="button" aria-label={playLabel} hidden data-kinekt-hero-media-play>
+          <svg aria-hidden="true" focusable="false" viewBox={`0 0 ${playWidth} ${playHeight}`}><path d={playPath as string} /></svg>
+        </button>
+      </>
+    )}
+    {externalVideoUrl && <iframe class="content-hero-media-allentown__embed" src={externalVideoUrl} title={title} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />}
+  </div>
+)}
+
+<script>
+  const initialize = (root: ParentNode = document) => {
+    root.querySelectorAll<HTMLElement>('[data-kinekt-hero-media]').forEach((media) => {
+      if (media.hasAttribute('data-kinekt-hero-media-initialized')) return
+      const video = media.querySelector<HTMLVideoElement>('[data-kinekt-hero-media-video]')
+      const play = media.querySelector<HTMLButtonElement>('[data-kinekt-hero-media-play]')
+      if (!video || !play) return
+      media.setAttribute('data-kinekt-hero-media-initialized', '')
+      const start = () => {
+        play.hidden = true
+        video.controls = true
+      }
+      video.controls = false
+      play.hidden = false
+      play.addEventListener('click', () => {
+        start()
+        video.focus()
+        void video.play().catch(() => undefined)
+      })
+      video.addEventListener('play', start)
+    })
+  }
+  initialize()
+  document.addEventListener('astro:page-load', () => initialize())
+</script>
+
+<style is:global>
+  /*
+   * Hooks (set on the section or any ancestor; each falls back to its default inside the rule):
+   * --kiw--content-hero-media-allentown-ratio (16 / 9), -play-size (section-space-s), -play-icon-size (h5),
+   * -play-background (Figma: base) and -play-color (Figma: neutral-ultra-light), the same in every theme.
+   */
+
+  .content-hero-media-allentown {
+    position: relative;
+    min-width: 0;
+  }
+
+  .content-hero-media-allentown .content-hero-media-allentown__picture { display: block; }
+
+  .content-hero-media-allentown :is(.content-hero-media-allentown__image, .content-hero-media-allentown__video, .content-hero-media-allentown__embed) {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: var(--kiw--content-hero-media-allentown-ratio, 16 / 9);
+    border: 0;
+    border-radius: var(--kinekt-component-radius, var(--radius-none));
+    object-fit: cover;
+    filter: var(--kinekt-component-media-filter, none);
+  }
+
+  .content-hero-media-allentown .content-hero-media-allentown__video { background: var(--kiw--content-hero-media-allentown-play-background, var(--base)); }
+  .content-hero-media-allentown .content-hero-media-allentown__embed { background: var(--kinekt-component-canvas, transparent); }
+
+  .content-hero-media-allentown .content-hero-media-allentown__play {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    display: grid;
+    place-items: center;
+    inline-size: var(--kiw--content-hero-media-allentown-play-size, var(--section-space-s));
+    block-size: var(--kiw--content-hero-media-allentown-play-size, var(--section-space-s));
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: var(--kiw--content-hero-media-allentown-play-color, var(--neutral-ultra-light));
+    background: var(--kiw--content-hero-media-allentown-play-background, var(--base));
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+  }
+
+  .content-hero-media-allentown .content-hero-media-allentown__play[hidden] { display: none; }
+
+  .content-hero-media-allentown .content-hero-media-allentown__play svg {
+    inline-size: var(--kiw--content-hero-media-allentown-play-icon-size, var(--h5));
+    block-size: var(--kiw--content-hero-media-allentown-play-icon-size, var(--h5));
+    fill: currentColor;
+  }
+
+  .content-hero-media-allentown .content-hero-media-allentown__play:focus-visible {
+    outline: var(--border-width) solid var(--kiw--content-hero-media-allentown-play-color, var(--neutral-ultra-light));
+    outline-offset: var(--space-xxxs);
+    box-shadow: 0 0 0 calc(var(--border-width) * 2) var(--kiw--content-hero-media-allentown-play-background, var(--base));
+  }
+</style>

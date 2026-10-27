@@ -144,6 +144,71 @@
     }
   },
   {
+    "id": "components/content-hero-media/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "content-hero-media-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "content-hero-media",
+    "variation": "allentown",
+    "title": "Content Hero Media Allentown",
+    "description": "Reusable hero media for articles and cases. It supports an image, an S3-uploaded video, or an external video URL; video sources carry a poster image for the initial render and content cards.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-525220",
+    "variants": {},
+    "fields": {
+      "sourceType": {
+        "kind": "select",
+        "required": true,
+        "localized": true,
+        "options": [
+          "image",
+          "uploaded-video",
+          "external-video"
+        ],
+        "description": "Select one source. The paired adapter validates the matching media field and never renders multiple source types."
+      },
+      "image": {
+        "kind": "media",
+        "required": false,
+        "localized": true,
+        "description": "Required when Source type is image. Used as the Article hero and its related-content card image."
+      },
+      "video": {
+        "kind": "video",
+        "required": false,
+        "localized": true,
+        "description": "Required when Source type is uploaded-video. Stored in the customer S3-backed Media collection."
+      },
+      "externalVideoUrl": {
+        "kind": "text",
+        "required": false,
+        "localized": true,
+        "description": "Required when Source type is external-video. The adapter validates the supported external provider URL."
+      },
+      "poster": {
+        "kind": "media",
+        "required": false,
+        "localized": true,
+        "description": "Required for either video source. Used before playback and as the Case featured image in related-content cards."
+      }
+    },
+    "runtimeProps": {
+      "sourceValidation": {
+        "kind": "discriminatedMediaSource",
+        "source": "adapter"
+      },
+      "playback": {
+        "kind": "accessibleVideoPlayback",
+        "source": "renderer"
+      }
+    },
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/content-hero-media-allentown.astro"
+    }
+  },
+  {
     "id": "components/event-card/allentown",
     "version": "26.10.0-beta.0",
     "slug": "event-card-allentown",
@@ -515,6 +580,39 @@
     }
   },
   {
+    "id": "components/key-fact/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "key-fact-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "key-fact",
+    "variation": "allentown",
+    "title": "Key Fact Allentown",
+    "description": "Reusable labelled fact for a project-at-a-glance list.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-525227",
+    "variants": {},
+    "fields": {
+      "label": {
+        "kind": "text",
+        "required": true,
+        "localized": true,
+        "description": "Short fact label, for example Challenge, Solution or Result."
+      },
+      "description": {
+        "kind": "richText",
+        "required": true,
+        "localized": true,
+        "description": "Concise explanation of the fact."
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/key-fact-allentown.astro"
+    }
+  },
+  {
     "id": "components/next-step/allentown",
     "version": "26.10.0-beta.0",
     "slug": "next-step-allentown",
@@ -787,6 +885,43 @@
     }
   },
   {
+    "id": "components/use-case-item/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "use-case-item-allentown",
+    "category": "components",
+    "tags": [],
+    "role": "use-case-item",
+    "variation": "allentown",
+    "title": "Use Case Item Allentown",
+    "description": "A reusable use case with required localised title and rich-text description plus optional CTA Group.",
+    "status": "planned",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5049-307816&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "title": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "description": {
+        "kind": "richText",
+        "required": true,
+        "localized": true
+      },
+      "ctaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": false,
+        "localized": true
+      }
+    },
+    "runtimeProps": {},
+    "previewSource": null,
+    "entries": {
+      "astro": "@kinekt-io/components/components/use-case-item-allentown.astro"
+    }
+  },
+  {
     "id": "controls/button/allentown",
     "version": "26.10.0-beta.0",
     "slug": "button-allentown",
@@ -1008,7 +1143,7 @@
     "title": "Article Header Allentown",
     "description": "An editorial article header with intro, derived reading time and reusable image or video hero media.",
     "status": "planned",
-    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-526183&t=OtYEVTRRdAJJYQ0v-11",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-526185",
     "variants": {},
     "fields": {
       "theme": {
@@ -1132,7 +1267,7 @@
     "title": "Case Header Allentown",
     "description": "A case-study page header with editorial intro, optional customer logo and reusable image or video hero media.",
     "status": "planned",
-    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-524475&t=OtYEVTRRdAJJYQ0v-11",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-524477",
     "variants": {},
     "fields": {
       "theme": {
@@ -1729,7 +1864,7 @@
     "title": "Editorial Content Allentown",
     "description": "A long-form editorial section for Case and Article pages, authored in Payload Lexical rich text with approved inline content blocks.",
     "status": "planned",
-    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-526183&t=OtYEVTRRdAJJYQ0v-11",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-526201",
     "variants": {},
     "fields": {
       "theme": {
@@ -3718,7 +3853,7 @@
     "title": "Project Glance Allentown",
     "description": "A compact project overview with a heading and repeatable labelled facts.",
     "status": "planned",
-    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-524475&t=OtYEVTRRdAJJYQ0v-11",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-525223",
     "variants": {},
     "fields": {
       "theme": {
@@ -3914,7 +4049,7 @@
     "title": "Related Content Allentown",
     "description": "A related-posts section with an intro, explicitly selected published content and an optional overview action.",
     "status": "planned",
-    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-526183&t=OtYEVTRRdAJJYQ0v-11",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-526230&t=OtYEVTRRdAJJYQ0v-11",
     "variants": {},
     "fields": {
       "theme": {

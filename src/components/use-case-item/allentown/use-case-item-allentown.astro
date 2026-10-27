@@ -1,0 +1,74 @@
+---
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import FacilityFact from '../../facility-fact/allentown/facility-fact-allentown.astro'
+import type { Cta, RichText } from '../../../shared/content.js'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+
+export interface UseCaseItemContent {
+  title: string
+  description: string | RichText | Record<string, unknown>
+  ctaGroup?: { primaryButton?: Cta | null; secondaryButton?: Cta | null } | null
+}
+
+interface Props {
+  item: UseCaseItemContent
+  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  class?: string
+}
+
+const isCta = (value: Cta | null | undefined): value is Cta => typeof value?.label === 'string' && value.label !== '' && typeof value.href === 'string' && value.href !== ''
+
+const { item, headingLevel = 'h3', class: className } = Astro.props
+const actions = [item.ctaGroup?.primaryButton, item.ctaGroup?.secondaryButton].filter(isCta)
+const classes = ['use-case-item-allentown', className].filter(Boolean).join(' ')
+---
+<article class={classes}>
+  <FacilityFact class="use-case-item-allentown__copy" title={item.title} description={item.description} headingLevel={headingLevel} />
+  {actions.length > 0 && (
+    <div class="use-case-item-allentown__actions">
+      {actions.map((cta) => {
+        const icon = isCtaIcon(cta.icon) ? ctaIconPaths[cta.icon] : undefined
+        return <Button href={cta.href} label={cta.label} style="clear">{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="none"><path d={icon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>
+      })}
+    </div>
+  )}
+</article>
+<style is:global>
+  /* Figma "Content Item" in "Section - Use cases for the right fit" (5685:654618): the title + description block
+     (h4 at line-height 1, space-xs, text-m at 1.5 in muted) is the same pattern as Facility Fact, so it is reused;
+     space-l to an optional row of clear Buttons (Type=clear, Size=medium, chevron → CtaIcon). */
+  :where(.use-case-item-allentown) {
+    --kiw--use-case-item-allentown-gap: var(--space-l);
+    --kiw--use-case-item-allentown-actions-gap: var(--space-l);
+    --kiw--use-case-item-allentown-title-line-height: 1;
+    --kiw--use-case-item-allentown-mobile-title-line-height: 1.2;
+  }
+
+  .use-case-item-allentown {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: var(--kiw--use-case-item-allentown-gap);
+    min-width: 0;
+    margin: 0;
+  }
+
+  .use-case-item-allentown .use-case-item-allentown__copy {
+    --kiw--facility-fact-allentown-title-line-height: var(--kiw--use-case-item-allentown-title-line-height);
+    justify-self: stretch;
+  }
+
+  .use-case-item-allentown .use-case-item-allentown__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--kiw--use-case-item-allentown-actions-gap);
+  }
+
+  /* Figma Desktop=no: M H4 at line-height 1.2. */
+  @media (max-width: 49.999rem) {
+    .use-case-item-allentown .use-case-item-allentown__copy {
+      --kiw--facility-fact-allentown-title-line-height: var(--kiw--use-case-item-allentown-mobile-title-line-height);
+    }
+  }
+</style>

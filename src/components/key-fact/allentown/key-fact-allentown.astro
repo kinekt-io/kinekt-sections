@@ -1,0 +1,73 @@
+---
+import type { RichText } from '../../../shared/content.js'
+
+export interface KeyFactContent {
+  label?: string
+  description?: string | RichText | { html?: string }
+}
+
+interface Props {
+  fact: KeyFactContent
+  /** Rendered element. The section renders the surrounding `<ul>` and lays the facts out. */
+  as?: 'li' | 'div'
+  class?: string
+}
+
+const { fact, as = 'li', class: className } = Astro.props
+const Element = as
+const label = typeof fact?.label === 'string' ? fact.label.trim() : ''
+const description = fact?.description
+const descriptionText = typeof description === 'string' && description.trim() ? description : undefined
+const descriptionHtml = typeof description === 'object' && description !== null && typeof description.html === 'string' && description.html.trim() ? description.html : undefined
+const classes = ['key-fact-allentown', className].filter(Boolean).join(' ')
+---
+{label && (
+  <Element class={classes}>
+    <p class="key-fact-allentown__label"><span class="key-fact-allentown__prefix" aria-hidden="true">{'/ '}</span>{label}</p>
+    {descriptionText && <p class="key-fact-allentown__description">{descriptionText}</p>}
+    {descriptionHtml && <div class="key-fact-allentown__description" set:html={descriptionHtml} />}
+  </Element>
+)}
+<style is:global>
+  /*
+   * Figma fact in "The project at a glance" (Case Template 5639:525227, a plain frame, no library component):
+   * centred column, gap XS; label "/ Challenge" = heading font 500, text-l, 5 % tracking, line-height 1, uppercase, accent;
+   * description text-xxl at 1.5. The decorative "/ " prefix is hidden from assistive technology.
+   * Every hook falls back to its default inside the rule, so a section can set it on any ancestor (the list or the section root).
+   */
+  .key-fact-allentown {
+    display: grid;
+    align-content: start;
+    gap: var(--kiw--key-fact-allentown-gap, var(--space-xs));
+    min-width: 0;
+    margin: 0;
+    text-align: var(--kiw--key-fact-allentown-text-align, center);
+  }
+
+  .key-fact-allentown .key-fact-allentown__label {
+    margin: 0;
+    color: var(--kiw--key-fact-allentown-label-color, var(--kinekt-component-accent, currentColor));
+    font-family: var(--kiw--section-heading-font-family, var(--heading-font-family));
+    font-size: var(--kiw--key-fact-allentown-label-size, var(--text-l));
+    font-weight: var(--kiw--key-fact-allentown-label-weight, var(--heading-font-weight));
+    line-height: 1;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .key-fact-allentown .key-fact-allentown__prefix {
+    display: var(--kiw--key-fact-allentown-prefix-display, inline);
+  }
+
+  .key-fact-allentown .key-fact-allentown__description {
+    margin: 0;
+    color: var(--kiw--key-fact-allentown-description-color, var(--kinekt-component-ink, currentColor));
+    font-size: var(--kiw--key-fact-allentown-description-size, var(--text-xxl));
+    line-height: var(--kiw--key-fact-allentown-description-line-height, var(--kinekt-component-text-line-height, var(--text-line-height)));
+    text-wrap: pretty;
+  }
+
+  .key-fact-allentown .key-fact-allentown__description > * {
+    margin-block: 0;
+  }
+</style>

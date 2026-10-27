@@ -1,12 +1,17 @@
 ---
 import '../../../styles/wireframe-tokens.css'
 import type { RichText } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
-interface Props { id?: string; theme?: Theme; content: string | RichText | { html?: string } }
+/** Payload sends raw Lexical (`{ root }`); pre-rendered HTML (`{ html }`) and plain strings are accepted too. */
+interface Props { id?: string; theme?: Theme; content: string | RichText | { html?: string } | { root: unknown } }
 
 const { id, theme = 'light', content } = Astro.props as Props
-const html = typeof content === 'object' && content !== null && 'html' in content && typeof content.html === 'string' ? content.html : undefined
+const isObject = typeof content === 'object' && content !== null
+const html = isObject && 'html' in content && typeof content.html === 'string'
+  ? content.html
+  : isObject && 'root' in content ? richTextToHtml(content, 'content') : undefined
 ---
 <section class="editorial-content-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="editorial-content-allentown__container">
@@ -16,30 +21,175 @@ const html = typeof content === 'object' && content !== null && 'html' in conten
 </section>
 
 <style is:global>
-  :where(.editorial-content-allentown) { --kiw--editorial-content-allentown-inline-space: var(--section-gutter); --kiw--editorial-content-allentown-block-space: var(--section-space-xl); --kiw--editorial-content-allentown-reading-width: var(--width-l); --kiw--editorial-content-allentown-copy-gap: var(--space-l); }
+  /*
+   * Figma: Article Template "Section - Content" 5639:526201 and the Case Template body 5639:525236 (both light).
+   * Rich-text output is styled on the copy wrapper. Inline blocks are matched by their semantic markup:
+   * media = `figure` with an image and optional `figcaption`; quote = `blockquote` (optionally in a `figure`
+   * whose `figcaption` holds `strong` name + `span` role); intro = `hgroup` (accent `p` + heading) followed by
+   * its description `p`; columns = `[data-kinekt-editorial-columns]` with two column children (a `figure`
+   * column gets the 5:4 media layout of the Case Template). `hr` draws the Figma flight-path divider.
+   */
+  :where(.editorial-content-allentown) {
+    --kiw--editorial-content-allentown-inline-space: var(--section-gutter);
+    --kiw--editorial-content-allentown-block-space: var(--section-space-xl);
+    --kiw--editorial-content-allentown-reading-width: var(--width-xl);
+    --kiw--editorial-content-allentown-block-gap: var(--section-space-m);
+    --kiw--editorial-content-allentown-intro-gap: var(--section-space-l);
+    --kiw--editorial-content-allentown-heading-gap: var(--space-m);
+    --kiw--editorial-content-allentown-paragraph-gap: var(--space-xs);
+    --kiw--editorial-content-allentown-text-size: var(--text-l);
+    --kiw--editorial-content-allentown-lead-size: var(--text-xl);
+    --kiw--editorial-content-allentown-intro-line-height: 1.4;
+    --kiw--editorial-content-allentown-heading-weight: 600;
+    --kiw--editorial-content-allentown-heading-line-height: 1.2;
+    --kiw--editorial-content-allentown-caption-gap: var(--space-xs);
+    --kiw--editorial-content-allentown-caption-size: var(--text-m);
+    --kiw--editorial-content-allentown-list-indent: var(--space-l);
+    --kiw--editorial-content-allentown-quote-font-family: var(--mono-font-family);
+    --kiw--editorial-content-allentown-quote-size: var(--h3);
+    --kiw--editorial-content-allentown-quote-line-height: 1.2;
+    --kiw--editorial-content-allentown-quote-indent: -0.45em;
+    --kiw--editorial-content-allentown-quote-gap: var(--space-m);
+    --kiw--editorial-content-allentown-quote-author-gap: var(--space-s);
+    --kiw--editorial-content-allentown-quote-author-size: var(--text-xl);
+    --kiw--editorial-content-allentown-columns-gap: var(--section-space-m);
+    --kiw--editorial-content-allentown-media-columns-gap: var(--section-space-l);
+    --kiw--editorial-content-allentown-media-columns: minmax(0, 5fr) minmax(0, 4fr);
+    --kiw--editorial-content-allentown-divider-fade-opacity: 30%;
+    --kiw--editorial-content-allentown-divider-fade-at: 70%;
+    --kiw--editorial-content-allentown-divider-arrow-width: 0.3125rem;
+    --kiw--editorial-content-allentown-divider-arrow-height: 0.36rem;
+    --kiw--editorial-content-allentown-divider-dot-size: 0.333rem;
+  }
 
+  @media (min-width: 50rem) {
+    :where(.editorial-content-allentown) { --kiw--editorial-content-allentown-quote-size: var(--mobile-h2); }
+  }
+
+  /* Theme roles (handoff §7.3) plus two off-role Figma colours: body copy `--primary-dark`, quote role `--primary-semi-light`. */
   .editorial-content-allentown {
-    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--neutral-ultra-light));
-    --kinekt-component-ink: var(--kinekt-section-ink, var(--primary-ultra-dark));
-    --kinekt-component-muted: var(--kinekt-section-muted, var(--primary-semi-dark));
-    --kinekt-component-line: var(--kinekt-section-line, var(--primary-ultra-light));
-    --kinekt-component-radius: var(--kinekt-section-radius, var(--radius-none));
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--editorial-content-allentown-canvas, var(--neutral-ultra-light)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--editorial-content-allentown-surface, var(--white)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--editorial-content-allentown-ink, var(--primary-ultra-dark)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--editorial-content-allentown-muted, var(--primary-semi-dark)));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--editorial-content-allentown-subtle, var(--primary)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--editorial-content-allentown-line, var(--primary-ultra-light)));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--editorial-content-allentown-accent, var(--accent-semi-dark)));
+    --kinekt-component-radius: var(--kinekt-section-radius, var(--kiw--editorial-content-allentown-radius, var(--radius-none)));
+    --kiw--editorial-content-allentown-text-color: var(--kiw--editorial-content-allentown-copy-color, var(--primary-dark));
+    --kiw--editorial-content-allentown-quote-role-color: var(--kiw--editorial-content-allentown-quote-role, var(--primary-semi-light));
+    color-scheme: light;
     padding-block: var(--kiw--editorial-content-allentown-block-space);
     color: var(--kinekt-component-ink);
     background: var(--kinekt-component-canvas);
+    font-family: var(--text-font-family);
+    font-size: var(--kiw--editorial-content-allentown-text-size);
+    font-weight: var(--text-font-weight);
+    line-height: var(--text-line-height);
+    letter-spacing: var(--text-letter-spacing);
+  }
+  .editorial-content-allentown[data-kinekt-theme='semi-light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--editorial-content-allentown-canvas, var(--neutral-light))); }
+  .editorial-content-allentown[data-kinekt-theme='semi-dark'] {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--editorial-content-allentown-canvas, var(--primary-dark)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--editorial-content-allentown-surface, var(--primary-semi-dark)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--editorial-content-allentown-ink, var(--white)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--editorial-content-allentown-muted, var(--primary-light)));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--editorial-content-allentown-subtle, var(--primary-light)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--editorial-content-allentown-line, var(--primary)));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--editorial-content-allentown-accent, var(--accent)));
+  }
+  .editorial-content-allentown[data-kinekt-theme='dark'] {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--editorial-content-allentown-canvas, var(--primary-ultra-dark)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--editorial-content-allentown-surface, var(--primary-semi-dark)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--editorial-content-allentown-ink, var(--white)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--editorial-content-allentown-muted, var(--primary-ultra-light)));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--editorial-content-allentown-subtle, var(--primary-ultra-light)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--editorial-content-allentown-line, var(--primary)));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--editorial-content-allentown-accent, var(--accent)));
+  }
+  /* Off-role colours on dark canvases (inferred): copy follows the muted role, the quote role primary-light. */
+  .editorial-content-allentown:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) {
+    --kiw--editorial-content-allentown-text-color: var(--kiw--editorial-content-allentown-copy-color, var(--kinekt-component-muted));
+    --kiw--editorial-content-allentown-quote-role-color: var(--kiw--editorial-content-allentown-quote-role, var(--primary-light));
+    color-scheme: dark;
+  }
 
-    &[data-kinekt-theme='semi-light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--neutral-light)); }
-    &:is([data-kinekt-theme='dark'], [data-kinekt-theme='semi-dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--primary-ultra-dark)); --kinekt-component-ink: var(--kinekt-section-ink, var(--white)); --kinekt-component-muted: var(--kinekt-section-muted, var(--primary-ultra-light)); --kinekt-component-line: var(--kinekt-section-line, var(--primary)); }
+  .editorial-content-allentown *, .editorial-content-allentown *::before, .editorial-content-allentown *::after { box-sizing: border-box; }
 
-    & *, & *::before, & *::after { box-sizing: border-box; }
-    & .editorial-content-allentown__container { width: 100%; max-width: min(var(--website-width), calc(var(--kiw--editorial-content-allentown-reading-width) + (var(--kiw--editorial-content-allentown-inline-space) * 2))); margin-inline: auto; padding-inline: var(--kiw--editorial-content-allentown-inline-space); }
-    & .editorial-content-allentown__copy { color: var(--kinekt-component-muted); font-size: var(--text-l); line-height: var(--text-line-height); }
-    & .editorial-content-allentown__copy > :first-child { margin-top: 0; }
-    & .editorial-content-allentown__copy > :last-child { margin-bottom: 0; }
-    & .editorial-content-allentown__copy > * + * { margin-block-start: var(--kiw--editorial-content-allentown-copy-gap); }
-    & .editorial-content-allentown__copy :is(h2, h3, h4, h5, h6) { color: var(--kinekt-component-ink); font-family: var(--heading-font-family); font-weight: var(--heading-font-weight); line-height: var(--heading-line-height); }
-    & .editorial-content-allentown__copy blockquote { margin-inline: 0; padding-inline-start: var(--space-l); border-inline-start: var(--border-width) solid var(--kinekt-component-line); color: var(--kinekt-component-ink); }
-    & .editorial-content-allentown__copy :is(ul, ol) { padding-inline-start: var(--space-l); }
-    & .editorial-content-allentown__copy a { color: inherit; font-weight: var(--heading-font-weight); text-underline-offset: var(--space-xxs); }
+  .editorial-content-allentown .editorial-content-allentown__container { width: 100%; max-width: var(--website-width); margin-inline: auto; padding-inline: var(--kiw--editorial-content-allentown-inline-space); }
+  @media (min-width: 50rem) {
+    .editorial-content-allentown .editorial-content-allentown__container { max-width: min(var(--website-width), calc(var(--kiw--editorial-content-allentown-reading-width) + (var(--kiw--editorial-content-allentown-inline-space) * 2))); }
+  }
+
+  /* Flow: blocks 64 apart (Article), intros 80 (Case), heading → copy space-m, paragraphs space-xs. */
+  .editorial-content-allentown :is(.editorial-content-allentown__copy, [data-kinekt-editorial-columns] > *) { min-width: 0; color: var(--kiw--editorial-content-allentown-text-color); }
+  .editorial-content-allentown :is(.editorial-content-allentown__copy, [data-kinekt-editorial-columns] > *) > * { margin-block: 0; }
+  .editorial-content-allentown :is(.editorial-content-allentown__copy, [data-kinekt-editorial-columns] > *) > * + * { margin-block-start: var(--kiw--editorial-content-allentown-block-gap); }
+  .editorial-content-allentown :is(.editorial-content-allentown__copy, [data-kinekt-editorial-columns] > *) > :is(p, ul, ol) + :is(p, ul, ol) { margin-block-start: var(--kiw--editorial-content-allentown-paragraph-gap); }
+  .editorial-content-allentown :is(.editorial-content-allentown__copy, [data-kinekt-editorial-columns] > *) > :is(h2, h3, h4, h5, h6, hgroup) + * { margin-block-start: var(--kiw--editorial-content-allentown-heading-gap); }
+  .editorial-content-allentown :is(.editorial-content-allentown__copy, [data-kinekt-editorial-columns] > *) > * + :is(hgroup, hr),
+  .editorial-content-allentown :is(.editorial-content-allentown__copy, [data-kinekt-editorial-columns] > *) > hr + *,
+  .editorial-content-allentown :is(.editorial-content-allentown__copy, [data-kinekt-editorial-columns] > *) > hgroup + p + :not(p, ul, ol) { margin-block-start: var(--kiw--editorial-content-allentown-intro-gap); }
+
+  /* Headings: Figma h2 = D H3 32, h3 = D H4 28 (SemiBold, line-height 1.2), in ink. */
+  .editorial-content-allentown .editorial-content-allentown__copy :is(h2, h3, h4, h5, h6) { color: var(--kinekt-component-ink); font-family: var(--heading-font-family); font-weight: var(--kiw--editorial-content-allentown-heading-weight); line-height: var(--kiw--editorial-content-allentown-heading-line-height); letter-spacing: var(--heading-letter-spacing); text-wrap: balance; }
+  .editorial-content-allentown .editorial-content-allentown__copy h2 { font-size: var(--h3); }
+  .editorial-content-allentown .editorial-content-allentown__copy h3 { font-size: var(--h4); }
+  .editorial-content-allentown .editorial-content-allentown__copy h4 { font-size: var(--h5); }
+  .editorial-content-allentown .editorial-content-allentown__copy :is(h5, h6) { font-size: var(--h6); }
+  /* Lead: the paragraph right after an h2 (Article "Wat betekent …" block) is text-xl. */
+  .editorial-content-allentown .editorial-content-allentown__copy h2 + p { font-size: var(--kiw--editorial-content-allentown-lead-size); }
+
+  /* Intro block (Figma "Header Wrapper"): accent + heading (500, line-height 1, XXS gap), description text-xl 1.4. */
+  .editorial-content-allentown .editorial-content-allentown__copy hgroup { display: grid; gap: var(--space-xxs); }
+  .editorial-content-allentown .editorial-content-allentown__copy hgroup > * { margin: 0; }
+  .editorial-content-allentown .editorial-content-allentown__copy hgroup > p { color: var(--kinekt-component-accent); font-family: var(--heading-font-family); font-size: var(--text-m); font-weight: var(--heading-font-weight); line-height: 1; letter-spacing: 0.05em; text-transform: uppercase; }
+  .editorial-content-allentown .editorial-content-allentown__copy hgroup > :is(h2, h3, h4, h5, h6) { font-weight: var(--heading-font-weight); line-height: 1; }
+  .editorial-content-allentown .editorial-content-allentown__copy hgroup + p { font-size: var(--kiw--editorial-content-allentown-lead-size); line-height: var(--kiw--editorial-content-allentown-intro-line-height); }
+
+  /* Lists and inline text. */
+  .editorial-content-allentown .editorial-content-allentown__copy :is(ul, ol) { display: grid; gap: var(--kiw--editorial-content-allentown-paragraph-gap); padding-inline-start: var(--kiw--editorial-content-allentown-list-indent); }
+  .editorial-content-allentown .editorial-content-allentown__copy li > :is(ul, ol) { margin-block-start: var(--kiw--editorial-content-allentown-paragraph-gap); }
+  .editorial-content-allentown .editorial-content-allentown__copy :is(strong, b) { color: var(--kinekt-component-ink); font-weight: var(--kiw--editorial-content-allentown-heading-weight); }
+  .editorial-content-allentown .editorial-content-allentown__copy a { color: var(--kinekt-component-accent); text-decoration: none; }
+  .editorial-content-allentown .editorial-content-allentown__copy a:is(:hover, :focus-visible) { text-decoration: underline; text-decoration-thickness: var(--border-width); text-underline-offset: var(--space-xxs); }
+
+  /* Media: full-width image, natural ratio, caption space-xs below in text-m. */
+  .editorial-content-allentown .editorial-content-allentown__copy img { display: block; width: 100%; max-width: 100%; height: auto; border-radius: var(--kinekt-component-radius); filter: var(--media-filter); }
+  .editorial-content-allentown .editorial-content-allentown__copy figure { margin-inline: 0; }
+  .editorial-content-allentown .editorial-content-allentown__copy figure > figcaption { margin-block-start: var(--kiw--editorial-content-allentown-caption-gap); font-size: var(--kiw--editorial-content-allentown-caption-size); line-height: var(--text-line-height); }
+
+  /* Quote: Space Grotesk (mono family) M H2 36 at 1.2 in the accent, hanging opening mark; author row text-xl. */
+  .editorial-content-allentown .editorial-content-allentown__copy blockquote { margin-inline: 0; padding: 0; color: var(--kinekt-component-accent); font-family: var(--kiw--editorial-content-allentown-quote-font-family); font-size: var(--kiw--editorial-content-allentown-quote-size); font-weight: var(--text-font-weight); line-height: var(--kiw--editorial-content-allentown-quote-line-height); quotes: '\201C' '\201D'; }
+  .editorial-content-allentown .editorial-content-allentown__copy figure > blockquote { margin-block: 0; }
+  .editorial-content-allentown .editorial-content-allentown__copy blockquote > * { margin: 0; }
+  .editorial-content-allentown .editorial-content-allentown__copy blockquote > * + * { margin-block-start: var(--kiw--editorial-content-allentown-paragraph-gap); }
+  .editorial-content-allentown .editorial-content-allentown__copy blockquote > :is(p, div):first-child { text-indent: var(--kiw--editorial-content-allentown-quote-indent); }
+  .editorial-content-allentown .editorial-content-allentown__copy blockquote > :is(p, div):first-child::before { content: open-quote; }
+  .editorial-content-allentown .editorial-content-allentown__copy blockquote > :is(p, div):last-child::after { content: close-quote; }
+  /* Lexical's quote node renders its text directly inside the blockquote. */
+  .editorial-content-allentown .editorial-content-allentown__copy blockquote:not(:has(> :is(p, div))) { text-indent: var(--kiw--editorial-content-allentown-quote-indent); }
+  .editorial-content-allentown .editorial-content-allentown__copy blockquote:not(:has(> :is(p, div)))::before { content: open-quote; }
+  .editorial-content-allentown .editorial-content-allentown__copy blockquote:not(:has(> :is(p, div)))::after { content: close-quote; }
+  .editorial-content-allentown .editorial-content-allentown__copy figure:has(> blockquote) > figcaption { display: flex; flex-wrap: wrap; gap: var(--kiw--editorial-content-allentown-quote-author-gap); margin-block-start: var(--kiw--editorial-content-allentown-quote-gap); font-size: var(--kiw--editorial-content-allentown-quote-author-size); line-height: 1.4; }
+  .editorial-content-allentown .editorial-content-allentown__copy figure:has(> blockquote) > figcaption > :is(strong, b) { color: var(--kinekt-component-ink); font-weight: var(--heading-font-weight); }
+  .editorial-content-allentown .editorial-content-allentown__copy figure:has(> blockquote) > figcaption > span { color: var(--kiw--editorial-content-allentown-quote-role-color); }
+  .editorial-content-allentown .editorial-content-allentown__copy figure:has(> blockquote) > figcaption > :is(strong, b) + span::before { content: '|'; margin-inline-end: var(--space-xs); }
+
+  /* Divider: the Figma flight path (accent → 30% at 70%, arrow start, dot end). */
+  .editorial-content-allentown .editorial-content-allentown__copy hr { position: relative; overflow: visible; height: var(--border-width); border: 0; background: linear-gradient(to right, var(--kinekt-component-accent), color-mix(in srgb, var(--kinekt-component-accent) var(--kiw--editorial-content-allentown-divider-fade-opacity), transparent) var(--kiw--editorial-content-allentown-divider-fade-at)); }
+  .editorial-content-allentown .editorial-content-allentown__copy hr::before,
+  .editorial-content-allentown .editorial-content-allentown__copy hr::after { position: absolute; top: 50%; content: ''; translate: 0 -50%; }
+  .editorial-content-allentown .editorial-content-allentown__copy hr::before { left: 0; width: var(--kiw--editorial-content-allentown-divider-arrow-width); height: var(--kiw--editorial-content-allentown-divider-arrow-height); background: var(--kinekt-component-accent); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+  .editorial-content-allentown .editorial-content-allentown__copy hr::after { right: 0; width: var(--kiw--editorial-content-allentown-divider-dot-size); height: var(--kiw--editorial-content-allentown-divider-dot-size); border-radius: 50%; background: color-mix(in srgb, var(--kinekt-component-accent) var(--kiw--editorial-content-allentown-divider-fade-opacity), transparent); }
+
+  /* Columns: stacked on mobile; 2 equal columns gap 64 (Article), or 5:4 with a media column gap 80 (Case). */
+  .editorial-content-allentown .editorial-content-allentown__copy [data-kinekt-editorial-columns] { display: grid; gap: var(--kiw--editorial-content-allentown-columns-gap); }
+  .editorial-content-allentown .editorial-content-allentown__copy [data-kinekt-editorial-columns] > figure { margin: 0; }
+  @media (min-width: 50rem) {
+    .editorial-content-allentown .editorial-content-allentown__copy [data-kinekt-editorial-columns] { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+    .editorial-content-allentown .editorial-content-allentown__copy [data-kinekt-editorial-columns]:has(> figure) { column-gap: var(--kiw--editorial-content-allentown-media-columns-gap); }
+    .editorial-content-allentown .editorial-content-allentown__copy [data-kinekt-editorial-columns]:has(> figure:last-child) { grid-template-columns: var(--kiw--editorial-content-allentown-media-columns); }
+    .editorial-content-allentown .editorial-content-allentown__copy [data-kinekt-editorial-columns]:has(> figure:first-child) { grid-template-columns: minmax(0, 4fr) minmax(0, 5fr); }
   }
 </style>
