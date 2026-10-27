@@ -6,6 +6,7 @@
  */
 @layer kinekt.tokens {
 :root {
+  /* start editable colors */
   /* Color palettes: deliberately neutral until a customer theme overrides them. */
   --primary-ultra-light: #f5f5f5;
   --primary-light: #dedede;
@@ -37,8 +38,9 @@
   --warning: var(--primary-semi-light);
   --error: var(--primary-dark);
   --info: var(--primary-semi-dark);
-
+/* end editable colors */
   /* Fluid layout inputs. */
+  /* start editable spacings */
   --desktop-content-width: 90rem;
   --mobile-content-width: 24.375rem;
   --desktop-section-gutter: 8.75rem;
@@ -51,6 +53,7 @@
   --mobile-section-spacing-multiplier: 3.2;
   --desktop-input-height: 3rem;
   --mobile-input-height: 2.75rem;
+  /* end editable spacings */
 
   --desktop-website-width: calc(var(--desktop-content-width) + (var(--desktop-section-gutter) * 2));
   --mobile-website-width: calc(var(--mobile-content-width) + (var(--mobile-section-gutter) * 2));
@@ -141,6 +144,7 @@
   --grid-gap: calc(var(--mobile-grid-gap) + (var(--desktop-grid-gap) - var(--mobile-grid-gap)) * var(--fluid-progress));
   --input-height: calc(var(--mobile-input-height) + (var(--desktop-input-height) - var(--mobile-input-height)) * var(--fluid-progress));
 
+  /* start editable typography  */
   /* Fluid typography inputs and outputs. */
   --heading-font-family: system-ui, sans-serif;
   --heading-font-weight: 500;
@@ -176,6 +180,7 @@
   --desktop-text-xl: 1.25rem;
   --mobile-text-xxl: 1.375rem;
   --desktop-text-xxl: 1.375rem;
+  /* end editable typography */
   --h1: calc(var(--mobile-h1) + (var(--desktop-h1) - var(--mobile-h1)) * var(--fluid-progress));
   --h2: calc(var(--mobile-h2) + (var(--desktop-h2) - var(--mobile-h2)) * var(--fluid-progress));
   --h3: calc(var(--mobile-h3) + (var(--desktop-h3) - var(--mobile-h3)) * var(--fluid-progress));
@@ -189,6 +194,7 @@
   --text-xl: calc(var(--mobile-text-xl) + (var(--desktop-text-xl) - var(--mobile-text-xl)) * var(--fluid-progress));
   --text-xxl: calc(var(--mobile-text-xxl) + (var(--desktop-text-xxl) - var(--mobile-text-xxl)) * var(--fluid-progress));
 
+  /* start editable borders */
   --border-width: 1px;
   --radius-none: 0;
   --radius-xs: 0.125rem;
@@ -199,6 +205,8 @@
   --radius-xxl: 2rem;
   --buttons-has-radius: 0;
   --buttons-radius: var(--radius-m);
+  /* end editable borders */
+  
   --media-filter: grayscale(1);
   --motion-duration: 200ms;
   --motion-easing: ease;
