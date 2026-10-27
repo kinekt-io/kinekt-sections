@@ -1,8 +1,10 @@
 # Editorial Content Allentown
 
-Structural implementation for the [Article Template](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-526183&t=OtYEVTRRdAJJYQ0v-11), frame **261014 | Tulip - Europe - Desktop - Article Template**. The Case Template reuses this section.
+Implementation for the [Article Template — 261014 | Tulip - Europe - Desktop - Article Template](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-526183&t=OtYEVTRRdAJJYQ0v-11). The Case Template reuses this section.
 
-The editor field is Payload Lexical rich text. The later Payload editor configuration must allow standard text plus controlled inline blocks only:
+The section renders editor-owned Payload Lexical rich text inside a readable semantic `section`; it does not use `StructuralSection`.
+
+The Payload editor configuration must permit standard text and controlled inline blocks only:
 
 - `Intro Allentown`
 - `Quote Allentown`

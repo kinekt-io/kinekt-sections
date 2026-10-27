@@ -1,100 +1,82 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import '../../../styles/wireframe-tokens.css'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { Cta, Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { isSafeWebUrl } from '../../../urls.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "contentSources": {
-    "kind": "contentReferenceList"
-  },
-  "cta": {
-    "kind": "component",
-    "id": "controls/button/allentown",
-    "role": "button",
-    "fields": {
-      "cta": {
-        "kind": "cta"
-      }
-    }
-  }
-}
+type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
+type RelatedItem = { title?: string; excerpt?: string; href?: string; kind?: string; image?: unknown; media?: unknown; poster?: unknown }
+interface Props { id?: string; theme?: Theme; headingLevel?: 'h2' | 'h3'; intro: SectionIntroContent; contentSources?: RelatedItem[]; cta?: { cta?: Cta } | Cta | null; mediaLoading?: 'eager' | 'lazy' }
+
+const { id, theme = 'semi-light', headingLevel = 'h2', intro, contentSources = [], cta, mediaLoading = 'lazy' } = Astro.props as Props
+const isMedia = (value: unknown): value is Media => typeof value === 'object' && value !== null && typeof (value as Media).url === 'string' && isSafeWebUrl((value as Media).url)
+const relatedItems = contentSources.filter((item): item is Required<Pick<RelatedItem, 'title' | 'href'>> & RelatedItem => typeof item?.title === 'string' && item.title.trim().length > 0 && typeof item.href === 'string' && isSafeWebUrl(item.href))
+const rawAction: unknown = cta && typeof cta === 'object' && 'cta' in cta ? cta.cta : cta
+const isCta = (value: unknown): value is Cta & Required<Pick<Cta, 'label' | 'href'>> => typeof value === 'object' && value !== null && typeof (value as Record<string, unknown>).label === 'string' && typeof (value as Record<string, unknown>).href === 'string' && isSafeWebUrl((value as Record<string, string>).href)
+const action = isCta(rawAction) ? rawAction : undefined
+const itemMedia = (item: RelatedItem) => [item.image, item.media, item.poster].find(isMedia)
 ---
-<StructuralSection block="beta-related-content-allentown" fields={fields} {...props} />
-<style is:global>
-.beta-related-content-allentown[data-kinekt-section] {
-  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--related-content-allentown-site-width, var(--website-width)));
-  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--related-content-allentown-content-width, var(--content-width)));
-  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--related-content-allentown-reading-width, var(--width-m)));
-  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--related-content-allentown-inline-space, var(--section-gutter)));
-  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--related-content-allentown-block-space, var(--section-space-l)));
-  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--related-content-allentown-gap, var(--content-gap)));
-  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--related-content-allentown-radius, var(--radius-none)));
-  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--related-content-allentown-border-width, var(--border-width)));
-  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--related-content-allentown-media-filter, var(--media-filter)));
-  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--related-content-allentown-intro-accent-gap, var(--space-xxs)));
-  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--related-content-allentown-intro-description-gap, var(--space-m)));
-  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--related-content-allentown-heading-1-size, var(--h1)));
-  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--related-content-allentown-heading-2-size, var(--h2)));
-  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--related-content-allentown-heading-3-size, var(--h3)));
-  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--related-content-allentown-heading-4-size, var(--h4)));
-  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--related-content-allentown-heading-5-size, var(--h5)));
-  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--related-content-allentown-heading-6-size, var(--h6)));
-  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--related-content-allentown-heading-font-family, var(--heading-font-family)));
-  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--related-content-allentown-heading-font-weight, var(--heading-font-weight)));
-  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--related-content-allentown-heading-line-height, var(--heading-line-height)));
-  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--related-content-allentown-heading-letter-spacing, var(--heading-letter-spacing)));
-  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--related-content-allentown-text-font-family, var(--text-font-family)));
-  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--related-content-allentown-text-font-weight, var(--text-font-weight)));
-  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--related-content-allentown-text-line-height, var(--text-line-height)));
-  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--related-content-allentown-text-letter-spacing, var(--text-letter-spacing)));
-  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--related-content-allentown-mono-font-family, var(--mono-font-family)));
-  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--related-content-allentown-text-xs-size, var(--text-xs)));
-  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--related-content-allentown-text-s-size, var(--text-s)));
-  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--related-content-allentown-text-m-size, var(--text-m)));
-  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--related-content-allentown-text-l-size, var(--text-l)));
-  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--related-content-allentown-text-xl-size, var(--text-xl)));
-  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--related-content-allentown-text-xxl-size, var(--text-xxl)));
-  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--related-content-allentown-carousel-gap, var(--content-gap)));
-  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--related-content-allentown-actions-gap, var(--space-s)));
-  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--related-content-allentown-actions-margin, var(--space-xl)));
-  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--related-content-allentown-button-height, var(--input-height)));
-  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--related-content-allentown-button-padding-block, var(--space-s)));
-  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--related-content-allentown-button-padding-inline, var(--space-l)));
-  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--related-content-allentown-button-radius, var(--buttons-radius)));
-  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--related-content-allentown-input-height, var(--input-height)));
-  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--related-content-allentown-editorial-gap, var(--section-space-xxl)));
-  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--related-content-allentown-card-padding, var(--space-l)));
-  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--related-content-allentown-header-to-content-gap, var(--section-space-s)));
-  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--related-content-allentown-table-offset, var(--space-xl)));
-  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--related-content-allentown-canvas));
-  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--related-content-allentown-surface));
-  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--related-content-allentown-ink));
-  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--related-content-allentown-muted));
-  --kiw--section-subtle: var(--kinekt-section-subtle, var(--kiw--related-content-allentown-subtle));
-  --kiw--section-line: var(--kinekt-section-line, var(--kiw--related-content-allentown-line));
-  --kiw--section-action: var(--kinekt-section-action, var(--kiw--related-content-allentown-action));
-  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--related-content-allentown-action-text));
-  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--related-content-allentown-accent));
-  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--related-content-allentown-action-icon));
-}
-</style>
+<section class="related-content-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="related-content-allentown__container">
+    <header class="related-content-allentown__header">
+      <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
+      {action && <Button class="related-content-allentown__action" href={action.href} label={action.label} />}
+    </header>
+    {relatedItems.length > 0 && <ul class="related-content-allentown__cards">
+      {relatedItems.map((item) => {
+        const media = itemMedia(item)
+        return <li class="related-content-allentown__item"><article class="related-content-allentown__card">
+          {media && <a class="related-content-allentown__media-link" href={item.href} aria-label={`Read ${item.title}`}><KinektMedia media={media} class="related-content-allentown__media" imageClass="related-content-allentown__image" loading={mediaLoading} /></a>}
+          <div class="related-content-allentown__body">
+            {item.kind && <p class="related-content-allentown__kind">{item.kind}</p>}
+            <h3 class="related-content-allentown__title"><a href={item.href}>{item.title}</a></h3>
+            {item.excerpt && <p class="related-content-allentown__excerpt">{item.excerpt}</p>}
+            <a class="related-content-allentown__link" href={item.href}>Read more <span aria-hidden="true">→</span></a>
+          </div>
+        </article></li>
+      })}
+    </ul>}
+  </div>
+</section>
 
+<style is:global>
+  :where(.related-content-allentown) { --kiw--related-content-allentown-inline-space: var(--section-gutter); --kiw--related-content-allentown-block-space: var(--section-space-xl); --kiw--related-content-allentown-gap: var(--section-space-l); --kiw--related-content-allentown-card-gap: var(--space-m); --kiw--related-content-allentown-media-ratio: 16 / 9; }
+
+  .related-content-allentown {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--neutral-light));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--primary-ultra-dark));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--primary-semi-dark));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--accent-semi-dark));
+    --kinekt-component-line: var(--kinekt-section-line, var(--primary-ultra-light));
+    --kinekt-component-radius: var(--kinekt-section-radius, var(--radius-none));
+    --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--media-filter));
+    --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--width-l));
+    padding-block: var(--kiw--related-content-allentown-block-space);
+    color: var(--kinekt-component-ink);
+    background: var(--kinekt-component-canvas);
+
+    &[data-kinekt-theme='light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--neutral-ultra-light)); }
+    &:is([data-kinekt-theme='dark'], [data-kinekt-theme='semi-dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--primary-ultra-dark)); --kinekt-component-ink: var(--kinekt-section-ink, var(--white)); --kinekt-component-muted: var(--kinekt-section-muted, var(--primary-ultra-light)); --kinekt-component-accent: var(--kinekt-section-accent, var(--accent)); --kinekt-component-line: var(--kinekt-section-line, var(--primary)); }
+
+    & *, & *::before, & *::after { box-sizing: border-box; }
+    & .related-content-allentown__container { display: grid; width: 100%; max-width: min(var(--website-width), calc(var(--content-width) + (var(--kiw--related-content-allentown-inline-space) * 2))); gap: var(--kiw--related-content-allentown-gap); margin-inline: auto; padding-inline: var(--kiw--related-content-allentown-inline-space); }
+    & .related-content-allentown__header { display: grid; align-items: end; gap: var(--space-l); }
+    & .related-content-allentown__action { width: max-content; }
+    & .related-content-allentown__cards { display: grid; gap: var(--kiw--related-content-allentown-card-gap); margin: 0; padding: 0; list-style: none; }
+    & .related-content-allentown__card { display: grid; height: 100%; gap: var(--kiw--related-content-allentown-card-gap); }
+    & .related-content-allentown__media-link { display: block; }
+    & .related-content-allentown__image { display: block; inline-size: 100%; aspect-ratio: var(--kiw--related-content-allentown-media-ratio); object-fit: cover; }
+    & .related-content-allentown__body { display: grid; align-content: start; gap: var(--space-s); }
+    & :is(.related-content-allentown__kind, .related-content-allentown__excerpt, .related-content-allentown__title) { margin: 0; }
+    & .related-content-allentown__kind { color: var(--kinekt-component-accent); font-family: var(--mono-font-family); font-size: var(--text-s); text-transform: uppercase; }
+    & .related-content-allentown__title { font-size: var(--h4); line-height: var(--heading-line-height); }
+    & .related-content-allentown__title a { color: inherit; text-decoration: none; }
+    & .related-content-allentown__excerpt { color: var(--kinekt-component-muted); }
+    & .related-content-allentown__link { width: max-content; color: inherit; font-weight: var(--heading-font-weight); text-decoration: none; }
+    & .related-content-allentown__link span { color: var(--kinekt-component-accent); }
+
+    @media (min-width: 50rem) { & .related-content-allentown__header { grid-template-columns: minmax(0, var(--kinekt-component-reading-width)) auto; justify-content: space-between; } & .related-content-allentown__cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  }
+</style>
