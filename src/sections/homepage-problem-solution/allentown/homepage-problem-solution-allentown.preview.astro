@@ -1,46 +1,33 @@
 ---
 import HomepageProblemSolution from './homepage-problem-solution-allentown.astro'
-const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
 
-// Copy from Figma "Section - The problem + The Solution" (5240:411370). The two infographics are fixed implementation
-// assets the renderer will ship (runtime props problemMedia / solutionMedia); the preview uses local placeholders.
+// Copy from the Tulip homepage design ("Section - The problem + The Solution", 5240:411370). The infographic is a fixed
+// asset the renderer ships, so the preview passes no media.
 const content = {
   theme: 'dark' as const,
   problemIntro: {
-    accentHeading: '/ The low-density problem',
-    heading: 'Low-density batteries force compromises',
-    description: 'Every gram and every millimeter matters. When battery systems take up too much space or add unnecessary weight, platform designers are forced to compromise on payload, range, endurance or overall system design.',
+    accentHeading: '/ Standard battery constraints',
+    heading: 'Most unmanned systems are held back by their battery',
+    description: 'While the rest of the platform gets optimized, the battery often stays industry-standard: heavy for the energy it stores, with sourcing that’s hard to document.',
   },
   problemItems: [
-    { icon: 'xmark', title: 'Less payload', description: 'More battery weight leaves less capacity for mission equipment.' },
-    { icon: 'xmark', title: 'Shorter endurance', description: 'Limited energy density reduces time in operation.' },
-    { icon: 'xmark', title: 'Restricted range', description: 'Less usable energy limits how far the platform can operate.' },
-    { icon: 'xmark', title: 'More redesign', description: 'Extra capacity often requires a larger or heavier battery system.' },
+    { icon: 'xmark', title: 'Limited range', description: 'With less usable energy, the platform can’t reach as far as it was designed to.' },
+    { icon: 'xmark', title: 'Shorter endurance', description: 'Standard packs give your platform less operating time per charge.' },
+    { icon: 'xmark', title: 'Less payload', description: 'A heavier pack leaves less allowance for sensors, equipment or cargo.' },
+    { icon: 'xmark', title: 'Unclear origin', description: 'Compliance and qualification take longer when a pack can’t be traced.' },
   ],
   solutionIntro: {
     accentHeading: '/ The high-density solution',
-    heading: 'More performance from the same battery space',
-    description: 'High-density cells and a pack engineered around them deliver more usable energy in the same envelope, so platforms gain range, endurance and payload instead of trading one for another.',
+    heading: 'Get more range and endurance from the same platform',
+    description: 'At up to 450 Wh/kg, our packs store far more energy per kilogram than standard packs at 200–300 Wh/kg, so your platform flies longer at the same weight.',
   },
   solutionSteps: [
-    { icon: 'microchip', title: 'High-density cell technology', description: 'Selected high-energy cells store more energy per gram and per litre than conventional packs.' },
-    { icon: 'gears', title: 'High-density engineering', description: 'Pack structure, thermal design and electronics are optimised to keep that density at system level.' },
-    { icon: 'shield-halved', title: 'Battle tested & developed', description: 'Validated in demanding field conditions before a design moves into series production.' },
+    { icon: 'microchip', title: 'High-density cells', description: 'First access to the newest chemistries from top-tier cell manufacturers.' },
+    { icon: 'gears', title: 'High-density engineering', description: 'Configuration, thermal design and integration, engineered around your platform.' },
+    { icon: 'shield-halved', title: 'Battle-proven', description: '650,000+ packs delivered, flying on 70+ unmanned platforms.' },
   ],
   solutionCtaGroup: {
-    primaryButton: { label: 'Read more about high-density tech', href: '/technology/high-density', icon: 'arrow-right' as const },
-  },
-  problemMedia: {
-    url: placeholder('placeholder-1000x1000.svg'),
-    alt: 'Infographic: flight range of a low-density battery',
-    width: 1000,
-    height: 1000,
-  },
-  solutionMedia: {
-    url: placeholder('placeholder-1000x1000.svg'),
-    alt: 'Infographic: the larger flight range of a high-density battery',
-    width: 1000,
-    height: 1000,
+    primaryButton: { label: 'How we get to 450 Wh/kg', href: '/technology/high-density', icon: 'arrow-right' as const },
   },
 }
 ---

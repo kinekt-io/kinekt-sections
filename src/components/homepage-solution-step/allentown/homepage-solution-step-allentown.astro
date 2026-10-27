@@ -54,7 +54,8 @@ const descriptionHtml = item.description == null || item.description === ''
 
   .homepage-solution-step-allentown { display: grid; gap: var(--kiw--homepage-solution-step-allentown-gap); align-content: start; min-width: 0; }
   .homepage-solution-step-allentown .homepage-solution-step-allentown__title-row { display: flex; align-items: center; gap: var(--kiw--homepage-solution-step-allentown-title-gap); max-width: none; margin: 0; color: var(--kiw--homepage-solution-step-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--homepage-solution-step-allentown-title-size); font-weight: var(--heading-font-weight); line-height: 1; letter-spacing: var(--heading-letter-spacing); text-wrap: balance; }
-  .homepage-solution-step-allentown .homepage-solution-step-allentown__icon { flex: none; display: block; inline-size: auto; block-size: var(--kiw--homepage-solution-step-allentown-icon-size); max-inline-size: 1.25em; fill: var(--kiw--homepage-solution-step-allentown-icon-color); }
+  /* overflow: visible as in Font Awesome's own CSS: some glyphs (e.g. FA 7 gears) draw past their viewBox. */
+  .homepage-solution-step-allentown .homepage-solution-step-allentown__icon { flex: none; display: block; inline-size: auto; block-size: var(--kiw--homepage-solution-step-allentown-icon-size); max-inline-size: 1.25em; overflow: visible; fill: var(--kiw--homepage-solution-step-allentown-icon-color); }
   .homepage-solution-step-allentown .homepage-solution-step-allentown__title { min-width: 0; }
   .homepage-solution-step-allentown .homepage-solution-step-allentown__description { color: var(--kiw--homepage-solution-step-allentown-description-color); font-size: var(--kiw--homepage-solution-step-allentown-description-size); line-height: var(--kiw--homepage-solution-step-allentown-description-line-height); }
   .homepage-solution-step-allentown .homepage-solution-step-allentown__description > * { margin-block: 0; }

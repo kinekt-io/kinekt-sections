@@ -2,15 +2,18 @@
 import '../../../styles/wireframe-tokens.css'
 import HomepageProblemItem, { type HomepageProblemItemContent } from '../../../components/homepage-problem-item/allentown/homepage-problem-item-allentown.astro'
 import HomepageSolutionStep, { type HomepageSolutionStepContent } from '../../../components/homepage-solution-step/allentown/homepage-solution-step-allentown.astro'
+import Label from '../../../atoms/label/allentown/label-allentown.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
-import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { Cta, Media, RichText, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import type { Cta, RichText, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { isSafeWebUrl } from '../../../urls.js'
 import type { BetaHomepageProblemSolutionAllentownContent } from './homepage-problem-solution-allentown.types.js'
+// Fixed implementation assets (manifest runtimeProps problemMedia / solutionMedia): a dark night map of Paris, 1086 × 1086.
+import mapLarge from './assets/paris-night-map-1086.webp?url'
+import mapSmall from './assets/paris-night-map-720.webp?url'
 
 type IntroInput = Omit<SectionIntroContent, 'description'> & { description?: string | RichText | Record<string, unknown> | null }
 
@@ -22,10 +25,16 @@ interface Props extends BetaHomepageProblemSolutionAllentownContent {
   solutionIntro: IntroInput
   solutionSteps: HomepageSolutionStepContent[]
   solutionCtaGroup?: { primaryButton?: Cta | null; secondaryButton?: Cta | null } | null
-  /** Runtime prop (manifest `fixedImplementationAsset`): the low-density infographic the renderer ships. */
-  problemMedia?: Media | null
-  /** Runtime prop (manifest `fixedImplementationAsset`): the high-density infographic the renderer ships. */
-  solutionMedia?: Media | null
+  /** Renderer-only: accessible name of the infographic in its problem state (not in the contract yet). */
+  problemInfographicLabel?: string
+  /** Renderer-only: accessible name of the infographic in its solution state (not in the contract yet). */
+  solutionInfographicLabel?: string
+  /** Renderer-only: callout on the standard range circle once the high-density ring appears (not in the contract yet). */
+  problemRangeLabel?: string
+  /** Renderer-only: callout on the high-density ring at the end of the animation (not in the contract yet). */
+  solutionRangeLabel?: string
+  /** Renderer-only: the gain shown in a Label under `solutionRangeLabel` (not in the contract yet). */
+  solutionRangeValue?: string
   id?: string
   headingLevel?: 'h1' | 'h2' | 'h3'
   mediaLoading?: 'eager' | 'lazy'
@@ -39,8 +48,11 @@ const {
   solutionIntro,
   solutionSteps = [],
   solutionCtaGroup,
-  problemMedia,
-  solutionMedia,
+  problemInfographicLabel = 'Infographic: flight range of a standard battery',
+  solutionInfographicLabel = 'Infographic: the larger flight range of a high-density battery',
+  problemRangeLabel = 'Standard range',
+  solutionRangeLabel = 'High-density increase',
+  solutionRangeValue = 'up to 100%',
   headingLevel = 'h2',
   mediaLoading = 'lazy',
 } = Astro.props
@@ -56,7 +68,6 @@ const solutionIntroContent = toIntro(solutionIntro, 'solutionIntro.description')
 const hasTitle = (item: { title?: unknown } | null | undefined) => typeof item?.title === 'string' && item.title !== ''
 const visibleProblemItems = problemItems.filter(hasTitle)
 const visibleSolutionSteps = solutionSteps.filter(hasTitle)
-const isMedia = (value: Media | null | undefined): value is Media => Boolean(value && typeof value === 'object' && typeof value.url === 'string')
 const isCta = (value: Cta | null | undefined): value is Cta => typeof value?.label === 'string' && value.label !== '' && typeof value.href === 'string'
 const primary = isCta(solutionCtaGroup?.primaryButton) ? solutionCtaGroup.primaryButton : undefined
 const secondary = isCta(solutionCtaGroup?.secondaryButton) ? solutionCtaGroup.secondaryButton : undefined
@@ -65,16 +76,77 @@ const actions = [
   primary && { cta: primary, style: 'primary' as const },
   secondary && { cta: secondary, style: 'clear' as const },
 ].filter((action): action is { cta: Cta; style: 'primary' | 'clear' } => Boolean(action))
+// One infographic in two static states. From 50rem (with motion allowed) the script hides the solution copy and
+// scrubs the problem copy from state 0 to 1 while it sticks beside both text groups (runtimeProps.scrollAnimation).
+const groups = [
+  { state: 'problem' as const, intro: problemIntroContent, label: problemInfographicLabel },
+  { state: 'solution' as const, intro: solutionIntroContent, label: solutionInfographicLabel },
+]
+// Green callout line (overlay units): from the dot a 45° diagonal out past the ring, then a short run to the arrow. One
+// SVG path, so it draws with a dash offset in one go; the gradient needs an id per rendered infographic.
+// The path starts `gap` units along the diagonal, just inside the semi-transparent dot's edge (a slight overlap rather
+// than a gap; the dot is a fixed 4 px, the units scale with the stage).
+const donutCallout = { diagonal: 68, elbow: 16, gap: 1.5 }
+const donutCalloutRun = Math.round(donutCallout.diagonal * Math.SQRT1_2 * 100) / 100
+const donutCalloutStart = Math.round(donutCallout.gap * Math.SQRT1_2 * 100) / 100
+const donutCalloutPath = `M${donutCalloutStart} ${donutCalloutStart}L${donutCalloutRun} ${donutCalloutRun}H${donutCalloutRun + donutCallout.elbow}`
+const donutCalloutStyle = `--kiw--homepage-problem-solution-donut-callout-run: ${donutCalloutRun}; --kiw--homepage-problem-solution-donut-callout-elbow: ${donutCallout.elbow}; --kiw--homepage-problem-solution-donut-callout-length: ${donutCallout.diagonal - donutCallout.gap + donutCallout.elbow};`
+const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice(2, 10)}`
 ---
-<section class="homepage-problem-solution-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
-  <div class="homepage-problem-solution-allentown__container">
-    <div class:list={['homepage-problem-solution-allentown__group', 'homepage-problem-solution-allentown__group--problem', { 'homepage-problem-solution-allentown__group--media': isMedia(problemMedia) }]}>
-      {isMedia(problemMedia) && <KinektMedia media={problemMedia} class="homepage-problem-solution-allentown__media homepage-problem-solution-allentown__media--problem" imageClass="homepage-problem-solution-allentown__image" loading={mediaLoading} />}
-      <div class="homepage-problem-solution-allentown__text">
+<section class="homepage-problem-solution-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-homepage-problem-solution>
+  <div class="homepage-problem-solution-allentown__container" data-homepage-problem-solution-grid>
+    {groups.map(({ state, intro, label }) => (
+    <div class:list={['homepage-problem-solution-allentown__group', `homepage-problem-solution-allentown__group--${state}`]}>
+      <div class:list={['homepage-problem-solution-allentown__stage', `homepage-problem-solution-allentown__stage--${state}`]} role="img" aria-label={label} data-homepage-problem-solution-stage={state} data-homepage-problem-solution-problem-label={problemInfographicLabel} data-homepage-problem-solution-solution-label={solutionInfographicLabel}>
+        <div class="homepage-problem-solution-allentown__scene">
+          <img class="homepage-problem-solution-allentown__map" src={mapLarge} srcset={`${mapSmall} 720w, ${mapLarge} 1086w`} sizes="(min-width: 50rem) 714px, 124vw" width="1086" height="1086" alt="" loading={mediaLoading} decoding="async" />
+          <span class="homepage-problem-solution-allentown__donut-glow"></span>
+          <svg class="homepage-problem-solution-allentown__overlay" viewBox="0 0 576 576" aria-hidden="true" focusable="false">
+            <g class="homepage-problem-solution-allentown__donut">
+              <circle class="homepage-problem-solution-allentown__donut-fill" cx="288" cy="288" />
+              <circle class="homepage-problem-solution-allentown__donut-line" cx="288" cy="288" pathLength="1000" />
+            </g>
+            <circle class="homepage-problem-solution-allentown__range" cx="288" cy="288" />
+            <g class="homepage-problem-solution-allentown__plane">
+              <svg x="276" y="276" width="24" height="24" viewBox="0 0 640 640">
+                <!--!Font Awesome Pro 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2026 Fonticons, Inc.-->
+                <path d="M552 264C582.9 264 608 289.1 608 320C608 350.9 582.9 376 552 376L424.7 376L256 560L176 560L237.3 376L137.6 376L80 448L32 448L64 320L32 192L80 192L137.6 264L237.3 264L176 80L256 80L424.7 264L552 264z" />
+              </svg>
+            </g>
+          </svg>
+          {problemRangeLabel && (
+            <div class="homepage-problem-solution-allentown__callout homepage-problem-solution-allentown__callout--range">
+              <span class="homepage-problem-solution-allentown__callout-dot"></span>
+              <span class="homepage-problem-solution-allentown__callout-line"><span class="homepage-problem-solution-allentown__callout-arrow"></span></span>
+              <span class="homepage-problem-solution-allentown__callout-label">{problemRangeLabel}</span>
+            </div>
+          )}
+          {(solutionRangeLabel || solutionRangeValue) && (
+            <div class="homepage-problem-solution-allentown__callout homepage-problem-solution-allentown__callout--donut" style={donutCalloutStyle}>
+              <span class="homepage-problem-solution-allentown__callout-dot"></span>
+              <svg class="homepage-problem-solution-allentown__callout-path" viewBox={`0 0 ${donutCalloutRun + donutCallout.elbow} ${donutCalloutRun}`} aria-hidden="true" focusable="false">
+                <defs>
+                  <linearGradient id={`${gradientId}-${state}`} gradientUnits="userSpaceOnUse" x1={donutCalloutStart} y1={donutCalloutStart} x2={donutCalloutRun} y2={donutCalloutRun}>
+                    <stop class="homepage-problem-solution-allentown__callout-path-fade" offset="0" />
+                    <stop class="homepage-problem-solution-allentown__callout-path-full" offset="1" />
+                  </linearGradient>
+                </defs>
+                <path d={donutCalloutPath} pathLength="1" stroke={`url(#${gradientId}-${state})`} />
+              </svg>
+              <span class="homepage-problem-solution-allentown__callout-arrow"></span>
+              <span class="homepage-problem-solution-allentown__callout-label">
+                {solutionRangeLabel && <span class="homepage-problem-solution-allentown__callout-text">{solutionRangeLabel}</span>}
+                {solutionRangeValue && <Label text={solutionRangeValue} size="s" class="homepage-problem-solution-allentown__callout-value" />}
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+      <div class="homepage-problem-solution-allentown__text" data-homepage-problem-solution-sticky-end={state === 'solution' ? '' : undefined}>
         <header class="homepage-problem-solution-allentown__intro">
-          <SectionIntro intro={problemIntroContent} headingLevel={headingLevel} accentStyle="heading" />
+          <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
         </header>
-        {visibleProblemItems.length > 0 && (
+        {state === 'problem' && visibleProblemItems.length > 0 && (
           <ul class="homepage-problem-solution-allentown__problems">
             {visibleProblemItems.map((item) => (
               <li class="homepage-problem-solution-allentown__problem">
@@ -83,16 +155,7 @@ const actions = [
             ))}
           </ul>
         )}
-      </div>
-    </div>
-
-    <div class:list={['homepage-problem-solution-allentown__group', 'homepage-problem-solution-allentown__group--solution', { 'homepage-problem-solution-allentown__group--media': isMedia(solutionMedia) }]}>
-      {isMedia(solutionMedia) && <KinektMedia media={solutionMedia} class="homepage-problem-solution-allentown__media homepage-problem-solution-allentown__media--solution" imageClass="homepage-problem-solution-allentown__image" loading={mediaLoading} />}
-      <div class="homepage-problem-solution-allentown__text">
-        <header class="homepage-problem-solution-allentown__intro">
-          <SectionIntro intro={solutionIntroContent} headingLevel={headingLevel} accentStyle="heading" />
-        </header>
-        {visibleSolutionSteps.length > 0 && (
+        {state === 'solution' && visibleSolutionSteps.length > 0 && (
           <ol class="homepage-problem-solution-allentown__steps">
             {visibleSolutionSteps.map((step) => (
               <li class="homepage-problem-solution-allentown__step">
@@ -101,7 +164,7 @@ const actions = [
             ))}
           </ol>
         )}
-        {actions.length > 0 && (
+        {state === 'solution' && actions.length > 0 && (
           <div class="homepage-problem-solution-allentown__actions">
             {actions.map(({ cta, style }) => {
               const icon = isCtaIcon(cta.icon) ? ctaIconPaths[cta.icon] : undefined
@@ -111,8 +174,81 @@ const actions = [
         )}
       </div>
     </div>
+    ))}
   </div>
 </section>
+<script>
+  // runtimeProps.scrollAnimation (progressive): from 50rem with motion allowed, one sticky infographic scrubs from the
+  // problem state (0) to the solution state (1). Otherwise (phones, reduced motion, no JS) both static states stay.
+  const motion = window.matchMedia('(min-width: 50rem) and (prefers-reduced-motion: no-preference)')
+  const progressProperty = '--kiw--homepage-problem-solution-progress'
+
+  for (const section of document.querySelectorAll<HTMLElement>('[data-homepage-problem-solution]')) {
+    if (section.hasAttribute('data-homepage-problem-solution-initialized')) continue
+    section.setAttribute('data-homepage-problem-solution-initialized', '')
+    const grid = section.querySelector<HTMLElement>('[data-homepage-problem-solution-grid]')
+    const stage = section.querySelector<HTMLElement>('[data-homepage-problem-solution-stage="problem"]')
+    if (!grid || !stage) continue
+    const labels = { problem: stage.dataset.homepageProblemSolutionProblemLabel ?? '', solution: stage.dataset.homepageProblemSolutionSolutionLabel ?? '' }
+    const stickyEnd = section.querySelector<HTMLElement>('[data-homepage-problem-solution-sticky-end]')
+    let stickyTop = 0
+    let endOffset = 0
+    // Progress points at which each callout plays (CSS variables, read on measure).
+    const callouts = [
+      { attribute: 'data-homepage-problem-solution-range-callout', property: '--kiw--homepage-problem-solution-range-callout-at', at: 0.55 },
+      { attribute: 'data-homepage-problem-solution-donut-callout', property: '--kiw--homepage-problem-solution-donut-callout-at', at: 0.85 },
+    ]
+    let progress = ''
+    let frame = 0
+
+    const update = () => {
+      frame = 0
+      if (!section.hasAttribute('data-homepage-problem-solution-animated')) return
+      // The stage travels from the top of the grid to the end of the solution steps (the bottom margin keeps it clear
+      // of the CTA); progress is how far along that travel it is.
+      const gridBox = grid.getBoundingClientRect()
+      const travel = gridBox.height - stage.offsetHeight - endOffset
+      const value = travel > 0 ? Math.min(Math.max((stickyTop - gridBox.top) / travel, 0), 1) : 0
+      const next = value.toFixed(4)
+      if (next === progress) return
+      progress = next
+      stage.style.setProperty(progressProperty, next)
+      stage.setAttribute('aria-label', value >= 0.5 ? labels.solution : labels.problem)
+      // Callouts aren't scrubbed: past their point they play (and reverse) as CSS transitions.
+      for (const callout of callouts) stage.toggleAttribute(callout.attribute, value >= callout.at)
+    }
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update) }
+    const measure = () => {
+      const style = getComputedStyle(stage)
+      stickyTop = Number.parseFloat(style.top) || 0
+      for (const callout of callouts) callout.at = Number.parseFloat(style.getPropertyValue(callout.property)) || callout.at
+      // Sticky stops at the end of its grid area; a bottom margin makes it stop earlier, with its top level with the top
+      // of the solution text (the eyebrow).
+      stage.style.removeProperty('margin-block-end')
+      endOffset = section.hasAttribute('data-homepage-problem-solution-animated') && stickyEnd
+        ? Math.max(0, grid.getBoundingClientRect().bottom - (stickyEnd.getBoundingClientRect().top + stage.offsetHeight))
+        : 0
+      if (endOffset) stage.style.setProperty('margin-block-end', `${endOffset}px`)
+      progress = ''
+      schedule()
+    }
+    const apply = () => {
+      section.toggleAttribute('data-homepage-problem-solution-animated', motion.matches)
+      if (!motion.matches) {
+        stage.style.removeProperty(progressProperty)
+        stage.setAttribute('aria-label', labels.problem)
+        for (const callout of callouts) stage.removeAttribute(callout.attribute)
+      }
+      measure()
+    }
+
+    motion.addEventListener('change', apply)
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', measure, { passive: true })
+    new ResizeObserver(measure).observe(grid)
+    apply()
+  }
+</script>
 <style is:global>
   .homepage-problem-solution-allentown {
     --kiw--section-site-width: var(--kiw--homepage-problem-solution-allentown-site-width, var(--website-width));
@@ -184,9 +320,7 @@ const actions = [
     --kiw--homepage-problem-solution-column-gap: var(--section-space-l);
     --kiw--homepage-problem-solution-stack-gap: var(--section-space-s);
     --kiw--homepage-problem-solution-media-width: var(--width-m);
-    --kiw--homepage-problem-solution-media-ratio: 1 / 1;
     --kiw--homepage-problem-solution-text-gap: var(--section-space-m);
-    --kiw--homepage-problem-solution-text-max-width: var(--width-l);
     --kiw--homepage-problem-solution-intro-gap: var(--space-m);
     --kiw--homepage-problem-solution-heading-stack-gap: var(--space-xxs);
     --kiw--homepage-problem-solution-heading-size: var(--h2);
@@ -198,12 +332,144 @@ const actions = [
     --kiw--homepage-problem-solution-step-gap: var(--space-xxl);
     --kiw--homepage-problem-solution-divider-color: var(--kinekt-component-line);
     --kiw--homepage-problem-solution-actions-gap: var(--space-s);
+    /* Infographic (always dark: the map is a fixed asset, so it uses palette colours rather than theme roles). Units are
+       the 576 × 576 overlay; the start frame matches the Tulip reference (range r 78, plane 24). */
+    --kiw--homepage-problem-solution-infographic-canvas: var(--primary-ultra-dark);
+    --kiw--homepage-problem-solution-plane-color: var(--white);
+    --kiw--homepage-problem-solution-range-color: var(--kiw--homepage-problem-solution-problem-accent-color);
+    --kiw--homepage-problem-solution-range-end-color: var(--white);
+    --kiw--homepage-problem-solution-range-radius: 78;
+    --kiw--homepage-problem-solution-range-fill-opacity: 10%;
+    --kiw--homepage-problem-solution-range-stroke-opacity: 65%;
+    --kiw--homepage-problem-solution-range-stroke-width: 1.5px;
+    --kiw--homepage-problem-solution-range-dash: 4px 2.5px;
+    --kiw--homepage-problem-solution-donut-color: var(--accent);
+    --kiw--homepage-problem-solution-donut-radius: 245;
+    --kiw--homepage-problem-solution-donut-fill-opacity: 5%;
+    --kiw--homepage-problem-solution-donut-stroke-opacity: 75%;
+    --kiw--homepage-problem-solution-donut-stroke-width: 1.75px;
+    --kiw--homepage-problem-solution-donut-dash: 4.8 3.2;
+    /* Soft glow hugging the ring, mostly inside it (overlay units). */
+    --kiw--homepage-problem-solution-donut-glow-opacity: 22%;
+    --kiw--homepage-problem-solution-donut-glow-inside: 10;
+    --kiw--homepage-problem-solution-donut-glow-outside: 4;
+    /* Callouts: mirrored flight paths (same caps and fade as the subtitle-flight-path primitive): a dot, a line that draws
+       out from it, an arrow pointing back, then the label fades in. Distances are overlay units.
+       Range callout (white): from the range circle's right edge; dot 38 inside, arrow 12 outside, label 21 outside. */
+    --kiw--homepage-problem-solution-range-callout-color: var(--white);
+    --kiw--homepage-problem-solution-range-callout-dot-inset: 38;
+    --kiw--homepage-problem-solution-range-callout-line-end: 12;
+    --kiw--homepage-problem-solution-range-callout-text-offset: 21;
+    /* Donut callout (green): dot at a point inside the ring (fractions of its radius), a 45° line out past the ring, then
+       a short horizontal line to the arrow; label and value Label beside it. */
+    --kiw--homepage-problem-solution-donut-callout-color: var(--kiw--homepage-problem-solution-donut-color);
+    --kiw--homepage-problem-solution-donut-callout-x: 0.4;
+    --kiw--homepage-problem-solution-donut-callout-y: 0.64;
+    --kiw--homepage-problem-solution-donut-callout-text-gap: 6;
+    --kiw--homepage-problem-solution-callout-line-width: var(--border-width);
+    --kiw--homepage-problem-solution-callout-fade-opacity: 25%;
+    --kiw--homepage-problem-solution-callout-fade-at: 70%;
+    --kiw--homepage-problem-solution-callout-dot-opacity: 40%;
+    --kiw--homepage-problem-solution-callout-arrow-width: 0.3125rem;
+    --kiw--homepage-problem-solution-callout-arrow-height: 0.36rem;
+    --kiw--homepage-problem-solution-callout-dot-size: 0.25rem;
+    /* Lines start just inside the dot's edge (a slight overlap), so they barely show through it. */
+    --kiw--homepage-problem-solution-callout-line-gap: calc(var(--kiw--homepage-problem-solution-callout-dot-size) / 2 - 0.5px);
+    --kiw--homepage-problem-solution-callout-font-size: 16;
+    --kiw--homepage-problem-solution-callout-min-font-size: var(--text-xs);
+    /* Scroll phases (progress 0–1). The map is drawn at 124 % of the stage, so the zoom end can go down to 0.81. */
+    --kiw--homepage-problem-solution-zoom-end: 0.82;
+    --kiw--homepage-problem-solution-whiten-start: 0.3;
+    --kiw--homepage-problem-solution-whiten-end: 0.55;
+    --kiw--homepage-problem-solution-grow-start: 0.4;
+    --kiw--homepage-problem-solution-grow-end: 0.85;
+    /* Callouts aren't scrubbed: the script switches each one on past its progress point and it plays as a timed animation
+       (line draws out, then the label fades in; reversed when scrolling back). */
+    --kiw--homepage-problem-solution-range-callout-at: 0.55;
+    --kiw--homepage-problem-solution-donut-callout-at: 0.85;
+    /* Lines draw at one speed, so a longer line takes longer (white: 50 units = 250ms). */
+    --kiw--homepage-problem-solution-callout-draw-speed: 5ms;
+    --kiw--homepage-problem-solution-callout-text-duration: 300ms;
+    --kiw--homepage-problem-solution-sticky-space: var(--section-space-s);
+    --kiw--homepage-problem-solution-sticky-size: min(var(--kiw--homepage-problem-solution-media-width), 100svh - 2 * var(--kiw--homepage-problem-solution-sticky-space));
     --kinekt-section-gap: var(--kiw--homepage-problem-solution-group-gap);
   }
 
   .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group { display: grid; gap: var(--kiw--homepage-problem-solution-stack-gap); min-width: 0; }
-  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__media { display: block; min-width: 0; }
-  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; block-size: auto; aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--homepage-problem-solution-media-ratio)); object-fit: cover; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+
+  /* Infographic: one progress value (problem state 0, solution state 1; the script scrubs it) drives every effect. */
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__stage {
+    --kiw--homepage-problem-solution-p: var(--kiw--homepage-problem-solution-progress, 0);
+    --kiw--homepage-problem-solution-whiten: clamp(0, (var(--kiw--homepage-problem-solution-p) - var(--kiw--homepage-problem-solution-whiten-start)) / (var(--kiw--homepage-problem-solution-whiten-end) - var(--kiw--homepage-problem-solution-whiten-start)), 1);
+    --kiw--homepage-problem-solution-grow: clamp(0, (var(--kiw--homepage-problem-solution-p) - var(--kiw--homepage-problem-solution-grow-start)) / (var(--kiw--homepage-problem-solution-grow-end) - var(--kiw--homepage-problem-solution-grow-start)), 1);
+    --kiw--homepage-problem-solution-range-current: color-mix(in srgb, var(--kiw--homepage-problem-solution-range-end-color) calc(var(--kiw--homepage-problem-solution-whiten) * 100%), var(--kiw--homepage-problem-solution-range-color));
+    --kiw--homepage-problem-solution-donut-units: calc(var(--kiw--homepage-problem-solution-range-radius) + (var(--kiw--homepage-problem-solution-donut-radius) - var(--kiw--homepage-problem-solution-range-radius)) * var(--kiw--homepage-problem-solution-grow));
+    --kiw--homepage-problem-solution-donut-current: calc(var(--kiw--homepage-problem-solution-donut-units) * 1px);
+    --kiw--homepage-problem-solution-scale: calc(1 - (1 - var(--kiw--homepage-problem-solution-zoom-end)) * var(--kiw--homepage-problem-solution-p));
+    position: relative; overflow: hidden; min-width: 0; inline-size: 100%; aspect-ratio: 1; container-type: inline-size; background: var(--kiw--homepage-problem-solution-infographic-canvas); border-radius: var(--kinekt-component-radius);
+  }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__stage--solution { --kiw--homepage-problem-solution-progress: 1; }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__scene { position: absolute; inset: 0; transform: scale(var(--kiw--homepage-problem-solution-scale)); transform-origin: 50% 50%; }
+  /* The square map bleeds 12 % past every side, so the zoomed-out scene still covers the stage. */
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__map { position: absolute; top: -12%; left: -12%; display: block; inline-size: 124%; max-inline-size: none; block-size: 124%; object-fit: cover; filter: var(--kinekt-component-media-filter); }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__overlay { position: absolute; inset: 0; display: block; inline-size: 100%; block-size: 100%; overflow: visible; }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__range { r: calc(var(--kiw--homepage-problem-solution-range-radius) * 1px); fill: color-mix(in srgb, var(--kiw--homepage-problem-solution-range-current) var(--kiw--homepage-problem-solution-range-fill-opacity), transparent); stroke: color-mix(in srgb, var(--kiw--homepage-problem-solution-range-current) var(--kiw--homepage-problem-solution-range-stroke-opacity), transparent); stroke-width: var(--kiw--homepage-problem-solution-range-stroke-width); stroke-dasharray: var(--kiw--homepage-problem-solution-range-dash); }
+  .homepage-problem-solution-allentown :is(.homepage-problem-solution-allentown__donut, .homepage-problem-solution-allentown__donut-glow) { opacity: clamp(0, var(--kiw--homepage-problem-solution-grow) / 0.15, 1); }
+  /* A radial gradient rather than a blur filter, so growing it each frame stays cheap. */
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__donut-glow { position: absolute; top: 50%; left: 50%; inline-size: calc((var(--kiw--homepage-problem-solution-donut-units) + var(--kiw--homepage-problem-solution-donut-glow-outside)) * 2 / 576 * 100%); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, transparent calc(100% - (var(--kiw--homepage-problem-solution-donut-glow-inside) + var(--kiw--homepage-problem-solution-donut-glow-outside)) / 576 * 100cqi), color-mix(in srgb, var(--kiw--homepage-problem-solution-donut-color) var(--kiw--homepage-problem-solution-donut-glow-opacity), transparent) calc(100% - var(--kiw--homepage-problem-solution-donut-glow-outside) / 576 * 100cqi), transparent 100%); translate: -50% -50%; pointer-events: none; }
+  /* The plane and the callouts keep their on-screen size: they undo the scene scale around their own anchor (the centre,
+     a point on a circle), so they still follow the shrinking circles. */
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__plane { fill: var(--kiw--homepage-problem-solution-plane-color); transform-origin: 288px 288px; scale: calc(1 / var(--kiw--homepage-problem-solution-scale)); }
+
+  /* Callouts are zero-size anchors in the scene; overlay units become stage-relative lengths (cqi). --callout-on is 0 or 1:
+     always 1 in the static solution state, and switched by the script (data attributes on the stage) while animating.
+     Each part transitions; delays order it: dot, line out (arrow at its tip), label. Hiding fades the label and collapses
+     the line at once (the line doesn't wait for the label), then the dot and arrow go. */
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout {
+    --kiw--homepage-problem-solution-callout-on: 0;
+    --kiw--homepage-problem-solution-callout-text: var(--kiw--homepage-problem-solution-callout-text-duration);
+    position: absolute; inline-size: 0; block-size: 0; transform-origin: 0 0; scale: calc(1 / var(--kiw--homepage-problem-solution-scale)); pointer-events: none;
+  }
+  .homepage-problem-solution-allentown :is(.homepage-problem-solution-allentown__stage--solution, [data-homepage-problem-solution-range-callout]) .homepage-problem-solution-allentown__callout--range,
+  .homepage-problem-solution-allentown :is(.homepage-problem-solution-allentown__stage--solution, [data-homepage-problem-solution-donut-callout]) .homepage-problem-solution-allentown__callout--donut { --kiw--homepage-problem-solution-callout-on: 1; }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout--range { --kiw--homepage-problem-solution-callout-draw: calc((var(--kiw--homepage-problem-solution-range-callout-dot-inset) + var(--kiw--homepage-problem-solution-range-callout-line-end)) * var(--kiw--homepage-problem-solution-callout-draw-speed)); top: 50%; left: calc((288 + var(--kiw--homepage-problem-solution-range-radius)) / 576 * 100%); color: var(--kiw--homepage-problem-solution-range-callout-color); }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout--donut {
+    /* run, elbow and length (the path's geometry) come from the renderer as inline variables. */
+    --kiw--homepage-problem-solution-callout-draw: calc(var(--kiw--homepage-problem-solution-donut-callout-length) * var(--kiw--homepage-problem-solution-callout-draw-speed));
+    /* Anchored to the ring's final radius, so the dot stays on one spot of the map while the ring grows or shrinks. */
+    top: calc((288 + var(--kiw--homepage-problem-solution-donut-radius) * var(--kiw--homepage-problem-solution-donut-callout-y)) / 576 * 100%); left: calc((288 + var(--kiw--homepage-problem-solution-donut-radius) * var(--kiw--homepage-problem-solution-donut-callout-x)) / 576 * 100%); color: var(--kiw--homepage-problem-solution-donut-callout-color);
+  }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout-dot { position: absolute; top: 0; left: 0; inline-size: var(--kiw--homepage-problem-solution-callout-dot-size); block-size: var(--kiw--homepage-problem-solution-callout-dot-size); border-radius: 50%; background: color-mix(in srgb, currentColor var(--kiw--homepage-problem-solution-callout-dot-opacity), transparent); translate: -50% -50%; opacity: var(--kiw--homepage-problem-solution-callout-on); transition: opacity 150ms linear var(--kiw--homepage-problem-solution-callout-draw); }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout-line { position: absolute; top: calc(var(--kiw--homepage-problem-solution-callout-line-width) / -2); left: 0; inline-size: calc(var(--kiw--homepage-problem-solution-callout-line-length) / 576 * 100cqi * var(--kiw--homepage-problem-solution-callout-on)); block-size: var(--kiw--homepage-problem-solution-callout-line-width); background: linear-gradient(to left, currentColor, color-mix(in srgb, currentColor var(--kiw--homepage-problem-solution-callout-fade-opacity), transparent) var(--kiw--homepage-problem-solution-callout-fade-at)); transition: inline-size var(--kiw--homepage-problem-solution-callout-draw) ease-in-out; }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout-arrow { position: absolute; top: 50%; right: 0; inline-size: var(--kiw--homepage-problem-solution-callout-arrow-width); block-size: var(--kiw--homepage-problem-solution-callout-arrow-height); background: currentColor; clip-path: polygon(100% 0, 0 50%, 100% 100%); translate: 0 -50%; opacity: var(--kiw--homepage-problem-solution-callout-on); transition: opacity 100ms linear var(--kiw--homepage-problem-solution-callout-draw); }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout-label { position: absolute; inline-size: max-content; max-inline-size: 7em; text-wrap: balance; font-size: max(var(--kiw--homepage-problem-solution-callout-font-size) / 576 * 100cqi, var(--kiw--homepage-problem-solution-callout-min-font-size)); line-height: 1.2; opacity: var(--kiw--homepage-problem-solution-callout-on); transition: opacity var(--kiw--homepage-problem-solution-callout-text) linear; }
+  /* Showing: dot and arrow at once, line from the start, label once the line is out. */
+  .homepage-problem-solution-allentown :is(.homepage-problem-solution-allentown__stage--solution, [data-homepage-problem-solution-range-callout]) .homepage-problem-solution-allentown__callout--range :is(.homepage-problem-solution-allentown__callout-dot, .homepage-problem-solution-allentown__callout-line, .homepage-problem-solution-allentown__callout-arrow),
+  .homepage-problem-solution-allentown :is(.homepage-problem-solution-allentown__stage--solution, [data-homepage-problem-solution-donut-callout]) .homepage-problem-solution-allentown__callout--donut :is(.homepage-problem-solution-allentown__callout-dot, .homepage-problem-solution-allentown__callout-path path) { transition-delay: 0ms; }
+  .homepage-problem-solution-allentown :is(.homepage-problem-solution-allentown__stage--solution, [data-homepage-problem-solution-range-callout]) .homepage-problem-solution-allentown__callout--range .homepage-problem-solution-allentown__callout-label,
+  .homepage-problem-solution-allentown :is(.homepage-problem-solution-allentown__stage--solution, [data-homepage-problem-solution-donut-callout]) .homepage-problem-solution-allentown__callout--donut .homepage-problem-solution-allentown__callout-label { transition-delay: var(--kiw--homepage-problem-solution-callout-draw); }
+  /* Range callout: dot inside the circle, line straight out past the edge, label centred on the line. */
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout--range .homepage-problem-solution-allentown__callout-dot { left: calc(var(--kiw--homepage-problem-solution-range-callout-dot-inset) / -576 * 100cqi); }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout--range .homepage-problem-solution-allentown__callout-line { --kiw--homepage-problem-solution-callout-line-length: calc(var(--kiw--homepage-problem-solution-range-callout-dot-inset) + var(--kiw--homepage-problem-solution-range-callout-line-end)); left: calc(var(--kiw--homepage-problem-solution-range-callout-dot-inset) / -576 * 100cqi + var(--kiw--homepage-problem-solution-callout-line-gap)); inline-size: calc((var(--kiw--homepage-problem-solution-callout-line-length) / 576 * 100cqi - var(--kiw--homepage-problem-solution-callout-line-gap)) * var(--kiw--homepage-problem-solution-callout-on)); }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout--range .homepage-problem-solution-allentown__callout-label { top: 0; left: calc(var(--kiw--homepage-problem-solution-range-callout-text-offset) / 576 * 100cqi); translate: 0 -50%; }
+  /* Donut callout: one path (diagonal, then elbow) with a 1 px on-screen stroke, drawn by its dash offset (pathLength 1)
+     and faded towards the dot by one gradient along the diagonal. The arrow sits at the end: it appears when the line
+     arrives and goes as soon as the line starts collapsing. */
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout-path { position: absolute; top: 0; left: 0; display: block; inline-size: calc((var(--kiw--homepage-problem-solution-donut-callout-run) + var(--kiw--homepage-problem-solution-donut-callout-elbow)) / 576 * 100cqi); block-size: calc(var(--kiw--homepage-problem-solution-donut-callout-run) / 576 * 100cqi); overflow: visible; }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout-path path { fill: none; stroke-width: var(--kiw--homepage-problem-solution-callout-line-width); vector-effect: non-scaling-stroke; stroke-dasharray: 1 1; stroke-dashoffset: calc(1 - var(--kiw--homepage-problem-solution-callout-on)); transition: stroke-dashoffset var(--kiw--homepage-problem-solution-callout-draw) ease-in-out; }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout-path-fade { stop-color: currentColor; stop-opacity: var(--kiw--homepage-problem-solution-callout-fade-opacity); }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout-path-full { stop-color: currentColor; }
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout--donut .homepage-problem-solution-allentown__callout-arrow { top: calc(var(--kiw--homepage-problem-solution-donut-callout-run) / 576 * 100cqi); right: auto; left: calc((var(--kiw--homepage-problem-solution-donut-callout-run) + var(--kiw--homepage-problem-solution-donut-callout-elbow)) / 576 * 100cqi); translate: -100% -50%; transition-delay: 0ms; }
+  .homepage-problem-solution-allentown :is(.homepage-problem-solution-allentown__stage--solution, [data-homepage-problem-solution-donut-callout]) .homepage-problem-solution-allentown__callout--donut .homepage-problem-solution-allentown__callout-arrow { transition-delay: calc(var(--kiw--homepage-problem-solution-callout-draw) - 50ms); }
+  /* The text is centred on the horizontal line (between its two lines when it wraps); the value Label hangs below it. */
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout--donut .homepage-problem-solution-allentown__callout-label { top: calc(var(--kiw--homepage-problem-solution-donut-callout-run) / 576 * 100cqi); translate: 0 -50%; left: calc((var(--kiw--homepage-problem-solution-donut-callout-run) + var(--kiw--homepage-problem-solution-donut-callout-elbow) + var(--kiw--homepage-problem-solution-donut-callout-text-gap)) / 576 * 100cqi); color: var(--kiw--homepage-problem-solution-range-callout-color); }
+  /* The value is the shared Label atom in the infographic's green (fixed: the map is always dark), sized to the stage,
+     in the copy's own case and wrapping to balanced lines in the small space beside the ring. */
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__callout-value { --kiw--label-allentown-accent: var(--kiw--homepage-problem-solution-donut-callout-color); --kiw--label-allentown-tint: 15%; --kiw--label-allentown-font-size: max(16 / 576 * 100cqi, 11px); --kiw--label-allentown-text-transform: none; --kiw--label-allentown-line-height: 1.2; --kiw--label-allentown-padding-block: max(7 / 576 * 100cqi, 4px); --kiw--label-allentown-padding-inline: max(10 / 576 * 100cqi, 6px); position: absolute; top: calc(100% + var(--space-xxs)); left: 0; inline-size: max-content; max-inline-size: 7em; }
+  /* The donut's fill is a stroke centred between the two radii, so it never tints the range circle. */
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__donut-fill { r: calc((var(--kiw--homepage-problem-solution-range-radius) * 1px + var(--kiw--homepage-problem-solution-donut-current)) / 2); fill: none; stroke: color-mix(in srgb, var(--kiw--homepage-problem-solution-donut-color) var(--kiw--homepage-problem-solution-donut-fill-opacity), transparent); stroke-width: calc(var(--kiw--homepage-problem-solution-donut-current) - var(--kiw--homepage-problem-solution-range-radius) * 1px); }
+  /* pathLength keeps the dash count fixed, so the dashes stretch with the ring instead of crawling round it. */
+  .homepage-problem-solution-allentown .homepage-problem-solution-allentown__donut-line { r: var(--kiw--homepage-problem-solution-donut-current); fill: none; stroke: color-mix(in srgb, var(--kiw--homepage-problem-solution-donut-color) var(--kiw--homepage-problem-solution-donut-stroke-opacity), transparent); stroke-width: var(--kiw--homepage-problem-solution-donut-stroke-width); stroke-dasharray: var(--kiw--homepage-problem-solution-donut-dash); }
   .homepage-problem-solution-allentown .homepage-problem-solution-allentown__text { display: grid; gap: var(--kiw--homepage-problem-solution-text-gap); align-content: start; justify-items: start; min-width: 0; }
   .homepage-problem-solution-allentown .homepage-problem-solution-allentown__text > * { inline-size: 100%; }
   .homepage-problem-solution-allentown .homepage-problem-solution-allentown__intro { min-width: 0; }
@@ -224,10 +490,20 @@ const actions = [
 
   @media (min-width: 50rem) {
     :where(.homepage-problem-solution-allentown) { --kinekt-section-content-width: var(--kiw--homepage-problem-solution-container-width); }
-    .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group--media { grid-template-columns: minmax(0, var(--kiw--homepage-problem-solution-media-width)) minmax(0, 1fr); column-gap: var(--kiw--homepage-problem-solution-column-gap); }
-    .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group--problem { align-items: start; }
-    .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group--solution { align-items: end; }
-    .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group:not(.homepage-problem-solution-allentown__group--media) .homepage-problem-solution-allentown__text { max-inline-size: var(--kiw--homepage-problem-solution-text-max-width); }
+    /* One grid for both groups (groups are display: contents), so the sticky stage can span both rows. */
+    .homepage-problem-solution-allentown[data-kinekt-section] > .homepage-problem-solution-allentown__container { grid-template-columns: minmax(0, var(--kiw--homepage-problem-solution-media-width)) minmax(0, 1fr); column-gap: var(--kiw--homepage-problem-solution-column-gap); }
+    .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group { display: contents; }
+    .homepage-problem-solution-allentown .homepage-problem-solution-allentown__stage { grid-column: 1; }
+    .homepage-problem-solution-allentown .homepage-problem-solution-allentown__text { grid-column: 2; }
+    .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group--problem > * { grid-row: 1; }
+    .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group--solution > * { grid-row: 2; }
+    .homepage-problem-solution-allentown .homepage-problem-solution-allentown__stage--problem { align-self: start; }
+    /* Top-aligned with the solution eyebrow, where the scroll animation's sticky stage also stops. */
+    .homepage-problem-solution-allentown .homepage-problem-solution-allentown__stage--solution { align-self: start; }
+    /* Scroll animation (set by the script): the problem stage sticks, centred in the viewport, from the problem text to the end of the solution group. */
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--problem { grid-row: 1 / span 2; position: sticky; top: max(var(--kiw--homepage-problem-solution-sticky-space), (100svh - var(--kiw--homepage-problem-solution-sticky-size)) / 2); max-inline-size: var(--kiw--homepage-problem-solution-sticky-size); }
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--problem .homepage-problem-solution-allentown__scene { will-change: transform; }
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--solution { display: none; }
   }
   @media (min-width: 75rem) {
     .homepage-problem-solution-allentown .homepage-problem-solution-allentown__problems { grid-template-columns: repeat(2, minmax(0, 1fr)); }
