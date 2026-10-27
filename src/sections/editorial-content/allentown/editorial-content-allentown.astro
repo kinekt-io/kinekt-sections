@@ -175,6 +175,7 @@ const html = isObject && 'html' in content && typeof content.html === 'string'
   .editorial-content-allentown .editorial-content-allentown__copy figure:has(> blockquote) > figcaption > :is(strong, b) { color: var(--kinekt-component-ink); font-weight: var(--heading-font-weight); }
   .editorial-content-allentown .editorial-content-allentown__copy figure:has(> blockquote) > figcaption > span { color: var(--kiw--editorial-content-allentown-quote-role-color); }
   .editorial-content-allentown .editorial-content-allentown__copy figure:has(> blockquote) > figcaption > :is(strong, b) + span::before { content: '|'; margin-inline-end: var(--space-xs); }
+  .editorial-content-allentown .editorial-content-allentown__copy figure.editorial-content-allentown__quote > figcaption > img { width: var(--space-xl); height: var(--space-xl); border-radius: 50%; object-fit: cover; }
 
   /* Divider: the Figma flight path (accent → 30% at 70%, arrow start, dot end). */
   .editorial-content-allentown .editorial-content-allentown__copy hr { position: relative; overflow: visible; height: var(--border-width); border: 0; background: linear-gradient(to right, var(--kinekt-component-accent), color-mix(in srgb, var(--kinekt-component-accent) var(--kiw--editorial-content-allentown-divider-fade-opacity), transparent) var(--kiw--editorial-content-allentown-divider-fade-at)); }
