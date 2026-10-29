@@ -5,7 +5,6 @@ import '@package-src/styles/wireframe-tokens.css'
 import components from '../generated/components.json'
 
 const previewModules = import.meta.glob('@package-src/**/*.preview.astro', { eager: true })
-const maturityTags = ['alpha', 'beta', 'prerelease', 'release'] as const
 const sections = components
   .filter((component) => component.category === 'sections' && component.previewSource)
   .map((component) => {
@@ -13,7 +12,7 @@ const sections = components
     if (!previewSource) throw new Error(`No preview source configured for ${component.id}.`)
     const module = Object.entries(previewModules).find(([path]) => path.endsWith(previewSource))?.[1]
     if (!module) throw new Error(`No preview module found for ${component.id}.`)
-    return { component, Preview: (module as { default: any }).default, reviewStatus: component.tags.find((tag) => maturityTags.includes(tag as typeof maturityTags[number])) ?? 'alpha' }
+    return { component, Preview: (module as { default: any }).default }
   })
 const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
 ---
@@ -35,10 +34,10 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
       <p>{sections.length} reusable section contracts rendered in catalogue order.</p>
     </header>
     <main>
-      {sections.map(({ component, Preview, reviewStatus }) => (
+      {sections.map(({ component, Preview }) => (
         <article class="section-preview" id={component.slug}>
           <header class="section-preview__meta">
-            <p>{reviewStatus} / {component.slug}</p>
+            <p>{component.status} / {component.slug}</p>
             <p class="section-preview__title">{component.title}</p>
             <ul class="section-preview__tags" aria-label={`${component.title} tags`}>
               {component.tags.map((tag) => <li>{tag}</li>)}
@@ -57,7 +56,7 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
           <dialog class="section-preview__dialog" id={`section-${component.slug}`} aria-label={`${component.title} details`}>
             <div class="section-preview__dialog-content">
               <div>
-                <p>{reviewStatus} / {component.slug}</p>
+                <p>{component.status} / {component.slug}</p>
                 <p class="section-preview__title">{component.title}</p>
               </div>
               <button class="section-preview__dialog-close" type="button" data-kinekt-section-close aria-label="Close details">×</button>
