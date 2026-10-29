@@ -1,17 +1,11 @@
 ---
 /*
- * Step Stage: one step of Figma "Section - 01 Light Battery Packs" (5240:414399, "Text Container" 5240:414406).
- * A "Subtile + Flight Path" (Small) stage label above the numbered step. The numbered step itself is the
- * same pattern as Next Step Allentown (accent mono number + title, description in `subtle`, clear CTAs),
- * so it reuses that renderer and only retunes its variables to this frame: h4 instead of h5, number
- * line-height 1.2, and space-m (not space-l) between copy and CTAs.
+ * Step Stage composes the shared numbered step renderer for the two-field
+ * title/description editor contract of Steps Stage.
  */
 import NextStep, { type NextStepContent } from '../../next-step/allentown/next-step-allentown.astro'
-import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
 
-export interface StepStageContent extends NextStepContent {
-  stage: string
-}
+export type StepStageContent = Pick<NextStepContent, 'title' | 'description'>
 
 interface Props {
   step: StepStageContent
@@ -25,7 +19,6 @@ const { step, number, headingLevel = 'h3', class: className } = Astro.props
 const classes = ['step-stage', className].filter(Boolean).join(' ')
 ---
 <div class={classes}>
-  {step.stage && <SubtitleFlightPath text={step.stage} size="small" class="step-stage__stage" />}
   <NextStep step={step} number={number} headingLevel={headingLevel} class="step-stage__step" />
 </div>
 <style is:global>

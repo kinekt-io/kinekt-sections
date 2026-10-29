@@ -4,14 +4,15 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { Cta, Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { ctaGroupActions, type Cta, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { BetaTheme } from '../../../shared/payload.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
 import { isSafeWebUrl } from '../../../urls.js'
 
-// The generated types (product-hero-allentown.types.ts) are still a generic record; these are the fields the manifest declares.
-interface FeaturePair {
-  label: string
+type RichTextInput = string | RichText | Record<string, unknown>
+
+interface FeatureItem {
   value: string
 }
 
@@ -19,52 +20,59 @@ interface Props {
   id?: string
   theme?: BetaTheme
   headingLevel?: 'h1' | 'h2'
-  intro: SectionIntroContent
+  intro: SectionIntroContent & { description?: RichTextInput | null }
   featureListTitle?: string
-  featurePairs?: FeaturePair[]
-  ctaGroup?: { primaryButton?: Cta | null; secondaryButton?: Cta | null } | null
+  features?: FeatureItem[]
+  ctaGroup?: CtaGroup | { primaryButton?: Cta | null; secondaryButton?: Cta | null } | null
   media: unknown
   mobileMedia?: unknown
   mediaLoading?: 'eager' | 'lazy'
 }
 
-const { id, theme = 'dark', headingLevel = 'h1', intro, featureListTitle, featurePairs = [], ctaGroup, media, mobileMedia, mediaLoading = 'eager' } = Astro.props as Props
+const { id, theme = 'dark', headingLevel = 'h1', intro, featureListTitle, features = [], ctaGroup, media, mobileMedia, mediaLoading = 'eager' } = Astro.props as Props
 
-const primary = ctaGroup?.primaryButton ?? undefined
-const secondary = ctaGroup?.secondaryButton ?? undefined
-for (const cta of [primary, secondary]) if (cta && !isSafeWebUrl(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) or root-relative URL.')
-const primaryIcon = primary && isCtaIcon(primary.icon) ? ctaIconPaths[primary.icon] : undefined
-const secondaryIcon = secondary && isCtaIcon(secondary.icon) ? ctaIconPaths[secondary.icon] : undefined
+const toIntroDescription = (value: RichTextInput | null | undefined): RichText | string | undefined => {
+  if (value == null || value === '') return undefined
+  if (typeof value === 'string') return value
+  if ('html' in value && typeof value.html === 'string') return { html: value.html }
+  return { html: richTextToHtml(value, 'intro.description') }
+}
+const introContent: SectionIntroContent = { ...intro, description: toIntroDescription(intro.description) }
+
+const actions = ctaGroupActions(ctaGroup)
+for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) or root-relative URL.')
 
 // The Payload adapter passes media through unchanged, so it may arrive as an ID; render only resolved, safe media objects.
 const isMedia = (value: unknown): value is Media => typeof value === 'object' && value !== null && typeof (value as Media).url === 'string' && isSafeWebUrl((value as Media).url)
 const heroMedia = isMedia(media) ? { ...media, alt: typeof media.alt === 'string' ? media.alt : '' } : undefined
 const heroMobileMedia = isMedia(mobileMedia) ? { ...mobileMedia, alt: typeof mobileMedia.alt === 'string' ? mobileMedia.alt : '' } : undefined
 
-const pairs = featurePairs.filter((pair) => pair && typeof pair.label === 'string' && pair.label.trim())
+const featureItems = features.filter((feature) => feature && typeof feature.value === 'string' && feature.value.trim())
 const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
 ---
 <section class="product-hero-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="product-hero-allentown__container">
     <div class="product-hero-allentown__content">
       <header class="product-hero-allentown__header">
-        <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
+        <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
       </header>
-      {(featureListTitle || pairs.length > 0) && <div class="product-hero-allentown__features">
+      {(featureListTitle || featureItems.length > 0) && <div class="product-hero-allentown__features">
         {featureListTitle && <p class="product-hero-allentown__features-title">{featureListTitle}</p>}
-        {pairs.length > 0 && <dl class="product-hero-allentown__feature-list">
-          {pairs.map((pair) => (
-            <div class="product-hero-allentown__feature">
-              <dt class="product-hero-allentown__feature-label"><svg class="product-hero-allentown__check" aria-hidden="true" focusable="false" viewBox={`0 0 ${checkWidth} ${checkHeight}`}><path d={checkPath as string} /></svg>{pair.label}</dt>
-              {pair.value && <dd class="product-hero-allentown__feature-value">{pair.value}</dd>}
-            </div>
+        {featureItems.length > 0 && <ul class="product-hero-allentown__feature-list">
+          {featureItems.map((feature) => (
+            <li class="product-hero-allentown__feature">
+              <svg class="product-hero-allentown__check" aria-hidden="true" focusable="false" viewBox={`0 0 ${checkWidth} ${checkHeight}`}><path d={checkPath as string} /></svg>
+              <span class="product-hero-allentown__feature-text">{feature.value}</span>
+            </li>
           ))}
-        </dl>}
+        </ul>}
       </div>}
-      {(primary || secondary) && <hr class="product-hero-allentown__divider" />}
-      {(primary || secondary) && <div class="product-hero-allentown__actions">
-        {primary && <Button class="product-hero-allentown__action product-hero-allentown__action--primary" size="l" href={primary.href} label={primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
-        {secondary && <Button class="product-hero-allentown__action product-hero-allentown__action--secondary" href={secondary.href} label={secondary.label} style="clear">{secondaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+      {actions.length > 0 && <hr class="product-hero-allentown__divider" />}
+      {actions.length > 0 && <div class="product-hero-allentown__actions">
+        {actions.map((action, index) => {
+          const icon = isCtaIcon(action.icon) ? ctaIconPaths[action.icon] : undefined
+          return <Button class="product-hero-allentown__action" size={index === 0 ? 'l' : 'm'} href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="none"><path d={icon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>
+        })}
       </div>}
     </div>
     {heroMedia && <KinektMedia media={heroMedia} mobileMedia={heroMobileMedia} class="product-hero-allentown__media" imageClass="product-hero-allentown__image" loading={mediaLoading} fetchpriority={mediaLoading === 'eager' ? 'high' : undefined} />}
@@ -149,8 +157,7 @@ const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
     --kiw--product-hero-feature-gap: var(--space-xs);
     --kiw--product-hero-feature-size: var(--text-l);
     --kiw--product-hero-feature-line-height: 1;
-    --kiw--product-hero-feature-label-color: var(--kinekt-component-ink);
-    --kiw--product-hero-feature-value-color: var(--kinekt-component-muted);
+    --kiw--product-hero-feature-text-color: var(--kinekt-component-muted);
     --kiw--product-hero-check-size: var(--text-m);
     /* Figma colours the checks accent-semi-dark on this dark frame (the dark accent role is --accent); on light themes it equals the accent role. */
     --kiw--product-hero-check-color: var(--accent-semi-dark);
@@ -160,7 +167,7 @@ const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
     --kinekt-section-content-width: var(--kiw--product-hero-container-width);
   }
   .product-hero-allentown > .product-hero-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kiw--product-hero-row-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
-  .product-hero-allentown :is(h1, h2, h3, h4, h5, h6, p, dl, dt, dd) { margin: 0; }
+  .product-hero-allentown :is(h1, h2, h3, h4, h5, h6, p, ul, li) { margin: 0; }
   .product-hero-allentown .product-hero-allentown__content { display: grid; justify-items: start; gap: var(--kiw--product-hero-content-gap); min-width: 0; }
   .product-hero-allentown .product-hero-allentown__header { width: 100%; min-width: 0; }
   .product-hero-allentown .section-intro { display: grid; justify-items: start; gap: var(--kiw--product-hero-intro-gap); }
@@ -171,10 +178,9 @@ const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
   .product-hero-allentown .section-intro__description > * { margin-block: 0; }
   .product-hero-allentown .product-hero-allentown__features { display: grid; gap: var(--kiw--product-hero-features-gap); width: 100%; min-width: 0; }
   .product-hero-allentown .product-hero-allentown__features-title { color: var(--kinekt-component-ink); font-size: var(--kiw--product-hero-features-title-size); font-weight: var(--kiw--product-hero-features-title-font-weight); line-height: 1; }
-  .product-hero-allentown .product-hero-allentown__feature-list { display: grid; gap: var(--kiw--product-hero-feature-list-gap); }
-  .product-hero-allentown .product-hero-allentown__feature { position: relative; display: flex; flex-wrap: wrap; column-gap: var(--kiw--product-hero-feature-gap); row-gap: var(--space-xxs); padding-inline-start: calc(var(--kiw--product-hero-check-size) + var(--kiw--product-hero-feature-gap)); font-size: var(--kiw--product-hero-feature-size); line-height: var(--kiw--product-hero-feature-line-height); }
-  .product-hero-allentown .product-hero-allentown__feature-label { color: var(--kiw--product-hero-feature-label-color); }
-  .product-hero-allentown .product-hero-allentown__feature-value { color: var(--kiw--product-hero-feature-value-color); }
+  .product-hero-allentown .product-hero-allentown__feature-list { display: grid; gap: var(--kiw--product-hero-feature-list-gap); padding: 0; list-style: none; }
+  .product-hero-allentown .product-hero-allentown__feature { position: relative; padding-inline-start: calc(var(--kiw--product-hero-check-size) + var(--kiw--product-hero-feature-gap)); color: var(--kiw--product-hero-feature-text-color); font-size: var(--kiw--product-hero-feature-size); line-height: var(--kiw--product-hero-feature-line-height); }
+  .product-hero-allentown .product-hero-allentown__feature-text { display: block; }
   .product-hero-allentown .product-hero-allentown__check { position: absolute; inset-block-start: calc((1lh - var(--kiw--product-hero-check-size)) / 2); inset-inline-start: 0; inline-size: var(--kiw--product-hero-check-size); block-size: var(--kiw--product-hero-check-size); fill: var(--kiw--product-hero-check-color); }
   .product-hero-allentown .product-hero-allentown__divider { width: 100%; height: 0; margin: 0; border: 0; border-block-start: var(--kinekt-component-border-width) solid var(--kiw--product-hero-divider-color); }
   .product-hero-allentown .product-hero-allentown__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--kiw--product-hero-actions-gap); }

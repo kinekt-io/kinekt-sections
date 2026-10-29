@@ -6,7 +6,7 @@ import SpecPair from '../../../components/spec-pair/allentown/spec-pair-allentow
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import { ctaIconPaths } from '../../../shared/cta-icons.js'
-import type { Cta, CtaGroup, Media, RichText, SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
+import { ctaGroupActions, type Cta, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent, type SectionTheme } from '../../../shared/content.js'
 
 interface BatteryModel {
   image: Media
@@ -25,7 +25,7 @@ interface Props {
   id?: string
   theme?: SectionTheme
   intro: SectionIntroContent
-  ctas?: CtaGroup
+  ctas?: CtaGroup | Cta[]
   models: BatteryModel[]
   crossSell?: { label?: string; intro: SectionIntroContent; items: CrossSellItem[] } | null
   headingLevel?: 'h1' | 'h2' | 'h3'
@@ -41,10 +41,8 @@ const {
   headingLevel = 'h2',
 } = Astro.props as Props
 
+const actions = ctaGroupActions(ctas)
 const iconFor = (cta?: Cta | null) => (cta?.icon ? ctaIconPaths[cta.icon] : undefined)
-const primaryIcon = iconFor(ctas?.primary)
-const secondaryIcon = iconFor(ctas?.secondary)
-
 type ChildHeading = 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 const level = Number(headingLevel.slice(1))
 const ModelHeading = `h${Math.min(level + 1, 6)}` as ChildHeading
@@ -59,10 +57,12 @@ const crossSellIntro = crossSell ? { ...crossSell.intro, accentHeading: crossSel
     <div class="beta-battery-models-allentown__catalogue">
       <header class="beta-battery-models-allentown__intro">
         <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
-        {(ctas?.primary || ctas?.secondary) && (
+        {actions.length > 0 && (
           <nav class="beta-battery-models-allentown__actions" aria-label="Section actions">
-            {ctas.primary && <Button class="beta-battery-models-allentown__action beta-battery-models-allentown__action--primary" href={ctas.primary.href} label={ctas.primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
-            {ctas.secondary && <Button class="beta-battery-models-allentown__action beta-battery-models-allentown__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="clear">{secondaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+            {actions.map((action, index) => {
+              const icon = action.icon ? ctaIconPaths[action.icon] : undefined
+              return <Button class="beta-battery-models-allentown__action" href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="none"><path d={icon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>
+            })}
           </nav>
         )}
       </header>

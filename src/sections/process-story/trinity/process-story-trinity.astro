@@ -3,16 +3,14 @@ import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import type { RichText, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-
-interface Cta { label: string; href: string }
+import { ctaGroupActions, type Cta, type CtaGroup, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
 interface ProcessItem {
   title: string
   description?: string | RichText
   markerType?: 'number' | 'icon'
   icon?: string
-  ctaGroup?: { primaryButton?: Cta; secondaryButton?: Cta }
+  ctaGroup?: CtaGroup | { primaryButton?: Cta; secondaryButton?: Cta }
 }
 
 interface Props {
@@ -37,6 +35,7 @@ const fontAwesomeIcon = (name?: string) => {
     <ol class="process-story-trinity__steps" aria-label="Process steps">
       {items.map((item, index) => {
         const icon = fontAwesomeIcon(item.icon)
+        const actions = ctaGroupActions(item.ctaGroup)
         return <li class="process-story-trinity__step" data-process-story-step data-process-story-item-marker={item.markerType ?? 'number'}>
           <details class="process-story-trinity__disclosure" open={index === 0} data-process-story-disclosure>
             <summary class="process-story-trinity__trigger" data-process-story-trigger>
@@ -49,9 +48,8 @@ const fontAwesomeIcon = (name?: string) => {
             </summary>
             <div class="process-story-trinity__panel">
               {description(item.description) && <div class="process-story-trinity__description" set:html={description(item.description)} />}
-              {item.ctaGroup && <div class="process-story-trinity__cta-group">
-                {item.ctaGroup.primaryButton && <Button {...item.ctaGroup.primaryButton} size="l" />}
-                {item.ctaGroup.secondaryButton && <Button {...item.ctaGroup.secondaryButton} style="secondary" size="l" />}
+              {actions.length > 0 && <div class="process-story-trinity__cta-group">
+                {actions.map((action, actionIndex) => <Button href={action.href} label={action.label} style={action.style ?? (actionIndex === 0 ? 'primary' : 'secondary')} size="l" />)}
               </div>}
             </div>
           </details>

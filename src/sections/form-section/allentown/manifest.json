@@ -20,7 +20,7 @@
     "intro": { "kind": "component", "componentId": "components/intro/allentown", "required": true, "localized": true },
     "image": { "kind": "media", "required": false, "localized": true },
     "imagePosition": { "kind": "select", "required": true, "localized": true, "options": ["left", "right"], "description": "Desktop media position. Mobile always presents content before media." },
-    "form": { "kind": "textarea", "required": true, "localized": true, "description": "HubSpot embed code. The wireframe preview renders a safe placeholder; the integration owns execution of the embed." },
+    "form": { "kind": "formEmbed", "required": true, "localized": true, "description": "Paste the complete HubSpot embed code. The frontend renders it in place." },
     "contactHeading": { "kind": "text", "required": false, "localized": true },
     "contactMethods": { "kind": "componentList", "componentId": "components/contact-method/allentown", "required": false, "localized": true, "minItems": 1 }
   },

@@ -4,12 +4,7 @@ import Button from '../../../controls/button/allentown/button-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-
-interface Cta {
-  label: string
-  href: string
-}
+import type { Cta, Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
 interface ContactMethod {
   icon?: 'whatsapp' | 'phone' | 'email'
@@ -23,7 +18,7 @@ interface Props {
   intro: SectionIntroContent
   image: Media
   actionHeading: string
-  actions: Record<string, Cta | undefined>
+  actions: Cta[]
   actionNote?: string
   contactHeading: string
   contactMethods: ContactMethod[]
@@ -43,7 +38,7 @@ const {
   headingLevel = 'h2',
 } = Astro.props as Props
 
-const actionList = Object.values(actions).filter((action): action is Cta => Boolean(action?.label && action.href))
+const actionList = actions.filter((action): action is Cta => Boolean(action?.label && action.href))
 ---
 <section class="beta-action-contact-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="beta-action-contact-allentown__container">
@@ -61,7 +56,7 @@ const actionList = Object.values(actions).filter((action): action is Cta => Bool
                 {actionList.length > 0 && (
                   <nav class="beta-action-contact-allentown__actions" aria-label="Contact actions">
                     {actionList.map((action, index) => (
-                      <Button href={action.href} label={action.label} style={index === 0 ? 'primary' : 'secondary'} />
+                      <Button href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'secondary')} />
                     ))}
                   </nav>
                 )}

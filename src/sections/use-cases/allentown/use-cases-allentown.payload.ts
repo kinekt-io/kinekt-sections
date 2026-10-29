@@ -48,31 +48,6 @@ const manifest = {
       "required": true,
       "localized": true
     },
-    "advantages": {
-      "kind": "componentList",
-      "componentId": "atoms/label/allentown",
-      "required": true,
-      "localized": true,
-      "minItems": 1,
-      "fields": {
-        "text": {
-          "kind": "text",
-          "required": true,
-          "localized": true
-        },
-        "icon": {
-          "kind": "text",
-          "required": false,
-          "localized": true,
-          "description": "Optional Font Awesome icon key rendered before the label text."
-        }
-      }
-    },
-    "gridHeading": {
-      "kind": "text",
-      "required": true,
-      "localized": true
-    },
     "items": {
       "kind": "componentList",
       "componentId": "components/use-case-item/allentown",
@@ -96,17 +71,13 @@ const manifest = {
           "required": false,
           "localized": true,
           "fields": {
-            "primaryButton": {
-              "kind": "cta",
+            "buttons": {
+              "kind": "ctaGroup",
               "required": false,
               "localized": true,
-              "description": "Optional primary Button component part."
-            },
-            "secondaryButton": {
-              "kind": "cta",
-              "required": false,
-              "localized": true,
-              "description": "Optional secondary Button component part."
+              "minItems": 0,
+              "maxItems": 2,
+              "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary or Clear."
             }
           }
         }

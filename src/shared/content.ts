@@ -1,6 +1,18 @@
 export type CtaIcon = 'arrow-right' | 'arrow-down' | 'arrow-up-left' | 'download' | 'paper-plane' | 'plus'
-export interface Cta { label: string; href: string; icon?: CtaIcon }
-export interface CtaGroup { primary?: Cta | null; secondary?: Cta | null }
+export type CtaStyle = 'primary' | 'secondary' | 'clear'
+export interface Cta { label: string; href: string; icon?: CtaIcon; style?: CtaStyle }
+export interface CtaGroup { buttons?: Cta[]; primary?: Cta | null; secondary?: Cta | null }
+
+export const ctaGroupActions = (group: CtaGroup | Cta[] | Record<string, unknown> | null | undefined): Cta[] => {
+  if (!group) return []
+  if (Array.isArray(group)) return group.filter((action): action is Cta => typeof action === 'object' && action !== null && typeof action.label === 'string' && action.label.trim() !== '' && typeof action.href === 'string' && action.href.trim() !== '')
+  if (typeof group !== 'object') return []
+  const legacy = group as CtaGroup & { primaryButton?: Cta; secondaryButton?: Cta }
+  const actions = Array.isArray(legacy.buttons)
+    ? legacy.buttons
+    : [legacy.primary ?? legacy.primaryButton, legacy.secondary ?? legacy.secondaryButton].filter(Boolean)
+  return actions.filter((action): action is Cta => typeof action === 'object' && action !== null && typeof action.label === 'string' && action.label.trim() !== '' && typeof action.href === 'string' && action.href.trim() !== '')
+}
 export interface MediaSource { url: string; width: number; height: number }
 export interface Media { url: string; alt: string; width: number; height: number; sources?: MediaSource[]; sizes?: string; fallbackUrl?: string }
 export interface RichText { html: string }

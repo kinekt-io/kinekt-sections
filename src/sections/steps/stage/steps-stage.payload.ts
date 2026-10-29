@@ -55,11 +55,6 @@ const manifest = {
       "localized": true,
       "minItems": 1,
       "fields": {
-        "stage": {
-          "kind": "text",
-          "required": true,
-          "localized": true
-        },
         "title": {
           "kind": "text",
           "required": true,
@@ -69,26 +64,6 @@ const manifest = {
           "kind": "textarea",
           "required": true,
           "localized": true
-        },
-        "ctaGroup": {
-          "kind": "component",
-          "componentId": "components/cta-group/allentown",
-          "required": false,
-          "localized": true,
-          "fields": {
-            "primaryButton": {
-              "kind": "cta",
-              "required": false,
-              "localized": true,
-              "description": "Optional primary Button component part."
-            },
-            "secondaryButton": {
-              "kind": "cta",
-              "required": false,
-              "localized": true,
-              "description": "Optional secondary Button component part."
-            }
-          }
         }
       }
     }

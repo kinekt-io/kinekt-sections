@@ -17,10 +17,10 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
     height: 627,
   }}
   actionHeading="Start with a focused conversation"
-  actions={{
-    primary: { label: 'Talk to an engineer', href: '#' },
-    secondary: { label: 'Share a project brief', href: '#' },
-  }}
+  actions={[
+    { label: 'Talk to an engineer', href: '#', style: 'primary' },
+    { label: 'Share a project brief', href: '#', style: 'secondary' },
+  ]}
   actionNote="We use the first call to understand the operating conditions, delivery window and technical questions that matter most."
   contactHeading="Reach the right team directly"
   contactMethods={[
