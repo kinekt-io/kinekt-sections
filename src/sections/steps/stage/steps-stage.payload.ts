@@ -64,6 +64,22 @@ const manifest = {
           "kind": "textarea",
           "required": true,
           "localized": true
+        },
+        "ctaGroup": {
+          "kind": "component",
+          "componentId": "components/cta-group/allentown",
+          "required": false,
+          "localized": true,
+          "fields": {
+            "buttons": {
+              "kind": "ctaGroup",
+              "required": false,
+              "localized": true,
+              "minItems": 0,
+              "maxItems": 2,
+              "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary or Clear."
+            }
+          }
         }
       }
     }

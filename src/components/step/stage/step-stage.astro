@@ -1,11 +1,10 @@
 ---
 /*
- * Step Stage composes the shared numbered step renderer for the two-field
- * title/description editor contract of Steps Stage.
+ * Step Stage composes the shared numbered step renderer for Steps Stage.
  */
 import NextStep, { type NextStepContent } from '../../next-step/allentown/next-step-allentown.astro'
 
-export type StepStageContent = Pick<NextStepContent, 'title' | 'description'>
+export type StepStageContent = Pick<NextStepContent, 'title' | 'description' | 'ctaGroup'>
 
 interface Props {
   step: StepStageContent

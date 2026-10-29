@@ -24,6 +24,12 @@
       "kind": "textarea",
       "required": true,
       "localized": true
+    },
+    "ctaGroup": {
+      "kind": "component",
+      "componentId": "components/cta-group/allentown",
+      "required": false,
+      "localized": true
     }
   },
   "runtimeProps": {
