@@ -6,7 +6,7 @@ import type { BetaProductFinderFormAllentownContent, PayloadBetaProductFinderFor
 const manifest = {
   "slug": "product-finder-form-allentown",
   "title": "Product Finder Form Allentown",
-  "status": "beta",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",

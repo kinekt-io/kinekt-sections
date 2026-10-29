@@ -6,7 +6,7 @@ import type { BetaProofMetricsAllentownContent, PayloadBetaProofMetricsAllentown
 const manifest = {
   "slug": "proof-metrics-allentown",
   "title": "Proof Metrics Allentown",
-  "status": "beta",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",

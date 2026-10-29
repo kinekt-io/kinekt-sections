@@ -6,7 +6,7 @@ import type { BetaIntakeFormAllentownContent, PayloadBetaIntakeFormAllentownDocu
 const manifest = {
   "slug": "intake-form-allentown",
   "title": "Intake Form Allentown",
-  "status": "beta",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",

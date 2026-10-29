@@ -6,7 +6,7 @@ import type { BetaMoqLeadTimesAllentownContent, PayloadBetaMoqLeadTimesAllentown
 const manifest = {
   "slug": "moq-lead-times-allentown",
   "title": "MOQ Lead Times Allentown",
-  "status": "planned",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",

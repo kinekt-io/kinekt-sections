@@ -54,44 +54,43 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
           <ul class="components">
             {components.map((component) => (
               <li class:list={['component', { 'component--preview': Boolean(component.previewSource) }]} data-catalogue-component data-catalogue-id={component.id} data-tags={component.tags.join(' ')} data-search={[component.title, component.description, component.category, component.role, component.variation, component.id, ...component.tags].filter(Boolean).join(' ').toLowerCase()}>
-                <div class="component__details">
-                  <div class="component__header">
+                <div class="component__summary">
+                  <div>
                     <p class="component__category">{component.category} / {component.role ?? 'component'}</p>
-                    <h3>{component.title}</h3>
-                    <p>{component.description}</p>
+                    <p class="component__title">{component.title}</p>
                   </div>
-                  <dl class="component__meta">
-                    <div><dt>Variation</dt><dd>{component.variation ?? '—'}</dd></div>
-                    <div><dt>Folder</dt><dd><code>src/{component.id}</code></dd></div>
-                  </dl>
-                  {component.tags.length > 0 && (
-                    <ul class="component__tags" aria-label="Categories">
-                      {component.tags.map((tag) => <li>{tag}</li>)}
-                    </ul>
-                  )}
-                  <div class="component__imports">
-                    <h4>Public imports</h4>
-                    <ul>
-                      {Object.entries(component.entries).map(([kind, entrypoint]) => (
-                        <li><span>{kind}</span><code>{entrypoint}</code></li>
-                      ))}
-                    </ul>
+                  <div class="component__controls">
+                    {component.previewSource && (
+                      <div class="theme-switch" aria-label={`Preview theme for ${component.title}`}>
+                        <button type="button" data-catalogue-theme="light" aria-pressed="true">Light</button>
+                        <button type="button" data-catalogue-theme="semi-light" aria-pressed="false">Semi-light</button>
+                        <button type="button" data-catalogue-theme="semi-dark" aria-pressed="false">Semi-dark</button>
+                        <button type="button" data-catalogue-theme="dark" aria-pressed="false">Dark</button>
+                      </div>
+                    )}
+                    <button class="component__info" type="button" data-catalogue-info={component.slug} aria-label={`More information about ${component.title}`}>i</button>
+                    {component.previewSource && <a class="component__action" href={`${catalogueBase}components/${component.id}/`}>Open preview <span aria-hidden="true">→</span></a>}
                   </div>
-                  {(component.figmaUrl || component.previewSource) && (
-                    <div class="component__actions">
-                      {component.figmaUrl && (
-                        <a class="component__action" href={component.figmaUrl} target="_blank" rel="noreferrer">
-                          Open design frame <span aria-hidden="true">↗</span>
-                        </a>
-                      )}
-                      {component.previewSource && (
-                        <a class="component__action" href={`${catalogueBase}components/${component.id}/`}>
-                          Open wireframe preview <span aria-hidden="true">→</span>
-                        </a>
-                      )}
-                    </div>
-                  )}
                 </div>
+                <dialog class="component__dialog" id={`component-${component.slug}`} aria-label={`${component.title} details`}>
+                  <div class="component__dialog-content">
+                    <div>
+                      <p class="component__category">{component.category} / {component.role ?? 'component'}</p>
+                      <p class="component__title">{component.title}</p>
+                    </div>
+                    <button class="component__dialog-close" type="button" data-catalogue-close aria-label="Close details">×</button>
+                    <p>{component.description}</p>
+                    <dl class="component__meta">
+                      <div><dt>Variation</dt><dd>{component.variation ?? '—'}</dd></div>
+                      <div><dt>Folder</dt><dd><code>src/{component.id}</code></dd></div>
+                    </dl>
+                    {component.tags.length > 0 && <p class="component__tags">{component.tags.join(' · ')}</p>}
+                    <ul class="component__imports" aria-label="Public imports">
+                      {Object.entries(component.entries).map(([kind, entrypoint]) => <li><span>{kind}</span><code>{entrypoint}</code></li>)}
+                    </ul>
+                    {component.figmaUrl && <a class="component__action" href={component.figmaUrl} target="_blank" rel="noreferrer">Open design frame <span aria-hidden="true">↗</span></a>}
+                  </div>
+                </dialog>
                 {component.previewSource && (
                   <div class="component__thumbnail">
                     <iframe
@@ -120,6 +119,37 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
       const cards = [...document.querySelectorAll<HTMLElement>('[data-catalogue-component]')]
       let pagefind: Promise<PagefindModule> | undefined
       let pagefindSearchGeneration = 0
+
+      type PreviewTheme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
+      const isPreviewTheme = (value: string | undefined): value is PreviewTheme =>
+        value === 'light' || value === 'semi-light' || value === 'semi-dark' || value === 'dark'
+      const applyTheme = (card: HTMLElement, theme: PreviewTheme) => {
+        card.querySelectorAll<HTMLButtonElement>('[data-catalogue-theme]').forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.catalogueTheme === theme))
+        })
+        const frame = card.querySelector<HTMLIFrameElement>('iframe')
+        const applyToFrame = () => frame?.contentDocument?.querySelector<HTMLElement>('[data-kinekt-section]')?.setAttribute('data-kinekt-theme', theme)
+        applyToFrame()
+        frame?.addEventListener('load', applyToFrame, { once: true })
+      }
+
+      document.addEventListener('click', (event) => {
+        const target = event.target as Element
+        const themeButton = target.closest<HTMLButtonElement>('[data-catalogue-theme]')
+        const card = themeButton?.closest<HTMLElement>('[data-catalogue-component]')
+        const theme = themeButton?.dataset.catalogueTheme
+        if (card && isPreviewTheme(theme)) return applyTheme(card, theme)
+
+        const info = target.closest<HTMLButtonElement>('[data-catalogue-info]')
+        if (info) return (document.getElementById(`component-${info.dataset.catalogueInfo}`) as HTMLDialogElement | null)?.showModal()
+
+        const close = target.closest<HTMLButtonElement>('[data-catalogue-close]')
+        if (close) close.closest<HTMLDialogElement>('dialog')?.close()
+      })
+
+      cards.forEach((card) => {
+        if (card.querySelector('iframe')) applyTheme(card, 'light')
+      })
 
       function syncSearchUrl() {
         const url = new URL(window.location.href)
@@ -290,26 +320,34 @@ const roles = new Set(components.map((component) => component.role).filter(Boole
   .catalogue-page .catalogue-search button { align-self: end; padding: var(--kiw--catalogue-space-s) var(--kiw--catalogue-space-m); border-color: var(--kiw--catalogue-action); border-radius: calc(var(--kiw--catalogue-search-button-radius-switch) * var(--kiw--catalogue-search-button-radius)); color: var(--kiw--catalogue-canvas); background: var(--kiw--catalogue-action); font-weight: var(--kiw--catalogue-heading-weight); cursor: pointer; }
   .catalogue-page .catalogue-search__status { min-height: var(--kiw--catalogue-space-l); margin: 0 0 var(--kiw--catalogue-space-l); color: var(--kiw--catalogue-muted); font-size: var(--kiw--catalogue-text-s); }
   .catalogue-page .components { display: grid; gap: var(--kiw--catalogue-space-l); margin: 0; padding: 0; list-style: none; }
-  .catalogue-page .component { display: grid; gap: var(--kiw--catalogue-space-xl); padding: var(--kiw--catalogue-space-xl); border: var(--kiw--catalogue-border-width) solid var(--kiw--catalogue-line); border-radius: var(--kiw--catalogue-radius-m); background: var(--kiw--catalogue-canvas); }
+  .catalogue-page .component { display: grid; gap: var(--kiw--catalogue-space-l); padding: var(--kiw--catalogue-space-l); border: var(--kiw--catalogue-border-width) solid var(--kiw--catalogue-line); border-radius: var(--kiw--catalogue-radius-m); background: var(--kiw--catalogue-canvas); }
   .catalogue-page .component[hidden] { display: none; }
   .catalogue-page .component--preview { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; padding: 0; overflow: hidden; }
-  .catalogue-page .component__details { display: grid; align-content: start; gap: var(--kiw--catalogue-space-xl); padding: var(--kiw--catalogue-space-xl); }
-  .catalogue-page .component__header p:not(.component__category) { margin: var(--kiw--catalogue-space-m) 0 0; color: var(--kiw--catalogue-muted); line-height: var(--kiw--catalogue-text-line-height); }
-  .catalogue-page .component h3 { margin: var(--kiw--catalogue-space-xxxs) 0 0; font-family: var(--kiw--catalogue-heading-font); font-size: var(--kiw--catalogue-h3); font-weight: var(--kiw--catalogue-heading-weight); letter-spacing: var(--kiw--catalogue-heading-tracking); line-height: var(--kiw--catalogue-heading-line-height); text-wrap: balance; }
-  .catalogue-page .component__meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--kiw--catalogue-space-m); margin: 0; padding-block: var(--kiw--catalogue-space-m); border-block: var(--kiw--catalogue-border-width) solid var(--kiw--catalogue-line); }
-  .catalogue-page .component__meta dd { overflow-wrap: anywhere; font-size: var(--kiw--catalogue-text-s); }
-  .catalogue-page .component__tags { display: flex; flex-wrap: wrap; gap: var(--kiw--catalogue-space-xxxs); margin: calc(var(--kiw--catalogue-space-s) * -1) 0 0; padding: 0; list-style: none; }
-  .catalogue-page .component__tags li { padding: var(--kiw--catalogue-space-xxxs) var(--kiw--catalogue-space-xs); border: var(--kiw--catalogue-border-width) solid var(--kiw--catalogue-line); border-radius: var(--kiw--catalogue-radius-s); color: var(--kiw--catalogue-action); font-family: var(--kiw--catalogue-mono-font); font-size: var(--kiw--catalogue-text-xs); font-weight: var(--kiw--catalogue-heading-weight); letter-spacing: var(--kiw--catalogue-heading-tracking); text-transform: uppercase; }
-  .catalogue-page .component__imports h4 { margin-bottom: var(--kiw--catalogue-space-s); font-family: var(--kiw--catalogue-heading-font); font-size: var(--kiw--catalogue-text-s); font-weight: var(--kiw--catalogue-heading-weight); letter-spacing: var(--kiw--catalogue-heading-tracking); text-transform: uppercase; }
-  .catalogue-page .component__imports ul { display: grid; gap: var(--kiw--catalogue-space-xxxs); margin: 0; padding: 0; list-style: none; }
-  .catalogue-page .component__imports li { display: grid; grid-template-columns: 4.75rem minmax(0, 1fr); gap: var(--kiw--catalogue-space-s); align-items: baseline; }
-  .catalogue-page .component__imports span { color: var(--kiw--catalogue-muted); font-size: var(--kiw--catalogue-text-s); font-weight: var(--kiw--catalogue-heading-weight); text-transform: uppercase; }
-  .catalogue-page .component__imports code { overflow-wrap: anywhere; font-size: var(--kiw--catalogue-text-xs); }
-  .catalogue-page .component__actions { display: grid; gap: var(--kiw--catalogue-space-s); padding-top: var(--kiw--catalogue-space-m); border-top: var(--kiw--catalogue-border-width) solid var(--kiw--catalogue-line); }
+  .catalogue-page .component__summary { display: flex; align-items: center; justify-content: space-between; gap: var(--kiw--catalogue-space-m); padding: var(--kiw--catalogue-space-l); }
+  .catalogue-page .component__category { margin: 0; color: var(--kiw--catalogue-muted); font-family: var(--kiw--catalogue-mono-font); font-size: var(--kiw--catalogue-text-xs); font-weight: var(--kiw--catalogue-heading-weight); letter-spacing: var(--kiw--catalogue-heading-tracking); text-transform: uppercase; }
+  .catalogue-page .component__title { margin: var(--kiw--catalogue-space-xxxs) 0 0; font-family: var(--kiw--catalogue-heading-font); font-size: var(--kiw--catalogue-h3); font-weight: var(--kiw--catalogue-heading-weight); letter-spacing: var(--kiw--catalogue-heading-tracking); line-height: var(--kiw--catalogue-heading-line-height); }
+  .catalogue-page .component__controls { display: flex; align-items: center; justify-content: end; flex-wrap: wrap; gap: var(--kiw--catalogue-space-s); }
+  .catalogue-page .theme-switch { display: flex; padding: var(--kiw--catalogue-space-xxxs); border: var(--kiw--catalogue-border-width) solid var(--kiw--catalogue-line); border-radius: var(--kiw--catalogue-radius-s); }
+  .catalogue-page .theme-switch button, .catalogue-page .component__info, .catalogue-page .component__dialog-close { min-height: 2rem; border: 0; color: var(--kiw--catalogue-ink); background: transparent; font: inherit; font-weight: var(--kiw--catalogue-heading-weight); cursor: pointer; }
+  .catalogue-page .theme-switch button { padding-inline: var(--kiw--catalogue-space-xs); font-size: var(--kiw--catalogue-text-xs); }
+  .catalogue-page .theme-switch button[aria-pressed='true'] { color: var(--kiw--catalogue-canvas); background: var(--kiw--catalogue-action); }
+  .catalogue-page .component__info { width: 2rem; border: var(--kiw--catalogue-border-width) solid var(--kiw--catalogue-line); border-radius: 50%; font-family: var(--kiw--catalogue-heading-font); }
   .catalogue-page .component__action { display: flex; justify-content: space-between; gap: var(--kiw--catalogue-space-m); color: var(--kiw--catalogue-action); font-weight: var(--kiw--catalogue-heading-weight); text-decoration-thickness: var(--kiw--catalogue-border-width); text-underline-offset: 0.18em; }
   .catalogue-page .component__thumbnail { position: relative; min-height: 32rem; overflow: hidden; background: var(--kiw--catalogue-thumbnail); }
   .catalogue-page .component__thumbnail iframe { position: absolute; inset: 0; width: 200%; height: 200%; border: 0; pointer-events: none; transform: scale(0.5); transform-origin: top left; }
+  .catalogue-page .component__dialog { width: min(100% - (var(--kiw--catalogue-gutter) * 2), var(--kiw--catalogue-width-l)); padding: 0; border: var(--kiw--catalogue-border-width) solid var(--kiw--catalogue-line); border-radius: var(--kiw--catalogue-radius-m); color: var(--kiw--catalogue-ink); background: var(--kiw--catalogue-canvas); }
+  .catalogue-page .component__dialog::backdrop { background: rgb(0 0 0 / 0.5); }
+  .catalogue-page .component__dialog-content { display: grid; grid-template-columns: 1fr auto; gap: var(--kiw--catalogue-space-l); padding: var(--kiw--catalogue-space-xl); }
+  .catalogue-page .component__dialog-content > :is(p, .component__meta, .component__tags, .component__imports, .component__action) { grid-column: 1 / -1; margin: 0; }
+  .catalogue-page .component__dialog-close { width: 2rem; font-size: var(--kiw--catalogue-text-l); }
+  .catalogue-page .component__meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--kiw--catalogue-space-m); padding-block: var(--kiw--catalogue-space-m); border-block: var(--kiw--catalogue-border-width) solid var(--kiw--catalogue-line); }
+  .catalogue-page .component__meta dd { margin: var(--kiw--catalogue-space-xxxs) 0 0; overflow-wrap: anywhere; font-size: var(--kiw--catalogue-text-s); }
+  .catalogue-page .component__tags { color: var(--kiw--catalogue-action); font-family: var(--kiw--catalogue-mono-font); font-size: var(--kiw--catalogue-text-xs); font-weight: var(--kiw--catalogue-heading-weight); letter-spacing: var(--kiw--catalogue-heading-tracking); text-transform: uppercase; }
+  .catalogue-page .component__imports { display: grid; gap: var(--kiw--catalogue-space-xxxs); padding: 0; list-style: none; }
+  .catalogue-page .component__imports li { display: grid; grid-template-columns: 4.75rem minmax(0, 1fr); gap: var(--kiw--catalogue-space-s); align-items: baseline; }
+  .catalogue-page .component__imports span { color: var(--kiw--catalogue-muted); font-size: var(--kiw--catalogue-text-s); font-weight: var(--kiw--catalogue-heading-weight); text-transform: uppercase; }
+  .catalogue-page .component__imports code { overflow-wrap: anywhere; font-size: var(--kiw--catalogue-text-xs); }
   .catalogue-page :is(a, button, input, select):focus-visible { outline: var(--kiw--catalogue-border-width) solid var(--kiw--catalogue-focus); outline-offset: var(--kiw--catalogue-space-xxxs); }
   @media (max-width: 52rem) { .catalogue-page .component--preview { grid-template-columns: 1fr; } .catalogue-page .component__thumbnail { min-height: 24rem; } }
-  @media (max-width: 40rem) { .catalogue-page .catalogue__heading { align-items: start; flex-direction: column; } .catalogue-page .catalogue-search { grid-template-columns: 1fr; } .catalogue-page .component__meta { grid-template-columns: 1fr; } }
+  @media (max-width: 40rem) { .catalogue-page .catalogue__heading { align-items: start; flex-direction: column; } .catalogue-page .catalogue-search { grid-template-columns: 1fr; } .catalogue-page .component__summary { align-items: start; flex-direction: column; } .catalogue-page .component__controls { justify-content: start; } .catalogue-page .component__meta { grid-template-columns: 1fr; } }
 </style>

@@ -10,7 +10,7 @@
   "tags": ["metrics", "social-proof", "beta"],
   "role": "proof-metrics",
   "variation": "allentown",
-  "status": "beta",
+  "status": "prerelease",
   "figma": {
     "url": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412607&t=mG3L6xlBzomA03GY-11",
     "nodeId": "5240:412607"

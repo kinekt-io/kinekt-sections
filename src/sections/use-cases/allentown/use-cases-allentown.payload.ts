@@ -6,7 +6,7 @@ import type { BetaUseCasesAllentownContent, PayloadBetaUseCasesAllentownDocument
 const manifest = {
   "slug": "use-cases-allentown",
   "title": "Use Cases Allentown",
-  "status": "planned",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",

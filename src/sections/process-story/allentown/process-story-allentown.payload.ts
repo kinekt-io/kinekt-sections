@@ -6,7 +6,7 @@ import type { BetaProcessStoryAllentownContent, PayloadBetaProcessStoryAllentown
 const manifest = {
   "slug": "process-story-allentown",
   "title": "Process Story Allentown",
-  "status": "beta",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",

@@ -6,7 +6,7 @@ import type { BetaFacilitiesOverviewAllentownContent, PayloadBetaFacilitiesOverv
 const manifest = {
   "slug": "facilities-overview-allentown",
   "title": "Facilities Overview Allentown",
-  "status": "beta",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",

@@ -6,7 +6,7 @@ import type { BetaCaseHeaderAllentownContent, PayloadBetaCaseHeaderAllentownDocu
 const manifest = {
   "slug": "case-header-allentown",
   "title": "Case Header Allentown",
-  "status": "planned",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",

@@ -6,7 +6,7 @@ import type { BetaEditorialContentAllentownContent, PayloadBetaEditorialContentA
 const manifest = {
   "slug": "editorial-content-allentown",
   "title": "Editorial Content Allentown",
-  "status": "planned",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",
