@@ -1,6 +1,5 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import ChecklistItem, { type ChecklistItemContent } from '../../../components/checklist-item/allentown/checklist-item-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { RichText, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
@@ -16,15 +15,13 @@ interface Props {
   theme?: BetaTheme
   headingLevel?: 'h2' | 'h3'
   intro: Omit<SectionIntroContent, 'description'> & { description?: RichTextInput | null }
-  checklist: ChecklistItemContent[]
   features: FeatureItem[]
   /** Runtime `featureDividers` (renderer presentation): dividers between feature items, as in Figma. */
   featureDividers?: boolean
 }
 
-const { id, theme = 'semi-light', headingLevel = 'h2', intro, checklist = [], features = [], featureDividers = true } = Astro.props
+const { id, theme = 'semi-light', headingLevel = 'h2', intro, features = [], featureDividers = true } = Astro.props
 const FeatureHeading = headingLevel === 'h2' ? 'h3' : 'h4'
-const checklistItems = checklist.filter((item) => item?.text)
 const featureItems = features.filter((feature) => feature?.title)
 const toHtml = (value: RichTextInput | null | undefined, field: string): string => {
   if (value == null || value === '') return ''
@@ -36,14 +33,7 @@ const introContent: SectionIntroContent = { ...intro, description: intro.descrip
 ---
 <section class:list={['checklist-feature-list-allentown', featureDividers && 'checklist-feature-list-allentown--dividers']} id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="checklist-feature-list-allentown__container">
-    <div class="checklist-feature-list-allentown__lead">
-      <SectionIntro intro={introContent}headingLevel={headingLevel} accentStyle="heading" />
-      {checklistItems.length > 0 && (
-        <ul class="checklist-feature-list-allentown__checklist">
-          {checklistItems.map((item) => <ChecklistItem item={item} />)}
-        </ul>
-      )}
-    </div>
+    <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
     {featureItems.length > 0 && (
       <ul class="checklist-feature-list-allentown__features">
         {featureItems.map((feature) => (
@@ -114,10 +104,8 @@ const introContent: SectionIntroContent = { ...intro, description: intro.descrip
   :where(.checklist-feature-list-allentown) {
     --kiw--checklist-feature-list-allentown-column-gap: var(--section-space-l);
     --kiw--checklist-feature-list-allentown-stack-gap: var(--section-space-m);
-    --kiw--checklist-feature-list-allentown-lead-gap: var(--space-l);
     --kiw--checklist-feature-list-allentown-intro-gap: var(--space-m);
     --kiw--checklist-feature-list-allentown-intro-copy-size: var(--kiw--section-text-l-size);
-    --kiw--checklist-feature-list-allentown-checklist-gap: var(--space-s);
     --kiw--checklist-feature-list-allentown-features-offset: var(--space-xl);
     --kiw--checklist-feature-list-allentown-features-gap: var(--section-space-xs);
     --kiw--checklist-feature-list-allentown-divider-color: var(--kinekt-component-line);
@@ -141,14 +129,12 @@ const introContent: SectionIntroContent = { ...intro, description: intro.descrip
   :where(.checklist-feature-list-allentown) :is(p, ul, h3, h4) { margin-block: 0; }
 
   .checklist-feature-list-allentown > .checklist-feature-list-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); row-gap: var(--kiw--checklist-feature-list-allentown-stack-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
-  .checklist-feature-list-allentown .checklist-feature-list-allentown__lead { display: grid; align-content: start; gap: var(--kiw--checklist-feature-list-allentown-lead-gap); min-width: 0; }
   .checklist-feature-list-allentown .section-intro { display: grid; justify-items: start; gap: var(--kiw--checklist-feature-list-allentown-intro-gap); }
   .checklist-feature-list-allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
   .checklist-feature-list-allentown .section-intro__heading { max-width: none; }
   .checklist-feature-list-allentown .section-intro__description { max-width: none; font-size: var(--kiw--checklist-feature-list-allentown-intro-copy-size); line-height: var(--kinekt-component-text-line-height); }
   .checklist-feature-list-allentown .section-intro__description > * { margin-block: 0; }
   .checklist-feature-list-allentown .section-intro__description > * + * { margin-block-start: var(--space-s); }
-  .checklist-feature-list-allentown .checklist-feature-list-allentown__checklist { display: grid; gap: var(--kiw--checklist-feature-list-allentown-checklist-gap); margin: 0; padding: 0; list-style: none; }
   .checklist-feature-list-allentown .checklist-feature-list-allentown__features { display: grid; align-content: start; gap: var(--kiw--checklist-feature-list-allentown-features-gap); min-width: 0; margin: 0; padding: 0; list-style: none; }
   .checklist-feature-list-allentown.checklist-feature-list-allentown--dividers .checklist-feature-list-allentown__feature + .checklist-feature-list-allentown__feature { padding-block-start: var(--kiw--checklist-feature-list-allentown-features-gap); border-block-start: var(--kinekt-component-border-width) solid var(--kiw--checklist-feature-list-allentown-divider-color); }
   .checklist-feature-list-allentown .checklist-feature-list-allentown__feature { display: grid; gap: var(--kiw--checklist-feature-list-allentown-feature-gap); min-width: 0; }

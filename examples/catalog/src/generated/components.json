@@ -27,6 +27,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/atoms/label-allentown.astro"
     }
@@ -80,6 +81,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/accordion-item-allentown.astro"
     }
@@ -113,6 +115,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/callout-allentown.astro"
     }
@@ -139,6 +142,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/checklist-item-allentown.astro"
     }
@@ -204,6 +208,7 @@
       }
     },
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/content-hero-media-allentown.astro"
     }
@@ -293,6 +298,7 @@
       }
     },
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/event-card-allentown.astro"
     }
@@ -324,6 +330,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/facility-fact-allentown.astro"
     }
@@ -360,6 +367,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/fact-card-allentown.astro"
     }
@@ -387,6 +395,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/form-embed-allentown.astro"
     }
@@ -428,6 +437,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/hd-cell-item-allentown.astro"
     }
@@ -470,6 +480,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/hd-engineering-topic-allentown.astro"
     }
@@ -509,6 +520,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/homepage-problem-item-allentown.astro"
     }
@@ -550,6 +562,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/homepage-solution-step-allentown.astro"
     }
@@ -581,6 +594,7 @@
       }
     },
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/intake-step-allentown.astro"
     }
@@ -614,6 +628,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/key-fact-allentown.astro"
     }
@@ -656,6 +671,7 @@
       }
     },
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/next-step-allentown.astro"
     }
@@ -692,6 +708,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/output-card-allentown.astro"
     }
@@ -728,6 +745,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/process-item-allentown.astro"
     }
@@ -776,6 +794,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/product-detail-item-allentown.astro"
     }
@@ -808,6 +827,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/result-item-allentown.astro"
     }
@@ -845,6 +865,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/spec-pair-allentown.astro"
     }
@@ -887,6 +908,7 @@
       }
     },
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/step-stage.astro"
     }
@@ -924,6 +946,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/components/use-case-item-allentown.astro"
     }
@@ -955,6 +978,7 @@
       }
     },
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/controls/button-allentown.astro"
     }
@@ -986,6 +1010,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/primitives/contact-icon.astro"
     }
@@ -1022,6 +1047,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/primitives/section-intro.astro"
     }
@@ -1048,6 +1074,7 @@
     },
     "runtimeProps": {},
     "previewSource": null,
+    "thumbnailURL": null,
     "entries": {
       "astro": "@kinekt-io/components/primitives/subtitle-flight-path.astro"
     }
@@ -1129,6 +1156,7 @@
       }
     },
     "previewSource": "sections/action-contact/allentown/action-contact-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/action-contact/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/action-contact-allentown.astro",
       "payload": "@kinekt-io/components/sections/action-contact-allentown.payload",
@@ -1189,6 +1217,7 @@
       }
     },
     "previewSource": "sections/article-header/allentown/article-header-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/article-header/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/article-header-allentown.astro",
       "payload": "@kinekt-io/components/sections/article-header-allentown.payload",
@@ -1253,6 +1282,7 @@
     },
     "runtimeProps": {},
     "previewSource": "sections/battery-models/allentown/battery-models-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/battery-models/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/battery-models-allentown.astro",
       "payload": "@kinekt-io/components/sections/battery-models-allentown.payload",
@@ -1315,6 +1345,7 @@
       }
     },
     "previewSource": "sections/case-header/allentown/case-header-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/case-header/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/case-header-allentown.astro",
       "payload": "@kinekt-io/components/sections/case-header-allentown.payload",
@@ -1379,6 +1410,7 @@
     },
     "runtimeProps": {},
     "previewSource": "sections/case-studies/allentown/case-studies-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/case-studies/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/case-studies-allentown.astro",
       "payload": "@kinekt-io/components/sections/case-studies-allentown.payload",
@@ -1387,7 +1419,7 @@
   },
   {
     "id": "sections/checklist-feature-list/allentown",
-    "version": "26.10.0-beta.0",
+    "version": "26.10.2-beta.16",
     "slug": "checklist-feature-list-allentown",
     "category": "sections",
     "tags": [
@@ -1398,7 +1430,7 @@
     "role": "checklist-feature-list",
     "variation": "allentown",
     "title": "Checklist Feature List Allentown",
-    "description": "A reusable two-column section with a localized introduction and checklist beside a visible feature list.",
+    "description": "A reusable two-column section with a localized introduction and visible feature list.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415190&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -1421,13 +1453,6 @@
         "required": true,
         "localized": true
       },
-      "checklist": {
-        "kind": "componentList",
-        "componentId": "components/checklist-item/allentown",
-        "required": true,
-        "localized": true,
-        "minItems": 1
-      },
       "features": {
         "kind": "componentList",
         "componentId": "components/feature-item/allentown",
@@ -1443,6 +1468,7 @@
       }
     },
     "previewSource": "sections/checklist-feature-list/allentown/checklist-feature-list-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/checklist-feature-list/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/checklist-feature-list-allentown.astro",
       "payload": "@kinekt-io/components/sections/checklist-feature-list-allentown.payload",
@@ -1506,6 +1532,7 @@
     },
     "runtimeProps": {},
     "previewSource": "sections/comparison-overview/allentown/comparison-overview-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/comparison-overview/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/comparison-overview-allentown.astro",
       "payload": "@kinekt-io/components/sections/comparison-overview-allentown.payload",
@@ -1563,6 +1590,7 @@
     },
     "runtimeProps": {},
     "previewSource": "sections/compatibility-specifications/allentown/compatibility-specifications-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/compatibility-specifications/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/compatibility-specifications-allentown.astro",
       "payload": "@kinekt-io/components/sections/compatibility-specifications-allentown.payload",
@@ -1643,6 +1671,7 @@
       }
     },
     "previewSource": "sections/compliance-detail/allentown/compliance-detail-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/compliance-detail/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/compliance-detail-allentown.astro",
       "payload": "@kinekt-io/components/sections/compliance-detail-allentown.payload",
@@ -1715,6 +1744,7 @@
       }
     },
     "previewSource": "sections/compliance-overview/allentown/compliance-overview-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/compliance-overview/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/compliance-overview-allentown.astro",
       "payload": "@kinekt-io/components/sections/compliance-overview-allentown.payload",
@@ -1787,6 +1817,7 @@
       }
     },
     "previewSource": "sections/compliance-text/allentown/compliance-text-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/compliance-text/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/compliance-text-allentown.astro",
       "payload": "@kinekt-io/components/sections/compliance-text-allentown.payload",
@@ -1849,6 +1880,7 @@
       }
     },
     "previewSource": "sections/density-comparison/allentown/density-comparison-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/density-comparison/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/density-comparison-allentown.astro",
       "payload": "@kinekt-io/components/sections/density-comparison-allentown.payload",
@@ -1900,6 +1932,7 @@
       }
     },
     "previewSource": "sections/editorial-content/allentown/editorial-content-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/editorial-content/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/editorial-content-allentown.astro",
       "payload": "@kinekt-io/components/sections/editorial-content-allentown.payload",
@@ -1962,6 +1995,7 @@
       }
     },
     "previewSource": "sections/event-overview/allentown/event-overview-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/event-overview/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/event-overview-allentown.astro",
       "payload": "@kinekt-io/components/sections/event-overview-allentown.payload",
@@ -2030,6 +2064,7 @@
       }
     },
     "previewSource": "sections/facilities-overview/allentown/facilities-overview-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/facilities-overview/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/facilities-overview-allentown.astro",
       "payload": "@kinekt-io/components/sections/facilities-overview-allentown.payload",
@@ -2094,6 +2129,7 @@
       }
     },
     "previewSource": "sections/faq-index/allentown/faq-index-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/faq-index/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/faq-index-allentown.astro",
       "payload": "@kinekt-io/components/sections/faq-index-allentown.payload",
@@ -2163,6 +2199,7 @@
       }
     },
     "previewSource": "sections/faq/allentown/faq-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/faq/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/faq-allentown.astro",
       "payload": "@kinekt-io/components/sections/faq-allentown.payload",
@@ -2221,6 +2258,7 @@
       }
     },
     "previewSource": "sections/featured-event/allentown/featured-event-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/featured-event/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/featured-event-allentown.astro",
       "payload": "@kinekt-io/components/sections/featured-event-allentown.payload",
@@ -2296,6 +2334,7 @@
       }
     },
     "previewSource": "sections/featured-insights/allentown/featured-insights-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/featured-insights/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/featured-insights-allentown.astro",
       "payload": "@kinekt-io/components/sections/featured-insights-allentown.payload",
@@ -2362,6 +2401,7 @@
       }
     },
     "previewSource": "sections/featured-page-header/allentown/featured-page-header-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/featured-page-header/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/featured-page-header-allentown.astro",
       "payload": "@kinekt-io/components/sections/featured-page-header-allentown.payload",
@@ -2449,6 +2489,7 @@
       }
     },
     "previewSource": "sections/form-section/allentown/form-section-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/form-section/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/form-section-allentown.astro",
       "payload": "@kinekt-io/components/sections/form-section-allentown.payload",
@@ -2523,6 +2564,7 @@
       }
     },
     "previewSource": "sections/hd-cells-engineering/allentown/hd-cells-engineering-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/hd-cells-engineering/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/hd-cells-engineering-allentown.astro",
       "payload": "@kinekt-io/components/sections/hd-cells-engineering-allentown.payload",
@@ -2595,6 +2637,7 @@
       }
     },
     "previewSource": "sections/hero/allentown/hero-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/hero/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/hero-allentown.astro",
       "payload": "@kinekt-io/components/sections/hero-allentown.payload",
@@ -2672,6 +2715,7 @@
       }
     },
     "previewSource": "sections/hero/todos-santos/hero-todos-santos.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/hero/todos-santos.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/hero-todos-santos.astro",
       "payload": "@kinekt-io/components/sections/hero-todos-santos.payload",
@@ -2744,6 +2788,7 @@
       }
     },
     "previewSource": "sections/hero/trinity/hero-trinity.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/hero/trinity.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/hero-trinity.astro",
       "payload": "@kinekt-io/components/sections/hero-trinity.payload",
@@ -2891,6 +2936,7 @@
       }
     },
     "previewSource": "sections/homepage-problem-solution/allentown/homepage-problem-solution-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/homepage-problem-solution/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/homepage-problem-solution-allentown.astro",
       "payload": "@kinekt-io/components/sections/homepage-problem-solution-allentown.payload",
@@ -2966,6 +3012,7 @@
       }
     },
     "previewSource": "sections/insight-index/allentown/insight-index-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/insight-index/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/insight-index-allentown.astro",
       "payload": "@kinekt-io/components/sections/insight-index-allentown.payload",
@@ -3039,6 +3086,7 @@
       }
     },
     "previewSource": "sections/intake-form/allentown/intake-form-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/intake-form/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/intake-form-allentown.astro",
       "payload": "@kinekt-io/components/sections/intake-form-allentown.payload",
@@ -3118,6 +3166,7 @@
       }
     },
     "previewSource": "sections/media-accordion/allentown/media-accordion-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/media-accordion/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/media-accordion-allentown.astro",
       "payload": "@kinekt-io/components/sections/media-accordion-allentown.payload",
@@ -3181,6 +3230,7 @@
       }
     },
     "previewSource": "sections/media-fact-grid/allentown/media-fact-grid-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/media-fact-grid/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/media-fact-grid-allentown.astro",
       "payload": "@kinekt-io/components/sections/media-fact-grid-allentown.payload",
@@ -3253,6 +3303,7 @@
     },
     "runtimeProps": {},
     "previewSource": "sections/media-feature-list/allentown/media-feature-list-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/media-feature-list/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/media-feature-list-allentown.astro",
       "payload": "@kinekt-io/components/sections/media-feature-list-allentown.payload",
@@ -3314,6 +3365,7 @@
     },
     "runtimeProps": {},
     "previewSource": "sections/media-metrics/allentown/media-metrics-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/media-metrics/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/media-metrics-allentown.astro",
       "payload": "@kinekt-io/components/sections/media-metrics-allentown.payload",
@@ -3378,6 +3430,7 @@
     },
     "runtimeProps": {},
     "previewSource": "sections/moq-lead-times/allentown/moq-lead-times-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/moq-lead-times/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/moq-lead-times-allentown.astro",
       "payload": "@kinekt-io/components/sections/moq-lead-times-allentown.payload",
@@ -3438,6 +3491,7 @@
       }
     },
     "previewSource": "sections/not-found-hero/allentown/not-found-hero-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/not-found-hero/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/not-found-hero-allentown.astro",
       "payload": "@kinekt-io/components/sections/not-found-hero-allentown.payload",
@@ -3499,6 +3553,7 @@
     },
     "runtimeProps": {},
     "previewSource": "sections/output-card-grid/allentown/output-card-grid-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/output-card-grid/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/output-card-grid-allentown.astro",
       "payload": "@kinekt-io/components/sections/output-card-grid-allentown.payload",
@@ -3561,6 +3616,7 @@
       }
     },
     "previewSource": "sections/process-story/allentown/process-story-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/process-story/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/process-story-allentown.astro",
       "payload": "@kinekt-io/components/sections/process-story-allentown.payload",
@@ -3623,6 +3679,7 @@
       }
     },
     "previewSource": "sections/process-story/trinity/process-story-trinity.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/process-story/trinity.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/process-story-trinity.astro",
       "payload": "@kinekt-io/components/sections/process-story-trinity.payload",
@@ -3698,6 +3755,7 @@
       }
     },
     "previewSource": "sections/product-details/allentown/product-details-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/product-details/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/product-details-allentown.astro",
       "payload": "@kinekt-io/components/sections/product-details-allentown.payload",
@@ -3754,6 +3812,7 @@
       }
     },
     "previewSource": "sections/product-finder-form/allentown/product-finder-form-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/product-finder-form/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/product-finder-form-allentown.astro",
       "payload": "@kinekt-io/components/sections/product-finder-form-allentown.payload",
@@ -3838,6 +3897,7 @@
       }
     },
     "previewSource": "sections/product-hero/allentown/product-hero-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/product-hero/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/product-hero-allentown.astro",
       "payload": "@kinekt-io/components/sections/product-hero-allentown.payload",
@@ -3941,6 +4001,7 @@
     },
     "runtimeProps": {},
     "previewSource": "sections/product-options/allentown/product-options-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/product-options/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/product-options-allentown.astro",
       "payload": "@kinekt-io/components/sections/product-options-allentown.payload",
@@ -3999,6 +4060,7 @@
       }
     },
     "previewSource": "sections/project-glance/allentown/project-glance-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/project-glance/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/project-glance-allentown.astro",
       "payload": "@kinekt-io/components/sections/project-glance-allentown.payload",
@@ -4075,6 +4137,7 @@
       }
     },
     "previewSource": "sections/proof-metrics/allentown/proof-metrics-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/proof-metrics/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/proof-metrics-allentown.astro",
       "payload": "@kinekt-io/components/sections/proof-metrics-allentown.payload",
@@ -4137,6 +4200,7 @@
     },
     "runtimeProps": {},
     "previewSource": "sections/read-more/allentown/read-more-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/read-more/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/read-more-allentown.astro",
       "payload": "@kinekt-io/components/sections/read-more-allentown.payload",
@@ -4201,6 +4265,7 @@
       }
     },
     "previewSource": "sections/related-content/allentown/related-content-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/related-content/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/related-content-allentown.astro",
       "payload": "@kinekt-io/components/sections/related-content-allentown.payload",
@@ -4263,6 +4328,7 @@
       }
     },
     "previewSource": "sections/solution-list/allentown/solution-list-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/solution-list/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/solution-list-allentown.astro",
       "payload": "@kinekt-io/components/sections/solution-list-allentown.payload",
@@ -4329,6 +4395,7 @@
       }
     },
     "previewSource": "sections/steps/stage/steps-stage.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/steps/stage.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/steps-stage.astro",
       "payload": "@kinekt-io/components/sections/steps-stage.payload",
@@ -4406,6 +4473,7 @@
       }
     },
     "previewSource": "sections/support-contact/allentown/support-contact-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/support-contact/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/support-contact-allentown.astro",
       "payload": "@kinekt-io/components/sections/support-contact-allentown.payload",
@@ -4467,6 +4535,7 @@
       }
     },
     "previewSource": "sections/tabs/allentown/tabs-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/tabs/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/tabs-allentown.astro",
       "payload": "@kinekt-io/components/sections/tabs-allentown.payload",
@@ -4538,6 +4607,7 @@
       }
     },
     "previewSource": "sections/thank-you-hero/allentown/thank-you-hero-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/thank-you-hero/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/thank-you-hero-allentown.astro",
       "payload": "@kinekt-io/components/sections/thank-you-hero-allentown.payload",
@@ -4595,6 +4665,7 @@
     },
     "runtimeProps": {},
     "previewSource": "sections/use-cases/allentown/use-cases-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/use-cases/allentown.jpeg",
     "entries": {
       "astro": "@kinekt-io/components/sections/use-cases-allentown.astro",
       "payload": "@kinekt-io/components/sections/use-cases-allentown.payload",

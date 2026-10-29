@@ -7,6 +7,11 @@ const source = path.join(root, 'src')
 const entries = new Map()
 const components = new Map()
 
+const sectionThumbnailURL = (metadata, hasPreview) =>
+  metadata.category === 'sections' && hasPreview
+    ? `https://kinekt-io.github.io/kinekt-sections/thumbnails/${metadata.id}.jpeg`
+    : null
+
 function componentFor(relative) {
   const directory = path.dirname(relative)
   const component = components.get(directory) ?? { directory, entries: {} }
@@ -123,6 +128,15 @@ async function componentManifest(directory) {
 }
 
 await discover(source)
+
+entries.set('./section-thumbnails', {
+  source: 'shared/section-thumbnails.ts',
+  target: {
+    default: './dist/shared/section-thumbnails.js',
+    import: './dist/shared/section-thumbnails.js',
+    types: './dist/shared/section-thumbnails.d.ts',
+  },
+})
 if (!entries.size) throw new Error('No component entrypoints found inside src/.')
 
 const manifestPath = path.join(root, 'package.json')
@@ -152,6 +166,7 @@ for (const component of [...components.values()].sort((a, b) => a.directory.loca
     fields: metadata.fields,
     runtimeProps: metadata.runtimeProps ?? {},
     previewSource: component.previewSource ?? null,
+    thumbnailURL: sectionThumbnailURL(metadata, Boolean(component.previewSource)),
     entries: Object.fromEntries(Object.entries(component.entries).map(([kind, entry]) => [kind, `${manifest.name}/${entry.importPath}`])),
   })
 }

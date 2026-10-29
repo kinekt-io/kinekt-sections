@@ -43,20 +43,6 @@ const manifest = {
         }
       }
     },
-    "checklist": {
-      "kind": "componentList",
-      "componentId": "components/checklist-item/allentown",
-      "required": true,
-      "localized": true,
-      "minItems": 1,
-      "fields": {
-        "text": {
-          "kind": "text",
-          "required": true,
-          "localized": true
-        }
-      }
-    },
     "features": {
       "kind": "componentList",
       "componentId": "components/feature-item/allentown",
