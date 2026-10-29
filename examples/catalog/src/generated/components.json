@@ -4126,7 +4126,7 @@
       },
       "ctas": {
         "kind": "ctaGroup",
-        "required": true,
+        "required": false,
         "localized": true
       },
       "media": {
