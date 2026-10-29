@@ -27,25 +27,26 @@ const introDescription = intro.description == null || typeof intro.description =
 const introContent: SectionIntroContent = { ...intro, description: introDescription }
 const hasMedia = Boolean(image && typeof image === 'object' && typeof image.url === 'string')
 const visibleItems = items.filter((item) => (typeof item?.label === 'string' && item.label !== '') || (typeof item?.title === 'string' && item.title !== ''))
+const classes = ['process-story-allentown', hasMedia && 'process-story-allentown--with-media'].filter(Boolean).join(' ')
 ---
-<section class="process-story-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class={classes} id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="process-story-allentown__container">
-    <div class="process-story-allentown__lead">
-      <header class="process-story-allentown__intro">
-        <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
-      </header>
-      {hasMedia && image && <KinektMedia media={image} class="process-story-allentown__media" imageClass="process-story-allentown__image" loading={mediaLoading} />}
-    </div>
+    <header class="process-story-allentown__intro">
+      <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
+    </header>
 
-    {visibleItems.length > 0 && (
-      <ol class="process-story-allentown__items">
-        {visibleItems.map((item, index) => (
-          <li class="process-story-allentown__item">
-            <ProcessItem item={item} number={index + 1} headingLevel={itemHeadingLevel} />
-          </li>
-        ))}
-      </ol>
-    )}
+    <div class="process-story-allentown__content">
+      {hasMedia && image && <KinektMedia media={image} class="process-story-allentown__media" imageClass="process-story-allentown__image" loading={mediaLoading} />}
+      {visibleItems.length > 0 && (
+        <ul class="process-story-allentown__items">
+          {visibleItems.map((item) => (
+            <li class="process-story-allentown__item">
+              <ProcessItem item={item} headingLevel={itemHeadingLevel} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   </div>
 </section>
 <style is:global>
@@ -112,26 +113,22 @@ const visibleItems = items.filter((item) => (typeof item?.label === 'string' && 
   .process-story-allentown :is(p, ul, ol) { margin-block: 0; }
 </style>
 <style is:global>
-  /* Figma "Section - How we build your battery" (4779:129512), light: 1440 container; lead 576 inside a 680 column, 80 gap, 680 steps column. */
+  /* Figma “Close engineering alignment” (5255:545027): 1296px container, 1:2 media/content columns, 100px column gap. */
   :where(.process-story-allentown) {
-    --kiw--process-story-container-width: var(--content-width);
-    --kiw--process-story-column-gap: var(--section-space-l);
+    --kiw--process-story-container-width: var(--width-xxl);
     --kiw--process-story-stack-gap: var(--section-space-m);
-    --kiw--process-story-lead-width: var(--width-m);
-    --kiw--process-story-lead-gap: var(--space-l);
+    --kiw--process-story-content-gap: var(--section-space-xl);
+    --kiw--process-story-intro-width: var(--width-l);
     --kiw--process-story-intro-gap: var(--space-m);
     --kiw--process-story-heading-stack-gap: var(--space-xxs);
     --kiw--process-story-heading-size: var(--h2);
     --kiw--process-story-description-font-size: var(--text-l);
     --kiw--process-story-media-ratio: 4 / 5;
-    --kiw--process-story-items-offset: var(--space-xl);
-    --kiw--process-story-item-gap: var(--section-space-s);
-    --kiw--process-story-divider-color: var(--kinekt-component-line);
+    --kiw--process-story-item-gap: var(--section-space-m);
     --kinekt-section-content-width: var(--kiw--process-story-container-width);
     --kinekt-section-gap: var(--kiw--process-story-stack-gap);
   }
 
-  .process-story-allentown .process-story-allentown__lead { display: grid; gap: var(--kiw--process-story-lead-gap); min-width: 0; align-content: start; }
   .process-story-allentown .process-story-allentown__intro { min-width: 0; }
   .process-story-allentown .section-intro { display: grid; justify-items: start; gap: var(--kiw--process-story-intro-gap); }
   .process-story-allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
@@ -139,17 +136,17 @@ const visibleItems = items.filter((item) => (typeof item?.label === 'string' && 
   .process-story-allentown .section-intro__heading { max-width: none; font-size: var(--kiw--process-story-heading-size); }
   .process-story-allentown .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--kiw--process-story-description-font-size); line-height: var(--kinekt-component-text-line-height); }
   .process-story-allentown .section-intro__description > * { margin-block: 0; }
+
+  .process-story-allentown .process-story-allentown__content { display: grid; gap: var(--kiw--process-story-stack-gap); min-width: 0; }
   .process-story-allentown .process-story-allentown__media { display: block; min-width: 0; }
   .process-story-allentown .process-story-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; block-size: auto; aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--process-story-media-ratio)); object-fit: cover; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
-
-  .process-story-allentown .process-story-allentown__items { display: grid; min-width: 0; margin: 0; padding: 0; list-style: none; }
+  .process-story-allentown .process-story-allentown__items { display: grid; gap: var(--kiw--process-story-item-gap); min-width: 0; margin: 0; padding: 0; list-style: none; }
   .process-story-allentown .process-story-allentown__item { min-width: 0; }
-  .process-story-allentown .process-story-allentown__item + .process-story-allentown__item { margin-block-start: var(--kiw--process-story-item-gap); padding-block-start: var(--kiw--process-story-item-gap); border-block-start: var(--kinekt-component-border-width) solid var(--kiw--process-story-divider-color); }
 
   @media (min-width: 50rem) {
-    .process-story-allentown[data-kinekt-section] > .process-story-allentown__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; column-gap: var(--kiw--process-story-column-gap); }
-    .process-story-allentown .process-story-allentown__lead { max-inline-size: var(--kiw--process-story-lead-width); }
-    .process-story-allentown .process-story-allentown__items { padding-block-start: var(--kiw--process-story-items-offset); }
+    .process-story-allentown[data-kinekt-section] > .process-story-allentown__container { align-items: start; }
+    .process-story-allentown .process-story-allentown__intro { max-inline-size: var(--kiw--process-story-intro-width); }
+    .process-story-allentown--with-media .process-story-allentown__content { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); align-items: center; column-gap: var(--kiw--process-story-content-gap); }
   }
   @media (max-width: 49.999rem) {
     .process-story-allentown :is(h1, h2, h3, h4, h5, h6) { max-width: 100vw; }
