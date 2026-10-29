@@ -1,7 +1,7 @@
 ---
 import ProcessStory from './process-story-allentown.astro'
+const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
 
-// Figma "Section - How we build your battery" (4779:129512) shows no image, so the preview leaves the optional image out.
 const content = {
   theme: 'light' as const,
   intro: {
@@ -10,6 +10,12 @@ const content = {
     description: {
       html: '<p>From cell selection to series production, every Tulip battery follows the same controlled process. Each step is engineered, tested and documented, so the pack that reaches your platform performs as specified.</p>',
     },
+  },
+  image: {
+    url: placeholder('placeholder-800x1000.svg'),
+    alt: 'Battery engineers reviewing a prototype pack',
+    width: 800,
+    height: 1000,
   },
   items: [
     {
@@ -26,11 +32,6 @@ const content = {
       label: 'Validate',
       title: 'We test before deployment',
       description: 'Validate electrical, thermal and mechanical performance before the battery reaches the field.',
-    },
-    {
-      label: 'Produce',
-      title: 'Scale with controlled production',
-      description: 'Move validated designs into repeatable production with testing, traceability and quality control built in.',
     },
   ],
 }

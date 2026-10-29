@@ -1,4 +1,6 @@
 ---
+import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
+
 export interface ProcessItemContent {
   label: string
   title: string
@@ -7,57 +9,36 @@ export interface ProcessItemContent {
 
 interface Props {
   item: ProcessItemContent
-  /** 1-based position in the list; rendered as a two-digit marker (01, 02, …). */
-  number?: number
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   class?: string
 }
 
-const { item, number, headingLevel = 'h3', class: className } = Astro.props
+const { item, headingLevel = 'h3', class: className } = Astro.props
 const Heading = headingLevel
-const marker = typeof number === 'number' && Number.isFinite(number) ? String(number).padStart(2, '0') : undefined
 const classes = ['process-item-allentown', className].filter(Boolean).join(' ')
 ---
-<article class={classes}>
-  {(marker || item.label) && (
-    <Heading class="process-item-allentown__heading">
-      {marker && <span class="process-item-allentown__number" aria-hidden="true">{marker}</span>}
-      {item.label && <span class="process-item-allentown__label">{item.label}</span>}
-    </Heading>
-  )}
+<div class={classes}>
+  {item.label && <SubtitleFlightPath text={item.label} caps />}
   {(item.title || item.description) && (
     <div class="process-item-allentown__copy">
-      {item.title && <p class="process-item-allentown__title">{item.title}</p>}
+      {item.title && <Heading class="process-item-allentown__title">{item.title}</Heading>}
       {item.description && <p class="process-item-allentown__description">{item.description}</p>}
     </div>
   )}
-</article>
+</div>
 <style is:global>
-  /* Figma "Step Description" in "Section - How we build your battery" (4779:130248): number + step name (h3, line-height 1), then title (text-l 500) and description (text-m 1.5 in --primary). */
   :where(.process-item-allentown) {
-    --kiw--process-item-allentown-gap: var(--space-m);
-    --kiw--process-item-allentown-heading-gap: var(--space-xs);
-    --kiw--process-item-allentown-heading-size: var(--h3);
-    --kiw--process-item-allentown-number-font-family: var(--kinekt-component-mono, var(--mono-font-family));
-    --kiw--process-item-allentown-number-font-weight: 400;
-    --kiw--process-item-allentown-number-color: var(--kinekt-component-accent, currentColor);
-    --kiw--process-item-allentown-label-color: var(--kinekt-component-ink, currentColor);
-    --kiw--process-item-allentown-copy-gap: var(--space-xxs);
-    --kiw--process-item-allentown-title-size: var(--text-l);
+    --kiw--process-item-allentown-gap: var(--space-xl);
+    --kiw--process-item-allentown-copy-gap: var(--space-xs);
+    --kiw--process-item-allentown-title-size: var(--h4);
     --kiw--process-item-allentown-title-color: var(--kinekt-component-ink, currentColor);
-    --kiw--process-item-allentown-description-size: var(--text-m);
+    --kiw--process-item-allentown-description-size: var(--text-l);
     --kiw--process-item-allentown-description-line-height: 1.5;
-    --kiw--process-item-allentown-description-color: var(--kinekt-component-subtle, var(--kinekt-component-muted, currentColor));
+    --kiw--process-item-allentown-description-color: var(--kinekt-component-muted, currentColor);
   }
 
   .process-item-allentown { display: grid; gap: var(--kiw--process-item-allentown-gap); min-width: 0; }
-  .process-item-allentown .process-item-allentown__heading { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--kiw--process-item-allentown-heading-gap); max-width: none; margin: 0; font-family: var(--heading-font-family); font-size: var(--kiw--process-item-allentown-heading-size); font-weight: var(--heading-font-weight); line-height: 1; letter-spacing: var(--heading-letter-spacing); text-wrap: balance; }
-  .process-item-allentown .process-item-allentown__number { color: var(--kiw--process-item-allentown-number-color); font-family: var(--kiw--process-item-allentown-number-font-family); font-weight: var(--kiw--process-item-allentown-number-font-weight); font-variant-numeric: tabular-nums; }
-  .process-item-allentown .process-item-allentown__label { color: var(--kiw--process-item-allentown-label-color); }
   .process-item-allentown .process-item-allentown__copy { display: grid; gap: var(--kiw--process-item-allentown-copy-gap); }
-  .process-item-allentown .process-item-allentown__title { margin: 0; color: var(--kiw--process-item-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--process-item-allentown-title-size); font-weight: var(--heading-font-weight); line-height: 1; }
+  .process-item-allentown .process-item-allentown__title { max-width: none; margin: 0; color: var(--kiw--process-item-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--process-item-allentown-title-size); font-weight: var(--heading-font-weight); line-height: 1.2; letter-spacing: var(--heading-letter-spacing); text-wrap: balance; }
   .process-item-allentown .process-item-allentown__description { margin: 0; color: var(--kiw--process-item-allentown-description-color); font-size: var(--kiw--process-item-allentown-description-size); line-height: var(--kiw--process-item-allentown-description-line-height); white-space: pre-line; }
-  @media (max-width: 49.999rem) {
-    .process-item-allentown .process-item-allentown__title { line-height: 1.3; }
-  }
 </style>
