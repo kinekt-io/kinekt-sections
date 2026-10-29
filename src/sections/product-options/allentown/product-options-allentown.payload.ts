@@ -25,7 +25,12 @@ const manifest = {
       "kind": "component",
       "componentId": "components/intro/allentown",
       "required": true,
-      "localized": true
+      "localized": true,
+      "fields": {
+        "accentHeading": { "kind": "text", "required": false, "localized": true },
+        "heading": { "kind": "text", "required": true, "localized": true },
+        "description": { "kind": "richText", "required": false, "localized": true }
+      }
     },
     "ctas": {
       "kind": "ctaGroup",
@@ -38,7 +43,13 @@ const manifest = {
       "componentId": "components/option-card/allentown",
       "required": true,
       "localized": true,
-      "minItems": 1
+      "minItems": 1,
+      "fields": {
+        "image": { "kind": "media", "required": true, "localized": true },
+        "title": { "kind": "text", "required": true, "localized": true },
+        "description": { "kind": "textarea", "required": true, "localized": true },
+        "benefits": { "kind": "featureItems", "required": false, "localized": true }
+      }
     },
     "form": {
       "kind": "formEmbed",
