@@ -3,7 +3,7 @@ import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
-import type { Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { ctaGroupActions, type Cta, type Media, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import { isSafeWebUrl } from '../../../urls.js'
 
 interface Feature {
@@ -11,10 +11,6 @@ interface Feature {
   value: string
 }
 
-interface Cta {
-  label: string
-  href: string
-}
 
 interface Props {
   id?: string
@@ -23,7 +19,7 @@ interface Props {
   intro: SectionIntroContent
   featureHeading?: string
   features?: Feature[]
-  ctas?: { primary?: Cta; secondary?: Cta }
+  ctas?: { buttons?: Cta[]; primary?: Cta; secondary?: Cta } | Cta[]
   image: Media
   mobileImage?: Media
 }
@@ -36,7 +32,8 @@ function assertSafeImage(image: Media, name: string): void {
 }
 
 const { id, theme = 'dark', headingLevel = 'h1', intro, featureHeading, features = [], ctas, image, mobileImage } = Astro.props
-for (const cta of [ctas?.primary, ctas?.secondary]) if (cta && !isSafeWebUrl(cta.href)) throw new Error('ctas must use an HTTP(S) or root-relative URL.')
+const actions = ctaGroupActions(ctas)
+for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('ctas must use an HTTP(S) or root-relative URL.')
 assertSafeImage(image, 'image')
 if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 ---
@@ -54,10 +51,9 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
           </tbody>
         </table>
       )}
-      {(ctas?.primary || ctas?.secondary) && (
+      {actions.length > 0 && (
         <nav class="hero-todos-santos__actions" aria-label="Hero actions">
-          {ctas.primary && <Button class="hero-todos-santos__action hero-todos-santos__action--primary" size="l" href={ctas.primary.href} label={ctas.primary.label} />}
-          {ctas.secondary && <Button class="hero-todos-santos__action hero-todos-santos__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="clear" />}
+          {actions.map((action, index) => <Button class="hero-todos-santos__action" size={index === 0 ? 'l' : undefined} href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')} />)}
         </nav>
       )}
     </div>

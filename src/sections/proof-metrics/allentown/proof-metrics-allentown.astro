@@ -4,7 +4,7 @@ import Callout from '../../../components/callout/allentown/callout-allentown.ast
 import ResultItem from '../../../components/result-item/allentown/result-item-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { Cta, CtaGroup, Media, SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
+import { ctaGroupActions, type Cta, type CtaGroup, type Media, type SectionIntro as SectionIntroContent, type SectionTheme } from '../../../shared/content.js'
 
 type CalloutCta = Partial<Cta> | null | undefined
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
     label?: string
     intro: SectionIntroContent
     /** Payload contract (`components/cta-group/allentown`). */
-    ctaGroup?: { primary?: CalloutCta; secondary?: CalloutCta; primaryButton?: CalloutCta; secondaryButton?: CalloutCta } | null
+    ctaGroup?: CtaGroup | Cta[] | { primary?: CalloutCta; secondary?: CalloutCta; primaryButton?: CalloutCta; secondaryButton?: CalloutCta } | null
     /** Legacy preview shape. */
     cta?: { cta?: CalloutCta } | null
   } | null
@@ -26,11 +26,8 @@ interface Props {
 }
 
 const { id, theme = 'light', intro, metrics = [], media, callout, headingLevel = 'h2' } = Astro.props as Props
-// Normalise the Payload shape and the legacy preview shape into the shared Callout's `{ intro, ctaGroup }`.
-const usableCta = (cta: CalloutCta): Cta | undefined => (cta?.label && cta.href ? (cta as Cta) : undefined)
 const calloutGroup: CtaGroup = {
-  primary: usableCta(callout?.ctaGroup?.primary ?? callout?.ctaGroup?.primaryButton ?? callout?.cta?.cta),
-  secondary: usableCta(callout?.ctaGroup?.secondary ?? callout?.ctaGroup?.secondaryButton),
+  buttons: ctaGroupActions(callout?.ctaGroup ?? { primary: callout?.cta?.cta }),
 }
 const calloutContent = callout?.intro
   ? { intro: { ...callout.intro, accentHeading: callout.intro.accentHeading ?? callout.label }, ctaGroup: calloutGroup }
