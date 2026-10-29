@@ -81,12 +81,18 @@ const manifest = {
             "label": {
               "kind": "text",
               "required": true,
-              "localized": true
+              "localized": true,
+              "admin": {
+                "width": "50%"
+              }
             },
             "value": {
               "kind": "text",
               "required": true,
-              "localized": true
+              "localized": true,
+              "admin": {
+                "width": "50%"
+              }
             }
           }
         }

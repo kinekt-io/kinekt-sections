@@ -48,24 +48,12 @@ const manifest = {
       "required": true,
       "localized": true
     },
-    "featurePairs": {
-      "kind": "componentList",
-      "componentId": "components/feature-pair/allentown",
-      "minItems": 1,
+    "features": {
+      "kind": "featureItems",
       "required": true,
       "localized": true,
-      "fields": {
-        "label": {
-          "kind": "text",
-          "required": true,
-          "localized": true
-        },
-        "value": {
-          "kind": "text",
-          "required": true,
-          "localized": true
-        }
-      }
+      "minItems": 1,
+      "description": "Short product features. The renderer supplies the check marker."
     },
     "ctaGroup": {
       "kind": "component",
@@ -73,17 +61,13 @@ const manifest = {
       "required": true,
       "localized": true,
       "fields": {
-        "primaryButton": {
-          "kind": "cta",
+        "buttons": {
+          "kind": "ctaGroup",
           "required": false,
           "localized": true,
-          "description": "Optional primary Button component part."
-        },
-        "secondaryButton": {
-          "kind": "cta",
-          "required": false,
-          "localized": true,
-          "description": "Optional secondary Button component part."
+          "minItems": 0,
+          "maxItems": 2,
+          "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary or Clear."
         }
       }
     },

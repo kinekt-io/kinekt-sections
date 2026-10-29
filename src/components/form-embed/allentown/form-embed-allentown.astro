@@ -1,17 +1,15 @@
 ---
 /*
- * Form Embed Allentown: the one building block for forms in sections.
+ * Form Embed Allentown is the one building block for CMS-owned forms.
  *
- * Production forms are HubSpot embeds. Sections take the embed code as a
- * `formEmbed` field (Payload textarea, see shared/manifest-block.ts) and pass
- * it here; the integration owns executing it inside
- * `[data-kinekt-hubspot-form-placeholder]`. The catalogue never runs the code
- * and shows the non-submitting placeholder from the default slot instead.
+ * A non-empty HubSpot embed from the editor is emitted exactly where the
+ * form belongs. The provider's script owns the interactive form. The
+ * default slot, or the built-in placeholder, is only a catalogue fallback
+ * when there is no editor embed.
  *
  * All field styling lives here and targets native controls (label, input,
- * select, textarea, fieldset, radio/checkbox, details, submit), so the
- * placeholder and the real HubSpot form look the same. Sections only choose
- * placeholder fields and may tune the --kiw--form-embed-allentown-* variables.
+ * select, textarea, fieldset, radio/checkbox, details, submit), so a
+ * catalogue fallback and the real HubSpot form receive the same treatment.
  *
  * Placeholder helpers: __fields (stacked groups), __group (tight group, e.g.
  * a row plus a disclosure), __row (two columns from 50rem), __inline (field + attached submit), __options (framed radios),
@@ -28,30 +26,35 @@ interface Props {
   class?: string
 }
 
-const { loadingLabel = 'Form is loading', class: className } = Astro.props
+const { form, loadingLabel = 'Form is loading', class: className } = Astro.props
 const classes = ['form-embed-allentown', className].filter(Boolean).join(' ')
+const hasEmbed = typeof form === 'string' && form.trim() !== ''
 const hasPlaceholder = Astro.slots.has('default')
 const chevronDown = fas.faChevronDown.icon
 const sendIcon = ctaIconPaths['paper-plane']
 ---
-<div class={classes} data-kinekt-form-embed data-kinekt-hubspot-form-placeholder aria-label={loadingLabel}>
-  {hasPlaceholder ? <slot /> : (
-    <form class="form-embed-allentown__form" action="#" method="post">
-      <div class="form-embed-allentown__fields">
-        <div class="form-embed-allentown__row">
-          <label>Name <input name="name" autocomplete="name" placeholder="Morgan Reed" required /></label>
-          <label>Email address <input name="email" type="email" autocomplete="email" placeholder="morgan.reed@example.com" required /></label>
-        </div>
-        <label>Topic
-          <span class="form-embed-allentown__select">
-            <select name="topic"><option value="">Choose a topic</option></select>
-            <svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={`0 0 ${chevronDown[0]} ${chevronDown[1]}`} fill="currentColor"><path d={chevronDown[4] as string} /></svg>
-          </span>
-        </label>
-        <label>Message <textarea name="message" placeholder="Type here..." required></textarea></label>
-      </div>
-      <button type="submit">Send enquiry <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={sendIcon.viewBox} fill="none"><path d={sendIcon.path} stroke="currentColor" stroke-width="2" /></svg></button>
-    </form>
+<div class={classes} data-kinekt-form-embed aria-label={loadingLabel}>
+  {hasEmbed ? <div class="form-embed-allentown__provider" data-kinekt-hubspot-form set:html={form} /> : (
+    <div data-kinekt-hubspot-form-placeholder>
+      {hasPlaceholder ? <slot /> : (
+        <form class="form-embed-allentown__form" action="#" method="post">
+          <div class="form-embed-allentown__fields">
+            <div class="form-embed-allentown__row">
+              <label>Name <input name="name" autocomplete="name" placeholder="Morgan Reed" required /></label>
+              <label>Email address <input name="email" type="email" autocomplete="email" placeholder="morgan.reed@example.com" required /></label>
+            </div>
+            <label>Topic
+              <span class="form-embed-allentown__select">
+                <select name="topic"><option value="">Choose a topic</option></select>
+                <svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={`0 0 ${chevronDown[0]} ${chevronDown[1]}`} fill="currentColor"><path d={chevronDown[4] as string} /></svg>
+              </span>
+            </label>
+            <label>Message <textarea name="message" placeholder="Type here..." required></textarea></label>
+          </div>
+          <button type="submit">Send enquiry <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={sendIcon.viewBox} fill="none"><path d={sendIcon.path} stroke="currentColor" stroke-width="2" /></svg></button>
+        </form>
+      )}
+    </div>
   )}
 </div>
 

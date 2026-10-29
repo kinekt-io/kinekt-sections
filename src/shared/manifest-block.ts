@@ -1,17 +1,24 @@
 import type { Block, CollectionSlug, Field } from 'payload'
-import { ctaFields, ctaGroupFields } from './payload-fields.js'
+import { ctaFields } from './payload-fields.js'
 
 type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'insightSourceList' | 'contentReferenceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
 
+interface ManifestFieldAdmin {
+  description?: string
+  initCollapsed?: boolean
+  width?: string
+}
 interface ManifestField {
   kind: FieldKind
   required: boolean
   localized: boolean
   options?: readonly string[]
   minItems?: number
+  maxItems?: number
   componentId?: string
   fields?: Readonly<Record<string, ManifestField>>
   description?: string
+  admin?: ManifestFieldAdmin
 }
 
 type SectionStatus = 'planned' | 'alpha' | 'beta' | 'prerelease' | 'release' | 'released' | 'deprecated'
@@ -52,6 +59,7 @@ function commonField(name: string, field: ManifestField, parentLocalized: boolea
     name,
     required: field.required,
     ...(field.localized && !parentLocalized ? { localized: true as const } : {}),
+    ...(field.admin ? { admin: field.admin } : {}),
   }
 }
 
@@ -63,16 +71,41 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
     case 'text': return { ...common, type: 'text' }
     case 'textarea': return { ...common, type: 'textarea' }
     case 'richText': return { ...common, type: 'richText' }
-    case 'dateTime': return { ...common, type: 'date', admin: { date: { pickerAppearance: 'dayAndTime' } } }
+    case 'dateTime': return { ...common, type: 'date', admin: { ...field.admin, date: { pickerAppearance: 'dayAndTime' } } }
     case 'select':
     case 'theme': return { ...common, type: 'select', options: (field.options ?? ['light', 'dark']).map((value) => ({ label: value, value })) }
     case 'media':
     case 'video': return { ...common, type: 'upload', relationTo: options.mediaCollection }
     case 'mediaList': return { ...common, type: 'array', minRows: field.minItems, fields: [{ name: 'media', type: 'upload', relationTo: options.mediaCollection, required: true }] }
     case 'cta': return { ...common, type: 'group', fields: ctaFields(options.targetCollections, field.required) }
-    case 'ctaGroup': return { ...common, type: 'group', fields: ctaGroupFields(options.targetCollections) }
+    case 'ctaGroup': return {
+      ...common,
+      type: 'array',
+      minRows: field.minItems ?? 0,
+      maxRows: field.maxItems ?? 2,
+      admin: { initCollapsed: true, ...field.admin },
+      fields: [
+        {
+          name: 'style',
+          type: 'select',
+          required: true,
+          defaultValue: 'primary',
+          options: [
+            { label: 'Primary', value: 'primary' },
+            { label: 'Secondary', value: 'secondary' },
+            { label: 'Clear', value: 'clear' },
+          ],
+        },
+        ...ctaFields(options.targetCollections),
+      ],
+    }
     case 'sectionIntro': return { ...common, type: 'group', fields: introFields() }
-    case 'component': return { ...common, type: 'group', fields: childFields(field, options, descendantsLocalized) }
+    case 'component': {
+      const admin = field.componentId === 'components/intro/allentown' || field.componentId === 'components/cta-group/allentown'
+        ? { initCollapsed: true, ...field.admin }
+        : field.admin
+      return { ...common, ...(admin ? { admin } : {}), type: 'group', fields: childFields(field, options, descendantsLocalized) }
+    }
     case 'componentList': return { ...common, type: 'array', minRows: field.minItems, fields: childFields(field, options, descendantsLocalized) }
     case 'infoItems':
     case 'featureItems':
@@ -122,7 +155,7 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
       ],
     }
     // HubSpot embed code (production forms are embeds). Rendered by components/form-embed/allentown.
-    case 'formEmbed': return { ...common, type: 'textarea', admin: { rows: 8, description: field.description ?? 'Paste the HubSpot form embed code. The component preview keeps using a non-submitting placeholder form.' } }
+    case 'formEmbed': return { ...common, type: 'textarea', admin: { ...field.admin, rows: 8, description: field.description ?? 'Paste the HubSpot form embed code. The component preview keeps using a non-submitting placeholder form.' } }
     case 'formReference': {
       if (!options.formCollection) throw new Error(`Field ${name} requires a formCollection; JSON fallback is forbidden.`)
       return { ...common, type: 'relationship', relationTo: options.formCollection }

@@ -1,42 +1,21 @@
 ---
 import MoqLeadTimesAllentown from './moq-lead-times-allentown.astro'
 ---
-
 <MoqLeadTimesAllentown
   theme="dark"
   intro={{
     accentHeading: 'Ordering & delivery',
-    heading: 'From first order to scalable supply',
-    description: 'Clear order quantities and predictable lead times help you plan from early testing through recurring production.',
+    heading: 'Supply that scales with your program',
+    description: 'We match your production schedule, from first order to full-scale.',
   }}
-  cta={{
-    cta: {
-      label: 'Discuss with an expert',
-      href: '#',
-    },
-  }}
+  cta={{ cta: { label: 'Book a call', href: '#', icon: 'arrow-right' } }}
   moq={{
-    title: 'Minimum order quantity',
-    description: 'Start small. Scale when you are ready.',
-    value: {
-      icon: 'Production',
-      text: 'From 200 units',
-    },
+    title: 'Minimum quantity',
+    description: 'Per order',
+    value: { text: 'From €50,000' },
   }}
   leadTimes={[
-    {
-      title: 'Sample',
-      description: 'Evaluation units prepared for the next engineering decision.',
-      value: {
-        text: '2–3 weeks',
-      },
-    },
-    {
-      title: 'Production',
-      description: 'Confirmed production windows for approved specifications.',
-      value: {
-        text: '8–10 weeks',
-      },
-    },
+    { title: 'Sample', description: 'Sample delivery window', value: { text: 'Ask our team' } },
+    { title: 'Production', description: 'Production delivery window', value: { text: 'Around your schedule' } },
   ]}
 />

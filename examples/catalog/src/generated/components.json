@@ -829,12 +829,18 @@
       "label": {
         "kind": "text",
         "required": true,
-        "localized": true
+        "localized": true,
+        "admin": {
+          "width": "50%"
+        }
       },
       "value": {
         "kind": "text",
         "required": true,
-        "localized": true
+        "localized": true,
+        "admin": {
+          "width": "50%"
+        }
       }
     },
     "runtimeProps": {},
@@ -852,16 +858,11 @@
     "role": "step",
     "variation": "stage",
     "title": "Step Stage",
-    "description": "A visible process step with a required localized stage label, derived sequence number, title, description, and optional CTA group.",
+    "description": "A numbered process step with a localized title and description.",
     "status": "planned",
-    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414405&t=mG3L6xlBzomA03GY-11",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5676-552040&t=OtYEVTRRdAJJYQ0v-11",
     "variants": {},
     "fields": {
-      "stage": {
-        "kind": "text",
-        "required": true,
-        "localized": true
-      },
       "title": {
         "kind": "text",
         "required": true,
@@ -870,12 +871,6 @@
       "description": {
         "kind": "textarea",
         "required": true,
-        "localized": true
-      },
-      "ctaGroup": {
-        "kind": "component",
-        "componentId": "components/cta-group/allentown",
-        "required": false,
         "localized": true
       }
     },
@@ -2419,10 +2414,10 @@
         "description": "Desktop media position. Mobile always presents content before media."
       },
       "form": {
-        "kind": "textarea",
+        "kind": "formEmbed",
         "required": true,
         "localized": true,
-        "description": "HubSpot embed code. The wireframe preview renders a safe placeholder; the integration owns execution of the embed."
+        "description": "Paste the complete HubSpot embed code. The frontend renders it in place."
       },
       "contactHeading": {
         "kind": "text",
@@ -3334,7 +3329,7 @@
     "title": "MOQ Lead Times Allentown",
     "description": "A reusable ordering and delivery section with MOQ and lead-time facts.",
     "status": "prerelease",
-    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4811-283011&t=mG3L6xlBzomA03GY-11",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5823-638305&t=OtYEVTRRdAJJYQ0v-11",
     "variants": {},
     "fields": {
       "theme": {
@@ -3772,7 +3767,7 @@
     "role": "product-hero",
     "variation": "allentown",
     "title": "Product Hero Allentown",
-    "description": "A reusable product hero with introductory content, product feature pairs, actions and responsive media.",
+    "description": "A reusable product hero with introductory content, product feature items, actions and responsive media.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538028&t=OtYEVTRRdAJJYQ0v-11",
     "variants": {},
@@ -3800,12 +3795,12 @@
         "required": true,
         "localized": true
       },
-      "featurePairs": {
-        "kind": "componentList",
-        "componentId": "components/feature-pair/allentown",
-        "minItems": 1,
+      "features": {
+        "kind": "featureItems",
         "required": true,
-        "localized": true
+        "localized": true,
+        "minItems": 1,
+        "description": "Short product features. The renderer supplies the check marker."
       },
       "ctaGroup": {
         "kind": "component",
@@ -4556,7 +4551,7 @@
     "role": "use-cases",
     "variation": "allentown",
     "title": "Use Cases Allentown",
-    "description": "A reusable use-cases section with a labelled action-capable use-case grid.",
+    "description": "A reusable use-cases section with an advantage heading and action-capable use-case grid.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-544548",
     "variants": {},
@@ -4580,18 +4575,6 @@
         "localized": true
       },
       "advantageHeading": {
-        "kind": "text",
-        "required": true,
-        "localized": true
-      },
-      "advantages": {
-        "kind": "componentList",
-        "componentId": "atoms/label/allentown",
-        "required": true,
-        "localized": true,
-        "minItems": 1
-      },
-      "gridHeading": {
         "kind": "text",
         "required": true,
         "localized": true

@@ -76,17 +76,13 @@ const manifest = {
           "required": false,
           "localized": true,
           "fields": {
-            "primaryButton": {
-              "kind": "cta",
+            "buttons": {
+              "kind": "ctaGroup",
               "required": false,
               "localized": true,
-              "description": "Optional primary Button component part."
-            },
-            "secondaryButton": {
-              "kind": "cta",
-              "required": false,
-              "localized": true,
-              "description": "Optional secondary Button component part."
+              "minItems": 0,
+              "maxItems": 2,
+              "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary or Clear."
             }
           }
         }

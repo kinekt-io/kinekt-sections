@@ -1,150 +1,154 @@
 ---
-// @generated structural section — source manifest remains the contract.
-import StructuralSection from '../../../shared/structural-section.astro'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import Callout from '../../../components/callout/allentown/callout-allentown.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import { ctaGroupActions, type Cta, type CtaGroup, type RichText, type SectionIntro as SectionIntroContent, type SectionTheme } from '../../../shared/content.js'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import type { BetaFaqAllentownContent } from './faq-allentown.types.js'
 
-const props = Astro.props
-const fields = {
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "items": {
-    "kind": "componentList",
-    "id": "components/faq-item/allentown",
-    "role": "faq-item",
-    "fields": {
-      "question": {
-        "kind": "text"
-      },
-      "answer": {
-        "kind": "textarea"
-      }
-    }
-  },
-  "overviewCta": {
-    "kind": "component",
-    "id": "controls/button/allentown",
-    "role": "button",
-    "fields": {
-      "cta": {
-        "kind": "cta"
-      }
-    }
-  },
-  "callout": {
-    "kind": "component",
-    "id": "components/callout/allentown",
-    "role": "callout",
-    "fields": {
-      "intro": {
-        "kind": "component",
-        "id": "components/intro/allentown",
-        "role": "intro",
-        "fields": {
-          "accentHeading": {
-            "kind": "text"
-          },
-          "heading": {
-            "kind": "text"
-          },
-          "description": {
-            "kind": "richText"
-          }
-        }
-      },
-      "ctaGroup": {
-        "kind": "component",
-        "id": "components/cta-group/allentown",
-        "role": "cta-group",
-        "fields": {
-          "primaryButton": {
-            "kind": "cta"
-          },
-          "secondaryButton": {
-            "kind": "cta"
-          }
-        }
-      }
-    }
-  }
+type HeadingLevel = 'h1' | 'h2' | 'h3'
+type RichTextInput = string | RichText | Record<string, unknown>
+type IntroInput = Omit<SectionIntroContent, 'description'> & { description?: RichTextInput | null }
+type CtaInput = Partial<Cta> | null | undefined
+
+interface FaqItem {
+  question: string
+  answer: string
 }
+
+interface Props extends BetaFaqAllentownContent {
+  id?: string
+  theme?: SectionTheme
+  headingLevel?: HeadingLevel
+  intro: IntroInput
+  items?: FaqItem[]
+  overviewCta?: { cta?: CtaInput } | CtaInput
+  callout?: { intro: IntroInput; ctaGroup?: CtaGroup | { primaryButton?: CtaInput; secondaryButton?: CtaInput } | null } | null
+}
+
+const { id, theme = 'semi-light', headingLevel = 'h2', intro, items = [], overviewCta, callout } = Astro.props as Props
+const toHtml = (value: RichTextInput, field: string): string => {
+  if (typeof value === 'string') return value.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).map((part) => richTextToHtml(part, field)).join('')
+  if (typeof value.html === 'string') return value.html
+  return richTextToHtml(value, field)
+}
+const normaliseIntro = (value: IntroInput, field: string): SectionIntroContent => ({
+  ...value,
+  description: value.description == null || typeof value.description === 'string' ? value.description ?? undefined : { html: toHtml(value.description, field) },
+})
+const usableCta = (value: CtaInput): Cta | undefined => typeof value?.label === 'string' && value.label.trim() !== '' && typeof value.href === 'string' && value.href.trim() !== '' ? value as Cta : undefined
+const ctaFrom = (value: unknown): CtaInput => typeof value === 'object' && value !== null && 'cta' in value ? (value as { cta?: CtaInput }).cta : value as CtaInput
+const introContent = normaliseIntro(intro, 'intro.description')
+const faqs = items.filter((item) => typeof item?.question === 'string' && item.question.trim() !== '' && typeof item.answer === 'string' && item.answer.trim() !== '')
+const overviewAction = usableCta(ctaFrom(overviewCta))
+const calloutContent = callout?.intro && typeof callout.intro.heading === 'string' && callout.intro.heading.trim() !== ''
+  ? { intro: normaliseIntro(callout.intro, 'callout.intro.description'), ctaGroup: { buttons: ctaGroupActions(callout.ctaGroup) } }
+  : undefined
+const CalloutHeading: HeadingLevel = headingLevel === 'h1' ? 'h2' : 'h3'
+const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]}`, path: faChevronDown.icon[4] as string }
 ---
-<StructuralSection block="beta-faq-allentown" fields={fields} {...props} />
+<section class="beta-faq-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="beta-faq-allentown__container">
+    <div class="beta-faq-allentown__main">
+      <header class="beta-faq-allentown__intro">
+        <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
+      </header>
+
+      {faqs.length > 0 && (
+        <ul class="beta-faq-allentown__items" data-kinekt-disclosure-group>
+          {faqs.map((item, index) => (
+            <li class="beta-faq-allentown__item">
+              <details class="beta-faq-allentown__faq" open={index === 0} data-kinekt-disclosure>
+                <summary class="beta-faq-allentown__question">
+                  <span class="beta-faq-allentown__question-text">{item.question}</span>
+                  <svg class="beta-faq-allentown__toggle" aria-hidden="true" focusable="false" viewBox={chevron.viewBox}><path d={chevron.path} fill="currentColor" /></svg>
+                </summary>
+                <p class="beta-faq-allentown__answer">{item.answer}</p>
+              </details>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {overviewAction && (() => {
+        const icon = isCtaIcon(overviewAction.icon) ? ctaIconPaths[overviewAction.icon] : undefined
+        return <div class="beta-faq-allentown__overview"><Button href={overviewAction.href} label={overviewAction.label} style="clear">{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="none"><path d={icon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button></div>
+      })()}
+    </div>
+
+    {calloutContent && <Callout class="beta-faq-allentown__callout" callout={calloutContent} size="medium" headingLevel={CalloutHeading} />}
+  </div>
+</section>
+<script>
+  import { initializeKinektInteractions } from '../../../shared/interactions'
+  initializeKinektInteractions()
+</script>
 <style is:global>
-.beta-faq-allentown[data-kinekt-section] {
-  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--faq-allentown-site-width, var(--website-width)));
-  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--faq-allentown-content-width, var(--content-width)));
-  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--faq-allentown-reading-width, var(--width-m)));
-  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--faq-allentown-inline-space, var(--section-gutter)));
-  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--faq-allentown-block-space, var(--section-space-l)));
-  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--faq-allentown-gap, var(--content-gap)));
-  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--faq-allentown-radius, var(--radius-none)));
-  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--faq-allentown-border-width, var(--border-width)));
-  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--faq-allentown-media-filter, var(--media-filter)));
-  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--faq-allentown-intro-accent-gap, var(--space-xxs)));
-  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--faq-allentown-intro-description-gap, var(--space-m)));
-  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--faq-allentown-heading-1-size, var(--h1)));
-  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--faq-allentown-heading-2-size, var(--h2)));
-  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--faq-allentown-heading-3-size, var(--h3)));
-  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--faq-allentown-heading-4-size, var(--h4)));
-  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--faq-allentown-heading-5-size, var(--h5)));
-  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--faq-allentown-heading-6-size, var(--h6)));
-  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--faq-allentown-heading-font-family, var(--heading-font-family)));
-  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--faq-allentown-heading-font-weight, var(--heading-font-weight)));
-  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--faq-allentown-heading-line-height, var(--heading-line-height)));
-  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--faq-allentown-heading-letter-spacing, var(--heading-letter-spacing)));
-  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--faq-allentown-text-font-family, var(--text-font-family)));
-  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--faq-allentown-text-font-weight, var(--text-font-weight)));
-  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--faq-allentown-text-line-height, var(--text-line-height)));
-  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--faq-allentown-text-letter-spacing, var(--text-letter-spacing)));
-  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--faq-allentown-mono-font-family, var(--mono-font-family)));
-  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--faq-allentown-text-xs-size, var(--text-xs)));
-  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--faq-allentown-text-s-size, var(--text-s)));
-  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--faq-allentown-text-m-size, var(--text-m)));
-  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--faq-allentown-text-l-size, var(--text-l)));
-  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--faq-allentown-text-xl-size, var(--text-xl)));
-  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--faq-allentown-text-xxl-size, var(--text-xxl)));
-  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--faq-allentown-carousel-gap, var(--content-gap)));
-  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--faq-allentown-actions-gap, var(--space-l)));
-  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--faq-allentown-actions-margin, var(--section-space-xs)));
-  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--faq-allentown-button-height, var(--input-height)));
-  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--faq-allentown-button-padding-block, var(--space-s)));
-  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--faq-allentown-button-padding-inline, var(--space-l)));
-  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--faq-allentown-button-radius, var(--buttons-radius)));
-  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--faq-allentown-input-height, var(--input-height)));
-  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--faq-allentown-editorial-gap, var(--section-space-xxl)));
-  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--faq-allentown-card-padding, var(--space-l)));
-  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--faq-allentown-header-to-content-gap, var(--section-space-s)));
-  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--faq-allentown-table-offset, var(--space-xl)));
-  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--faq-allentown-canvas));
-  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--faq-allentown-surface));
-  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--faq-allentown-ink));
-  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--faq-allentown-muted));
-  --kiw--section-subtle: var(--kinekt-section-subtle, var(--kiw--faq-allentown-subtle));
-  --kiw--section-line: var(--kinekt-section-line, var(--kiw--faq-allentown-line));
-  --kiw--section-action: var(--kinekt-section-action, var(--kiw--faq-allentown-action));
-  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--faq-allentown-action-text));
-  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--faq-allentown-accent));
-  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--faq-allentown-action-icon));
-}
-</style>
-<style is:global>
-:where(.beta-faq-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
-:where(.beta-faq-allentown[data-kinekt-structural-section]) .beta-faq-allentown__header { text-align: center; }
-:where(.beta-faq-allentown[data-kinekt-structural-section]) .beta-faq-allentown__header-content { margin-inline: auto; }
+  :where(.beta-faq-allentown) {
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--faq-allentown-canvas, var(--neutral-ultra-light)));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--faq-allentown-surface, var(--white)));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--faq-allentown-ink, var(--primary-ultra-dark)));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--faq-allentown-muted, var(--primary-semi-dark)));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--faq-allentown-line, var(--primary-ultra-light)));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--faq-allentown-action, var(--primary)));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--faq-allentown-accent, var(--accent-semi-dark)));
+    --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--faq-allentown-site-width, var(--website-width)));
+    --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--faq-allentown-content-width, var(--width-l)));
+    --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--faq-allentown-inline-space, var(--section-gutter)));
+    --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--faq-allentown-block-space, var(--section-space-l)));
+    --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--faq-allentown-border-width, var(--border-width)));
+    --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--faq-allentown-heading-line-height, var(--heading-line-height)));
+    --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--faq-allentown-text-line-height, var(--text-line-height)));
+    --kiw--faq-allentown-container-gap: var(--section-space-xl);
+    --kiw--faq-allentown-main-gap: var(--section-space-m);
+    --kiw--faq-allentown-heading-stack-gap: var(--space-xxs);
+    --kiw--faq-allentown-item-gap: var(--space-xl);
+    --kiw--faq-allentown-question-gap: var(--space-l);
+    --kiw--faq-allentown-question-size: var(--text-xl);
+    --kiw--faq-allentown-answer-gap: var(--space-m);
+    --kiw--faq-allentown-answer-size: var(--text-l);
+    --kiw--faq-allentown-focus-color: var(--kinekt-component-action);
+    box-sizing: border-box;
+    padding-block: var(--kinekt-component-block-space);
+    color: var(--kinekt-component-ink);
+    background: var(--kinekt-component-canvas);
+    font-family: var(--kinekt-section-text-font-family, var(--text-font-family));
+    font-size: var(--kinekt-section-text-m-size, var(--text-m));
+    font-weight: var(--kinekt-section-text-font-weight, var(--text-font-weight));
+    line-height: var(--kinekt-component-text-line-height);
+    letter-spacing: var(--kinekt-section-text-letter-spacing, var(--text-letter-spacing));
+  }
+
+  :where(.beta-faq-allentown[data-kinekt-theme='semi-light']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--faq-allentown-canvas, var(--neutral-light))); }
+  :where(.beta-faq-allentown[data-kinekt-theme='dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--faq-allentown-canvas, var(--primary-ultra-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--faq-allentown-surface, var(--primary-semi-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--faq-allentown-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--faq-allentown-muted, var(--primary-ultra-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--faq-allentown-line, var(--primary))); }
+  :where(.beta-faq-allentown[data-kinekt-theme='semi-dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--faq-allentown-canvas, var(--primary-dark))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--faq-allentown-surface, var(--primary-semi-dark))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--faq-allentown-ink, var(--white))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--faq-allentown-muted, var(--primary-light))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--faq-allentown-line, var(--primary))); }
+  :where(.beta-faq-allentown) *, :where(.beta-faq-allentown) *::before, :where(.beta-faq-allentown) *::after { box-sizing: border-box; }
+  :where(.beta-faq-allentown) [hidden] { display: none !important; }
+
+  .beta-faq-allentown > .beta-faq-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kiw--faq-allentown-container-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
+  .beta-faq-allentown .beta-faq-allentown__main { display: grid; gap: var(--kiw--faq-allentown-main-gap); min-width: 0; }
+  .beta-faq-allentown .beta-faq-allentown__intro { min-width: 0; text-align: center; }
+  .beta-faq-allentown .beta-faq-allentown__intro .section-intro { display: grid; justify-items: center; gap: var(--space-m); }
+  .beta-faq-allentown .beta-faq-allentown__intro .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
+  .beta-faq-allentown .beta-faq-allentown__intro .section-intro__heading-group { display: grid; justify-items: center; gap: var(--kiw--faq-allentown-heading-stack-gap); }
+  .beta-faq-allentown .beta-faq-allentown__intro .section-intro__heading { max-width: none; font-size: var(--kinekt-section-heading-2-size, var(--h2)); }
+  .beta-faq-allentown .beta-faq-allentown__intro .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--text-l); }
+  .beta-faq-allentown .beta-faq-allentown__intro .section-intro__description > * { margin-block: 0; }
+  .beta-faq-allentown .beta-faq-allentown__items { display: grid; min-width: 0; margin: 0; padding: 0; list-style: none; }
+  .beta-faq-allentown .beta-faq-allentown__item { min-width: 0; }
+  .beta-faq-allentown .beta-faq-allentown__item + .beta-faq-allentown__item { margin-block-start: var(--kiw--faq-allentown-item-gap); padding-block-start: var(--kiw--faq-allentown-item-gap); border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+  .beta-faq-allentown .beta-faq-allentown__faq { display: block; margin: 0; }
+  .beta-faq-allentown .beta-faq-allentown__question { display: flex; align-items: center; justify-content: space-between; gap: var(--kiw--faq-allentown-question-gap); color: var(--kinekt-component-ink); font-family: var(--kinekt-section-heading-font-family, var(--heading-font-family)); font-size: var(--kiw--faq-allentown-question-size); font-weight: var(--kinekt-section-heading-font-weight, var(--heading-font-weight)); line-height: 1; letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--heading-letter-spacing)); list-style: none; cursor: pointer; }
+  .beta-faq-allentown .beta-faq-allentown__question::-webkit-details-marker { display: none; }
+  .beta-faq-allentown .beta-faq-allentown__question:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kiw--faq-allentown-focus-color); outline-offset: var(--space-xxs); }
+  .beta-faq-allentown .beta-faq-allentown__question-text { min-width: 0; }
+  .beta-faq-allentown .beta-faq-allentown__toggle { flex: none; inline-size: 1em; block-size: 1em; color: var(--kinekt-component-accent); transition: transform 150ms ease; }
+  .beta-faq-allentown .beta-faq-allentown__faq[open] .beta-faq-allentown__toggle { transform: rotate(180deg); }
+  .beta-faq-allentown .beta-faq-allentown__answer { margin: var(--kiw--faq-allentown-answer-gap) 0 0; color: var(--kinekt-component-muted); font-size: var(--kiw--faq-allentown-answer-size); line-height: var(--kinekt-component-text-line-height); white-space: pre-line; }
+  .beta-faq-allentown .beta-faq-allentown__overview { display: flex; justify-content: center; }
+  .beta-faq-allentown .beta-faq-allentown__callout { --kiw--callout-allentown-copy-gap: var(--space-s); }
+  @media (max-width: 49.999rem) { .beta-faq-allentown .beta-faq-allentown__question { line-height: 1.3; } }
+  @media (prefers-reduced-motion: reduce) { .beta-faq-allentown .beta-faq-allentown__toggle { transition: none; } }
 </style>
