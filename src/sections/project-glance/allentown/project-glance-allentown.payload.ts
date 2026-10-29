@@ -6,7 +6,7 @@ import type { BetaProjectGlanceAllentownContent, PayloadBetaProjectGlanceAllento
 const manifest = {
   "slug": "project-glance-allentown",
   "title": "Project Glance Allentown",
-  "status": "planned",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",

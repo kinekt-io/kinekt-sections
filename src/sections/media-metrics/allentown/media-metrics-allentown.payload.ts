@@ -7,7 +7,7 @@ import type { MediaMetricsAllentownContent, PayloadMediaMetricsAllentownDocument
 const manifest = {
   "slug": "media-metrics-allentown",
   "title": "Media Metrics Allentown",
-  "status": "beta",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",

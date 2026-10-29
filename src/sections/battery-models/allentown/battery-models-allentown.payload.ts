@@ -6,7 +6,7 @@ import type { BetaBatteryModelsAllentownContent, PayloadBetaBatteryModelsAllento
 const manifest = {
   "slug": "battery-models-allentown",
   "title": "Battery Models Allentown",
-  "status": "beta",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",

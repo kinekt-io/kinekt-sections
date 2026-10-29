@@ -6,7 +6,7 @@ import type { BetaActionContactAllentownContent, PayloadBetaActionContactAllento
 const manifest = {
   "slug": "action-contact-allentown",
   "title": "Action Contact Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

@@ -6,7 +6,7 @@ import type { BetaTabsAllentownContent, PayloadBetaTabsAllentownDocument } from 
 const manifest = {
   "slug": "tabs-allentown",
   "title": "Tabs Allentown",
-  "status": "planned",
+  "status": "beta",
   "fields": {
     "theme": {
       "kind": "select",

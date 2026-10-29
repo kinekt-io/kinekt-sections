@@ -6,7 +6,7 @@ import type { BetaArticleHeaderAllentownContent, PayloadBetaArticleHeaderAllento
 const manifest = {
   "slug": "article-header-allentown",
   "title": "Article Header Allentown",
-  "status": "planned",
+  "status": "prerelease",
   "fields": {
     "theme": {
       "kind": "select",
