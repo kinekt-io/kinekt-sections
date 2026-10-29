@@ -86,8 +86,8 @@ export function betaProductOptionsAllentownToProps(data: PayloadProductOptionsAl
     ...(ctas ? { ctas } : {}),
     options: requireArray(data.options, 'options').map((item, index) => {
       const option = requireObject(item, `options[${index}]`)
-      const benefits = option.benefits === undefined || option.benefits === null
-        ? option.benefits
+      const benefits = option.benefits === undefined || option.benefits === null || (Array.isArray(option.benefits) && option.benefits.length === 0)
+        ? undefined
         : requireArray(option.benefits, `options[${index}].benefits`).map((benefit, benefitIndex) =>
             requireText(benefit, `options[${index}].benefits[${benefitIndex}]`),
           )
