@@ -24,7 +24,7 @@ async function fixture(t) {
   }
 }
 
-test('discovers nested paired sections and standalone components without exporting helpers', async (t) => {
+test('discovers nested components and preserves the public thumbnail utility', async (t) => {
   const f = await fixture(t)
   await f.add('sections/hero/allentown/manifest.json', JSON.stringify({
     $schema: 'https://kinekt.io/schemas/component-manifest.schema.json',
@@ -64,9 +64,15 @@ test('discovers nested paired sections and standalone components without exporti
     fields: {},
   }))
   await f.add('controls/button/button.astro')
+  await f.add('shared/section-thumbnails.ts')
   f.run()
   assert.deepEqual(await f.exports(), {
     './controls/button.astro': './src/controls/button/button.astro',
+    './section-thumbnails': {
+      default: './dist/shared/section-thumbnails.js',
+      import: './dist/shared/section-thumbnails.js',
+      types: './dist/shared/section-thumbnails.d.ts',
+    },
     './sections/hero-allentown.astro': './src/sections/hero/allentown/hero-allentown.astro',
     './sections/hero-allentown.payload': {
       default: './dist/sections/hero/allentown/hero-allentown.payload.js',
@@ -96,6 +102,7 @@ test('discovers nested paired sections and standalone components without exporti
       fields: {},
       runtimeProps: {},
       previewSource: null,
+      thumbnailURL: null,
       entries: { astro: '@test/components/controls/button.astro' },
     },
     {
@@ -114,6 +121,7 @@ test('discovers nested paired sections and standalone components without exporti
       fields: {},
       runtimeProps: {},
       previewSource: 'sections/hero/allentown/hero-allentown.preview.astro',
+      thumbnailURL: 'https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/hero/allentown.jpeg',
       entries: {
         astro: '@test/components/sections/hero-allentown.astro',
         payload: '@test/components/sections/hero-allentown.payload',
