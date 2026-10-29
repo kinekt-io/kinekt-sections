@@ -39,7 +39,7 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
         <article class="section-preview" id={component.slug}>
           <header class="section-preview__meta">
             <p>{reviewStatus} / {component.slug}</p>
-            <h2>{component.title}</h2>
+            <p class="section-preview__title">{component.title}</p>
             <ul class="section-preview__tags" aria-label={`${component.title} tags`}>
               {component.tags.map((tag) => <li>{tag}</li>)}
             </ul>
@@ -50,9 +50,26 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
                 <button type="button" data-kinekt-preview-theme="semi-dark" aria-pressed="false">Semi-dark</button>
                 <button type="button" data-kinekt-preview-theme="dark" aria-pressed="false">Dark</button>
               </div>
+              <button class="section-preview__info" type="button" data-kinekt-section-info={component.slug} aria-label={`More information about ${component.title}`}>i</button>
               <a href={`${catalogueBase}components/${component.id}/`}>Open isolated preview →</a>
             </div>
           </header>
+          <dialog class="section-preview__dialog" id={`section-${component.slug}`} aria-label={`${component.title} details`}>
+            <div class="section-preview__dialog-content">
+              <div>
+                <p>{reviewStatus} / {component.slug}</p>
+                <p class="section-preview__title">{component.title}</p>
+              </div>
+              <button class="section-preview__dialog-close" type="button" data-kinekt-section-close aria-label="Close details">×</button>
+              <p>{component.description}</p>
+              <dl>
+                <div><dt>Role</dt><dd>{component.role ?? '—'}</dd></div>
+                <div><dt>Variation</dt><dd>{component.variation ?? '—'}</dd></div>
+                <div><dt>Status</dt><dd>{component.status}</dd></div>
+              </dl>
+              {component.figmaUrl && <a href={component.figmaUrl} target="_blank" rel="noreferrer">Open design frame ↗</a>}
+            </div>
+          </dialog>
           <Preview />
         </article>
       ))}
@@ -75,11 +92,17 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
       })
 
       document.addEventListener('click', (event) => {
-        const button = (event.target as Element).closest<HTMLButtonElement>('[data-kinekt-preview-theme]')
+        const target = event.target as Element
+        const button = target.closest<HTMLButtonElement>('[data-kinekt-preview-theme]')
         const preview = button?.closest<HTMLElement>('.section-preview')
         const theme = button?.dataset.kinektPreviewTheme
-        if (!preview || (theme !== 'light' && theme !== 'semi-light' && theme !== 'semi-dark' && theme !== 'dark')) return
-        setPreviewTheme(preview, theme)
+        if (preview && (theme === 'light' || theme === 'semi-light' || theme === 'semi-dark' || theme === 'dark')) return setPreviewTheme(preview, theme)
+
+        const info = target.closest<HTMLButtonElement>('[data-kinekt-section-info]')
+        if (info) return (document.getElementById(`section-${info.dataset.kinektSectionInfo}`) as HTMLDialogElement | null)?.showModal()
+
+        const close = target.closest<HTMLButtonElement>('[data-kinekt-section-close]')
+        if (close) close.closest<HTMLDialogElement>('dialog')?.close()
       })
     </script>
     <BrandSwitch />
@@ -100,13 +123,21 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
   .sections-page .section-preview { padding: var(--kiw--sections-section-space-xs) var(--kiw--sections-gutter); background: var(--kiw--sections-canvas); }
   .sections-page .section-preview__meta { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--kiw--sections-space-s) var(--kiw--sections-space-xl); margin-bottom: var(--kiw--sections-space-xl); padding-bottom: var(--kiw--sections-space-m); border-bottom: var(--kiw--sections-border) solid var(--kiw--sections-line); }
   .sections-page .section-preview__meta p { margin: 0; color: var(--kiw--sections-muted); font-family: var(--kiw--sections-mono-font); font-size: var(--kiw--sections-text-xs); font-weight: var(--kiw--sections-heading-weight); line-height: var(--kiw--sections-text-line-height); }
-  .sections-page .section-preview__meta h2 { flex-basis: 100%; order: -1; margin: 0; font-family: var(--kiw--sections-heading-font); font-size: var(--kiw--sections-h2); font-weight: var(--kiw--sections-heading-weight); letter-spacing: var(--kiw--sections-heading-tracking); line-height: var(--kiw--sections-heading-line-height); text-wrap: balance; }
+  .sections-page .section-preview__meta .section-preview__title { flex-basis: 100%; order: -1; color: var(--kiw--sections-ink); font-family: var(--kiw--sections-heading-font); font-size: var(--kiw--sections-h2); font-weight: var(--kiw--sections-heading-weight); letter-spacing: var(--kiw--sections-heading-tracking); line-height: var(--kiw--sections-heading-line-height); }
   .sections-page .section-preview__tags { display: flex; flex-basis: 100%; flex-wrap: wrap; gap: var(--kiw--sections-space-xxxs); order: -1; margin: 0; padding: 0; list-style: none; }
   .sections-page .section-preview__tags li { padding: var(--kiw--sections-space-xxxs) var(--kiw--sections-space-xs); border: var(--kiw--sections-border) solid var(--kiw--sections-line); border-radius: var(--kiw--sections-radius); color: var(--kiw--sections-action); font-family: var(--kiw--sections-mono-font); font-size: var(--kiw--sections-text-xs); font-weight: var(--kiw--sections-heading-weight); letter-spacing: var(--kiw--sections-heading-tracking); text-transform: uppercase; }
   .sections-page .section-preview__tools { display: flex; align-items: center; flex-wrap: wrap; gap: var(--kiw--sections-space-s); }
   .sections-page .theme-switch { display: flex; flex-wrap: wrap; padding: var(--kiw--sections-space-xxxs); border: var(--kiw--sections-border) solid var(--kiw--sections-muted); border-radius: var(--kiw--sections-radius); }
   .sections-page .theme-switch button { min-height: 2rem; padding: var(--kiw--sections-space-xxxs) var(--kiw--sections-space-s); border: 0; border-radius: calc(var(--kiw--sections-theme-button-radius-switch) * var(--kiw--sections-theme-button-radius)); color: var(--kiw--sections-ink); background: transparent; font: inherit; font-size: var(--kiw--sections-text-s); font-weight: var(--kiw--sections-heading-weight); cursor: pointer; }
   .sections-page .theme-switch button[aria-pressed='true'] { color: var(--kiw--sections-canvas); background: var(--kiw--sections-action); }
-  .sections-page .theme-switch button:focus-visible { outline: var(--kiw--sections-border) solid var(--kiw--sections-focus); outline-offset: var(--kiw--sections-space-xxxs); }
+  .sections-page :is(.theme-switch button, .section-preview__info, .section-preview__dialog-close):focus-visible { outline: var(--kiw--sections-border) solid var(--kiw--sections-focus); outline-offset: var(--kiw--sections-space-xxxs); }
+  .sections-page .section-preview__info { width: 2rem; min-height: 2rem; border: var(--kiw--sections-border) solid var(--kiw--sections-line); border-radius: 50%; color: inherit; background: transparent; font: inherit; font-family: var(--kiw--sections-heading-font); cursor: pointer; }
   .sections-page .section-preview__meta a { color: inherit; font-weight: var(--kiw--sections-heading-weight); text-underline-offset: 0.18em; }
+  .sections-page .section-preview__dialog { width: min(100% - (var(--kiw--sections-gutter) * 2), 48rem); padding: 0; border: var(--kiw--sections-border) solid var(--kiw--sections-line); border-radius: var(--kiw--sections-radius); color: var(--kiw--sections-ink); background: var(--kiw--sections-canvas); }
+  .sections-page .section-preview__dialog::backdrop { background: rgb(0 0 0 / 0.5); }
+  .sections-page .section-preview__dialog-content { display: grid; grid-template-columns: 1fr auto; gap: var(--kiw--sections-space-m); padding: var(--kiw--sections-space-xl); }
+  .sections-page .section-preview__dialog-content > :is(p, dl, a) { grid-column: 1 / -1; margin: 0; }
+  .sections-page .section-preview__dialog-content dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--kiw--sections-space-s); padding-block: var(--kiw--sections-space-m); border-block: var(--kiw--sections-border) solid var(--kiw--sections-line); }
+  .sections-page .section-preview__dialog-content dd { margin: var(--kiw--sections-space-xxxs) 0 0; }
+  .sections-page .section-preview__dialog-close { width: 2rem; min-height: 2rem; border: 0; color: inherit; background: transparent; font: inherit; font-size: var(--kiw--sections-h2); cursor: pointer; }
 </style>
