@@ -93,16 +93,17 @@ export const optionalCtaToProps = (value: unknown, field: string, options: Paylo
 
 export const ctaGroupToProps = (value: unknown, field: string, options: PayloadAdapterOptions = {}): CtaGroup | undefined => {
   if (value === undefined || value === null) return undefined
-  const group = requireObject(value, field)
-  if (Array.isArray(group.buttons)) {
+  const group = Array.isArray(value) ? {} : requireObject(value, field)
+  const entries = Array.isArray(value) ? value : group.buttons
+  if (Array.isArray(entries)) {
     const buttons: Cta[] = []
-    group.buttons.slice(0, 2).forEach((button, index) => {
+    entries.slice(0, 2).forEach((button, index) => {
       const cta = optionalCtaToProps(button, `${field}.buttons.${index}`, options)
       if (!cta) return
       const style = requireObject(button, `${field}.buttons.${index}`).style
       buttons.push({ ...cta, style: style === 'primary' || style === 'secondary' || style === 'clear' ? style : 'primary' })
     })
-    return buttons.length > 0 ? { buttons } : undefined
+    return buttons.length > 0 ? { buttons, primary: buttons[0], secondary: buttons[1] } : undefined
   }
   const primary = optionalCtaToProps(group.primary, `${field}.primary`, options)
   const secondary = optionalCtaToProps(group.secondary, `${field}.secondary`, options)

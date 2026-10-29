@@ -3,8 +3,8 @@ import '../../../styles/wireframe-tokens.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import Label from '../../../atoms/label/allentown/label-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { Cta, Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-import { ctaIconPaths } from '../../../shared/cta-icons.js'
+import { ctaGroupActions, type CtaGroup, type Media, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 interface Props {
@@ -12,15 +12,13 @@ interface Props {
   headingLevel?: 'h1' | 'h2' | 'h3'
   intro: SectionIntroContent
   label?: { text: string; icon?: string }
-  ctas: { primary?: Cta; secondary?: Cta }
+  ctas: CtaGroup
   media: Media
   mediaLoading?: 'eager' | 'lazy'
 }
 
 const { theme = 'light', intro, label, ctas, media, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props
-const hasActions = Boolean(ctas.primary || ctas.secondary)
-const primaryIcon = ctas.primary?.icon ? ctaIconPaths[ctas.primary.icon] : undefined
-const secondaryIcon = ctas.secondary?.icon ? ctaIconPaths[ctas.secondary.icon] : undefined
+const actions = ctaGroupActions(ctas)
 ---
 <section class="read-more-allentown" data-kinekt-section data-kinekt-theme={theme}>
   <div class="read-more-allentown__container">
@@ -28,9 +26,11 @@ const secondaryIcon = ctas.secondary?.icon ? ctaIconPaths[ctas.secondary.icon] :
       <SectionIntro intro={intro} headingLevel={headingLevel}>
         {label?.text && <Label slot="after-heading" class="read-more-allentown__label" text={label.text} icon={label.icon} />}
       </SectionIntro>
-      {hasActions && <div class="read-more-allentown__actions">
-        {ctas.primary && <Button class="read-more-allentown__action read-more-allentown__action--primary" href={ctas.primary.href} label={ctas.primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
-        {ctas.secondary && <Button class="read-more-allentown__action read-more-allentown__action--secondary" href={ctas.secondary.href} label={ctas.secondary.label} style="clear">{secondaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+      {actions.length > 0 && <div class="read-more-allentown__actions">
+        {actions.map((action, index) => {
+          const icon = isCtaIcon(action.icon) ? ctaIconPaths[action.icon] : undefined
+          return <Button class="read-more-allentown__action" href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="none"><path d={icon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>
+        })}
       </div>}
     </header>
     <picture class="read-more-allentown__media">

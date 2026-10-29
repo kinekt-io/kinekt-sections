@@ -4,7 +4,7 @@ import ChecklistItem, { type ChecklistItemContent } from '../../../components/ch
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { Cta, Media, RichText, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { ctaGroupActions, type Cta, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
@@ -29,7 +29,7 @@ interface Props {
   intro: Omit<SectionIntroContent, 'description'> & { description?: RichTextInput | null }
   checklistTitle?: string | null
   checklistItems: ChecklistItemContent[]
-  ctaGroup?: { primaryButton?: Cta | null; secondaryButton?: Cta | null } | null
+  ctaGroup?: CtaGroup | Cta[] | { primaryButton?: Cta | null; secondaryButton?: Cta | null } | null
   /** Runtime `collageNavigation`: the page passes the eligible compliance sections in page order. */
   collage?: ComplianceCollageTile[]
   /** Hover / focus label on collage tiles. */
@@ -47,11 +47,8 @@ const toHtml = (value: RichTextInput | null | undefined, field: string): string 
 const introContent: SectionIntroContent = { ...intro, description: intro.description == null || typeof intro.description === 'string' ? intro.description ?? undefined : { html: toHtml(intro.description, 'intro.description') } }
 const items = checklistItems.filter((item) => item?.text)
 const ChecklistTitle = headingLevel === 'h1' ? 'h2' : 'h3'
-const primary = ctaGroup?.primaryButton?.label && ctaGroup.primaryButton.href ? ctaGroup.primaryButton : undefined
-const secondary = ctaGroup?.secondaryButton?.label && ctaGroup.secondaryButton.href ? ctaGroup.secondaryButton : undefined
-for (const cta of [primary, secondary]) if (cta && !isSafeWebUrl(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) or root-relative URL.')
-const primaryIcon = primary && isCtaIcon(primary.icon) ? ctaIconPaths[primary.icon] : undefined
-const secondaryIcon = secondary && isCtaIcon(secondary.icon) ? ctaIconPaths[secondary.icon] : undefined
+const actions = ctaGroupActions(ctaGroup)
+for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) or root-relative URL.')
 const tiles = collage.filter((tile) => typeof tile?.anchor === 'string' && /^[A-Za-z][\w:.-]*$/.test(tile.anchor) && tile.certImage?.url)
 // Figma's arrow-down-right is the shared arrow-up-left stroke icon turned 180° (no separate CtaIcon needed).
 const tileIcon = ctaIconPaths['arrow-up-left']
@@ -70,10 +67,12 @@ const tileIcon = ctaIconPaths['arrow-up-left']
           </div>
         )}
       </div>
-      {(primary || secondary) && (
+      {actions.length > 0 && (
         <div class="compliance-overview-allentown__actions">
-          {primary && <Button class="compliance-overview-allentown__action compliance-overview-allentown__action--primary" size="l" href={primary.href} label={primary.label}>{primaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={primaryIcon.viewBox} fill="none"><path d={primaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
-          {secondary && <Button class="compliance-overview-allentown__action compliance-overview-allentown__action--secondary" href={secondary.href} label={secondary.label} style="clear">{secondaryIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={secondaryIcon.viewBox} fill="none"><path d={secondaryIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+          {actions.map((action, index) => {
+            const icon = isCtaIcon(action.icon) ? ctaIconPaths[action.icon] : undefined
+            return <Button class="compliance-overview-allentown__action" size={index === 0 ? 'l' : undefined} href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="none"><path d={icon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>
+          })}
         </div>
       )}
     </div>

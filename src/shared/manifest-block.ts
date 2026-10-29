@@ -83,7 +83,7 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
       type: 'array',
       minRows: field.minItems ?? 0,
       maxRows: field.maxItems ?? 2,
-      admin: { initCollapsed: true, ...field.admin },
+      admin: { initCollapsed: true, ...(field.description ? { description: field.description } : {}), ...field.admin },
       fields: [
         {
           name: 'style',
@@ -101,7 +101,21 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
     }
     case 'sectionIntro': return { ...common, type: 'group', fields: introFields() }
     case 'component': {
-      const admin = field.componentId === 'components/intro/allentown' || field.componentId === 'components/cta-group/allentown'
+      if (field.componentId === 'components/cta-group/allentown') {
+        const buttons = field.fields?.buttons
+        if (!buttons || buttons.kind !== 'ctaGroup') throw new Error('CTA Group Allentown must expose its buttons field.')
+        return fieldFor(name, {
+          ...buttons,
+          required: false,
+          localized: field.localized,
+          admin: {
+            ...(buttons.description || field.description ? { description: buttons.description ?? field.description } : {}),
+            ...buttons.admin,
+            ...field.admin,
+          },
+        }, options, parentLocalized)
+      }
+      const admin = field.componentId === 'components/intro/allentown'
         ? { initCollapsed: true, ...field.admin }
         : field.admin
       return { ...common, ...(admin ? { admin } : {}), type: 'group', fields: childFields(field, options, descendantsLocalized) }
