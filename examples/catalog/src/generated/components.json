@@ -1419,7 +1419,7 @@
   },
   {
     "id": "sections/checklist-feature-list/allentown",
-    "version": "26.10.0-beta.0",
+    "version": "26.10.2-beta.16",
     "slug": "checklist-feature-list-allentown",
     "category": "sections",
     "tags": [
@@ -1430,7 +1430,7 @@
     "role": "checklist-feature-list",
     "variation": "allentown",
     "title": "Checklist Feature List Allentown",
-    "description": "A reusable two-column section with a localized introduction and checklist beside a visible feature list.",
+    "description": "A reusable two-column section with a localized introduction and visible feature list.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415190&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -1452,13 +1452,6 @@
         "componentId": "components/intro/allentown",
         "required": true,
         "localized": true
-      },
-      "checklist": {
-        "kind": "componentList",
-        "componentId": "components/checklist-item/allentown",
-        "required": true,
-        "localized": true,
-        "minItems": 1
       },
       "features": {
         "kind": "componentList",
