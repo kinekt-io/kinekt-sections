@@ -5,6 +5,7 @@ import '@package-src/styles/wireframe-tokens.css'
 import components from '../generated/components.json'
 
 const previewModules = import.meta.glob('@package-src/**/*.preview.astro', { eager: true })
+const lifecycleTags = new Set(['alpha', 'beta', 'prerelease', 'release'])
 const sections = components
   .filter((component) => component.category === 'sections' && component.previewSource)
   .map((component) => {
@@ -12,7 +13,11 @@ const sections = components
     if (!previewSource) throw new Error(`No preview source configured for ${component.id}.`)
     const module = Object.entries(previewModules).find(([path]) => path.endsWith(previewSource))?.[1]
     if (!module) throw new Error(`No preview module found for ${component.id}.`)
-    return { component, Preview: (module as { default: any }).default }
+    return {
+      component,
+      Preview: (module as { default: any }).default,
+      contentTags: component.tags.filter((tag) => !lifecycleTags.has(tag)),
+    }
   })
 const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
 ---
@@ -34,13 +39,13 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
       <p>{sections.length} reusable section contracts rendered in catalogue order.</p>
     </header>
     <main>
-      {sections.map(({ component, Preview }) => (
+      {sections.map(({ component, Preview, contentTags }) => (
         <article class="section-preview" id={component.slug}>
           <header class="section-preview__meta">
             <p>{component.status} / {component.slug}</p>
             <p class="section-preview__title">{component.title}</p>
             <ul class="section-preview__tags" aria-label={`${component.title} tags`}>
-              {component.tags.map((tag) => <li>{tag}</li>)}
+              {contentTags.map((tag) => <li>{tag}</li>)}
             </ul>
             <div class="section-preview__tools">
               <div class="theme-switch" aria-label={`Preview theme for ${component.title}`}>
