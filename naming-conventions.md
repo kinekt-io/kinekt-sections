@@ -100,6 +100,22 @@ Add an optional `<name>.preview.astro` beside a component when it has representa
 
 Preview files are not package exports. They MAY contain component-specific example props, but MUST NOT use production credentials, customer data, or CMS connections. Do not add a preview that invents required props; leave the component listed without a preview until a real example exists.
 
+### Static editor thumbnails
+
+Every section preview with a catalogue preview also has a static 16:10 JPEG thumbnail at:
+
+```text
+https://kinekt-io.github.io/kinekt-sections/thumbnails/<manifest.id>.jpeg
+```
+
+Payload uses these native card images instead of loading live cross-origin previews. After changing a representative preview, regenerate and commit its images:
+
+```sh
+pnpm thumbnails:generate
+```
+
+The command builds the catalogue first. On a new machine, install Playwright’s Chromium (`pnpm exec playwright install chromium`), or set `CHROME_PATH` to an existing Chrome executable.
+
 ## Figma links
 
 Record the approved HTTPS Figma URL in `manifest.json` under `figma.url`, with its meaningful frame name in the component documentation. The current generator requires this manifest reference and uses it for catalogue metadata.
