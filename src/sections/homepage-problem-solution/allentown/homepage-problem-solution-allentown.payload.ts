@@ -1,6 +1,8 @@
-// @generated structural section — source manifest remains the contract.
+// @generated Homepage Problem Solution Payload contract from the manifest.
 import type { Block, CollectionSlug } from 'payload'
-import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
+import { createManifestBlock } from '../../../shared/manifest-block.js'
+import { ctaGroupToProps, optionalText, requireArray, requireObject, requireText, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BetaHomepageProblemSolutionAllentownContent, PayloadBetaHomepageProblemSolutionAllentownDocument } from './homepage-problem-solution-allentown.types.js'
 
 const manifest = {
@@ -8,18 +10,6 @@ const manifest = {
   "title": "Homepage Problem Solution Allentown",
   "status": "prerelease",
   "fields": {
-    "theme": {
-      "kind": "select",
-      "required": true,
-      "localized": true,
-      "options": [
-        "light",
-        "semi-light",
-        "semi-dark",
-        "dark"
-      ],
-      "description": "CMS-selected presentation setting passed to the renderer."
-    },
     "problemIntro": {
       "kind": "component",
       "componentId": "components/intro/allentown",
@@ -51,10 +41,12 @@ const manifest = {
       "localized": true,
       "fields": {
         "icon": {
-          "kind": "text",
+          "kind": "select",
           "required": true,
           "localized": true,
-          "description": "Allowed icon key selected by the editor."
+          "options": [
+            "xmark"
+          ]
         },
         "title": {
           "kind": "text",
@@ -99,10 +91,14 @@ const manifest = {
       "localized": true,
       "fields": {
         "icon": {
-          "kind": "text",
+          "kind": "select",
           "required": true,
           "localized": true,
-          "description": "Allowed icon key selected by the editor."
+          "options": [
+            "microchip",
+            "gears",
+            "shield-check"
+          ]
         },
         "title": {
           "kind": "text",
@@ -117,24 +113,9 @@ const manifest = {
       }
     },
     "solutionCtaGroup": {
-      "kind": "component",
-      "componentId": "components/cta-group/allentown",
+      "kind": "ctaGroup",
       "required": false,
-      "localized": true,
-      "fields": {
-        "primaryButton": {
-          "kind": "cta",
-          "required": false,
-          "localized": true,
-          "description": "Optional primary Button component part."
-        },
-        "secondaryButton": {
-          "kind": "cta",
-          "required": false,
-          "localized": true,
-          "description": "Optional secondary Button component part."
-        }
-      }
+      "localized": true
     }
   }
 } as const
@@ -145,6 +126,43 @@ export function createBetaHomepageProblemSolutionAllentownBlock(options: CreateB
   return createManifestBlock(manifest, options)
 }
 
-export function betaHomepageProblemSolutionAllentownToProps(data: PayloadBetaHomepageProblemSolutionAllentownDocument): BetaHomepageProblemSolutionAllentownContent {
-  return manifestToProps(data)
+const intro = (value: unknown, field: string): Record<string, unknown> => {
+  const content = requireObject(value, field)
+  return {
+    heading: requireText(content.heading, `${field}.heading`),
+    ...(optionalText(content.accentHeading, `${field}.accentHeading`) ? { accentHeading: optionalText(content.accentHeading, `${field}.accentHeading`) } : {}),
+    ...(content.description ? { description: { html: richTextToHtml(content.description, `${field}.description`) } } : {}),
+  }
+}
+
+const items = (value: unknown, field: string, allowedIcons: readonly string[]): Record<string, unknown>[] =>
+  requireArray(value, field).map((item, index) => {
+    const content = requireObject(item, `${field}[${index}]`)
+    if (typeof content.icon !== 'string' || !allowedIcons.includes(content.icon)) {
+      throw new Error(`${field}[${index}].icon must be one of ${allowedIcons.join(', ')}.`)
+    }
+    return {
+      icon: content.icon,
+      title: requireText(content.title, `${field}[${index}].title`),
+      description: { html: richTextToHtml(content.description, `${field}[${index}].description`) },
+    }
+  })
+
+export function betaHomepageProblemSolutionAllentownToProps(data: PayloadBetaHomepageProblemSolutionAllentownDocument, options: PayloadAdapterOptions = {}): BetaHomepageProblemSolutionAllentownContent {
+  const block = requireObject(data, 'homepageProblemSolution')
+  const ctaGroup = ctaGroupToProps(block.solutionCtaGroup, 'solutionCtaGroup', options)
+
+  return {
+    theme: 'dark',
+    problemIntro: intro(block.problemIntro, 'problemIntro'),
+    problemItems: items(block.problemItems, 'problemItems', ['xmark']),
+    solutionIntro: intro(block.solutionIntro, 'solutionIntro'),
+    solutionSteps: items(block.solutionSteps, 'solutionSteps', ['microchip', 'gears', 'shield-check']),
+    ...(ctaGroup ? {
+      solutionCtaGroup: {
+        ...(ctaGroup.primary ? { primaryButton: ctaGroup.primary } : {}),
+        ...(ctaGroup.secondary ? { secondaryButton: ctaGroup.secondary } : {}),
+      },
+    } : {}),
+  }
 }

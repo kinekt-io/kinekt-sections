@@ -370,8 +370,9 @@ function previewFields(manifest, depth = 0) {
 async function materialize(filename, source, force = false) {
   try {
     const existing = await readFile(filename, 'utf8')
-    const generatedStructuralPayload = filename.endsWith('.payload.ts') && source.includes('structuralSectionToProps')
-    if (!force && !generatedStructuralPayload && !existing.includes('@generated structural section')) return
+    const generatedPayload = filename.endsWith('.payload.ts')
+      && (source.includes('structuralSectionToProps') || source.includes('@generated Homepage Problem Solution Payload contract'))
+    if (!force && !generatedPayload && !existing.includes('@generated structural section')) return
   } catch (error) {
     if (error?.code !== 'ENOENT') throw error
   }
@@ -400,6 +401,7 @@ for (const directory of await manifestDirectories(sections)) {
   const caseStudiesContract = manifest.slug === 'case-studies-allentown'
   const solutionListContract = manifest.slug === 'solution-list-allentown'
   const formSectionContract = manifest.slug === 'form-section-allentown'
+  const homepageProblemSolutionAdapter = manifest.slug === 'homepage-problem-solution-allentown'
   const block = `${prefix}${manifest.slug}`
   const previewContent = sampleContent(manifest)
   const fields = previewFields(manifest)
@@ -517,6 +519,62 @@ const content = resolveCatalogueAssets(rawContent) as typeof rawContent
   const solutionListTypes = `// Solution List native Payload contract type entrypoint.\nexport type { PayloadSolutionListAllentownDocument, SolutionListAllentownContent, SolutionListAllentownItem } from './solution-list-allentown.contract.js'\n`
   const solutionListPayload = `// Solution List native Payload contract entrypoint.\nexport { createSolutionListAllentownBlock, solutionListAllentownToProps } from './solution-list-allentown.contract.js'\nexport type { CreateSolutionListAllentownBlockOptions, PayloadSolutionListAllentownDocument, SolutionListAllentownAdapterOptions, SolutionListAllentownContent, SolutionListAllentownItem } from './solution-list-allentown.contract.js'\n`
   const formSectionTypes = `// Form Section native Payload contract type entrypoint.\nexport type { BetaFormSectionAllentownContent, ContactMethod, ContactMethodIcon, FormSectionImagePosition, PayloadBetaFormSectionAllentownDocument } from './form-section-allentown.contract.js'\n`
+  const homepageProblemSolutionPayload = `// @generated Homepage Problem Solution Payload contract from the manifest.
+import type { Block, CollectionSlug } from 'payload'
+import { createManifestBlock } from '${importAdapter}'
+import { ctaGroupToProps, optionalText, requireArray, requireObject, requireText, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import type { ${name}Content, Payload${name}Document } from './${base}.types.js'
+
+const manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const
+
+export interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+
+export function create${name}Block(options: Create${name}BlockOptions = {}): Block {
+  return createManifestBlock(manifest, options)
+}
+
+const intro = (value: unknown, field: string): Record<string, unknown> => {
+  const content = requireObject(value, field)
+  return {
+    heading: requireText(content.heading, \`\${field}.heading\`),
+    ...(optionalText(content.accentHeading, \`\${field}.accentHeading\`) ? { accentHeading: optionalText(content.accentHeading, \`\${field}.accentHeading\`) } : {}),
+    ...(content.description ? { description: { html: richTextToHtml(content.description, \`\${field}.description\`) } } : {}),
+  }
+}
+
+const items = (value: unknown, field: string, allowedIcons: readonly string[]): Record<string, unknown>[] =>
+  requireArray(value, field).map((item, index) => {
+    const content = requireObject(item, \`\${field}[\${index}]\`)
+    if (typeof content.icon !== 'string' || !allowedIcons.includes(content.icon)) {
+      throw new Error(\`\${field}[\${index}].icon must be one of \${allowedIcons.join(', ')}.\`)
+    }
+    return {
+      icon: content.icon,
+      title: requireText(content.title, \`\${field}[\${index}].title\`),
+      description: { html: richTextToHtml(content.description, \`\${field}[\${index}].description\`) },
+    }
+  })
+
+export function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document, options: PayloadAdapterOptions = {}): ${name}Content {
+  const block = requireObject(data, 'homepageProblemSolution')
+  const ctaGroup = ctaGroupToProps(block.solutionCtaGroup, 'solutionCtaGroup', options)
+
+  return {
+    theme: 'dark',
+    problemIntro: intro(block.problemIntro, 'problemIntro'),
+    problemItems: items(block.problemItems, 'problemItems', ['xmark']),
+    solutionIntro: intro(block.solutionIntro, 'solutionIntro'),
+    solutionSteps: items(block.solutionSteps, 'solutionSteps', ['microchip', 'gears', 'shield-check']),
+    ...(ctaGroup ? {
+      solutionCtaGroup: {
+        ...(ctaGroup.primary ? { primaryButton: ctaGroup.primary } : {}),
+        ...(ctaGroup.secondary ? { secondaryButton: ctaGroup.secondary } : {}),
+      },
+    } : {}),
+  }
+}
+`
 
   await materialize(path.join(directory, `${base}.astro`), `---\n// @generated structural section — source manifest remains the contract.\nimport StructuralSection from '${importAstro}'\n\nconst props = Astro.props\nconst fields = ${JSON.stringify(fields, null, 2)}\n---\n<StructuralSection block=${JSON.stringify(block)} fields={fields} {...props} />\n${sectionTokenBridgeCss(block)}\n${generatedComponentStyle(block)}\n`)
   await materialize(path.join(directory, `${base}.types.ts`), manifest.slug === 'media-metrics-allentown'
@@ -534,7 +592,9 @@ const content = resolveCatalogueAssets(rawContent) as typeof rawContent
       ? caseStudiesPayload
       : solutionListContract
         ? solutionListPayload
-        : structuralAdapter
+        : homepageProblemSolutionAdapter
+          ? homepageProblemSolutionPayload
+          : structuralAdapter
           ? `import type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock } from '${importAdapter}'\nimport { structuralSectionToProps } from '${importStructuralAdapter}'\nimport type { PayloadAdapterOptions } from '../../../shared/payload.js'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document, options: PayloadAdapterOptions = {}): ${name}Content {\n  return structuralSectionToProps(data, options)\n}\n`
           : `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`, manifest.slug === 'media-metrics-allentown' || solutionListContract)
   const previewSource = manifest.slug === 'media-metrics-allentown'
