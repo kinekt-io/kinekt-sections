@@ -52,6 +52,7 @@ const descriptionHtml = typeof step.description === 'string'
     --kiw--next-step-allentown-heading-size: var(--h5);
     --kiw--next-step-allentown-number-color: var(--kinekt-component-accent, var(--accent-semi-dark));
     --kiw--next-step-allentown-number-font-family: var(--mono-font-family);
+    --kiw--next-step-allentown-number-font-weight: 400;
     --kiw--next-step-allentown-number-line-height: var(--heading-line-height);
     --kiw--next-step-allentown-title-color: var(--kinekt-component-ink, inherit);
     --kiw--next-step-allentown-description-color: var(--kinekt-component-subtle, var(--kinekt-component-muted, inherit));
@@ -61,7 +62,7 @@ const descriptionHtml = typeof step.description === 'string'
   .next-step-allentown { display: grid; align-content: start; gap: var(--kiw--next-step-allentown-gap); min-width: 0; }
   .next-step-allentown .next-step-allentown__copy { display: grid; gap: var(--kiw--next-step-allentown-copy-gap); }
   .next-step-allentown .next-step-allentown__heading { display: flex; align-items: center; gap: var(--kiw--next-step-allentown-heading-gap); max-width: none; margin: 0; font-size: var(--kiw--next-step-allentown-heading-size); }
-  .next-step-allentown .next-step-allentown__number { flex: none; color: var(--kiw--next-step-allentown-number-color); font-family: var(--kiw--next-step-allentown-number-font-family); font-weight: 500; line-height: var(--kiw--next-step-allentown-number-line-height); }
+  .next-step-allentown .next-step-allentown__number { flex: none; color: var(--kiw--next-step-allentown-number-color); font-family: var(--kiw--next-step-allentown-number-font-family); font-weight: var(--kiw--next-step-allentown-number-font-weight); line-height: var(--kiw--next-step-allentown-number-line-height); }
   .next-step-allentown .next-step-allentown__title { min-width: 0; color: var(--kiw--next-step-allentown-title-color); font-family: var(--kinekt-component-heading-font-family, var(--heading-font-family)); font-weight: var(--kinekt-component-heading-font-weight, var(--heading-font-weight)); line-height: 1; }
   .next-step-allentown .next-step-allentown__description { margin: 0; color: var(--kiw--next-step-allentown-description-color); font-size: var(--kiw--next-step-allentown-description-size); line-height: var(--kinekt-component-text-line-height, var(--text-line-height)); }
   .next-step-allentown .next-step-allentown__description > * { margin-block: 0; }

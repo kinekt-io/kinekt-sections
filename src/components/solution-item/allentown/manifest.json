@@ -20,7 +20,8 @@
     "heading": { "kind": "text", "required": true, "localized": true },
     "label": { "kind": "component", "componentId": "atoms/label/allentown", "required": false, "localized": true },
     "description": { "kind": "richText", "required": true, "localized": true },
-    "cta": { "kind": "component", "componentId": "controls/button/allentown", "required": true, "localized": true, "description": "Link label plus either a Page relationship or a URL." }
+    "cta": { "kind": "component", "componentId": "controls/button/allentown", "required": true, "localized": true, "description": "Link label, optional Font Awesome Sharp Solid icon, and either a content relationship or a URL." },
+    "ctaStyle": { "kind": "select", "required": false, "localized": true, "options": ["primary", "secondary", "clear", "clear-base"], "description": "Button appearance. Leave empty to retain Clear." }
   },
   "runtimeProps": {
     "headingLevel": { "kind": "headingLevel", "source": "renderer" }

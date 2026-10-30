@@ -40,7 +40,7 @@ const action = (value: any) => value?.cta ?? value
             {action(item.cta)?.label && (() => {
               const itemAction = action(item.cta)
               const icon = isCtaIcon(itemAction.icon) ? ctaIconPaths(itemAction.icon) : undefined
-              return <div class="beta-solution-list-allentown__actions"><Button href={itemAction.href} label={itemAction.label} style="clear" size="l">{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button></div>
+              return <div class="beta-solution-list-allentown__actions"><Button href={itemAction.href} label={itemAction.label} style={item.ctaStyle ?? 'clear'} size="l">{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button></div>
             })()}
           </div>
         </article></li>

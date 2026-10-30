@@ -95,7 +95,8 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
     --kinekt-component-action: var(--kinekt-section-action, var(--kiw--faq-allentown-action, var(--primary)));
     --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--faq-allentown-accent, var(--accent-semi-dark)));
     --kinekt-component-site-width: var(--kinekt-section-site-width, var(--kiw--faq-allentown-site-width, var(--website-width)));
-    --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--faq-allentown-content-width, var(--width-l)));
+    --kinekt-component-content-width: var(--kinekt-section-content-width, var(--kiw--faq-allentown-content-width, var(--content-width)));
+    --kiw--faq-allentown-items-width: var(--width-l);
     --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--kiw--faq-allentown-inline-space, var(--section-gutter)));
     --kinekt-component-block-space: var(--kinekt-section-block-space, var(--kiw--faq-allentown-block-space, var(--section-space-l)));
     --kinekt-component-border-width: var(--kinekt-section-border-width, var(--kiw--faq-allentown-border-width, var(--border-width)));
@@ -136,7 +137,7 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
   .beta-faq-allentown .beta-faq-allentown__intro .section-intro__heading { max-width: none; font-size: var(--kinekt-section-heading-2-size, var(--h2)); }
   .beta-faq-allentown .beta-faq-allentown__intro .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--text-l); }
   .beta-faq-allentown .beta-faq-allentown__intro .section-intro__description > * { margin-block: 0; }
-  .beta-faq-allentown .beta-faq-allentown__items { display: grid; min-width: 0; margin: 0; padding: 0; list-style: none; }
+  .beta-faq-allentown .beta-faq-allentown__items { display: grid; min-width: 0; width: min(100%, var(--kiw--faq-allentown-items-width)); margin: 0 auto; padding: 0; list-style: none; }
   .beta-faq-allentown .beta-faq-allentown__item { min-width: 0; }
   .beta-faq-allentown .beta-faq-allentown__item + .beta-faq-allentown__item { margin-block-start: var(--kiw--faq-allentown-item-gap); padding-block-start: var(--kiw--faq-allentown-item-gap); border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
   .beta-faq-allentown .beta-faq-allentown__faq { display: block; margin: 0; }
@@ -148,7 +149,7 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
   .beta-faq-allentown .beta-faq-allentown__faq[open] .beta-faq-allentown__toggle { transform: rotate(180deg); }
   .beta-faq-allentown .beta-faq-allentown__answer { margin: var(--kiw--faq-allentown-answer-gap) 0 0; color: var(--kinekt-component-muted); font-size: var(--kiw--faq-allentown-answer-size); line-height: var(--kinekt-component-text-line-height); white-space: pre-line; }
   .beta-faq-allentown .beta-faq-allentown__overview { display: flex; justify-content: center; }
-  .beta-faq-allentown .beta-faq-allentown__callout { --kiw--callout-allentown-copy-gap: var(--space-s); }
+  .beta-faq-allentown .beta-faq-allentown__callout { --kiw--callout-allentown-copy-gap: var(--space-s); width: min(100%, var(--kiw--faq-allentown-items-width)); margin-inline: auto; }
   @media (max-width: 49.999rem) { .beta-faq-allentown .beta-faq-allentown__question { line-height: 1.3; } }
   @media (prefers-reduced-motion: reduce) { .beta-faq-allentown .beta-faq-allentown__toggle { transition: none; } }
 </style>

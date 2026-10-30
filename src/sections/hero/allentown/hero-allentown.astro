@@ -156,12 +156,22 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
   .hero-allentown .hero-allentown__image { display: block; width: 100%; height: 100%; aspect-ratio: var(--kinekt-section-media-ratio); object-fit: cover; }
   @media (min-width: 50rem) {
     .hero-allentown .hero-allentown__container {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
       align-items: center;
       justify-content: space-between;
       gap: var(--section-space-xxl);
       min-height: var(--hero-allentown-min-block-size);
     }
   }
-  @media (max-width: 49.99rem) { .hero-allentown { --kinekt-component-reading-width: var(--content-width); } }
+  @media (width < 50rem) {
+    .hero-allentown {
+      --hero-allentown-copy-width: 100%;
+      --hero-allentown-media-width: 100%;
+      --kinekt-component-reading-width: 100%;
+
+      & .hero-allentown__content {
+        align-items: stretch;
+      }
+    }
+  }
 </style>

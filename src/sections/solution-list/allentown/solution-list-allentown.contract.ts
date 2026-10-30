@@ -1,6 +1,7 @@
 import type { Block, CollectionSlug, Field } from 'payload'
 
-import type { Cta, CtaGroup, Media, RichText, SectionIntro } from '../../../shared/content.js'
+import type { Cta, CtaGroup, CtaStyle, Media, RichText, SectionIntro } from '../../../shared/content.js'
+import { isCtaStyle } from '../../../shared/content.js'
 import { renderRichText } from '../../../shared/rich-text.js'
 import { mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { isSafeWebUrl } from '../../../urls.js'
@@ -13,6 +14,7 @@ export interface SolutionListAllentownItem {
   label?: { text: string; icon?: string }
   description: RichText
   cta: Cta
+  ctaStyle?: CtaStyle
 }
 
 export interface SolutionListAllentownContent {
@@ -55,6 +57,8 @@ export function createSolutionListAllentownBlock({ mediaCollection = 'media', ta
           { name: 'linkLabel', label: 'Link label', type: 'text', localized: true, required: true, validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' },
           { name: 'href', label: 'URL', type: 'text', localized: true, admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeWebUrl(value) || 'Enter an absolute HTTP(S) URL or a site-root-relative path.' },
           targetField(targetRelation, true),
+          { name: 'icon', label: 'Icon', type: 'text', localized: true, validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example arrow-right or bolt.' } },
+          { name: 'ctaStyle', label: 'CTA style', type: 'select', localized: true, options: [{ label: 'Primary', value: 'primary' }, { label: 'Secondary', value: 'secondary' }, { label: 'Clear', value: 'clear' }, { label: 'Clear base', value: 'clear-base' }], admin: { description: 'Leave empty to retain Clear.' } },
         ],
       },
       { name: 'callout', label: 'Callout', type: 'group', localized: true, fields: [{ name: 'intro', label: 'Intro block', type: 'group', required: true, fields: introFields() }, { name: 'ctaGroup', label: 'CTA group', type: 'group', required: true, fields: ctaGroupFields(targetRelation) }] },
@@ -116,6 +120,7 @@ function itemToProps(value: unknown, index: number, contentHref: SolutionListAll
   const item = requireObject(value, `items[${index}]`)
   const label = item.label ? requireObject(item.label, `items[${index}].label`) : undefined
   const destination = destinationToProps(item, `items[${index}]`, 'linkLabel', contentHref)
+  const ctaStyle = isCtaStyle(item.ctaStyle) ? item.ctaStyle : undefined
 
   return {
     image: mediaToProps(item.image, `items[${index}].image`, options),
@@ -124,6 +129,7 @@ function itemToProps(value: unknown, index: number, contentHref: SolutionListAll
     ...(label && optionalText(label.text, `items[${index}].label.text`) ? { label: { text: requireText(label.text, `items[${index}].label.text`), ...(optionalSharpSolidIcon(label.icon, `items[${index}].label.icon`) ? { icon: optionalSharpSolidIcon(label.icon, `items[${index}].label.icon`) } : {}) } } : {}),
     description: renderRichText(item.description, `items[${index}].description`),
     cta: destination,
+    ...(ctaStyle ? { ctaStyle } : {}),
   }
 }
 

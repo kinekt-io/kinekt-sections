@@ -1,7 +1,7 @@
 // @generated Use Cases Payload contract from the manifest.
 import type { Block, CollectionSlug } from 'payload'
 import { createManifestBlock } from '../../../shared/manifest-block.js'
-import { ctaGroupToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { ctaGroupToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BetaUseCasesAllentownContent, PayloadBetaUseCasesAllentownDocument, UseCasesAllentownItem } from './use-cases-allentown.types.js'
 
@@ -62,6 +62,12 @@ const manifest = {
           "required": true,
           "localized": true
         },
+        "icon": {
+          "kind": "text",
+          "required": false,
+          "localized": true,
+          "description": "Optional Font Awesome 7 Sharp Solid icon name rendered before the item title."
+        },
         "description": {
           "kind": "richText",
           "required": true,
@@ -79,7 +85,7 @@ const manifest = {
               "localized": true,
               "minItems": 0,
               "maxItems": 2,
-              "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary or Clear."
+              "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
             }
           }
         }
@@ -105,9 +111,11 @@ const introToProps = (value: unknown): BetaUseCasesAllentownContent['intro'] => 
 
 const itemToProps = (value: unknown, index: number, options: PayloadAdapterOptions): UseCasesAllentownItem => {
   const item = requireObject(value, 'items[' + index + ']')
+  const icon = optionalSharpSolidIcon(item.icon, 'items[' + index + '].icon')
   const ctaGroup = ctaGroupToProps(item.ctaGroup, 'items[' + index + '].ctaGroup', options)
   return {
     title: requireText(item.title, 'items[' + index + '].title'),
+    ...(icon ? { icon } : {}),
     description: { html: richTextToHtml(item.description, 'items[' + index + '].description') },
     ...(ctaGroup ? { ctaGroup } : {}),
   }

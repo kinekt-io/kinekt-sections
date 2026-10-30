@@ -3,6 +3,7 @@ import type { BetaTheme } from '../../../shared/payload.js'
 
 export interface UseCasesAllentownItem {
   title: string
+  icon?: string
   description: RichText
   ctaGroup?: CtaGroup
 }
@@ -19,5 +20,5 @@ type DraftFields<T> = { [Field in keyof T]?: T[Field] | null }
 export interface PayloadBetaUseCasesAllentownDocument extends DraftFields<Omit<BetaUseCasesAllentownContent, 'intro' | 'items'>> {
   blockType?: string
   intro?: { accentHeading?: string | null; heading?: string | null; description?: unknown } | null
-  items?: Array<{ title?: string | null; description?: unknown; ctaGroup?: unknown } | null> | null
+  items?: Array<{ title?: string | null; icon?: string | null; description?: unknown; ctaGroup?: unknown } | null> | null
 }

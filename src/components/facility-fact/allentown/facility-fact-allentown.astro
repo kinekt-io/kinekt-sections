@@ -17,7 +17,7 @@ const descriptionHtml = typeof description === 'string'
   : description.html
 ---
 <div class={classes}>
-  <Heading class="facility-fact-allentown__title">{title}</Heading>
+  <Heading class="facility-fact-allentown__title"><slot name="title-prefix" />{title}</Heading>
   <div class="facility-fact-allentown__description" set:html={descriptionHtml} />
 </div>
 <style is:global>

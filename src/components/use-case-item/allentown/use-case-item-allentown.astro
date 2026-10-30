@@ -7,6 +7,7 @@ import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 
 export interface UseCaseItemContent {
   title: string
+  icon?: string
   description: string | RichText
   ctaGroup?: CtaGroup | { primaryButton?: Cta | null; secondaryButton?: Cta | null } | null
 }
@@ -20,10 +21,13 @@ interface Props {
 
 const { item, headingLevel = 'h3', class: className } = Astro.props
 const actions = ctaGroupActions(item.ctaGroup)
+const titleIcon = isCtaIcon(item.icon) ? ctaIconPaths(item.icon) : undefined
 const classes = ['use-case-item-allentown', className].filter(Boolean).join(' ')
 ---
 <article class={classes}>
-  <FacilityFact class="use-case-item-allentown__copy" title={item.title} description={item.description} headingLevel={headingLevel} />
+  <FacilityFact class="use-case-item-allentown__copy" title={item.title} description={item.description} headingLevel={headingLevel}>
+    {titleIcon && <svg slot="title-prefix" class="use-case-item-allentown__title-icon" aria-hidden="true" focusable="false" viewBox={titleIcon.viewBox} fill="currentColor"><path d={titleIcon.path} /></svg>}
+  </FacilityFact>
   {actions.length > 0 && (
     <div class="use-case-item-allentown__actions">
       {actions.map((cta) => {
@@ -42,6 +46,8 @@ const classes = ['use-case-item-allentown', className].filter(Boolean).join(' ')
     --kiw--use-case-item-allentown-actions-gap: var(--space-l);
     --kiw--use-case-item-allentown-title-line-height: 1;
     --kiw--use-case-item-allentown-mobile-title-line-height: 1.2;
+    --kiw--use-case-item-allentown-icon-color: var(--kinekt-component-accent, var(--accent-semi-dark));
+    --kiw--use-case-item-allentown-icon-gap: var(--space-xs);
   }
 
   .use-case-item-allentown {
@@ -56,6 +62,17 @@ const classes = ['use-case-item-allentown', className].filter(Boolean).join(' ')
   .use-case-item-allentown .use-case-item-allentown__copy {
     --kiw--facility-fact-allentown-title-line-height: var(--kiw--use-case-item-allentown-title-line-height);
     justify-self: stretch;
+  }
+
+  .use-case-item-allentown {
+    & .use-case-item-allentown__title-icon {
+      display: inline-block;
+      inline-size: 1em;
+      block-size: 1em;
+      margin-inline-end: var(--kiw--use-case-item-allentown-icon-gap);
+      color: var(--kiw--use-case-item-allentown-icon-color);
+      vertical-align: -0.125em;
+    }
   }
 
   .use-case-item-allentown .use-case-item-allentown__actions {

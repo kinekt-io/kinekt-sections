@@ -11,6 +11,8 @@
 - Expose the existing Sharp Solid icon-name validator and SVG resolver through `@kinekt-io/components/icons` for consuming CMS configurations.
 - Add `clear-base` to shared CTA styles: clear-button presentation with icons inheriting the text color.
 - Add optional zero-to-two CTA groups below the Steps Stage intro and below its steps; retain per-step CTA groups.
+- Add optional localized Sharp Solid title icons to Use Case items through Facility Fact's title-prefix slot, using the section's theme accent.
+- Add optional localized Solution List item CTA styles (`primary`, `secondary`, `clear`, or `clear-base`); retain CTA icons inside the rendered button.
 
 ### Changed
 
@@ -23,6 +25,9 @@
 - Replace MOQ Lead Times' fixed facts with one or two editable info columns containing repeatable row titles and labels, plus the shared optional CTA group. Existing CMS content requires migration from `moq`, `leadTimes`, and `cta` to `infoColumns` and `ctas`.
 - Size MOQ headings one visual level below their semantic level and use the theme accent for MOQ and Product Hero checklist icons.
 - Allow one to four Media Metrics Allentown entries instead of requiring exactly four; enforce both limits in Payload.
+- Use regular `400` weight for Next Step numbers through a component-owned font-weight token.
+- Use regular `400` weight for Process Story Trinity numbered markers through a component-owned font-weight token.
+- Use a 3:2 text-to-media grid for Hero Allentown on desktop; below 50rem, both stacked blocks and their reading width fill the available container.
 
 ### Fixed
 
@@ -45,6 +50,7 @@
 - Separate Steps Stage items with internal borders only; align flightpath arrow, line, and endpoint on one centerline.
 - Remove Case Studies quote indentation, inherit the mono font token, and use zero author row gap. Allow hanging quotation marks past the carousel clipping edge without horizontal page overflow.
 - Correct the Product Hero Allentown design reference to [Hero Section - Battery Packs](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538028&t=OtYEVTRRdAJJYQ0v-11); content fields and rendering are unchanged.
+- Let FAQ intros use the section content width while FAQ items and the Callout remain at `width-l`.
 
 ## 26.10.2-beta.25 — 2026-10-23
 
