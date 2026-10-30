@@ -4,6 +4,7 @@ import Button from '../../../controls/button/allentown/button-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
 import { faChevronRight } from '@fortawesome/sharp-solid-svg-icons'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
@@ -13,6 +14,7 @@ interface Insight {
   excerpt?: string
   href: string
   kind?: string
+  kindIcon?: string
   featured?: boolean
   image?: Media
 }
@@ -30,12 +32,14 @@ const action = cta && ('cta' in cta ? cta.cta : cta)
 const featured = insightSources.find((insight) => insight.featured) ?? insightSources[0]
 const recent = insightSources.filter((insight) => insight !== featured).slice(0, 3)
 const kindLabel = (kind?: string): string | undefined => kind?.replace(/[-_]/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase())
+const kindIconOf = (insight: Insight) => isCtaIcon(insight.kindIcon) ? ctaIconPaths(insight.kindIcon) : undefined
+const featuredKindLabel = kindLabel(featured?.kind)
+const featuredKindIcon = featured && kindIconOf(featured)
 ---
 <section class="featured-insights-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="featured-insights-allentown__container">
     <header class="featured-insights-allentown__intro">
       <div class="featured-insights-allentown__intro-content"><SectionIntro intro={intro} headingLevel={headingLevel} /></div>
-      {action && <div class="featured-insights-allentown__cta"><Button {...action} /></div>}
     </header>
     <div class="featured-insights-allentown__content">
       {featured && <article class="featured-insights-allentown__featured">
@@ -44,20 +48,25 @@ const kindLabel = (kind?: string): string | undefined => kind?.replace(/[-_]/g, 
           <img src={featured.image.url} alt={featured.image.alt} width={featured.image.width} height={featured.image.height} data-fallback-url={featured.image.fallbackUrl} loading="lazy" decoding="async" />
         </picture>}
         <SubtitleFlightPath class="featured-insights-allentown__featured-header" labelClass="featured-insights-allentown__eyebrow" text="Featured" size="small" />
-        {kindLabel(featured.kind) && <p class="featured-insights-allentown__kind">{kindLabel(featured.kind)}</p>}
-        <h3>{featured.title}</h3>
-        {featured.excerpt && <p>{featured.excerpt}</p>}
+        {featuredKindLabel && <p class="featured-insights-allentown__kind">{featuredKindIcon && <svg class="featured-insights-allentown__kind-icon" aria-hidden="true" focusable="false" viewBox={featuredKindIcon.viewBox} fill="currentColor"><path d={featuredKindIcon.path} /></svg>}<span class="featured-insights-allentown__kind-label">{featuredKindLabel}</span></p>}
+        <h3 class="featured-insights-allentown__featured-title">{featured.title}</h3>
+        {featured.excerpt && <p class="featured-insights-allentown__featured-description">{featured.excerpt}</p>}
         <Button class="featured-insights-allentown__link" href={featured.href} label="Read more" style="clear"><svg aria-hidden="true" width="1em" height="1em" viewBox={`0 0 ${faChevronRight.icon[0]} ${faChevronRight.icon[1]}`} fill="currentColor"><path d={faChevronRight.icon[4] as string} /></svg></Button>
       </article>}
-      <div class="featured-insights-allentown__recent">
+      {(recent.length > 0 || action) && <div class:list={['featured-insights-allentown__recent', action && 'featured-insights-allentown__recent--with-action']}>
         <SubtitleFlightPath class="featured-insights-allentown__recent-header" text="Most recent" size="small" />
-        <ol>{recent.map((insight) => <li><article>
-          {kindLabel(insight.kind) && <p class="featured-insights-allentown__kind">{kindLabel(insight.kind)}</p>}
-          <h3>{insight.title}</h3>
-          {insight.excerpt && <p>{insight.excerpt}</p>}
-          <Button class="featured-insights-allentown__link" href={insight.href} label="Read more" style="clear"><svg aria-hidden="true" width="1em" height="1em" viewBox={`0 0 ${faChevronRight.icon[0]} ${faChevronRight.icon[1]}`} fill="currentColor"><path d={faChevronRight.icon[4] as string} /></svg></Button>
-        </article></li>)}</ol>
-      </div>
+        <ol class="featured-insights-allentown__recent-list">{recent.map((insight) => {
+          const kindLabelValue = kindLabel(insight.kind)
+          const kindIcon = kindIconOf(insight)
+          return <li class="featured-insights-allentown__recent-list-item"><article class="featured-insights-allentown__recent-article">
+            {kindLabelValue && <p class="featured-insights-allentown__kind">{kindIcon && <svg class="featured-insights-allentown__kind-icon" aria-hidden="true" focusable="false" viewBox={kindIcon.viewBox} fill="currentColor"><path d={kindIcon.path} /></svg>}<span class="featured-insights-allentown__kind-label">{kindLabelValue}</span></p>}
+            <h3 class="featured-insights-allentown__recent-title">{insight.title}</h3>
+            {insight.excerpt && <p class="featured-insights-allentown__recent-description">{insight.excerpt}</p>}
+            <Button class="featured-insights-allentown__link" href={insight.href} label="Read more" style="clear"><svg aria-hidden="true" width="1em" height="1em" viewBox={`0 0 ${faChevronRight.icon[0]} ${faChevronRight.icon[1]}`} fill="currentColor"><path d={faChevronRight.icon[4] as string} /></svg></Button>
+          </article></li>
+        })}</ol>
+        {action && <div class="featured-insights-allentown__cta"><Button {...action} /></div>}
+      </div>}
     </div>
   </div>
 </section>
@@ -138,14 +147,11 @@ const kindLabel = (kind?: string): string | undefined => kind?.replace(/[-_]/g, 
   :where(.featured-insights-allentown) {
     --kiw--featured-insights-allentown-content-width: var(--content-width);
     --kiw--featured-insights-allentown-container-gap: var(--section-space-l);
-    --kiw--featured-insights-allentown-intro-gap: var(--space-m);
     --kiw--featured-insights-allentown-intro-width: var(--kinekt-component-reading-width);
     --kiw--featured-insights-allentown-card-gap: var(--space-s);
     --kiw--featured-insights-allentown-action-color: var(--kinekt-component-action);
     --kiw--featured-insights-allentown-label-size: var(--text-xs);
     --kiw--featured-insights-allentown-label-weight: var(--heading-font-weight);
-    --kiw--featured-insights-allentown-text-line-height: var(--text-line-height);
-    --kiw--featured-insights-allentown-text-letter-spacing: var(--text-letter-spacing);
     --kiw--featured-insights-allentown-copy-width: var(--width-m);
     --kiw--featured-insights-allentown-link-gap: var(--space-xs);
     --kiw--featured-insights-allentown-ink-color: var(--kinekt-component-ink);
@@ -154,20 +160,21 @@ const kindLabel = (kind?: string): string | undefined => kind?.replace(/[-_]/g, 
     --kiw--featured-insights-allentown-border-width: var(--border-width);
     --kiw--featured-insights-allentown-recent-heading-size: var(--h6);
     --kiw--featured-insights-allentown-heading-line-height: var(--heading-line-height);
-    --kiw--featured-insights-allentown-muted-color: var(--kinekt-component-muted);
+    --kiw--featured-insights-allentown-recent-description-color: var(--primary);
+    --kiw--featured-insights-allentown-kind-color: var(--kinekt-component-accent);
     --kiw--featured-insights-allentown-recent-space: var(--space-l);
-    --kiw--featured-insights-allentown-column-gap: var(--section-space-xl);
   }
 
   .featured-insights-allentown > .featured-insights-allentown__container { display: grid; gap: var(--kiw--featured-insights-allentown-container-gap); }
-  .featured-insights-allentown .featured-insights-allentown__intro { display: flex; flex-direction: column; align-items: flex-start; gap: var(--kiw--featured-insights-allentown-intro-gap); width: 100%; max-width: none; }
+  .featured-insights-allentown .featured-insights-allentown__intro { width: 100%; max-width: none; }
   .featured-insights-allentown .featured-insights-allentown__intro .section-intro__description { max-width: var(--kiw--featured-insights-allentown-intro-width); }
   .featured-insights-allentown .featured-insights-allentown__content { display: grid; width: 100%; max-width: none; gap: var(--kiw--featured-insights-allentown-container-gap); }
   .featured-insights-allentown :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent article) { display: grid; align-content: start; gap: var(--kiw--featured-insights-allentown-card-gap); }
   .featured-insights-allentown :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent article) :is(h3, p) { margin: 0; }
   .featured-insights-allentown .featured-insights-allentown__media img { aspect-ratio: var(--kiw--featured-insights-allentown-media-ratio, 16 / 9); object-fit: cover; }
-  .featured-insights-allentown .featured-insights-allentown__kind { color: var(--kiw--featured-insights-allentown-action-color); font-size: var(--kiw--featured-insights-allentown-label-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); }
-  .featured-insights-allentown :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent) > :is(p, h3), .featured-insights-allentown .featured-insights-allentown__recent article > :is(p, h3) { max-width: var(--kiw--featured-insights-allentown-copy-width); }
+  .featured-insights-allentown .featured-insights-allentown__kind { display: inline-flex; align-items: center; gap: var(--kiw--featured-insights-allentown-link-gap); color: var(--kiw--featured-insights-allentown-kind-color); font-size: var(--kiw--featured-insights-allentown-label-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); }
+  .featured-insights-allentown .featured-insights-allentown__kind-icon { width: 1em; height: 1em; flex: none; }
+  .featured-insights-allentown :is(.featured-insights-allentown__featured-title, .featured-insights-allentown__featured-description, .featured-insights-allentown__recent-title, .featured-insights-allentown__recent-description) { max-width: var(--kiw--featured-insights-allentown-copy-width); }
   .featured-insights-allentown .featured-insights-allentown__link { display: inline-flex; align-items: center; gap: var(--kiw--featured-insights-allentown-link-gap); width: max-content; min-height: auto; padding: 0; border-color: transparent; color: var(--kiw--featured-insights-allentown-ink-color); background: transparent; font-size: var(--kiw--featured-insights-allentown-link-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); text-decoration: none; }
   .featured-insights-allentown .featured-insights-allentown__link:hover { color: var(--kiw--featured-insights-allentown-action-color); }
   .featured-insights-allentown .featured-insights-allentown__recent { display: none; }
@@ -176,24 +183,25 @@ const kindLabel = (kind?: string): string | undefined => kind?.replace(/[-_]/g, 
       --kiw--subtitle-flight-path-gap: var(--kiw--featured-insights-allentown-card-gap);
     }
   }
-  .featured-insights-allentown .featured-insights-allentown__recent ol { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
-  .featured-insights-allentown .featured-insights-allentown__recent li > article { min-height: 0; padding: 0; border: 0; background: transparent; box-shadow: none; }
-  .featured-insights-allentown .featured-insights-allentown__recent li > article h3 { font-size: var(--kiw--featured-insights-allentown-recent-heading-size); line-height: var(--kiw--featured-insights-allentown-heading-line-height); }
-  .featured-insights-allentown .featured-insights-allentown__recent li > article > p:not(.featured-insights-allentown__kind) { color: var(--kiw--featured-insights-allentown-muted-color); font-size: var(--kiw--featured-insights-allentown-link-size); }
-  .featured-insights-allentown .featured-insights-allentown__recent li { padding-block: var(--kiw--featured-insights-allentown-recent-space); border-bottom: var(--kiw--featured-insights-allentown-border-width) solid var(--kiw--featured-insights-allentown-line-color); }
-  .featured-insights-allentown .featured-insights-allentown__recent li:first-child { padding-top: 0; }
-  .featured-insights-allentown .featured-insights-allentown__recent li:last-child { border-bottom: 0; }
+  .featured-insights-allentown .featured-insights-allentown__recent-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+  .featured-insights-allentown .featured-insights-allentown__recent-article { min-height: 0; padding: 0; border: 0; background: transparent; box-shadow: none; }
+  .featured-insights-allentown .featured-insights-allentown__recent-title { font-size: var(--kiw--featured-insights-allentown-recent-heading-size); line-height: var(--kiw--featured-insights-allentown-heading-line-height); }
+  .featured-insights-allentown .featured-insights-allentown__recent-description { color: var(--kiw--featured-insights-allentown-recent-description-color); font-size: var(--kiw--featured-insights-allentown-link-size); }
+  .featured-insights-allentown .featured-insights-allentown__recent-list-item { padding-block: var(--kiw--featured-insights-allentown-recent-space); border-bottom: var(--kiw--featured-insights-allentown-border-width) solid var(--kiw--featured-insights-allentown-line-color); }
+  .featured-insights-allentown .featured-insights-allentown__recent-list-item:first-child { padding-top: 0; }
+  .featured-insights-allentown .featured-insights-allentown__recent-list-item:last-child { border-bottom: 0; }
 
   @media (min-width: 50rem) {
-    .featured-insights-allentown .featured-insights-allentown__intro { flex-direction: row; align-items: end; justify-content: space-between; column-gap: var(--kiw--featured-insights-allentown-column-gap); }
     .featured-insights-allentown .featured-insights-allentown__content { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); column-gap: var(--kiw--featured-insights-allentown-container-gap); }
     .featured-insights-allentown .featured-insights-allentown__recent { display: grid; align-content: start; gap: var(--kiw--featured-insights-allentown-recent-space); }
   }
 
   @media (max-width: 49.99rem) {
+    .featured-insights-allentown .featured-insights-allentown__recent--with-action { display: grid; gap: 0; }
+    .featured-insights-allentown .featured-insights-allentown__recent--with-action :is(.featured-insights-allentown__recent-header, .featured-insights-allentown__recent-list) { display: none; }
     .featured-insights-allentown .featured-insights-allentown__intro-content :is(.section-intro, .section-intro__accent, .section-intro__heading, .section-intro__description) { width: 100%; max-width: none; }
     .featured-insights-allentown .featured-insights-allentown__intro-content .section-intro__heading { max-width: var(--content-width); }
   }
   /* The action role is a button fill; as text it needs the subtle role to stay readable on dark canvases. */
-  .featured-insights-allentown[data-kinekt-theme='semi-dark'], .featured-insights-allentown[data-kinekt-theme='dark'] { --kiw--featured-insights-allentown-action-color: var(--kinekt-component-subtle); }
+  .featured-insights-allentown[data-kinekt-theme='semi-dark'], .featured-insights-allentown[data-kinekt-theme='dark'] { --kiw--featured-insights-allentown-action-color: var(--kinekt-component-subtle); --kiw--featured-insights-allentown-recent-description-color: var(--primary-light); }
 </style>

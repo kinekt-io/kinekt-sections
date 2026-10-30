@@ -8,6 +8,7 @@
 - Add prerelease Streamer Allentown with the standard Intro and optional zero-to-two CTA Group.
 - Add optional localized results headings to Case Studies slides and editable Problem Solution animation labels; empty labels render no text.
 - Add optional zero-to-two CTA groups below the Process Story Allentown intro, below its item list, and within each item; resolve Content-or-URL targets through the shared adapter.
+- Expose the existing Sharp Solid icon-name validator and SVG resolver through `@kinekt-io/components/icons` for consuming CMS configurations.
 
 ### Changed
 
@@ -28,8 +29,10 @@
 - Omit incomplete optional CTAs during frontend conversion, including nested callouts, without dropping their section or page. Keep publish-time validation, required CTA validation and URL safety checks intact.
 - Synchronize Process Story Trinity progression with its six-second linear timer fill. Hover and offscreen pauses preserve elapsed progress; clicking stops autoplay and fills the selected timer.
 - Expose Steps Stage item descriptions as native Payload rich text instead of textareas, matching the existing rich-text renderer and stored editor data.
-- Use `primary-light` for both Homepage Problem Solution intros and reusable item descriptions in semi-dark, and `primary` for Read More descriptions in semi-light.
+- Use `primary-light` for both Homepage Problem Solution intros and reusable item descriptions in dark and semi-dark, and `primary` for Read More descriptions in semi-light.
 - Size Form Section intro headings one visual level below their semantic tag. Use theme-aware contact text and accent icons, token-based large contact headings with 1.2 line height, and a divider between the form and contact list.
+- Let Density Comparison intros and headings fill their container, size table headers with `h5`, and alternate full/half-opacity theme-aware backgrounds in the middle comparison column.
+- Place Featured Insights' section CTA below the recent articles, retaining mobile access. Render supplied `kindIcon` names as accent-colored SVGs, use explicit card text classes, and give recent descriptions theme-aware primary colors.
 - Correct the Product Hero Allentown design reference to [Hero Section - Battery Packs](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538028&t=OtYEVTRRdAJJYQ0v-11); content fields and rendering are unchanged.
 
 ## 26.10.2-beta.25 — 2026-10-23

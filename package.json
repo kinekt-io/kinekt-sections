@@ -45,6 +45,11 @@
     "./components/step-stage.astro": "./src/components/step/stage/step-stage.astro",
     "./components/use-case-item-allentown.astro": "./src/components/use-case-item/allentown/use-case-item-allentown.astro",
     "./controls/button-allentown.astro": "./src/controls/button/allentown/button-allentown.astro",
+    "./icons": {
+      "default": "./dist/shared/cta-icons.js",
+      "import": "./dist/shared/cta-icons.js",
+      "types": "./dist/shared/cta-icons.d.ts"
+    },
     "./primitives/contact-icon.astro": "./src/primitives/contact-icon/contact-icon.astro",
     "./primitives/section-intro.astro": "./src/primitives/section-intro/section-intro.astro",
     "./primitives/subtitle-flight-path.astro": "./src/primitives/subtitle-flight-path/subtitle-flight-path.astro",

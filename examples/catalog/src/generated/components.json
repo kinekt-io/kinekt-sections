@@ -2461,6 +2461,11 @@
       "recentMedia": {
         "kind": "hidden",
         "source": "renderer"
+      },
+      "kindIcon": {
+        "kind": "articleTypeIcon",
+        "source": "renderer",
+        "description": "Optional FA7 Sharp Solid icon name resolved centrally from the referenced article type."
       }
     },
     "previewSource": "sections/featured-insights/allentown/featured-insights-allentown.preview.astro",

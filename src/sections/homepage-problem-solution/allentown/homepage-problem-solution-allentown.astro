@@ -474,7 +474,7 @@ const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice
   .homepage-problem-solution-allentown .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--kiw--homepage-problem-solution-description-font-size); line-height: var(--kiw--homepage-problem-solution-description-line-height); }
   .homepage-problem-solution-allentown .section-intro__description > * { margin-block: 0; }
 
-  .homepage-problem-solution-allentown[data-kinekt-theme='semi-dark'] {
+  .homepage-problem-solution-allentown:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) {
     & :is(.section-intro__description, .homepage-problem-item-allentown__description, .homepage-solution-step-allentown__description) {
       color: var(--kiw--homepage-problem-solution-allentown-description-color, var(--primary-light));
     }

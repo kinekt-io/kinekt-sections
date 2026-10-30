@@ -22,6 +22,7 @@
     "featuredSelection": { "kind": "selectedFeaturedThenListOrder", "source": "renderer" },
     "recentSelection": { "kind": "selectedListOrder", "source": "renderer" },
     "featuredMedia": { "kind": "required", "source": "renderer" },
-    "recentMedia": { "kind": "hidden", "source": "renderer" }
+    "recentMedia": { "kind": "hidden", "source": "renderer" },
+    "kindIcon": { "kind": "articleTypeIcon", "source": "renderer", "description": "Optional FA7 Sharp Solid icon name resolved centrally from the referenced article type." }
   }
 }

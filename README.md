@@ -251,6 +251,8 @@ Icon dependencies require a Font Awesome **Pro Package Token** with access to `@
 
 Shared components render Font Awesome 7 Sharp Solid definitions as SVG, without an icon font or browser-side Font Awesome API. Editor icon fields accept icon names such as `bolt` or `shield-halved`; optional empty fields omit the icon.
 
+Consumers can import `isCtaIcon` and `ctaIconPaths` from `@kinekt-io/components/icons` to validate editor-owned icon names and resolve the same SVG definitions. Featured Insights accepts optional renderer-owned `insightSources[].kindIcon`; a CMS can derive this from central article-type settings without duplicating icon controls on each card.
+
 Run commands from this repository:
 
 ```bash

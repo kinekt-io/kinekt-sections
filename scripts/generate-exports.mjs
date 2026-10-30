@@ -30,6 +30,17 @@ async function discover(directory) {
 
     const relative = path.relative(source, filename).split(path.sep).join('/')
     const parts = relative.split('/')
+    if (relative === 'shared/cta-icons.ts') {
+      entries.set('./icons', {
+        source: relative,
+        target: {
+          default: './dist/shared/cta-icons.js',
+          import: './dist/shared/cta-icons.js',
+          types: './dist/shared/cta-icons.d.ts',
+        },
+      })
+      continue
+    }
     if (parts[0] === 'styles' && entry.name.endsWith('.css')) {
       entries.set(`./styles/${entry.name}`, { source: relative, target: `./src/${relative}` })
       continue
