@@ -1,11 +1,12 @@
 ---
 import { faMinus, faPlus } from '@fortawesome/sharp-solid-svg-icons'
 import Label from '../../../atoms/label/allentown/label-allentown.astro'
-
+import type { RichText } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
 export interface ProductDetailItemContent {
   title: string
   subtitle?: string | null
-  description: string
+  description: string | RichText
   detailHeading?: string | null
   details?: Array<{ text: string; icon?: string | null }> | null
 }
@@ -24,6 +25,10 @@ const details = (item.details ?? []).filter((detail) => typeof detail?.text === 
 const classes = ['product-detail-item-allentown', className].filter(Boolean).join(' ')
 const [plusWidth, plusHeight, , , plusPath] = faPlus.icon
 const [minusWidth, minusHeight, , , minusPath] = faMinus.icon
+const descriptionHtml = typeof item.description === 'string'
+  ? richTextToHtml(item.description, 'product detail item description')
+  : item.description.html
+
 ---
 <details class={classes} open={open} data-kinekt-disclosure>
   <summary class="product-detail-item-allentown__summary">
@@ -35,7 +40,7 @@ const [minusWidth, minusHeight, , , minusPath] = faMinus.icon
     <svg class="product-detail-item-allentown__icon product-detail-item-allentown__icon--close" aria-hidden="true" focusable="false" viewBox={`0 0 ${minusWidth} ${minusHeight}`} fill="currentColor"><path d={minusPath as string} /></svg>
   </summary>
   <div class="product-detail-item-allentown__content">
-    <p class="product-detail-item-allentown__description">{item.description}</p>
+    <div class="product-detail-item-allentown__description" set:html={descriptionHtml} />
     {(item.detailHeading || details.length > 0) && (
       <div class="product-detail-item-allentown__feature">
         {item.detailHeading && <p class="product-detail-item-allentown__detail-heading">{item.detailHeading}</p>}
@@ -81,6 +86,8 @@ const [minusWidth, minusHeight, , , minusPath] = faMinus.icon
 
   .product-detail-item-allentown .product-detail-item-allentown__content { display: grid; gap: var(--kiw--product-detail-item-allentown-body-gap); margin-block-start: var(--kiw--product-detail-item-allentown-content-gap); }
   .product-detail-item-allentown .product-detail-item-allentown__description { margin: 0; color: var(--kiw--product-detail-item-allentown-text-color); font-size: var(--kiw--product-detail-item-allentown-description-size); line-height: var(--text-line-height); white-space: pre-line; }
+  .product-detail-item-allentown .product-detail-item-allentown__description > * { margin-block: 0; }
+  .product-detail-item-allentown .product-detail-item-allentown__description > * + * { margin-block-start: var(--space-s); }
   .product-detail-item-allentown .product-detail-item-allentown__feature { display: grid; gap: var(--kiw--product-detail-item-allentown-feature-gap); }
   .product-detail-item-allentown .product-detail-item-allentown__detail-heading { margin: 0; color: var(--kiw--product-detail-item-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--product-detail-item-allentown-detail-heading-size); font-weight: var(--heading-font-weight); line-height: 1; }
   .product-detail-item-allentown .product-detail-item-allentown__details { display: flex; flex-wrap: wrap; gap: var(--kiw--product-detail-item-allentown-details-gap); margin: 0; padding: 0; list-style: none; }

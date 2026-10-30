@@ -4,7 +4,7 @@ import { richTextToHtml } from '../../../shared/rich-text.js'
 
 interface Props {
   title: string
-  description: string | RichText | Record<string, unknown>
+  description: string | RichText
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   class?: string
 }
@@ -14,9 +14,7 @@ const Heading = headingLevel
 const classes = ['facility-fact-allentown', className].filter(Boolean).join(' ')
 const descriptionHtml = typeof description === 'string'
   ? richTextToHtml(description, 'facility fact description')
-  : typeof description?.html === 'string'
-    ? description.html
-    : richTextToHtml(description, 'facility fact description')
+  : description.html
 ---
 <div class={classes}>
   <Heading class="facility-fact-allentown__title">{title}</Heading>

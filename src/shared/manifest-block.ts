@@ -1,4 +1,5 @@
 import type { Block, CollectionSlug, Field } from 'payload'
+import { renderRichText } from './rich-text.js'
 import { ctaFields, isSharpSolidIconNameOrEmpty } from './payload-fields.js'
 
 type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'insightSourceList' | 'contentReferenceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
@@ -203,6 +204,15 @@ export function createManifestBlock(manifest: SectionManifest, input: CreateMani
   }
 }
 
+function normalizeRichText(value: unknown, field: string): unknown {
+  if (Array.isArray(value)) return value.map((item, index) => normalizeRichText(item, `${field}[${index}]`))
+  if (typeof value !== 'object' || value === null) return value
+
+  const record = value as Record<string, unknown>
+  if ('root' in record) return renderRichText(record, field)
+  return Object.fromEntries(Object.entries(record).map(([key, item]) => [key, normalizeRichText(item, `${field}.${key}`)]))
+}
+
 export function manifestToProps<T extends ManifestSectionDocument>(data: T): T {
-  return data
+  return normalizeRichText(data, 'section') as T
 }

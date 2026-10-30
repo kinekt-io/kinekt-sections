@@ -4,6 +4,7 @@ import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import { ctaGroupActions, type Media } from '../../../shared/content.js'
 import type { HeroContent } from './hero-trinity.types.js'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import { isSafeWebUrl } from '../../../urls.js'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 interface Props extends HeroContent { id?: string; headingLevel?: 'h1' | 'h2' }
@@ -19,7 +20,10 @@ assertSafeImage(image, 'image'); if (mobileImage) assertSafeImage(mobileImage, '
     <header class="hero-trinity__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
       {actions.length > 0 && <div class="hero-trinity__actions">
-        {actions.map((action, index) => <Button class="hero-trinity__action" href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'secondary')} />)}
+        {actions.map((action, index) => {
+          const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
+          return <Button class="hero-trinity__action" href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'secondary')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
+        })}
       </div>}
     </header>
   </div>

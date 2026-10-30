@@ -1,10 +1,10 @@
 ---
 interface Props { text: string; size?: 'small' | 'medium'; as?: 'p' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'; id?: string; caps?: boolean; class?: string; labelClass?: string }
-const { text, size = 'small', as: Label = 'p', id, caps = false, class: className, labelClass } = Astro.props
+const { text, size = 'small', as: Label = 'p', id, caps = true, class: className, labelClass, ...attributes } = Astro.props
 const classes = ['subtitle-flight-path', `subtitle-flight-path--${size}`, caps && 'subtitle-flight-path--caps', className].filter(Boolean).join(' ')
 const labelClasses = ['subtitle-flight-path__label', labelClass].filter(Boolean).join(' ')
 ---
-<div class={classes}><Label class={labelClasses} id={id}>{text}</Label><span class="subtitle-flight-path__path" aria-hidden="true" /></div>
+<div {...attributes} class={classes}><Label class={labelClasses} id={id}>{text}</Label><span class="subtitle-flight-path__path" aria-hidden="true" /></div>
 <style is:global>
   :where(.subtitle-flight-path) {
     --kiw--subtitle-flight-path-color: var(--kinekt-component-accent, var(--accent-semi-dark));
@@ -30,6 +30,10 @@ const labelClasses = ['subtitle-flight-path__label', labelClass].filter(Boolean)
     gap: var(--kiw--subtitle-flight-path-gap);
     min-width: 0;
     padding-inline-end: var(--kiw--subtitle-flight-path-padding-end);
+
+    &[hidden] {
+      display: none;
+    }
   }
 
   .subtitle-flight-path .subtitle-flight-path__label {
@@ -53,7 +57,7 @@ const labelClasses = ['subtitle-flight-path__label', labelClass].filter(Boolean)
     background: linear-gradient(to right, var(--kiw--subtitle-flight-path-color), color-mix(in srgb, var(--kiw--subtitle-flight-path-color) var(--kiw--subtitle-flight-path-fade-opacity), transparent) var(--kiw--subtitle-flight-path-fade-at));
   }
 
-  /* Optional arrow start and dot end caps; the default line has none. */
+  /* Caps share the gradient's start and end colors. */
   .subtitle-flight-path--caps .subtitle-flight-path__path::before,
   .subtitle-flight-path--caps .subtitle-flight-path__path::after {
     position: absolute;

@@ -7,7 +7,7 @@ import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 
 export interface UseCaseItemContent {
   title: string
-  description: string | RichText | Record<string, unknown>
+  description: string | RichText
   ctaGroup?: CtaGroup | { primaryButton?: Cta | null; secondaryButton?: Cta | null } | null
 }
 

@@ -5,11 +5,18 @@ import Label from '../../../atoms/label/allentown/label-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import Callout from '../../../components/callout/allentown/callout-allentown.astro'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import type { RichText } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
 
 const { id, theme = 'semi-light', intro, items = [], callout, headingLevel = 'h2' } = Astro.props as any
 const sectionId = id ?? 'solution-list'
 const toc = items.map((item: any, index: number) => ({ id: `${sectionId}-item-${index + 1}`, label: item.heading }))
-const description = (value: unknown) => typeof value === 'string' ? value : (value as { html?: string })?.html
+const descriptionHtml = (value: string | RichText | null | undefined) => value == null || value === ''
+  ? undefined
+  : typeof value === 'string'
+    ? richTextToHtml(value, 'solution item description')
+    : value.html
 const action = (value: any) => value?.cta ?? value
 ---
 <section class="beta-solution-list-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
@@ -28,9 +35,13 @@ const action = (value: any) => value?.cta ?? value
               </div>
               {item.label?.text && <Label class="beta-solution-list-allentown__label" text={item.label.text} icon={item.label.icon} />}
               {item.label && typeof item.label === 'string' && <Label class="beta-solution-list-allentown__label" text={item.label} />}
-              {description(item.description) && <div class="beta-solution-list-allentown__description" set:html={description(item.description)} />}
+              {descriptionHtml(item.description) && <div class="beta-solution-list-allentown__description" set:html={descriptionHtml(item.description)} />}
             </div>
-            {action(item.cta)?.label && <div class="beta-solution-list-allentown__actions"><Button href={action(item.cta).href} label={action(item.cta).label} style="clear" size="l" /></div>}
+            {action(item.cta)?.label && (() => {
+              const itemAction = action(item.cta)
+              const icon = isCtaIcon(itemAction.icon) ? ctaIconPaths(itemAction.icon) : undefined
+              return <div class="beta-solution-list-allentown__actions"><Button href={itemAction.href} label={itemAction.label} style="clear" size="l">{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button></div>
+            })()}
           </div>
         </article></li>
       ))}

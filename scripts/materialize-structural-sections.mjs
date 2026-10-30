@@ -402,6 +402,7 @@ for (const directory of await manifestDirectories(sections)) {
   const solutionListContract = manifest.slug === 'solution-list-allentown'
   const formSectionContract = manifest.slug === 'form-section-allentown'
   const homepageProblemSolutionAdapter = manifest.slug === 'homepage-problem-solution-allentown'
+  const useCasesAdapter = manifest.slug === 'use-cases-allentown'
   const block = `${prefix}${manifest.slug}`
   const previewContent = sampleContent(manifest)
   const fields = previewFields(manifest)
@@ -519,6 +520,73 @@ const content = resolveCatalogueAssets(rawContent) as typeof rawContent
   const solutionListTypes = `// Solution List native Payload contract type entrypoint.\nexport type { PayloadSolutionListAllentownDocument, SolutionListAllentownContent, SolutionListAllentownItem } from './solution-list-allentown.contract.js'\n`
   const solutionListPayload = `// Solution List native Payload contract entrypoint.\nexport { createSolutionListAllentownBlock, solutionListAllentownToProps } from './solution-list-allentown.contract.js'\nexport type { CreateSolutionListAllentownBlockOptions, PayloadSolutionListAllentownDocument, SolutionListAllentownAdapterOptions, SolutionListAllentownContent, SolutionListAllentownItem } from './solution-list-allentown.contract.js'\n`
   const formSectionTypes = `// Form Section native Payload contract type entrypoint.\nexport type { BetaFormSectionAllentownContent, ContactMethod, ContactMethodIcon, FormSectionImagePosition, PayloadBetaFormSectionAllentownDocument } from './form-section-allentown.contract.js'\n`
+  const useCasesTypes = `import type { CtaGroup, RichText, SectionIntro } from '../../../shared/content.js'
+import type { BetaTheme } from '../../../shared/payload.js'
+
+export interface UseCasesAllentownItem {
+  title: string
+  description: RichText
+  ctaGroup?: CtaGroup
+}
+
+export interface BetaUseCasesAllentownContent {
+  theme: BetaTheme
+  intro: SectionIntro
+  advantageHeading: string
+  items: UseCasesAllentownItem[]
+}
+
+type DraftFields<T> = { [Field in keyof T]?: T[Field] | null }
+
+export interface PayloadBetaUseCasesAllentownDocument extends DraftFields<Omit<BetaUseCasesAllentownContent, 'intro' | 'items'>> {
+  blockType?: string
+  intro?: { accentHeading?: string | null; heading?: string | null; description?: unknown } | null
+  items?: Array<{ title?: string | null; description?: unknown; ctaGroup?: unknown } | null> | null
+}
+`
+  const useCasesPayload = `// @generated Use Cases Payload contract from the manifest.
+import type { Block, CollectionSlug } from 'payload'
+import { createManifestBlock } from '${importAdapter}'
+import { ctaGroupToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import type { ${name}Content, Payload${name}Document, UseCasesAllentownItem } from './${base}.types.js'
+
+const manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const
+
+export interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+
+export function create${name}Block(options: Create${name}BlockOptions = {}): Block {
+  return createManifestBlock(manifest, options)
+}
+
+const introToProps = (value: unknown): ${name}Content['intro'] => {
+  const intro = requireObject(value, 'intro')
+  return {
+    accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'),
+    heading: requireText(intro.heading, 'intro.heading'),
+    ...(intro.description ? { description: { html: richTextToHtml(intro.description, 'intro.description') } } : {}),
+  }
+}
+
+const itemToProps = (value: unknown, index: number, options: PayloadAdapterOptions): UseCasesAllentownItem => {
+  const item = requireObject(value, 'items[' + index + ']')
+  const ctaGroup = ctaGroupToProps(item.ctaGroup, 'items[' + index + '].ctaGroup', options)
+  return {
+    title: requireText(item.title, 'items[' + index + '].title'),
+    description: { html: richTextToHtml(item.description, 'items[' + index + '].description') },
+    ...(ctaGroup ? { ctaGroup } : {}),
+  }
+}
+
+export function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document, options: PayloadAdapterOptions = {}): ${name}Content {
+  return {
+    theme: requireTheme(data.theme),
+    intro: introToProps(data.intro),
+    advantageHeading: requireText(data.advantageHeading, 'advantageHeading'),
+    items: requireArray(data.items, 'items').map((item, index) => itemToProps(item, index, options)),
+  }
+}
+`
   const homepageProblemSolutionPayload = `// @generated Homepage Problem Solution Payload contract from the manifest.
 import type { Block, CollectionSlug } from 'payload'
 import { createManifestBlock } from '${importAdapter}'
@@ -559,6 +627,9 @@ export function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${n
 
   return {
     theme: 'dark',
+    problemRangeLabel: optionalText(block.problemRangeLabel, 'problemRangeLabel'),
+    solutionRangeLabel: optionalText(block.solutionRangeLabel, 'solutionRangeLabel'),
+    solutionRangeValue: optionalText(block.solutionRangeValue, 'solutionRangeValue'),
     problemIntro: intro(block.problemIntro, 'problemIntro'),
     problemItems: items(block.problemItems, 'problemItems'),
     solutionIntro: intro(block.solutionIntro, 'solutionIntro'),
@@ -582,7 +653,9 @@ export function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${n
         ? solutionListTypes
         : formSectionContract
           ? formSectionTypes
-          : `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`, manifest.slug === 'media-metrics-allentown' || solutionListContract || formSectionContract)
+          : useCasesAdapter
+            ? useCasesTypes
+            : `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`, manifest.slug === 'media-metrics-allentown' || solutionListContract || formSectionContract || useCasesAdapter)
   await materialize(path.join(directory, `${base}.payload.ts`), manifest.slug === 'media-metrics-allentown'
     ? mediaMetricsPayload
     : caseStudiesContract
@@ -591,7 +664,9 @@ export function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${n
         ? solutionListPayload
         : homepageProblemSolutionAdapter
           ? homepageProblemSolutionPayload
-          : structuralAdapter
+          : useCasesAdapter
+            ? useCasesPayload
+            : structuralAdapter
           ? `import type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock } from '${importAdapter}'\nimport { structuralSectionToProps } from '${importStructuralAdapter}'\nimport type { PayloadAdapterOptions } from '../../../shared/payload.js'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document, options: PayloadAdapterOptions = {}): ${name}Content {\n  return structuralSectionToProps(data, options)\n}\n`
           : `// @generated structural section — source manifest remains the contract.\nimport type { Block, CollectionSlug } from 'payload'\nimport { createManifestBlock, manifestToProps } from '${importAdapter}'\nimport type { ${name}Content, Payload${name}Document } from './${base}.types.js'\n\nconst manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const\n\nexport interface Create${name}BlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }\n\nexport function create${name}Block(options: Create${name}BlockOptions = {}): Block {\n  return createManifestBlock(manifest, options)\n}\n\nexport function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document): ${name}Content {\n  return manifestToProps(data)\n}\n`, manifest.slug === 'media-metrics-allentown' || solutionListContract)
   const previewSource = manifest.slug === 'media-metrics-allentown'

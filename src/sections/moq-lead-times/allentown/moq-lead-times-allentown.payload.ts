@@ -68,7 +68,7 @@ const manifest = {
           "localized": true
         },
         "description": {
-          "kind": "textarea",
+          "kind": "richText",
           "required": true,
           "localized": true
         },
@@ -106,7 +106,7 @@ const manifest = {
           "localized": true
         },
         "description": {
-          "kind": "textarea",
+          "kind": "richText",
           "required": true,
           "localized": true
         },

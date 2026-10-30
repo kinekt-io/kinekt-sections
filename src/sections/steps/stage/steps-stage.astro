@@ -11,7 +11,7 @@ import type { BetaStepsStageContent } from './steps-stage.types.js'
 // The generated contract type is still `Record<string, unknown>`; these are the fields the renderer reads.
 interface Props extends BetaStepsStageContent {
   theme?: BetaTheme
-  intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | Record<string, unknown> | null }
+  intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | null }
   media?: Media | null
   steps: StepStageContent[]
   id?: string

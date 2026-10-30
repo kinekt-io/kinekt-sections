@@ -6,16 +6,21 @@
 
 - Add prerelease Battery Models Trinity with reusable model cards, editable one-to-five ratings, webshop/specification links, and an optional Callout.
 - Add prerelease Streamer Allentown with the standard Intro and optional zero-to-two CTA Group.
+- Add optional localized results headings to Case Studies slides and editable Problem Solution animation labels; empty labels render no text.
 
 ### Changed
 
 - Render semantic component icons with Font Awesome 7 Pro Sharp Solid SVG definitions instead of Free Solid or handcrafted stroke glyphs.
 - Accept optional free-text Sharp Solid icon names in Payload icon fields, including CTA groups, with runtime validation of populated names.
 - Require a build-only Pro Package Token for dependency installation; keep icon fonts and credentials out of browser output.
+- Use rich-text description fields throughout sections and reusable content blocks, preserving paragraph, list, emphasis, and safe link formatting in Astro.
+- Use shared capped flightpaths for Case Studies and both Featured Insights headers.
 
 ### Fixed
 
 - Render configured arrow-right and arrow-down icons for Case Studies Allentown header and slide CTAs, retaining the current content-target contract and component-owned styles.
+- Normalize Use Cases rich-text descriptions and content-target CTA groups before rendering.
+- Render configured Sharp Solid icons throughout reusable labels, lists, buttons, and contact methods. Contact icons no longer depend on the former fixed enum.
 - Accept empty optional Case Studies results and quotes without an author name. Author role and avatar require a name, and author details require quote text.
 - Validate partial CTA and quote input before publication while allowing incomplete drafts. Keep empty CTA groups optional, normalize numeric content IDs, and accept an unset CTA icon.
 - Omit incomplete optional CTAs during frontend conversion, including nested callouts, without dropping their section or page. Keep publish-time validation, required CTA validation and URL safety checks intact.

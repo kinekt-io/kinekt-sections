@@ -1,5 +1,5 @@
 import type { Block, CollectionSlug, Field } from 'payload'
-import { ctaFields, sectionIntroFields } from '../../../shared/payload-fields.js'
+import { ctaFields, isSharpSolidIconNameOrEmpty, sectionIntroFields } from '../../../shared/payload-fields.js'
 import { ctaToProps, ctaGroupToProps, mediaToProps, optionalCtaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BatteryModelsTrinityContent, BatteryRatingTrinity, PayloadBatteryModelsTrinityDocument } from './battery-models-trinity.types.js'
@@ -81,7 +81,7 @@ export function createBatteryModelsTrinityBlock({ mediaCollection = 'media', tar
         fields: [
           { name: 'image', type: 'upload', relationTo: mediaCollection, localized: true, required: true },
           { name: 'title', type: 'text', localized: true, required: true },
-          { name: 'bestForIcon', type: 'text', localized: true, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or boxes-stacked.' } },
+          { name: 'bestForIcon', type: 'text', localized: true, validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or boxes-stacked.' } },
           { name: 'bestForText', type: 'text', localized: true },
           { name: 'description', type: 'richText', localized: true, required: true },
           {

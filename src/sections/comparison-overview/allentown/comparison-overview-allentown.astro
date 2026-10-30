@@ -1,15 +1,15 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import { fass as fas } from '@fortawesome/sharp-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import Callout from '../../../components/callout/allentown/callout-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 type Status = 'positive' | 'negative'
-interface Cta { label: string; href: string }
-interface Cell { type: 'text' | 'status'; text?: string; status?: Status }
+interface Cta { label: string; href: string; icon?: string }
+interface Cell { type: 'text' | 'status'; text?: string; status?: Status; icon?: string }
 interface ComparisonRow { feature: string; cells: Cell[] }
 interface Props {
   id?: string
@@ -23,7 +23,8 @@ interface Props {
 
 const { id, theme = 'semi-light', headingLevel = 'h2', intro, introCta, comparison, callout } = Astro.props as Props
 const getCta = (value: Props['introCta']) => value && ('cta' in value ? value.cta : value)
-const fontAwesomeIcon = (name: 'circle-check' | 'circle-xmark') => fas[name === 'circle-check' ? 'faCircleCheck' : 'faCircleXmark']
+const introAction = getCta(introCta)
+const introIcon = introAction && isCtaIcon(introAction.icon) ? ctaIconPaths(introAction.icon) : undefined
 const normalizedCallout = {
   intro: callout.intro,
   ctaGroup: callout.ctaGroup ?? { primary: getCta(callout.cta) },
@@ -33,7 +34,7 @@ const normalizedCallout = {
   <div class="comparison-overview-allentown__container">
     <header class="comparison-overview-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
-      {getCta(introCta) && <Button {...getCta(introCta)!} style="clear" />}
+      {introAction && <Button href={introAction.href} label={introAction.label} style="clear">{introIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={introIcon.viewBox} fill="currentColor"><path d={introIcon.path} /></svg>}</Button>}
     </header>
     <div class="comparison-overview-allentown__table-wrap">
       <table class="comparison-overview-allentown__table">
@@ -41,9 +42,9 @@ const normalizedCallout = {
         <tbody>{comparison.rows.map((row) => <tr><th scope="row">{row.feature}</th>{comparison.columns.map((_, index) => {
           const cell = row.cells[index]
           if (cell?.type === 'status' && (cell.status === 'positive' || cell.status === 'negative')) {
-            const icon = fontAwesomeIcon(cell.status === 'positive' ? 'circle-check' : 'circle-xmark')
+            const icon = ctaIconPaths(cell.icon || (cell.status === 'positive' ? 'circle-check' : 'circle-xmark'))
             const label = cell.status === 'positive' ? 'Yes' : 'No'
-            return <td><span class:list={['comparison-overview-allentown__status', `comparison-overview-allentown__status--${cell.status}`]}><svg viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} aria-hidden="true" focusable="false" fill="currentColor"><path d={icon.icon[4] as string} /></svg><span class="comparison-overview-allentown__visually-hidden">{label}</span></span></td>
+            return <td><span class:list={['comparison-overview-allentown__status', `comparison-overview-allentown__status--${cell.status}`]}>{icon && <svg viewBox={icon.viewBox} aria-hidden="true" focusable="false" fill="currentColor"><path d={icon.path} /></svg>}<span class:list={{ 'comparison-overview-allentown__visually-hidden': Boolean(icon) }}>{label}</span></span></td>
           }
           return <td>{cell?.text}</td>
         })}</tr>)}</tbody>

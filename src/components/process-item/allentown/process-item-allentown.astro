@@ -1,10 +1,12 @@
 ---
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
+import type { RichText } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
 
 export interface ProcessItemContent {
   label: string
   title: string
-  description: string
+  description: string | RichText
 }
 
 interface Props {
@@ -16,13 +18,17 @@ interface Props {
 const { item, headingLevel = 'h3', class: className } = Astro.props
 const Heading = headingLevel
 const classes = ['process-item-allentown', className].filter(Boolean).join(' ')
+const descriptionHtml = typeof item.description === 'string'
+  ? richTextToHtml(item.description, 'process item description')
+  : item.description.html
+
 ---
 <div class={classes}>
   {item.label && <SubtitleFlightPath text={item.label} caps />}
   {(item.title || item.description) && (
     <div class="process-item-allentown__copy">
       {item.title && <Heading class="process-item-allentown__title">{item.title}</Heading>}
-      {item.description && <p class="process-item-allentown__description">{item.description}</p>}
+      <div class="process-item-allentown__description" set:html={descriptionHtml} />
     </div>
   )}
 </div>
@@ -41,4 +47,6 @@ const classes = ['process-item-allentown', className].filter(Boolean).join(' ')
   .process-item-allentown .process-item-allentown__copy { display: grid; gap: var(--kiw--process-item-allentown-copy-gap); }
   .process-item-allentown .process-item-allentown__title { max-width: none; margin: 0; color: var(--kiw--process-item-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--process-item-allentown-title-size); font-weight: var(--heading-font-weight); line-height: 1.2; letter-spacing: var(--heading-letter-spacing); text-wrap: balance; }
   .process-item-allentown .process-item-allentown__description { margin: 0; color: var(--kiw--process-item-allentown-description-color); font-size: var(--kiw--process-item-allentown-description-size); line-height: var(--kiw--process-item-allentown-description-line-height); white-space: pre-line; }
+  .process-item-allentown .process-item-allentown__description > * { margin-block: 0; }
+  .process-item-allentown .process-item-allentown__description > * + * { margin-block-start: var(--space-xs); }
 </style>

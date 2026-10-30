@@ -49,7 +49,7 @@
       "fields": {
         "image": { "kind": "media", "required": true, "localized": true },
         "title": { "kind": "text", "required": true, "localized": true },
-        "description": { "kind": "textarea", "required": true, "localized": true },
+        "description": { "kind": "richText", "required": true, "localized": true },
         "benefits": { "kind": "featureItems", "required": false, "localized": true }
       }
     },

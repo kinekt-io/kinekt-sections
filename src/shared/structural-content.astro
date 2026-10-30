@@ -2,6 +2,7 @@
 import Button from '../controls/button/allentown/button-allentown.astro'
 import Label from '../atoms/label/allentown/label-allentown.astro'
 import FormEmbed from '../components/form-embed/allentown/form-embed-allentown.astro'
+import { faArrowLeft, faArrowRight } from '@fortawesome/sharp-solid-svg-icons'
 interface Field {
   kind: string
   id?: string
@@ -85,11 +86,11 @@ function buttonStyle(value: Record<string, unknown>, key: string): 'primary' | '
         </ul>
       </div>
       <div class={`${className}-pagination`} data-kinekt-carousel-pagination>
-        {carouselControls === 'previous-next' && <button class="button button--clear" type="button" data-kinekt-carousel-previous aria-label="Previous case study"><span data-kinekt-carousel-control-icon aria-hidden="true">←</span><span data-kinekt-carousel-control-text>Previous</span></button>}
+        {carouselControls === 'previous-next' && <button class="button button--clear" type="button" data-kinekt-carousel-previous aria-label="Previous case study"><span data-kinekt-carousel-control-icon aria-hidden="true"><svg width="1em" height="1em" viewBox={`0 0 ${faArrowLeft.icon[0]} ${faArrowLeft.icon[1]}`} fill="currentColor"><path d={faArrowLeft.icon[4] as string} /></svg></span><span data-kinekt-carousel-control-text>Previous</span></button>}
         <p class={`${className}-counter`} data-kinekt-carousel-counter aria-live="polite" aria-atomic="true">
           <span data-kinekt-carousel-current aria-hidden="true">1</span><span data-kinekt-carousel-separator aria-hidden="true"> / </span><span data-kinekt-carousel-total aria-hidden="true">{items.length}</span><span class={`${className}-status`} data-kinekt-carousel-status>Slide 1 of {items.length}</span>
         </p>
-        <button class="button button--clear" type="button" data-kinekt-carousel-next aria-label="Next case study"><span data-kinekt-carousel-control-icon aria-hidden="true">→</span><span data-kinekt-carousel-control-text>Next</span></button>
+        <button class="button button--clear" type="button" data-kinekt-carousel-next aria-label="Next case study"><span data-kinekt-carousel-control-icon aria-hidden="true"><svg width="1em" height="1em" viewBox={`0 0 ${faArrowRight.icon[0]} ${faArrowRight.icon[1]}`} fill="currentColor"><path d={faArrowRight.icon[4] as string} /></svg></span><span data-kinekt-carousel-control-text>Next</span></button>
         <div class={`${className}-indicators`} data-kinekt-carousel-indicators role="group" aria-label="Case study pagination">
           {items.map((_, index) => <button class="button button--clear" type="button" data-kinekt-carousel-dot data-kinekt-carousel-index={index} aria-label={`Go to case study ${index + 1}`} aria-current={index === 0 ? 'true' : undefined}></button>)}
         </div>

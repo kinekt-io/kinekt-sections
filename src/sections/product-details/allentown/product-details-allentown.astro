@@ -12,7 +12,7 @@ import type { BetaProductDetailsAllentownContent } from './product-details-allen
 // The generated contract type is still `Record<string, unknown>`; these are the fields the renderer reads.
 interface Props extends BetaProductDetailsAllentownContent {
   theme?: BetaTheme
-  intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | Record<string, unknown> | null }
+  intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | null }
   image?: Media | null
   detailLabel: string
   items: ProductDetailItemContent[]

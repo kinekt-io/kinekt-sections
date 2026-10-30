@@ -4,7 +4,7 @@ import type { RichText } from '../../../shared/content.js'
 
 interface Props {
   title: string
-  description: string | RichText | Record<string, unknown>
+  description: string | RichText
   value: string
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   class?: string
@@ -17,19 +17,7 @@ const classes = ['fact-card-allentown', className].filter(Boolean).join(' ')
 // The Figma Label "Title=yes" title is a single line of plain text, so the rich-text description is flattened to its text.
 const entities: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', '#39': "'" }
 const htmlToText = (html: string) => html.replace(/<[^>]*>/g, ' ').replace(/&(amp|lt|gt|quot|apos|nbsp|#39);/g, (_, name: string) => entities[name])
-const lexicalToText = (node: unknown): string => {
-  if (!node || typeof node !== 'object') return ''
-  const record = node as { text?: unknown; children?: unknown; root?: unknown }
-  if (typeof record.text === 'string') return record.text
-  if (record.root) return lexicalToText(record.root)
-  return Array.isArray(record.children) ? record.children.map(lexicalToText).join(' ') : ''
-}
-const descriptionText = (typeof description === 'string'
-  ? description
-  : typeof description?.html === 'string'
-    ? htmlToText(description.html)
-    : lexicalToText(description)
-).replace(/\s+/g, ' ').trim()
+const descriptionText = (typeof description === 'string' ? description : htmlToText(description.html)).replace(/\s+/g, ' ').trim()
 ---
 <div class={classes}>
   <Heading class="fact-card-allentown__title">{title}</Heading>

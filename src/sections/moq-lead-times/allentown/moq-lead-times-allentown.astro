@@ -7,10 +7,10 @@ import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 
 type HeadingLevel = 'h1' | 'h2' | 'h3'
-type RichTextInput = string | RichText | Record<string, unknown>
+type RichTextInput = string | RichText
 type IntroInput = Omit<SectionIntroContent, 'description'> & { description?: RichTextInput | null }
 type CtaInput = Partial<Cta> | null | undefined
-interface DeliveryFact { title: string; description: string; value: { text: string; icon?: string } }
+interface DeliveryFact { title: string; description: string | RichText; value: { text: string; icon?: string } }
 interface Props {
   id?: string
   theme?: SectionTheme
@@ -22,11 +22,14 @@ interface Props {
 }
 
 const { id, theme = 'dark', headingLevel = 'h2', intro, cta, moq, leadTimes = [] } = Astro.props as Props
-const toHtml = (value: RichTextInput, field: string): string => {
-  if (typeof value === 'string') return value.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).map((part) => richTextToHtml(part, field)).join('')
-  if (typeof value.html === 'string') return value.html
-  return richTextToHtml(value, field)
-}
+const toHtml = (value: RichTextInput, field: string): string => typeof value === 'string'
+  ? value.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).map((part) => richTextToHtml(part, field)).join('')
+  : value.html
+const descriptionHtml = (value: DeliveryFact['description']) => typeof value === 'string'
+  ? richTextToHtml(value, 'delivery fact description')
+  : value.html
+const hasDescription = (value: DeliveryFact['description']) => typeof value === 'string' ? value.trim() !== '' : value.html.trim() !== ''
+
 const introContent: SectionIntroContent = {
   ...intro,
   description: intro.description == null || typeof intro.description === 'string' ? intro.description ?? undefined : { html: toHtml(intro.description, 'intro.description') },
@@ -38,7 +41,7 @@ const action = (() => {
   return typeof candidate?.label === 'string' && candidate.label.trim() !== '' && typeof candidate.href === 'string' && candidate.href.trim() !== '' ? candidate as Cta : undefined
 })()
 const actionIcon = action && isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-const visibleLeadTimes = leadTimes.filter((item) => typeof item?.title === 'string' && item.title.trim() !== '' && typeof item.description === 'string' && item.description.trim() !== '' && typeof item.value?.text === 'string' && item.value.text.trim() !== '')
+const visibleLeadTimes = leadTimes.filter((item) => typeof item?.title === 'string' && item.title.trim() !== '' && hasDescription(item.description) && typeof item.value?.text === 'string' && item.value.text.trim() !== '')
 ---
 <section class="beta-moq-lead-times-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="beta-moq-lead-times-allentown__container">
@@ -50,24 +53,25 @@ const visibleLeadTimes = leadTimes.filter((item) => typeof item?.title === 'stri
     <section class="beta-moq-lead-times-allentown__facts" aria-label="Order requirements">
       <section class="beta-moq-lead-times-allentown__fact">
         <h3>{moq.title}</h3>
-        <dl>
-          <div>
-            <dt>{moq.description}</dt>
-            <dd><Label text={moq.value.text} icon={moq.value.icon} size="s" /></dd>
+        <div class="beta-moq-lead-times-allentown__fact-list">
+          <div class="beta-moq-lead-times-allentown__fact-row">
+            <div class="beta-moq-lead-times-allentown__fact-description" set:html={descriptionHtml(moq.description)} />
+            <Label text={moq.value.text} icon={moq.value.icon} size="s" />
           </div>
-        </dl>
+        </div>
       </section>
 
       <section class="beta-moq-lead-times-allentown__fact">
         <h3>Lead times</h3>
-        <dl>
+        <div class="beta-moq-lead-times-allentown__fact-list">
           {visibleLeadTimes.map((leadTime) => (
-            <div>
-              <dt>{leadTime.title}</dt>
-              <dd><Label text={leadTime.value.text} icon={leadTime.value.icon} size="s" /></dd>
+            <div class="beta-moq-lead-times-allentown__fact-row">
+              <div class="beta-moq-lead-times-allentown__fact-title">{leadTime.title}</div>
+              <div class="beta-moq-lead-times-allentown__fact-description" set:html={descriptionHtml(leadTime.description)} />
+              <Label text={leadTime.value.text} icon={leadTime.value.icon} size="s" />
             </div>
           ))}
-        </dl>
+        </div>
       </section>
     </section>
   </div>
@@ -119,11 +123,12 @@ const visibleLeadTimes = leadTimes.filter((item) => typeof item?.title === 'stri
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__facts { display: grid; gap: var(--kiw--moq-lead-times-allentown-column-gap); min-width: 0; }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact { min-width: 0; }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact > h3 { margin: 0; font-size: var(--kiw--moq-lead-times-allentown-heading-size); }
-  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact > dl { display: grid; gap: var(--kiw--moq-lead-times-allentown-fact-gap); margin: var(--space-s) 0 0; padding: var(--space-m) 0 0; border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
-  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact > dl > div { display: grid; gap: var(--kiw--moq-lead-times-allentown-value-gap); }
-  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact :is(dt, dd) { margin: 0; }
-  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact dt { color: var(--kinekt-component-ink); font-size: var(--kiw--moq-lead-times-allentown-description-size); }
-  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact dd { display: flex; }
+  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact-list { display: grid; gap: var(--kiw--moq-lead-times-allentown-fact-gap); margin: var(--space-s) 0 0; padding: var(--space-m) 0 0; border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
+  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact-row { display: grid; gap: var(--kiw--moq-lead-times-allentown-value-gap); }
+  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact-description { color: var(--kinekt-component-ink); font-size: var(--kiw--moq-lead-times-allentown-description-size); }
+  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact-description > * { margin-block: 0; }
+  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact-description > * + * { margin-block-start: var(--space-xs); }
+  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact-title { font-weight: var(--heading-font-weight); }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact .label-allentown { --kinekt-label-tint: 15%; }
   @media (min-width: 50rem) { .beta-moq-lead-times-allentown > .beta-moq-lead-times-allentown__container { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; column-gap: var(--section-space-xl); } .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); align-self: center; } }
 </style>

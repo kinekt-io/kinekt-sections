@@ -1,4 +1,4 @@
-import { richTextToHtml } from './rich-text.js'
+import { renderRichText } from './rich-text.js'
 import { isObjectRecord } from './type-guards.js'
 import { optionalCtaToProps, mediaToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from './payload.js'
 
@@ -12,7 +12,7 @@ function adaptValue(value: unknown, field: string, options: PayloadAdapterOption
   if (entries.length === 1 && entries[0][0] === 'value') return adaptValue(entries[0][1], `${field}.value`, options)
   if ('destinationType' in value || ('label' in value && ('href' in value || 'page' in value))) return optionalCtaToProps(value, field, options)
   if (isMedia(value)) return mediaToProps(value, field, options)
-  if (isRichText(value)) return { html: richTextToHtml(value, field) }
+  if (isRichText(value)) return renderRichText(value, field)
   return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, adaptValue(item, `${field}.${key}`, options)]))
 }
 

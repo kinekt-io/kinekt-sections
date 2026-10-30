@@ -330,7 +330,7 @@
         "localized": true
       },
       "description": {
-        "kind": "textarea",
+        "kind": "richText",
         "required": true,
         "localized": true
       },
@@ -714,7 +714,7 @@
         "localized": true
       },
       "description": {
-        "kind": "textarea",
+        "kind": "richText",
         "required": true,
         "localized": true
       },
@@ -799,7 +799,7 @@
         "localized": true
       },
       "description": {
-        "kind": "textarea",
+        "kind": "richText",
         "required": true,
         "localized": true
       }
@@ -836,7 +836,7 @@
         "localized": true
       },
       "description": {
-        "kind": "textarea",
+        "kind": "richText",
         "required": true,
         "localized": true
       },
@@ -3036,6 +3036,24 @@
         "kind": "ctaGroup",
         "required": false,
         "localized": true
+      },
+      "problemRangeLabel": {
+        "kind": "text",
+        "required": false,
+        "localized": true,
+        "description": "Text beside the initial range circle. Leave empty to hide this text."
+      },
+      "solutionRangeLabel": {
+        "kind": "text",
+        "required": false,
+        "localized": true,
+        "description": "Title beside the expanded range circle. Leave empty to hide this text."
+      },
+      "solutionRangeValue": {
+        "kind": "text",
+        "required": false,
+        "localized": true,
+        "description": "Label below the expanded range title. Leave empty to hide this label."
       }
     },
     "runtimeProps": {
@@ -4098,7 +4116,7 @@
             "localized": true
           },
           "description": {
-            "kind": "textarea",
+            "kind": "richText",
             "required": true,
             "localized": true
           },

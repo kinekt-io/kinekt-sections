@@ -1,8 +1,15 @@
 ---
 import type { SectionIntro } from '../../shared/content.js'
+import { richTextToHtml } from '../../shared/rich-text.js'
 interface Props { intro: SectionIntro; headingLevel?: 'h1' | 'h2' | 'h3'; accentStyle?: 'inherit' | 'heading' }
 const { intro, headingLevel = 'h2', accentStyle = 'heading' } = Astro.props
 const Heading = headingLevel
+const descriptionHtml = intro.description == null || intro.description === ''
+  ? undefined
+  : typeof intro.description === 'object' && typeof intro.description.html === 'string'
+    ? intro.description.html
+    : richTextToHtml(intro.description, 'intro description')
+
 ---
 <div class:list={['section-intro', accentStyle === 'heading' && 'section-intro--accent-heading']}>
   <div class="section-intro__heading-group">
@@ -10,8 +17,7 @@ const Heading = headingLevel
     <Heading class="section-intro__heading">{intro.heading}</Heading>
   </div>
   <slot name="after-heading" />
-  {typeof intro.description === 'string' && <p class="section-intro__description">{intro.description}</p>}
-  {typeof intro.description === 'object' && <div class="section-intro__description" set:html={intro.description.html} />}
+  {descriptionHtml && <div class="section-intro__description" set:html={descriptionHtml} />}
 </div>
 
 <style is:global>

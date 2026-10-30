@@ -1,14 +1,14 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import { fass as fas } from '@fortawesome/sharp-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 type Status = 'positive' | 'negative'
-interface Cta { label: string; href: string }
-interface Cell { text: string; status: Status }
+interface Cta { label: string; href: string; icon?: string }
+interface Cell { text: string; status: Status; icon?: string }
 interface ComparisonRow { feature: string; cells: Cell[] }
 interface Props {
   id?: string
@@ -21,7 +21,7 @@ interface Props {
 
 const { id, theme = 'semi-light', headingLevel = 'h2', intro, comparison, cta } = Astro.props as Props
 const action = cta && ('cta' in cta ? cta.cta : cta)
-const iconFor = (status: Status) => fas[status === 'positive' ? 'faCircleCheck' : 'faCircleXmark']
+const actionIcon = action && isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
 ---
 <section class="density-comparison-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="density-comparison-allentown__container">
@@ -32,12 +32,12 @@ const iconFor = (status: Status) => fas[status === 'positive' ? 'faCircleCheck' 
         <tbody>{comparison.rows.map((row) => <tr><th scope="row">{row.feature}</th>{comparison.columns.map((_, index) => {
           const cell = row.cells[index]
           if (!cell) return <td />
-          const icon = iconFor(cell.status)
-          return <td><span class:list={['density-comparison-allentown__value', `density-comparison-allentown__value--${cell.status}`]}><svg viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} aria-hidden="true" focusable="false" fill="currentColor"><path d={icon.icon[4] as string} /></svg><span>{cell.text}</span></span></td>
+          const icon = ctaIconPaths(cell.icon || (cell.status === 'positive' ? 'circle-check' : 'circle-xmark'))
+          return <td><span class:list={['density-comparison-allentown__value', `density-comparison-allentown__value--${cell.status}`]}>{icon && <svg viewBox={icon.viewBox} aria-hidden="true" focusable="false" fill="currentColor"><path d={icon.path} /></svg>}<span>{cell.text}</span></span></td>
         })}</tr>)}</tbody>
       </table>
     </div>
-    {action && <div class="density-comparison-allentown__action"><Button {...action} style="clear" size="l" /></div>}
+    {action && <div class="density-comparison-allentown__action"><Button href={action.href} label={action.label} style="clear" size="l">{actionIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={actionIcon.viewBox} fill="currentColor"><path d={actionIcon.path} /></svg>}</Button></div>}
   </div>
 </section>
 <style is:global>

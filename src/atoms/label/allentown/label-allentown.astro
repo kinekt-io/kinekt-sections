@@ -1,17 +1,12 @@
 ---
-import { fass as fas } from '@fortawesome/sharp-solid-svg-icons'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 
 interface Props { text: string; icon?: string; size?: 's' | 'm' | 'l' | 'xl'; class?: string }
 const { text, icon, size = 'm', class: className } = Astro.props
 const classes = ['label-allentown', `label-allentown--${size}`, className].filter(Boolean).join(' ')
-const fontAwesomeIcon = (name?: string) => {
-  if (!name || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name)) return undefined
-  const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
-  return fas[key]
-}
-const iconDefinition = fontAwesomeIcon(icon)
+const iconDefinition = ctaIconPaths(icon)
 ---
-<span class={classes}>{iconDefinition && <svg class="label-allentown__icon" aria-hidden="true" focusable="false" viewBox={`0 0 ${iconDefinition.icon[0]} ${iconDefinition.icon[1]}`} fill="currentColor"><path d={iconDefinition.icon[4] as string} /></svg>}<span class="label-allentown__text">{text}</span></span>
+<span class={classes}>{iconDefinition && <svg class="label-allentown__icon" aria-hidden="true" focusable="false" viewBox={iconDefinition.viewBox} fill="currentColor"><path d={iconDefinition.path} /></svg>}<span class="label-allentown__text">{text}</span></span>
 <style is:global>
   :where(.label-allentown) {
     --kiw--label-allentown-accent: var(--kinekt-component-accent, var(--accent-semi-dark));

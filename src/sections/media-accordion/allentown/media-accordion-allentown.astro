@@ -13,7 +13,7 @@ import type { BetaMediaAccordionAllentownContent } from './media-accordion-allen
 // The generated .types.ts is still generic (Record<string, unknown>), so the renderer types its props from the manifest here.
 interface Props extends BetaMediaAccordionAllentownContent {
   theme?: BetaTheme
-  intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | Record<string, unknown> | null }
+  intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | null }
   ctas?: CtaGroup | Cta[] | null
   media?: Media | null
   items: AccordionItemContent[]

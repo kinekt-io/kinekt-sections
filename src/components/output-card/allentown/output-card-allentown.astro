@@ -2,6 +2,7 @@
 import { faCheck } from '@fortawesome/sharp-solid-svg-icons'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import type { Media, RichText } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
 
 /*
  * Figma "Battery Output Card" (component set 4700:59363). Without benefits it is the `Bullets=no` variant
@@ -20,14 +21,16 @@ const classes = ['output-card-allentown', className].filter(Boolean).join(' ')
 const benefits = (card.benefits ?? []).filter(Boolean)
 const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
 const checkViewBox = ['0 0', checkWidth, checkHeight].join(' ')
+const descriptionHtml = typeof card.description === 'string'
+  ? richTextToHtml(card.description, 'output card description')
+  : card.description.html
 ---
+
 <article class={classes}>
   <KinektMedia class="output-card-allentown__media" imageClass="output-card-allentown__image" media={card.image} loading={mediaLoading} />
   <div class="output-card-allentown__content">
     <Heading class="output-card-allentown__title">{card.title}</Heading>
-    {typeof card.description === 'string'
-      ? <p class="output-card-allentown__description">{card.description}</p>
-      : <div class="output-card-allentown__description" set:html={card.description.html} />}
+    <div class="output-card-allentown__description" set:html={descriptionHtml} />
     {benefits.length > 0 && (
       <ul class="output-card-allentown__benefits">
         {benefits.map((benefit) => (

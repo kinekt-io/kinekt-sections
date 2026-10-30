@@ -29,11 +29,11 @@ interface Props extends BetaHomepageProblemSolutionAllentownContent {
   problemInfographicLabel?: string
   /** Renderer-only: accessible name of the infographic in its solution state (not in the contract yet). */
   solutionInfographicLabel?: string
-  /** Renderer-only: callout on the standard range circle once the high-density ring appears (not in the contract yet). */
+  /** Optional editor-owned callout beside the initial range circle. */
   problemRangeLabel?: string
-  /** Renderer-only: callout on the high-density ring at the end of the animation (not in the contract yet). */
+  /** Optional editor-owned title beside the expanded range circle. */
   solutionRangeLabel?: string
-  /** Renderer-only: the gain shown in a Label under `solutionRangeLabel` (not in the contract yet). */
+  /** Optional editor-owned label below the expanded range title. */
   solutionRangeValue?: string
   id?: string
   headingLevel?: 'h1' | 'h2' | 'h3'
@@ -50,9 +50,9 @@ const {
   solutionCtaGroup,
   problemInfographicLabel = 'Infographic: flight range of a standard battery',
   solutionInfographicLabel = 'Infographic: the larger flight range of a high-density battery',
-  problemRangeLabel = 'Standard range',
-  solutionRangeLabel = 'High-density increase',
-  solutionRangeValue = 'up to 100%',
+  problemRangeLabel,
+  solutionRangeLabel,
+  solutionRangeValue,
   headingLevel = 'h2',
   mediaLoading = 'lazy',
 } = Astro.props

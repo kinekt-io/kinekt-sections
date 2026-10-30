@@ -2,8 +2,9 @@
 import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
-import { fass as fas } from '@fortawesome/sharp-solid-svg-icons'
 import { ctaGroupActions, type Cta, type CtaGroup, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
 
 interface ProcessItem {
   title: string
@@ -22,34 +23,37 @@ interface Props {
 }
 
 const { id, theme = 'light', headingLevel = 'h2', intro, items = [] } = Astro.props as Props
-const description = (value: ProcessItem['description']) => typeof value === 'string' ? value : value?.html
-const fontAwesomeIcon = (name?: string) => {
-  if (!name || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name)) return undefined
-  const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
-  return fas[key]
-}
+const descriptionHtml = (value: ProcessItem['description']) => value == null || value === ''
+  ? undefined
+  : typeof value === 'string'
+    ? richTextToHtml(value, 'process item description')
+    : value.html
 ---
 <section class="process-story-trinity" id={id} data-kinekt-section data-kinekt-theme={theme} data-process-story-trinity>
   <div class="process-story-trinity__container">
     <div class="process-story-trinity__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></div>
     <ol class="process-story-trinity__steps" aria-label="Process steps">
       {items.map((item, index) => {
-        const icon = fontAwesomeIcon(item.icon)
+        const icon = item.markerType === 'icon' ? ctaIconPaths(item.icon) : undefined
         const actions = ctaGroupActions(item.ctaGroup)
+        const itemDescriptionHtml = descriptionHtml(item.description)
         return <li class="process-story-trinity__step" data-process-story-step data-process-story-item-marker={item.markerType ?? 'number'}>
           <details class="process-story-trinity__disclosure" open={index === 0} data-process-story-disclosure>
             <summary class="process-story-trinity__trigger" data-process-story-trigger>
               <span class="process-story-trinity__number" aria-hidden="true">
-                <span class="process-story-trinity__marker-number">{String(index + 1).padStart(2, '0')}</span>
-                {icon && <svg class="process-story-trinity__marker-icon" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} focusable="false" fill="currentColor"><path d={icon.icon[4] as string} /></svg>}
+                {item.markerType !== 'icon' && <span class="process-story-trinity__marker-number">{String(index + 1).padStart(2, '0')}</span>}
+                {icon && <svg class="process-story-trinity__marker-icon" aria-hidden="true" viewBox={icon.viewBox} focusable="false" fill="currentColor"><path d={icon.path} /></svg>}
               </span>
               <span class="process-story-trinity__title">{item.title}</span>
               <span class="process-story-trinity__timer" aria-hidden="true"><span></span></span>
             </summary>
             <div class="process-story-trinity__panel">
-              {description(item.description) && <div class="process-story-trinity__description" set:html={description(item.description)} />}
+              {itemDescriptionHtml && <div class="process-story-trinity__description" set:html={itemDescriptionHtml} />}
               {actions.length > 0 && <div class="process-story-trinity__cta-group">
-                {actions.map((action, actionIndex) => <Button href={action.href} label={action.label} style={action.style ?? (actionIndex === 0 ? 'primary' : 'secondary')} size="l" />)}
+                {actions.map((action, actionIndex) => {
+                  const actionIcon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
+                  return <Button href={action.href} label={action.label} style={action.style ?? (actionIndex === 0 ? 'primary' : 'secondary')} size="l">{actionIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={actionIcon.viewBox} fill="currentColor"><path d={actionIcon.path} /></svg>}</Button>
+                })}
               </div>}
             </div>
           </details>

@@ -1,7 +1,9 @@
-// @generated structural section — source manifest remains the contract.
+// @generated Use Cases Payload contract from the manifest.
 import type { Block, CollectionSlug } from 'payload'
-import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
-import type { BetaUseCasesAllentownContent, PayloadBetaUseCasesAllentownDocument } from './use-cases-allentown.types.js'
+import { createManifestBlock } from '../../../shared/manifest-block.js'
+import { ctaGroupToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import type { BetaUseCasesAllentownContent, PayloadBetaUseCasesAllentownDocument, UseCasesAllentownItem } from './use-cases-allentown.types.js'
 
 const manifest = {
   "slug": "use-cases-allentown",
@@ -92,6 +94,30 @@ export function createBetaUseCasesAllentownBlock(options: CreateBetaUseCasesAlle
   return createManifestBlock(manifest, options)
 }
 
-export function betaUseCasesAllentownToProps(data: PayloadBetaUseCasesAllentownDocument): BetaUseCasesAllentownContent {
-  return manifestToProps(data)
+const introToProps = (value: unknown): BetaUseCasesAllentownContent['intro'] => {
+  const intro = requireObject(value, 'intro')
+  return {
+    accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'),
+    heading: requireText(intro.heading, 'intro.heading'),
+    ...(intro.description ? { description: { html: richTextToHtml(intro.description, 'intro.description') } } : {}),
+  }
+}
+
+const itemToProps = (value: unknown, index: number, options: PayloadAdapterOptions): UseCasesAllentownItem => {
+  const item = requireObject(value, 'items[' + index + ']')
+  const ctaGroup = ctaGroupToProps(item.ctaGroup, 'items[' + index + '].ctaGroup', options)
+  return {
+    title: requireText(item.title, 'items[' + index + '].title'),
+    description: { html: richTextToHtml(item.description, 'items[' + index + '].description') },
+    ...(ctaGroup ? { ctaGroup } : {}),
+  }
+}
+
+export function betaUseCasesAllentownToProps(data: PayloadBetaUseCasesAllentownDocument, options: PayloadAdapterOptions = {}): BetaUseCasesAllentownContent {
+  return {
+    theme: requireTheme(data.theme),
+    intro: introToProps(data.intro),
+    advantageHeading: requireText(data.advantageHeading, 'advantageHeading'),
+    items: requireArray(data.items, 'items').map((item, index) => itemToProps(item, index, options)),
+  }
 }

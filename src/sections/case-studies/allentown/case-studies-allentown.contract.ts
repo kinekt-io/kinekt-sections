@@ -1,6 +1,6 @@
 import type { Block, CollectionSlug } from 'payload'
 
-import type { Cta, CtaIcon, Media, SectionIntro } from '../../../shared/content.js'
+import type { Cta, CtaIcon, Media, RichText, SectionIntro } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { ctaGroupToProps, ctaToProps, mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { contentTargetField, ctaFields, isSharpSolidIconNameOrEmpty } from '../../../shared/payload-fields.js'
@@ -14,8 +14,9 @@ export type CaseStudySlide = {
   page?: string
   logo?: Media
   title: string
-  description?: string
+  description?: string | RichText
   image: Media
+  resultsHeading?: string
   results?: CaseStudyResult[]
   quote?: {
     quote: string
@@ -95,8 +96,9 @@ export function createCaseStudiesAllentownBlock({
             contentTargetField(targetRelation),
             { name: 'logo', type: 'upload', label: 'Logo', relationTo: mediaCollection, localized: true },
             { name: 'title', type: 'text', label: 'Title', localized: true, required: true, validate: textRequired },
-            { name: 'description', type: 'textarea', label: 'Description', localized: true },
+            { name: 'description', type: 'richText', label: 'Description', localized: true },
             { name: 'image', type: 'upload', label: 'Image', relationTo: mediaCollection, localized: true, required: true },
+            { name: 'resultsHeading', type: 'text', label: 'Results heading', localized: true, admin: { description: 'Optional heading above the results for this slide.' } },
             {
               name: 'results', type: 'array', label: 'Results', localized: true,
               validate: (value: unknown, { data }) => (data as Record<string, unknown> | undefined)?._status === 'draft' || value === undefined || value === null || Array.isArray(value) || 'Results must be a list.',
@@ -104,7 +106,7 @@ export function createCaseStudiesAllentownBlock({
                 { name: 'label', type: 'text', label: 'Label', required: true, validate: textRequired },
                 { name: 'value', type: 'group', label: 'Value', required: true, fields: [
                   { name: 'text', type: 'text', label: 'Text', required: true, validate: textRequired },
-                  { name: 'icon', type: 'text', label: 'Icon' },
+                  { name: 'icon', type: 'text', label: 'Icon', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' } },
                 ] },
               ],
             },
@@ -169,9 +171,10 @@ function slideToProps(value: unknown, index: number, options: PayloadAdapterOpti
     ...(page ? { page } : {}),
     ...(item.logo ? { logo: mediaToProps(item.logo, `carousel.items[${index}].logo`, options) } : {}),
     title: requireText(item.title, `carousel.items[${index}].title`),
-    ...(optionalText(item.description, `carousel.items[${index}].description`) ? { description: optionalText(item.description, `carousel.items[${index}].description`) } : {}),
+    ...(item.description ? { description: { html: richTextToHtml(item.description, `carousel.items[${index}].description`) } } : {}),
     image: mediaToProps(item.image, `carousel.items[${index}].image`, options),
     ...(results?.length ? { results } : {}),
+    ...(optionalText(item.resultsHeading, `carousel.items[${index}].resultsHeading`) ? { resultsHeading: optionalText(item.resultsHeading, `carousel.items[${index}].resultsHeading`) } : {}),
     ...(quote ? { quote } : {}),
     cta: action,
   }

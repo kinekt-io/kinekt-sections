@@ -1,9 +1,10 @@
 ---
 import type { RichText } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
 
 export interface KeyFactContent {
   label?: string
-  description?: string | RichText | { html?: string }
+  description?: string | RichText
 }
 
 interface Props {
@@ -17,14 +18,16 @@ const { fact, as = 'li', class: className } = Astro.props
 const Element = as
 const label = typeof fact?.label === 'string' ? fact.label.trim() : ''
 const description = fact?.description
-const descriptionText = typeof description === 'string' && description.trim() ? description : undefined
-const descriptionHtml = typeof description === 'object' && description !== null && typeof description.html === 'string' && description.html.trim() ? description.html : undefined
+const descriptionHtml = description == null || description === ''
+  ? undefined
+  : typeof description === 'string'
+    ? richTextToHtml(description, 'key fact description')
+    : description.html
 const classes = ['key-fact-allentown', className].filter(Boolean).join(' ')
 ---
 {label && (
   <Element class={classes}>
     <p class="key-fact-allentown__label"><span class="key-fact-allentown__prefix" aria-hidden="true">{'/ '}</span>{label}</p>
-    {descriptionText && <p class="key-fact-allentown__description">{descriptionText}</p>}
     {descriptionHtml && <div class="key-fact-allentown__description" set:html={descriptionHtml} />}
   </Element>
 )}
@@ -70,4 +73,5 @@ const classes = ['key-fact-allentown', className].filter(Boolean).join(' ')
   .key-fact-allentown .key-fact-allentown__description > * {
     margin-block: 0;
   }
+  .key-fact-allentown .key-fact-allentown__description > * + * { margin-block-start: var(--space-xs); }
 </style>

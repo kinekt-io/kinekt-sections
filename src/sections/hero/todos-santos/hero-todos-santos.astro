@@ -5,6 +5,7 @@ import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import { ctaGroupActions, type Cta, type Media, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import { isSafeWebUrl } from '../../../urls.js'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 
 interface Feature {
   label: string
@@ -53,7 +54,10 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
       )}
       {actions.length > 0 && (
         <nav class="hero-todos-santos__actions" aria-label="Hero actions">
-          {actions.map((action, index) => <Button class="hero-todos-santos__action" size={index === 0 ? 'l' : undefined} href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')} />)}
+          {actions.map((action, index) => {
+            const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
+            return <Button class="hero-todos-santos__action" size={index === 0 ? 'l' : undefined} href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
+          })}
         </nav>
       )}
     </div>

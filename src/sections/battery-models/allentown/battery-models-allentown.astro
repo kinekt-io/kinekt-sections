@@ -7,6 +7,7 @@ import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import { ctaGroupActions, type Cta, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent, type SectionTheme } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
 
 interface BatteryModel {
   image: Media
@@ -50,6 +51,10 @@ const crossSellHeadingLevel = `h${Math.min(level + 1, 3)}` as 'h2' | 'h3'
 const ItemHeading = `h${Math.min(level + 2, 6)}` as ChildHeading
 // The manifest's cross-sell is an Intro component, so the shared Callout renders its header from intro.accentHeading; the older `label` prop still wins when set.
 const crossSellIntro = crossSell ? { ...crossSell.intro, accentHeading: crossSell.label ?? crossSell.intro.accentHeading } : undefined
+const descriptionHtml = (description: BatteryModel['description']) => typeof description === 'string'
+  ? richTextToHtml(description, 'battery model description')
+  : description.html
+
 ---
 
 <section class="beta-battery-models-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
@@ -75,9 +80,7 @@ const crossSellIntro = crossSell ? { ...crossSell.intro, accentHeading: crossSel
               <div class="beta-battery-models-allentown__model-text">
                 <div class="beta-battery-models-allentown__model-content">
                   <ModelHeading class="beta-battery-models-allentown__model-title">{model.title}</ModelHeading>
-                  {typeof model.description === 'string'
-                    ? <p class="beta-battery-models-allentown__model-description">{model.description}</p>
-                    : <div class="beta-battery-models-allentown__model-description" set:html={model.description.html} />}
+                  <div class="beta-battery-models-allentown__model-description" set:html={descriptionHtml(model.description)} />
                 </div>
                 {model.specs.length > 0 && (
                   <dl class="beta-battery-models-allentown__specifications">

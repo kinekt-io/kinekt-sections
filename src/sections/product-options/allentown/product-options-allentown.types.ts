@@ -1,10 +1,10 @@
-import type { CtaGroup, Media, SectionIntro } from '../../../shared/content.js'
+import type { CtaGroup, Media, RichText, SectionIntro } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 
 export interface ProductOption {
   image: Media
   title: string
-  description: string
+  description: string | RichText
   benefits?: string[] | null
 }
 
@@ -23,6 +23,6 @@ export interface PayloadProductOptionsAllentownDocument extends DraftFields<Omit
   blockType?: string
   intro?: { accentHeading?: string | null; heading?: string | null; description?: unknown } | null
   ctas?: unknown
-  options?: Array<{ image?: unknown; title?: string | null; description?: string | null; benefits?: string[] | null }> | null
+  options?: Array<{ image?: unknown; title?: string | null; description?: unknown; benefits?: string[] | null }> | null
   form?: string | null
 }

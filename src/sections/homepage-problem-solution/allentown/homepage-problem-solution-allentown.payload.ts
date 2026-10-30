@@ -110,6 +110,24 @@ const manifest = {
       "kind": "ctaGroup",
       "required": false,
       "localized": true
+    },
+    "problemRangeLabel": {
+      "kind": "text",
+      "required": false,
+      "localized": true,
+      "description": "Text beside the initial range circle. Leave empty to hide this text."
+    },
+    "solutionRangeLabel": {
+      "kind": "text",
+      "required": false,
+      "localized": true,
+      "description": "Title beside the expanded range circle. Leave empty to hide this text."
+    },
+    "solutionRangeValue": {
+      "kind": "text",
+      "required": false,
+      "localized": true,
+      "description": "Label below the expanded range title. Leave empty to hide this label."
     }
   }
 } as const
@@ -145,6 +163,9 @@ export function betaHomepageProblemSolutionAllentownToProps(data: PayloadBetaHom
 
   return {
     theme: 'dark',
+    problemRangeLabel: optionalText(block.problemRangeLabel, 'problemRangeLabel'),
+    solutionRangeLabel: optionalText(block.solutionRangeLabel, 'solutionRangeLabel'),
+    solutionRangeValue: optionalText(block.solutionRangeValue, 'solutionRangeValue'),
     problemIntro: intro(block.problemIntro, 'problemIntro'),
     problemItems: items(block.problemItems, 'problemItems'),
     solutionIntro: intro(block.solutionIntro, 'solutionIntro'),

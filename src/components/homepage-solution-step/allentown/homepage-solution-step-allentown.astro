@@ -1,5 +1,5 @@
 ---
-import { fass as fas } from '@fortawesome/sharp-solid-svg-icons'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import type { RichText } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 
@@ -7,7 +7,7 @@ export interface HomepageSolutionStepContent {
   /** Font Awesome icon key (e.g. `microchip`, `gears`, `shield-halved`). */
   icon?: string | null
   title: string
-  description: string | RichText | Record<string, unknown>
+  description: string | RichText
 }
 
 interface Props {
@@ -19,21 +19,14 @@ interface Props {
 const { item, headingLevel = 'h3', class: className } = Astro.props
 const Heading = headingLevel
 const classes = ['homepage-solution-step-allentown', className].filter(Boolean).join(' ')
-const fontAwesomeIcon = (name?: string | null) => {
-  if (!name || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name)) return undefined
-  const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
-  return fas[key]
-}
-const icon = fontAwesomeIcon(item.icon)
-const descriptionHtml = item.description == null || item.description === ''
-  ? undefined
-  : typeof item.description === 'object' && typeof (item.description as RichText).html === 'string'
-    ? (item.description as RichText).html
-    : richTextToHtml(item.description, 'homepage solution step description')
+const icon = ctaIconPaths(item.icon)
+const descriptionHtml = typeof item.description === 'string'
+  ? richTextToHtml(item.description, 'homepage solution step description')
+  : item.description.html
 ---
 <article class={classes}>
   <Heading class="homepage-solution-step-allentown__title-row">
-    {icon && <svg class="homepage-solution-step-allentown__icon" aria-hidden="true" focusable="false" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} fill="currentColor"><path d={icon.icon[4] as string} /></svg>}
+    {icon && <svg class="homepage-solution-step-allentown__icon" aria-hidden="true" focusable="false" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}
     <span class="homepage-solution-step-allentown__title">{item.title}</span>
   </Heading>
   {descriptionHtml && <div class="homepage-solution-step-allentown__description" set:html={descriptionHtml} />}

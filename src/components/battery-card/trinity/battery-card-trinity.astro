@@ -1,9 +1,10 @@
 ---
-import { fass as fas, faArrowUpRightFromSquare } from '@fortawesome/sharp-solid-svg-icons'
+import { faArrowUpRightFromSquare } from '@fortawesome/sharp-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import type { Cta, Media, RichText } from '../../../shared/content.js'
-
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
 interface Rating {
   label: string
   score: 1 | 2 | 3 | 4 | 5
@@ -27,13 +28,13 @@ interface Props {
 const { card, headingLevel = 'h3', class: className } = Astro.props as Props
 const Heading = headingLevel
 const classes = ['battery-card-trinity', className].filter(Boolean).join(' ')
-const fontAwesomeIcon = (name?: string) => {
-  if (!name || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name)) return undefined
-  const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
-  return fas[key]
-}
-const bestForIcon = fontAwesomeIcon(card.bestForIcon)
-const description = typeof card.description === 'string' ? card.description : card.description.html
+const bestForIcon = ctaIconPaths(card.bestForIcon)
+const webshopIcon = ctaIconPaths(card.webshopCta.icon)
+const showDefaultWebshopIcon = card.webshopCta.icon == null || card.webshopCta.icon === ''
+const specificationIcon = ctaIconPaths(card.specificationCta?.icon)
+const descriptionHtml = typeof card.description === 'string'
+  ? richTextToHtml(card.description, 'battery card description')
+  : card.description.html
 ---
 
 <article class={classes}>
@@ -43,11 +44,11 @@ const description = typeof card.description === 'string' ? card.description : ca
       <Heading class="battery-card-trinity__title">{card.title}</Heading>
       {card.bestForText && (
         <p class="battery-card-trinity__best-for">
-          {bestForIcon && <svg class="battery-card-trinity__best-for-icon" aria-hidden="true" focusable="false" viewBox={`0 0 ${bestForIcon.icon[0]} ${bestForIcon.icon[1]}`} fill="currentColor"><path d={bestForIcon.icon[4] as string} /></svg>}
+          {bestForIcon && <svg class="battery-card-trinity__best-for-icon" aria-hidden="true" focusable="false" viewBox={bestForIcon.viewBox} fill="currentColor"><path d={bestForIcon.path} /></svg>}
           <span>{card.bestForText}</span>
         </p>
       )}
-      <div class="battery-card-trinity__description" set:html={description} />
+      <div class="battery-card-trinity__description" set:html={descriptionHtml} />
     </div>
 
     <dl class="battery-card-trinity__ratings">
@@ -66,9 +67,11 @@ const description = typeof card.description === 'string' ? card.description : ca
 
     <nav class="battery-card-trinity__actions" aria-label={`${card.title} actions`}>
       <Button class="battery-card-trinity__webshop-action" href={card.webshopCta.href} label={card.webshopCta.label} style="clear">
-        <svg class="battery-card-trinity__external-icon" aria-hidden="true" focusable="false" viewBox={`0 0 ${faArrowUpRightFromSquare.icon[0]} ${faArrowUpRightFromSquare.icon[1]}`} fill="currentColor"><path d={faArrowUpRightFromSquare.icon[4] as string} /></svg>
+        {webshopIcon
+          ? <svg class="battery-card-trinity__external-icon" aria-hidden="true" focusable="false" viewBox={webshopIcon.viewBox} fill="currentColor"><path d={webshopIcon.path} /></svg>
+          : showDefaultWebshopIcon && <svg class="battery-card-trinity__external-icon" aria-hidden="true" focusable="false" viewBox={`0 0 ${faArrowUpRightFromSquare.icon[0]} ${faArrowUpRightFromSquare.icon[1]}`} fill="currentColor"><path d={faArrowUpRightFromSquare.icon[4] as string} /></svg>}
       </Button>
-      {card.specificationCta && <Button class="battery-card-trinity__specification-action" href={card.specificationCta.href} label={card.specificationCta.label} style="clear" />}
+      {card.specificationCta && <Button class="battery-card-trinity__specification-action" href={card.specificationCta.href} label={card.specificationCta.label} style="clear">{specificationIcon && <svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={specificationIcon.viewBox} fill="currentColor"><path d={specificationIcon.path} /></svg>}</Button>}
     </nav>
   </div>
 </article>

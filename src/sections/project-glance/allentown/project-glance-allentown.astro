@@ -4,7 +4,7 @@ import type { RichText } from '../../../shared/content.js'
 import KeyFact from '../../../components/key-fact/allentown/key-fact-allentown.astro'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
-type Fact = { label?: string; description?: string | RichText | { html?: string } }
+type Fact = { label?: string; description?: string | RichText }
 interface Props { id?: string; theme?: Theme; headingLevel?: 'h2' | 'h3'; heading: string; facts?: Fact[] }
 
 const { id, theme = 'semi-dark', headingLevel = 'h2', heading, facts = [] } = Astro.props as Props

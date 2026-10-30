@@ -5,9 +5,10 @@ import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { Cta, Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 
 interface ContactMethod {
-  icon?: 'whatsapp' | 'phone' | 'email'
+  icon?: string
   label: string
   href: string
 }
@@ -55,9 +56,10 @@ const actionList = actions.filter((action): action is Cta => Boolean(action?.lab
               <div class="beta-action-contact-allentown__action-controls">
                 {actionList.length > 0 && (
                   <nav class="beta-action-contact-allentown__actions" aria-label="Contact actions">
-                    {actionList.map((action, index) => (
-                      <Button href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'secondary')} />
-                    ))}
+                    {actionList.map((action, index) => {
+                      const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
+                      return <Button href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'secondary')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
+                    })}
                   </nav>
                 )}
                 {actionNote && <p class="beta-action-contact-allentown__action-note">{actionNote}</p>}

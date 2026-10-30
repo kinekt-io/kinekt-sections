@@ -1,7 +1,7 @@
 import type { Block, CollectionSlug, Field } from 'payload'
 
-import type { Cta, CtaGroup, Media, SectionIntro } from '../../../shared/content.js'
-import { richTextToHtml } from '../../../shared/rich-text.js'
+import type { Cta, CtaGroup, Media, RichText, SectionIntro } from '../../../shared/content.js'
+import { renderRichText } from '../../../shared/rich-text.js'
 import { mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { isSafeWebUrl } from '../../../urls.js'
 import { isSharpSolidIconNameOrEmpty } from '../../../shared/payload-fields.js'
@@ -11,7 +11,7 @@ export interface SolutionListAllentownItem {
   accentHeading?: string
   heading: string
   label?: { text: string; icon?: string }
-  description: string
+  description: RichText
   cta: Cta
 }
 
@@ -49,8 +49,8 @@ export function createSolutionListAllentownBlock({ mediaCollection = 'media', ta
           { name: 'image', label: 'Image', type: 'upload', relationTo: mediaCollection, localized: true, required: true },
           { name: 'accentHeading', label: 'Accent heading', type: 'text', localized: true },
           { name: 'heading', label: 'Heading', type: 'text', localized: true, required: true, validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' },
-          { name: 'label', label: 'Label', type: 'group', localized: true, fields: [{ name: 'text', label: 'Text', type: 'text' }, { name: 'icon', label: 'Icon', type: 'text' }] },
-          { name: 'description', label: 'Description', type: 'textarea', localized: true, required: true },
+          { name: 'label', label: 'Label', type: 'group', localized: true, fields: [{ name: 'text', label: 'Text', type: 'text' }, { name: 'icon', label: 'Icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' } }] },
+          { name: 'description', label: 'Description', type: 'richText', localized: true, required: true },
           { name: 'destinationType', label: 'Link type', type: 'select', localized: true, required: true, defaultValue: 'page', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }] },
           { name: 'linkLabel', label: 'Link label', type: 'text', localized: true, required: true, validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' },
           { name: 'href', label: 'URL', type: 'text', localized: true, admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeWebUrl(value) || 'Enter an absolute HTTP(S) URL or a site-root-relative path.' },
@@ -108,7 +108,7 @@ function introToProps(value: unknown, field: string): SectionIntro {
   return {
     accentHeading: optionalText(intro.accentHeading, `${field}.accentHeading`),
     heading: requireText(intro.heading, `${field}.heading`),
-    ...(intro.description ? { description: { html: richTextToHtml(intro.description, `${field}.description`) } } : {}),
+    ...(intro.description ? { description: renderRichText(intro.description, `${field}.description`) } : {}),
   }
 }
 
@@ -122,7 +122,7 @@ function itemToProps(value: unknown, index: number, contentHref: SolutionListAll
     accentHeading: optionalText(item.accentHeading, `items[${index}].accentHeading`),
     heading: requireText(item.heading, `items[${index}].heading`),
     ...(label && optionalText(label.text, `items[${index}].label.text`) ? { label: { text: requireText(label.text, `items[${index}].label.text`), ...(optionalSharpSolidIcon(label.icon, `items[${index}].label.icon`) ? { icon: optionalSharpSolidIcon(label.icon, `items[${index}].label.icon`) } : {}) } } : {}),
-    description: requireText(item.description, `items[${index}].description`),
+    description: renderRichText(item.description, `items[${index}].description`),
     cta: destination,
   }
 }

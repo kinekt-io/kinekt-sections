@@ -8,10 +8,10 @@ import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 
 // The generated .types.ts is still generic (Record<string, unknown>), so the renderer types its props from the manifest here.
-interface FactCardContent { title: string; description: string | RichText | Record<string, unknown>; value: string }
+interface FactCardContent { title: string; description: string | RichText; value: string }
 interface Props {
   theme: BetaTheme
-  intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | Record<string, unknown> | null }
+  intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | null }
   media?: Media | null
   facts: FactCardContent[]
   headingLevel?: 'h1' | 'h2' | 'h3'

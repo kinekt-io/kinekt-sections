@@ -3,8 +3,9 @@ import { faCalendarDays, faLocationDot } from '@fortawesome/sharp-solid-svg-icon
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
-import type { Cta, Media } from '../../../shared/content.js'
+import type { Cta, Media, RichText } from '../../../shared/content.js'
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
 
 /*
  * Figma "Content Item" (component set 4705:34467, Event=Tulip|National|International) is the `grid`
@@ -20,7 +21,7 @@ export interface EventCardContent {
   location: string
   startDateTime: string
   endDateTime?: string | null
-  description?: string | null
+  description?: string | RichText | null
   /** Media object or an unresolved upload ID (only rendered by the `featured` presentation). */
   media?: unknown
   button?: Cta | null
@@ -60,8 +61,12 @@ const end = endCandidate && start && endCandidate.iso !== start.iso ? endCandida
 const isMedia = (value: unknown): value is Media => typeof value === 'object' && value !== null && typeof (value as Media).url === 'string'
 const media = featured && isMedia(event.media) ? { ...event.media, alt: typeof event.media.alt === 'string' ? event.media.alt : '' } : undefined
 const button = event.button && typeof event.button.label === 'string' && event.button.label !== '' && typeof event.button.href === 'string' ? event.button : undefined
-const buttonIcon = button ? ctaIconPaths(isCtaIcon(button.icon) ? button.icon : 'arrow-right') : undefined
-const description = featured && typeof event.description === 'string' && event.description.trim() ? event.description : undefined
+const buttonIcon = button && isCtaIcon(button.icon) ? ctaIconPaths(button.icon) : undefined
+const descriptionHtml = !featured || event.description == null || event.description === ''
+  ? undefined
+  : typeof event.description === 'string'
+    ? richTextToHtml(event.description, 'event description')
+    : event.description.html
 
 const icon = (definition: typeof faLocationDot) => ({ viewBox: `0 0 ${definition.icon[0]} ${definition.icon[1]}`, path: definition.icon[4] as string })
 const locationIcon = icon(faLocationDot)
@@ -75,18 +80,18 @@ const classes = ['event-card-allentown', `event-card-allentown--${presentation}`
     <Heading class="event-card-allentown__title">{event.title}</Heading>
     <ul class="event-card-allentown__meta">
       <li class="event-card-allentown__meta-item">
-        <span class="event-card-allentown__meta-icon" aria-hidden="true"><svg focusable="false" viewBox={locationIcon.viewBox} fill="currentColor"><path d={locationIcon.path} /></svg></span>
+        <span class="event-card-allentown__meta-icon" aria-hidden="true"><svg aria-hidden="true" focusable="false" viewBox={locationIcon.viewBox} fill="currentColor"><path d={locationIcon.path} /></svg></span>
         <span class="event-card-allentown__meta-text">{event.location}</span>
       </li>
       {start && (
         <li class="event-card-allentown__meta-item">
-          <span class="event-card-allentown__meta-icon" aria-hidden="true"><svg focusable="false" viewBox={dateIcon.viewBox} fill="currentColor"><path d={dateIcon.path} /></svg></span>
+          <span class="event-card-allentown__meta-icon" aria-hidden="true"><svg aria-hidden="true" focusable="false" viewBox={dateIcon.viewBox} fill="currentColor"><path d={dateIcon.path} /></svg></span>
           <span class="event-card-allentown__meta-text"><time datetime={start.iso}>{start.label}</time>{end && <> – <time datetime={end.iso}>{end.label}</time></>}</span>
         </li>
       )}
     </ul>
-    {description && <p class="event-card-allentown__description">{description}</p>}
-    {button && buttonIcon && <Button class="event-card-allentown__button" href={button.href} label={button.label} style="clear"><svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={buttonIcon.viewBox} fill="currentColor"><path d={buttonIcon.path} /></svg></Button>}
+    {descriptionHtml && <div class="event-card-allentown__description" set:html={descriptionHtml} />}
+    {button && <Button class="event-card-allentown__button" href={button.href} label={button.label} style="clear">{buttonIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={buttonIcon.viewBox} fill="currentColor"><path d={buttonIcon.path} /></svg>}</Button>}
   </div>
 </article>
 <style is:global>
@@ -121,6 +126,8 @@ const classes = ['event-card-allentown', `event-card-allentown--${presentation}`
   .event-card-allentown .event-card-allentown__meta-icon > svg { display: block; block-size: var(--kiw--event-card-allentown-icon-size); inline-size: auto; fill: currentColor; }
   .event-card-allentown .event-card-allentown__meta-text { min-width: 0; overflow-wrap: anywhere; }
   .event-card-allentown .event-card-allentown__description { margin: 0; color: var(--kiw--event-card-allentown-description-color); font-size: var(--kiw--event-card-allentown-description-size); line-height: var(--kinekt-component-text-line-height, var(--text-line-height)); }
+  .event-card-allentown .event-card-allentown__description > * { margin-block: 0; }
+  .event-card-allentown .event-card-allentown__description > * + * { margin-block-start: var(--space-s); }
   .event-card-allentown .event-card-allentown__media { display: block; min-width: 0; }
   .event-card-allentown .event-card-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; height: auto; aspect-ratio: var(--kiw--event-card-allentown-media-ratio); object-fit: cover; border-radius: var(--kinekt-component-radius, var(--radius-none)); filter: var(--kinekt-component-media-filter, none); }
   @media (min-width: 50rem) {

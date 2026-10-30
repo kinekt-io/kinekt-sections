@@ -12,7 +12,7 @@ import type { BetaIntakeFormAllentownContent } from './intake-form-allentown.typ
 interface Props extends BetaIntakeFormAllentownContent {
   id?: string
   theme?: BetaTheme
-  intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | Record<string, unknown> | null }
+  intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | null }
   stepsHeading: string
   steps: IntakeStepContent[]
   formHeading?: string | null

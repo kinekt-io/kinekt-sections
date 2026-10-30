@@ -1,5 +1,6 @@
 ---
-import { fass as fas, faMinus, faPlus } from '@fortawesome/sharp-solid-svg-icons'
+import { faMinus, faPlus } from '@fortawesome/sharp-solid-svg-icons'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import type { RichText } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 
@@ -9,7 +10,7 @@ export interface AccordionItemContent {
   icon?: string | null
   title: string
   subtitle?: string | null
-  description: string | RichText | Record<string, unknown>
+  description: string | RichText
 }
 
 interface Props {
@@ -22,25 +23,18 @@ interface Props {
 
 const { item, number, open = false, class: className } = Astro.props
 const classes = ['accordion-item-allentown', className].filter(Boolean).join(' ')
-const fontAwesomeIcon = (name?: string | null) => {
-  if (!name || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name)) return undefined
-  const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
-  return fas[key]
-}
 const markerType = item.markerType ?? 'none'
-const icon = markerType === 'icon' ? fontAwesomeIcon(item.icon) : undefined
+const icon = markerType === 'icon' ? ctaIconPaths(item.icon) : undefined
 const showNumber = markerType === 'number'
 const descriptionHtml = typeof item.description === 'string'
   ? richTextToHtml(item.description, 'accordion item description')
-  : typeof item.description?.html === 'string'
-    ? item.description.html
-    : richTextToHtml(item.description, 'accordion item description')
+  : item.description.html
 ---
 <details class={classes} open={open} data-kinekt-disclosure>
   <summary class="accordion-item-allentown__summary">
     {(icon || showNumber) && (
       <span class="accordion-item-allentown__marker" aria-hidden="true">
-        {icon && <svg class="accordion-item-allentown__marker-icon" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} focusable="false" fill="currentColor"><path d={icon.icon[4] as string} /></svg>}
+        {icon && <svg class="accordion-item-allentown__marker-icon" aria-hidden="true" viewBox={icon.viewBox} focusable="false" fill="currentColor"><path d={icon.path} /></svg>}
         {showNumber && <span class="accordion-item-allentown__marker-number">{String(number).padStart(2, '0')}</span>}
       </span>
     )}

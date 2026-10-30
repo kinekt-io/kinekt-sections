@@ -7,8 +7,8 @@ export interface HdCellItemContent {
   media: Media
   title: string
   subtitle?: string | null
-  /** Rich text as it arrives: a plain string, pre-rendered `{ html }`, or raw Lexical JSON from the identity Payload adapter. */
-  description: string | RichText | Record<string, unknown>
+  /** A persisted plain string or normalized `{ html }` Payload rich text. */
+  description: string | RichText
 }
 
 interface Props {
@@ -22,10 +22,8 @@ interface Props {
 const { item, open = false, index, class: className } = Astro.props
 const classes = ['hd-cell-item-allentown', className].filter(Boolean).join(' ')
 const descriptionHtml = typeof item.description === 'string'
-  ? item.description.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).map((part) => richTextToHtml(part, 'hd cell item description')).join('')
-  : typeof item.description?.html === 'string'
-    ? item.description.html
-    : richTextToHtml(item.description, 'hd cell item description')
+  ? richTextToHtml(item.description, 'hd cell item description')
+  : item.description.html
 ---
 <details class={classes} open={open} data-kinekt-disclosure data-hd-cell-item={index}>
   <summary class="hd-cell-item-allentown__summary">
