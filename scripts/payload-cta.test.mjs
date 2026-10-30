@@ -4,6 +4,7 @@ import { ctaGroupToProps, ctaToProps } from '../dist/shared/payload.js'
 import { ctaFields } from '../dist/shared/payload-fields.js'
 import { structuralSectionToProps } from '../dist/shared/structural-props.js'
 import { betaProcessStoryAllentownToProps } from '../dist/sections/process-story/allentown/process-story-allentown.payload.js'
+import { betaProductOptionsAllentownToProps } from '../dist/sections/product-options/allentown/product-options-allentown.payload.js'
 
 function ctaField(name) {
   const field = ctaFields(['pages', 'articles']).find((candidate) => candidate.name === name)
@@ -200,5 +201,33 @@ test('CTA adapters accept Sharp Solid icon names and reject invalid populated na
   assert.throws(
     () => ctaToProps({ label: 'Browse products', destinationType: 'url', href: '/products', icon: 'external' }, 'cta'),
     /cta\.icon must name a Font Awesome 7 Sharp Solid icon/,
+  )
+})
+
+test('Product Options retains published content links without dropping the section', () => {
+  const publishedRoutes = new Map([['pages:intake', '/intake/']])
+  const options = { contentHref: (collection, id) => publishedRoutes.get(`${collection}:${id}`) }
+  const document = {
+    theme: 'light',
+    intro: { heading: 'Configure your system' },
+    ctas: [
+      { label: 'Book a call', destinationType: 'content', page: { relationTo: 'pages', value: { id: 'intake' } }, style: 'primary' },
+      { label: 'Download specs', destinationType: 'url', href: '/specifications.pdf', style: 'clear' },
+    ],
+    options: [{
+      title: 'Compact configuration',
+      description: 'A smaller footprint for constrained installations.',
+      image: { url: '/configuration.webp', alt: 'Compact configuration', width: 800, height: 600 },
+    }],
+  }
+
+  const result = betaProductOptionsAllentownToProps(document, options)
+  assert.deepEqual(result.ctas.buttons, [
+    { label: 'Book a call', href: '/intake/', style: 'primary' },
+    { label: 'Download specs', href: '/specifications.pdf', style: 'clear' },
+  ])
+  assert.throws(
+    () => betaProductOptionsAllentownToProps(document, { contentHref: () => undefined }),
+    /page is not available in this static build/,
   )
 })

@@ -31,8 +31,11 @@
 - Expose Steps Stage item descriptions as native Payload rich text instead of textareas, matching the existing rich-text renderer and stored editor data.
 - Use `primary-light` for both Homepage Problem Solution intros and reusable item descriptions in dark and semi-dark, and `primary` for Read More descriptions in semi-light.
 - Size Form Section intro headings one visual level below their semantic tag. Use theme-aware contact text and accent icons, token-based large contact headings with 1.2 line height, and a divider between the form and contact list.
-- Let Density Comparison intros and headings fill their container, size table headers with `h5`, and alternate full/half-opacity theme-aware backgrounds in the middle comparison column.
-- Place Featured Insights' section CTA below the recent articles, retaining mobile access. Render supplied `kindIcon` names as accent-colored SVGs, use explicit card text classes, and give recent descriptions theme-aware primary colors.
+- Let Density Comparison intros and headings fill their container, size table headers with `h5`, and alternate full/half-opacity theme-aware backgrounds in middle-column data cells only. Heading cells stay transparent and all value icons use the theme accent.
+- Place Featured Insights' section CTA below the recent articles, retaining mobile access. Render supplied `kindIcon` names as accent-colored SVGs, use explicit card text classes, and give featured/recent descriptions the same theme-aware primary colors.
+- Align Solution List's direct callout with the list inside one content container, add a dedicated larger callout separation, and use the theme accent for item accent headings.
+- Cap the Case Studies intro at 60ch; use theme-aware descriptions, mixed-case medium labels, hanging/inline accent quotation marks, and tighter semibold-name/regular-role attribution. Avoid duplicated outer quote marks in authored text.
+- Forward the published-content resolver into Product Options CTA groups so valid internal links no longer exclude their containing page from a static build.
 - Correct the Product Hero Allentown design reference to [Hero Section - Battery Packs](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538028&t=OtYEVTRRdAJJYQ0v-11); content fields and rendering are unchanged.
 
 ## 26.10.2-beta.25 — 2026-10-23

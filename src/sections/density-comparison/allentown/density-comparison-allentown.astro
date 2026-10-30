@@ -124,7 +124,7 @@ const actionIcon = action && isCtaIcon(action.icon) ? ctaIconPaths(action.icon) 
     --kiw--density-comparison-allentown-value-gap: var(--space-s);
     --kiw--density-comparison-allentown-muted-color: var(--kinekt-component-muted);
     --kiw--density-comparison-allentown-text-size: var(--text-s);
-    --kiw--density-comparison-allentown-action-color: var(--kinekt-component-action);
+    --kiw--density-comparison-allentown-icon-color: var(--kinekt-component-accent);
   }
 
   .density-comparison-allentown > .density-comparison-allentown__container { display: grid; gap: var(--kiw--density-comparison-allentown-container-gap); }
@@ -148,18 +148,16 @@ const actionIcon = action && isCtaIcon(action.icon) ? ctaIconPaths(action.icon) 
       font-size: var(--kiw--density-comparison-allentown-heading-size);
     }
 
-    & tr > :nth-child(2) {
+    & tr > td:nth-child(2) {
       background: var(--kiw--density-comparison-allentown-column-background);
     }
 
-    & tbody tr:nth-child(odd) > :nth-child(2) {
+    & tbody tr:nth-child(odd) > td:nth-child(2) {
       background: color-mix(in srgb, var(--kiw--density-comparison-allentown-column-background) 50%, transparent);
     }
   }
   .density-comparison-allentown .density-comparison-allentown__value { display: inline-flex; align-items: center; gap: var(--kiw--density-comparison-allentown-value-gap); color: var(--kiw--density-comparison-allentown-muted-color); font-size: var(--kiw--density-comparison-allentown-text-size); }
-  .density-comparison-allentown .density-comparison-allentown__value svg { flex: 0 0 auto; width: var(--kiw--density-comparison-allentown-text-size); height: var(--kiw--density-comparison-allentown-text-size); fill: currentColor; overflow: visible; }
-  .density-comparison-allentown .density-comparison-allentown__value--positive svg { color: var(--kiw--density-comparison-allentown-action-color); }
-  .density-comparison-allentown .density-comparison-allentown__value--negative svg { color: var(--kiw--density-comparison-allentown-muted-color); }
+  .density-comparison-allentown .density-comparison-allentown__value svg { flex: 0 0 auto; width: var(--kiw--density-comparison-allentown-text-size); height: var(--kiw--density-comparison-allentown-text-size); color: var(--kiw--density-comparison-allentown-icon-color); fill: currentColor; overflow: visible; }
   .density-comparison-allentown .density-comparison-allentown__action { display: flex; justify-content: center; }
   .density-comparison-allentown .density-comparison-allentown__visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
@@ -178,6 +176,4 @@ const actionIcon = action && isCtaIcon(action.icon) ? ctaIconPaths(action.icon) 
     margin-top: var(--kinekt-section-table-offset, var(--kiw--section-table-offset, var(--space-xl)));
     font-size: var(--text-m);
   }
-  /* The action role is a button fill; as text it needs the subtle role to stay readable on dark canvases. */
-  .density-comparison-allentown[data-kinekt-theme='semi-dark'], .density-comparison-allentown[data-kinekt-theme='dark'] { --kiw--density-comparison-allentown-action-color: var(--kinekt-component-subtle); }
 </style>

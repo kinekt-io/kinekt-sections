@@ -27,6 +27,12 @@ const ctaIcon = (value: unknown) => (isCtaIcon(value) ? ctaIconPaths(value) : un
 const actionIcon = ctaIcon(action?.icon);
 const previousIcon = ctaIconPaths("arrow-left")!;
 const nextIcon = ctaIconPaths("arrow-right")!;
+const quoteText = (value: string): string => {
+  const text = value.trim();
+  const wrapped = (text.startsWith("“") && text.endsWith("”"))
+    || (text.startsWith('"') && text.endsWith('"'));
+  return wrapped ? text.slice(1, -1).trim() : text;
+};
 ---
 
 <section
@@ -159,9 +165,7 @@ const nextIcon = ctaIconPaths("arrow-right")!;
                         {item.quote?.quote && (
                           <figure class="case-studies-allentown__quote">
                             <blockquote>
-                              <p class="case-studies-allentown__quote-text">
-                                {item.quote.quote}
-                              </p>
+                              <p class="case-studies-allentown__quote-text">{quoteText(item.quote.quote)}</p>
                             </blockquote>
                             {item.quote.authorName && (
                               <figcaption class="case-studies-allentown__quote-attribution">
@@ -372,6 +376,7 @@ const nextIcon = ctaIconPaths("arrow-right")!;
     --kiw--case-studies-allentown-label-gap: var(--space-s);
     --kiw--case-studies-allentown-header-gap: var(--space-m);
     --kiw--case-studies-allentown-header-width: var(--width-l);
+    --kiw--case-studies-allentown-intro-width: 60ch;
     --kiw--case-studies-allentown-header-column-gap: var(--space-xl);
     --kiw--case-studies-allentown-summary-space: var(--section-space-xs);
     --kiw--case-studies-allentown-media-gap: var(--section-space-l);
@@ -383,13 +388,15 @@ const nextIcon = ctaIconPaths("arrow-right")!;
     --kiw--case-studies-allentown-heading-line-height: var(--heading-line-height);
     --kiw--case-studies-allentown-result-gap: var(--space-s);
     --kiw--case-studies-allentown-quote-space: var(--space-l);
-    --kiw--case-studies-allentown-action-color: var(--kinekt-component-action);
+    --kiw--case-studies-allentown-quote-color: var(--kinekt-component-accent);
     --kiw--case-studies-allentown-quote-size: var(--text-xl);
+    --kiw--case-studies-allentown-quote-mark-space: 0.65em;
     --kiw--case-studies-allentown-text-line-height: var(--text-line-height);
     --kiw--case-studies-allentown-attribution-gap: var(--space-m);
     --kiw--case-studies-allentown-avatar-size: var(--section-space-s);
-    --kiw--case-studies-allentown-author-gap: var(--space-xs);
+    --kiw--case-studies-allentown-author-gap: var(--space-xxs);
     --kiw--case-studies-allentown-author-size: var(--text-s);
+    --kiw--case-studies-allentown-description-color: var(--primary-semi-dark);
     --kiw--case-studies-allentown-muted-color: var(--kinekt-component-muted);
     --kiw--case-studies-allentown-ink-color: var(--kinekt-component-ink);
   }
@@ -398,7 +405,7 @@ const nextIcon = ctaIconPaths("arrow-right")!;
     --kinekt-section-content-width: var(--kiw--case-studies-allentown-content-width);
     --case-studies-carousel-to-slide: var(--kiw--case-studies-allentown-carousel-gap);
     --case-studies-header-gap: var(--kiw--case-studies-allentown-header-gap);
-    --case-studies-header-content-width: var(--kiw--case-studies-allentown-header-width);
+    --case-studies-header-content-width: var(--kiw--case-studies-allentown-intro-width);
     --case-studies-header-column-gap: var(--kiw--case-studies-allentown-header-column-gap);
     --case-studies-logo-to-title: var(--kiw--case-studies-allentown-header-gap);
     --case-studies-title-to-summary: var(--kiw--case-studies-allentown-header-gap);
@@ -417,6 +424,12 @@ const nextIcon = ctaIconPaths("arrow-right")!;
       max-width: none;
       gap: var(--case-studies-header-gap);
       margin-bottom: 0;
+    }
+    & .case-studies-allentown__header-content,
+    & .case-studies-allentown__header-content .section-intro,
+    & .case-studies-allentown__header-content :is(.section-intro__heading, .section-intro__description) {
+      width: auto;
+      max-width: var(--kiw--case-studies-allentown-intro-width);
     }
     & .case-studies-allentown__carousel {
       display: grid;
@@ -462,6 +475,7 @@ const nextIcon = ctaIconPaths("arrow-right")!;
     & .case-studies-allentown__description {
       max-width: var(--kiw--case-studies-allentown-header-width);
       margin: 0;
+      color: var(--kiw--case-studies-allentown-description-color);
     }
     & .case-studies-allentown__carousel-slide-content {
       gap: var(--case-studies-summary-to-content);
@@ -498,10 +512,21 @@ const nextIcon = ctaIconPaths("arrow-right")!;
       margin: 0 0 var(--kiw--case-studies-allentown-quote-space);
     }
     & .case-studies-allentown__quote-text {
+      position: relative;
+      padding-inline-start: var(--kiw--case-studies-allentown-quote-mark-space);
       margin: 0;
-      color: var(--kiw--case-studies-allentown-action-color);
+      color: var(--kiw--case-studies-allentown-quote-color);
       font-size: var(--kiw--case-studies-allentown-quote-size);
       line-height: var(--kiw--case-studies-allentown-text-line-height);
+    }
+    & .case-studies-allentown__quote-text::before {
+      content: "“";
+      position: absolute;
+      inset-inline-start: 0;
+      inset-block-start: 0;
+    }
+    & .case-studies-allentown__quote-text::after {
+      content: "”";
     }
     & .case-studies-allentown__quote-attribution {
       display: flex;
@@ -533,6 +558,12 @@ const nextIcon = ctaIconPaths("arrow-right")!;
     & .case-studies-allentown__quote-author-role {
       color: var(--kiw--case-studies-allentown-muted-color);
     }
+    & .case-studies-allentown__quote-author-name {
+      font-weight: 600;
+    }
+    & .case-studies-allentown__quote-author-role {
+      font-weight: 400;
+    }
     & .case-studies-allentown__carousel-slide .case-studies-allentown__cta > a {
       min-height: 0;
       padding: 0;
@@ -553,6 +584,10 @@ const nextIcon = ctaIconPaths("arrow-right")!;
     }
     & [data-kinekt-carousel-indicators] {
       gap: var(--case-studies-pagination-indicator-gap, var(--kiw--case-studies-allentown-author-gap));
+    }
+    &[data-kinekt-theme='dark'],
+    &[data-kinekt-theme='semi-dark'] {
+      --kiw--case-studies-allentown-description-color: var(--primary-light);
     }
 
     @media (min-width: 50rem) {
@@ -602,7 +637,7 @@ const nextIcon = ctaIconPaths("arrow-right")!;
 <style is:global>
   :where(.case-studies-allentown) .case-studies-allentown__image { aspect-ratio: 4 / 3; object-fit: cover; }
   :where(.case-studies-allentown) .case-studies-allentown__results > li > article { display: grid; gap: var(--kiw--case-studies-allentown-result-gap); padding: 0; border: 0; background: transparent; }
-  :where(.case-studies-allentown) .case-studies-allentown__label { color: var(--kiw--case-studies-allentown-muted-color); text-transform: uppercase; }
+  :where(.case-studies-allentown) .case-studies-allentown__label { color: var(--kiw--case-studies-allentown-muted-color); font-weight: 500; text-transform: none; }
   :where(.case-studies-allentown) .case-studies-allentown__value { display: flex; }
   :where(.case-studies-allentown) .button--clear:not([data-kinekt-carousel-dot]) { min-height: auto; padding: 0; border-color: transparent; color: var(--kinekt-component-ink); background: transparent; }
   :where(.case-studies-allentown) [data-kinekt-carousel-dot] { min-height: var(--input-height); padding: 0; border: 0; color: transparent; background: transparent; }
@@ -624,15 +659,10 @@ const nextIcon = ctaIconPaths("arrow-right")!;
     :where(.case-studies-allentown) .case-studies-allentown__carousel-slide-content { flex-direction: row; align-items: flex-start; gap: var(--case-studies-media-to-details); }
     :where(.case-studies-allentown) .case-studies-allentown__image { flex: 1.2 1 0; }
     :where(.case-studies-allentown) .case-studies-allentown__carousel-slide-details { flex: 1 1 0; }
-    :where(.case-studies-allentown) .case-studies-allentown__header-content { max-width: var(--kinekt-component-reading-width); }
   }
 </style>
 <style is:global>
   @media (max-width: 49.999rem) {
     .case-studies-allentown { --kinekt-component-reading-width: var(--content-width); }
-    :where(.case-studies-allentown) .case-studies-allentown__header-content,
-    :where(.case-studies-allentown) .case-studies-allentown__header-content :is(.section-intro__heading, .section-intro__description) { max-width: var(--kinekt-component-reading-width); }
   }
-  /* The action role is a button fill; as text it needs the subtle role to stay readable on dark canvases. */
-  .case-studies-allentown[data-kinekt-theme='semi-dark'], .case-studies-allentown[data-kinekt-theme='dark'] { --kiw--case-studies-allentown-action-color: var(--kinekt-component-subtle); }
 </style>
