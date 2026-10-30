@@ -3471,7 +3471,7 @@
     "role": "media-metrics",
     "variation": "allentown",
     "title": "Media Metrics Allentown",
-    "description": "A reusable topic introduction with four key metrics and optional supporting media.",
+    "description": "A reusable topic introduction with one to four key metrics and optional supporting media.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414386&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -3499,9 +3499,9 @@
         "componentId": "components/result-item/allentown",
         "required": true,
         "localized": true,
-        "minItems": 4,
+        "minItems": 1,
         "maxItems": 4,
-        "description": "Four named metrics; each item presents a Label value before its heading."
+        "description": "One to four named metrics; each item presents a Label value before its heading."
       },
       "media": {
         "kind": "media",

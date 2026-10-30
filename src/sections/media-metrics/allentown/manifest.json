@@ -5,7 +5,7 @@
   "id": "sections/media-metrics/allentown",
   "slug": "media-metrics-allentown",
   "title": "Media Metrics Allentown",
-  "description": "A reusable topic introduction with four key metrics and optional supporting media.",
+  "description": "A reusable topic introduction with one to four key metrics and optional supporting media.",
   "category": "sections",
   "tags": ["content", "media", "metrics", "beta"],
   "role": "media-metrics",
@@ -34,9 +34,9 @@
       "componentId": "components/result-item/allentown",
       "required": true,
       "localized": true,
-      "minItems": 4,
+      "minItems": 1,
       "maxItems": 4,
-      "description": "Four named metrics; each item presents a Label value before its heading."
+      "description": "One to four named metrics; each item presents a Label value before its heading."
     },
     "media": {
       "kind": "media",

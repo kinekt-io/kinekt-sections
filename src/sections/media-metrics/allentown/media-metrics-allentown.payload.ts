@@ -49,9 +49,9 @@ const manifest = {
       "componentId": "components/result-item/allentown",
       "required": true,
       "localized": true,
-      "minItems": 4,
+      "minItems": 1,
       "maxItems": 4,
-      "description": "Four named metrics; each item presents a Label value before its heading.",
+      "description": "One to four named metrics; each item presents a Label value before its heading.",
       "fields": {
         "label": {
           "kind": "text",

@@ -22,6 +22,7 @@
 - Use theme-aware accent colors for Process Story Trinity numbers and SVG icons; only numbered markers inherit the monospace font token.
 - Replace MOQ Lead Times' fixed facts with one or two editable info columns containing repeatable row titles and labels, plus the shared optional CTA group. Existing CMS content requires migration from `moq`, `leadTimes`, and `cta` to `infoColumns` and `ctas`.
 - Size MOQ headings one visual level below their semantic level and use the theme accent for MOQ and Product Hero checklist icons.
+- Allow one to four Media Metrics Allentown entries instead of requiring exactly four; enforce both limits in Payload.
 
 ### Fixed
 
