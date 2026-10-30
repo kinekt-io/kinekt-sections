@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { ctaGroupToProps, ctaToProps } from '../dist/shared/payload.js'
-import { ctaFields } from '../dist/shared/payload-fields.js'
+import { ctaFields, ctaStyleField } from '../dist/shared/payload-fields.js'
 import { structuralSectionToProps } from '../dist/shared/structural-props.js'
 import { betaProcessStoryAllentownToProps } from '../dist/sections/process-story/allentown/process-story-allentown.payload.js'
 import { betaProductOptionsAllentownToProps } from '../dist/sections/product-options/allentown/product-options-allentown.payload.js'
@@ -52,6 +52,18 @@ test('CTA adapters retain complete URL and content destinations', () => {
     ),
     { label: 'Read the page', href: 'pages/42' },
   )
+})
+
+test('CTA adapters retain clear-base styles and the shared editor field exposes it', () => {
+  assert.deepEqual(
+    ctaToProps({ label: 'Read the technical guide', destinationType: 'url', href: '/guide', style: 'clear-base' }, 'cta'),
+    { label: 'Read the technical guide', href: '/guide', style: 'clear-base' },
+  )
+  assert.deepEqual(
+    ctaGroupToProps([{ label: 'Read the technical guide', destinationType: 'url', href: '/guide', style: 'clear-base' }], 'ctas'),
+    { buttons: [{ label: 'Read the technical guide', href: '/guide', style: 'clear-base' }], primary: { label: 'Read the technical guide', href: '/guide', style: 'clear-base' }, secondary: undefined },
+  )
+  assert.ok(ctaStyleField().options.some(({ label, value }) => label === 'Clear base' && value === 'clear-base'))
 })
 
 test('CTA validators reject partial publish values while allowing an omitted CTA', () => {

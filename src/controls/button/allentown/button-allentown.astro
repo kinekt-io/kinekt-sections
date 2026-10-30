@@ -1,8 +1,9 @@
 ---
+import type { CtaStyle } from '../../../shared/content.js'
 interface Props {
   href: string
   label: string
-  style?: 'primary' | 'secondary' | 'clear'
+  style?: CtaStyle
   size?: 's' | 'm' | 'l'
   class?: string
 }
@@ -61,7 +62,7 @@ const classes = ['button', `button--${style}`, size !== 'm' && `button--${size}`
   }
 
   /* Figma clear buttons are text only: no border, so the box is the line height (18 px at medium). */
-  :where([data-kinekt-section], [data-kinekt-structural-section]) .button--clear {
+  :where([data-kinekt-section], [data-kinekt-structural-section]) :is(.button--clear, .button--clear-base) {
     min-height: auto;
     padding: 0;
     border-width: 0;
@@ -78,6 +79,10 @@ const classes = ['button', `button--${style}`, size !== 'm' && `button--${size}`
 
   :where([data-kinekt-section], [data-kinekt-structural-section]) .button--clear > svg[aria-hidden='true'] {
     color: var(--kinekt-component-accent, currentColor);
+  }
+
+  :where([data-kinekt-section], [data-kinekt-structural-section]) .button--clear-base > svg[aria-hidden='true'] {
+    color: currentColor;
   }
 
   :where([data-kinekt-section], [data-kinekt-structural-section]) .button--secondary > svg[aria-hidden='true'] {

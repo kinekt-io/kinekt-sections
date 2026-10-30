@@ -2,47 +2,44 @@
 import StepsStage from './steps-stage.astro'
 const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
 
-// Copy from Figma "Section - 01 Light Battery Packs" (5240:414399).
 const content = {
   theme: 'light' as const,
   intro: {
-    accentHeading: '/ From design to deployment',
-    heading: 'Tulip’s R&D methods',
-    description: {
-      html: '<p>We design every pack around your application, selecting the ideal cell from thousands across 50+ suppliers, or building a custom one tailored to your needs.</p>',
-    },
+    accentHeading: 'Working together',
+    heading: 'From first brief to dependable delivery',
+    description: { html: '<p>Align the requirements, test the practical details, and prepare a clear handover before work moves into production.</p>' },
+  },
+  introCtaGroup: {
+    buttons: [{ label: 'Discuss your project', href: '/contact/', style: 'primary' as const, icon: 'arrow-right' as const }],
   },
   media: {
     url: placeholder('placeholder-1600x900.svg'),
-    alt: 'Battery pack prototype on the test bench',
+    alt: 'A prototype prepared for a design review',
     width: 1600,
     height: 900,
   },
   steps: [
     {
-      stage: 'Design',
-      title: 'Engineer around the platform',
-      description: 'We model performance on your platform before anything is built. Designing for manufacturing from the start means production takes shape while you test.',
-      ctaGroup: {
-        primaryButton: { label: 'Read more about high-density engineering', href: '#', icon: 'arrow-right' as const },
-      },
+      title: 'Agree on the requirements',
+      description: 'Turn the initial brief into a practical scope with clear priorities and acceptance criteria.',
+      ctaGroup: { buttons: [{ label: 'Explore the planning workshop', href: '/services/', style: 'clear' as const, icon: 'arrow-right' as const }] },
     },
     {
-      stage: 'Prototype',
       title: 'Validate the design early',
-      description: 'Your pack should run reliably, every time. That’s why we build a prototype and send it to you, after fast iterations to the lowest-weight build your platform can carry.',
+      description: 'Review a working prototype and resolve the critical details before committing to the full delivery.',
     },
     {
-      stage: 'Test',
-      title: 'Prove performance before deployment',
-      description: 'We test the battery itself, and then you test it too. Every pack goes through extensive laboratory and field evaluation before it reaches your platform.',
+      title: 'Confirm operational readiness',
+      description: 'Check the design against real operating conditions and document the evidence needed for handover.',
     },
     {
-      stage: 'Scale',
-      title: 'Scale with confidence',
-      description: 'The moment your pack is proven, it’s refined, certified to UN38.3, and produced at volume: up to 100,000 packs per year per product.',
+      title: 'Prepare a repeatable delivery',
+      description: 'Agree on the production schedule, quality checks, and support arrangements for the next rollout.',
     },
   ],
+  listCtaGroup: {
+    buttons: [{ label: 'Review our delivery approach', href: '/approach/', style: 'clear-base' as const, icon: 'arrow-right' as const }],
+  },
 }
 ---
 <StepsStage {...content} />

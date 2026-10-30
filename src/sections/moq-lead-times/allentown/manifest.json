@@ -5,7 +5,7 @@
   "id": "sections/moq-lead-times/allentown",
   "slug": "moq-lead-times-allentown",
   "title": "MOQ Lead Times Allentown",
-  "description": "A reusable ordering and delivery section with MOQ and lead-time facts.",
+  "description": "A reusable ordering and delivery section with editable information columns.",
   "category": "sections",
   "tags": ["product", "logistics", "alpha"],
   "role": "moq-lead-times",
@@ -29,24 +29,47 @@
       "required": true,
       "localized": true
     },
-    "cta": {
-      "kind": "component",
-      "componentId": "controls/button/allentown",
+    "ctas": {
+      "kind": "ctaGroup",
       "required": false,
-      "localized": true
+      "localized": true,
+      "minItems": 0,
+      "maxItems": 2,
+      "description": "Optional primary and secondary actions below the introduction."
     },
-    "moq": {
-      "kind": "component",
-      "componentId": "components/delivery-fact/allentown",
-      "required": true,
-      "localized": true
-    },
-    "leadTimes": {
+    "infoColumns": {
       "kind": "componentList",
-      "componentId": "components/delivery-fact/allentown",
       "required": true,
       "localized": true,
-      "minItems": 1
+      "minItems": 1,
+      "maxItems": 2,
+      "description": "One or two ordering and delivery information columns.",
+      "fields": {
+        "title": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "rows": {
+          "kind": "componentList",
+          "required": true,
+          "localized": true,
+          "minItems": 1,
+          "fields": {
+            "title": {
+              "kind": "text",
+              "required": true,
+              "localized": true
+            },
+            "value": {
+              "kind": "component",
+              "componentId": "atoms/label/allentown",
+              "required": true,
+              "localized": true
+            }
+          }
+        }
+      }
     }
   }
 }

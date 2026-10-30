@@ -1,9 +1,11 @@
 ---
 import '../../../styles/wireframe-tokens.css'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import StepStage, { type StepStageContent } from '../../../components/step/stage/step-stage.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { Media, RichText, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { ctaGroupActions, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BetaStepsStageContent } from './steps-stage.types.js'
@@ -12,6 +14,8 @@ import type { BetaStepsStageContent } from './steps-stage.types.js'
 interface Props extends BetaStepsStageContent {
   theme?: BetaTheme
   intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | null }
+  introCtaGroup?: CtaGroup | null
+  listCtaGroup?: CtaGroup | null
   media?: Media | null
   steps: StepStageContent[]
   id?: string
@@ -19,7 +23,7 @@ interface Props extends BetaStepsStageContent {
   mediaLoading?: 'eager' | 'lazy'
 }
 
-const { id, theme = 'light', intro, media, steps = [], headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
+const { id, theme = 'light', intro, introCtaGroup, media, steps = [], listCtaGroup, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 const stepHeadingLevel = ({ h1: 'h2', h2: 'h3', h3: 'h4' } as const)[headingLevel] ?? 'h3'
 const introDescription = intro.description == null || typeof intro.description === 'string'
   ? intro.description ?? undefined
@@ -27,24 +31,46 @@ const introDescription = intro.description == null || typeof intro.description =
 const introContent: SectionIntroContent = { ...intro, description: introDescription }
 const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url === 'string' && media.url !== '')
 const visibleSteps = steps.filter((step) => typeof step?.title === 'string' && step.title !== '')
+const introActions = ctaGroupActions(introCtaGroup)
+const listActions = ctaGroupActions(listCtaGroup)
 ---
 <section class="steps-stage" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="steps-stage__container">
     <div class="steps-stage__lead">
       <header class="steps-stage__intro">
         <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
+        {introActions.length > 0 && (
+          <nav class="steps-stage__actions steps-stage__intro-actions" aria-label="Introduction actions">
+            {introActions.map((action) => {
+              const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
+              return <Button href={action.href} label={action.label} style={action.style ?? 'primary'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
+            })}
+          </nav>
+        )}
       </header>
       {hasMedia && media && <KinektMedia media={media} class="steps-stage__media" imageClass="steps-stage__image" loading={mediaLoading} />}
     </div>
 
-    {visibleSteps.length > 0 && (
-      <ol class="steps-stage__steps">
-        {visibleSteps.map((step, index) => (
-          <li class="steps-stage__step">
-            <StepStage step={step} number={index + 1} headingLevel={stepHeadingLevel} />
-          </li>
-        ))}
-      </ol>
+    {(visibleSteps.length > 0 || listActions.length > 0) && (
+      <div class="steps-stage__list-column">
+        {visibleSteps.length > 0 && (
+          <ol class="steps-stage__steps">
+            {visibleSteps.map((step, index) => (
+              <li class="steps-stage__step">
+                <StepStage step={step} number={index + 1} headingLevel={stepHeadingLevel} />
+              </li>
+            ))}
+          </ol>
+        )}
+        {listActions.length > 0 && (
+          <nav class="steps-stage__actions steps-stage__list-actions" aria-label="Steps actions">
+            {listActions.map((action) => {
+              const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
+              return <Button href={action.href} label={action.label} style={action.style ?? 'primary'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
+            })}
+          </nav>
+        )}
+      </div>
     )}
   </div>
 </section>
@@ -130,7 +156,7 @@ const visibleSteps = steps.filter((step) => typeof step?.title === 'string' && s
   }
 
   .steps-stage .steps-stage__lead { display: grid; gap: var(--kiw--steps-stage-lead-gap); min-width: 0; align-content: start; }
-  .steps-stage .steps-stage__intro { min-width: 0; }
+  .steps-stage .steps-stage__intro { display: grid; gap: var(--kiw--steps-stage-intro-gap); min-width: 0; }
   .steps-stage .section-intro { display: grid; justify-items: start; gap: var(--kiw--steps-stage-intro-gap); }
   .steps-stage .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
   .steps-stage .section-intro__heading-group { display: grid; gap: var(--kiw--steps-stage-heading-stack-gap); }
@@ -140,8 +166,39 @@ const visibleSteps = steps.filter((step) => typeof step?.title === 'string' && s
   .steps-stage .steps-stage__media { display: block; min-width: 0; }
   .steps-stage .steps-stage__image { display: block; inline-size: 100%; max-inline-size: 100%; block-size: auto; aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--steps-stage-media-ratio)); object-fit: cover; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
 
-  .steps-stage .steps-stage__steps { display: grid; gap: var(--kiw--steps-stage-step-gap); min-width: 0; margin: 0; padding: 0; list-style: none; }
-  .steps-stage .steps-stage__step { min-width: 0; }
+  .steps-stage {
+    & .steps-stage__list-column {
+      display: grid;
+      gap: var(--kiw--steps-stage-step-gap);
+      min-width: 0;
+    }
+
+    & .steps-stage__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--kiw--section-actions-gap);
+    }
+
+    & .steps-stage__steps {
+      display: grid;
+      gap: 0;
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    & .steps-stage__step {
+      min-width: 0;
+
+      & + .steps-stage__step {
+        margin-block-start: calc(var(--kiw--steps-stage-step-gap) / 2);
+        padding-block-start: calc(var(--kiw--steps-stage-step-gap) / 2);
+        border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+      }
+    }
+  }
 
   @media (min-width: 50rem) {
     .steps-stage[data-kinekt-section] > .steps-stage__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; column-gap: var(--kiw--steps-stage-column-gap); }

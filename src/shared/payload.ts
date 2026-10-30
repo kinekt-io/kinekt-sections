@@ -1,5 +1,6 @@
 import { isSafeWebUrl } from '../urls.js'
 import type { Cta, CtaGroup, Media } from './content.js'
+import { isCtaStyle } from './content.js'
 import { isCtaIcon } from './cta-icons.js'
 export type BetaTheme = 'light' | 'semi-light' | 'dark' | 'semi-dark'
 export type PayloadAdapterOptions = {
@@ -79,7 +80,8 @@ export const ctaToProps = (value: unknown, field: string, options: PayloadAdapte
     throw new Error(`${field}.destinationType must be content or url.`)
   }
   const icon = optionalSharpSolidIcon(cta.icon, `${field}.icon`)
-  return { label: requireText(cta.label, `${field}.label`), href, ...(icon ? { icon } : {}) }
+  const style = isCtaStyle(cta.style) ? { style: cta.style } : {}
+  return { label: requireText(cta.label, `${field}.label`), href, ...style, ...(icon ? { icon } : {}) }
 }
 
 export const optionalCtaToProps = (value: unknown, field: string, options: PayloadAdapterOptions = {}): Cta | undefined => {
@@ -107,7 +109,7 @@ export const ctaGroupToProps = (value: unknown, field: string, options: PayloadA
       const cta = optionalCtaToProps(button, `${field}.buttons.${index}`, options)
       if (!cta) return
       const style = requireObject(button, `${field}.buttons.${index}`).style
-      buttons.push({ ...cta, style: style === 'primary' || style === 'secondary' || style === 'clear' ? style : 'primary' })
+      buttons.push({ ...cta, style: isCtaStyle(style) ? style : 'primary' })
     })
     return buttons.length > 0 ? { buttons, primary: buttons[0], secondary: buttons[1] } : undefined
   }

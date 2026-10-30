@@ -1,6 +1,6 @@
 import type { Block, CollectionSlug, Field } from 'payload'
 import { renderRichText } from './rich-text.js'
-import { ctaFields, isSharpSolidIconNameOrEmpty } from './payload-fields.js'
+import { ctaFields, ctaStyleField, isSharpSolidIconNameOrEmpty } from './payload-fields.js'
 
 type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'insightSourceList' | 'contentReferenceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
 
@@ -90,20 +90,7 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
       minRows: field.minItems ?? 0,
       maxRows: field.maxItems ?? 2,
       admin: { initCollapsed: true, ...(field.description ? { description: field.description } : {}), ...field.admin },
-      fields: [
-        {
-          name: 'style',
-          type: 'select',
-          required: true,
-          defaultValue: 'primary',
-          options: [
-            { label: 'Primary', value: 'primary' },
-            { label: 'Secondary', value: 'secondary' },
-            { label: 'Clear', value: 'clear' },
-          ],
-        },
-        ...ctaFields(options.targetCollections),
-      ],
+      fields: [ctaStyleField(), ...ctaFields(options.targetCollections)],
     }
     case 'sectionIntro': return { ...common, type: 'group', fields: introFields() }
     case 'component': {
@@ -126,7 +113,7 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
         : field.admin
       return { ...common, ...(admin ? { admin } : {}), type: 'group', fields: childFields(field, options, descendantsLocalized) }
     }
-    case 'componentList': return { ...common, type: 'array', minRows: field.minItems, fields: childFields(field, options, descendantsLocalized) }
+    case 'componentList': return { ...common, type: 'array', minRows: field.minItems, maxRows: field.maxItems, fields: childFields(field, options, descendantsLocalized) }
     case 'infoItems':
     case 'featureItems':
     case 'comparisonColumns': return { ...common, type: 'array', minRows: field.minItems, fields: [{ name: 'value', type: 'text', required: true }] }

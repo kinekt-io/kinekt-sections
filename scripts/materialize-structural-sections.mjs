@@ -162,7 +162,11 @@ const manifests = new Map(await Promise.all(manifestDirectoriesList.map(async (d
 
 function expandComponentFields(fields, ancestors = []) {
   return Object.fromEntries(Object.entries(fields).map(([key, field]) => {
-    if (!field.componentId) return [key, field]
+    if (!field.componentId) {
+      return [key, field.fields
+        ? { ...field, fields: expandComponentFields(field.fields, ancestors) }
+        : field]
+    }
     if (ancestors.includes(field.componentId)) throw new Error(`Circular component manifest reference: ${[...ancestors, field.componentId].join(' -> ')}`)
     const component = manifests.get(field.componentId)
     if (!component) throw new Error(`Missing reusable component manifest: ${field.componentId}`)
@@ -175,8 +179,11 @@ function expandComponentFields(fields, ancestors = []) {
 
 function sampleField(field, key, depth = 0, index = 0) {
   const child = field.componentId ? manifests.get(field.componentId) : null
-  if (field.kind === 'component' && child && depth < 4) return sampleContent(child, depth + 1, index)
-  if (field.kind === 'componentList' && child && depth < 4) return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => sampleContent(child, depth + 1, itemIndex))
+  const inline = field.fields ? { fields: field.fields } : null
+  const content = child ?? inline
+  const itemCount = Math.min(Math.max(field.minItems ?? 1, 3), field.maxItems ?? Infinity)
+  if (field.kind === 'component' && content && depth < 4) return sampleContent(content, depth + 1, index)
+  if (field.kind === 'componentList' && content && depth < 4) return Array.from({ length: itemCount }, (_, itemIndex) => sampleContent(content, depth + 1, itemIndex))
   if (field.kind === 'text' || field.kind === 'textarea' || field.kind === 'richText') return previewText(key, index)
   if (field.kind === 'select' || field.kind === 'theme') return field.options?.[0] ?? 'light'
   if (field.kind === 'media' || field.kind === 'video') return { url: `catalogue-asset:placeholder-1600x900.svg`, alt: 'Battery module and electrical interface', width: 1600, height: 900 }
@@ -398,6 +405,9 @@ for (const directory of await manifestDirectories(sections)) {
     'comparison-overview-allentown',
     'density-comparison-allentown',
     'featured-insights-allentown',
+    'battery-models-allentown',
+    'steps-stage',
+    'moq-lead-times-allentown',
   ]).has(manifest.slug)
   const caseStudiesContract = manifest.slug === 'case-studies-allentown'
   const solutionListContract = manifest.slug === 'solution-list-allentown'

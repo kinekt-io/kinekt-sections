@@ -53,6 +53,23 @@ export function contactMethodFields(): Field[] {
   ]
 }
 
+export function ctaStyleField(): Field {
+  return {
+    name: 'style',
+    type: 'select',
+    label: 'Style',
+    required: true,
+    defaultValue: 'primary',
+    options: [
+      { label: 'Primary', value: 'primary' },
+      { label: 'Secondary', value: 'secondary' },
+      { label: 'Clear', value: 'clear' },
+      { label: 'Clear base', value: 'clear-base' },
+    ],
+  }
+}
+
+
 export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], required = false): Field[] {
   return [
     {
@@ -97,7 +114,7 @@ export function ctaGroupFields(targetCollections: CollectionSlug | CollectionSlu
     name,
     type: 'group',
     label: name.toLowerCase().includes('primary') ? 'Primary CTA' : 'Secondary CTA',
-    fields: ctaFields(targetCollections),
+    fields: [ctaStyleField(), ...ctaFields(targetCollections)],
   }))
 }
 

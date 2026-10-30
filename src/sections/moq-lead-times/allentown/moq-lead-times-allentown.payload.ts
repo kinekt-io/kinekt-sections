@@ -1,6 +1,7 @@
-// @generated structural section — source manifest remains the contract.
 import type { Block, CollectionSlug } from 'payload'
-import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
+import { createManifestBlock } from '../../../shared/manifest-block.js'
+import { structuralSectionToProps } from '../../../shared/structural-props.js'
+import type { PayloadAdapterOptions } from '../../../shared/payload.js'
 import type { BetaMoqLeadTimesAllentownContent, PayloadBetaMoqLeadTimesAllentownDocument } from './moq-lead-times-allentown.types.js'
 
 const manifest = {
@@ -43,89 +44,56 @@ const manifest = {
         }
       }
     },
-    "cta": {
-      "kind": "component",
-      "componentId": "controls/button/allentown",
+    "ctas": {
+      "kind": "ctaGroup",
       "required": false,
       "localized": true,
-      "fields": {
-        "cta": {
-          "kind": "cta",
-          "required": true,
-          "localized": true
-        }
-      }
+      "minItems": 0,
+      "maxItems": 2,
+      "description": "Optional primary and secondary actions below the introduction."
     },
-    "moq": {
-      "kind": "component",
-      "componentId": "components/delivery-fact/allentown",
-      "required": true,
-      "localized": true,
-      "fields": {
-        "title": {
-          "kind": "text",
-          "required": true,
-          "localized": true
-        },
-        "description": {
-          "kind": "richText",
-          "required": true,
-          "localized": true
-        },
-        "value": {
-          "kind": "component",
-          "componentId": "atoms/label/allentown",
-          "required": true,
-          "localized": true,
-          "fields": {
-            "text": {
-              "kind": "text",
-              "required": true,
-              "localized": true
-            },
-            "icon": {
-              "kind": "text",
-              "required": false,
-              "localized": true,
-              "description": "Optional Font Awesome 7 Sharp Solid icon name rendered before the label text."
-            }
-          }
-        }
-      }
-    },
-    "leadTimes": {
+    "infoColumns": {
       "kind": "componentList",
-      "componentId": "components/delivery-fact/allentown",
       "required": true,
       "localized": true,
       "minItems": 1,
+      "maxItems": 2,
+      "description": "One or two ordering and delivery information columns.",
       "fields": {
         "title": {
           "kind": "text",
           "required": true,
           "localized": true
         },
-        "description": {
-          "kind": "richText",
-          "required": true,
-          "localized": true
-        },
-        "value": {
-          "kind": "component",
-          "componentId": "atoms/label/allentown",
+        "rows": {
+          "kind": "componentList",
           "required": true,
           "localized": true,
+          "minItems": 1,
           "fields": {
-            "text": {
+            "title": {
               "kind": "text",
               "required": true,
               "localized": true
             },
-            "icon": {
-              "kind": "text",
-              "required": false,
+            "value": {
+              "kind": "component",
+              "componentId": "atoms/label/allentown",
+              "required": true,
               "localized": true,
-              "description": "Optional Font Awesome 7 Sharp Solid icon name rendered before the label text."
+              "fields": {
+                "text": {
+                  "kind": "text",
+                  "required": true,
+                  "localized": true
+                },
+                "icon": {
+                  "kind": "text",
+                  "required": false,
+                  "localized": true,
+                  "description": "Optional Font Awesome 7 Sharp Solid icon name rendered before the label text."
+                }
+              }
             }
           }
         }
@@ -140,6 +108,6 @@ export function createBetaMoqLeadTimesAllentownBlock(options: CreateBetaMoqLeadT
   return createManifestBlock(manifest, options)
 }
 
-export function betaMoqLeadTimesAllentownToProps(data: PayloadBetaMoqLeadTimesAllentownDocument): BetaMoqLeadTimesAllentownContent {
-  return manifestToProps(data)
+export function betaMoqLeadTimesAllentownToProps(data: PayloadBetaMoqLeadTimesAllentownDocument, options: PayloadAdapterOptions = {}): BetaMoqLeadTimesAllentownContent {
+  return structuralSectionToProps(data, options)
 }

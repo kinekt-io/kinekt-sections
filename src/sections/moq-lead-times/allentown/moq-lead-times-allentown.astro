@@ -2,78 +2,74 @@
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import Label from '../../../atoms/label/allentown/label-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { Cta, RichText, SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
+import { ctaGroupActions, type Cta, type CtaGroup, type RichText, type SectionIntro as SectionIntroContent, type SectionTheme } from '../../../shared/content.js'
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 
 type HeadingLevel = 'h1' | 'h2' | 'h3'
 type RichTextInput = string | RichText
 type IntroInput = Omit<SectionIntroContent, 'description'> & { description?: RichTextInput | null }
-type CtaInput = Partial<Cta> | null | undefined
-interface DeliveryFact { title: string; description: string | RichText; value: { text: string; icon?: string } }
+interface InfoRow { title: string; value: { text: string; icon?: string } }
+interface InfoColumn { title: string; rows: InfoRow[] }
 interface Props {
   id?: string
   theme?: SectionTheme
   headingLevel?: HeadingLevel
   intro: IntroInput
-  cta?: { cta?: CtaInput } | CtaInput
-  moq: DeliveryFact
-  leadTimes?: DeliveryFact[]
+  ctas?: CtaGroup | Cta[]
+  infoColumns?: InfoColumn[]
 }
 
-const { id, theme = 'dark', headingLevel = 'h2', intro, cta, moq, leadTimes = [] } = Astro.props as Props
+const { id, theme = 'dark', headingLevel = 'h2', intro, ctas, infoColumns = [] } = Astro.props as Props
 const toHtml = (value: RichTextInput, field: string): string => typeof value === 'string'
   ? value.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).map((part) => richTextToHtml(part, field)).join('')
   : value.html
-const descriptionHtml = (value: DeliveryFact['description']) => typeof value === 'string'
-  ? richTextToHtml(value, 'delivery fact description')
-  : value.html
-const hasDescription = (value: DeliveryFact['description']) => typeof value === 'string' ? value.trim() !== '' : value.html.trim() !== ''
 
 const introContent: SectionIntroContent = {
   ...intro,
   description: intro.description == null || typeof intro.description === 'string' ? intro.description ?? undefined : { html: toHtml(intro.description, 'intro.description') },
 }
-const action = (() => {
-  const candidate: CtaInput = typeof cta === 'object' && cta !== null && 'cta' in cta
-    ? (cta as { cta?: CtaInput }).cta
-    : cta as CtaInput
-  return typeof candidate?.label === 'string' && candidate.label.trim() !== '' && typeof candidate.href === 'string' && candidate.href.trim() !== '' ? candidate as Cta : undefined
-})()
-const actionIcon = action && isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-const visibleLeadTimes = leadTimes.filter((item) => typeof item?.title === 'string' && item.title.trim() !== '' && hasDescription(item.description) && typeof item.value?.text === 'string' && item.value.text.trim() !== '')
+const actions = ctaGroupActions(ctas)
+const columns = infoColumns
+  .filter((column) => typeof column?.title === 'string' && column.title.trim() !== '' && Array.isArray(column.rows))
+  .slice(0, 2)
+  .map((column) => ({
+    ...column,
+    rows: column.rows.filter((row) => typeof row?.title === 'string' && row.title.trim() !== '' && typeof row.value?.text === 'string' && row.value.text.trim() !== ''),
+  }))
+  .filter((column) => column.rows.length > 0)
 ---
-<section class="beta-moq-lead-times-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="beta-moq-lead-times-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-kinekt-heading-level={headingLevel}>
   <div class="beta-moq-lead-times-allentown__container">
     <header class="beta-moq-lead-times-allentown__intro">
       <SectionIntro intro={introContent} headingLevel={headingLevel} />
-      {action && <Button href={action.href} label={action.label} size="s">{actionIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={actionIcon.viewBox} fill="currentColor"><path d={actionIcon.path} /></svg>}</Button>}
+      {actions.length > 0 && (
+        <nav class="beta-moq-lead-times-allentown__actions" aria-label="Section actions">
+          {actions.map((action, index) => {
+            const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
+            return <Button href={action.href} label={action.label} size="s" style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
+          })}
+        </nav>
+      )}
     </header>
 
-    <section class="beta-moq-lead-times-allentown__facts" aria-label="Order requirements">
-      <section class="beta-moq-lead-times-allentown__fact">
-        <h3>{moq.title}</h3>
-        <div class="beta-moq-lead-times-allentown__fact-list">
-          <div class="beta-moq-lead-times-allentown__fact-row">
-            <div class="beta-moq-lead-times-allentown__fact-description" set:html={descriptionHtml(moq.description)} />
-            <Label text={moq.value.text} icon={moq.value.icon} size="s" />
-          </div>
-        </div>
-      </section>
-
-      <section class="beta-moq-lead-times-allentown__fact">
-        <h3>Lead times</h3>
-        <div class="beta-moq-lead-times-allentown__fact-list">
-          {visibleLeadTimes.map((leadTime) => (
-            <div class="beta-moq-lead-times-allentown__fact-row">
-              <div class="beta-moq-lead-times-allentown__fact-title">{leadTime.title}</div>
-              <div class="beta-moq-lead-times-allentown__fact-description" set:html={descriptionHtml(leadTime.description)} />
-              <Label text={leadTime.value.text} icon={leadTime.value.icon} size="s" />
+    {columns.length > 0 && (
+      <section class="beta-moq-lead-times-allentown__facts" aria-label="Order requirements">
+        {columns.map((column) => (
+          <section class="beta-moq-lead-times-allentown__fact">
+            <h3>{column.title}</h3>
+            <div class="beta-moq-lead-times-allentown__fact-list">
+              {column.rows.map((row) => (
+                <div class="beta-moq-lead-times-allentown__fact-row">
+                  <div class="beta-moq-lead-times-allentown__fact-title">{row.title}</div>
+                  <Label text={row.value.text} icon={row.value.icon} size="s" />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </section>
+        ))}
       </section>
-    </section>
+    )}
   </div>
 </section>
 <style is:global>
@@ -95,8 +91,9 @@ const visibleLeadTimes = leadTimes.filter((item) => typeof item?.title === 'stri
     --kiw--moq-lead-times-allentown-column-gap: var(--section-space-xl);
     --kiw--moq-lead-times-allentown-fact-gap: var(--space-m);
     --kiw--moq-lead-times-allentown-value-gap: var(--space-xs);
+    --kiw--moq-lead-times-allentown-action-gap: var(--space-s);
     --kiw--moq-lead-times-allentown-heading-size: var(--text-l);
-    --kiw--moq-lead-times-allentown-description-size: var(--text-s);
+    --kiw--moq-lead-times-allentown-intro-heading-size: var(--kinekt-section-heading-3-size, var(--h3));
     box-sizing: border-box;
     padding-block: var(--kinekt-component-block-space);
     color: var(--kinekt-component-ink);
@@ -108,26 +105,28 @@ const visibleLeadTimes = leadTimes.filter((item) => typeof item?.title === 'stri
     letter-spacing: var(--kinekt-section-text-letter-spacing, var(--text-letter-spacing));
   }
 
-  :where(.beta-moq-lead-times-allentown[data-kinekt-theme='light']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--moq-lead-times-allentown-canvas, var(--neutral-ultra-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--moq-lead-times-allentown-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--moq-lead-times-allentown-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--moq-lead-times-allentown-muted, var(--primary-semi-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--moq-lead-times-allentown-line, var(--primary-ultra-light))); }
-  :where(.beta-moq-lead-times-allentown[data-kinekt-theme='semi-light']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--moq-lead-times-allentown-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--moq-lead-times-allentown-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--moq-lead-times-allentown-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--moq-lead-times-allentown-muted, var(--primary-semi-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--moq-lead-times-allentown-line, var(--primary-ultra-light))); }
-  :where(.beta-moq-lead-times-allentown[data-kinekt-theme='semi-dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--moq-lead-times-allentown-canvas, var(--primary-dark))); }
+  :where(.beta-moq-lead-times-allentown[data-kinekt-theme='light']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--moq-lead-times-allentown-canvas, var(--neutral-ultra-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--moq-lead-times-allentown-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--moq-lead-times-allentown-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--moq-lead-times-allentown-muted, var(--primary-semi-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--moq-lead-times-allentown-line, var(--primary-ultra-light))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--moq-lead-times-allentown-accent, var(--accent-semi-dark))); }
+  :where(.beta-moq-lead-times-allentown[data-kinekt-theme='semi-light']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--moq-lead-times-allentown-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--moq-lead-times-allentown-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--moq-lead-times-allentown-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--moq-lead-times-allentown-muted, var(--primary-semi-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--moq-lead-times-allentown-line, var(--primary-ultra-light))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--moq-lead-times-allentown-accent, var(--accent-semi-dark))); }
+  :where(.beta-moq-lead-times-allentown[data-kinekt-theme='semi-dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--moq-lead-times-allentown-canvas, var(--primary-dark))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--moq-lead-times-allentown-accent, var(--accent))); }
+  :where(.beta-moq-lead-times-allentown[data-kinekt-theme='dark']) { --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--moq-lead-times-allentown-accent, var(--accent))); }
+  :where(.beta-moq-lead-times-allentown[data-kinekt-heading-level='h1']) { --kiw--moq-lead-times-allentown-intro-heading-size: var(--kinekt-section-heading-2-size, var(--h2)); }
+  :where(.beta-moq-lead-times-allentown[data-kinekt-heading-level='h2']) { --kiw--moq-lead-times-allentown-intro-heading-size: var(--kinekt-section-heading-3-size, var(--h3)); }
+  :where(.beta-moq-lead-times-allentown[data-kinekt-heading-level='h3']) { --kiw--moq-lead-times-allentown-intro-heading-size: var(--kinekt-section-heading-4-size, var(--h4)); }
   :where(.beta-moq-lead-times-allentown) *, :where(.beta-moq-lead-times-allentown) *::before, :where(.beta-moq-lead-times-allentown) *::after { box-sizing: border-box; }
 
   .beta-moq-lead-times-allentown > .beta-moq-lead-times-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--section-space-l); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__intro { display: grid; align-content: start; justify-items: start; gap: var(--section-space-s); min-width: 0; }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__intro .section-intro { display: grid; gap: var(--space-xs); }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__intro .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
-  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__intro .section-intro__heading { max-width: none; font-size: var(--kinekt-section-heading-2-size, var(--h2)); }
+  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__intro .section-intro__heading { max-width: none; font-size: var(--kiw--moq-lead-times-allentown-intro-heading-size); }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__intro .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--text-m); }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__intro .section-intro__description > * { margin-block: 0; }
+  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__actions { display: flex; flex-wrap: wrap; gap: var(--kiw--moq-lead-times-allentown-action-gap); }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__facts { display: grid; gap: var(--kiw--moq-lead-times-allentown-column-gap); min-width: 0; }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact { min-width: 0; }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact > h3 { margin: 0; font-size: var(--kiw--moq-lead-times-allentown-heading-size); }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact-list { display: grid; gap: var(--kiw--moq-lead-times-allentown-fact-gap); margin: var(--space-s) 0 0; padding: var(--space-m) 0 0; border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact-row { display: grid; gap: var(--kiw--moq-lead-times-allentown-value-gap); }
-  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact-description { color: var(--kinekt-component-ink); font-size: var(--kiw--moq-lead-times-allentown-description-size); }
-  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact-description > * { margin-block: 0; }
-  .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact-description > * + * { margin-block-start: var(--space-xs); }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact-title { font-weight: var(--heading-font-weight); }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact .label-allentown { --kinekt-label-tint: 15%; }
   @media (min-width: 50rem) { .beta-moq-lead-times-allentown > .beta-moq-lead-times-allentown__container { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; column-gap: var(--section-space-xl); } .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); align-self: center; } }

@@ -3,6 +3,7 @@ import Button from '../controls/button/allentown/button-allentown.astro'
 import Label from '../atoms/label/allentown/label-allentown.astro'
 import FormEmbed from '../components/form-embed/allentown/form-embed-allentown.astro'
 import { faArrowLeft, faArrowRight } from '@fortawesome/sharp-solid-svg-icons'
+import { isCtaStyle, type CtaStyle } from './content.js'
 interface Field {
   kind: string
   id?: string
@@ -56,8 +57,8 @@ function identifier(value: string) {
   return value.replace(/[^a-zA-Z0-9_-]/g, '-')
 }
 
-function buttonStyle(value: Record<string, unknown>, key: string): 'primary' | 'secondary' | 'clear' {
-  if (value.style === 'secondary' || value.style === 'clear' || value.style === 'primary') return value.style
+function buttonStyle(value: Record<string, unknown>, key: string): CtaStyle {
+  if (isCtaStyle(value.style)) return value.style
   return /secondary/i.test(key) ? 'secondary' : /clear|text/i.test(key) ? 'clear' : 'primary'
 }
 ---

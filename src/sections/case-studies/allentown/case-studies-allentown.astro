@@ -390,11 +390,12 @@ const quoteText = (value: string): string => {
     --kiw--case-studies-allentown-quote-space: var(--space-l);
     --kiw--case-studies-allentown-quote-color: var(--kinekt-component-accent);
     --kiw--case-studies-allentown-quote-size: var(--text-xl);
-    --kiw--case-studies-allentown-quote-mark-space: 0.65em;
+    --kiw--case-studies-allentown-quote-font-family: var(--mono-font-family);
+    --kiw--case-studies-allentown-quote-mark-space: calc(var(--kiw--case-studies-allentown-quote-size) * 0.65);
     --kiw--case-studies-allentown-text-line-height: var(--text-line-height);
     --kiw--case-studies-allentown-attribution-gap: var(--space-m);
     --kiw--case-studies-allentown-avatar-size: var(--section-space-s);
-    --kiw--case-studies-allentown-author-gap: var(--space-xxs);
+    --kiw--case-studies-allentown-author-gap: 0;
     --kiw--case-studies-allentown-author-size: var(--text-s);
     --kiw--case-studies-allentown-description-color: var(--primary-semi-dark);
     --kiw--case-studies-allentown-muted-color: var(--kinekt-component-muted);
@@ -437,6 +438,11 @@ const quoteText = (value: string): string => {
     }
     & .case-studies-allentown__carousel-label {
       --kiw--subtitle-flight-path-gap: var(--kiw--case-studies-allentown-label-gap);
+    }
+    & .case-studies-allentown__carousel-viewport {
+      min-inline-size: 0;
+      overflow: clip;
+      overflow-clip-margin: var(--kiw--case-studies-allentown-quote-overhang, 1em);
     }
     & .case-studies-allentown__carousel-slide {
       flex-basis: 100%;
@@ -513,16 +519,16 @@ const quoteText = (value: string): string => {
     }
     & .case-studies-allentown__quote-text {
       position: relative;
-      padding-inline-start: var(--kiw--case-studies-allentown-quote-mark-space);
       margin: 0;
       color: var(--kiw--case-studies-allentown-quote-color);
+      font-family: var(--kiw--case-studies-allentown-quote-font-family);
       font-size: var(--kiw--case-studies-allentown-quote-size);
       line-height: var(--kiw--case-studies-allentown-text-line-height);
     }
     & .case-studies-allentown__quote-text::before {
       content: "“";
       position: absolute;
-      inset-inline-start: 0;
+      inset-inline-start: calc(-1 * var(--kiw--case-studies-allentown-quote-mark-space));
       inset-block-start: 0;
     }
     & .case-studies-allentown__quote-text::after {
@@ -583,7 +589,7 @@ const quoteText = (value: string): string => {
       font-size: var(--case-studies-pagination-icon-size, var(--kiw--case-studies-allentown-quote-size));
     }
     & [data-kinekt-carousel-indicators] {
-      gap: var(--case-studies-pagination-indicator-gap, var(--kiw--case-studies-allentown-author-gap));
+      gap: var(--case-studies-pagination-indicator-gap, var(--space-xxs));
     }
     &[data-kinekt-theme='dark'],
     &[data-kinekt-theme='semi-dark'] {

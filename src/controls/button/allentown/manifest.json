@@ -5,7 +5,7 @@
   "id": "controls/button/allentown",
   "slug": "button-allentown",
   "title": "Button Allentown",
-  "description": "A reusable action control with localised CTA data and renderer-owned primary, secondary or text presentation.",
+  "description": "A reusable action control with localised CTA data and renderer-owned primary, secondary, clear or clear-base presentation.",
   "category": "controls",
   "role": "button",
   "variation": "allentown",

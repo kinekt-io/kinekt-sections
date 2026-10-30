@@ -1,5 +1,5 @@
 import type { Block, CollectionSlug, Field } from 'payload'
-import { ctaFields, sectionIntroFields } from '../../../shared/payload-fields.js'
+import { ctaFields, ctaStyleField, sectionIntroFields } from '../../../shared/payload-fields.js'
 import { ctaGroupToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { PayloadStreamerAllentownDocument, StreamerAllentownContent } from './streamer-allentown.types.js'
@@ -18,20 +18,10 @@ function actionFields(targetCollections: CollectionSlug[]): Field[] {
       maxRows: 2,
       admin: {
         initCollapsed: true,
-        description: 'Add zero, one or two actions. Set each action to Primary, Secondary or Clear.',
+        description: 'Add zero, one or two actions. Set each action to Primary, Secondary, Clear or Clear base.',
       },
       fields: [
-        {
-          name: 'style',
-          type: 'select',
-          required: true,
-          defaultValue: 'primary',
-          options: [
-            { label: 'Primary', value: 'primary' },
-            { label: 'Secondary', value: 'secondary' },
-            { label: 'Clear', value: 'clear' },
-          ],
-        },
+        ctaStyleField(),
         ...ctaFields(targetCollections),
       ],
     },

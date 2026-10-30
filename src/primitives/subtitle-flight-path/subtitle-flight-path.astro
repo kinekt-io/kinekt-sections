@@ -57,6 +57,13 @@ const labelClasses = ['subtitle-flight-path__label', labelClass].filter(Boolean)
     background: linear-gradient(to right, var(--kiw--subtitle-flight-path-color), color-mix(in srgb, var(--kiw--subtitle-flight-path-color) var(--kiw--subtitle-flight-path-fade-opacity), transparent) var(--kiw--subtitle-flight-path-fade-at));
   }
 
+  .subtitle-flight-path--caps .subtitle-flight-path__path {
+    height: max(var(--kiw--subtitle-flight-path-arrow-height), var(--kiw--subtitle-flight-path-dot-size), var(--kiw--subtitle-flight-path-line-width));
+    background-position: var(--kiw--subtitle-flight-path-arrow-width) center;
+    background-size: calc(100% - var(--kiw--subtitle-flight-path-arrow-width) - var(--kiw--subtitle-flight-path-dot-size)) var(--kiw--subtitle-flight-path-line-width);
+    background-repeat: no-repeat;
+  }
+
   /* Caps share the gradient's start and end colors. */
   .subtitle-flight-path--caps .subtitle-flight-path__path::before,
   .subtitle-flight-path--caps .subtitle-flight-path__path::after {

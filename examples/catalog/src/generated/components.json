@@ -1028,7 +1028,7 @@
     "role": "button",
     "variation": "allentown",
     "title": "Button Allentown",
-    "description": "A reusable action control with localised CTA data and renderer-owned primary, secondary or text presentation.",
+    "description": "A reusable action control with localised CTA data and renderer-owned primary, secondary, clear or clear-base presentation.",
     "status": "planned",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4811-276496&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -3532,7 +3532,7 @@
     "role": "moq-lead-times",
     "variation": "allentown",
     "title": "MOQ Lead Times Allentown",
-    "description": "A reusable ordering and delivery section with MOQ and lead-time facts.",
+    "description": "A reusable ordering and delivery section with editable information columns.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5823-638305&t=OtYEVTRRdAJJYQ0v-11",
     "variants": {},
@@ -3555,24 +3555,47 @@
         "required": true,
         "localized": true
       },
-      "cta": {
-        "kind": "component",
-        "componentId": "controls/button/allentown",
+      "ctas": {
+        "kind": "ctaGroup",
         "required": false,
-        "localized": true
+        "localized": true,
+        "minItems": 0,
+        "maxItems": 2,
+        "description": "Optional primary and secondary actions below the introduction."
       },
-      "moq": {
-        "kind": "component",
-        "componentId": "components/delivery-fact/allentown",
-        "required": true,
-        "localized": true
-      },
-      "leadTimes": {
+      "infoColumns": {
         "kind": "componentList",
-        "componentId": "components/delivery-fact/allentown",
         "required": true,
         "localized": true,
-        "minItems": 1
+        "minItems": 1,
+        "maxItems": 2,
+        "description": "One or two ordering and delivery information columns.",
+        "fields": {
+          "title": {
+            "kind": "text",
+            "required": true,
+            "localized": true
+          },
+          "rows": {
+            "kind": "componentList",
+            "required": true,
+            "localized": true,
+            "minItems": 1,
+            "fields": {
+              "title": {
+                "kind": "text",
+                "required": true,
+                "localized": true
+              },
+              "value": {
+                "kind": "component",
+                "componentId": "atoms/label/allentown",
+                "required": true,
+                "localized": true
+              }
+            }
+          }
+        }
       }
     },
     "runtimeProps": {},
@@ -4532,6 +4555,13 @@
         "required": true,
         "localized": true
       },
+      "introCtaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": false,
+        "localized": true,
+        "description": "Optional actions below the introduction."
+      },
       "media": {
         "kind": "media",
         "required": false,
@@ -4543,6 +4573,13 @@
         "required": true,
         "localized": true,
         "minItems": 1
+      },
+      "listCtaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": false,
+        "localized": true,
+        "description": "Optional actions below the steps."
       }
     },
     "runtimeProps": {

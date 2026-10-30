@@ -9,6 +9,8 @@
 - Add optional localized results headings to Case Studies slides and editable Problem Solution animation labels; empty labels render no text.
 - Add optional zero-to-two CTA groups below the Process Story Allentown intro, below its item list, and within each item; resolve Content-or-URL targets through the shared adapter.
 - Expose the existing Sharp Solid icon-name validator and SVG resolver through `@kinekt-io/components/icons` for consuming CMS configurations.
+- Add `clear-base` to shared CTA styles: clear-button presentation with icons inheriting the text color.
+- Add optional zero-to-two CTA groups below the Steps Stage intro and below its steps; retain per-step CTA groups.
 
 ### Changed
 
@@ -18,6 +20,8 @@
 - Use rich-text description fields throughout sections and reusable content blocks, preserving paragraph, list, emphasis, and safe link formatting in Astro.
 - Use shared capped flightpaths for Case Studies and both Featured Insights headers.
 - Use theme-aware accent colors for Process Story Trinity numbers and SVG icons; only numbered markers inherit the monospace font token.
+- Replace MOQ Lead Times' fixed facts with one or two editable info columns containing repeatable row titles and labels, plus the shared optional CTA group. Existing CMS content requires migration from `moq`, `leadTimes`, and `cta` to `infoColumns` and `ctas`.
+- Size MOQ headings one visual level below their semantic level and use the theme accent for MOQ and Product Hero checklist icons.
 
 ### Fixed
 
@@ -36,6 +40,9 @@
 - Align Solution List's direct callout with the list inside one content container, add a dedicated larger callout separation, and use the theme accent for item accent headings.
 - Cap the Case Studies intro at 60ch; use theme-aware descriptions, mixed-case medium labels, hanging/inline accent quotation marks, and tighter semibold-name/regular-role attribution. Avoid duplicated outer quote marks in authored text.
 - Forward the published-content resolver into Product Options CTA groups so valid internal links no longer exclude their containing page from a static build.
+- Resolve Battery Models, Steps Stage, and MOQ content-target CTAs through the shared structural adapter instead of dropping internal-link buttons.
+- Separate Steps Stage items with internal borders only; align flightpath arrow, line, and endpoint on one centerline.
+- Remove Case Studies quote indentation, inherit the mono font token, and use zero author row gap. Allow hanging quotation marks past the carousel clipping edge without horizontal page overflow.
 - Correct the Product Hero Allentown design reference to [Hero Section - Battery Packs](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538028&t=OtYEVTRRdAJJYQ0v-11); content fields and rendering are unchanged.
 
 ## 26.10.2-beta.25 — 2026-10-23

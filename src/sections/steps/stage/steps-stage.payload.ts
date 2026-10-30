@@ -1,6 +1,7 @@
-// @generated structural section — source manifest remains the contract.
 import type { Block, CollectionSlug } from 'payload'
-import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
+import { createManifestBlock } from '../../../shared/manifest-block.js'
+import { structuralSectionToProps } from '../../../shared/structural-props.js'
+import type { PayloadAdapterOptions } from '../../../shared/payload.js'
 import type { BetaStepsStageContent, PayloadBetaStepsStageDocument } from './steps-stage.types.js'
 
 const manifest = {
@@ -43,6 +44,23 @@ const manifest = {
         }
       }
     },
+    "introCtaGroup": {
+      "kind": "component",
+      "componentId": "components/cta-group/allentown",
+      "required": false,
+      "localized": true,
+      "description": "Optional actions below the introduction.",
+      "fields": {
+        "buttons": {
+          "kind": "ctaGroup",
+          "required": false,
+          "localized": true,
+          "minItems": 0,
+          "maxItems": 2,
+          "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
+        }
+      }
+    },
     "media": {
       "kind": "media",
       "required": false,
@@ -77,9 +95,26 @@ const manifest = {
               "localized": true,
               "minItems": 0,
               "maxItems": 2,
-              "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary or Clear."
+              "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
             }
           }
+        }
+      }
+    },
+    "listCtaGroup": {
+      "kind": "component",
+      "componentId": "components/cta-group/allentown",
+      "required": false,
+      "localized": true,
+      "description": "Optional actions below the steps.",
+      "fields": {
+        "buttons": {
+          "kind": "ctaGroup",
+          "required": false,
+          "localized": true,
+          "minItems": 0,
+          "maxItems": 2,
+          "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
         }
       }
     }
@@ -92,6 +127,6 @@ export function createBetaStepsStageBlock(options: CreateBetaStepsStageBlockOpti
   return createManifestBlock(manifest, options)
 }
 
-export function betaStepsStageToProps(data: PayloadBetaStepsStageDocument): BetaStepsStageContent {
-  return manifestToProps(data)
+export function betaStepsStageToProps(data: PayloadBetaStepsStageDocument, options: PayloadAdapterOptions = {}): BetaStepsStageContent {
+  return structuralSectionToProps(data, options)
 }

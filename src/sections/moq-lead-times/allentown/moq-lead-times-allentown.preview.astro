@@ -8,14 +8,21 @@ import MoqLeadTimesAllentown from './moq-lead-times-allentown.astro'
     heading: 'Supply that scales with your program',
     description: 'We match your production schedule, from first order to full-scale.',
   }}
-  cta={{ cta: { label: 'Book a call', href: '#', icon: 'arrow-right' } }}
-  moq={{
-    title: 'Minimum quantity',
-    description: 'Per order',
-    value: { text: 'From €50,000' },
-  }}
-  leadTimes={[
-    { title: 'Sample', description: 'Sample delivery window', value: { text: 'Ask our team' } },
-    { title: 'Production', description: 'Production delivery window', value: { text: 'Around your schedule' } },
+  ctas={[
+    { label: 'Plan your rollout', href: '#', icon: 'arrow-right', style: 'primary' },
+    { label: 'View technical guide', href: '#', icon: 'download', style: 'clear' },
+  ]}
+  infoColumns={[
+    {
+      title: 'Supply parameters',
+      rows: [{ title: 'Order window', value: { text: 'Program review' } }],
+    },
+    {
+      title: 'Planning horizon',
+      rows: [
+        { title: 'Prototype run', value: { text: '6–8 weeks' } },
+        { title: 'Production slot', value: { text: 'Scheduled jointly' } },
+      ],
+    },
   ]}
 />

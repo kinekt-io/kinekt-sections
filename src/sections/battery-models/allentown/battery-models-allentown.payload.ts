@@ -1,6 +1,7 @@
-// @generated structural section — source manifest remains the contract.
 import type { Block, CollectionSlug } from 'payload'
-import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
+import { createManifestBlock } from '../../../shared/manifest-block.js'
+import { structuralSectionToProps } from '../../../shared/structural-props.js'
+import type { PayloadAdapterOptions } from '../../../shared/payload.js'
 import type { BetaBatteryModelsAllentownContent, PayloadBetaBatteryModelsAllentownDocument } from './battery-models-allentown.types.js'
 
 const manifest = {
@@ -170,6 +171,6 @@ export function createBetaBatteryModelsAllentownBlock(options: CreateBetaBattery
   return createManifestBlock(manifest, options)
 }
 
-export function betaBatteryModelsAllentownToProps(data: PayloadBetaBatteryModelsAllentownDocument): BetaBatteryModelsAllentownContent {
-  return manifestToProps(data)
+export function betaBatteryModelsAllentownToProps(data: PayloadBetaBatteryModelsAllentownDocument, options: PayloadAdapterOptions = {}): BetaBatteryModelsAllentownContent {
+  return structuralSectionToProps(data, options)
 }

@@ -1,5 +1,5 @@
 import type { Block, CollectionSlug, Field } from 'payload'
-import { ctaFields, isSharpSolidIconNameOrEmpty, sectionIntroFields } from '../../../shared/payload-fields.js'
+import { ctaFields, ctaStyleField, isSharpSolidIconNameOrEmpty, sectionIntroFields } from '../../../shared/payload-fields.js'
 import { ctaToProps, ctaGroupToProps, mediaToProps, optionalCtaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BatteryModelsTrinityContent, BatteryRatingTrinity, PayloadBatteryModelsTrinityDocument } from './battery-models-trinity.types.js'
@@ -21,20 +21,10 @@ function ctaGroupFields(targetCollections: CollectionSlug[]): Field[] {
       maxRows: 2,
       admin: {
         initCollapsed: true,
-        description: 'Add zero, one or two actions. Set each action to Primary, Secondary or Clear.',
+        description: 'Add zero, one or two actions. Set each action to Primary, Secondary, Clear or Clear base.',
       },
       fields: [
-        {
-          name: 'style',
-          type: 'select',
-          required: true,
-          defaultValue: 'primary',
-          options: [
-            { label: 'Primary', value: 'primary' },
-            { label: 'Secondary', value: 'secondary' },
-            { label: 'Clear', value: 'clear' },
-          ],
-        },
+        ctaStyleField(),
         ...ctaFields(targetCollections),
       ],
     },

@@ -1,4 +1,5 @@
 import { renderRichText } from './rich-text.js'
+import { isCtaStyle } from './content.js'
 import { isObjectRecord } from './type-guards.js'
 import { optionalCtaToProps, mediaToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from './payload.js'
 
@@ -14,7 +15,7 @@ function adaptValue(value: unknown, field: string, options: PayloadAdapterOption
     const cta = optionalCtaToProps(value, field, options)
     if (!cta) return undefined
     const style = value.style
-    return style === 'primary' || style === 'secondary' || style === 'clear' ? { ...cta, style } : cta
+    return isCtaStyle(style) ? { ...cta, style } : cta
   }
   if (isMedia(value)) return mediaToProps(value, field, options)
   if (isRichText(value)) return renderRichText(value, field)

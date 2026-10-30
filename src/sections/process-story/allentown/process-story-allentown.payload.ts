@@ -57,7 +57,7 @@ const manifest = {
           "localized": true,
           "minItems": 0,
           "maxItems": 2,
-          "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary or Clear."
+          "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
         }
       }
     },
@@ -101,7 +101,7 @@ const manifest = {
               "localized": true,
               "minItems": 0,
               "maxItems": 2,
-              "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary or Clear."
+              "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
             }
           }
         }
@@ -120,7 +120,7 @@ const manifest = {
           "localized": true,
           "minItems": 0,
           "maxItems": 2,
-          "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary or Clear."
+          "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
         }
       }
     }

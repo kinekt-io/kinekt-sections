@@ -1,5 +1,7 @@
 export type CtaIcon = string
-export type CtaStyle = 'primary' | 'secondary' | 'clear'
+export const ctaStyles = ['primary', 'secondary', 'clear', 'clear-base'] as const
+export type CtaStyle = (typeof ctaStyles)[number]
+export const isCtaStyle = (value: unknown): value is CtaStyle => typeof value === 'string' && ctaStyles.includes(value as CtaStyle)
 export interface Cta { label: string; href: string; icon?: CtaIcon; style?: CtaStyle }
 export interface CtaGroup { buttons?: Cta[]; primary?: Cta | null; secondary?: Cta | null }
 
