@@ -1,12 +1,15 @@
 ---
+import Button from '../../../controls/button/allentown/button-allentown.astro'
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
-import type { RichText } from '../../../shared/content.js'
+import { ctaGroupActions, type Cta, type CtaGroup, type RichText } from '../../../shared/content.js'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 
 export interface ProcessItemContent {
   label: string
   title: string
   description: string | RichText
+  ctaGroup?: CtaGroup | { primaryButton?: Cta | null; secondaryButton?: Cta | null } | null
 }
 
 interface Props {
@@ -16,6 +19,7 @@ interface Props {
 }
 
 const { item, headingLevel = 'h3', class: className } = Astro.props
+const actions = ctaGroupActions(item.ctaGroup)
 const Heading = headingLevel
 const classes = ['process-item-allentown', className].filter(Boolean).join(' ')
 const descriptionHtml = typeof item.description === 'string'
@@ -31,11 +35,20 @@ const descriptionHtml = typeof item.description === 'string'
       <div class="process-item-allentown__description" set:html={descriptionHtml} />
     </div>
   )}
+  {actions.length > 0 && (
+    <div class="process-item-allentown__actions">
+      {actions.map((action) => {
+        const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
+        return <Button href={action.href} label={action.label} style={action.style ?? 'primary'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
+      })}
+    </div>
+  )}
 </div>
 <style is:global>
   :where(.process-item-allentown) {
     --kiw--process-item-allentown-gap: var(--space-xl);
     --kiw--process-item-allentown-copy-gap: var(--space-xs);
+    --kiw--process-item-allentown-actions-gap: var(--space-l);
     --kiw--process-item-allentown-title-size: var(--h4);
     --kiw--process-item-allentown-title-color: var(--kinekt-component-ink, currentColor);
     --kiw--process-item-allentown-description-size: var(--text-l);
@@ -49,4 +62,6 @@ const descriptionHtml = typeof item.description === 'string'
   .process-item-allentown .process-item-allentown__description { margin: 0; color: var(--kiw--process-item-allentown-description-color); font-size: var(--kiw--process-item-allentown-description-size); line-height: var(--kiw--process-item-allentown-description-line-height); white-space: pre-line; }
   .process-item-allentown .process-item-allentown__description > * { margin-block: 0; }
   .process-item-allentown .process-item-allentown__description > * + * { margin-block-start: var(--space-xs); }
+
+  .process-item-allentown .process-item-allentown__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--kiw--process-item-allentown-actions-gap); }
 </style>

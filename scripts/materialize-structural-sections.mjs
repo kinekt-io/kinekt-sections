@@ -393,6 +393,7 @@ for (const directory of await manifestDirectories(sections)) {
   const base = manifest.slug
   const structuralAdapter = new Set([
     'solution-list-allentown',
+    'process-story-allentown',
     'process-story-trinity',
     'comparison-overview-allentown',
     'density-comparison-allentown',

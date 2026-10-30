@@ -7,6 +7,7 @@
 - Add prerelease Battery Models Trinity with reusable model cards, editable one-to-five ratings, webshop/specification links, and an optional Callout.
 - Add prerelease Streamer Allentown with the standard Intro and optional zero-to-two CTA Group.
 - Add optional localized results headings to Case Studies slides and editable Problem Solution animation labels; empty labels render no text.
+- Add optional zero-to-two CTA groups below the Process Story Allentown intro, below its item list, and within each item; resolve Content-or-URL targets through the shared adapter.
 
 ### Changed
 
@@ -15,6 +16,7 @@
 - Require a build-only Pro Package Token for dependency installation; keep icon fonts and credentials out of browser output.
 - Use rich-text description fields throughout sections and reusable content blocks, preserving paragraph, list, emphasis, and safe link formatting in Astro.
 - Use shared capped flightpaths for Case Studies and both Featured Insights headers.
+- Use theme-aware accent colors for Process Story Trinity numbers and SVG icons; only numbered markers inherit the monospace font token.
 
 ### Fixed
 
@@ -24,6 +26,8 @@
 - Accept empty optional Case Studies results and quotes without an author name. Author role and avatar require a name, and author details require quote text.
 - Validate partial CTA and quote input before publication while allowing incomplete drafts. Keep empty CTA groups optional, normalize numeric content IDs, and accept an unset CTA icon.
 - Omit incomplete optional CTAs during frontend conversion, including nested callouts, without dropping their section or page. Keep publish-time validation, required CTA validation and URL safety checks intact.
+- Synchronize Process Story Trinity progression with its six-second linear timer fill. Hover and offscreen pauses preserve elapsed progress; clicking stops autoplay and fills the selected timer.
+- Expose Steps Stage item descriptions as native Payload rich text instead of textareas, matching the existing rich-text renderer and stored editor data.
 - Correct the Product Hero Allentown design reference to [Hero Section - Battery Packs](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538028&t=OtYEVTRRdAJJYQ0v-11); content fields and rendering are unchanged.
 
 ## 26.10.2-beta.25 — 2026-10-23

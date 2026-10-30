@@ -3,6 +3,7 @@ import test from 'node:test'
 import { ctaGroupToProps, ctaToProps } from '../dist/shared/payload.js'
 import { ctaFields } from '../dist/shared/payload-fields.js'
 import { structuralSectionToProps } from '../dist/shared/structural-props.js'
+import { betaProcessStoryAllentownToProps } from '../dist/sections/process-story/allentown/process-story-allentown.payload.js'
 
 function ctaField(name) {
   const field = ctaFields(['pages', 'articles']).find((candidate) => candidate.name === name)
@@ -115,6 +116,61 @@ test('recursive section conversion preserves content around incomplete nested CT
   assert.equal(result.items[0].ctaGroup.secondaryButton, undefined)
   assert.equal(result.items[1].heading, 'Build together')
   assert.equal(result.items[1].ctaGroup.secondaryButton, undefined)
+})
+
+test('Process Story Allentown resolves CTA targets, styles and icons while dropping incomplete groups', () => {
+  const contentHrefCalls = []
+  const result = betaProcessStoryAllentownToProps({
+    theme: 'light',
+    intro: { heading: 'A controlled process' },
+    introCtaGroup: [
+      {
+        label: 'Discuss your requirements',
+        destinationType: 'content',
+        page: { relationTo: 'pages', value: 7 },
+        style: 'primary',
+        icon: 'arrow-right',
+      },
+    ],
+    items: [
+      {
+        label: 'Select',
+        title: 'Choose the right cell technology',
+        description: 'Reliable components support a repeatable battery platform.',
+        ctaGroup: [
+          { label: 'View selection criteria', destinationType: 'url', href: '/technology', style: 'secondary', icon: 'bolt' },
+          { label: '', destinationType: 'url', href: '/contact', style: 'clear' },
+        ],
+      },
+      {
+        label: 'Validate',
+        title: 'Test before deployment',
+        description: 'Validation evidence confirms the battery will perform in the field.',
+        ctaGroup: [{ label: '', destinationType: 'url', href: '/contact', style: 'primary' }],
+      },
+    ],
+    listCtaGroup: [
+      {
+        label: 'Start an engineering conversation',
+        destinationType: 'content',
+        page: { relationTo: 'articles', value: 42 },
+        style: 'clear',
+        icon: 'arrow-right',
+      },
+      { label: '', destinationType: 'url', href: '/contact', style: 'primary' },
+    ],
+  }, {
+    contentHref: (collection, id) => {
+      contentHrefCalls.push([collection, id])
+      return `/${collection}/${id}`
+    },
+  })
+
+  assert.deepEqual(result.introCtaGroup, [{ label: 'Discuss your requirements', href: '/pages/7', style: 'primary', icon: 'arrow-right' }])
+  assert.deepEqual(result.items[0].ctaGroup, [{ label: 'View selection criteria', href: '/technology', style: 'secondary', icon: 'bolt' }])
+  assert.deepEqual(result.items[1].ctaGroup, [])
+  assert.deepEqual(result.listCtaGroup, [{ label: 'Start an engineering conversation', href: '/articles/42', style: 'clear', icon: 'arrow-right' }])
+  assert.deepEqual(contentHrefCalls, [['pages', '7'], ['articles', '42']])
 })
 
 test('optional CTA handling does not weaken required CTA or URL safety validation', () => {

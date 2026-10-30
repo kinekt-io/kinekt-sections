@@ -1,25 +1,29 @@
 ---
 import '../../../styles/wireframe-tokens.css'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
 import ProcessItem, { type ProcessItemContent } from '../../../components/process-item/allentown/process-item-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { Media, RichText, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-import type { BetaTheme } from '../../../shared/payload.js'
+import { ctaGroupActions, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
+import type { BetaTheme } from '../../../shared/payload.js'
 import type { BetaProcessStoryAllentownContent } from './process-story-allentown.types.js'
 
 // The generated contract type is still `Record<string, unknown>`; these are the fields the renderer reads.
 interface Props extends BetaProcessStoryAllentownContent {
+  id?: string
   theme?: BetaTheme
   intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | null }
+  introCtaGroup?: CtaGroup | null
   image?: Media | null
   items: ProcessItemContent[]
-  id?: string
+  listCtaGroup?: CtaGroup | null
   headingLevel?: 'h1' | 'h2' | 'h3'
   mediaLoading?: 'eager' | 'lazy'
 }
 
-const { id, theme = 'light', intro, image, items = [], headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
+const { id, theme = 'light', intro, introCtaGroup, image, items = [], listCtaGroup, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 const itemHeadingLevel = ({ h1: 'h2', h2: 'h3', h3: 'h4' } as const)[headingLevel] ?? 'h3'
 const introDescription = intro.description == null || typeof intro.description === 'string'
   ? intro.description ?? undefined
@@ -27,24 +31,46 @@ const introDescription = intro.description == null || typeof intro.description =
 const introContent: SectionIntroContent = { ...intro, description: introDescription }
 const hasMedia = Boolean(image && typeof image === 'object' && typeof image.url === 'string')
 const visibleItems = items.filter((item) => (typeof item?.label === 'string' && item.label !== '') || (typeof item?.title === 'string' && item.title !== ''))
+const introActions = ctaGroupActions(introCtaGroup)
+const listActions = ctaGroupActions(listCtaGroup)
 const classes = ['process-story-allentown', hasMedia && 'process-story-allentown--with-media'].filter(Boolean).join(' ')
 ---
 <section class={classes} id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="process-story-allentown__container">
     <header class="process-story-allentown__intro">
       <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
+      {introActions.length > 0 && (
+        <nav class="process-story-allentown__actions process-story-allentown__intro-actions" aria-label="Introduction actions">
+          {introActions.map((action) => {
+            const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
+            return <Button href={action.href} label={action.label} style={action.style ?? 'primary'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
+          })}
+        </nav>
+      )}
     </header>
 
     <div class="process-story-allentown__content">
       {hasMedia && image && <KinektMedia media={image} class="process-story-allentown__media" imageClass="process-story-allentown__image" loading={mediaLoading} />}
-      {visibleItems.length > 0 && (
-        <ul class="process-story-allentown__items">
-          {visibleItems.map((item) => (
-            <li class="process-story-allentown__item">
-              <ProcessItem item={item} headingLevel={itemHeadingLevel} />
-            </li>
-          ))}
-        </ul>
+      {(visibleItems.length > 0 || listActions.length > 0) && (
+        <div class="process-story-allentown__list-column">
+          {visibleItems.length > 0 && (
+            <ul class="process-story-allentown__items">
+              {visibleItems.map((item) => (
+                <li class="process-story-allentown__item">
+                  <ProcessItem item={item} headingLevel={itemHeadingLevel} />
+                </li>
+              ))}
+            </ul>
+          )}
+          {listActions.length > 0 && (
+            <nav class="process-story-allentown__actions process-story-allentown__list-actions" aria-label="Process story actions">
+              {listActions.map((action) => {
+                const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
+                return <Button href={action.href} label={action.label} style={action.style ?? 'primary'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
+              })}
+            </nav>
+          )}
+        </div>
       )}
     </div>
   </div>
@@ -125,11 +151,13 @@ const classes = ['process-story-allentown', hasMedia && 'process-story-allentown
     --kiw--process-story-description-font-size: var(--text-l);
     --kiw--process-story-media-ratio: 4 / 5;
     --kiw--process-story-item-gap: var(--section-space-m);
+    --kiw--process-story-actions-gap: var(--kiw--section-actions-gap);
+    --kiw--process-story-actions-margin: var(--kiw--section-actions-margin);
     --kinekt-section-content-width: var(--kiw--process-story-container-width);
     --kinekt-section-gap: var(--kiw--process-story-stack-gap);
   }
 
-  .process-story-allentown .process-story-allentown__intro { min-width: 0; }
+  .process-story-allentown .process-story-allentown__intro { display: grid; justify-items: start; gap: var(--kiw--process-story-actions-margin); min-width: 0; }
   .process-story-allentown .section-intro { display: grid; justify-items: start; gap: var(--kiw--process-story-intro-gap); }
   .process-story-allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
   .process-story-allentown .section-intro__heading-group { display: grid; gap: var(--kiw--process-story-heading-stack-gap); }
@@ -140,8 +168,10 @@ const classes = ['process-story-allentown', hasMedia && 'process-story-allentown
   .process-story-allentown .process-story-allentown__content { display: grid; gap: var(--kiw--process-story-stack-gap); min-width: 0; }
   .process-story-allentown .process-story-allentown__media { display: block; min-width: 0; }
   .process-story-allentown .process-story-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; block-size: auto; aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--process-story-media-ratio)); object-fit: cover; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+  .process-story-allentown .process-story-allentown__list-column { display: grid; align-content: start; gap: var(--kiw--process-story-actions-margin); min-width: 0; }
   .process-story-allentown .process-story-allentown__items { display: grid; gap: var(--kiw--process-story-item-gap); min-width: 0; margin: 0; padding: 0; list-style: none; }
   .process-story-allentown .process-story-allentown__item { min-width: 0; }
+  .process-story-allentown .process-story-allentown__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--kiw--process-story-actions-gap); }
 
   @media (min-width: 50rem) {
     .process-story-allentown[data-kinekt-section] > .process-story-allentown__container { align-items: start; }

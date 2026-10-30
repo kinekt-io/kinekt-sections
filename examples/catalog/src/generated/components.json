@@ -783,7 +783,7 @@
     "role": "process-item",
     "variation": "allentown",
     "title": "Process Item Allentown",
-    "description": "A reusable process-story item with label, title and description.",
+    "description": "A reusable process-story item with label, title, description and optional actions.",
     "status": "planned",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4779-130248&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -802,6 +802,13 @@
         "kind": "richText",
         "required": true,
         "localized": true
+      },
+      "ctaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": false,
+        "localized": true,
+        "description": "Optional primary, secondary or clear actions below this process item."
       }
     },
     "runtimeProps": {},
@@ -951,7 +958,7 @@
         "localized": true
       },
       "description": {
-        "kind": "textarea",
+        "kind": "richText",
         "required": true,
         "localized": true
       },
@@ -3708,7 +3715,7 @@
     "role": "process-story",
     "variation": "allentown",
     "title": "Process Story Allentown",
-    "description": "A reusable process-story section with optional media and labelled narrative items.",
+    "description": "A reusable process-story section with optional media, labelled narrative items and optional action groups.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4779-129512&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -3731,6 +3738,13 @@
         "required": true,
         "localized": true
       },
+      "introCtaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": false,
+        "localized": true,
+        "description": "Optional primary, secondary or clear actions below the introduction."
+      },
       "image": {
         "kind": "media",
         "required": false,
@@ -3742,6 +3756,13 @@
         "required": true,
         "localized": true,
         "minItems": 1
+      },
+      "listCtaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": false,
+        "localized": true,
+        "description": "Optional primary, secondary or clear actions below the process item list."
       }
     },
     "runtimeProps": {

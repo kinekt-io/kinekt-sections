@@ -64,8 +64,6 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
 </section>
 
 <script>
-  const duration = 6000
-
   function initialise(root: HTMLElement) {
     if (root.dataset.processStoryInitialised) return
     root.dataset.processStoryInitialised = 'true'
@@ -76,7 +74,6 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     const disclosures = steps.map((step) => step.querySelector<HTMLDetailsElement>('[data-process-story-disclosure]')!)
     const triggers = steps.map((step) => step.querySelector<HTMLElement>('[data-process-story-trigger]')!)
     let activeIndex = 0
-    let timer: number | undefined
     let pausedByPointer = false
     let outsideViewport = true
     let stoppedByClick = false
@@ -85,10 +82,6 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
       root.dataset.processStoryTimerState = state
     }
 
-    const clearTimer = () => {
-      if (timer !== undefined) window.clearTimeout(timer)
-      timer = undefined
-    }
 
     const show = (index: number) => {
       activeIndex = index
@@ -99,39 +92,36 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
       })
     }
 
-    const schedule = () => {
-      clearTimer()
-      if (stoppedByClick || pausedByPointer || outsideViewport) {
-        setTimerState('paused')
-        return
-      }
-      setTimerState('running')
-      timer = window.setTimeout(() => {
-        show((activeIndex + 1) % steps.length)
-        schedule()
-      }, duration)
+    const syncTimerState = () => {
+      setTimerState(stoppedByClick || pausedByPointer || outsideViewport ? 'paused' : 'running')
     }
+
+    root.addEventListener('animationend', (event) => {
+      if (stoppedByClick || event.animationName !== 'process-story-trinity-timer') return
+      if (event.target !== steps[activeIndex].querySelector('.process-story-trinity__timer > span')) return
+      show((activeIndex + 1) % steps.length)
+    })
 
     show(0)
     root.addEventListener('pointerenter', () => {
       pausedByPointer = true
-      schedule()
+      syncTimerState()
     })
     root.addEventListener('pointerleave', () => {
       pausedByPointer = false
-      schedule()
+      syncTimerState()
     })
     triggers.forEach((trigger, index) => trigger.addEventListener('click', (event) => {
       event.preventDefault()
       stoppedByClick = true
       root.dataset.processStoryStopped = 'true'
       show(index)
-      schedule()
+      syncTimerState()
     }))
 
     const observer = new IntersectionObserver(([entry]) => {
       outsideViewport = !entry.isIntersecting
-      schedule()
+      syncTimerState()
     }, { threshold: 0.2 })
     observer.observe(root)
   }
@@ -216,12 +206,13 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
   :where(.process-story-trinity) {
     --kiw--process-story-trinity-step-gap: var(--space-s);
     --kiw--process-story-trinity-step-padding: var(--space-l);
-    --kiw--process-story-trinity-duration: var(--motion-duration);
+    --kiw--process-story-trinity-duration: 6s;
     --kiw--process-story-trinity-container-gap: var(--section-space-m);
     --kiw--process-story-trinity-intro-width: var(--width-l);
     --kiw--process-story-trinity-trigger-gap: var(--space-m);
     --kiw--process-story-trinity-ink-color: var(--kinekt-component-ink);
     --kiw--process-story-trinity-muted-color: var(--kinekt-component-muted);
+    --kiw--process-story-trinity-marker-color: var(--kinekt-component-accent);
     --kiw--process-story-trinity-mono-font: var(--kinekt-component-mono);
     --kiw--process-story-trinity-heading-size: var(--h4);
     --kiw--process-story-trinity-heading-weight: var(--heading-font-weight);
@@ -233,7 +224,6 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     --kiw--process-story-trinity-actions-space: var(--space-l);
     --kiw--process-story-trinity-border-width: var(--border-width);
     --kiw--process-story-trinity-line-color: var(--kinekt-component-line);
-    --kiw--process-story-trinity-motion-easing: var(--motion-easing);
     --kiw--process-story-trinity-column-gap: var(--section-space-xl);
   }
 
@@ -251,7 +241,8 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     & .process-story-trinity__trigger::marker { display: none; content: none; }
     & .process-story-trinity__trigger::-webkit-details-marker { display: none; }
     & .process-story-trinity__trigger::after { display: none; content: none; }
-    & .process-story-trinity__number { color: var(--kiw--process-story-trinity-muted-color); font-family: var(--kiw--process-story-trinity-mono-font); font-size: var(--kiw--process-story-trinity-heading-size); font-weight: var(--kiw--process-story-trinity-heading-weight); letter-spacing: var(--kiw--process-story-trinity-heading-letter-spacing); line-height: var(--kiw--process-story-trinity-heading-line-height); }
+    & .process-story-trinity__number { color: var(--kiw--process-story-trinity-marker-color); font-size: var(--kiw--process-story-trinity-heading-size); font-weight: var(--kiw--process-story-trinity-heading-weight); letter-spacing: var(--kiw--process-story-trinity-heading-letter-spacing); line-height: var(--kiw--process-story-trinity-heading-line-height); }
+    & .process-story-trinity__marker-number { font-family: var(--kiw--process-story-trinity-mono-font); }
     & .process-story-trinity__marker-icon { display: none; width: 1em; height: 1em; fill: currentColor; overflow: visible; }
     & [data-process-story-item-marker='icon'] .process-story-trinity__marker-number { display: none; }
     & [data-process-story-item-marker='icon'] .process-story-trinity__marker-icon { display: block; }
@@ -266,10 +257,10 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     & .process-story-trinity__description :last-child { margin-bottom: 0; }
     & .process-story-trinity__cta-group { display: flex; flex-wrap: wrap; gap: var(--kiw--process-story-trinity-actions-gap); margin-top: var(--kiw--process-story-trinity-actions-space); }
     & .process-story-trinity__timer { position: absolute; inset-block: var(--process-story-trinity-step-padding); inset-inline-start: 0; display: block; inline-size: var(--kiw--process-story-trinity-border-width); overflow: hidden; background: var(--kiw--process-story-trinity-line-color); }
-    & .process-story-trinity__timer > span { display: block; width: 100%; height: 0; background: var(--kiw--process-story-trinity-ink-color); }
-    & [data-process-story-active] .process-story-trinity__timer > span { animation: process-story-trinity-timer var(--process-story-trinity-duration) var(--kiw--process-story-trinity-motion-easing) both; animation-play-state: paused; }
+    & .process-story-trinity__timer > span { display: block; width: 100%; height: 100%; transform: scaleY(0); transform-origin: top; background: var(--kiw--process-story-trinity-marker-color); }
+    & [data-process-story-active] .process-story-trinity__timer > span { animation: process-story-trinity-timer var(--process-story-trinity-duration) linear both; animation-play-state: paused; }
     &[data-process-story-timer-state='running'] [data-process-story-active] .process-story-trinity__timer > span { animation-play-state: running; }
-    &[data-process-story-stopped='true'] [data-process-story-active] .process-story-trinity__timer > span { height: 100%; animation: none; }
+    &[data-process-story-stopped='true'] [data-process-story-active] .process-story-trinity__timer > span { transform: scaleY(1); animation: none; }
 
     @media (max-width: 49.999rem) {
       & .process-story-trinity__intro,
@@ -282,7 +273,7 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     }
   }
 
-  @keyframes process-story-trinity-timer { to { height: 100%; } }
+  @keyframes process-story-trinity-timer { to { transform: scaleY(1); } }
 
   @media (prefers-reduced-motion: reduce) {
     .process-story-trinity .process-story-trinity__timer { display: none; }

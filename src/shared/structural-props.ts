@@ -6,11 +6,16 @@ const isMedia = (value: Record<string, unknown>): boolean => 'url' in value && '
 const isRichText = (value: Record<string, unknown>): boolean => 'root' in value
 
 function adaptValue(value: unknown, field: string, options: PayloadAdapterOptions): unknown {
-  if (Array.isArray(value)) return value.map((item, index) => adaptValue(item, `${field}[${index}]`, options))
+  if (Array.isArray(value)) return value.map((item, index) => adaptValue(item, `${field}[${index}]`, options)).filter((item) => item !== undefined)
   if (!isObjectRecord(value)) return value
   const entries = Object.entries(value)
   if (entries.length === 1 && entries[0][0] === 'value') return adaptValue(entries[0][1], `${field}.value`, options)
-  if ('destinationType' in value || ('label' in value && ('href' in value || 'page' in value))) return optionalCtaToProps(value, field, options)
+  if ('destinationType' in value || ('label' in value && ('href' in value || 'page' in value))) {
+    const cta = optionalCtaToProps(value, field, options)
+    if (!cta) return undefined
+    const style = value.style
+    return style === 'primary' || style === 'secondary' || style === 'clear' ? { ...cta, style } : cta
+  }
   if (isMedia(value)) return mediaToProps(value, field, options)
   if (isRichText(value)) return renderRichText(value, field)
   return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, adaptValue(item, `${field}.${key}`, options)]))

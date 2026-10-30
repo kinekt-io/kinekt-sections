@@ -1,6 +1,7 @@
-// @generated structural section — source manifest remains the contract.
 import type { Block, CollectionSlug } from 'payload'
-import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
+import { createManifestBlock } from '../../../shared/manifest-block.js'
+import { structuralSectionToProps } from '../../../shared/structural-props.js'
+import type { PayloadAdapterOptions } from '../../../shared/payload.js'
 import type { BetaProcessStoryAllentownContent, PayloadBetaProcessStoryAllentownDocument } from './process-story-allentown.types.js'
 
 const manifest = {
@@ -43,6 +44,23 @@ const manifest = {
         }
       }
     },
+    "introCtaGroup": {
+      "kind": "component",
+      "componentId": "components/cta-group/allentown",
+      "required": false,
+      "localized": true,
+      "description": "Optional primary, secondary or clear actions below the introduction.",
+      "fields": {
+        "buttons": {
+          "kind": "ctaGroup",
+          "required": false,
+          "localized": true,
+          "minItems": 0,
+          "maxItems": 2,
+          "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary or Clear."
+        }
+      }
+    },
     "image": {
       "kind": "media",
       "required": false,
@@ -69,6 +87,40 @@ const manifest = {
           "kind": "richText",
           "required": true,
           "localized": true
+        },
+        "ctaGroup": {
+          "kind": "component",
+          "componentId": "components/cta-group/allentown",
+          "required": false,
+          "localized": true,
+          "description": "Optional primary, secondary or clear actions below this process item.",
+          "fields": {
+            "buttons": {
+              "kind": "ctaGroup",
+              "required": false,
+              "localized": true,
+              "minItems": 0,
+              "maxItems": 2,
+              "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary or Clear."
+            }
+          }
+        }
+      }
+    },
+    "listCtaGroup": {
+      "kind": "component",
+      "componentId": "components/cta-group/allentown",
+      "required": false,
+      "localized": true,
+      "description": "Optional primary, secondary or clear actions below the process item list.",
+      "fields": {
+        "buttons": {
+          "kind": "ctaGroup",
+          "required": false,
+          "localized": true,
+          "minItems": 0,
+          "maxItems": 2,
+          "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary or Clear."
         }
       }
     }
@@ -81,6 +133,6 @@ export function createBetaProcessStoryAllentownBlock(options: CreateBetaProcessS
   return createManifestBlock(manifest, options)
 }
 
-export function betaProcessStoryAllentownToProps(data: PayloadBetaProcessStoryAllentownDocument): BetaProcessStoryAllentownContent {
-  return manifestToProps(data)
+export function betaProcessStoryAllentownToProps(data: PayloadBetaProcessStoryAllentownDocument, options: PayloadAdapterOptions = {}): BetaProcessStoryAllentownContent {
+  return structuralSectionToProps(data, options)
 }

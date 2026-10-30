@@ -1,8 +1,9 @@
 ---
 import ProcessStory from './process-story-allentown.astro'
+import type { ComponentProps } from 'astro/types'
 const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
 
-const content = {
+const content: ComponentProps<typeof ProcessStory> = {
   theme: 'light' as const,
   intro: {
     accentHeading: '/ How we build your battery',
@@ -10,6 +11,12 @@ const content = {
     description: {
       html: '<p>From cell selection to series production, every Tulip battery follows the same controlled process. Each step is engineered, tested and documented, so the pack that reaches your platform performs as specified.</p>',
     },
+  },
+  introCtaGroup: {
+    buttons: [
+      { label: 'Discuss your requirements', href: '/contact', style: 'primary', icon: 'arrow-right' },
+      { label: 'Explore our approach', href: '/approach', style: 'clear' },
+    ],
   },
   image: {
     url: placeholder('placeholder-800x1000.svg'),
@@ -22,6 +29,9 @@ const content = {
       label: 'Select',
       title: 'Choose the right cell technology',
       description: 'Selected suppliers provide reliable access to critical components while supporting quality, availability and long-term continuity.',
+      ctaGroup: {
+        buttons: [{ label: 'View cell selection criteria', href: '/technology', style: 'secondary', icon: 'arrow-right' }],
+      },
     },
     {
       label: 'Engineer',
@@ -34,6 +44,12 @@ const content = {
       description: 'Validate electrical, thermal and mechanical performance before the battery reaches the field.',
     },
   ],
+  listCtaGroup: {
+    buttons: [
+      { label: 'Start an engineering conversation', href: '/contact', style: 'primary', icon: 'arrow-right' },
+      { label: 'Download our capability overview', href: '/insights', style: 'clear' },
+    ],
+  },
 }
 ---
 <ProcessStory {...content} />
