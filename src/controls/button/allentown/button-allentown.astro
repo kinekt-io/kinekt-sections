@@ -17,7 +17,7 @@ const classes = ['button', `button--${style}`, size !== 'm' && `button--${size}`
 <style is:global>
   /* Figma Button (4700:58121), Size=medium: padding S / M, icon gap XS, text-l at line-height 1, icon one step smaller.
      Figma draws no stroke, so the border is taken out of the padding to keep its outer size. */
-  :where([data-kinekt-section], [data-kinekt-structural-section]) .button {
+  .button {
     --kiw--section-button-padding-block: var(--space-s);
     --kiw--section-button-padding-inline: var(--space-m);
     --kiw--button-allentown-font-size: var(--text-l);
@@ -42,18 +42,18 @@ const classes = ['button', `button--${style}`, size !== 'm' && `button--${size}`
   }
 
   /* Figma Size=small and Size=large keep the padding and step the text and icon. */
-  :where([data-kinekt-section], [data-kinekt-structural-section]) .button.button--s {
+  .button.button--s {
     --kiw--button-allentown-font-size: var(--text-m);
     --kiw--button-allentown-icon-size: var(--text-s);
   }
 
-  :where([data-kinekt-section], [data-kinekt-structural-section]) .button.button--l {
+  .button.button--l {
     --kiw--button-allentown-font-size: var(--text-xl);
     --kiw--button-allentown-icon-size: var(--text-l);
   }
 
   /* Figma Type=secondary: a light fill with dark text in every theme. */
-  :where([data-kinekt-section], [data-kinekt-structural-section]) .button.button--secondary {
+  .button.button--secondary {
     --kiw--button-allentown-secondary-background: var(--neutral-light);
     --kiw--button-allentown-secondary-text: var(--primary-ultra-dark);
     border-color: var(--kiw--button-allentown-secondary-background);
@@ -62,7 +62,7 @@ const classes = ['button', `button--${style}`, size !== 'm' && `button--${size}`
   }
 
   /* Figma clear buttons are text only: no border, so the box is the line height (18 px at medium). */
-  :where([data-kinekt-section], [data-kinekt-structural-section]) :is(.button--clear, .button--clear-base) {
+  :is(.button--clear, .button--clear-base) {
     min-height: auto;
     padding: 0;
     border-width: 0;
@@ -70,22 +70,22 @@ const classes = ['button', `button--${style}`, size !== 'm' && `button--${size}`
     background: transparent;
   }
 
-  :where([data-kinekt-section], [data-kinekt-structural-section]) .button > svg[aria-hidden='true'] {
+  .button > svg[aria-hidden='true'] {
     flex: none;
     inline-size: var(--kiw--button-allentown-icon-size);
     block-size: var(--kiw--button-allentown-icon-size);
     color: var(--kinekt-component-action-icon, currentColor);
   }
 
-  :where([data-kinekt-section], [data-kinekt-structural-section]) .button--clear > svg[aria-hidden='true'] {
+  .button--clear > svg[aria-hidden='true'] {
     color: var(--kinekt-component-accent, currentColor);
   }
 
-  :where([data-kinekt-section], [data-kinekt-structural-section]) .button--clear-base > svg[aria-hidden='true'] {
+  .button--clear-base > svg[aria-hidden='true'] {
     color: currentColor;
   }
 
-  :where([data-kinekt-section], [data-kinekt-structural-section]) .button--secondary > svg[aria-hidden='true'] {
+  .button--secondary > svg[aria-hidden='true'] {
     color: var(--kiw--button-allentown-secondary-icon, var(--accent-semi-dark));
   }
 </style>
