@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Added
+
+- Add prerelease Battery Models Trinity with reusable model cards, editable one-to-five ratings, webshop/specification links, and an optional Callout.
+- Add prerelease Streamer Allentown with the standard Intro and optional zero-to-two CTA Group.
+
 ### Fixed
 
 - Render configured arrow-right and arrow-down icons for Case Studies Allentown header and slide CTAs, retaining the current content-target contract and component-owned styles.

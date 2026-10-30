@@ -1,0 +1,78 @@
+import type { Block, CollectionSlug, Field } from 'payload'
+import { ctaFields, sectionIntroFields } from '../../../shared/payload-fields.js'
+import { ctaGroupToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import type { PayloadStreamerAllentownDocument, StreamerAllentownContent } from './streamer-allentown.types.js'
+
+export interface CreateStreamerAllentownBlockOptions {
+  targetCollections?: CollectionSlug[]
+}
+
+function actionFields(targetCollections: CollectionSlug[]): Field[] {
+  return [
+    {
+      name: 'ctas',
+      type: 'array',
+      localized: true,
+      minRows: 0,
+      maxRows: 2,
+      admin: {
+        initCollapsed: true,
+        description: 'Add zero, one or two actions. Set each action to Primary, Secondary or Clear.',
+      },
+      fields: [
+        {
+          name: 'style',
+          type: 'select',
+          required: true,
+          defaultValue: 'primary',
+          options: [
+            { label: 'Primary', value: 'primary' },
+            { label: 'Secondary', value: 'secondary' },
+            { label: 'Clear', value: 'clear' },
+          ],
+        },
+        ...ctaFields(targetCollections),
+      ],
+    },
+  ]
+}
+
+export function createStreamerAllentownBlock({ targetCollections = ['pages'] }: CreateStreamerAllentownBlockOptions = {}): Block {
+  return {
+    slug: 'beta-streamer-allentown',
+    interfaceName: 'StreamerAllentown',
+    labels: {
+      singular: 'PRERELEASE — Streamer Allentown',
+      plural: 'PRERELEASE — Streamer Allentown blocks',
+    },
+    fields: [
+      {
+        name: 'theme',
+        type: 'select',
+        localized: true,
+        required: true,
+        defaultValue: 'semi-light',
+        options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })),
+      },
+      { name: 'intro', type: 'group', localized: true, fields: sectionIntroFields() },
+      ...actionFields(targetCollections),
+    ],
+  }
+}
+
+export function streamerAllentownToProps(data: PayloadStreamerAllentownDocument, options: PayloadAdapterOptions = {}): StreamerAllentownContent {
+  const block = requireObject(data, 'streamerAllentown')
+  const intro = requireObject(block.intro, 'intro')
+  const ctas = ctaGroupToProps(block.ctas, 'ctas', options)
+
+  return {
+    theme: requireTheme(block.theme),
+    intro: {
+      heading: requireText(intro.heading, 'intro.heading'),
+      ...(optionalText(intro.accentHeading, 'intro.accentHeading') ? { accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading') } : {}),
+      ...(intro.description ? { description: { html: richTextToHtml(intro.description, 'intro.description') } } : {}),
+    },
+    ...(ctas ? { ctas } : {}),
+  }
+}

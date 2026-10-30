@@ -1,0 +1,245 @@
+---
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import type { Cta, Media, RichText } from '../../../shared/content.js'
+
+interface Rating {
+  label: string
+  score: 1 | 2 | 3 | 4 | 5
+}
+
+interface Props {
+  card: {
+    image: Media
+    title: string
+    bestForIcon?: string
+    bestForText?: string
+    description: string | RichText
+    ratings: Rating[]
+    webshopCta: Cta
+    specificationCta?: Cta
+  }
+  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  class?: string
+}
+
+const { card, headingLevel = 'h3', class: className } = Astro.props as Props
+const Heading = headingLevel
+const classes = ['battery-card-trinity', className].filter(Boolean).join(' ')
+const fontAwesomeIcon = (name?: string) => {
+  if (!name || !/^[a-z0-9-]+$/.test(name)) return undefined
+  const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
+  return fas[key]
+}
+const bestForIcon = fontAwesomeIcon(card.bestForIcon)
+const description = typeof card.description === 'string' ? card.description : card.description.html
+---
+
+<article class={classes}>
+  <KinektMedia class="battery-card-trinity__media" imageClass="battery-card-trinity__image" media={card.image} />
+  <div class="battery-card-trinity__body">
+    <div class="battery-card-trinity__content">
+      <Heading class="battery-card-trinity__title">{card.title}</Heading>
+      {card.bestForText && (
+        <p class="battery-card-trinity__best-for">
+          {bestForIcon && <svg class="battery-card-trinity__best-for-icon" aria-hidden="true" focusable="false" viewBox={`0 0 ${bestForIcon.icon[0]} ${bestForIcon.icon[1]}`}><path d={bestForIcon.icon[4] as string} /></svg>}
+          <span>{card.bestForText}</span>
+        </p>
+      )}
+      <div class="battery-card-trinity__description" set:html={description} />
+    </div>
+
+    <dl class="battery-card-trinity__ratings">
+      {card.ratings.map((rating) => (
+        <div class="battery-card-trinity__rating">
+          <dt class="battery-card-trinity__rating-label">{rating.label}</dt>
+          <dd class="battery-card-trinity__rating-value">
+            <span class="battery-card-trinity__visually-hidden">{rating.score} out of 5</span>
+            <span class="battery-card-trinity__dots" aria-hidden="true">
+              {Array.from({ length: 5 }, (_, index) => <span class:list={['battery-card-trinity__dot', { 'battery-card-trinity__dot--active': index < rating.score }]}></span>)}
+            </span>
+          </dd>
+        </div>
+      ))}
+    </dl>
+
+    <nav class="battery-card-trinity__actions" aria-label={`${card.title} actions`}>
+      <Button class="battery-card-trinity__webshop-action" href={card.webshopCta.href} label={card.webshopCta.label} style="clear">
+        <svg class="battery-card-trinity__external-icon" aria-hidden="true" focusable="false" viewBox="0 0 18 18" fill="none"><path d="M3 15 15 3m-8 0h8v8" stroke="currentColor" stroke-width="2" /></svg>
+      </Button>
+      {card.specificationCta && <Button class="battery-card-trinity__specification-action" href={card.specificationCta.href} label={card.specificationCta.label} style="clear" />}
+    </nav>
+  </div>
+</article>
+
+<style is:global>
+  :where(.battery-card-trinity) {
+    --kiw--battery-card-trinity-gap: var(--space-l);
+    --kiw--battery-card-trinity-content-gap: var(--space-m);
+    --kiw--battery-card-trinity-rating-gap: var(--space-xs);
+    --kiw--battery-card-trinity-rating-row-space: var(--space-xs);
+    --kiw--battery-card-trinity-action-gap: var(--space-xs);
+    --kiw--battery-card-trinity-media-ratio: 16 / 9;
+    --kiw--battery-card-trinity-media-radius: var(--radius-l);
+    --kiw--battery-card-trinity-title-size: var(--h4);
+    --kiw--battery-card-trinity-title-line-height: 1.1;
+    --kiw--battery-card-trinity-best-for-size: var(--text-m);
+    --kiw--battery-card-trinity-description-size: var(--text-s);
+    --kiw--battery-card-trinity-rating-size: var(--text-s);
+    --kiw--battery-card-trinity-dot-size: 0.625rem;
+  }
+
+  .battery-card-trinity {
+    display: grid;
+    align-content: start;
+    gap: var(--kiw--battery-card-trinity-gap);
+    min-inline-size: 0;
+
+    & .battery-card-trinity__media,
+    & .battery-card-trinity__image {
+      display: block;
+      inline-size: 100%;
+    }
+
+    & .battery-card-trinity__image {
+      aspect-ratio: var(--kiw--battery-card-trinity-media-ratio);
+      object-fit: cover;
+      border-radius: var(--kiw--battery-card-trinity-media-radius);
+      filter: var(--kinekt-component-media-filter, none);
+    }
+
+    & .battery-card-trinity__body,
+    & .battery-card-trinity__content,
+    & .battery-card-trinity__actions {
+      display: grid;
+      min-inline-size: 0;
+    }
+
+    & .battery-card-trinity__body {
+      gap: var(--kiw--battery-card-trinity-content-gap);
+    }
+
+    & .battery-card-trinity__content {
+      gap: var(--kiw--battery-card-trinity-content-gap);
+    }
+
+    & .battery-card-trinity__title,
+    & .battery-card-trinity__best-for,
+    & .battery-card-trinity__description,
+    & .battery-card-trinity__ratings,
+    & .battery-card-trinity__actions {
+      margin: 0;
+    }
+
+    & .battery-card-trinity__title {
+      color: var(--kinekt-component-ink);
+      font-family: var(--kinekt-component-heading-font-family, var(--heading-font-family));
+      font-size: var(--kiw--battery-card-trinity-title-size);
+      font-weight: var(--kinekt-component-heading-font-weight, var(--heading-font-weight));
+      line-height: var(--kiw--battery-card-trinity-title-line-height);
+      letter-spacing: var(--kinekt-component-heading-letter-spacing, var(--heading-letter-spacing));
+      text-wrap: balance;
+    }
+
+    & .battery-card-trinity__best-for {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      color: var(--kinekt-component-accent);
+      font-size: var(--kiw--battery-card-trinity-best-for-size);
+      font-weight: var(--heading-font-weight);
+      line-height: 1.2;
+    }
+
+    & .battery-card-trinity__best-for-icon {
+      flex: none;
+      inline-size: 1em;
+      block-size: 1em;
+      fill: currentColor;
+      overflow: visible;
+    }
+
+    & .battery-card-trinity__description {
+      color: var(--kinekt-component-muted);
+      font-size: var(--kiw--battery-card-trinity-description-size);
+      line-height: var(--kinekt-component-text-line-height);
+
+      & > * {
+        margin-block: 0;
+      }
+
+      & > * + * {
+        margin-block-start: var(--space-s);
+      }
+    }
+
+    & .battery-card-trinity__ratings {
+      display: grid;
+      gap: var(--kiw--battery-card-trinity-rating-row-space);
+      margin: 0;
+    }
+
+    & .battery-card-trinity__rating {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--kiw--battery-card-trinity-rating-gap);
+      min-inline-size: 0;
+      padding-block-end: var(--kiw--battery-card-trinity-rating-row-space);
+      border-block-end: var(--border-width) solid var(--kinekt-component-line);
+    }
+
+    & .battery-card-trinity__rating-label,
+    & .battery-card-trinity__rating-value {
+      margin: 0;
+    }
+
+    & .battery-card-trinity__rating-label {
+      color: var(--kinekt-component-muted);
+      font-size: var(--kiw--battery-card-trinity-rating-size);
+    }
+
+    & .battery-card-trinity__dots {
+      display: flex;
+      gap: var(--space-xs);
+    }
+
+    & .battery-card-trinity__dot {
+      inline-size: var(--kiw--battery-card-trinity-dot-size);
+      block-size: var(--kiw--battery-card-trinity-dot-size);
+      border-radius: 50%;
+      background: var(--kinekt-component-line);
+
+      &.battery-card-trinity__dot--active {
+        background: var(--kinekt-component-muted);
+      }
+    }
+
+    & .battery-card-trinity__actions {
+      justify-items: start;
+      gap: var(--kiw--battery-card-trinity-action-gap);
+    }
+
+    & .button-allentown {
+      justify-content: flex-start;
+    }
+
+    & .battery-card-trinity__external-icon {
+      inline-size: 1em;
+      block-size: 1em;
+    }
+
+    & .battery-card-trinity__visually-hidden {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  }
+</style>

@@ -1,0 +1,70 @@
+---
+import BatteryModelsTrinity from './battery-models-trinity.astro'
+
+const placeholder = (name: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '')}/placeholders/${name}`
+const media = (alt: string) => ({ url: placeholder('placeholder-1600x900.svg'), alt, width: 1600, height: 900 })
+---
+
+<BatteryModelsTrinity
+  theme="light"
+  intro={{
+    accentHeading: 'Find your battery',
+    heading: 'Power your drone',
+  }}
+  catalogueCta={{ label: 'View all packs in the webshop', href: '#catalogue' }}
+  models={[
+    {
+      image: media('Compact battery module for high-output missions'),
+      title: '16Ah 4S1P',
+      bestForIcon: 'bolt',
+      bestForText: 'Best for high power',
+      description: 'A compact pack for fast-response platforms where peak output matters as much as a tight integration envelope.',
+      ratings: [
+        { label: 'Power', score: 5 },
+        { label: 'Endurance', score: 4 },
+        { label: 'Payload', score: 3 },
+        { label: 'Weight', score: 1 },
+      ],
+      webshopCta: { label: 'View in webshop', href: '#16ah' },
+      specificationCta: { label: 'Download specs', href: '#16ah-specs' },
+    },
+    {
+      image: media('High-capacity battery module for long-endurance platforms'),
+      title: '78Ah 6S2P',
+      bestForIcon: 'bolt',
+      bestForText: 'Best for endurance',
+      description: 'A high-capacity configuration for longer operating windows and mission profiles that need dependable energy reserves.',
+      ratings: [
+        { label: 'Power', score: 5 },
+        { label: 'Endurance', score: 4 },
+        { label: 'Payload', score: 3 },
+        { label: 'Weight', score: 1 },
+      ],
+      webshopCta: { label: 'View in webshop', href: '#78ah' },
+      specificationCta: { label: 'Download specs', href: '#78ah-specs' },
+    },
+    {
+      image: media('Balanced battery module for payload-led drone missions'),
+      title: '30Ah 6S1P',
+      bestForIcon: 'boxes-stacked',
+      bestForText: 'Best payload',
+      description: 'A balanced option for teams that need practical endurance while preserving useful payload headroom for field equipment.',
+      ratings: [
+        { label: 'Power', score: 4 },
+        { label: 'Endurance', score: 5 },
+        { label: 'Payload', score: 3 },
+        { label: 'Weight', score: 1 },
+      ],
+      webshopCta: { label: 'View in webshop', href: '#30ah' },
+      specificationCta: { label: 'Download specs', href: '#30ah-specs' },
+    },
+  ]}
+  callout={{
+    intro: {
+      accentHeading: 'Expert support',
+      heading: 'Match a battery model to the way your platform operates',
+      description: 'Share the operating profile, power demand and payload constraints. An engineer will help narrow the right configuration.',
+    },
+    ctaGroup: { primary: { label: 'Contact an engineer', href: '#contact', style: 'primary' } },
+  }}
+/>

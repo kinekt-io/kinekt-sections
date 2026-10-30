@@ -22,6 +22,7 @@
   "exports": {
     "./atoms/label-allentown.astro": "./src/atoms/label/allentown/label-allentown.astro",
     "./components/accordion-item-allentown.astro": "./src/components/accordion-item/allentown/accordion-item-allentown.astro",
+    "./components/battery-card-trinity.astro": "./src/components/battery-card/trinity/battery-card-trinity.astro",
     "./components/callout-allentown.astro": "./src/components/callout/allentown/callout-allentown.astro",
     "./components/checklist-item-allentown.astro": "./src/components/checklist-item/allentown/checklist-item-allentown.astro",
     "./components/content-hero-media-allentown.astro": "./src/components/content-hero-media/allentown/content-hero-media-allentown.astro",
@@ -84,6 +85,17 @@
       "default": "./dist/sections/battery-models/allentown/battery-models-allentown.types.js",
       "import": "./dist/sections/battery-models/allentown/battery-models-allentown.types.js",
       "types": "./dist/sections/battery-models/allentown/battery-models-allentown.types.d.ts"
+    },
+    "./sections/battery-models-trinity.astro": "./src/sections/battery-models/trinity/battery-models-trinity.astro",
+    "./sections/battery-models-trinity.payload": {
+      "default": "./dist/sections/battery-models/trinity/battery-models-trinity.payload.js",
+      "import": "./dist/sections/battery-models/trinity/battery-models-trinity.payload.js",
+      "types": "./dist/sections/battery-models/trinity/battery-models-trinity.payload.d.ts"
+    },
+    "./sections/battery-models-trinity.types": {
+      "default": "./dist/sections/battery-models/trinity/battery-models-trinity.types.js",
+      "import": "./dist/sections/battery-models/trinity/battery-models-trinity.types.js",
+      "types": "./dist/sections/battery-models/trinity/battery-models-trinity.types.d.ts"
     },
     "./sections/case-header-allentown.astro": "./src/sections/case-header/allentown/case-header-allentown.astro",
     "./sections/case-header-allentown.payload": {
@@ -568,6 +580,17 @@
       "default": "./dist/sections/steps/stage/steps-stage.types.js",
       "import": "./dist/sections/steps/stage/steps-stage.types.js",
       "types": "./dist/sections/steps/stage/steps-stage.types.d.ts"
+    },
+    "./sections/streamer-allentown.astro": "./src/sections/streamer/allentown/streamer-allentown.astro",
+    "./sections/streamer-allentown.payload": {
+      "default": "./dist/sections/streamer/allentown/streamer-allentown.payload.js",
+      "import": "./dist/sections/streamer/allentown/streamer-allentown.payload.js",
+      "types": "./dist/sections/streamer/allentown/streamer-allentown.payload.d.ts"
+    },
+    "./sections/streamer-allentown.types": {
+      "default": "./dist/sections/streamer/allentown/streamer-allentown.types.js",
+      "import": "./dist/sections/streamer/allentown/streamer-allentown.types.js",
+      "types": "./dist/sections/streamer/allentown/streamer-allentown.types.d.ts"
     },
     "./sections/support-contact-allentown.astro": "./src/sections/support-contact/allentown/support-contact-allentown.astro",
     "./sections/support-contact-allentown.payload": {

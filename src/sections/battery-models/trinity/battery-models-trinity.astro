@@ -1,0 +1,225 @@
+---
+import '../../../styles/wireframe-tokens.css'
+import BatteryCardTrinity from '../../../components/battery-card/trinity/battery-card-trinity.astro'
+import Callout from '../../../components/callout/allentown/callout-allentown.astro'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { BatteryModelsTrinityContent } from './battery-models-trinity.types.js'
+
+interface Props extends BatteryModelsTrinityContent {
+  headingLevel?: 'h1' | 'h2' | 'h3'
+}
+
+const {
+  id,
+  theme = 'light',
+  intro,
+  catalogueCta,
+  models,
+  callout,
+  headingLevel = 'h2',
+} = Astro.props as Props
+const cardHeadingLevel = `h${Math.min(Number(headingLevel.slice(1)) + 1, 6)}` as 'h2' | 'h3' | 'h4'
+const calloutHeadingLevel = `h${Math.min(Number(headingLevel.slice(1)) + 1, 6)}` as 'h2' | 'h3'
+---
+
+<section class="battery-models-trinity" id={id} data-kinekt-section data-kinekt-theme={theme}>
+  <div class="battery-models-trinity__container">
+    <header class="battery-models-trinity__header">
+      <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
+      {catalogueCta && <Button class="battery-models-trinity__catalogue-cta" href={catalogueCta.href} label={catalogueCta.label} style="clear">
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 18 18" fill="none"><path d="M3 15 15 3m-8 0h8v8" stroke="currentColor" stroke-width="2" /></svg>
+      </Button>}
+    </header>
+
+    <ul class="battery-models-trinity__models">
+      {models.map((model) => (
+        <li class="battery-models-trinity__model">
+          <BatteryCardTrinity card={model} headingLevel={cardHeadingLevel} />
+        </li>
+      ))}
+    </ul>
+
+    {callout && <Callout class="battery-models-trinity__callout" callout={callout} headingLevel={calloutHeadingLevel} size="medium" />}
+  </div>
+</section>
+
+<style is:global>
+  :where(.battery-models-trinity[data-kinekt-section]) {
+    --kiw--battery-models-trinity-site-width: var(--website-width);
+    --kiw--battery-models-trinity-content-width: var(--content-width);
+    --kiw--battery-models-trinity-inline-space: var(--section-gutter);
+    --kiw--battery-models-trinity-block-space: var(--section-space-xl);
+    --kiw--battery-models-trinity-container-gap: var(--section-space-xl);
+    --kiw--battery-models-trinity-header-gap: var(--space-l);
+    --kiw--battery-models-trinity-card-gap: var(--section-space-s);
+    --kiw--battery-models-trinity-callout-gap: var(--section-space-l);
+    --kiw--battery-models-trinity-reading-width: var(--width-l);
+    --kiw--battery-models-trinity-heading-size: var(--h2);
+    --kiw--battery-models-trinity-description-size: var(--text-l);
+    --kiw--battery-models-trinity-canvas: var(--neutral-ultra-light);
+    --kiw--battery-models-trinity-surface: var(--white);
+    --kiw--battery-models-trinity-ink: var(--primary-ultra-dark);
+    --kiw--battery-models-trinity-muted: var(--primary-semi-dark);
+    --kiw--battery-models-trinity-line: var(--primary-ultra-light);
+    --kiw--battery-models-trinity-accent: var(--accent-semi-dark);
+    --kiw--battery-models-trinity-action: var(--primary-ultra-dark);
+    --kiw--battery-models-trinity-action-text: var(--white);
+    --kiw--battery-models-trinity-action-icon: var(--accent-semi-dark);
+    --kiw--battery-models-trinity-subtle: var(--primary);
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--battery-models-trinity-canvas));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--battery-models-trinity-surface));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--battery-models-trinity-ink));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--battery-models-trinity-muted));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--battery-models-trinity-line));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--battery-models-trinity-accent));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--battery-models-trinity-action));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--battery-models-trinity-action-text));
+    --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--battery-models-trinity-action-icon));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--battery-models-trinity-subtle));
+    --kinekt-component-heading-font-family: var(--kinekt-section-heading-font-family, var(--heading-font-family));
+    --kinekt-component-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--heading-font-weight));
+    --kinekt-component-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--heading-letter-spacing));
+    --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--heading-line-height));
+    --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--text-line-height));
+  }
+
+  :where(.battery-models-trinity[data-kinekt-section][data-kinekt-theme='semi-light']) {
+    --kiw--battery-models-trinity-canvas: var(--neutral-light);
+  }
+
+  :where(.battery-models-trinity[data-kinekt-section][data-kinekt-theme='semi-dark']) {
+    --kiw--battery-models-trinity-canvas: var(--primary-dark);
+    --kiw--battery-models-trinity-surface: var(--primary-semi-dark);
+    --kiw--battery-models-trinity-ink: var(--white);
+    --kiw--battery-models-trinity-muted: var(--primary-light);
+    --kiw--battery-models-trinity-line: var(--primary-semi-light);
+    --kiw--battery-models-trinity-action: var(--white);
+    --kiw--battery-models-trinity-action-text: var(--primary-ultra-dark);
+  }
+
+  :where(.battery-models-trinity[data-kinekt-section][data-kinekt-theme='dark']) {
+    --kiw--battery-models-trinity-canvas: var(--primary-ultra-dark);
+    --kiw--battery-models-trinity-surface: var(--primary-semi-dark);
+    --kiw--battery-models-trinity-ink: var(--white);
+    --kiw--battery-models-trinity-muted: var(--primary-ultra-light);
+    --kiw--battery-models-trinity-line: var(--primary-semi-light);
+    --kiw--battery-models-trinity-action: var(--white);
+    --kiw--battery-models-trinity-action-text: var(--primary-ultra-dark);
+  }
+
+  .battery-models-trinity {
+    box-sizing: border-box;
+    padding-block: var(--kiw--battery-models-trinity-block-space);
+    color: var(--kinekt-component-ink);
+    background: var(--kinekt-component-canvas);
+    font-family: var(--text-font-family);
+    font-size: var(--text-m);
+    font-weight: var(--text-font-weight);
+    line-height: var(--kinekt-component-text-line-height);
+
+    & *,
+    & *::before,
+    & *::after {
+      box-sizing: border-box;
+    }
+
+    & .battery-models-trinity__container {
+      display: grid;
+      inline-size: 100%;
+      max-inline-size: min(var(--kiw--battery-models-trinity-site-width), calc(var(--kiw--battery-models-trinity-content-width) + (var(--kiw--battery-models-trinity-inline-space) * 2)));
+      gap: var(--kiw--battery-models-trinity-container-gap);
+      margin-inline: auto;
+      padding-inline: var(--kiw--battery-models-trinity-inline-space);
+    }
+
+    & .battery-models-trinity__header {
+      display: grid;
+      gap: var(--kiw--battery-models-trinity-header-gap);
+      align-items: end;
+    }
+
+    & .section-intro {
+      display: grid;
+      gap: var(--space-xs);
+      min-inline-size: 0;
+    }
+
+    & .section-intro__heading-group {
+      display: grid;
+      gap: var(--space-xxs);
+    }
+
+    & .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) {
+      margin: 0;
+    }
+
+    & .section-intro__accent {
+      color: var(--kinekt-component-accent);
+      font-family: var(--mono-font-family);
+      font-size: var(--text-xs);
+      font-weight: var(--heading-font-weight);
+      letter-spacing: var(--heading-letter-spacing);
+      text-transform: uppercase;
+    }
+
+    & .section-intro__heading {
+      max-inline-size: var(--kiw--battery-models-trinity-reading-width);
+      color: var(--kinekt-component-ink);
+      font-size: var(--kiw--battery-models-trinity-heading-size);
+    }
+
+    & .section-intro__description {
+      max-inline-size: var(--kiw--battery-models-trinity-reading-width);
+      color: var(--kinekt-component-muted);
+      font-size: var(--kiw--battery-models-trinity-description-size);
+    }
+
+    & .section-intro__description > * {
+      margin-block: 0;
+    }
+
+    & .battery-models-trinity__catalogue-cta {
+      justify-self: start;
+    }
+
+    & .battery-models-trinity__catalogue-cta svg {
+      inline-size: 1em;
+      block-size: 1em;
+    }
+
+    & .battery-models-trinity__models {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--kiw--battery-models-trinity-card-gap);
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    & .battery-models-trinity__model {
+      min-inline-size: 0;
+    }
+
+    & .battery-models-trinity__callout {
+      margin-block-start: var(--kiw--battery-models-trinity-callout-gap);
+    }
+  }
+
+  @media (min-width: 50rem) {
+    .battery-models-trinity {
+      & .battery-models-trinity__header {
+        grid-template-columns: minmax(0, 1fr) auto;
+        column-gap: var(--section-space-m);
+      }
+
+      & .battery-models-trinity__catalogue-cta {
+        justify-self: end;
+      }
+
+      & .battery-models-trinity__models {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  }
+</style>

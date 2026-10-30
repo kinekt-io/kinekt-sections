@@ -1,0 +1,27 @@
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "version": "26.10.0-beta.0",
+  "id": "components/battery-card/trinity",
+  "slug": "battery-card-trinity",
+  "title": "Battery Card Trinity",
+  "description": "A localized battery model card with media, an optional best-for marker, configurable five-point ratings, a required webshop action and optional specification download.",
+  "category": "components",
+  "role": "battery-card",
+  "variation": "trinity",
+  "status": "planned",
+  "figma": {
+    "url": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-537149&t=DdGjpoAvVqSIinWT-11",
+    "nodeId": "5255:537149"
+  },
+  "fields": {
+    "image": { "kind": "media", "required": true, "localized": true },
+    "title": { "kind": "text", "required": true, "localized": true },
+    "bestForIcon": { "kind": "text", "required": false, "localized": true, "description": "Optional Font Awesome Free icon key, for example bolt or boxes-stacked." },
+    "bestForText": { "kind": "text", "required": false, "localized": true },
+    "description": { "kind": "richText", "required": true, "localized": true },
+    "ratings": { "kind": "componentList", "componentId": "components/battery-rating/trinity", "required": true, "localized": true, "minItems": 1 },
+    "webshopCta": { "kind": "cta", "required": true, "localized": true, "description": "Required webshop action for this battery model." },
+    "specificationCta": { "kind": "cta", "required": false, "localized": true, "description": "Optional specification download or detail action." }
+  }
+}
