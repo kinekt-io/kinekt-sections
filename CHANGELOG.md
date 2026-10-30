@@ -30,6 +30,9 @@
 - Use regular `400` weight for Process Story Trinity numbered markers through a component-owned font-weight token.
 - Use a 3:2 text-to-media grid for Hero Allentown on desktop; below 50rem, both stacked blocks and their reading width fill the available container.
 - Swap Primary and Secondary colors on hover and keyboard focus. Clear text takes its icon's theme accent; Clear base uses the accent for both text and icon.
+- Remove HD Cells header width caps and use `primary-light` for its intro descriptions and cell subtitles through component tokens.
+- Reduce Proof Metrics gaps to `space-m`; keep values on one line and allow whole metric items to move to the next row instead.
+- Let Hero Allentown intro headings and descriptions fill the text column on desktop as well as mobile.
 
 ### Fixed
 

@@ -154,8 +154,8 @@ const calloutContent = callout?.intro
   --kiw--proof-metrics-intro-width: var(--width-l);
   --kiw--proof-metrics-intro-group-gap: var(--space-m);
   --kiw--proof-metrics-heading-stack-gap: var(--space-xxs);
-  --kiw--proof-metrics-metric-gap: var(--section-space-xxl);
-  --kiw--proof-metrics-metric-row-gap: var(--section-space-s);
+  --kiw--proof-metrics-metric-gap: var(--space-m);
+  --kiw--proof-metrics-metric-row-gap: var(--space-m);
   --kiw--proof-metrics-media-ratio: 1296 / 406;
   padding-block: var(--kiw--proof-metrics-section-space);
 }
@@ -206,16 +206,29 @@ const calloutContent = callout?.intro
 }
 
 .proof-metrics-allentown .proof-metrics-allentown__metrics {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--kiw--proof-metrics-metric-row-gap);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kiw--proof-metrics-metric-row-gap) var(--kiw--proof-metrics-metric-gap);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .proof-metrics-allentown .proof-metrics-allentown__metric {
-  min-width: 0;
+  flex: 1 1 calc((100% - var(--kiw--proof-metrics-metric-gap)) / 2);
+  min-inline-size: min-content;
+}
+
+.proof-metrics-allentown {
+  & .result-item-allentown__value {
+    --kiw--label-allentown-text-wrap: nowrap;
+    min-inline-size: max-content;
+
+    & .label-allentown__text {
+      white-space: nowrap;
+      overflow-wrap: normal;
+    }
+  }
 }
 
 .proof-metrics-allentown .proof-metrics-allentown__media {
@@ -231,9 +244,8 @@ const calloutContent = callout?.intro
 }
 
 @media (min-width: 48rem) {
-  .proof-metrics-allentown .proof-metrics-allentown__metrics {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: var(--kiw--proof-metrics-metric-gap);
+  .proof-metrics-allentown .proof-metrics-allentown__metric {
+    flex-basis: calc((100% - var(--kiw--proof-metrics-metric-gap) * 3) / 4);
   }
 }
 

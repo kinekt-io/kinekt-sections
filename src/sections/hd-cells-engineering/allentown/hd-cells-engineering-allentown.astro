@@ -303,6 +303,7 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
     --kiw--hd-cells-engineering-heading-stack-gap: var(--space-xxs);
     --kiw--hd-cells-engineering-heading-size: var(--h2);
     --kiw--hd-cells-engineering-description-font-size: var(--text-xl);
+    --kiw--hd-cells-engineering-description-color: var(--primary-light);
     --kiw--hd-cells-engineering-cells-width: var(--width-xxl);
     --kiw--hd-cells-engineering-cells-gap: var(--section-space-l);
     --kiw--hd-cells-engineering-cells-media-ratio: 5 / 4;
@@ -325,7 +326,7 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
   .hd-cells-engineering-allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
   .hd-cells-engineering-allentown .section-intro__heading-group { display: grid; justify-items: center; gap: var(--kiw--hd-cells-engineering-heading-stack-gap); }
   .hd-cells-engineering-allentown .section-intro__heading { max-width: none; font-size: var(--kiw--hd-cells-engineering-heading-size); }
-  .hd-cells-engineering-allentown .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--kiw--hd-cells-engineering-description-font-size); line-height: var(--kinekt-component-text-line-height); }
+  .hd-cells-engineering-allentown .section-intro__description { max-width: none; color: var(--kiw--hd-cells-engineering-description-color); font-size: var(--kiw--hd-cells-engineering-description-font-size); line-height: var(--kinekt-component-text-line-height); }
   .hd-cells-engineering-allentown .section-intro__description > * { margin-block: 0; }
 
   /* High-density cells */
@@ -356,6 +357,9 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
   @keyframes hd-cells-engineering-allentown-fade { from { opacity: 0; } to { opacity: 1; } }
 
   .hd-cells-engineering-allentown {
+    & .hd-cell-item-allentown {
+      --kiw--hd-cell-item-allentown-subtitle-color: var(--kiw--hd-cells-engineering-subtitle-color, var(--primary-light));
+    }
     & .hd-cells-engineering-allentown__cell { position: relative; }
     & .hd-cells-engineering-allentown__cell-timer { display: none; }
 
@@ -393,7 +397,6 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
 
   @media (min-width: 50rem) {
     :where(.hd-cells-engineering-allentown) { --kiw--hd-cells-engineering-allentown-content-width: var(--content-width); }
-    .hd-cells-engineering-allentown .hd-cells-engineering-allentown__header { max-inline-size: var(--kiw--hd-cells-engineering-header-width); }
     .hd-cells-engineering-allentown .hd-cells-engineering-allentown__cells { max-inline-size: var(--kiw--hd-cells-engineering-cells-width); }
     .hd-cells-engineering-allentown .hd-cells-engineering-allentown__cells-body--media { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
     /* No Figma frame without cell media: the list keeps the intro's reading width, centred (inferred). */

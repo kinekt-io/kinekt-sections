@@ -142,7 +142,7 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 
   .hero-allentown {
     --kinekt-section-content-width: var(--content-width);
-    --kinekt-section-reading-width: var(--width-m);
+    --kinekt-section-reading-width: var(--kiw--hero-allentown-reading-width, 100%);
     --kinekt-section-media-ratio: 1 / 1;
     --kinekt-section-gap: var(--section-space-xl);
   }
@@ -151,6 +151,9 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
   .hero-allentown { --kiw--hero-allentown-copy-width: var(--width-l); --kiw--hero-allentown-column-gap: var(--section-space-l); --kiw--hero-allentown-min-block-size: var(--section-space-xxl); --hero-allentown-copy-width: var(--kinekt-section-hero-copy-width, var(--kiw--hero-allentown-copy-width)); --hero-allentown-media-width: var(--kinekt-section-hero-media-width, var(--width-m)); --hero-allentown-column-gap: var(--kinekt-section-hero-column-gap, var(--kiw--hero-allentown-column-gap)); --hero-allentown-min-block-size: var(--kinekt-section-hero-min-block-size, var(--kiw--hero-allentown-min-block-size)); --hero-allentown-action-gap: var(--kinekt-section-hero-action-gap, var(--section-space-xs)); --kinekt-section-media-ratio: var(--kinekt-section-hero-media-ratio, 4 / 5); }
   .hero-allentown { --kiw--section-intro-accent-font-size: var(--text-l); }
   .hero-allentown .hero-allentown__content { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; width: 100%; max-width: var(--hero-allentown-copy-width); padding-block: 0; }
+  .hero-allentown {
+    & .hero-allentown__content > .section-intro { width: 100%; }
+  }
   .hero-allentown .hero-allentown__actions { margin-block-start: var(--hero-allentown-action-gap); }
   .hero-allentown .hero-allentown__media { display: block; width: 100%; max-width: var(--hero-allentown-media-width); aspect-ratio: var(--kinekt-section-media-ratio); overflow: hidden; }
   .hero-allentown .hero-allentown__image { display: block; width: 100%; height: 100%; aspect-ratio: var(--kinekt-section-media-ratio); object-fit: cover; }
