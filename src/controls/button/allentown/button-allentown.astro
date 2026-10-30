@@ -24,6 +24,8 @@ const classes = ['button', `button--${style}`, size !== 'm' && `button--${size}`
     --kiw--button-allentown-icon-size: var(--text-m);
     --kiw--button-allentown-gap: var(--space-xs);
     --kiw--button-allentown-border-width: var(--kinekt-component-border-width, var(--border-width));
+    --kiw--button-allentown-secondary-background: var(--neutral-light);
+    --kiw--button-allentown-secondary-text: var(--primary-ultra-dark);
     min-height: var(--kiw--section-button-height);
     padding: calc(var(--kiw--section-button-padding-block) - var(--kiw--button-allentown-border-width)) calc(var(--kiw--section-button-padding-inline) - var(--kiw--button-allentown-border-width));
     border: var(--kiw--button-allentown-border-width) solid var(--kinekt-component-action);
@@ -39,6 +41,7 @@ const classes = ['button', `button--${style}`, size !== 'm' && `button--${size}`
     gap: var(--kiw--button-allentown-gap);
     text-decoration: none;
     display: inline-flex;
+    transition: color var(--kiw--button-allentown-transition-duration, 150ms) ease, background-color var(--kiw--button-allentown-transition-duration, 150ms) ease, border-color var(--kiw--button-allentown-transition-duration, 150ms) ease;
   }
 
   /* Figma Size=small and Size=large keep the padding and step the text and icon. */
@@ -54,8 +57,6 @@ const classes = ['button', `button--${style}`, size !== 'm' && `button--${size}`
 
   /* Figma Type=secondary: a light fill with dark text in every theme. */
   .button.button--secondary {
-    --kiw--button-allentown-secondary-background: var(--neutral-light);
-    --kiw--button-allentown-secondary-text: var(--primary-ultra-dark);
     border-color: var(--kiw--button-allentown-secondary-background);
     color: var(--kiw--button-allentown-secondary-text);
     background: var(--kiw--button-allentown-secondary-background);
@@ -87,5 +88,38 @@ const classes = ['button', `button--${style}`, size !== 'm' && `button--${size}`
 
   .button--secondary > svg[aria-hidden='true'] {
     color: var(--kiw--button-allentown-secondary-icon, var(--accent-semi-dark));
+  }
+
+  .button.button--primary:is(:hover, :focus-visible) {
+    border-color: var(--kiw--button-allentown-secondary-background);
+    background: var(--kiw--button-allentown-secondary-background);
+    color: var(--kiw--button-allentown-secondary-text);
+
+    & > svg[aria-hidden='true'] {
+      color: var(--kiw--button-allentown-secondary-icon, var(--accent-semi-dark));
+    }
+  }
+
+  .button.button--secondary:is(:hover, :focus-visible) {
+    border-color: var(--kinekt-component-action);
+    background: var(--kinekt-component-action);
+    color: var(--kinekt-component-action-text);
+
+    & > svg[aria-hidden='true'] {
+      color: var(--kinekt-component-action-icon, currentColor);
+    }
+  }
+
+  .button:is(.button--clear, .button--clear-base):is(:hover, :focus-visible) {
+    color: var(--kinekt-component-accent, var(--accent));
+  }
+
+  .button:focus-visible {
+    outline: calc(var(--border-width) * 2) solid var(--kinekt-component-accent, var(--accent));
+    outline-offset: var(--space-xxs);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .button { transition: none; }
   }
 </style>

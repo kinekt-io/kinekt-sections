@@ -82,6 +82,7 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
         <ul class="hd-cells-engineering-allentown__cells-list" data-kinekt-disclosure-group>
           {cells.map((item, index) => (
             <li class="hd-cells-engineering-allentown__cell">
+              <span class="hd-cells-engineering-allentown__cell-timer" aria-hidden="true"><span></span></span>
               <HdCellItem item={item} index={index} open={index === 0} />
             </li>
           ))}
@@ -137,6 +138,58 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
         media.forEach((item) => { item.hidden = item.dataset.hdCellMedia !== index })
       })
     })
+
+    const cellsBody = section.querySelector<HTMLElement>('.hd-cells-engineering-allentown__cells-body--media')
+    const disclosures = Array.from(cellsBody?.querySelectorAll<HTMLDetailsElement>('details[data-hd-cell-item]') ?? [])
+    if (cellsBody && disclosures.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const rows = disclosures.map((details) => details.parentElement!)
+      let activeIndex = 0
+      let hovered = cellsBody.matches(':hover')
+      let visible = false
+      let stopped = false
+      cellsBody.dataset.hdCellTimed = 'true'
+
+      const syncTimer = () => {
+        cellsBody.dataset.hdCellTimerState = stopped || hovered || !visible ? 'paused' : 'running'
+      }
+      const show = (index: number) => {
+        activeIndex = index
+        disclosures.forEach((details, itemIndex) => {
+          const active = itemIndex === index
+          rows[itemIndex].toggleAttribute('data-hd-cell-active', active)
+          details.open = active
+        })
+      }
+      cellsBody.addEventListener('animationend', (event) => {
+        if (stopped || event.animationName !== 'hd-cells-engineering-timer') return
+        if (event.target !== rows[activeIndex].querySelector('.hd-cells-engineering-allentown__cell-timer > span')) return
+        show((activeIndex + 1) % disclosures.length)
+      })
+      cellsBody.addEventListener('pointerenter', () => {
+        hovered = true
+        syncTimer()
+      })
+      cellsBody.addEventListener('pointerleave', () => {
+        hovered = false
+        syncTimer()
+      })
+      disclosures.forEach((details, index) => {
+        details.querySelector('summary')?.addEventListener('click', (event) => {
+          event.preventDefault()
+          stopped = true
+          cellsBody.dataset.hdCellStopped = 'true'
+          show(index)
+          syncTimer()
+        })
+      })
+      show(0)
+      syncTimer()
+      const observer = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting
+        syncTimer()
+      }, { threshold: 0.2 })
+      observer.observe(cellsBody)
+    }
 
     // Topics: turn the buttons into a tablist (first topic active) for the shared tabs helper.
     const tabsRoot = section.querySelector<HTMLElement>('[data-hd-engineering-tabs]')
@@ -301,6 +354,42 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
     .hd-cells-engineering-allentown .hd-cells-engineering-allentown__tab { transition: color 200ms ease-out, border-color 200ms ease-out; }
   }
   @keyframes hd-cells-engineering-allentown-fade { from { opacity: 0; } to { opacity: 1; } }
+
+  .hd-cells-engineering-allentown {
+    & .hd-cells-engineering-allentown__cell { position: relative; }
+    & .hd-cells-engineering-allentown__cell-timer { display: none; }
+
+    & [data-hd-cell-timed] {
+      & .hd-cell-item-allentown > .hd-cell-item-allentown__summary::before { content: none; }
+      & .hd-cells-engineering-allentown__cell-timer {
+        position: absolute;
+        z-index: 1;
+        inset-block: 0;
+        inset-inline-start: 0;
+        display: block;
+        inline-size: calc(var(--border-width) * 2);
+        overflow: hidden;
+        pointer-events: none;
+        background: var(--kinekt-component-line);
+
+        & > span {
+          display: block;
+          width: 100%;
+          height: 100%;
+          background: var(--kinekt-component-accent);
+          transform: scaleY(0);
+          transform-origin: top;
+        }
+      }
+      & [data-hd-cell-active] .hd-cells-engineering-allentown__cell-timer > span {
+        animation: hd-cells-engineering-timer var(--kiw--hd-cells-engineering-allentown-duration, 6s) linear both;
+        animation-play-state: paused;
+      }
+      &[data-hd-cell-timer-state='running'] [data-hd-cell-active] .hd-cells-engineering-allentown__cell-timer > span { animation-play-state: running; }
+      &[data-hd-cell-stopped='true'] [data-hd-cell-active] .hd-cells-engineering-allentown__cell-timer > span { animation: none; transform: scaleY(1); }
+    }
+  }
+  @keyframes hd-cells-engineering-timer { to { transform: scaleY(1); } }
 
   @media (min-width: 50rem) {
     :where(.hd-cells-engineering-allentown) { --kiw--hd-cells-engineering-allentown-content-width: var(--content-width); }

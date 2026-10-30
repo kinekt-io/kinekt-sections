@@ -13,6 +13,7 @@
 - Add optional zero-to-two CTA groups below the Steps Stage intro and below its steps; retain per-step CTA groups.
 - Add optional localized Sharp Solid title icons to Use Case items through Facility Fact's title-prefix slot, using the section's theme accent.
 - Add optional localized Solution List item CTA styles (`primary`, `secondary`, `clear`, or `clear-base`); retain CTA icons inside the rendered button.
+- Autoplay the HD Cells media accordion with six-second progress bars, synchronized media, hover/offscreen pause, and a permanent stop after explicit selection; reduced-motion and single-item views retain manual disclosures.
 
 ### Changed
 
@@ -28,6 +29,7 @@
 - Use regular `400` weight for Next Step numbers through a component-owned font-weight token.
 - Use regular `400` weight for Process Story Trinity numbered markers through a component-owned font-weight token.
 - Use a 3:2 text-to-media grid for Hero Allentown on desktop; below 50rem, both stacked blocks and their reading width fill the available container.
+- Swap Primary and Secondary colors on hover and keyboard focus. Clear text takes its icon's theme accent; Clear base uses the accent for both text and icon.
 
 ### Fixed
 
