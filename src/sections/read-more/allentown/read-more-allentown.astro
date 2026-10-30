@@ -134,6 +134,11 @@ const actions = ctaGroupActions(ctas)
   .read-more-allentown .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--kiw--read-more-allentown-description-font-size); }
   .read-more-allentown .section-intro__description :first-child { margin-top: 0; }
   .read-more-allentown .section-intro__description :last-child { margin-bottom: 0; }
+  .read-more-allentown[data-kinekt-theme='semi-light'] {
+    & .section-intro__description {
+      color: var(--kiw--read-more-allentown-description-color, var(--primary));
+    }
+  }
   .read-more-allentown .read-more-allentown__actions { display: flex; flex-wrap: wrap; gap: var(--kiw--read-more-allentown-actions-gap); margin: 0; }
   .read-more-allentown .read-more-allentown__media { display: block; width: 100%; }
   .read-more-allentown .read-more-allentown__image { aspect-ratio: var(--kiw--read-more-allentown-media-ratio); object-fit: cover; }

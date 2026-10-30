@@ -149,20 +149,68 @@ const methods = contactMethods.filter((method) => method.label && method.href)
     --kiw--form-section-allentown-container-gap: var(--section-space-l);
     --kiw--form-section-allentown-content-gap: var(--space-l);
     --kiw--form-section-allentown-embed-gap: var(--space-xs);
-    --kiw--form-section-allentown-label-font-size: var(--text-s);
+    --kiw--form-section-allentown-label-font-size: var(--text-l);
     --kiw--form-section-allentown-label-font-weight: var(--heading-font-weight);
     --kiw--form-section-allentown-contacts-gap: var(--space-s);
     --kiw--form-section-allentown-column-gap: var(--section-space-xl);
+    --kiw--form-section-allentown-contacts-heading-font-family: var(--heading-font-family);
+    --kiw--form-section-allentown-contacts-heading-line-height: 1.2;
+    --kiw--form-section-allentown-contacts-separator-space: var(--space-l);
   }
 
   .form-section-allentown > .form-section-allentown__container { gap: var(--kiw--form-section-allentown-container-gap); }
   .form-section-allentown :is(.section-intro__heading, .section-intro__description) { max-width: var(--kinekt-component-reading-width); }
   @media (max-width: 49.99rem) { .form-section-allentown { --kinekt-component-reading-width: var(--content-width); } }
   .form-section-allentown .form-section-allentown__content { display: grid; align-content: center; gap: var(--kiw--form-section-allentown-content-gap); }
-  .form-section-allentown .form-section-allentown__contacts-heading { display: grid; gap: var(--kiw--form-section-allentown-embed-gap); margin: 0; font-size: var(--kiw--form-section-allentown-label-font-size); font-weight: var(--kiw--form-section-allentown-label-font-weight); }
-  .form-section-allentown .form-section-allentown__contacts { display: grid; gap: var(--kiw--form-section-allentown-contacts-gap); font-style: normal; }
-  .form-section-allentown .form-section-allentown__contacts ul { display: grid; gap: var(--kiw--form-section-allentown-embed-gap); margin: 0; padding: 0; list-style: none; }
-  .form-section-allentown .form-section-allentown__contacts a { display: inline-flex; align-items: center; gap: var(--kiw--form-section-allentown-embed-gap); color: inherit; font-weight: var(--heading-font-weight); text-decoration: none; }
+  .form-section-allentown {
+    --kiw--form-section-allentown-contacts-color: var(--primary);
+    --kiw--form-section-allentown-contacts-heading-color: var(--primary-ultra-dark);
+
+    &:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) {
+      --kiw--form-section-allentown-contacts-color: var(--primary-ultra-light);
+      --kiw--form-section-allentown-contacts-heading-color: var(--white);
+    }
+
+    & .section-intro__heading {
+      &:is(h1) { font-size: var(--kiw--form-section-allentown-heading-1-size, var(--h2)); }
+      &:is(h2) { font-size: var(--kiw--form-section-allentown-heading-2-size, var(--h3)); }
+      &:is(h3) { font-size: var(--kiw--form-section-allentown-heading-3-size, var(--h4)); }
+    }
+
+    & .form-section-allentown__contacts {
+      display: grid;
+      gap: var(--kiw--form-section-allentown-contacts-gap);
+      color: var(--kiw--form-section-allentown-contacts-color);
+      font-style: normal;
+
+      & .form-section-allentown__contacts-heading {
+        margin: 0;
+        color: var(--kiw--form-section-allentown-contacts-heading-color);
+        font-family: var(--kiw--form-section-allentown-contacts-heading-font-family);
+        font-size: var(--kiw--form-section-allentown-label-font-size);
+        font-style: normal;
+        font-weight: var(--kiw--form-section-allentown-label-font-weight);
+        line-height: var(--kiw--form-section-allentown-contacts-heading-line-height);
+      }
+
+      & ul { display: grid; gap: var(--kiw--form-section-allentown-embed-gap); margin: 0; padding: 0; list-style: none; }
+      & a {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--kiw--form-section-allentown-embed-gap);
+        color: inherit;
+        font-weight: var(--heading-font-weight);
+        text-decoration: none;
+
+        & svg { color: var(--kinekt-component-accent); }
+      }
+    }
+
+    & .form-section-allentown__form-embed + .form-section-allentown__contacts {
+      padding-block-start: var(--kiw--form-section-allentown-contacts-separator-space);
+      border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+    }
+  }
   .form-section-allentown .form-section-allentown__media { display: block; min-width: 0; }
   .form-section-allentown .form-section-allentown__media img { aspect-ratio: 1 / 1; object-fit: cover; }
   @media (min-width: 50rem) {

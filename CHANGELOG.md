@@ -28,6 +28,8 @@
 - Omit incomplete optional CTAs during frontend conversion, including nested callouts, without dropping their section or page. Keep publish-time validation, required CTA validation and URL safety checks intact.
 - Synchronize Process Story Trinity progression with its six-second linear timer fill. Hover and offscreen pauses preserve elapsed progress; clicking stops autoplay and fills the selected timer.
 - Expose Steps Stage item descriptions as native Payload rich text instead of textareas, matching the existing rich-text renderer and stored editor data.
+- Use `primary-light` for both Homepage Problem Solution intros and reusable item descriptions in semi-dark, and `primary` for Read More descriptions in semi-light.
+- Size Form Section intro headings one visual level below their semantic tag. Use theme-aware contact text and accent icons, token-based large contact headings with 1.2 line height, and a divider between the form and contact list.
 - Correct the Product Hero Allentown design reference to [Hero Section - Battery Packs](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538028&t=OtYEVTRRdAJJYQ0v-11); content fields and rendering are unchanged.
 
 ## 26.10.2-beta.25 — 2026-10-23
