@@ -1,6 +1,6 @@
 import { isSafeWebUrl } from '../urls.js'
 import type { Cta, CtaGroup, Media } from './content.js'
-import { ctaIconOptions, isCtaIcon } from './cta-icons.js'
+import { isCtaIcon } from './cta-icons.js'
 export type BetaTheme = 'light' | 'semi-light' | 'dark' | 'semi-dark'
 export type PayloadAdapterOptions = {
   mediaBaseUrl?: string
@@ -10,6 +10,15 @@ export const requireObject = (value: unknown, field: string): Record<string, unk
 export const requireArray = (value: unknown, field: string): unknown[] => { if (!Array.isArray(value) || value.length === 0) throw new Error(`${field} must contain at least one item.`); return value }
 export const requireText = (value: unknown, field: string): string => { if (typeof value !== 'string' || value.trim().length === 0) throw new Error(`${field} must be non-empty text.`); return value }
 export const optionalText = (value: unknown, field: string): string | undefined => value === undefined || value === null || value === '' ? undefined : requireText(value, field)
+
+export const requireSharpSolidIcon = (value: unknown, field: string): string => {
+  const icon = requireText(value, field)
+  if (!isCtaIcon(icon)) throw new Error(`${field} must name a Font Awesome 7 Sharp Solid icon.`)
+  return icon
+}
+
+export const optionalSharpSolidIcon = (value: unknown, field: string): string | undefined =>
+  value === undefined || value === null || value === '' ? undefined : requireSharpSolidIcon(value, field)
 export const requireTheme = (value: unknown, field = 'theme'): BetaTheme => { if (value === 'light' || value === 'semi-light' || value === 'dark' || value === 'semi-dark') return value; throw new Error(`${field} must be light, semi-light, dark, or semi-dark.`) }
 const withMediaBaseUrl = (url: string, mediaBaseUrl: string | undefined): string => { if (url.startsWith('/') && mediaBaseUrl) return new URL(url, mediaBaseUrl).toString(); if (!isSafeWebUrl(url)) throw new Error('Media URL must be an HTTP(S) or root-relative URL.'); return url }
 export const mediaToProps = (value: unknown, field: string, { mediaBaseUrl }: PayloadAdapterOptions = {}): Media => {
@@ -69,11 +78,8 @@ export const ctaToProps = (value: unknown, field: string, options: PayloadAdapte
   } else {
     throw new Error(`${field}.destinationType must be content or url.`)
   }
-  const icon = cta.icon
-  if (icon !== undefined && icon !== null && icon !== '' && !isCtaIcon(icon)) {
-    throw new Error(`${field}.icon must be one of ${ctaIconOptions.map((option) => option.value).join(', ')}.`)
-  }
-  return { label: requireText(cta.label, `${field}.label`), href, ...(isCtaIcon(icon) ? { icon } : {}) }
+  const icon = optionalSharpSolidIcon(cta.icon, `${field}.icon`)
+  return { label: requireText(cta.label, `${field}.label`), href, ...(icon ? { icon } : {}) }
 }
 
 export const optionalCtaToProps = (value: unknown, field: string, options: PayloadAdapterOptions = {}): Cta | undefined => {

@@ -1,5 +1,5 @@
 ---
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fass as fas, faMinus, faPlus } from '@fortawesome/sharp-solid-svg-icons'
 import type { RichText } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 
@@ -23,7 +23,7 @@ interface Props {
 const { item, number, open = false, class: className } = Astro.props
 const classes = ['accordion-item-allentown', className].filter(Boolean).join(' ')
 const fontAwesomeIcon = (name?: string | null) => {
-  if (!name || !/^[a-z0-9-]+$/.test(name)) return undefined
+  if (!name || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name)) return undefined
   const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
   return fas[key]
 }
@@ -40,7 +40,7 @@ const descriptionHtml = typeof item.description === 'string'
   <summary class="accordion-item-allentown__summary">
     {(icon || showNumber) && (
       <span class="accordion-item-allentown__marker" aria-hidden="true">
-        {icon && <svg class="accordion-item-allentown__marker-icon" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} focusable="false"><path d={icon.icon[4] as string} /></svg>}
+        {icon && <svg class="accordion-item-allentown__marker-icon" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} focusable="false" fill="currentColor"><path d={icon.icon[4] as string} /></svg>}
         {showNumber && <span class="accordion-item-allentown__marker-number">{String(number).padStart(2, '0')}</span>}
       </span>
     )}
@@ -48,7 +48,8 @@ const descriptionHtml = typeof item.description === 'string'
       <span class="accordion-item-allentown__title">{item.title}</span>
       {item.subtitle && <span class="accordion-item-allentown__subtitle">{item.subtitle}</span>}
     </span>
-    <svg class="accordion-item-allentown__toggle" aria-hidden="true" focusable="false" width="1em" height="1em" viewBox="0 0 18 18" fill="none"><path class="accordion-item-allentown__toggle-horizontal" d="M2 9h14" stroke="currentColor" stroke-width="1.5" /><path class="accordion-item-allentown__toggle-vertical" d="M9 2v14" stroke="currentColor" stroke-width="1.5" /></svg>
+    <svg class="accordion-item-allentown__toggle accordion-item-allentown__toggle--closed" aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={`0 0 ${faPlus.icon[0]} ${faPlus.icon[1]}`} fill="currentColor"><path d={faPlus.icon[4] as string} /></svg>
+    <svg class="accordion-item-allentown__toggle accordion-item-allentown__toggle--open" aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={`0 0 ${faMinus.icon[0]} ${faMinus.icon[1]}`} fill="currentColor"><path d={faMinus.icon[4] as string} /></svg>
   </summary>
   <div class="accordion-item-allentown__panel" set:html={descriptionHtml} />
 </details>
@@ -86,7 +87,9 @@ const descriptionHtml = typeof item.description === 'string'
   .accordion-item-allentown .accordion-item-allentown__title { color: var(--kiw--accordion-item-allentown-title-color); font-family: var(--kinekt-component-heading-font-family, var(--heading-font-family)); font-size: var(--kiw--accordion-item-allentown-title-size); font-weight: var(--kinekt-component-heading-font-weight, var(--heading-font-weight)); line-height: var(--kiw--accordion-item-allentown-title-line-height); letter-spacing: var(--kinekt-component-heading-letter-spacing, var(--heading-letter-spacing)); text-wrap: balance; }
   .accordion-item-allentown .accordion-item-allentown__subtitle { color: var(--kiw--accordion-item-allentown-subtitle-color); font-size: var(--kiw--accordion-item-allentown-subtitle-size); line-height: var(--kinekt-component-text-line-height, var(--text-line-height)); }
   .accordion-item-allentown .accordion-item-allentown__toggle { flex: none; inline-size: 1em; block-size: 1em; color: var(--kiw--accordion-item-allentown-toggle-color); font-size: var(--kiw--accordion-item-allentown-toggle-size); }
-  .accordion-item-allentown[open] .accordion-item-allentown__toggle-vertical { display: none; }
+  .accordion-item-allentown .accordion-item-allentown__toggle--open,
+  .accordion-item-allentown[open] .accordion-item-allentown__toggle--closed { display: none; }
+  .accordion-item-allentown[open] .accordion-item-allentown__toggle--open { display: block; }
   .accordion-item-allentown .accordion-item-allentown__panel { margin-block-start: var(--kiw--accordion-item-allentown-panel-gap); color: var(--kiw--accordion-item-allentown-description-color); font-size: var(--kiw--accordion-item-allentown-description-size); line-height: var(--kinekt-component-text-line-height, var(--text-line-height)); }
   .accordion-item-allentown .accordion-item-allentown__panel > * { margin-block: 0; }
   .accordion-item-allentown .accordion-item-allentown__panel > * + * { margin-block-start: var(--space-s); }

@@ -1,9 +1,13 @@
 import type { CollectionSlug, Field } from 'payload'
 import { isSafeWebUrl } from '../urls.js'
-import { ctaIconOptions } from './cta-icons.js'
 
 export const requiredTextMessage = 'Enter non-empty text.'
 export const actionableHrefMessage = 'Enter an HTTP(S), root-relative, mailto:, or tel: link.'
+export const sharpSolidIconMessage = 'Enter a Font Awesome 7 Sharp Solid icon name in kebab-case.'
+
+export const isSharpSolidIconNameOrEmpty = (value: unknown): true | string =>
+  value === undefined || value === null || value === '' || typeof value === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value) || sharpSolidIconMessage
+
 
 export function sectionIntroFields(): Field[] {
   return [
@@ -23,14 +27,11 @@ export function contactMethodFields(): Field[] {
   return [
     {
       name: 'icon',
-      type: 'select',
+      type: 'text',
       label: 'Icon',
       required: true,
-      options: [
-        { label: 'WhatsApp', value: 'whatsapp' },
-        { label: 'Phone', value: 'phone' },
-        { label: 'Email', value: 'email' },
-      ],
+      validate: isSharpSolidIconNameOrEmpty,
+      admin: { description: 'Font Awesome 7 Sharp Solid icon name, for example phone or envelope.' },
     },
     {
       name: 'label',
@@ -81,7 +82,13 @@ export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], 
       validate: (value: unknown, { siblingData }: { siblingData?: unknown }) => validateOptionalCtaHref(value, siblingData),
     },
     ctaContentTargetField(targetCollections),
-    { name: 'icon', type: 'select', label: 'Icon', options: ctaIconOptions },
+    {
+      name: 'icon',
+      type: 'text',
+      label: 'Icon',
+      validate: isSharpSolidIconNameOrEmpty,
+      admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' },
+    },
   ]
 }
 

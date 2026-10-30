@@ -117,7 +117,7 @@ const manifest = {
                   "kind": "text",
                   "required": false,
                   "localized": true,
-                  "description": "Required for status. Font Awesome icon key."
+                  "description": "Required for status. Font Awesome 7 Sharp Solid icon name."
                 }
               }
             }

@@ -247,6 +247,10 @@ The [developer handoff](DEVELOPER-HANDOFF.md) covers the full manifest, implemen
 
 ## Local development
 
+Icon dependencies require a Font Awesome **Pro Package Token** with access to `@fortawesome/sharp-solid-svg-icons@7.3.1`. Set `FONTAWESOME_NPM_AUTH_TOKEN` in your local process environment before installing. `.npmrc` references this variable; never commit the token itself. A Kit code or general API token does not grant package-registry access.
+
+Shared components render Font Awesome 7 Sharp Solid definitions as SVG, without an icon font or browser-side Font Awesome API. Editor icon fields accept icon names such as `bolt` or `shield-halved`; optional empty fields omit the icon.
+
 Run commands from this repository:
 
 ```bash
@@ -268,9 +272,13 @@ The workflow targets [kinekt-io.github.io/kinekt-sections](https://kinekt-io.git
 
 GitHub Pages MUST be available for private repositories on the organization plan before the deployment can succeed. If it is unavailable, run `pnpm build:catalog` or `pnpm dev:catalog` locally; neither command requires GitHub Pages.
 
+The check, catalogue-build, and private-publish jobs read `FONTAWESOME_NPM_AUTH_TOKEN` from the `github-pages` environment. Checks do not expose this credential to fork pull requests.
+
 ### Netlify deploy previews
 
 `netlify.toml` builds `examples/catalog/dist` with the current Node 22 release and pnpm `10.18.0`. On Netlify, import `kinekt-io/kinekt-sections`, set `main` as the production branch, and enable **Deploy Previews** for pull requests. Netlify uses this file, creates one preview URL per pull request, and posts the URL through its GitHub integration.
+
+Add `FONTAWESOME_NPM_AUTH_TOKEN` to the Netlify site's build environment for production and trusted deploy previews. It is required during dependency installation, before the build command runs.
 
 The catalogue keeps its `/kinekt-sections` base only outside Netlify. Netlify production and pull-request previews use their own root URL, preventing GitHub Pages paths from leaking into preview links.
 

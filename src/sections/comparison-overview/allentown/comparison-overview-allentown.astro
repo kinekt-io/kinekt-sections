@@ -1,6 +1,6 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fass as fas } from '@fortawesome/sharp-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import Callout from '../../../components/callout/allentown/callout-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
@@ -43,7 +43,7 @@ const normalizedCallout = {
           if (cell?.type === 'status' && (cell.status === 'positive' || cell.status === 'negative')) {
             const icon = fontAwesomeIcon(cell.status === 'positive' ? 'circle-check' : 'circle-xmark')
             const label = cell.status === 'positive' ? 'Yes' : 'No'
-            return <td><span class:list={['comparison-overview-allentown__status', `comparison-overview-allentown__status--${cell.status}`]}><svg viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} aria-hidden="true" focusable="false"><path d={icon.icon[4] as string} /></svg><span class="comparison-overview-allentown__visually-hidden">{label}</span></span></td>
+            return <td><span class:list={['comparison-overview-allentown__status', `comparison-overview-allentown__status--${cell.status}`]}><svg viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} aria-hidden="true" focusable="false" fill="currentColor"><path d={icon.icon[4] as string} /></svg><span class="comparison-overview-allentown__visually-hidden">{label}</span></span></td>
           }
           return <td>{cell?.text}</td>
         })}</tr>)}</tbody>

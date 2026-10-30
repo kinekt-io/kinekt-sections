@@ -1,5 +1,5 @@
 ---
-import { faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faPlay } from '@fortawesome/sharp-solid-svg-icons'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import type { Media } from '../../../shared/content.js'
 import { isSafeWebUrl } from '../../../urls.js'
@@ -48,7 +48,7 @@ const classes = ['content-hero-media-allentown', sourceType && `content-hero-med
         <video class="content-hero-media-allentown__video" controls playsinline preload="metadata" poster={poster?.url} data-kinekt-hero-media-video><source src={video.url} /></video>
         {/* Progressive: hidden until the script below takes over; without JavaScript the native controls stay. */}
         <button class="content-hero-media-allentown__play" type="button" aria-label={playLabel} hidden data-kinekt-hero-media-play>
-          <svg aria-hidden="true" focusable="false" viewBox={`0 0 ${playWidth} ${playHeight}`}><path d={playPath as string} /></svg>
+          <svg aria-hidden="true" focusable="false" viewBox={`0 0 ${playWidth} ${playHeight}`} fill="currentColor"><path d={playPath as string} /></svg>
         </button>
       </>
     )}

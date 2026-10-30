@@ -1,6 +1,6 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fass as fas } from '@fortawesome/sharp-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import FormEmbed from '../../../components/form-embed/allentown/form-embed-allentown.astro'
 import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
@@ -39,7 +39,7 @@ const {
 
 const methods = contactMethods.filter((method) => method.label && method.href)
 const chevronDown = fas.faChevronDown.icon
-const submitIcon = ctaIconPaths['paper-plane']
+const submitIcon = ctaIconPaths('paper-plane')
 ---
 
 <section class="beta-support-contact-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
@@ -94,7 +94,7 @@ const submitIcon = ctaIconPaths['paper-plane']
               </div>
               <label>How can we help? <textarea name="message" placeholder="Type here..." required></textarea></label>
             </div>
-            <button type="submit">Send request <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={submitIcon.viewBox} fill="none"><path d={submitIcon.path} stroke="currentColor" stroke-width="2" /></svg></button>
+            <button type="submit">Send request {submitIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={submitIcon.viewBox} fill="currentColor"><path d={submitIcon.path} /></svg>}</button>
           </form>
         </FormEmbed>
       </section>

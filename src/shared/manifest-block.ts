@@ -1,5 +1,5 @@
 import type { Block, CollectionSlug, Field } from 'payload'
-import { ctaFields } from './payload-fields.js'
+import { ctaFields, isSharpSolidIconNameOrEmpty } from './payload-fields.js'
 
 type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'insightSourceList' | 'contentReferenceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
 
@@ -68,7 +68,12 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
   const descendantsLocalized = parentLocalized || field.localized
 
   switch (field.kind) {
-    case 'text': return { ...common, type: 'text' }
+    case 'text': return {
+      ...common,
+      type: 'text',
+      ...(field.description ? { admin: { description: field.description, ...field.admin } } : {}),
+      ...(name === 'icon' || name.endsWith('Icon') ? { validate: isSharpSolidIconNameOrEmpty } : {}),
+    }
     case 'textarea': return { ...common, type: 'textarea' }
     case 'richText': return { ...common, type: 'richText' }
     case 'dateTime': return { ...common, type: 'date', admin: { ...field.admin, date: { pickerAppearance: 'dayAndTime' } } }

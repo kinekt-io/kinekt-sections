@@ -2,7 +2,7 @@
 import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import ProductFinderFormAllentown from './product-finder-form-allentown.astro'
 
-const submitIcon = ctaIconPaths['arrow-right']
+const submitIcon = ctaIconPaths('arrow-right')
 
 const content = {
   theme: 'light' as const,
@@ -26,6 +26,6 @@ const content = {
         </div>
       </fieldset>
     </div>
-    <button type="submit">Find my battery <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={submitIcon.viewBox} fill="none"><path d={submitIcon.path} stroke="currentColor" stroke-width="2" /></svg></button>
+    <button type="submit">Find my battery {submitIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={submitIcon.viewBox} fill="currentColor"><path d={submitIcon.path} /></svg>}</button>
   </form>
 </ProductFinderFormAllentown>

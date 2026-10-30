@@ -4,6 +4,7 @@ import {
   mediaToProps,
   optionalText,
   requireObject,
+  requireSharpSolidIcon,
   requireText,
   requireTheme,
   type PayloadAdapterOptions,
@@ -141,16 +142,13 @@ function contactMethodsToProps(value: unknown): ContactMethod[] | undefined {
 
   const methods = value.map((entry, index) => {
     const method = requireObject(entry, `contactMethods[${index}]`)
-    const icon = method.icon
-    if (icon !== 'whatsapp' && icon !== 'phone' && icon !== 'email') {
-      throw new Error(`contactMethods[${index}].icon must be whatsapp, phone, or email.`)
-    }
+    const icon = requireSharpSolidIcon(method.icon, `contactMethods[${index}].icon`)
 
     const href = requireText(method.href, `contactMethods[${index}].href`)
     if (!isActionableHref(href)) throw new Error(`contactMethods[${index}].href is not an actionable link.`)
 
     return {
-      icon: icon as ContactMethod['icon'],
+      icon,
       label: requireText(method.label, `contactMethods[${index}].label`),
       href,
     }

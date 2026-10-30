@@ -77,15 +77,10 @@ const manifest = {
       "minItems": 1,
       "fields": {
         "icon": {
-          "kind": "select",
+          "kind": "text",
           "required": true,
           "localized": true,
-          "options": [
-            "whatsapp",
-            "phone",
-            "email"
-          ],
-          "description": "Font Awesome Free SVG icon."
+          "description": "Font Awesome 7 Sharp Solid icon name, for example phone or envelope."
         },
         "label": {
           "kind": "text",

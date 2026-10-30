@@ -36,7 +36,7 @@ const descriptionHtml = typeof topic.description === 'string'
     : richTextToHtml(topic.description, 'hd engineering topic description')
 const actions = ctaGroupActions(topic.ctaGroup)
 const hasMedia = Boolean(topic.media && typeof topic.media.url === 'string' && topic.media.url !== '')
-const plus = ctaIconPaths.plus
+const plus = ctaIconPaths('plus')
 ---
 <div class={classes} data-hd-engineering-topic>
   {hasMedia && <KinektMedia media={topic.media} class="hd-engineering-topic-allentown__media" imageClass="hd-engineering-topic-allentown__image" loading={mediaLoading} />}
@@ -48,15 +48,15 @@ const plus = ctaIconPaths.plus
         {actions.length > 0 && (
           <div class="hd-engineering-topic-allentown__actions">
             {actions.map((cta) => {
-              const icon = isCtaIcon(cta.icon) ? ctaIconPaths[cta.icon] : undefined
-              return <Button href={cta.href} label={cta.label} style={cta.style ?? 'clear'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="none"><path d={icon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>
+              const icon = isCtaIcon(cta.icon) ? ctaIconPaths(cta.icon) : undefined
+              return <Button href={cta.href} label={cta.label} style={cta.style ?? 'clear'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
             })}
           </div>
         )}
       </div>
     </div>
     <!-- Progressive enhancement: the details are readable without JavaScript; the section script reveals this toggle and collapses them. -->
-    <button class="button button--clear hd-engineering-topic-allentown__toggle" type="button" aria-expanded="true" aria-controls={`${id}-details`} data-hd-engineering-topic-toggle hidden>{moreInformationLabel}<svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={plus.viewBox} fill="none"><path d={plus.path} stroke="currentColor" stroke-width="2" /></svg></button>
+    <button class="button button--clear hd-engineering-topic-allentown__toggle" type="button" aria-expanded="true" aria-controls={`${id}-details`} data-hd-engineering-topic-toggle hidden>{moreInformationLabel}{plus && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={plus.viewBox} fill="currentColor"><path d={plus.path} /></svg>}</button>
   </div>
 </div>
 <style is:global>

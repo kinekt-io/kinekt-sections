@@ -1,6 +1,6 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import { faChevronDown, faChevronLeft, faChevronRight, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown, faChevronLeft, faChevronRight, faMagnifyingGlass, faXmark } from '@fortawesome/sharp-solid-svg-icons'
 import Label from '../../../atoms/label/allentown/label-allentown.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
@@ -112,7 +112,7 @@ const labels: InsightIndexLabels = {
 }
 const facetLabels: Record<string, string> = { Article: 'Articles', Case: 'Cases', ...mediaTypeLabels }
 const cardLinkLabels: Record<string, string> = { Article: 'Read article', Case: 'View case', default: 'Read insight', ...linkLabels }
-// Figma "Label Icon" (4650:28087) icons per media type; Font Awesome free solid names for the Label atom.
+// Figma "Label Icon" (4650:28087) icons per media type for the Label atom.
 const kindIcons: Record<string, string> = { article: 'newspaper', case: 'suitcase', 'white paper': 'file-lines', video: 'circle-play', blog: 'pen-nib', interview: 'microphone', news: 'bullhorn' }
 
 // runtimeProps.pageSize = four
@@ -166,7 +166,7 @@ const FiltersHeading = headingLevel
 const CardHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' : 'h4'
 const fa = (definition: typeof faXmark) => ({ viewBox: `0 0 ${definition.icon[0]} ${definition.icon[1]}`, path: definition.icon[4] as string })
 const icons = { search: fa(faMagnifyingGlass), xmark: fa(faXmark), chevronDown: fa(faChevronDown), chevronLeft: fa(faChevronLeft), chevronRight: fa(faChevronRight) }
-const linkIcon = ctaIconPaths['arrow-right']
+const linkIcon = ctaIconPaths('arrow-right')
 const sortOptions = [
   { value: 'newest', label: labels.sortNewest },
   { value: 'oldest', label: labels.sortOldest },
@@ -260,7 +260,7 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
                       </div>
                       {record.excerpt && <p class="insight-index-allentown__excerpt">{record.excerpt}</p>}
                     </div>
-                    <Button class="insight-index-allentown__link" href={record.href} label={cardLinkLabels[record.kind] ?? cardLinkLabels.default} style="clear"><span class="insight-index-allentown__visually-hidden">: {record.title}</span><svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={linkIcon.viewBox} fill="none"><path d={linkIcon.path} stroke="currentColor" stroke-width="2" /></svg></Button>
+                    <Button class="insight-index-allentown__link" href={record.href} label={cardLinkLabels[record.kind] ?? cardLinkLabels.default} style="clear"><span class="insight-index-allentown__visually-hidden">: {record.title}</span>{linkIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={linkIcon.viewBox} fill="currentColor"><path d={linkIcon.path} /></svg>}</Button>
                   </div>
                 </article>
               </li>

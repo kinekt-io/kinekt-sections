@@ -87,7 +87,7 @@ const manifest = {
               "kind": "text",
               "required": false,
               "localized": true,
-              "description": "Optional Font Awesome icon key rendered before the label text."
+              "description": "Optional Font Awesome 7 Sharp Solid icon name rendered before the label text."
             }
           }
         }
@@ -125,7 +125,7 @@ const manifest = {
               "kind": "text",
               "required": false,
               "localized": true,
-              "description": "Optional Font Awesome icon key rendered before the label text."
+              "description": "Optional Font Awesome 7 Sharp Solid icon name rendered before the label text."
             }
           }
         }

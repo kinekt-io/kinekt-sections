@@ -7,6 +7,12 @@
 - Add prerelease Battery Models Trinity with reusable model cards, editable one-to-five ratings, webshop/specification links, and an optional Callout.
 - Add prerelease Streamer Allentown with the standard Intro and optional zero-to-two CTA Group.
 
+### Changed
+
+- Render semantic component icons with Font Awesome 7 Pro Sharp Solid SVG definitions instead of Free Solid or handcrafted stroke glyphs.
+- Accept optional free-text Sharp Solid icon names in Payload icon fields, including CTA groups, with runtime validation of populated names.
+- Require a build-only Pro Package Token for dependency installation; keep icon fonts and credentials out of browser output.
+
 ### Fixed
 
 - Render configured arrow-right and arrow-down icons for Case Studies Allentown header and slide CTAs, retaining the current content-target contract and component-owned styles.

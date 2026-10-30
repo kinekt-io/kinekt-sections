@@ -1,4 +1,4 @@
-export type CtaIcon = 'arrow-right' | 'arrow-down' | 'arrow-up-left' | 'download' | 'paper-plane' | 'plus'
+export type CtaIcon = string
 export type CtaStyle = 'primary' | 'secondary' | 'clear'
 export interface Cta { label: string; href: string; icon?: CtaIcon; style?: CtaStyle }
 export interface CtaGroup { buttons?: Cta[]; primary?: Cta | null; secondary?: Cta | null }

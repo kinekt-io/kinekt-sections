@@ -10,6 +10,8 @@ The token migration is included in this source revision. Package publication rem
 
 Use Node.js 22.12 or newer and pnpm 10.18.0. The package currently develops against Astro 7.1.3 and Payload 3.88.0. Keep the lockfile; do not upgrade dependencies as part of section work.
 
+Before installation, export `FONTAWESOME_NPM_AUTH_TOKEN` with a valid Font Awesome Pro Package Token. Shared icons use `@fortawesome/sharp-solid-svg-icons@7.3.1`; do not add Free/Classic icon packages, icon fonts, or browser API calls. Expose editor-selectable icons as optional text names (for example `shield-halved`) and render their Sharp Solid definitions as SVG.
+
 From the repository root:
 
 ```sh
@@ -19,7 +21,7 @@ pnpm dev:catalog --port 4321
 
 Open `http://127.0.0.1:4321/kinekt-sections/`. This is the neutral wireframe catalogue with component inspection controls, not a customer website.
 
-On the current workstation, the active checkout is `kinekt-sections-published`, not the older sibling `kinekt-sections`. On another workstation the clone folder can differ; verify the Git remote before editing.
+Clone directory names can differ. Verify the Git remote and branch before editing rather than selecting a checkout by its folder suffix.
 
 Astro 7 can start a background dev daemon and exit successfully. A terminal exit alone does not mean the preview stopped. Stop this catalogue with:
 

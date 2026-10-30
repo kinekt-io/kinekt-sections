@@ -56,6 +56,7 @@ test('CTA validators reject partial publish values while allowing an omitted CTA
   const label = ctaField('label')
   const href = ctaField('href')
   const page = ctaField('page')
+  const icon = ctaField('icon')
   assert.deepEqual(page.relationTo, ['pages', 'articles'])
 
   assert.equal(validate(label, undefined, { destinationType: 'url', icon: null }), true)
@@ -64,6 +65,9 @@ test('CTA validators reject partial publish values while allowing an omitted CTA
   assert.equal(validate(label, 'Read more', { destinationType: 'content', page: { relationTo: 'articles', value: 42 } }), true)
   assert.equal(validate(page, 42, { destinationType: 'content', label: 'Read more' }), true)
   assert.equal(validate(href, '/products', { destinationType: 'url', label: 'Browse products' }), true)
+  assert.equal(validate(icon, 'bolt'), true)
+  assert.equal(validate(icon, 'shield-halved'), true)
+  assert.equal(validate(icon, 'shield_halved'), 'Enter a Font Awesome 7 Sharp Solid icon name in kebab-case.')
 })
 
 test('optional CTA groups omit incomplete buttons without discarding their complete sibling', () => {
@@ -124,7 +128,11 @@ test('optional CTA handling does not weaken required CTA or URL safety validatio
   )
 })
 
-test('CTA adapters reject malformed relationships and unsupported populated icons', () => {
+test('CTA adapters accept Sharp Solid icon names and reject invalid populated names', () => {
+  assert.deepEqual(
+    ctaToProps({ label: 'Browse products', destinationType: 'url', href: '/products', icon: 'shield-halved' }, 'cta'),
+    { label: 'Browse products', href: '/products', icon: 'shield-halved' },
+  )
   assert.throws(
     () => ctaToProps({ label: 'Read more', destinationType: 'content', page: { relationTo: 'articles', value: { id: null } } }, 'cta'),
     /cta\.page\.value\.id must reference content/,
@@ -135,6 +143,6 @@ test('CTA adapters reject malformed relationships and unsupported populated icon
   )
   assert.throws(
     () => ctaToProps({ label: 'Browse products', destinationType: 'url', href: '/products', icon: 'external' }, 'cta'),
-    /cta\.icon must be one of arrow-right, arrow-down/,
+    /cta\.icon must name a Font Awesome 7 Sharp Solid icon/,
   )
 })

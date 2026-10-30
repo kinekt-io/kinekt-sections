@@ -1,5 +1,5 @@
 ---
-import { faCalendarDays, faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarDays, faLocationDot } from '@fortawesome/sharp-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
@@ -60,7 +60,7 @@ const end = endCandidate && start && endCandidate.iso !== start.iso ? endCandida
 const isMedia = (value: unknown): value is Media => typeof value === 'object' && value !== null && typeof (value as Media).url === 'string'
 const media = featured && isMedia(event.media) ? { ...event.media, alt: typeof event.media.alt === 'string' ? event.media.alt : '' } : undefined
 const button = event.button && typeof event.button.label === 'string' && event.button.label !== '' && typeof event.button.href === 'string' ? event.button : undefined
-const buttonIcon = button ? ctaIconPaths[isCtaIcon(button.icon) ? button.icon : 'arrow-right'] : undefined
+const buttonIcon = button ? ctaIconPaths(isCtaIcon(button.icon) ? button.icon : 'arrow-right') : undefined
 const description = featured && typeof event.description === 'string' && event.description.trim() ? event.description : undefined
 
 const icon = (definition: typeof faLocationDot) => ({ viewBox: `0 0 ${definition.icon[0]} ${definition.icon[1]}`, path: definition.icon[4] as string })
@@ -75,18 +75,18 @@ const classes = ['event-card-allentown', `event-card-allentown--${presentation}`
     <Heading class="event-card-allentown__title">{event.title}</Heading>
     <ul class="event-card-allentown__meta">
       <li class="event-card-allentown__meta-item">
-        <span class="event-card-allentown__meta-icon" aria-hidden="true"><svg focusable="false" viewBox={locationIcon.viewBox}><path d={locationIcon.path} /></svg></span>
+        <span class="event-card-allentown__meta-icon" aria-hidden="true"><svg focusable="false" viewBox={locationIcon.viewBox} fill="currentColor"><path d={locationIcon.path} /></svg></span>
         <span class="event-card-allentown__meta-text">{event.location}</span>
       </li>
       {start && (
         <li class="event-card-allentown__meta-item">
-          <span class="event-card-allentown__meta-icon" aria-hidden="true"><svg focusable="false" viewBox={dateIcon.viewBox}><path d={dateIcon.path} /></svg></span>
+          <span class="event-card-allentown__meta-icon" aria-hidden="true"><svg focusable="false" viewBox={dateIcon.viewBox} fill="currentColor"><path d={dateIcon.path} /></svg></span>
           <span class="event-card-allentown__meta-text"><time datetime={start.iso}>{start.label}</time>{end && <> – <time datetime={end.iso}>{end.label}</time></>}</span>
         </li>
       )}
     </ul>
     {description && <p class="event-card-allentown__description">{description}</p>}
-    {button && buttonIcon && <Button class="event-card-allentown__button" href={button.href} label={button.label} style="clear"><svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={buttonIcon.viewBox} fill="none"><path d={buttonIcon.path} stroke="currentColor" stroke-width="2" /></svg></Button>}
+    {button && buttonIcon && <Button class="event-card-allentown__button" href={button.href} label={button.label} style="clear"><svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={buttonIcon.viewBox} fill="currentColor"><path d={buttonIcon.path} /></svg></Button>}
   </div>
 </article>
 <style is:global>

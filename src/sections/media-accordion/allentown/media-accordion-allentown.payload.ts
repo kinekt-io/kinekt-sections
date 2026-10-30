@@ -78,7 +78,7 @@ const manifest = {
           "kind": "text",
           "required": false,
           "localized": true,
-          "description": "Required when markerType is icon. Font Awesome icon key."
+          "description": "Required when markerType is icon. Font Awesome 7 Sharp Solid icon name."
         },
         "title": {
           "kind": "text",

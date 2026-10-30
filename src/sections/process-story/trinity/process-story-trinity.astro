@@ -2,7 +2,7 @@
 import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fass as fas } from '@fortawesome/sharp-solid-svg-icons'
 import { ctaGroupActions, type Cta, type CtaGroup, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
 interface ProcessItem {
@@ -24,7 +24,7 @@ interface Props {
 const { id, theme = 'light', headingLevel = 'h2', intro, items = [] } = Astro.props as Props
 const description = (value: ProcessItem['description']) => typeof value === 'string' ? value : value?.html
 const fontAwesomeIcon = (name?: string) => {
-  if (!name || !/^[a-z0-9-]+$/.test(name)) return undefined
+  if (!name || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name)) return undefined
   const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
   return fas[key]
 }
@@ -41,7 +41,7 @@ const fontAwesomeIcon = (name?: string) => {
             <summary class="process-story-trinity__trigger" data-process-story-trigger>
               <span class="process-story-trinity__number" aria-hidden="true">
                 <span class="process-story-trinity__marker-number">{String(index + 1).padStart(2, '0')}</span>
-                {icon && <svg class="process-story-trinity__marker-icon" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} focusable="false"><path d={icon.icon[4] as string} /></svg>}
+                {icon && <svg class="process-story-trinity__marker-icon" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} focusable="false" fill="currentColor"><path d={icon.icon[4] as string} /></svg>}
               </span>
               <span class="process-story-trinity__title">{item.title}</span>
               <span class="process-story-trinity__timer" aria-hidden="true"><span></span></span>

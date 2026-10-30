@@ -65,7 +65,7 @@ const manifest = {
           "kind": "text",
           "required": false,
           "localized": true,
-          "description": "Required when markerType is icon. Font Awesome icon key, for example blender-phone or dumpster-fire."
+          "description": "Required when markerType is icon. Font Awesome 7 Sharp Solid icon name, for example blender-phone or dumpster-fire."
         },
         "title": {
           "kind": "text",

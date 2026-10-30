@@ -1,5 +1,5 @@
 ---
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck } from '@fortawesome/sharp-solid-svg-icons'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import type { Media, RichText } from '../../../shared/content.js'
 
@@ -32,7 +32,7 @@ const checkViewBox = ['0 0', checkWidth, checkHeight].join(' ')
       <ul class="output-card-allentown__benefits">
         {benefits.map((benefit) => (
           <li class="output-card-allentown__benefit">
-            <svg class="output-card-allentown__check" aria-hidden="true" focusable="false" viewBox={checkViewBox}><path d={checkPath as string} /></svg>
+            <svg class="output-card-allentown__check" aria-hidden="true" focusable="false" viewBox={checkViewBox} fill="currentColor"><path d={checkPath as string} /></svg>
             <span>{benefit}</span>
           </li>
         ))}

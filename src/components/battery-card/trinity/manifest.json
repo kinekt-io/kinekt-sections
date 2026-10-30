@@ -17,7 +17,7 @@
   "fields": {
     "image": { "kind": "media", "required": true, "localized": true },
     "title": { "kind": "text", "required": true, "localized": true },
-    "bestForIcon": { "kind": "text", "required": false, "localized": true, "description": "Optional Font Awesome Free icon key, for example bolt or boxes-stacked." },
+    "bestForIcon": { "kind": "text", "required": false, "localized": true, "description": "Optional Font Awesome 7 Sharp Solid icon name, for example bolt or boxes-stacked." },
     "bestForText": { "kind": "text", "required": false, "localized": true },
     "description": { "kind": "richText", "required": true, "localized": true },
     "ratings": { "kind": "componentList", "componentId": "components/battery-rating/trinity", "required": true, "localized": true, "minItems": 1 },

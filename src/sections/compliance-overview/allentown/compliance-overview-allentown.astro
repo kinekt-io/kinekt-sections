@@ -50,8 +50,8 @@ const ChecklistTitle = headingLevel === 'h1' ? 'h2' : 'h3'
 const actions = ctaGroupActions(ctaGroup)
 for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) or root-relative URL.')
 const tiles = collage.filter((tile) => typeof tile?.anchor === 'string' && /^[A-Za-z][\w:.-]*$/.test(tile.anchor) && tile.certImage?.url)
-// Figma's arrow-down-right is the shared arrow-up-left stroke icon turned 180° (no separate CtaIcon needed).
-const tileIcon = ctaIconPaths['arrow-up-left']
+// Figma's arrow-down-right uses the shared Sharp Solid arrow-up-left icon turned 180°.
+const tileIcon = ctaIconPaths('arrow-up-left')
 ---
 <section class:list={['compliance-overview-allentown', tiles.length > 0 && 'compliance-overview-allentown--with-collage']} id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="compliance-overview-allentown__container">
@@ -70,8 +70,8 @@ const tileIcon = ctaIconPaths['arrow-up-left']
       {actions.length > 0 && (
         <div class="compliance-overview-allentown__actions">
           {actions.map((action, index) => {
-            const icon = isCtaIcon(action.icon) ? ctaIconPaths[action.icon] : undefined
-            return <Button class="compliance-overview-allentown__action" size={index === 0 ? 'l' : undefined} href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="none"><path d={icon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>
+            const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
+            return <Button class="compliance-overview-allentown__action" size={index === 0 ? 'l' : undefined} href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
           })}
         </div>
       )}
@@ -83,7 +83,7 @@ const tileIcon = ctaIconPaths['arrow-up-left']
             <li class="compliance-overview-allentown__tile-item">
               <a class="compliance-overview-allentown__tile" href={`#${tile.anchor}`} aria-label={tile.label || undefined}>
                 <KinektMedia media={tile.certImage} class="compliance-overview-allentown__tile-media" imageClass="compliance-overview-allentown__tile-image" loading={mediaLoading} />
-                <span class="compliance-overview-allentown__tile-label">{collageLinkLabel}<svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={tileIcon.viewBox} fill="none"><path d={tileIcon.path} stroke="currentColor" stroke-width="2" /></svg></span>
+                <span class="compliance-overview-allentown__tile-label">{collageLinkLabel}{tileIcon && <svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={tileIcon.viewBox} fill="currentColor"><path d={tileIcon.path} /></svg>}</span>
               </a>
             </li>
           ))}

@@ -4,6 +4,7 @@ import BatteryCardTrinity from '../../../components/battery-card/trinity/battery
 import Callout from '../../../components/callout/allentown/callout-allentown.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import { faArrowUpRightFromSquare } from '@fortawesome/sharp-solid-svg-icons'
 import type { BatteryModelsTrinityContent } from './battery-models-trinity.types.js'
 
 interface Props extends BatteryModelsTrinityContent {
@@ -28,7 +29,7 @@ const calloutHeadingLevel = `h${Math.min(Number(headingLevel.slice(1)) + 1, 6)}`
     <header class="battery-models-trinity__header">
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
       {catalogueCta && <Button class="battery-models-trinity__catalogue-cta" href={catalogueCta.href} label={catalogueCta.label} style="clear">
-        <svg aria-hidden="true" focusable="false" viewBox="0 0 18 18" fill="none"><path d="M3 15 15 3m-8 0h8v8" stroke="currentColor" stroke-width="2" /></svg>
+        <svg aria-hidden="true" focusable="false" viewBox={`0 0 ${faArrowUpRightFromSquare.icon[0]} ${faArrowUpRightFromSquare.icon[1]}`} fill="currentColor"><path d={faArrowUpRightFromSquare.icon[4] as string} /></svg>
       </Button>}
     </header>
 

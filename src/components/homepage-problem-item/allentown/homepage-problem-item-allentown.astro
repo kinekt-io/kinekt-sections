@@ -1,5 +1,5 @@
 ---
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fass as fas } from '@fortawesome/sharp-solid-svg-icons'
 import type { RichText } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 
@@ -20,7 +20,7 @@ const { item, headingLevel = 'h3', class: className } = Astro.props
 const Heading = headingLevel
 const classes = ['homepage-problem-item-allentown', className].filter(Boolean).join(' ')
 const fontAwesomeIcon = (name?: string | null) => {
-  if (!name || !/^[a-z0-9-]+$/.test(name)) return undefined
+  if (!name || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name)) return undefined
   const key = `fa${name.split('-').map((part) => part[0].toUpperCase() + part.slice(1)).join('')}`
   return fas[key]
 }
@@ -33,7 +33,7 @@ const descriptionHtml = item.description == null || item.description === ''
 ---
 <article class={classes}>
   <Heading class="homepage-problem-item-allentown__title-row">
-    {icon && <svg class="homepage-problem-item-allentown__icon" aria-hidden="true" focusable="false" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`}><path d={icon.icon[4] as string} /></svg>}
+    {icon && <svg class="homepage-problem-item-allentown__icon" aria-hidden="true" focusable="false" viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} fill="currentColor"><path d={icon.icon[4] as string} /></svg>}
     <span class="homepage-problem-item-allentown__title">{item.title}</span>
   </Heading>
   {descriptionHtml && <div class="homepage-problem-item-allentown__description" set:html={descriptionHtml} />}

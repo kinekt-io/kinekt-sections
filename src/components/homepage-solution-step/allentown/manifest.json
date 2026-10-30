@@ -15,7 +15,7 @@
     "nodeId": "5240:411405"
   },
   "fields": {
-    "icon": { "kind": "select", "required": true, "localized": true, "options": ["microchip", "gears", "shield-check"] },
+    "icon": { "kind": "text", "required": true, "localized": true, "description": "Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved." },
     "title": { "kind": "text", "required": true, "localized": true },
     "description": { "kind": "richText", "required": true, "localized": true }
   }

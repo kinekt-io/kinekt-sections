@@ -1,6 +1,6 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight } from '@fortawesome/sharp-solid-svg-icons'
 import ContentHeroMedia, { type ContentHeroMediaContent } from '../../../components/content-hero-media/allentown/content-hero-media-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { SectionIntro as SectionIntroContent } from '../../../shared/content.js'
@@ -37,7 +37,7 @@ const [chevronWidth, chevronHeight, , , chevronPath] = faChevronRight.icon
             const current = index === trail.length - 1
             return (
               <li class="article-header-allentown__breadcrumb-item">
-                {index > 0 && <svg class="article-header-allentown__breadcrumb-separator" aria-hidden="true" focusable="false" viewBox={`0 0 ${chevronWidth} ${chevronHeight}`}><path d={chevronPath as string} /></svg>}
+                {index > 0 && <svg class="article-header-allentown__breadcrumb-separator" aria-hidden="true" focusable="false" viewBox={`0 0 ${chevronWidth} ${chevronHeight}`} fill="currentColor"><path d={chevronPath as string} /></svg>}
                 {current
                   ? <span class="article-header-allentown__breadcrumb-current" aria-current="page">{item.label}</span>
                   : isSafeWebUrl(item.href) ? <a class="article-header-allentown__breadcrumb-link" href={item.href}>{item.label}</a> : <span class="article-header-allentown__breadcrumb-link">{item.label}</span>}

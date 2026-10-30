@@ -1,5 +1,5 @@
 ---
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck } from '@fortawesome/sharp-solid-svg-icons'
 
 export interface ChecklistItemContent {
   text: string
@@ -21,7 +21,7 @@ const classes = ['checklist-item-allentown', `checklist-item-allentown--${size}`
 ---
 {item?.text && (
   <Element class={classes}>
-    <svg class="checklist-item-allentown__check" aria-hidden="true" focusable="false" viewBox={`0 0 ${checkWidth} ${checkHeight}`}><path d={checkPath as string} /></svg>
+    <svg class="checklist-item-allentown__check" aria-hidden="true" focusable="false" viewBox={`0 0 ${checkWidth} ${checkHeight}`} fill="currentColor"><path d={checkPath as string} /></svg>
     <span class="checklist-item-allentown__text">{item.text}</span>
   </Element>
 )}

@@ -42,7 +42,7 @@ const {
 } = Astro.props as Props
 
 const actions = ctaGroupActions(ctas)
-const iconFor = (cta?: Cta | null) => (cta?.icon ? ctaIconPaths[cta.icon] : undefined)
+const iconFor = (cta?: Cta | null) => (cta?.icon ? ctaIconPaths(cta.icon) : undefined)
 type ChildHeading = 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 const level = Number(headingLevel.slice(1))
 const ModelHeading = `h${Math.min(level + 1, 6)}` as ChildHeading
@@ -60,8 +60,8 @@ const crossSellIntro = crossSell ? { ...crossSell.intro, accentHeading: crossSel
         {actions.length > 0 && (
           <nav class="beta-battery-models-allentown__actions" aria-label="Section actions">
             {actions.map((action, index) => {
-              const icon = action.icon ? ctaIconPaths[action.icon] : undefined
-              return <Button class="beta-battery-models-allentown__action" href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="none"><path d={icon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>
+              const icon = action.icon ? ctaIconPaths(action.icon) : undefined
+              return <Button class="beta-battery-models-allentown__action" href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
             })}
           </nav>
         )}
@@ -102,7 +102,7 @@ const crossSellIntro = crossSell ? { ...crossSell.intro, accentHeading: crossSel
                   <KinektMedia class="beta-battery-models-allentown__cross-sell-media" imageClass="beta-battery-models-allentown__cross-sell-image" media={item.image} />
                   <div class="beta-battery-models-allentown__cross-sell-content">
                     <ItemHeading class="beta-battery-models-allentown__cross-sell-title">{item.title}</ItemHeading>
-                    <Button class="beta-battery-models-allentown__cross-sell-action" size="s" href={item.cta.cta.href} label={item.cta.cta.label} style="clear">{itemIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={itemIcon.viewBox} fill="none"><path d={itemIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>
+                    <Button class="beta-battery-models-allentown__cross-sell-action" size="s" href={item.cta.cta.href} label={item.cta.cta.label} style="clear">{itemIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={itemIcon.viewBox} fill="currentColor"><path d={itemIcon.path} /></svg>}</Button>
                   </div>
                 </li>
               )

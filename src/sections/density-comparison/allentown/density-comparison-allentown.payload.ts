@@ -93,7 +93,7 @@ const manifest = {
                   "kind": "text",
                   "required": true,
                   "localized": true,
-                  "description": "Font Awesome icon key."
+                  "description": "Font Awesome 7 Sharp Solid icon name."
                 }
               }
             }

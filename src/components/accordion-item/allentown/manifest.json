@@ -5,7 +5,7 @@
   "id": "components/accordion-item/allentown",
   "slug": "accordion-item-allentown",
   "title": "Accordion Item Allentown",
-  "description": "A reusable accordion item with an optional automatic number or Font Awesome marker, required title and description, and optional subtitle.",
+  "description": "A reusable accordion item with an optional automatic number or Font Awesome 7 Sharp Solid marker, required title and description, and optional subtitle.",
   "category": "components",
   "role": "accordion-item",
   "variation": "allentown",
@@ -26,7 +26,7 @@
       "kind": "text",
       "required": false,
       "localized": true,
-      "description": "Required when markerType is icon. Font Awesome icon key."
+      "description": "Required when markerType is icon. Font Awesome 7 Sharp Solid icon name."
     },
     "title": {
       "kind": "text",

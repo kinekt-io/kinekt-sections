@@ -21,7 +21,7 @@ const items = Array.isArray(carousel.items) ? carousel.items : [];
 const action = cta?.cta ?? cta;
 const hasCarousel = items.length > 1;
 const slideAction = (item: any) => item.cta?.cta ?? item.cta;
-const ctaIcon = (value: unknown) => (isCtaIcon(value) ? ctaIconPaths[value] : undefined);
+const ctaIcon = (value: unknown) => (isCtaIcon(value) ? ctaIconPaths(value) : undefined);
 const actionIcon = ctaIcon(action?.icon);
 ---
 
@@ -54,9 +54,9 @@ const actionIcon = ctaIcon(action?.icon);
                   width="1em"
                   height="1em"
                   viewBox={actionIcon.viewBox}
-                  fill="none"
+                  fill="currentColor"
                 >
-                  <path d={actionIcon.path} stroke="currentColor" stroke-width="2" />
+                  <path d={actionIcon.path} />
                 </svg>
               )}
             </Button>
@@ -201,13 +201,9 @@ const actionIcon = ctaIcon(action?.icon);
                                   width="1em"
                                   height="1em"
                                   viewBox={itemActionIcon.viewBox}
-                                  fill="none"
+                                  fill="currentColor"
                                 >
-                                  <path
-                                    d={itemActionIcon.path}
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                  />
+                                  <path d={itemActionIcon.path} />
                                 </svg>
                               )}
                             </Button>

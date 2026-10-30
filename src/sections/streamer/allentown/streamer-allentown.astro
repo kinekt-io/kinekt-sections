@@ -20,9 +20,9 @@ const actions = ctaGroupActions(ctas)
     {actions.length > 0 && (
       <nav class="streamer-allentown__actions" aria-label="Section actions">
         {actions.map((action, index) => {
-          const icon = action.icon ? ctaIconPaths[action.icon] : undefined
+          const icon = action.icon ? ctaIconPaths(action.icon) : undefined
           return <Button class="streamer-allentown__action" href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>
-            {icon && <svg aria-hidden="true" focusable="false" viewBox={icon.viewBox} fill="none"><path d={icon.path} stroke="currentColor" stroke-width="2" /></svg>}
+            {icon && <svg aria-hidden="true" focusable="false" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}
           </Button>
         })}
       </nav>

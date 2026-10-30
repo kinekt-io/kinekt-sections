@@ -1,7 +1,7 @@
 import type { Block, CollectionSlug } from 'payload'
 import type { PayloadReadMoreDocument, ReadMoreContent } from './read-more-allentown.types.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
-import { ctaGroupToProps, mediaToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { ctaGroupToProps, mediaToProps, optionalSharpSolidIcon, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { ctaGroupFields } from '../../../shared/payload-fields.js'
 
 export interface CreateReadMoreBlockOptions {
@@ -28,7 +28,7 @@ export function readMoreToProps(data: PayloadReadMoreDocument, options: PayloadA
   const intro = requireObject(data.intro, 'intro')
   const label = data.label == null ? undefined : requireObject(data.label, 'label')
   const labelText = label ? optionalText(label.text, 'label.text') : undefined
-  const labelIcon = label ? optionalText(label.icon, 'label.icon') : undefined
+  const labelIcon = label ? optionalSharpSolidIcon(label.icon, 'label.icon') : undefined
   return {
     theme: requireTheme(data.theme),
     intro: {

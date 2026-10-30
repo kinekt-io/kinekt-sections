@@ -1,5 +1,5 @@
 ---
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faMinus, faPlus } from '@fortawesome/sharp-solid-svg-icons'
 import Label from '../../../atoms/label/allentown/label-allentown.astro'
 
 export interface ProductDetailItemContent {
@@ -31,8 +31,8 @@ const [minusWidth, minusHeight, , , minusPath] = faMinus.icon
       <Heading class="product-detail-item-allentown__title">{item.title}</Heading>
       {item.subtitle && <span class="product-detail-item-allentown__subtitle">{item.subtitle}</span>}
     </span>
-    <svg class="product-detail-item-allentown__icon product-detail-item-allentown__icon--open" aria-hidden="true" focusable="false" viewBox={`0 0 ${plusWidth} ${plusHeight}`}><path d={plusPath as string} /></svg>
-    <svg class="product-detail-item-allentown__icon product-detail-item-allentown__icon--close" aria-hidden="true" focusable="false" viewBox={`0 0 ${minusWidth} ${minusHeight}`}><path d={minusPath as string} /></svg>
+    <svg class="product-detail-item-allentown__icon product-detail-item-allentown__icon--open" aria-hidden="true" focusable="false" viewBox={`0 0 ${plusWidth} ${plusHeight}`} fill="currentColor"><path d={plusPath as string} /></svg>
+    <svg class="product-detail-item-allentown__icon product-detail-item-allentown__icon--close" aria-hidden="true" focusable="false" viewBox={`0 0 ${minusWidth} ${minusHeight}`} fill="currentColor"><path d={minusPath as string} /></svg>
   </summary>
   <div class="product-detail-item-allentown__content">
     <p class="product-detail-item-allentown__description">{item.description}</p>

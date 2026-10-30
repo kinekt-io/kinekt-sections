@@ -1,5 +1,5 @@
 ---
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown } from '@fortawesome/sharp-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import Callout from '../../../components/callout/allentown/callout-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
@@ -73,8 +73,8 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
       )}
 
       {overviewAction && (() => {
-        const icon = isCtaIcon(overviewAction.icon) ? ctaIconPaths[overviewAction.icon] : undefined
-        return <div class="beta-faq-allentown__overview"><Button href={overviewAction.href} label={overviewAction.label} style="clear">{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="none"><path d={icon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button></div>
+        const icon = isCtaIcon(overviewAction.icon) ? ctaIconPaths(overviewAction.icon) : undefined
+        return <div class="beta-faq-allentown__overview"><Button href={overviewAction.href} label={overviewAction.label} style="clear">{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button></div>
       })()}
     </div>
 

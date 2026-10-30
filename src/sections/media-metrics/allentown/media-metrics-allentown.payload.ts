@@ -1,7 +1,7 @@
 import type { Block, CollectionSlug } from 'payload'
 import { createManifestBlock } from '../../../shared/manifest-block.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
-import { mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import type { MediaMetricsAllentownContent, PayloadMediaMetricsAllentownDocument } from './media-metrics-allentown.types.js'
 
 const manifest = {
@@ -73,7 +73,7 @@ const manifest = {
               "kind": "text",
               "required": false,
               "localized": true,
-              "description": "Optional Font Awesome icon key rendered before the label text."
+              "description": "Optional Font Awesome 7 Sharp Solid icon name rendered before the label text."
             }
           }
         }
@@ -108,7 +108,7 @@ export function mediaMetricsAllentownToProps(data: PayloadMediaMetricsAllentownD
     metrics: requireArray(data.metrics, 'metrics').map((item, index) => {
       const metric = requireObject(item, 'metrics[' + index + ']')
       const value = requireObject(metric.value, 'metrics[' + index + '].value')
-      const icon = optionalText(value.icon, 'metrics[' + index + '].value.icon')
+      const icon = optionalSharpSolidIcon(value.icon, 'metrics[' + index + '].value.icon')
 
       return {
         label: requireText(metric.label, 'metrics[' + index + '].label'),

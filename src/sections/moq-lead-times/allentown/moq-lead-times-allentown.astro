@@ -37,14 +37,14 @@ const action = (() => {
     : cta as CtaInput
   return typeof candidate?.label === 'string' && candidate.label.trim() !== '' && typeof candidate.href === 'string' && candidate.href.trim() !== '' ? candidate as Cta : undefined
 })()
-const actionIcon = action && isCtaIcon(action.icon) ? ctaIconPaths[action.icon] : undefined
+const actionIcon = action && isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
 const visibleLeadTimes = leadTimes.filter((item) => typeof item?.title === 'string' && item.title.trim() !== '' && typeof item.description === 'string' && item.description.trim() !== '' && typeof item.value?.text === 'string' && item.value.text.trim() !== '')
 ---
 <section class="beta-moq-lead-times-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
   <div class="beta-moq-lead-times-allentown__container">
     <header class="beta-moq-lead-times-allentown__intro">
       <SectionIntro intro={introContent} headingLevel={headingLevel} />
-      {action && <Button href={action.href} label={action.label} size="s">{actionIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={actionIcon.viewBox} fill="none"><path d={actionIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button>}
+      {action && <Button href={action.href} label={action.label} size="s">{actionIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={actionIcon.viewBox} fill="currentColor"><path d={actionIcon.path} /></svg>}</Button>}
     </header>
 
     <section class="beta-moq-lead-times-allentown__facts" aria-label="Order requirements">

@@ -2,8 +2,9 @@ import type { Block, CollectionSlug, Field } from 'payload'
 
 import type { Cta, CtaGroup, Media, SectionIntro } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
-import { mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { isSafeWebUrl } from '../../../urls.js'
+import { isSharpSolidIconNameOrEmpty } from '../../../shared/payload-fields.js'
 
 export interface SolutionListAllentownItem {
   image: Media
@@ -90,7 +91,7 @@ function ctaGroupFields(targetRelation: CollectionSlug | CollectionSlug[]): Fiel
       { name: 'destinationType', label: 'Link type', type: 'select', defaultValue: 'url', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }], hooks: { afterRead: [({ value, siblingData }) => value === 'page' && !siblingData?.page && isSafeWebUrl(siblingData?.href) ? 'url' : value] } },
       { name: 'href', label: 'URL', type: 'text', admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeWebUrl(value) || 'Enter an absolute HTTP(S) URL or a site-root-relative path.' },
       targetField(targetRelation),
-      { name: 'icon', label: 'Icon', type: 'select', options: [{ label: 'Arrow right', value: 'arrow-right' }, { label: 'Arrow down', value: 'arrow-down' }] },
+      { name: 'icon', label: 'Icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' } },
     ],
   })) as Field[]
 }
@@ -120,7 +121,7 @@ function itemToProps(value: unknown, index: number, contentHref: SolutionListAll
     image: mediaToProps(item.image, `items[${index}].image`, options),
     accentHeading: optionalText(item.accentHeading, `items[${index}].accentHeading`),
     heading: requireText(item.heading, `items[${index}].heading`),
-    ...(label && optionalText(label.text, `items[${index}].label.text`) ? { label: { text: requireText(label.text, `items[${index}].label.text`), ...(optionalText(label.icon, `items[${index}].label.icon`) ? { icon: optionalText(label.icon, `items[${index}].label.icon`) } : {}) } } : {}),
+    ...(label && optionalText(label.text, `items[${index}].label.text`) ? { label: { text: requireText(label.text, `items[${index}].label.text`), ...(optionalSharpSolidIcon(label.icon, `items[${index}].label.icon`) ? { icon: optionalSharpSolidIcon(label.icon, `items[${index}].label.icon`) } : {}) } } : {}),
     description: requireText(item.description, `items[${index}].description`),
     cta: destination,
   }
@@ -128,8 +129,7 @@ function itemToProps(value: unknown, index: number, contentHref: SolutionListAll
 
 function destinationToProps(value: Record<string, unknown>, field: string, labelField: string, contentHref: SolutionListAllentownAdapterOptions['contentHref']): Cta {
   const label = requireText(value[labelField], `${field}.${labelField}`)
-  const icon = value.icon
-  if (icon !== undefined && icon !== 'arrow-right' && icon !== 'arrow-down') throw new Error(`${field}.icon must be arrow-right or arrow-down.`)
+  const icon = optionalSharpSolidIcon(value.icon, `${field}.icon`)
 
   if (value.destinationType === 'page') {
     const target = relationshipTarget(value.page, `${field}.page`)

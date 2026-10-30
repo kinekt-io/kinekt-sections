@@ -2,8 +2,8 @@ import type { Block, CollectionSlug } from 'payload'
 
 import type { Cta, CtaIcon, Media, SectionIntro } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
-import { ctaGroupToProps, ctaToProps, mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
-import { contentTargetField, ctaFields } from '../../../shared/payload-fields.js'
+import { ctaGroupToProps, ctaToProps, mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { contentTargetField, ctaFields, isSharpSolidIconNameOrEmpty } from '../../../shared/payload-fields.js'
 
 export type CaseStudyResult = {
   label: string
@@ -122,7 +122,7 @@ export function createCaseStudiesAllentownBlock({
               admin: { description: 'Uses the Content target or URL selected for this slide.' },
               fields: [
                 { name: 'label', type: 'text', label: 'Button text', required: true, validate: textRequired },
-                { name: 'icon', type: 'select', label: 'Icon', options: [{ label: 'Arrow right', value: 'arrow-right' }, { label: 'Arrow down', value: 'arrow-down' }] },
+                { name: 'icon', type: 'text', label: 'Icon', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' } },
               ],
             },
           ],
@@ -184,7 +184,7 @@ function resultToProps(value: unknown, itemIndex: number, resultIndex: number): 
     label: requireText(result.label, `carousel.items[${itemIndex}].results[${resultIndex}].label`),
     value: {
       text: requireText(metric.text, `carousel.items[${itemIndex}].results[${resultIndex}].value.text`),
-      ...(optionalText(metric.icon, `carousel.items[${itemIndex}].results[${resultIndex}].value.icon`) ? { icon: optionalText(metric.icon, `carousel.items[${itemIndex}].results[${resultIndex}].value.icon`) } : {}),
+      ...(optionalSharpSolidIcon(metric.icon, `carousel.items[${itemIndex}].results[${resultIndex}].value.icon`) ? { icon: optionalSharpSolidIcon(metric.icon, `carousel.items[${itemIndex}].results[${resultIndex}].value.icon`) } : {}),
     },
   }
 }

@@ -16,7 +16,7 @@
   },
   "fields": {
     "markerType": { "kind": "select", "required": true, "localized": true, "options": ["number", "icon"] },
-    "icon": { "kind": "text", "required": false, "localized": true, "description": "Required when markerType is icon. Font Awesome icon key, for example blender-phone or dumpster-fire." },
+    "icon": { "kind": "text", "required": false, "localized": true, "description": "Required when markerType is icon. Font Awesome 7 Sharp Solid icon name, for example blender-phone or dumpster-fire." },
     "title": { "kind": "text", "required": true, "localized": true },
     "description": { "kind": "richText", "required": true, "localized": true },
     "ctaGroup": { "kind": "component", "componentId": "components/cta-group/allentown", "required": false, "localized": true }

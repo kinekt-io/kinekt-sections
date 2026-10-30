@@ -2,7 +2,7 @@ import type { Media, SectionIntro } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 
 export type FormSectionImagePosition = 'left' | 'right'
-export type ContactMethodIcon = 'whatsapp' | 'phone' | 'email'
+export type ContactMethodIcon = string
 
 export interface ContactMethod {
   icon: ContactMethodIcon
@@ -32,7 +32,7 @@ export interface PayloadBetaFormSectionAllentownDocument extends DraftFields<Omi
   } | null
   image?: (DraftFields<Media> & { id?: PayloadID }) | PayloadID | null
   contactMethods?: Array<{
-    icon?: ContactMethodIcon | null
+    icon?: string | null
     label?: string | null
     href?: string | null
   }> | null

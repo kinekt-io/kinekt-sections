@@ -28,11 +28,11 @@ const relatedItems = contentSources.filter((item): item is Required<Pick<Related
 const rawAction: unknown = cta && typeof cta === 'object' && 'cta' in cta ? cta.cta : cta
 const isCta = (value: unknown): value is Cta & Required<Pick<Cta, 'label' | 'href'>> => typeof value === 'object' && value !== null && typeof (value as Record<string, unknown>).label === 'string' && typeof (value as Record<string, unknown>).href === 'string' && isSafeWebUrl((value as Record<string, string>).href)
 const action = isCta(rawAction) ? rawAction : undefined
-const actionIcon = action && isCtaIcon(action.icon) ? ctaIconPaths[action.icon] : undefined
+const actionIcon = action && isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
 const itemMedia = (item: RelatedItem) => [item.image, item.media, item.poster].find(isMedia)
 const CardHeading = headingLevel === 'h2' ? 'h3' : 'h4'
-const linkIcon = ctaIconPaths['arrow-right']
-// Figma "Label Icon" (4650:28087) icon per content type, as Font Awesome free solid names for the Label atom (same map as Insight Index).
+const linkIcon = ctaIconPaths('arrow-right')
+// Figma "Label Icon" (4650:28087) icon per content type for the Label atom (same map as Insight Index).
 const kindIcons: Record<string, string> = { article: 'newspaper', case: 'suitcase', 'case study': 'suitcase', 'white paper': 'file-lines', video: 'circle-play', blog: 'pen-nib', interview: 'microphone', news: 'bullhorn' }
 const kindIcon = (kind?: string) => (kind ? kindIcons[kind.trim().toLowerCase()] : undefined)
 ---
@@ -54,12 +54,12 @@ const kindIcon = (kind?: string) => (kind ? kindIcons[kind.trim().toLowerCase()]
               </div>
               {item.excerpt && <p class="related-content-allentown__excerpt">{item.excerpt}</p>}
             </div>
-            <Button class="related-content-allentown__link" href={item.href} label={readMoreLabel} style="clear"><span class="related-content-allentown__visually-hidden">: {item.title}</span><svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={linkIcon.viewBox} fill="none"><path d={linkIcon.path} stroke="currentColor" stroke-width="2" /></svg></Button>
+            <Button class="related-content-allentown__link" href={item.href} label={readMoreLabel} style="clear"><span class="related-content-allentown__visually-hidden">: {item.title}</span>{linkIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={linkIcon.viewBox} fill="currentColor"><path d={linkIcon.path} /></svg>}</Button>
           </div>
         </article></li>
       })}
     </ul>}
-    {action && <div class="related-content-allentown__actions"><Button class="related-content-allentown__action" href={action.href} label={action.label}>{actionIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={actionIcon.viewBox} fill="none"><path d={actionIcon.path} stroke="currentColor" stroke-width="2" /></svg>}</Button></div>}
+    {action && <div class="related-content-allentown__actions"><Button class="related-content-allentown__action" href={action.href} label={action.label}>{actionIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={actionIcon.viewBox} fill="currentColor"><path d={actionIcon.path} /></svg>}</Button></div>}
   </div>
 </section>
 <style is:global>

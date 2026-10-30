@@ -1,6 +1,6 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck } from '@fortawesome/sharp-solid-svg-icons'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
 import type {CompatibilitySpecificationsContent} from './compatibility-specifications-allentown.types.js'
@@ -31,7 +31,7 @@ const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
         <ul>
           {compatiblePlatforms.items.map((item) => (
             <li>
-              <svg class="compatibility-specifications__check" aria-hidden="true" focusable="false" viewBox={`0 0 ${checkWidth} ${checkHeight}`}><path d={checkPath as string} /></svg>
+              <svg class="compatibility-specifications__check" aria-hidden="true" focusable="false" viewBox={`0 0 ${checkWidth} ${checkHeight}`} fill="currentColor"><path d={checkPath as string} /></svg>
               <span>{item}</span>
             </li>
           ))}

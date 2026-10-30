@@ -1,7 +1,7 @@
 // @generated Homepage Problem Solution Payload contract from the manifest.
 import type { Block, CollectionSlug } from 'payload'
 import { createManifestBlock } from '../../../shared/manifest-block.js'
-import { ctaGroupToProps, optionalText, requireArray, requireObject, requireText, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { ctaGroupToProps, optionalText, requireArray, requireObject, requireSharpSolidIcon, requireText, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BetaHomepageProblemSolutionAllentownContent, PayloadBetaHomepageProblemSolutionAllentownDocument } from './homepage-problem-solution-allentown.types.js'
 
@@ -41,12 +41,10 @@ const manifest = {
       "localized": true,
       "fields": {
         "icon": {
-          "kind": "select",
+          "kind": "text",
           "required": true,
           "localized": true,
-          "options": [
-            "xmark"
-          ]
+          "description": "Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved."
         },
         "title": {
           "kind": "text",
@@ -91,14 +89,10 @@ const manifest = {
       "localized": true,
       "fields": {
         "icon": {
-          "kind": "select",
+          "kind": "text",
           "required": true,
           "localized": true,
-          "options": [
-            "microchip",
-            "gears",
-            "shield-check"
-          ]
+          "description": "Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved."
         },
         "title": {
           "kind": "text",
@@ -135,14 +129,11 @@ const intro = (value: unknown, field: string): Record<string, unknown> => {
   }
 }
 
-const items = (value: unknown, field: string, allowedIcons: readonly string[]): Record<string, unknown>[] =>
+const items = (value: unknown, field: string): Record<string, unknown>[] =>
   requireArray(value, field).map((item, index) => {
     const content = requireObject(item, `${field}[${index}]`)
-    if (typeof content.icon !== 'string' || !allowedIcons.includes(content.icon)) {
-      throw new Error(`${field}[${index}].icon must be one of ${allowedIcons.join(', ')}.`)
-    }
     return {
-      icon: content.icon,
+      icon: requireSharpSolidIcon(content.icon, `${field}[${index}].icon`),
       title: requireText(content.title, `${field}[${index}].title`),
       description: { html: richTextToHtml(content.description, `${field}[${index}].description`) },
     }
@@ -155,9 +146,9 @@ export function betaHomepageProblemSolutionAllentownToProps(data: PayloadBetaHom
   return {
     theme: 'dark',
     problemIntro: intro(block.problemIntro, 'problemIntro'),
-    problemItems: items(block.problemItems, 'problemItems', ['xmark']),
+    problemItems: items(block.problemItems, 'problemItems'),
     solutionIntro: intro(block.solutionIntro, 'solutionIntro'),
-    solutionSteps: items(block.solutionSteps, 'solutionSteps', ['microchip', 'gears', 'shield-check']),
+    solutionSteps: items(block.solutionSteps, 'solutionSteps'),
     ...(ctaGroup ? {
       solutionCtaGroup: {
         ...(ctaGroup.primary ? { primaryButton: ctaGroup.primary } : {}),

@@ -1,6 +1,6 @@
 import type { Block, CollectionSlug, Field } from 'payload'
 import { ctaFields, sectionIntroFields } from '../../../shared/payload-fields.js'
-import { ctaToProps, ctaGroupToProps, mediaToProps, optionalCtaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { ctaToProps, ctaGroupToProps, mediaToProps, optionalCtaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BatteryModelsTrinityContent, BatteryRatingTrinity, PayloadBatteryModelsTrinityDocument } from './battery-models-trinity.types.js'
 
@@ -81,7 +81,7 @@ export function createBatteryModelsTrinityBlock({ mediaCollection = 'media', tar
         fields: [
           { name: 'image', type: 'upload', relationTo: mediaCollection, localized: true, required: true },
           { name: 'title', type: 'text', localized: true, required: true },
-          { name: 'bestForIcon', type: 'text', localized: true, admin: { description: 'Optional Font Awesome Free icon key, for example bolt or boxes-stacked.' } },
+          { name: 'bestForIcon', type: 'text', localized: true, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or boxes-stacked.' } },
           { name: 'bestForText', type: 'text', localized: true },
           { name: 'description', type: 'richText', localized: true, required: true },
           {
@@ -159,7 +159,7 @@ export function batteryModelsTrinityToProps(data: PayloadBatteryModelsTrinityDoc
       return {
         image: mediaToProps(model.image, `models[${index}].image`, options),
         title: requireText(model.title, `models[${index}].title`),
-        ...(optionalText(model.bestForIcon, `models[${index}].bestForIcon`) ? { bestForIcon: optionalText(model.bestForIcon, `models[${index}].bestForIcon`) } : {}),
+        ...(optionalSharpSolidIcon(model.bestForIcon, `models[${index}].bestForIcon`) ? { bestForIcon: optionalSharpSolidIcon(model.bestForIcon, `models[${index}].bestForIcon`) } : {}),
         ...(optionalText(model.bestForText, `models[${index}].bestForText`) ? { bestForText: optionalText(model.bestForText, `models[${index}].bestForText`) } : {}),
         description: { html: richTextToHtml(model.description, `models[${index}].description`) },
         ratings: requireArray(model.ratings, `models[${index}].ratings`).map((rating, ratingIndex) => ratingToProps(rating, `models[${index}].ratings[${ratingIndex}]`)),

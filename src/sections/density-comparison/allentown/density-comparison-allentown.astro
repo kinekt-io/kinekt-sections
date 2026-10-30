@@ -1,6 +1,6 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fass as fas } from '@fortawesome/sharp-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { SectionIntro as SectionIntroContent } from '../../../shared/content.js'
@@ -33,7 +33,7 @@ const iconFor = (status: Status) => fas[status === 'positive' ? 'faCircleCheck' 
           const cell = row.cells[index]
           if (!cell) return <td />
           const icon = iconFor(cell.status)
-          return <td><span class:list={['density-comparison-allentown__value', `density-comparison-allentown__value--${cell.status}`]}><svg viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} aria-hidden="true" focusable="false"><path d={icon.icon[4] as string} /></svg><span>{cell.text}</span></span></td>
+          return <td><span class:list={['density-comparison-allentown__value', `density-comparison-allentown__value--${cell.status}`]}><svg viewBox={`0 0 ${icon.icon[0]} ${icon.icon[1]}`} aria-hidden="true" focusable="false" fill="currentColor"><path d={icon.icon[4] as string} /></svg><span>{cell.text}</span></span></td>
         })}</tr>)}</tbody>
       </table>
     </div>

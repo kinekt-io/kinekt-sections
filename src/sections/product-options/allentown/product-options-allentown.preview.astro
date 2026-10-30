@@ -9,8 +9,8 @@ const placeholder = (alt: string) => ({
   width: 200,
   height: 200,
 })
-const plusIcon = ctaIconPaths.plus
-const sendIcon = ctaIconPaths['paper-plane']
+const plusIcon = ctaIconPaths('plus')
+const sendIcon = ctaIconPaths('paper-plane')
 
 const content = {
   theme: 'light' as const,
@@ -52,7 +52,7 @@ const content = {
           <label>Your email address <input name="email" type="email" autocomplete="email" placeholder="Email address" required /></label>
         </div>
         <details>
-          <summary>Add phone number <svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={plusIcon.viewBox} fill="none"><path d={plusIcon.path} stroke="currentColor" stroke-width="2" /></svg></summary>
+          <summary>Add phone number {plusIcon && <svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={plusIcon.viewBox} fill="currentColor"><path d={plusIcon.path} /></svg>}</summary>
           <label>Your phone number <input name="phone" type="tel" autocomplete="tel" placeholder="Phone number" /></label>
         </details>
       </div>
@@ -64,6 +64,6 @@ const content = {
         </div>
       </fieldset>
     </div>
-    <button type="submit">Send request <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={sendIcon.viewBox} fill="none"><path d={sendIcon.path} stroke="currentColor" stroke-width="2" /></svg></button>
+    <button type="submit">Send request {sendIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={sendIcon.viewBox} fill="currentColor"><path d={sendIcon.path} /></svg>}</button>
   </form>
 </ProductOptionsAllentown>

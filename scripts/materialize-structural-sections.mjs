@@ -434,7 +434,7 @@ export interface PayloadMediaMetricsAllentownDocument extends DraftFields<Omit<M
   const mediaMetricsPayload = `import type { Block, CollectionSlug } from 'payload'
 import { createManifestBlock } from '../../../shared/manifest-block.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
-import { mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import type { MediaMetricsAllentownContent, PayloadMediaMetricsAllentownDocument } from './${base}.types.js'
 
 const manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const
@@ -459,7 +459,7 @@ export function mediaMetricsAllentownToProps(data: PayloadMediaMetricsAllentownD
     metrics: requireArray(data.metrics, 'metrics').map((item, index) => {
       const metric = requireObject(item, 'metrics[' + index + ']')
       const value = requireObject(metric.value, 'metrics[' + index + '].value')
-      const icon = optionalText(value.icon, 'metrics[' + index + '].value.icon')
+      const icon = optionalSharpSolidIcon(value.icon, 'metrics[' + index + '].value.icon')
 
       return {
         label: requireText(metric.label, 'metrics[' + index + '].label'),
@@ -522,7 +522,7 @@ const content = resolveCatalogueAssets(rawContent) as typeof rawContent
   const homepageProblemSolutionPayload = `// @generated Homepage Problem Solution Payload contract from the manifest.
 import type { Block, CollectionSlug } from 'payload'
 import { createManifestBlock } from '${importAdapter}'
-import { ctaGroupToProps, optionalText, requireArray, requireObject, requireText, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { ctaGroupToProps, optionalText, requireArray, requireObject, requireSharpSolidIcon, requireText, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { ${name}Content, Payload${name}Document } from './${base}.types.js'
 
@@ -543,14 +543,11 @@ const intro = (value: unknown, field: string): Record<string, unknown> => {
   }
 }
 
-const items = (value: unknown, field: string, allowedIcons: readonly string[]): Record<string, unknown>[] =>
+const items = (value: unknown, field: string): Record<string, unknown>[] =>
   requireArray(value, field).map((item, index) => {
     const content = requireObject(item, \`\${field}[\${index}]\`)
-    if (typeof content.icon !== 'string' || !allowedIcons.includes(content.icon)) {
-      throw new Error(\`\${field}[\${index}].icon must be one of \${allowedIcons.join(', ')}.\`)
-    }
     return {
-      icon: content.icon,
+      icon: requireSharpSolidIcon(content.icon, \`\${field}[\${index}].icon\`),
       title: requireText(content.title, \`\${field}[\${index}].title\`),
       description: { html: richTextToHtml(content.description, \`\${field}[\${index}].description\`) },
     }
@@ -563,9 +560,9 @@ export function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${n
   return {
     theme: 'dark',
     problemIntro: intro(block.problemIntro, 'problemIntro'),
-    problemItems: items(block.problemItems, 'problemItems', ['xmark']),
+    problemItems: items(block.problemItems, 'problemItems'),
     solutionIntro: intro(block.solutionIntro, 'solutionIntro'),
-    solutionSteps: items(block.solutionSteps, 'solutionSteps', ['microchip', 'gears', 'shield-check']),
+    solutionSteps: items(block.solutionSteps, 'solutionSteps'),
     ...(ctaGroup ? {
       solutionCtaGroup: {
         ...(ctaGroup.primary ? { primaryButton: ctaGroup.primary } : {}),
