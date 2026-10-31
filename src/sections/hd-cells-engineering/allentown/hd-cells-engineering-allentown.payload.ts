@@ -129,19 +129,41 @@ const manifest = {
           "required": true,
           "localized": true
         },
-        "ctaGroup": {
-          "kind": "component",
-          "componentId": "components/cta-group/allentown",
+        "labels": {
+          "kind": "componentList",
+          "componentId": "components/result-item/allentown",
           "required": false,
           "localized": true,
+          "minItems": 0,
+          "maxItems": 2,
+          "admin": {
+            "initCollapsed": true
+          },
+          "description": "Add up to two informational labels. Each has a title, label text and optional Font Awesome Sharp Solid icon; labels are not links.",
           "fields": {
-            "buttons": {
-              "kind": "ctaGroup",
-              "required": false,
+            "label": {
+              "kind": "text",
+              "required": true,
+              "localized": true
+            },
+            "value": {
+              "kind": "component",
+              "componentId": "atoms/label/allentown",
+              "required": true,
               "localized": true,
-              "minItems": 0,
-              "maxItems": 2,
-              "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
+              "fields": {
+                "text": {
+                  "kind": "text",
+                  "required": true,
+                  "localized": true
+                },
+                "icon": {
+                  "kind": "text",
+                  "required": false,
+                  "localized": true,
+                  "description": "Optional Font Awesome 7 Sharp Solid icon name rendered before the label text."
+                }
+              }
             }
           }
         }

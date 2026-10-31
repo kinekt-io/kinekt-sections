@@ -60,9 +60,9 @@ const manifest = {
       "componentId": "components/result-item/allentown",
       "required": true,
       "localized": true,
-      "minItems": 4,
+      "minItems": 1,
       "maxItems": 4,
-      "description": "Four named proof values; each metric has a required label and a localized Label value.",
+      "description": "One to four named proof values; each metric has a required title and a localized Label value.",
       "fields": {
         "label": {
           "kind": "text",

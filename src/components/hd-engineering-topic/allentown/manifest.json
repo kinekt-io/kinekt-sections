@@ -1,1 +1,29 @@
-{"$schema":"https://kinekt.io/schemas/component-manifest.schema.json","schemaVersion":1,"version":"26.10.0-beta.0","id":"components/hd-engineering-topic/allentown","slug":"hd-engineering-topic-allentown","title":"HD Engineering Topic Allentown","description":"A reusable interactive engineering topic.","category":"components","role":"hd-engineering-topic","variation":"allentown","status":"planned","figma":{"url":"https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412594&t=mG3L6xlBzomA03GY-11","nodeId":"5240:412594"},"fields":{"media":{"kind":"media","required":true,"localized":true},"title":{"kind":"text","required":true,"localized":true},"description":{"kind":"richText","required":true,"localized":true},"ctaGroup":{"kind":"component","componentId":"components/cta-group/allentown","required":false,"localized":true}}}
+{
+  "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
+  "schemaVersion": 1,
+  "version": "26.10.0-beta.0",
+  "id": "components/hd-engineering-topic/allentown",
+  "slug": "hd-engineering-topic-allentown",
+  "title": "HD Engineering Topic Allentown",
+  "description": "A reusable interactive engineering topic with up to two titled labels.",
+  "category": "components",
+  "role": "hd-engineering-topic",
+  "variation": "allentown",
+  "status": "planned",
+  "figma": { "url": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412594&t=mG3L6xlBzomA03GY-11", "nodeId": "5240:412594" },
+  "fields": {
+    "media": { "kind": "media", "required": true, "localized": true },
+    "title": { "kind": "text", "required": true, "localized": true },
+    "description": { "kind": "richText", "required": true, "localized": true },
+    "labels": {
+      "kind": "componentList",
+      "componentId": "components/result-item/allentown",
+      "required": false,
+      "localized": true,
+      "minItems": 0,
+      "maxItems": 2,
+      "admin": { "initCollapsed": true },
+      "description": "Add up to two informational labels. Each has a title, label text and optional Font Awesome Sharp Solid icon; labels are not links."
+    }
+  }
+}

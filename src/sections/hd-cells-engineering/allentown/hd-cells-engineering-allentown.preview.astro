@@ -41,7 +41,10 @@ const content = {
       media: topicMedia('Exploded view of the pack architecture'),
       title: 'Pack architecture',
       description: 'Cell layout, enclosure and internal architecture are optimized to maximize usable energy within available space and weight.',
-      ctaGroup: { primaryButton: { label: 'View pack options', href: '#', icon: 'arrow-right' as const } },
+      labels: [
+        { label: 'Assembly time', value: { text: '18% faster', icon: 'stopwatch' } },
+        { label: 'Service access', value: { text: 'Tool-free', icon: 'screwdriver-wrench' } },
+      ],
     },
     {
       media: topicMedia('Battery management system board'),

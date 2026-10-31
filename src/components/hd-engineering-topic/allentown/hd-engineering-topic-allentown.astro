@@ -1,10 +1,9 @@
 ---
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import ResultItem from '../../result-item/allentown/result-item-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
-import type { Cta, CtaGroup, Media, RichText } from '../../../shared/content.js'
-import { ctaGroupActions } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import type { Media, RichText } from '../../../shared/content.js'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 
 
@@ -13,7 +12,7 @@ export interface HdEngineeringTopicContent {
   title: string
   /** A persisted plain string or normalized `{ html }` Payload rich text. */
   description: string | RichText
-  ctaGroup?: CtaGroup | { primaryButton?: Cta | null; secondaryButton?: Cta | null } | null
+  labels?: { label: string; value: { text: string; icon?: string } }[]
 }
 
 interface Props {
@@ -32,7 +31,7 @@ const classes = ['hd-engineering-topic-allentown', className].filter(Boolean).jo
 const descriptionHtml = typeof topic.description === 'string'
   ? richTextToHtml(topic.description, 'hd engineering topic description')
   : topic.description.html
-const actions = ctaGroupActions(topic.ctaGroup)
+const labels = topic.labels ?? []
 const hasMedia = Boolean(topic.media && typeof topic.media.url === 'string' && topic.media.url !== '')
 const plus = ctaIconPaths('plus')
 ---
@@ -43,12 +42,9 @@ const plus = ctaIconPaths('plus')
       <SubtitleFlightPath text={topic.title} as={titleAs} class="hd-engineering-topic-allentown__title" />
       <div class="hd-engineering-topic-allentown__body">
         <div class="hd-engineering-topic-allentown__description" set:html={descriptionHtml} />
-        {actions.length > 0 && (
-          <div class="hd-engineering-topic-allentown__actions">
-            {actions.map((cta) => {
-              const icon = isCtaIcon(cta.icon) ? ctaIconPaths(cta.icon) : undefined
-              return <Button href={cta.href} label={cta.label} style={cta.style ?? 'clear'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-            })}
+        {labels.length > 0 && (
+          <div class="hd-engineering-topic-allentown__labels">
+            {labels.map((label) => <ResultItem label={label.label} value={label.value} size="s" />)}
           </div>
         )}
       </div>
@@ -60,7 +56,7 @@ const plus = ctaIconPaths('plus')
 <style is:global>
   /* Figma "Frame 44827" (5240:412598): a 576 × 720 (4:5) image with a "Content Item Description" card (5240:412600) inset space-m at the
      bottom. Collapsed it holds a clear-alt "More information +" Button; expanded (5240:412580) a Subtile + Flight Path Small header,
-     space-xxl, then the topic copy (text-m, 1.5), a divider and the topic's results (here: its CTAs). */
+     space-xxl, then the topic copy (text-m, 1.5), a divider and up to two titled labels. */
   :where(.hd-engineering-topic-allentown) {
     --kiw--hd-engineering-topic-allentown-media-ratio: 4 / 5;
     --kiw--hd-engineering-topic-allentown-media-background: var(--kinekt-component-surface, transparent);
@@ -75,7 +71,7 @@ const plus = ctaIconPaths('plus')
     --kiw--hd-engineering-topic-allentown-description-size: var(--text-m);
     --kiw--hd-engineering-topic-allentown-description-color: var(--kinekt-component-muted, inherit);
     --kiw--hd-engineering-topic-allentown-divider-color: var(--kinekt-component-line, currentColor);
-    --kiw--hd-engineering-topic-allentown-actions-gap: var(--space-xl);
+    --kiw--hd-engineering-topic-allentown-labels-gap: var(--space-xl);
   }
 
   .hd-engineering-topic-allentown { position: relative; display: grid; min-width: 0; }
@@ -88,7 +84,14 @@ const plus = ctaIconPaths('plus')
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__description { color: var(--kiw--hd-engineering-topic-allentown-description-color); font-size: var(--kiw--hd-engineering-topic-allentown-description-size); line-height: var(--kinekt-component-text-line-height, var(--text-line-height)); }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__description > * { margin-block: 0; }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__description > * + * { margin-block-start: var(--space-xs); }
-  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--kiw--hd-engineering-topic-allentown-actions-gap); padding-block-start: var(--kiw--hd-engineering-topic-allentown-body-gap); border-block-start: var(--kinekt-component-border-width, var(--border-width)) solid var(--kiw--hd-engineering-topic-allentown-divider-color); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__labels {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--kiw--hd-engineering-topic-allentown-labels-gap);
+    padding-block-start: var(--kiw--hd-engineering-topic-allentown-body-gap);
+    border-block-start: var(--kinekt-component-border-width, var(--border-width)) solid var(--kiw--hd-engineering-topic-allentown-divider-color);
+  }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__toggle { justify-self: start; font-family: inherit; }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__toggle:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kinekt-component-accent, currentColor); outline-offset: var(--space-xxs); }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__toggle[aria-expanded='true'] > svg { transform: rotate(45deg); }
