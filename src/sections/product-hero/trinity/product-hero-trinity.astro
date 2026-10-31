@@ -1,0 +1,192 @@
+---
+import '../../../styles/wireframe-tokens.css'
+import BatteryCardTrinity from '../../../components/battery-card/trinity/battery-card-trinity.astro'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
+import { ctaGroupActions } from '../../../shared/content.js'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
+import type { ProductHeroTrinityContent } from './product-hero-trinity.types.js'
+
+interface Props extends ProductHeroTrinityContent {
+  headingLevel?: 'h1' | 'h2' | 'h3'
+}
+
+const { id, theme = 'dark', intro, catalogueCta, featuredLabel, models, ctaGroup, headingLevel = 'h1' } = Astro.props as Props
+const cardHeadingLevel = `h${Number(headingLevel.slice(1)) + 1}` as 'h2' | 'h3' | 'h4'
+const label = featuredLabel?.trim()
+const actions = ctaGroupActions(ctaGroup)
+const catalogueIcon = ctaIconPaths(catalogueCta?.icon)
+---
+
+<section class="product-hero-trinity" id={id} data-kinekt-section data-kinekt-theme={theme} data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)}>
+  <div class="product-hero-trinity__container">
+    <div class="product-hero-trinity__content">
+      <header class="product-hero-trinity__header">
+        <SectionIntro intro={intro} headingLevel={headingLevel} />
+        {catalogueCta && <Button class="product-hero-trinity__catalogue-cta" href={catalogueCta.href} label={catalogueCta.label} style="clear">
+          {catalogueIcon && <svg aria-hidden="true" focusable="false" viewBox={catalogueIcon.viewBox} fill="currentColor"><path d={catalogueIcon.path} /></svg>}
+        </Button>}
+      </header>
+      <div class="product-hero-trinity__catalogue">
+        {label && <SubtitleFlightPath class="product-hero-trinity__featured" text={label} size="small" />}
+        <ul class="product-hero-trinity__models">
+          {models.map((model) => <li class="product-hero-trinity__model"><BatteryCardTrinity card={model} headingLevel={cardHeadingLevel} /></li>)}
+        </ul>
+      </div>
+    </div>
+    {actions.length > 0 && <nav class="product-hero-trinity__actions" aria-label="Section actions">
+      {actions.map((action, index) => {
+        const icon = ctaIconPaths(action.icon)
+        return <Button href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>
+          {icon && <svg aria-hidden="true" focusable="false" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}
+        </Button>
+      })}
+    </nav>}
+  </div>
+</section>
+
+<style is:global>
+  :where(.product-hero-trinity[data-kinekt-section]) {
+    --kiw--product-hero-trinity-site-width: var(--website-width);
+    --kiw--product-hero-trinity-inline-space: var(--section-gutter);
+    --kiw--product-hero-trinity-block-space: var(--section-space-l);
+    --kiw--product-hero-trinity-container-gap: var(--section-space-xl);
+    --kiw--product-hero-trinity-content-gap: var(--section-space-l);
+    --kiw--product-hero-trinity-featured-gap: var(--space-l);
+    --kiw--product-hero-trinity-card-gap: var(--space-xxl);
+    --kiw--product-hero-trinity-intro-width: var(--width-l);
+    --kiw--product-hero-trinity-action-gap: var(--space-l);
+    --kiw--product-hero-trinity-canvas: var(--neutral-ultra-light);
+    --kiw--product-hero-trinity-surface: var(--white);
+    --kiw--product-hero-trinity-ink: var(--primary-ultra-dark);
+    --kiw--product-hero-trinity-muted: var(--primary-semi-dark);
+    --kiw--product-hero-trinity-subtle: var(--primary);
+    --kiw--product-hero-trinity-line: var(--primary-ultra-light);
+    --kiw--product-hero-trinity-accent: var(--accent-semi-dark);
+    --kiw--product-hero-trinity-action: var(--primary);
+    --kiw--product-hero-trinity-action-text: var(--white);
+    --kiw--product-hero-trinity-action-icon: var(--accent);
+    --kiw--product-hero-trinity-tint: 8%;
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--product-hero-trinity-canvas));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--product-hero-trinity-surface));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--product-hero-trinity-ink));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--product-hero-trinity-muted));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kiw--product-hero-trinity-subtle));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--product-hero-trinity-line));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--product-hero-trinity-accent));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--product-hero-trinity-action));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--product-hero-trinity-action-text));
+    --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--product-hero-trinity-action-icon));
+    --kinekt-component-heading-font-family: var(--kinekt-section-heading-font-family, var(--heading-font-family));
+    --kinekt-component-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--heading-font-weight));
+    --kinekt-component-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--heading-letter-spacing));
+    --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--heading-line-height));
+    --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--text-line-height));
+  }
+
+  :where(.product-hero-trinity[data-kinekt-theme='semi-light']) {
+    --kiw--product-hero-trinity-canvas: var(--neutral-light);
+  }
+
+  :where(.product-hero-trinity:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark'])) {
+    --kiw--product-hero-trinity-canvas: var(--primary-dark);
+    --kiw--product-hero-trinity-surface: var(--primary-semi-dark);
+    --kiw--product-hero-trinity-ink: var(--white);
+    --kiw--product-hero-trinity-muted: var(--primary-light);
+    --kiw--product-hero-trinity-subtle: var(--primary-ultra-light);
+    --kiw--product-hero-trinity-line: var(--primary);
+    --kiw--product-hero-trinity-accent: var(--accent);
+  }
+
+  :where(.product-hero-trinity[data-kinekt-theme='dark']) {
+    --kiw--product-hero-trinity-canvas: var(--primary-ultra-dark);
+  }
+
+  .product-hero-trinity[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kiw--product-hero-trinity-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
+
+  .product-hero-trinity {
+    box-sizing: border-box;
+    padding-block: var(--kiw--product-hero-trinity-block-space);
+    color: var(--kinekt-component-ink);
+    background: linear-gradient(160deg, transparent 7%, color-mix(in srgb, var(--kinekt-component-accent) var(--kiw--product-hero-trinity-tint), transparent) 94%), var(--kinekt-component-canvas);
+    font-family: var(--text-font-family);
+    font-size: var(--text-m);
+    font-weight: var(--text-font-weight);
+    line-height: var(--kinekt-component-text-line-height);
+
+    & *, & *::before, & *::after { box-sizing: border-box; }
+
+    & .product-hero-trinity__container {
+      display: grid;
+      inline-size: 100%;
+      max-inline-size: min(var(--kiw--product-hero-trinity-site-width), calc(var(--kiw--product-hero-trinity-content-width) + var(--kiw--product-hero-trinity-inline-space) * 2));
+      margin-inline: auto;
+      padding-inline: var(--kiw--product-hero-trinity-inline-space);
+      gap: var(--kiw--product-hero-trinity-container-gap);
+    }
+
+    & .product-hero-trinity__content {
+      display: grid;
+      min-inline-size: 0;
+      gap: var(--kiw--product-hero-trinity-content-gap);
+    }
+
+    & .product-hero-trinity__header {
+      display: flex;
+      align-items: end;
+      flex-wrap: wrap;
+      gap: var(--space-l);
+    }
+
+    & .section-intro {
+      flex: 1 1 var(--kiw--product-hero-trinity-intro-width);
+      min-inline-size: 0;
+      max-inline-size: var(--kiw--product-hero-trinity-intro-width);
+      --kinekt-component-reading-width: 100%;
+    }
+
+    & .product-hero-trinity__catalogue-cta { margin-inline-start: auto; }
+
+    & .product-hero-trinity__catalogue {
+      display: grid;
+      min-inline-size: 0;
+      gap: var(--kiw--product-hero-trinity-featured-gap);
+    }
+
+    & .product-hero-trinity__models {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--kiw--product-hero-trinity-card-gap);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    & .product-hero-trinity__model { min-inline-size: 0; }
+
+    & .battery-card-trinity {
+      --kiw--battery-card-trinity-description-size: var(--text-m);
+      --kiw--battery-card-trinity-rating-size: var(--text-m);
+    }
+
+    & .product-hero-trinity__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--kiw--product-hero-trinity-action-gap);
+    }
+
+    & .button svg { inline-size: 1em; block-size: 1em; }
+
+    @media (min-width: 50rem) {
+      & .product-hero-trinity__models { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+  }
+</style>

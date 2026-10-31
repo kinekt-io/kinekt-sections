@@ -4,6 +4,7 @@
 
 ### Added
 
+- Add prerelease Product Hero Trinity with the Battery Models Trinity card contract, an optional editable featured flightpath, and zero-to-two actions below the cards instead of a callout.
 - Add prerelease Battery Models Trinity with reusable model cards, editable one-to-five ratings, webshop/specification links, and an optional Callout.
 - Add prerelease Streamer Allentown with the standard Intro and optional zero-to-two CTA Group.
 - Add optional localized results headings to Case Studies slides and editable Problem Solution animation labels; empty labels render no text.
@@ -37,6 +38,8 @@
 - Normalize main section containers to the selected content-width cap while preserving internal column layouts and full-bleed media; let Hero Trinity copy fill its content container below 50rem.
 
 ### Fixed
+
+- Replace Output Card Grid Allentown's fixed Primary/Secondary Payload groups with the standard collapsed zero-to-two CTA array and per-action styles. Before updating a populated CMS, migrate stored `ctas.primary`/`ctas.secondary` objects to CTA rows, preserving their selected styles and targets.
 
 - Render configured arrow-right and arrow-down icons for Case Studies Allentown header and slide CTAs, retaining the current content-target contract and component-owned styles.
 - Normalize Use Cases rich-text descriptions and content-target CTA groups before rendering.

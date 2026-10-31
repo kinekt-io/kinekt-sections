@@ -1,0 +1,49 @@
+---
+import ProductHeroTrinity from './product-hero-trinity.astro'
+
+const placeholder = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/placeholders/placeholder-1600x900.svg`
+const media = (alt: string) => ({ url: placeholder, alt, width: 1600, height: 900 })
+---
+
+<ProductHeroTrinity
+  theme="dark"
+  intro={{
+    accentHeading: 'Field-ready power',
+    heading: 'Choose the right pack for your platform',
+    description: 'Compare three configurations for inspection, mapping and equipment transport. Find a starting point that fits your operating window and integration requirements.',
+  }}
+  featuredLabel="Selected models"
+  models={[
+    {
+      image: media('Atlas compact battery module'),
+      title: 'Atlas 24',
+      bestForIcon: 'bolt',
+      bestForText: 'Compact performance',
+      description: 'A lightweight module for quick inspections and compact airframes with limited installation space.',
+      ratings: [{ label: 'Power', score: 5 }, { label: 'Endurance', score: 3 }, { label: 'Payload', score: 4 }, { label: 'Weight', score: 2 }],
+      webshopCta: { label: 'View in shop', href: 'https://example.com/shop/atlas-24', icon: 'arrow-up-right' },
+      specificationCta: { label: 'Product details', href: 'https://example.com/models/atlas-24' },
+    },
+    {
+      image: media('Meridian long-endurance battery module'),
+      title: 'Meridian 48',
+      bestForIcon: 'clock',
+      bestForText: 'Longer operating windows',
+      description: 'Additional energy reserves for mapping routes and planned missions with fewer battery changes.',
+      ratings: [{ label: 'Power', score: 4 }, { label: 'Endurance', score: 5 }, { label: 'Payload', score: 3 }, { label: 'Weight', score: 3 }],
+      webshopCta: { label: 'View in shop', href: 'https://example.com/shop/meridian-48', icon: 'arrow-up-right' },
+      specificationCta: { label: 'Product details', href: 'https://example.com/models/meridian-48' },
+    },
+    {
+      image: media('Summit battery module for equipment transport'),
+      title: 'Summit 36',
+      bestForIcon: 'boxes-stacked',
+      bestForText: 'Balanced capacity',
+      description: 'A balanced configuration for carrying field equipment while maintaining a practical flight window.',
+      ratings: [{ label: 'Power', score: 4 }, { label: 'Endurance', score: 4 }, { label: 'Payload', score: 5 }, { label: 'Weight', score: 2 }],
+      webshopCta: { label: 'View in shop', href: 'https://example.com/shop/summit-36', icon: 'arrow-up-right' },
+      specificationCta: { label: 'Product details', href: 'https://example.com/models/summit-36' },
+    },
+  ]}
+  ctaGroup={{ buttons: [{ label: 'Explore the range', href: 'https://example.com/shop', style: 'primary', icon: 'chevron-right' }] }}
+/>

@@ -2,7 +2,7 @@ import type { Block, CollectionSlug } from 'payload'
 import type { OutputCardGridContent, PayloadOutputCardGridDocument } from './output-card-grid-allentown.types.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { ctaGroupToProps, mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
-import { ctaGroupFields, sectionContentWidthField } from '../../../shared/payload-fields.js'
+import { ctaFields, ctaStyleField, sectionContentWidthField } from '../../../shared/payload-fields.js'
 import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
 export interface CreateOutputCardGridBlockOptions { mediaCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
@@ -16,7 +16,15 @@ export function createOutputCardGridBlock({ mediaCollection = 'media', targetCol
       sectionContentWidthField(),
       { name: 'theme', type: 'select', localized: true, required: true, defaultValue: 'light', options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })) },
       { name: 'intro', type: 'group', localized: true, fields: [{ name: 'accentHeading', type: 'text' }, { name: 'heading', type: 'text', required: true }, { name: 'description', type: 'richText' }] },
-      { name: 'ctas', type: 'group', localized: true, fields: ctaGroupFields(targetCollections) },
+      {
+        name: 'ctas',
+        type: 'array',
+        localized: true,
+        minRows: 0,
+        maxRows: 2,
+        admin: { initCollapsed: true },
+        fields: [ctaStyleField(), ...ctaFields(targetCollections)],
+      },
       { name: 'label', type: 'text', localized: true },
       { name: 'cards', type: 'array', localized: true, required: true, minRows: 1, fields: [{ name: 'image', type: 'upload', relationTo: mediaCollection, required: true }, { name: 'title', type: 'text', required: true }, { name: 'description', type: 'richText', required: true }] },
     ],

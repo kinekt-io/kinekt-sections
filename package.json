@@ -509,6 +509,17 @@
       "import": "./dist/sections/product-hero/allentown/product-hero-allentown.types.js",
       "types": "./dist/sections/product-hero/allentown/product-hero-allentown.types.d.ts"
     },
+    "./sections/product-hero-trinity.astro": "./src/sections/product-hero/trinity/product-hero-trinity.astro",
+    "./sections/product-hero-trinity.payload": {
+      "default": "./dist/sections/product-hero/trinity/product-hero-trinity.payload.js",
+      "import": "./dist/sections/product-hero/trinity/product-hero-trinity.payload.js",
+      "types": "./dist/sections/product-hero/trinity/product-hero-trinity.payload.d.ts"
+    },
+    "./sections/product-hero-trinity.types": {
+      "default": "./dist/sections/product-hero/trinity/product-hero-trinity.types.js",
+      "import": "./dist/sections/product-hero/trinity/product-hero-trinity.types.js",
+      "types": "./dist/sections/product-hero/trinity/product-hero-trinity.types.d.ts"
+    },
     "./sections/product-options-allentown.astro": "./src/sections/product-options/allentown/product-options-allentown.astro",
     "./sections/product-options-allentown.payload": {
       "default": "./dist/sections/product-options/allentown/product-options-allentown.payload.js",
