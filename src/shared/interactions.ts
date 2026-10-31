@@ -85,12 +85,22 @@ async function initializeCarousel(carousel: Element) {
 
   const listeners = new AbortController()
   const loop = carousel.getAttribute('data-kinekt-carousel-loop') === 'true'
+  const mediaQuery = carousel.getAttribute('data-kinekt-carousel-media')
+  const media = mediaQuery ? window.matchMedia(mediaQuery) : undefined
   const api = EmblaCarousel(viewport, {
     align: 'start',
     watchDrag: (_emblaApi, event) => !(event instanceof MouseEvent),
+    ...(mediaQuery ? { active: false, breakpoints: { [mediaQuery]: { active: true } } } : {}),
     ...(loop ? { loop: true } : { containScroll: 'trimSnaps' })
   })
   const update = () => {
+    if (media) {
+      const active = media.matches
+      api.slideNodes().forEach((slide, index) => { slide.inert = active && index !== api.selectedScrollSnap() })
+      if (active) carousel.setAttribute('aria-roledescription', 'carousel')
+      else carousel.removeAttribute('aria-roledescription')
+      if (!active) return
+    }
     const selected = api.selectedScrollSnap()
     const count = api.scrollSnapList().length
     if (previous) previous.disabled = !api.canScrollPrev()
@@ -110,6 +120,7 @@ async function initializeCarousel(carousel: Element) {
   carousel.addEventListener('kinekt:carousel-reinitialize', () => {
     listeners.abort()
     api.destroy()
+    if (media) api.slideNodes().forEach((slide) => { slide.inert = false })
     carousel.removeAttribute('data-kinekt-carousel-initialized')
     if (carousel.getAttribute('data-kinekt-carousel-static') !== 'true') void initializeCarousel(carousel)
   }, { once: true, signal: listeners.signal })

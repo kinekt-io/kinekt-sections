@@ -18,6 +18,8 @@ const cardHeadingLevel = `h${Number(headingLevel.slice(1)) + 1}` as 'h2' | 'h3' 
 const label = featuredLabel?.trim()
 const actions = ctaGroupActions(ctaGroup)
 const catalogueIcon = ctaIconPaths(catalogueCta?.icon)
+const hasCarousel = models.length > 1
+const nextIcon = ctaIconPaths('chevron-right')!
 ---
 
 <section class="product-hero-trinity" id={id} data-kinekt-section data-kinekt-theme={theme} data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)}>
@@ -29,11 +31,31 @@ const catalogueIcon = ctaIconPaths(catalogueCta?.icon)
           {catalogueIcon && <svg aria-hidden="true" focusable="false" viewBox={catalogueIcon.viewBox} fill="currentColor"><path d={catalogueIcon.path} /></svg>}
         </Button>}
       </header>
-      <div class="product-hero-trinity__catalogue">
+      <div class="product-hero-trinity__catalogue"
+        data-kinekt-carousel={hasCarousel ? true : undefined}
+        data-kinekt-carousel-media={hasCarousel ? '(max-width: 49.999rem)' : undefined}
+        role={hasCarousel ? 'region' : undefined}
+        aria-label={hasCarousel ? 'Featured products' : undefined}
+      >
         {label && <SubtitleFlightPath class="product-hero-trinity__featured" text={label} size="small" />}
-        <ul class="product-hero-trinity__models">
-          {models.map((model) => <li class="product-hero-trinity__model"><BatteryCardTrinity card={model} headingLevel={cardHeadingLevel} /></li>)}
-        </ul>
+        <div class="product-hero-trinity__viewport" data-kinekt-carousel-viewport={hasCarousel ? true : undefined}>
+          <ul class="product-hero-trinity__models" data-kinekt-carousel-container={hasCarousel ? true : undefined}>
+            {models.map((model) => <li class="product-hero-trinity__model" data-kinekt-carousel-slide={hasCarousel ? true : undefined}><BatteryCardTrinity card={model} headingLevel={cardHeadingLevel} /></li>)}
+          </ul>
+        </div>
+        {hasCarousel && <div class="product-hero-trinity__pagination">
+          <p class="product-hero-trinity__counter" aria-live="polite" aria-atomic="true">
+            <span data-kinekt-carousel-current aria-hidden="true">1</span>
+            <span class="product-hero-trinity__total" aria-hidden="true"> / <span data-kinekt-carousel-total>{models.length}</span></span>
+            <span class="product-hero-trinity__status" data-kinekt-carousel-status>Slide 1 of {models.length}</span>
+          </p>
+          <button class="product-hero-trinity__next" type="button" data-kinekt-carousel-next aria-label="Next product">
+            <svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={nextIcon.viewBox} fill="currentColor"><path d={nextIcon.path} /></svg>
+          </button>
+          <div class="product-hero-trinity__indicators" role="group" aria-label="Choose product">
+            {models.map((model, index) => <button type="button" data-kinekt-carousel-dot aria-label={`Show product ${index + 1}: ${model.title}`} aria-current={index === 0 ? 'true' : undefined} />)}
+          </div>
+        </div>}
       </div>
     </div>
     {actions.length > 0 && <nav class="product-hero-trinity__actions" aria-label="Section actions">
@@ -46,6 +68,11 @@ const catalogueIcon = ctaIconPaths(catalogueCta?.icon)
     </nav>}
   </div>
 </section>
+
+<script>
+  import { initializeKinektInteractions } from '../../../shared/interactions'
+  initializeKinektInteractions()
+</script>
 
 <style is:global>
   :where(.product-hero-trinity[data-kinekt-section]) {
@@ -160,6 +187,9 @@ const catalogueIcon = ctaIconPaths(catalogueCta?.icon)
       gap: var(--kiw--product-hero-trinity-featured-gap);
     }
 
+    & .product-hero-trinity__viewport { min-inline-size: 0; }
+    & .product-hero-trinity__pagination { display: none; }
+
     & .product-hero-trinity__models {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -184,6 +214,83 @@ const catalogueIcon = ctaIconPaths(catalogueCta?.icon)
     }
 
     & .button svg { inline-size: 1em; block-size: 1em; }
+
+    @media (max-width: 49.999rem) {
+      & .section-intro { flex-basis: 100%; max-inline-size: 100%; }
+      & .product-hero-trinity__catalogue {
+        gap: var(--kiw--product-hero-trinity-mobile-featured-gap, var(--section-space-s));
+      }
+
+      & [data-kinekt-carousel-initialized] {
+        & .product-hero-trinity__viewport { overflow: hidden; touch-action: pan-y pinch-zoom; }
+        & .product-hero-trinity__models { display: flex; }
+        & .product-hero-trinity__model { flex: 0 0 100%; }
+
+        & .product-hero-trinity__pagination {
+          display: grid;
+          grid-template-columns: 1fr auto;
+          align-items: center;
+          column-gap: var(--space-m);
+        }
+      }
+
+      & .product-hero-trinity__counter {
+        margin: 0;
+        color: var(--kinekt-component-accent);
+        font-family: var(--mono-font-family);
+        font-size: var(--text-l);
+      }
+      & .product-hero-trinity__total { color: var(--kinekt-component-muted); }
+      & .product-hero-trinity__status {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+      & .product-hero-trinity__next {
+        display: grid;
+        place-items: center end;
+        min-inline-size: var(--input-height);
+        min-block-size: var(--input-height);
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--kinekt-component-accent);
+        font-size: var(--text-xxl);
+        cursor: pointer;
+
+        &:disabled { opacity: .4; cursor: default; }
+      }
+      & .product-hero-trinity__indicators {
+        grid-column: 1 / -1;
+        display: flex;
+        gap: var(--space-xs);
+
+        & button {
+          flex: 1;
+          min-inline-size: 24px;
+          min-block-size: 24px;
+          padding: 0;
+          border: 0;
+          background: transparent;
+          cursor: pointer;
+
+          &::after {
+            content: '';
+            display: block;
+            block-size: var(--kiw--product-hero-trinity-indicator-height, 2px);
+            background: var(--kinekt-component-line);
+          }
+          &[aria-current='true']::after { background: var(--kinekt-component-accent); }
+        }
+      }
+      & .product-hero-trinity__pagination button:focus-visible {
+        outline: 2px solid var(--kinekt-component-accent);
+        outline-offset: 2px;
+      }
+    }
 
     @media (min-width: 50rem) {
       & .product-hero-trinity__models { grid-template-columns: repeat(3, minmax(0, 1fr)); }
