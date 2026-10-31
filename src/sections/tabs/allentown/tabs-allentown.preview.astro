@@ -1,154 +1,31 @@
 ---
-// @generated structural section preview.
-import StructuralSection from '../../../shared/structural-section.astro'
-
-const content = {
-  "contentWidth": "standard",
-  "theme": "light",
-  "intro": {
-    "accentHeading": "Energy systems built around real operating conditions",
-    "heading": "Energy systems built around real operating conditions",
-    "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-  },
-  "tabs": [
-    {
-      "label": "System engineering",
-      "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision.",
-      "form": "<script src=\"https://js.hsforms.net/forms/embed/v2.js\"></script>"
-    },
-    {
-      "label": "Built for the field",
-      "description": "The system is configured around the duty cycle, environmental demands and evidence needed for a reliable release.",
-      "form": "<script src=\"https://js.hsforms.net/forms/embed/v2.js\"></script>"
-    },
-    {
-      "label": "From cell to system",
-      "description": "Structured content keeps performance requirements, technical context and implementation choices easy to compare.",
-      "form": "<script src=\"https://js.hsforms.net/forms/embed/v2.js\"></script>"
-    }
-  ]
-}
-const fields = {
-  "contentWidth": {
-    "kind": "select"
-  },
-  "theme": {
-    "kind": "select"
-  },
-  "intro": {
-    "kind": "component",
-    "id": "components/intro/allentown",
-    "role": "intro",
-    "fields": {
-      "accentHeading": {
-        "kind": "text"
-      },
-      "heading": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      }
-    }
-  },
-  "tabs": {
-    "kind": "componentList",
-    "id": "components/tab-item/allentown",
-    "role": "tab-item",
-    "fields": {
-      "label": {
-        "kind": "text"
-      },
-      "description": {
-        "kind": "richText"
-      },
-      "form": {
-        "kind": "formEmbed"
-      }
-    }
-  }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = undefined
-const media = undefined
-const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
-
-function resolveCatalogueAssets(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(resolveCatalogueAssets)
-  if (!value || typeof value !== 'object') return value
-  const record = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveCatalogueAssets(item)]))
-  if (typeof record.url === 'string' && record.url.startsWith('catalogue-asset:')) {
-    record.url = `${catalogueBase}placeholders/${record.url.slice('catalogue-asset:'.length)}`
-  }
-  return record
-}
-
-const resolvedContent = resolveCatalogueAssets(content) as Record<string, unknown>
-const resolvedMedia = resolveCatalogueAssets(media) as typeof media
+import TabsAllentown from './tabs-allentown.astro'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
+const send = ctaIconPaths('paper-plane')!
+const form = `<form class="form-embed-allentown__form">
+  <div class="form-embed-allentown__fields">
+    <label>Your name<input name="name" autocomplete="name" placeholder="Morgan Reed" /></label>
+    <div class="form-embed-allentown__row">
+      <label>Phone number<input name="phone" type="tel" autocomplete="tel" placeholder="+1 202-555-0147" /></label>
+      <label>Country<select name="country" autocomplete="country-name"><option value="">Select country</option><option>United States</option><option>Netherlands</option></select></label>
+    </div>
+    <div class="form-embed-allentown__row">
+      <label>Email address (optional)<input name="email" type="email" autocomplete="email" placeholder="morgan@example.com" /></label>
+      <label>Company name (optional)<input name="company" autocomplete="organization" placeholder="Northfield Studio" /></label>
+    </div>
+  </div>
+  <button type="button">Send request <svg aria-hidden="true" width="1em" height="1em" viewBox="${send.viewBox}" fill="currentColor"><path d="${send.path}" /></svg></button>
+</form>`
+const tabs = [
+  { label: 'Message our team', intro: { description: 'Connect with an adviser to discuss your next project. Our team responds during weekday office hours.' }, ctaGroup: { buttons: [
+    { label: 'Start a conversation', href: '/contact/', style: 'primary' as const, icon: 'comments' },
+    { label: 'Schedule a call', href: '/appointments/', style: 'secondary' as const, icon: 'calendar' },
+  ] } },
+  { label: 'Contact details', intro: { accentHeading: 'Local support', heading: 'Speak with our service team', description: 'Monday to Friday, 9:00–17:00. We can help with project planning, service questions and delivery arrangements.' }, ctaGroup: { buttons: [
+    { label: '+1 202-555-0147', href: 'tel:+12025550147', style: 'primary' as const, icon: 'phone' },
+    { label: 'hello@example.com', href: 'mailto:hello@example.com', style: 'secondary' as const, icon: 'envelope' },
+  ] } },
+  { label: 'Send a request', form },
+]
 ---
-<StructuralSection block="beta-tabs-allentown" intro={intro} ctas={ctas} media={resolvedMedia} content={resolvedContent} fields={fields} />
-<style is:global>
-.beta-tabs-allentown[data-kinekt-section] {
-  --kiw--section-site-width: var(--kinekt-section-site-width, var(--kiw--tabs-allentown-site-width, var(--website-width)));
-  --kiw--section-content-width: var(--kinekt-section-content-width, var(--kiw--tabs-allentown-content-width, var(--content-width)));
-  --kiw--section-reading-width: var(--kinekt-section-reading-width, var(--kiw--tabs-allentown-reading-width, var(--width-m)));
-  --kiw--section-inline-space: var(--kinekt-section-inline-space, var(--kiw--tabs-allentown-inline-space, var(--section-gutter)));
-  --kiw--section-block-space: var(--kinekt-section-block-space, var(--kiw--tabs-allentown-block-space, var(--section-space-l)));
-  --kiw--section-gap: var(--kinekt-section-gap, var(--kiw--tabs-allentown-gap, var(--content-gap)));
-  --kiw--section-radius: var(--kinekt-section-radius, var(--kiw--tabs-allentown-radius, var(--radius-none)));
-  --kiw--section-border-width: var(--kinekt-section-border-width, var(--kiw--tabs-allentown-border-width, var(--border-width)));
-  --kiw--section-media-filter: var(--kinekt-section-media-filter, var(--kiw--tabs-allentown-media-filter, var(--media-filter)));
-  --kiw--section-intro-accent-gap: var(--kinekt-section-intro-accent-gap, var(--kiw--tabs-allentown-intro-accent-gap, var(--space-xxs)));
-  --kiw--section-intro-description-gap: var(--kinekt-section-intro-description-gap, var(--kiw--tabs-allentown-intro-description-gap, var(--space-m)));
-  --kiw--section-heading-1-size: var(--kinekt-section-heading-1-size, var(--kiw--tabs-allentown-heading-1-size, var(--h1)));
-  --kiw--section-heading-2-size: var(--kinekt-section-heading-2-size, var(--kiw--tabs-allentown-heading-2-size, var(--h2)));
-  --kiw--section-heading-3-size: var(--kinekt-section-heading-3-size, var(--kiw--tabs-allentown-heading-3-size, var(--h3)));
-  --kiw--section-heading-4-size: var(--kinekt-section-heading-4-size, var(--kiw--tabs-allentown-heading-4-size, var(--h4)));
-  --kiw--section-heading-5-size: var(--kinekt-section-heading-5-size, var(--kiw--tabs-allentown-heading-5-size, var(--h5)));
-  --kiw--section-heading-6-size: var(--kinekt-section-heading-6-size, var(--kiw--tabs-allentown-heading-6-size, var(--h6)));
-  --kiw--section-heading-font-family: var(--kinekt-section-heading-font-family, var(--kiw--tabs-allentown-heading-font-family, var(--heading-font-family)));
-  --kiw--section-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--kiw--tabs-allentown-heading-font-weight, var(--heading-font-weight)));
-  --kiw--section-heading-line-height: var(--kinekt-section-heading-line-height, var(--kiw--tabs-allentown-heading-line-height, var(--heading-line-height)));
-  --kiw--section-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--kiw--tabs-allentown-heading-letter-spacing, var(--heading-letter-spacing)));
-  --kiw--section-text-font-family: var(--kinekt-section-text-font-family, var(--kiw--tabs-allentown-text-font-family, var(--text-font-family)));
-  --kiw--section-text-font-weight: var(--kinekt-section-text-font-weight, var(--kiw--tabs-allentown-text-font-weight, var(--text-font-weight)));
-  --kiw--section-text-line-height: var(--kinekt-section-text-line-height, var(--kiw--tabs-allentown-text-line-height, var(--text-line-height)));
-  --kiw--section-text-letter-spacing: var(--kinekt-section-text-letter-spacing, var(--kiw--tabs-allentown-text-letter-spacing, var(--text-letter-spacing)));
-  --kiw--section-mono-font-family: var(--kinekt-section-mono-font-family, var(--kiw--tabs-allentown-mono-font-family, var(--mono-font-family)));
-  --kiw--section-text-xs-size: var(--kinekt-section-text-xs-size, var(--kiw--tabs-allentown-text-xs-size, var(--text-xs)));
-  --kiw--section-text-s-size: var(--kinekt-section-text-s-size, var(--kiw--tabs-allentown-text-s-size, var(--text-s)));
-  --kiw--section-text-m-size: var(--kinekt-section-text-m-size, var(--kiw--tabs-allentown-text-m-size, var(--text-m)));
-  --kiw--section-text-l-size: var(--kinekt-section-text-l-size, var(--kiw--tabs-allentown-text-l-size, var(--text-l)));
-  --kiw--section-text-xl-size: var(--kinekt-section-text-xl-size, var(--kiw--tabs-allentown-text-xl-size, var(--text-xl)));
-  --kiw--section-text-xxl-size: var(--kinekt-section-text-xxl-size, var(--kiw--tabs-allentown-text-xxl-size, var(--text-xxl)));
-  --kiw--section-carousel-gap: var(--kinekt-section-carousel-gap, var(--kiw--tabs-allentown-carousel-gap, var(--content-gap)));
-  --kiw--section-actions-gap: var(--kinekt-section-actions-gap, var(--kiw--tabs-allentown-actions-gap, var(--space-l)));
-  --kiw--section-actions-margin: var(--kinekt-section-actions-margin, var(--kiw--tabs-allentown-actions-margin, var(--section-space-xs)));
-  --kiw--section-button-height: var(--kinekt-section-button-height, var(--kiw--tabs-allentown-button-height, var(--input-height)));
-  --kiw--section-button-padding-block: var(--kinekt-section-button-padding-block, var(--kiw--tabs-allentown-button-padding-block, var(--space-s)));
-  --kiw--section-button-padding-inline: var(--kinekt-section-button-padding-inline, var(--kiw--tabs-allentown-button-padding-inline, var(--space-l)));
-  --kiw--section-button-radius: var(--kinekt-section-button-radius, var(--kiw--tabs-allentown-button-radius, var(--buttons-radius)));
-  --kiw--section-input-height: var(--kinekt-section-input-height, var(--kiw--tabs-allentown-input-height, var(--input-height)));
-  --kiw--section-editorial-gap: var(--kinekt-section-editorial-gap, var(--kiw--tabs-allentown-editorial-gap, var(--section-space-xxl)));
-  --kiw--section-card-padding: var(--kinekt-section-card-padding, var(--kiw--tabs-allentown-card-padding, var(--space-l)));
-  --kiw--section-header-to-content-gap: var(--kinekt-section-header-to-content-gap, var(--kiw--tabs-allentown-header-to-content-gap, var(--section-space-s)));
-  --kiw--section-table-offset: var(--kinekt-section-table-offset, var(--kiw--tabs-allentown-table-offset, var(--space-xl)));
-  --kiw--section-canvas: var(--kinekt-section-canvas, var(--kiw--tabs-allentown-canvas));
-  --kiw--section-surface: var(--kinekt-section-surface, var(--kiw--tabs-allentown-surface));
-  --kiw--section-ink: var(--kinekt-section-ink, var(--kiw--tabs-allentown-ink));
-  --kiw--section-muted: var(--kinekt-section-muted, var(--kiw--tabs-allentown-muted));
-  --kiw--section-subtle: var(--kinekt-section-subtle, var(--kiw--tabs-allentown-subtle));
-  --kiw--section-line: var(--kinekt-section-line, var(--kiw--tabs-allentown-line));
-  --kiw--section-action: var(--kinekt-section-action, var(--kiw--tabs-allentown-action));
-  --kiw--section-action-text: var(--kinekt-section-action-text, var(--kiw--tabs-allentown-action-text));
-  --kiw--section-accent: var(--kinekt-section-accent, var(--kiw--tabs-allentown-accent));
-  --kiw--section-action-icon: var(--kinekt-section-action-icon, var(--kiw--tabs-allentown-action-icon));
-}
-</style>
-<style is:global>
-:where(.beta-tabs-allentown[data-kinekt-structural-section]) { --kinekt-section-reading-width: var(--width-l); --kinekt-section-gap: var(--section-space-l); }
-</style>
+<TabsAllentown contentWidth="80" theme="light" intro={{ accentHeading: 'Get in touch', heading: 'Talk with our local support team' }} tabsHeading="How would you like to get in touch?" tabs={tabs} />

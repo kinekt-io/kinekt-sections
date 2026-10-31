@@ -406,6 +406,10 @@ for (const directory of await manifestDirectories(sections)) {
       label.fields.value.fields.text.required = false
     }
   }
+  if (manifest.slug === 'tabs-allentown') {
+    manifest.fields = structuredClone(manifest.fields)
+    manifest.fields.tabs.fields.intro.fields.heading.required = false
+  }
   const relativeAstro = path.relative(directory, path.join(source, 'shared', 'structural-section.astro')).split(path.sep).join('/')
   const relativeAdapter = path.relative(directory, path.join(source, 'shared', 'manifest-block.js')).split(path.sep).join('/')
   const importAstro = relativeAstro.startsWith('.') ? relativeAstro : `./${relativeAstro}`
@@ -426,6 +430,7 @@ for (const directory of await manifestDirectories(sections)) {
     'moq-lead-times-allentown',
     'moq-lead-times-trinity',
     'proof-metrics-trinity',
+    'tabs-allentown',
   ]).has(manifest.slug)
   const caseStudiesContract = manifest.slug === 'case-studies-allentown'
   const solutionListContract = manifest.slug === 'solution-list-allentown'

@@ -1,6 +1,7 @@
-// @generated structural section — source manifest remains the contract.
 import type { Block, CollectionSlug } from 'payload'
-import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
+import { createManifestBlock } from '../../../shared/manifest-block.js'
+import { structuralSectionToProps } from '../../../shared/structural-props.js'
+import type { PayloadAdapterOptions } from '../../../shared/payload.js'
 import type { BetaTabsAllentownContent, PayloadBetaTabsAllentownDocument } from './tabs-allentown.types.js'
 
 const manifest = {
@@ -17,20 +18,19 @@ const manifest = {
         "standard",
         "80",
         "70"
-      ],
-      "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      ]
     },
     "theme": {
       "kind": "select",
       "required": true,
       "localized": true,
+      "defaultValue": "light",
       "options": [
         "light",
         "semi-light",
         "semi-dark",
         "dark"
-      ],
-      "description": "CMS-selected presentation setting passed to the renderer."
+      ]
     },
     "intro": {
       "kind": "component",
@@ -45,7 +45,7 @@ const manifest = {
         },
         "heading": {
           "kind": "text",
-          "required": true,
+          "required": false,
           "localized": true
         },
         "description": {
@@ -55,28 +55,66 @@ const manifest = {
         }
       }
     },
+    "tabsHeading": {
+      "kind": "text",
+      "required": false,
+      "localized": true,
+      "description": "Optional prompt above the tab navigation."
+    },
     "tabs": {
       "kind": "componentList",
       "componentId": "components/tab-item/allentown",
       "required": true,
       "localized": true,
       "minItems": 1,
+      "admin": {
+        "initCollapsed": true
+      },
       "fields": {
         "label": {
           "kind": "text",
           "required": true,
           "localized": true
         },
-        "description": {
-          "kind": "richText",
+        "intro": {
+          "kind": "component",
+          "componentId": "components/intro/allentown",
           "required": false,
-          "localized": true
+          "localized": true,
+          "admin": {
+            "initCollapsed": true
+          },
+          "description": "Optional accent heading, heading and rich-text description. Every field may be left empty.",
+          "fields": {
+            "accentHeading": {
+              "kind": "text",
+              "required": false,
+              "localized": true
+            },
+            "heading": {
+              "kind": "text",
+              "required": false,
+              "localized": true
+            },
+            "description": {
+              "kind": "richText",
+              "required": false,
+              "localized": true
+            }
+          }
+        },
+        "ctaGroup": {
+          "kind": "ctaGroup",
+          "required": false,
+          "localized": true,
+          "minItems": 0,
+          "maxItems": 2
         },
         "form": {
           "kind": "formEmbed",
           "required": false,
           "localized": true,
-          "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
+          "description": "Optional HubSpot embed code. Leave empty for an introduction or contact actions without a form."
         }
       }
     }
@@ -89,6 +127,6 @@ export function createBetaTabsAllentownBlock(options: CreateBetaTabsAllentownBlo
   return createManifestBlock(manifest, options)
 }
 
-export function betaTabsAllentownToProps(data: PayloadBetaTabsAllentownDocument): BetaTabsAllentownContent {
-  return manifestToProps(data)
+export function betaTabsAllentownToProps(data: PayloadBetaTabsAllentownDocument, options: PayloadAdapterOptions = {}): BetaTabsAllentownContent {
+  return structuralSectionToProps(data, options)
 }

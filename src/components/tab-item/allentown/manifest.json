@@ -5,28 +5,15 @@
   "id": "components/tab-item/allentown",
   "slug": "tab-item-allentown",
   "title": "Tab Item Allentown",
-  "description": "A localized tab with a label and at least a description or selected Form record.",
+  "description": "A localized tab with an optional introduction, optional action group and optional form embed.",
   "category": "components",
   "role": "tab-item",
   "variation": "allentown",
-  "status": "planned",
-  "requiresAnyOf": ["description", "form"],
+  "status": "beta",
   "fields": {
-    "label": {
-      "kind": "text",
-      "required": true,
-      "localized": true
-    },
-    "description": {
-      "kind": "richText",
-      "required": false,
-      "localized": true
-    },
-    "form": {
-      "kind": "formEmbed",
-      "required": false,
-      "localized": true,
-      "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
-    }
+    "label": { "kind": "text", "required": true, "localized": true },
+    "intro": { "kind": "component", "componentId": "components/intro/allentown", "required": false, "localized": true, "admin": { "initCollapsed": true }, "description": "Optional accent heading, heading and rich-text description. Every field may be left empty." },
+    "ctaGroup": { "kind": "ctaGroup", "required": false, "localized": true, "minItems": 0, "maxItems": 2 },
+    "form": { "kind": "formEmbed", "required": false, "localized": true, "description": "Optional HubSpot embed code. Leave empty for an introduction or contact actions without a form." }
   }
 }

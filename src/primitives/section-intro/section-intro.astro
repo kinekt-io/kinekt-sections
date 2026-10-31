@@ -12,10 +12,10 @@ const descriptionHtml = intro.description == null || intro.description === ''
 
 ---
 <div class:list={['section-intro', accentStyle === 'heading' && 'section-intro--accent-heading']}>
-  <div class="section-intro__heading-group">
+  {(intro.accentHeading || intro.heading) && <div class="section-intro__heading-group">
     {intro.accentHeading && <p class="section-intro__accent">{intro.accentHeading}</p>}
-    <Heading class="section-intro__heading">{intro.heading}</Heading>
-  </div>
+    {intro.heading && <Heading class="section-intro__heading">{intro.heading}</Heading>}
+  </div>}
   <slot name="after-heading" />
   {descriptionHtml && <div class="section-intro__description" set:html={descriptionHtml} />}
 </div>

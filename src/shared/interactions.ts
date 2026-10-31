@@ -70,6 +70,7 @@ function initializeTabs(tabsRoot: Element) {
       }
     })
   })
+  activate(0)
 }
 
 async function initializeCarousel(carousel: Element) {
