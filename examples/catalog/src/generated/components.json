@@ -947,11 +947,17 @@
     "role": "step",
     "variation": "stage",
     "title": "Step Stage",
-    "description": "A numbered process step with a localized title and description.",
+    "description": "A process step with a localized title, rich-text description and optional SVG icon.",
     "status": "planned",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5676-552040&t=OtYEVTRRdAJJYQ0v-11",
     "variants": {},
     "fields": {
+      "icon": {
+        "kind": "text",
+        "required": false,
+        "localized": true,
+        "description": "Font Awesome 7 Sharp Solid icon name, used only when the section selects icon markers. Rendered as SVG without an icon font."
+      },
       "title": {
         "kind": "text",
         "required": true,
@@ -4017,6 +4023,112 @@
     }
   },
   {
+    "id": "sections/moq-lead-times/trinity",
+    "version": "26.10.0-beta.0",
+    "slug": "moq-lead-times-trinity",
+    "category": "sections",
+    "tags": [
+      "ordering",
+      "logistics",
+      "prerelease"
+    ],
+    "role": "moq-lead-times",
+    "variation": "trinity",
+    "title": "MOQ Lead Times Trinity",
+    "description": "One to six ordering items with optional icons and labels, followed by an optional shared contact callout.",
+    "status": "prerelease",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5744-772930",
+    "variants": {},
+    "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ]
+      },
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": true,
+        "defaultValue": "semi-light",
+        "options": [
+          "light",
+          "semi-light",
+          "semi-dark",
+          "dark"
+        ]
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "items": {
+        "kind": "componentList",
+        "required": true,
+        "localized": true,
+        "minItems": 1,
+        "maxItems": 6,
+        "admin": {
+          "initCollapsed": true
+        },
+        "description": "One to six items. Titles render literally; numbering is never added automatically.",
+        "fields": {
+          "icon": {
+            "kind": "text",
+            "required": false,
+            "localized": true,
+            "description": "Optional Font Awesome 7 Sharp Solid icon name; rendered as SVG, without an icon font."
+          },
+          "title": {
+            "kind": "text",
+            "required": true,
+            "localized": true
+          },
+          "description": {
+            "kind": "richText",
+            "required": true,
+            "localized": true
+          },
+          "label": {
+            "kind": "component",
+            "componentId": "atoms/label/allentown",
+            "required": false,
+            "localized": true
+          }
+        }
+      },
+      "callout": {
+        "kind": "component",
+        "componentId": "components/callout/allentown",
+        "required": false,
+        "localized": true,
+        "admin": {
+          "initCollapsed": true
+        }
+      }
+    },
+    "runtimeProps": {
+      "headingLevel": {
+        "kind": "headingLevel",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/moq-lead-times/trinity/moq-lead-times-trinity.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/moq-lead-times/trinity.jpeg",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/moq-lead-times-trinity.astro",
+      "payload": "@kinekt-io/components/sections/moq-lead-times-trinity.payload",
+      "types": "@kinekt-io/components/sections/moq-lead-times-trinity.types"
+    }
+  },
+  {
     "id": "sections/not-found-hero/allentown",
     "version": "26.10.0-beta.0",
     "slug": "not-found-hero-allentown",
@@ -4923,9 +5035,9 @@
       "callout": {
         "kind": "component",
         "componentId": "components/callout/allentown",
-        "required": true,
+        "required": false,
         "localized": true,
-        "description": "A localized action callout with a required Button component."
+        "description": "Optional localized action callout with zero, one or two actions. Leave its heading empty to omit the callout."
       }
     },
     "runtimeProps": {
@@ -5186,7 +5298,7 @@
     "role": "steps",
     "variation": "stage",
     "title": "Steps Stage",
-    "description": "A reusable two-column process section with a localized introduction, optional media, and fully visible staged process steps.",
+    "description": "A reusable two-column process section with a localized introduction, optional media, and fully visible process steps with numbers or icons.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414399&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -5232,6 +5344,17 @@
         "kind": "media",
         "required": false,
         "localized": true
+      },
+      "markerType": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "number",
+        "options": [
+          "number",
+          "icon"
+        ],
+        "description": "Use sequential numbers or each step's Font Awesome Sharp Solid icon. Number mode ignores saved icon names."
       },
       "steps": {
         "kind": "componentList",

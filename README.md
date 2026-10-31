@@ -321,3 +321,11 @@ scripts/
 ```
 
 The source repository is named `kinekt-sections`. The package name is `@kinekt-io/components`; the two names do not need to match.
+
+## Ordering and process section contracts
+
+- **MOQ Lead Times Trinity** (`sections/moq-lead-times-trinity.astro`, Payload block `beta-moq-lead-times-trinity`) uses a shared intro, 1–6 ordering items and an optional shared callout. Each item has a literal title, rich-text description, optional Font Awesome Sharp Solid icon name and optional Label Allentown. Desktop uses up to three columns; mobile uses two, with the final odd item spanning both. The callout accepts the standard 0–2-action CTA group. Empty labels and callouts can be saved. The default theme is `semi-light`; all four themes and the standard content-width presets are supported.
+  - [Desktop: Section – MOQ & Lead times](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5744-772930).
+  - [Mobile: Section – FAQ, showing MOQ and lead time](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5722-497588).
+- **Steps Stage** exposes a localized `markerType` selector: `number` (default) or `icon`. Each step has an optional `icon` name. Number mode always renders sequential `01`, `02`, … and ignores saved icon names. Icon mode renders Sharp Solid SVGs without an icon font; an empty icon does not fall back to a number. Existing content without the selector keeps its numbered presentation.
+- **Proof Metrics Allentown** has an optional callout. An absent or blank callout heading omits the entire callout; its CTA group remains optional.

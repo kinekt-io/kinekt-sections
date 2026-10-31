@@ -1,0 +1,200 @@
+---
+import '../../../styles/wireframe-tokens.css'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import Label from '../../../atoms/label/allentown/label-allentown.astro'
+import Callout from '../../../components/callout/allentown/callout-allentown.astro'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
+import type { CtaGroup, RichText, SectionIntro as Intro, SectionTheme } from '../../../shared/content.js'
+
+interface Props {
+  id?: string
+  theme?: SectionTheme
+  contentWidth?: string
+  intro: Intro
+  items: { title: string; icon?: string; description: string | RichText; label?: { text?: string; icon?: string } }[]
+  callout?: { intro?: Intro; ctaGroup?: CtaGroup }
+  headingLevel?: 'h1' | 'h2' | 'h3'
+}
+const { id, theme = 'semi-light', intro, items, callout, headingLevel = 'h2' } = Astro.props as Props
+const ItemHeading = `h${Number(headingLevel.slice(1)) + 1}` as 'h2' | 'h3' | 'h4'
+const descriptionHtml = (value: string | RichText) => typeof value === 'string' ? richTextToHtml(value, 'items.description') : value.html
+---
+
+<section class="moq-lead-times-trinity" id={id} data-kinekt-section data-kinekt-theme={theme} data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)}>
+  <div class="moq-lead-times-trinity__container">
+    <header class="moq-lead-times-trinity__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
+    <ul class="moq-lead-times-trinity__items">
+      {items.map((item) => {
+        const icon = ctaIconPaths(item.icon)
+        return <li class="moq-lead-times-trinity__item">
+          <div class="moq-lead-times-trinity__copy">
+            <ItemHeading class="moq-lead-times-trinity__item-heading">
+              {icon && <svg class="moq-lead-times-trinity__icon" aria-hidden="true" focusable="false" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}
+              <span>{item.title}</span>
+            </ItemHeading>
+            <div class="moq-lead-times-trinity__description" set:html={descriptionHtml(item.description)} />
+          </div>
+          {item.label?.text?.trim() && <Label class="moq-lead-times-trinity__label" text={item.label.text} icon={item.label.icon} size="l" />}
+        </li>
+      })}
+    </ul>
+    {callout?.intro?.heading?.trim() && <Callout class="moq-lead-times-trinity__callout" callout={{ ...callout, intro: callout.intro }} headingLevel={headingLevel === 'h1' ? 'h2' : 'h3'} />}
+  </div>
+</section>
+
+<style is:global>
+  :where(.moq-lead-times-trinity[data-kinekt-section]) {
+    --kiw--moq-lead-times-trinity-site-width: var(--website-width);
+    --kiw--moq-lead-times-trinity-inline-space: var(--section-gutter);
+    --kiw--moq-lead-times-trinity-block-space: var(--section-space-l);
+    --kiw--moq-lead-times-trinity-container-gap: var(--section-space-l);
+    --kiw--moq-lead-times-trinity-column-gap: var(--space-xxl);
+    --kiw--moq-lead-times-trinity-row-gap: var(--section-space-m);
+    --kiw--moq-lead-times-trinity-item-gap: var(--space-s);
+    --kiw--moq-lead-times-trinity-copy-gap: var(--space-l);
+    --kiw--moq-lead-times-trinity-heading-gap: var(--space-s);
+    --kiw--moq-lead-times-trinity-item-heading-size: var(--h4);
+    --kiw--moq-lead-times-trinity-icon-size: var(--h5);
+    --kiw--moq-lead-times-trinity-description-size: var(--text-l);
+    --kiw--moq-lead-times-trinity-canvas: var(--neutral-ultra-light);
+    --kiw--moq-lead-times-trinity-ink: var(--primary-ultra-dark);
+    --kiw--moq-lead-times-trinity-muted: var(--primary);
+    --kiw--moq-lead-times-trinity-line: var(--primary-ultra-light);
+    --kiw--moq-lead-times-trinity-accent: var(--accent-semi-dark);
+    --kiw--moq-lead-times-trinity-tint: 5%;
+    --kiw--moq-lead-times-trinity-action: var(--primary);
+    --kiw--moq-lead-times-trinity-action-text: var(--white);
+    --kiw--moq-lead-times-trinity-action-icon: var(--accent);
+    --kiw--section-button-height: var(--kiw--moq-lead-times-trinity-button-height, var(--input-height));
+    --kiw--section-button-radius: var(--kiw--moq-lead-times-trinity-button-radius, var(--buttons-radius));
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--moq-lead-times-trinity-canvas));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--white));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--moq-lead-times-trinity-ink));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--moq-lead-times-trinity-muted));
+    --kinekt-component-subtle: var(--kinekt-component-muted);
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--moq-lead-times-trinity-line));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--moq-lead-times-trinity-accent));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--moq-lead-times-trinity-action));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--moq-lead-times-trinity-action-text));
+    --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--moq-lead-times-trinity-action-icon));
+    --kinekt-component-heading-font-family: var(--heading-font-family);
+    --kinekt-component-heading-font-weight: var(--heading-font-weight);
+    --kinekt-component-heading-letter-spacing: var(--heading-letter-spacing);
+    --kinekt-component-heading-line-height: var(--heading-line-height);
+    --kinekt-component-text-line-height: var(--text-line-height);
+  }
+
+  :where(.moq-lead-times-trinity[data-kinekt-theme='semi-light']) {
+    --kiw--moq-lead-times-trinity-canvas: var(--neutral-light);
+    --kiw--moq-lead-times-trinity-action: var(--primary-semi-dark);
+  }
+  :where(.moq-lead-times-trinity:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark'])) {
+    --kiw--moq-lead-times-trinity-canvas: var(--primary-dark);
+    --kiw--moq-lead-times-trinity-ink: var(--white);
+    --kiw--moq-lead-times-trinity-muted: var(--primary-light);
+    --kiw--moq-lead-times-trinity-line: var(--primary);
+    --kiw--moq-lead-times-trinity-accent: var(--accent);
+  }
+  :where(.moq-lead-times-trinity[data-kinekt-theme='dark']) { --kiw--moq-lead-times-trinity-canvas: var(--primary-ultra-dark); }
+
+  .moq-lead-times-trinity[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
+
+  .moq-lead-times-trinity {
+    box-sizing: border-box;
+    padding-block: var(--kiw--moq-lead-times-trinity-block-space);
+    color: var(--kinekt-component-ink);
+    background: linear-gradient(167deg, transparent 7%, color-mix(in srgb, var(--kinekt-component-accent) var(--kiw--moq-lead-times-trinity-tint), transparent) 94%), var(--kinekt-component-canvas);
+    font-family: var(--text-font-family);
+    font-size: var(--text-m);
+    font-weight: var(--text-font-weight);
+    line-height: var(--text-line-height);
+
+    & *, & *::before, & *::after { box-sizing: border-box; }
+    & .moq-lead-times-trinity__container {
+      display: grid;
+      inline-size: 100%;
+      max-inline-size: min(var(--kiw--moq-lead-times-trinity-site-width), calc(var(--kinekt-section-content-width) + var(--kiw--moq-lead-times-trinity-inline-space) * 2));
+      margin-inline: auto;
+      padding-inline: var(--kiw--moq-lead-times-trinity-inline-space);
+      gap: var(--kiw--moq-lead-times-trinity-container-gap);
+    }
+    & .moq-lead-times-trinity__intro {
+      min-inline-size: 0;
+      & .section-intro { max-inline-size: none; --kinekt-component-reading-width: 100%; }
+    }
+    & .moq-lead-times-trinity__items {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--kiw--moq-lead-times-trinity-row-gap) var(--kiw--moq-lead-times-trinity-column-gap);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      & > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+    }
+    & .moq-lead-times-trinity__item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-inline-size: 0;
+      gap: var(--kiw--moq-lead-times-trinity-item-gap);
+      overflow-wrap: anywhere;
+    }
+    & .moq-lead-times-trinity__copy { display: grid; gap: var(--kiw--moq-lead-times-trinity-copy-gap); }
+    & .moq-lead-times-trinity__item-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--kiw--moq-lead-times-trinity-heading-gap);
+      margin: 0;
+      color: var(--kinekt-component-ink);
+      font-family: var(--heading-font-family);
+      font-size: var(--kiw--moq-lead-times-trinity-item-heading-size);
+      font-weight: var(--heading-font-weight);
+      line-height: 1.1;
+      & span { min-inline-size: 0; }
+    }
+    & .moq-lead-times-trinity__icon {
+      flex: 0 0 auto;
+      inline-size: 1em;
+      block-size: 1em;
+      color: var(--kinekt-component-accent);
+      font-size: var(--kiw--moq-lead-times-trinity-icon-size);
+      overflow: visible;
+    }
+    & .moq-lead-times-trinity__description {
+      color: var(--kinekt-component-muted);
+      font-size: var(--kiw--moq-lead-times-trinity-description-size);
+      & > :first-child { margin-block-start: 0; }
+      & > :last-child { margin-block-end: 0; }
+      & p { margin-block: var(--space-xxs); }
+      & strong { color: var(--kinekt-component-ink); font-weight: var(--heading-font-weight); }
+    }
+    & .moq-lead-times-trinity__callout {
+      --kiw--callout-allentown-title-size: var(--h5);
+      --kiw--callout-allentown-description-size: var(--text-m);
+      --kiw--callout-allentown-description-color: var(--kinekt-component-muted);
+      --kiw--callout-allentown-description-width: 100%;
+    }
+    @media (max-width: 49.999rem) {
+      --kiw--moq-lead-times-trinity-column-gap: var(--space-xl);
+      --kiw--moq-lead-times-trinity-description-size: var(--text-m);
+      --kiw--moq-lead-times-trinity-heading-gap: var(--space-xs);
+      --kiw--moq-lead-times-trinity-icon-size: var(--text-xxl);
+      & .moq-lead-times-trinity__label { --kiw--label-allentown-font-size: var(--text-l); }
+    }
+    @media (min-width: 50rem) {
+      & .moq-lead-times-trinity__items {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        & > :last-child:nth-child(odd) { grid-column: auto; }
+        &:has(> :only-child) { grid-template-columns: minmax(0, 1fr); }
+        &:has(> :nth-child(2):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+      & .moq-lead-times-trinity__callout { --kiw--callout-allentown-title-size: var(--h4); }
+    }
+  }
+</style>

@@ -30,7 +30,7 @@ const { id, theme = 'light', intro, metrics = [], media, callout, headingLevel =
 const calloutGroup: CtaGroup = {
   buttons: ctaGroupActions(callout?.ctaGroup ?? { primary: callout?.cta?.cta }),
 }
-const calloutContent = callout?.intro
+const calloutContent = callout?.intro?.heading?.trim()
   ? { intro: { ...callout.intro, accentHeading: callout.intro.accentHeading ?? callout.label }, ctaGroup: calloutGroup }
   : undefined
 ---

@@ -78,6 +78,17 @@ const manifest = {
       "required": false,
       "localized": true
     },
+    "markerType": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "defaultValue": "number",
+      "options": [
+        "number",
+        "icon"
+      ],
+      "description": "Use sequential numbers or each step's Font Awesome Sharp Solid icon. Number mode ignores saved icon names."
+    },
     "steps": {
       "kind": "componentList",
       "componentId": "components/step/stage",
@@ -85,6 +96,12 @@ const manifest = {
       "localized": true,
       "minItems": 1,
       "fields": {
+        "icon": {
+          "kind": "text",
+          "required": false,
+          "localized": true,
+          "description": "Font Awesome 7 Sharp Solid icon name, used only when the section selects icon markers. Rendered as SVG without an icon font."
+        },
         "title": {
           "kind": "text",
           "required": true,

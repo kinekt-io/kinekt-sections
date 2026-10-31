@@ -14,14 +14,17 @@ interface Props {
   step: NextStepContent
   /** Renderer-derived list position (1-based); shown as a zero-padded number. */
   number: number
+  markerType?: 'number' | 'icon'
+  icon?: string
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   class?: string
 }
 
 
-const { step, number, headingLevel = 'h3', class: className } = Astro.props
+const { step, number, markerType = 'number', icon: iconName, headingLevel = 'h3', class: className } = Astro.props
 const Heading = headingLevel
 const displayNumber = String(number).padStart(2, '0')
+const markerIcon = markerType === 'icon' ? ctaIconPaths(iconName) : undefined
 const actions = ctaGroupActions(step.ctaGroup)
 const classes = ['next-step-allentown', className].filter(Boolean).join(' ')
 const descriptionHtml = typeof step.description === 'string'
@@ -31,7 +34,11 @@ const descriptionHtml = typeof step.description === 'string'
 ---
 <article class={classes}>
   <div class="next-step-allentown__copy">
-    <Heading class="next-step-allentown__heading"><span class="next-step-allentown__number" aria-hidden="true">{displayNumber}</span><span class="next-step-allentown__title">{step.title}</span></Heading>
+    <Heading class="next-step-allentown__heading">
+      {markerType === 'number' && <span class="next-step-allentown__number" aria-hidden="true">{displayNumber}</span>}
+      {markerIcon && <svg class="next-step-allentown__icon" aria-hidden="true" focusable="false" viewBox={markerIcon.viewBox} fill="currentColor"><path d={markerIcon.path} /></svg>}
+      <span class="next-step-allentown__title">{step.title}</span>
+    </Heading>
     <div class="next-step-allentown__description" set:html={descriptionHtml} />
   </div>
   {actions.length > 0 && (
@@ -63,6 +70,7 @@ const descriptionHtml = typeof step.description === 'string'
   .next-step-allentown .next-step-allentown__copy { display: grid; gap: var(--kiw--next-step-allentown-copy-gap); }
   .next-step-allentown .next-step-allentown__heading { display: flex; align-items: center; gap: var(--kiw--next-step-allentown-heading-gap); max-width: none; margin: 0; font-size: var(--kiw--next-step-allentown-heading-size); }
   .next-step-allentown .next-step-allentown__number { flex: none; color: var(--kiw--next-step-allentown-number-color); font-family: var(--kiw--next-step-allentown-number-font-family); font-weight: var(--kiw--next-step-allentown-number-font-weight); line-height: var(--kiw--next-step-allentown-number-line-height); }
+  .next-step-allentown .next-step-allentown__icon { flex: none; inline-size: 1em; block-size: 1em; color: var(--kiw--next-step-allentown-number-color); }
   .next-step-allentown .next-step-allentown__title { min-width: 0; color: var(--kiw--next-step-allentown-title-color); font-family: var(--kinekt-component-heading-font-family, var(--heading-font-family)); font-weight: var(--kinekt-component-heading-font-weight, var(--heading-font-weight)); line-height: 1; }
   .next-step-allentown .next-step-allentown__description { margin: 0; color: var(--kiw--next-step-allentown-description-color); font-size: var(--kiw--next-step-allentown-description-size); line-height: var(--kinekt-component-text-line-height, var(--text-line-height)); }
   .next-step-allentown .next-step-allentown__description > * { margin-block: 0; }

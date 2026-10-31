@@ -390,6 +390,16 @@ for (const directory of await manifestDirectories(sections)) {
   const manifest = JSON.parse(await readFile(path.join(directory, 'manifest.json'), 'utf8'))
 
   manifest.fields = expandComponentFields(manifest.fields)
+  if (['moq-lead-times-trinity', 'proof-metrics-allentown'].includes(manifest.slug)) {
+    // Clone expanded fields: shared atom fields are reused by other manifests.
+    manifest.fields = structuredClone(manifest.fields)
+    // Empty optional groups must remain saveable in Payload.
+    manifest.fields.callout.fields.intro.required = false
+    manifest.fields.callout.fields.intro.fields.heading.required = false
+    if (manifest.slug === 'moq-lead-times-trinity') {
+      manifest.fields.items.fields.label.fields.text.required = false
+    }
+  }
   const relativeAstro = path.relative(directory, path.join(source, 'shared', 'structural-section.astro')).split(path.sep).join('/')
   const relativeAdapter = path.relative(directory, path.join(source, 'shared', 'manifest-block.js')).split(path.sep).join('/')
   const importAstro = relativeAstro.startsWith('.') ? relativeAstro : `./${relativeAstro}`
@@ -408,6 +418,7 @@ for (const directory of await manifestDirectories(sections)) {
     'battery-models-allentown',
     'steps-stage',
     'moq-lead-times-allentown',
+    'moq-lead-times-trinity',
   ]).has(manifest.slug)
   const caseStudiesContract = manifest.slug === 'case-studies-allentown'
   const solutionListContract = manifest.slug === 'solution-list-allentown'

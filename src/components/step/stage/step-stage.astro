@@ -1,24 +1,25 @@
 ---
 /*
- * Step Stage composes the shared numbered step renderer for Steps Stage.
+ * Step Stage composes the shared step renderer with a section-selected marker.
  */
 import NextStep, { type NextStepContent } from '../../next-step/allentown/next-step-allentown.astro'
 
-export type StepStageContent = Pick<NextStepContent, 'title' | 'description' | 'ctaGroup'>
+export type StepStageContent = Pick<NextStepContent, 'title' | 'description' | 'ctaGroup'> & { icon?: string }
 
 interface Props {
   step: StepStageContent
   /** Renderer-derived list position (1-based); shown as a zero-padded number. */
   number: number
+  markerType?: 'number' | 'icon'
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   class?: string
 }
 
-const { step, number, headingLevel = 'h3', class: className } = Astro.props
+const { step, number, markerType = 'number', headingLevel = 'h3', class: className } = Astro.props
 const classes = ['step-stage', className].filter(Boolean).join(' ')
 ---
 <div class={classes}>
-  <NextStep step={step} number={number} headingLevel={headingLevel} class="step-stage__step" />
+  <NextStep step={step} number={number} markerType={markerType} icon={step.icon} headingLevel={headingLevel} class="step-stage__step" />
 </div>
 <style is:global>
   :where(.step-stage) {

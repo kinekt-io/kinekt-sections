@@ -5,7 +5,7 @@
   "id": "components/step/stage",
   "slug": "step-stage",
   "title": "Step Stage",
-  "description": "A numbered process step with a localized title and description.",
+  "description": "A process step with a localized title, rich-text description and optional SVG icon.",
   "category": "components",
   "role": "step",
   "variation": "stage",
@@ -15,6 +15,12 @@
     "nodeId": "5676:552040"
   },
   "fields": {
+    "icon": {
+      "kind": "text",
+      "required": false,
+      "localized": true,
+      "description": "Font Awesome 7 Sharp Solid icon name, used only when the section selects icon markers. Rendered as SVG without an icon font."
+    },
     "title": {
       "kind": "text",
       "required": true,

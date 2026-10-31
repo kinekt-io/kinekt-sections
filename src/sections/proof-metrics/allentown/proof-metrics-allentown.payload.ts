@@ -45,7 +45,7 @@ const manifest = {
         },
         "heading": {
           "kind": "text",
-          "required": true,
+          "required": false,
           "localized": true
         },
         "description": {
@@ -99,14 +99,14 @@ const manifest = {
     "callout": {
       "kind": "component",
       "componentId": "components/callout/allentown",
-      "required": true,
+      "required": false,
       "localized": true,
-      "description": "A localized action callout with a required Button component.",
+      "description": "Optional localized action callout with zero, one or two actions. Leave its heading empty to omit the callout.",
       "fields": {
         "intro": {
           "kind": "component",
           "componentId": "components/intro/allentown",
-          "required": true,
+          "required": false,
           "localized": true,
           "fields": {
             "accentHeading": {
@@ -116,7 +116,7 @@ const manifest = {
             },
             "heading": {
               "kind": "text",
-              "required": true,
+              "required": false,
               "localized": true
             },
             "description": {

@@ -1,0 +1,22 @@
+---
+import MoqLeadTimesTrinity from './moq-lead-times-trinity.astro'
+
+const items = [
+  { title: 'Evaluate', icon: 'magnifying-glass-chart', description: { html: '<p><strong>Start with a small batch.</strong></p><p>Check the fit and performance on your equipment before committing to a larger order.</p>' }, label: { text: 'From 12 units' } },
+  { title: 'Validate', icon: 'clipboard-check', description: { html: '<p><strong>Put your plans to work.</strong></p><p>Run a pilot with your team and confirm the requirements for regular production.</p>' }, label: { text: 'From 80 units' } },
+  { title: 'Scale', icon: 'arrows-up-down-left-right', description: { html: '<p><strong>Plan recurring deliveries.</strong></p><p>Set a practical schedule around your production capacity and seasonal demand.</p>' }, label: { text: 'Scheduled supply' } },
+]
+const callout = {
+  intro: { accentHeading: 'Delivery planning', heading: 'Working towards a specific launch date?', description: 'Share your quantities and preferred delivery window. Our team will outline a schedule that fits your next rollout.' },
+  ctaGroup: { buttons: [
+    { label: 'Discuss your plans', href: '/contact/', style: 'primary' as const, icon: 'chevron-right' },
+    { label: 'Browse the range', href: '/products/', style: 'clear-base' as const, icon: 'arrow-up-right' },
+  ] },
+}
+---
+<MoqLeadTimesTrinity
+  theme="semi-light"
+  intro={{ accentHeading: 'Order planning', heading: 'A practical route from trial to regular supply', description: 'Choose an order size that suits your next stage. Start with evaluation, validate in the field and build towards a reliable delivery schedule.' }}
+  items={items}
+  callout={callout}
+/>

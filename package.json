@@ -432,6 +432,17 @@
       "import": "./dist/sections/moq-lead-times/allentown/moq-lead-times-allentown.types.js",
       "types": "./dist/sections/moq-lead-times/allentown/moq-lead-times-allentown.types.d.ts"
     },
+    "./sections/moq-lead-times-trinity.astro": "./src/sections/moq-lead-times/trinity/moq-lead-times-trinity.astro",
+    "./sections/moq-lead-times-trinity.payload": {
+      "default": "./dist/sections/moq-lead-times/trinity/moq-lead-times-trinity.payload.js",
+      "import": "./dist/sections/moq-lead-times/trinity/moq-lead-times-trinity.payload.js",
+      "types": "./dist/sections/moq-lead-times/trinity/moq-lead-times-trinity.payload.d.ts"
+    },
+    "./sections/moq-lead-times-trinity.types": {
+      "default": "./dist/sections/moq-lead-times/trinity/moq-lead-times-trinity.types.js",
+      "import": "./dist/sections/moq-lead-times/trinity/moq-lead-times-trinity.types.js",
+      "types": "./dist/sections/moq-lead-times/trinity/moq-lead-times-trinity.types.d.ts"
+    },
     "./sections/not-found-hero-allentown.astro": "./src/sections/not-found-hero/allentown/not-found-hero-allentown.astro",
     "./sections/not-found-hero-allentown.payload": {
       "default": "./dist/sections/not-found-hero/allentown/not-found-hero-allentown.payload.js",
