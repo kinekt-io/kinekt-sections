@@ -1,4 +1,5 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import Label from '../../../atoms/label/allentown/label-allentown.astro'
 import FacilityFact from '../../../components/facility-fact/allentown/facility-fact-allentown.astro'
@@ -11,6 +12,7 @@ import { richTextToHtml } from '../../../shared/rich-text.js'
 // The generated .types.ts is still generic (Record<string, unknown>), so the renderer types its props from the manifest here.
 interface FacilityFactContent { title: string; description: string | RichText }
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   theme: BetaTheme
   intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | null }
   label?: { text: string; icon?: string | null } | null
@@ -28,7 +30,7 @@ const introDescription = intro.description == null || typeof intro.description =
 const introContent: SectionIntroContent = { ...intro, description: introDescription }
 const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url === 'string')
 ---
-<section class="facilities-overview-allentown" data-kinekt-section data-kinekt-theme={theme}>
+<section class="facilities-overview-allentown" data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="facilities-overview-allentown__container">
     <header class="facilities-overview-allentown__header">
       <div class="facilities-overview-allentown__intro">
@@ -195,4 +197,12 @@ const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url 
   .facilities-overview-allentown, .facilities-overview-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .facilities-overview-allentown *, .facilities-overview-allentown *::before, .facilities-overview-allentown *::after { box-sizing: border-box; }
   .facilities-overview-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .facilities-overview-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

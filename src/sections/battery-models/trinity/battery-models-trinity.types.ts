@@ -1,3 +1,4 @@
+import type { SectionContentWidth } from '../../../shared/section-width.js'
 import type { Cta, CtaGroup, Media, RichText, SectionIntro, SectionTheme } from '../../../shared/content.js'
 
 export interface BatteryRatingTrinity {
@@ -17,6 +18,7 @@ export interface BatteryModelTrinity {
 }
 
 export interface BatteryModelsTrinityContent {
+  contentWidth?: SectionContentWidth
   id?: string
   theme?: SectionTheme
   intro: SectionIntro

@@ -15,6 +15,7 @@ interface ProcessItem {
 }
 
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: 'light' | 'semi-light' | 'semi-dark' | 'dark'
   headingLevel?: 'h1' | 'h2' | 'h3'
@@ -29,7 +30,7 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     ? richTextToHtml(value, 'process item description')
     : value.html
 ---
-<section class="process-story-trinity" id={id} data-kinekt-section data-kinekt-theme={theme} data-process-story-trinity>
+<section class="process-story-trinity" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-process-story-trinity>
   <div class="process-story-trinity__container">
     <div class="process-story-trinity__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></div>
     <ol class="process-story-trinity__steps" aria-label="Process steps">
@@ -290,5 +291,13 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
   @media (max-width: 49.99rem) { .process-story-trinity { --kinekt-component-reading-width: var(--content-width); } }
   @media (min-width: 50rem) {
     .process-story-trinity .process-story-trinity__intro :is(.section-intro__heading, .section-intro__description) { max-width: var(--kinekt-component-reading-width); }
+  }
+</style>
+<style is:global>
+  .process-story-trinity[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

@@ -5,7 +5,8 @@ import { isCtaStyle } from '../../../shared/content.js'
 import { renderRichText } from '../../../shared/rich-text.js'
 import { mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { isSafeWebUrl } from '../../../urls.js'
-import { isSharpSolidIconNameOrEmpty } from '../../../shared/payload-fields.js'
+import { isSharpSolidIconNameOrEmpty, sectionContentWidthField } from '../../../shared/payload-fields.js'
+import { normalizeSectionContentWidth, type SectionContentWidth } from '../../../shared/section-width.js'
 
 export interface SolutionListAllentownItem {
   image: Media
@@ -18,6 +19,7 @@ export interface SolutionListAllentownItem {
 }
 
 export interface SolutionListAllentownContent {
+  contentWidth?: SectionContentWidth
   theme: 'light' | 'semi-light' | 'semi-dark' | 'dark'
   intro: SectionIntro
   items: SolutionListAllentownItem[]
@@ -43,6 +45,7 @@ export function createSolutionListAllentownBlock({ mediaCollection = 'media', ta
     interfaceName: 'BetaSolutionListAllentown',
     labels: { singular: 'PRERELEASE — Solution List Allentown', plural: 'PRERELEASE — Solution List Allentown blocks' },
     fields: [
+      sectionContentWidthField(),
       { name: 'theme', type: 'select', localized: true, required: true, defaultValue: 'semi-light', options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })) },
       { name: 'intro', label: 'Intro block', type: 'group', localized: true, required: true, fields: introFields() },
       {
@@ -70,6 +73,7 @@ export function solutionListAllentownToProps(data: PayloadSolutionListAllentownD
   const intro = introToProps(data.intro, 'intro')
 
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(data.theme),
     intro,
     items: requireArray(data.items, 'items').map((item, index) => itemToProps(item, index, contentHref, payloadOptions)),

@@ -1,5 +1,6 @@
 import type { Media, SectionIntro } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
+import type { SectionContentWidth } from '../../../shared/section-width.js'
 
 export interface MediaMetric {
   label: string
@@ -7,6 +8,7 @@ export interface MediaMetric {
 }
 
 export interface MediaMetricsAllentownContent {
+  contentWidth?: SectionContentWidth
   theme: BetaTheme
   intro: SectionIntro
   metrics: MediaMetric[]

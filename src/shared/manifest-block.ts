@@ -1,6 +1,7 @@
 import type { Block, CollectionSlug, Field } from 'payload'
 import { renderRichText } from './rich-text.js'
-import { ctaFields, ctaStyleField, isSharpSolidIconNameOrEmpty } from './payload-fields.js'
+import { ctaFields, ctaStyleField, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from './payload-fields.js'
+import { normalizeSectionContentWidth } from './section-width.js'
 
 type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'insightSourceList' | 'contentReferenceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
 
@@ -13,6 +14,7 @@ interface ManifestField {
   kind: FieldKind
   required: boolean
   localized: boolean
+  defaultValue?: string
   options?: readonly string[]
   minItems?: number
   maxItems?: number
@@ -79,7 +81,14 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
     case 'richText': return { ...common, type: 'richText' }
     case 'dateTime': return { ...common, type: 'date', admin: { ...field.admin, date: { pickerAppearance: 'dayAndTime' } } }
     case 'select':
-    case 'theme': return { ...common, type: 'select', options: (field.options ?? ['light', 'dark']).map((value) => ({ label: value, value })) }
+      if (name === 'contentWidth') return { ...sectionContentWidthField(), ...common }
+      return {
+        ...common,
+        type: 'select',
+        defaultValue: field.defaultValue,
+        options: (field.options ?? ['light', 'dark']).map((value) => ({ label: value, value })),
+      }
+    case 'theme': return { ...common, type: 'select', defaultValue: field.defaultValue, options: (field.options ?? ['light', 'dark']).map((value) => ({ label: value, value })) }
     case 'media':
     case 'video': return { ...common, type: 'upload', relationTo: options.mediaCollection }
     case 'mediaList': return { ...common, type: 'array', minRows: field.minItems, fields: [{ name: 'media', type: 'upload', relationTo: options.mediaCollection, required: true }] }
@@ -201,5 +210,6 @@ function normalizeRichText(value: unknown, field: string): unknown {
 }
 
 export function manifestToProps<T extends ManifestSectionDocument>(data: T): T {
-  return normalizeRichText(data, 'section') as T
+  const props = normalizeRichText(data, 'section') as T
+  return { ...props, contentWidth: normalizeSectionContentWidth(props.contentWidth) }
 }

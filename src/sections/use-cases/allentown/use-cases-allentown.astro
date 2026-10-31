@@ -8,6 +8,7 @@ import type { SectionIntro as SectionIntroContent, SectionTheme } from '../../..
 type UseCase = UseCaseItemContent
 
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: SectionTheme
   intro: SectionIntroContent
@@ -28,7 +29,7 @@ const sectionLabel = advantageHeading
 const itemHeadingLevel = (`h${Math.min(Number(headingLevel.slice(1)) + 1, 6)}`) as 'h2' | 'h3' | 'h4'
 ---
 
-<section class="beta-use-cases-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="beta-use-cases-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="beta-use-cases-allentown__container">
     <header class="beta-use-cases-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
@@ -198,5 +199,13 @@ const itemHeadingLevel = (`h${Math.min(Number(headingLevel.slice(1)) + 1, 6)}`) 
   @media (max-width: 49.999rem) {
     /* Figma Desktop=no: rows gap "M Section Space S" (40.96), which is our section-s at phone width. */
     .beta-use-cases-allentown[data-kinekt-section] { --kiw--use-cases-row-gap: var(--section-space-s); --kinekt-component-reading-width: var(--content-width); }
+  }
+</style>
+<style is:global>
+  .beta-use-cases-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

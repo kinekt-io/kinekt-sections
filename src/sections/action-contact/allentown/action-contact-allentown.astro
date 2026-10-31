@@ -1,4 +1,5 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
@@ -14,6 +15,7 @@ interface ContactMethod {
 }
 
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: 'light' | 'semi-light' | 'semi-dark' | 'dark'
   intro: SectionIntroContent
@@ -41,7 +43,7 @@ const {
 
 const actionList = actions.filter((action): action is Cta => Boolean(action?.label && action.href))
 ---
-<section class="beta-action-contact-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="beta-action-contact-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="beta-action-contact-allentown__container">
     <div class="beta-action-contact-allentown__body">
       <div class="beta-action-contact-allentown__content">
@@ -235,4 +237,12 @@ const actionList = actions.filter((action): action is Cta => Boolean(action?.lab
   .beta-action-contact-allentown, .beta-action-contact-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .beta-action-contact-allentown *, .beta-action-contact-allentown *::before, .beta-action-contact-allentown *::after { box-sizing: border-box; }
   .beta-action-contact-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .beta-action-contact-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

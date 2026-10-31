@@ -1,4 +1,5 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { RichText, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
@@ -11,6 +12,7 @@ import { richTextToHtml } from '../../../shared/rich-text.js'
 type RichTextInput = string | RichText | Record<string, unknown>
 interface FeatureItem { title: string; description?: RichTextInput | null }
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: BetaTheme
   headingLevel?: 'h2' | 'h3'
@@ -31,7 +33,7 @@ const toHtml = (value: RichTextInput | null | undefined, field: string): string 
 }
 const introContent: SectionIntroContent = { ...intro, description: intro.description == null || typeof intro.description === 'string' ? intro.description ?? undefined : { html: toHtml(intro.description, 'intro.description') } }
 ---
-<section class:list={['checklist-feature-list-allentown', featureDividers && 'checklist-feature-list-allentown--dividers']} id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class:list={['checklist-feature-list-allentown', featureDividers && 'checklist-feature-list-allentown--dividers']} id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="checklist-feature-list-allentown__container">
     <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
     {featureItems.length > 0 && (
@@ -149,5 +151,13 @@ const introContent: SectionIntroContent = { ...intro, description: intro.descrip
     .checklist-feature-list-allentown { --kiw--section-content-width: var(--kiw--checklist-feature-list-allentown-content-width, var(--width-xxl)); }
     .checklist-feature-list-allentown > .checklist-feature-list-allentown__container { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--kiw--checklist-feature-list-allentown-column-gap); align-items: start; }
     .checklist-feature-list-allentown .checklist-feature-list-allentown__features { padding-block-start: var(--kiw--checklist-feature-list-allentown-features-offset); }
+  }
+</style>
+<style is:global>
+  .checklist-feature-list-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

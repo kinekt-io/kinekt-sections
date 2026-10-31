@@ -1,4 +1,5 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import Callout from '../../../components/callout/allentown/callout-allentown.astro'
@@ -12,6 +13,7 @@ interface Cta { label: string; href: string; icon?: string }
 interface Cell { type: 'text' | 'status'; text?: string; status?: Status; icon?: string }
 interface ComparisonRow { feature: string; cells: Cell[] }
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: Theme
   headingLevel?: 'h1' | 'h2' | 'h3'
@@ -30,7 +32,7 @@ const normalizedCallout = {
   ctaGroup: callout.ctaGroup ?? { primary: getCta(callout.cta) },
 }
 ---
-<section class="comparison-overview-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="comparison-overview-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="comparison-overview-allentown__container">
     <header class="comparison-overview-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
@@ -180,4 +182,12 @@ const normalizedCallout = {
   }
   /* The action role is a button fill; as text it needs the subtle role to stay readable on dark canvases. */
   .comparison-overview-allentown[data-kinekt-theme='semi-dark'], .comparison-overview-allentown[data-kinekt-theme='dark'] { --kiw--comparison-overview-allentown-action-color: var(--kinekt-component-subtle); }
+</style>
+<style is:global>
+  .comparison-overview-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

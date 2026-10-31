@@ -14,7 +14,7 @@ const { id, theme = 'semi-light', intro, ctas, headingLevel = 'h2' } = Astro.pro
 const actions = ctaGroupActions(ctas)
 ---
 
-<section class="streamer-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="streamer-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="streamer-allentown__container">
     <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
     {actions.length > 0 && (
@@ -185,5 +185,15 @@ const actions = ctaGroupActions(ctas)
         justify-content: end;
       }
     }
+  }
+</style>
+<style is:global>
+  .streamer-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    --kiw--streamer-allentown-content-width: var(--kinekt-section-content-width);
+    & > .streamer-allentown__container { max-inline-size: min(var(--kiw--streamer-allentown-site-width), calc(var(--kinekt-section-content-width) + (var(--kiw--streamer-allentown-inline-space) * 2))); }
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

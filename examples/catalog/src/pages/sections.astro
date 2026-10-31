@@ -54,6 +54,11 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
                 <button type="button" data-kinekt-preview-theme="semi-dark" aria-pressed="false">Semi-dark</button>
                 <button type="button" data-kinekt-preview-theme="dark" aria-pressed="false">Dark</button>
               </div>
+              <div class="width-switch" role="group" aria-label={`Content width for ${component.title}`}>
+                <button type="button" data-kinekt-preview-width="standard" aria-pressed="true">Standard</button>
+                <button type="button" data-kinekt-preview-width="80" aria-pressed="false">80%</button>
+                <button type="button" data-kinekt-preview-width="70" aria-pressed="false">70%</button>
+              </div>
               <button class="section-preview__info" type="button" data-kinekt-section-info={component.slug} aria-label={`More information about ${component.title}`}>i</button>
               <a href={`${catalogueBase}components/${component.id}/`}>Open isolated preview →</a>
             </div>
@@ -90,9 +95,20 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
         })
       }
 
+      function setPreviewWidth(preview: HTMLElement, width: 'standard' | '80' | '70') {
+        const section = preview.querySelector<HTMLElement>('[data-kinekt-section]')
+        if (!section) return
+        section.dataset.kinektContentWidth = width
+        preview.querySelectorAll<HTMLButtonElement>('[data-kinekt-preview-width]').forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.kinektPreviewWidth === width))
+        })
+      }
+
       document.querySelectorAll<HTMLElement>('.section-preview').forEach((preview) => {
         const theme = preview.querySelector<HTMLElement>('[data-kinekt-section]')?.dataset.kinektTheme
         setPreviewTheme(preview, theme === 'semi-light' || theme === 'dark' || theme === 'semi-dark' ? theme : 'light')
+        const width = preview.querySelector<HTMLElement>('[data-kinekt-section]')?.dataset.kinektContentWidth
+        setPreviewWidth(preview, width === '80' || width === '70' ? width : 'standard')
       })
 
       document.addEventListener('click', (event) => {
@@ -101,6 +117,10 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
         const preview = button?.closest<HTMLElement>('.section-preview')
         const theme = button?.dataset.kinektPreviewTheme
         if (preview && (theme === 'light' || theme === 'semi-light' || theme === 'semi-dark' || theme === 'dark')) return setPreviewTheme(preview, theme)
+        const widthButton = target.closest<HTMLButtonElement>('[data-kinekt-preview-width]')
+        const widthPreview = widthButton?.closest<HTMLElement>('.section-preview')
+        const width = widthButton?.dataset.kinektPreviewWidth
+        if (widthPreview && (width === 'standard' || width === '80' || width === '70')) return setPreviewWidth(widthPreview, width)
 
         const info = target.closest<HTMLButtonElement>('[data-kinekt-section-info]')
         if (info) return (document.getElementById(`section-${info.dataset.kinektSectionInfo}`) as HTMLDialogElement | null)?.showModal()
@@ -123,18 +143,18 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
   .sections-page .masthead a { color: inherit; font-weight: var(--kiw--sections-heading-weight); text-underline-offset: 0.18em; }
   .sections-page .masthead p { max-width: 44rem; color: var(--kiw--sections-dark-muted); line-height: var(--kiw--sections-text-line-height); }
   .sections-page .masthead h1 { margin: var(--kiw--sections-space-l) 0 var(--kiw--sections-space-s); font-family: var(--kiw--sections-heading-font); font-size: var(--kiw--sections-h1); font-weight: var(--kiw--sections-heading-weight); letter-spacing: var(--kiw--sections-heading-tracking); line-height: var(--kiw--sections-heading-line-height); text-wrap: balance; }
-  .sections-page main { display: grid; gap: var(--kiw--sections-border); background: var(--kiw--sections-line); }
-  .sections-page .section-preview { padding: var(--kiw--sections-section-space-xs) var(--kiw--sections-gutter); background: var(--kiw--sections-canvas); }
+  .sections-page main { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--kiw--sections-border); background: var(--kiw--sections-line); }
+  .sections-page .section-preview { min-width: 0; padding: var(--kiw--sections-section-space-xs) var(--kiw--sections-gutter); background: var(--kiw--sections-canvas); }
   .sections-page .section-preview__meta { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: var(--kiw--sections-space-s) var(--kiw--sections-space-xl); margin-bottom: var(--kiw--sections-space-xl); padding-bottom: var(--kiw--sections-space-m); border-bottom: var(--kiw--sections-border) solid var(--kiw--sections-line); }
   .sections-page .section-preview__meta p { margin: 0; color: var(--kiw--sections-muted); font-family: var(--kiw--sections-mono-font); font-size: var(--kiw--sections-text-xs); font-weight: var(--kiw--sections-heading-weight); line-height: var(--kiw--sections-text-line-height); }
   .sections-page .section-preview__meta .section-preview__title { flex-basis: 100%; order: -1; color: var(--kiw--sections-ink); font-family: var(--kiw--sections-heading-font); font-size: var(--kiw--sections-h2); font-weight: var(--kiw--sections-heading-weight); letter-spacing: var(--kiw--sections-heading-tracking); line-height: var(--kiw--sections-heading-line-height); }
   .sections-page .section-preview__tags { display: flex; flex-basis: 100%; flex-wrap: wrap; gap: var(--kiw--sections-space-xxxs); order: -1; margin: 0; padding: 0; list-style: none; }
   .sections-page .section-preview__tags li { padding: var(--kiw--sections-space-xxxs) var(--kiw--sections-space-xs); border: var(--kiw--sections-border) solid var(--kiw--sections-line); border-radius: var(--kiw--sections-radius); color: var(--kiw--sections-action); font-family: var(--kiw--sections-mono-font); font-size: var(--kiw--sections-text-xs); font-weight: var(--kiw--sections-heading-weight); letter-spacing: var(--kiw--sections-heading-tracking); text-transform: uppercase; }
-  .sections-page .section-preview__tools { display: flex; align-items: center; flex-wrap: wrap; gap: var(--kiw--sections-space-s); }
-  .sections-page .theme-switch { display: flex; flex-wrap: wrap; padding: var(--kiw--sections-space-xxxs); border: var(--kiw--sections-border) solid var(--kiw--sections-muted); border-radius: var(--kiw--sections-radius); }
-  .sections-page .theme-switch button { min-height: 2rem; padding: var(--kiw--sections-space-xxxs) var(--kiw--sections-space-s); border: 0; border-radius: calc(var(--kiw--sections-theme-button-radius-switch) * var(--kiw--sections-theme-button-radius)); color: var(--kiw--sections-ink); background: transparent; font: inherit; font-size: var(--kiw--sections-text-s); font-weight: var(--kiw--sections-heading-weight); cursor: pointer; }
-  .sections-page .theme-switch button[aria-pressed='true'] { color: var(--kiw--sections-canvas); background: var(--kiw--sections-action); }
-  .sections-page :is(.theme-switch button, .section-preview__info, .section-preview__dialog-close):focus-visible { outline: var(--kiw--sections-border) solid var(--kiw--sections-focus); outline-offset: var(--kiw--sections-space-xxxs); }
+  .sections-page .section-preview__tools { display: flex; min-width: 0; max-width: 100%; align-items: center; flex-wrap: wrap; gap: var(--kiw--sections-space-s); }
+  .sections-page :is(.theme-switch, .width-switch) { display: flex; flex-wrap: wrap; padding: var(--kiw--sections-space-xxxs); border: var(--kiw--sections-border) solid var(--kiw--sections-muted); border-radius: var(--kiw--sections-radius); }
+  .sections-page :is(.theme-switch, .width-switch) button { min-height: 2rem; padding: var(--kiw--sections-space-xxxs) var(--kiw--sections-space-s); border: 0; border-radius: calc(var(--kiw--sections-theme-button-radius-switch) * var(--kiw--sections-theme-button-radius)); color: var(--kiw--sections-ink); background: transparent; font: inherit; font-size: var(--kiw--sections-text-s); font-weight: var(--kiw--sections-heading-weight); cursor: pointer; }
+  .sections-page :is(.theme-switch, .width-switch) button[aria-pressed='true'] { color: var(--kiw--sections-canvas); background: var(--kiw--sections-action); }
+  .sections-page :is(.theme-switch button, .width-switch button, .section-preview__info, .section-preview__dialog-close):focus-visible { outline: var(--kiw--sections-border) solid var(--kiw--sections-focus); outline-offset: var(--kiw--sections-space-xxxs); }
   .sections-page .section-preview__info { width: 2rem; min-height: 2rem; border: var(--kiw--sections-border) solid var(--kiw--sections-line); border-radius: 50%; color: inherit; background: transparent; font: inherit; font-family: var(--kiw--sections-heading-font); cursor: pointer; }
   .sections-page .section-preview__meta a { color: inherit; font-weight: var(--kiw--sections-heading-weight); text-underline-offset: 0.18em; }
   .sections-page .section-preview__dialog { width: min(100% - (var(--kiw--sections-gutter) * 2), 48rem); padding: 0; border: var(--kiw--sections-border) solid var(--kiw--sections-line); border-radius: var(--kiw--sections-radius); color: var(--kiw--sections-ink); background: var(--kiw--sections-canvas); }

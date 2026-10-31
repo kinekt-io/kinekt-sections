@@ -34,7 +34,7 @@ const visibleSteps = steps.filter((step) => typeof step?.title === 'string' && s
 const introActions = ctaGroupActions(introCtaGroup)
 const listActions = ctaGroupActions(listCtaGroup)
 ---
-<section class="steps-stage" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="steps-stage" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="steps-stage__container">
     <div class="steps-stage__lead">
       <header class="steps-stage__intro">
@@ -242,4 +242,12 @@ const listActions = ctaGroupActions(listCtaGroup)
   .steps-stage, .steps-stage[data-kinekt-theme='light'] { color-scheme: light; }
   .steps-stage *, .steps-stage *::before, .steps-stage *::after { box-sizing: border-box; }
   .steps-stage [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .steps-stage[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

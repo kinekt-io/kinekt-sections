@@ -14,7 +14,7 @@ const actions = ctaGroupActions(ctas)
 for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('ctas must use an HTTP(S) or root-relative URL.')
 assertSafeImage(image, 'image'); if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 ---
-<section class="hero-trinity" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="hero-trinity" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="hero-trinity__container">
     <KinektMedia class="hero-trinity__media" imageClass="hero-trinity__image" media={image} mobileMedia={mobileImage} loading="eager" fetchpriority="high" />
     <header class="hero-trinity__content">
@@ -147,7 +147,7 @@ assertSafeImage(image, 'image'); if (mobileImage) assertSafeImage(mobileImage, '
     --kiw--hero-trinity-frame-width: var(--kinekt-component-site-width);
     --kiw--hero-trinity-frame-min-block-size: var(--width-l);
     --kiw--hero-trinity-frame-radius: var(--radius-m);
-    --kiw--hero-trinity-copy-width: var(--width-l);
+    --kiw--hero-trinity-copy-width: 100%;
     --hero-trinity-frame-width: var(--kinekt-section-hero-trinity-frame-width, var(--kiw--hero-trinity-frame-width));
     --hero-trinity-frame-min-block-size: var(--kinekt-section-hero-trinity-min-block-size, var(--kiw--hero-trinity-frame-min-block-size));
     --hero-trinity-frame-radius: var(--kinekt-section-hero-trinity-frame-radius, var(--kiw--hero-trinity-frame-radius));
@@ -159,18 +159,39 @@ assertSafeImage(image, 'image'); if (mobileImage) assertSafeImage(mobileImage, '
   .hero-trinity .hero-trinity__media { position: absolute; z-index: -1; inset: 0; display: block; margin: 0; }
   .hero-trinity .hero-trinity__media::after { position: absolute; inset: 0; content: ''; background: linear-gradient(240deg, transparent 22%, var(--kinekt-component-canvas) 99%); pointer-events: none; }
   .hero-trinity .hero-trinity__image { display: block; inline-size: 100%; block-size: 100%; border-radius: 0; object-fit: cover; }
-  .hero-trinity .hero-trinity__content { z-index: 0; align-content: end; inline-size: 100%; max-inline-size: none; min-block-size: var(--hero-trinity-frame-min-block-size); padding: var(--section-space-m) var(--kinekt-component-inline-space); }
+  .hero-trinity {
+    & .hero-trinity__content {
+      z-index: 0;
+      align-content: end;
+      inline-size: 100%;
+      max-inline-size: calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2));
+      min-block-size: var(--hero-trinity-frame-min-block-size);
+      margin-inline: auto;
+      padding: var(--section-space-m) var(--kinekt-component-inline-space);
+    }
+  }
   .hero-trinity .hero-trinity__content > :is(.section-intro, .hero-trinity__actions) { inline-size: min(100%, var(--hero-trinity-copy-width)); }
   .hero-trinity .hero-trinity__actions { display: flex; flex-wrap: wrap; gap: var(--kiw--section-actions-gap); margin-block-start: var(--kiw--section-actions-margin); }
   .hero-trinity :is(.section-intro__heading, .section-intro__description) { max-width: var(--kinekt-component-reading-width); }
-  @media (max-width: 49.99rem) { .hero-trinity { --kinekt-component-reading-width: var(--content-width); } }
+  @media (width < 50rem) { .hero-trinity { --kinekt-component-reading-width: 100%; } }
   .hero-trinity .hero-trinity__image { aspect-ratio: 1 / 1; }
   @media (min-width: 50rem) {
-    .hero-trinity > .hero-trinity__container {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      align-items: center;
-      column-gap: 0;
+    .hero-trinity {
+      --kiw--hero-trinity-copy-width: 50%;
+
+      & > .hero-trinity__container {
+        align-items: center;
+        column-gap: 0;
+      }
     }
   }
   @media (min-width: 90.0625rem) { .hero-trinity .hero-trinity__container { border-end-start-radius: var(--hero-trinity-frame-radius); border-end-end-radius: var(--hero-trinity-frame-radius); } }
+</style>
+<style is:global>
+  .hero-trinity[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

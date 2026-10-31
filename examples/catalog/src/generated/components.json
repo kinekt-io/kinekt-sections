@@ -1167,6 +1167,18 @@
     "figmaUrl": "https://www.figma.com/design/FaeBt9V4p54cxRyUuCd8wB/%25E2%2599%25A5-Tulip-Tech-ACSS-%25E2%2599%25A5?node-id=4131-288&t=dfGgl2XVtpG1Ejai-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -1251,6 +1263,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-526185",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -1312,6 +1336,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-544549",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -1377,6 +1413,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-537149&t=DdGjpoAvVqSIinWT-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -1443,6 +1491,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-524477",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -1507,6 +1567,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411424&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -1571,6 +1643,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415190&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -1629,6 +1713,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411428&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -1693,6 +1789,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538029&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -1751,6 +1859,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-413470&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -1832,6 +1952,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-413425&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -1905,6 +2037,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-413495&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -1978,6 +2122,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411489&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -2042,6 +2198,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-526201",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -2061,12 +2229,7 @@
         "description": "Payload Lexical content. The paired CMS implementation permits standard headings, paragraphs, lists, links and blockquotes, plus only these inline blocks: components/intro/allentown, components/quote/allentown, components/editorial-media/allentown and components/editorial-columns/allentown."
       }
     },
-    "runtimeProps": {
-      "contentWidth": {
-        "kind": "editorialReadableWidth",
-        "source": "renderer"
-      }
-    },
+    "runtimeProps": {},
     "previewSource": "sections/editorial-content/allentown/editorial-content-allentown.preview.astro",
     "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/editorial-content/allentown.jpeg",
     "entries": {
@@ -2093,6 +2256,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415963&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -2156,6 +2331,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-543714&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -2225,6 +2412,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414308&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -2290,6 +2489,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4811-276546&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -2360,6 +2571,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415942&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -2419,6 +2642,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411490&m=dev",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -2500,6 +2735,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411660&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -2567,6 +2814,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411427&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -2655,6 +2914,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412556&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -2730,6 +3001,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411811&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -2803,6 +3086,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411511&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -2881,6 +3176,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4754-91818&m=dev",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "intro": {
         "kind": "component",
         "componentId": "components/intro/allentown",
@@ -2954,6 +3261,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411370&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "problemIntro": {
         "kind": "component",
         "componentId": "components/intro/allentown",
@@ -3114,6 +3433,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411675&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -3190,6 +3521,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-416702&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -3265,6 +3608,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412609&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -3345,6 +3700,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414436&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -3409,6 +3776,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414365&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -3482,6 +3861,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414386&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -3543,6 +3934,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5823-638305&t=OtYEVTRRdAJJYQ0v-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -3631,6 +4034,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-532807&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -3692,6 +4107,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-537962&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -3754,6 +4181,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4779-129512&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -3832,6 +4271,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411425&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -3894,6 +4345,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411600&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -3970,6 +4433,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-537977&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -4027,6 +4502,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538028&t=OtYEVTRRdAJJYQ0v-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -4112,6 +4599,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411550&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -4216,6 +4715,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-525223",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -4275,6 +4786,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412607&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -4353,6 +4876,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411426&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -4415,6 +4950,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-526230&t=OtYEVTRRdAJJYQ0v-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -4480,6 +5027,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411423&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -4543,6 +5102,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414399&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -4624,6 +5195,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-537167&t=DdGjpoAvVqSIinWT-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -4678,6 +5261,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-414267&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -4756,6 +5351,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-538861&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -4818,6 +5425,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-425110&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,
@@ -4890,6 +5509,18 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-544548",
     "variants": {},
     "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      },
       "theme": {
         "kind": "select",
         "required": true,

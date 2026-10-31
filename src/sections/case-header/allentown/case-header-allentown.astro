@@ -1,4 +1,5 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import { faChevronRight } from '@fortawesome/sharp-solid-svg-icons'
 import ContentHeroMedia, { type ContentHeroMediaContent } from '../../../components/content-hero-media/allentown/content-hero-media-allentown.astro'
@@ -11,6 +12,7 @@ type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 /** Route-derived trail (runtimeProps.breadcrumb, source renderer); the last item is the current page. */
 type BreadcrumbItem = { label: string; href?: string }
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: Theme
   headingLevel?: 'h1' | 'h2'
@@ -33,7 +35,7 @@ const logo = isMedia(customerLogo) ? customerLogo : undefined
 const trail = Array.isArray(breadcrumb) ? breadcrumb.filter((item) => typeof item?.label === 'string' && item.label.length > 0) : []
 const [chevronWidth, chevronHeight, , , chevronPath] = faChevronRight.icon
 ---
-<section class="case-header-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="case-header-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="case-header-allentown__container">
     {trail.length > 0 && (
       <nav class="case-header-allentown__breadcrumb" aria-label={breadcrumbLabel}>
@@ -173,5 +175,14 @@ const [chevronWidth, chevronHeight, , , chevronPath] = faChevronRight.icon
       & .case-header-allentown__customer { justify-items: end; text-align: end; }
       & .case-header-allentown__logo-image { object-position: right center; }
     }
+  }
+</style>
+<style is:global>
+  .case-header-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+    & > .case-header-allentown__container { max-width: min(var(--website-width), calc(var(--kinekt-section-content-width) + (var(--kiw--case-header-allentown-inline-space) * 2))); }
   }
 </style>

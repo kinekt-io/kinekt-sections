@@ -1,4 +1,5 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
@@ -19,6 +20,7 @@ interface Insight {
   image?: Media
 }
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: Theme
   headingLevel?: 'h1' | 'h2' | 'h3'
@@ -36,7 +38,7 @@ const kindIconOf = (insight: Insight) => isCtaIcon(insight.kindIcon) ? ctaIconPa
 const featuredKindLabel = kindLabel(featured?.kind)
 const featuredKindIcon = featured && kindIconOf(featured)
 ---
-<section class="featured-insights-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="featured-insights-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="featured-insights-allentown__container">
     <header class="featured-insights-allentown__intro">
       <div class="featured-insights-allentown__intro-content"><SectionIntro intro={intro} headingLevel={headingLevel} /></div>
@@ -205,4 +207,12 @@ const featuredKindIcon = featured && kindIconOf(featured)
   }
   /* The action role is a button fill; as text it needs the subtle role to stay readable on dark canvases. */
   .featured-insights-allentown[data-kinekt-theme='semi-dark'], .featured-insights-allentown[data-kinekt-theme='dark'] { --kiw--featured-insights-allentown-action-color: var(--kinekt-component-subtle); --kiw--featured-insights-allentown-recent-description-color: var(--primary-light); }
+</style>
+<style is:global>
+  .featured-insights-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

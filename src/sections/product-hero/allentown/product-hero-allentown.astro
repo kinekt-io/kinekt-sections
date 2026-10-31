@@ -17,6 +17,7 @@ interface FeatureItem {
 }
 
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: BetaTheme
   headingLevel?: 'h1' | 'h2'
@@ -50,7 +51,7 @@ const heroMobileMedia = isMedia(mobileMedia) ? { ...mobileMedia, alt: typeof mob
 const featureItems = features.filter((feature) => feature && typeof feature.value === 'string' && feature.value.trim())
 const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
 ---
-<section class="product-hero-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="product-hero-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="product-hero-allentown__container">
     <div class="product-hero-allentown__content">
       <header class="product-hero-allentown__header">
@@ -228,4 +229,12 @@ const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
   .product-hero-allentown, .product-hero-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .product-hero-allentown *, .product-hero-allentown *::before, .product-hero-allentown *::after { box-sizing: border-box; }
   .product-hero-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .product-hero-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

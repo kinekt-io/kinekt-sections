@@ -11,7 +11,7 @@ interface Props extends MediaMetricsAllentownContent {
 
 const { theme, intro, metrics, media, headingLevel = 'h2' } = Astro.props as Props
 ---
-<section class="media-metrics-allentown" data-kinekt-section data-kinekt-theme={theme}>
+<section class="media-metrics-allentown" data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="media-metrics-allentown__container">
     <header class="media-metrics-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
@@ -170,4 +170,14 @@ const { theme, intro, metrics, media, headingLevel = 'h2' } = Astro.props as Pro
 </style>
 <style is:global>
   .media-metrics-allentown[data-kinekt-section] { padding-block: var(--kiw--media-metrics-section-space); }
+</style>
+<style is:global>
+  .media-metrics-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    --kiw--media-metrics-content-width: var(--kinekt-section-content-width);
+    & > .media-metrics-allentown__container { max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-section-content-width) + (var(--kiw--media-metrics-inline-space) * 2))); }
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

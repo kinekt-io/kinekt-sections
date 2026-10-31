@@ -2,6 +2,7 @@ import type { Block, CollectionSlug } from 'payload'
 import { createManifestBlock } from '../../../shared/manifest-block.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 import type { MediaMetricsAllentownContent, PayloadMediaMetricsAllentownDocument } from './media-metrics-allentown.types.js'
 
 const manifest = {
@@ -9,6 +10,18 @@ const manifest = {
   "title": "Media Metrics Allentown",
   "status": "prerelease",
   "fields": {
+    "contentWidth": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "defaultValue": "standard",
+      "options": [
+        "standard",
+        "80",
+        "70"
+      ],
+      "description": "Maximum content width: Standard (100%), 80%, or 70%."
+    },
     "theme": {
       "kind": "select",
       "required": true,
@@ -99,6 +112,7 @@ export function mediaMetricsAllentownToProps(data: PayloadMediaMetricsAllentownD
   const media = data.media
 
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(data.theme),
     intro: {
       accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'),

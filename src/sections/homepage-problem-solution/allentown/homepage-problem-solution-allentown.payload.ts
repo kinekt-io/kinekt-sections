@@ -4,12 +4,25 @@ import { createManifestBlock } from '../../../shared/manifest-block.js'
 import { ctaGroupToProps, optionalText, requireArray, requireObject, requireSharpSolidIcon, requireText, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BetaHomepageProblemSolutionAllentownContent, PayloadBetaHomepageProblemSolutionAllentownDocument } from './homepage-problem-solution-allentown.types.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
 const manifest = {
   "slug": "homepage-problem-solution-allentown",
   "title": "Homepage Problem Solution Allentown",
   "status": "prerelease",
   "fields": {
+    "contentWidth": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "defaultValue": "standard",
+      "options": [
+        "standard",
+        "80",
+        "70"
+      ],
+      "description": "Maximum content width: Standard (100%), 80%, or 70%."
+    },
     "problemIntro": {
       "kind": "component",
       "componentId": "components/intro/allentown",
@@ -162,6 +175,7 @@ export function betaHomepageProblemSolutionAllentownToProps(data: PayloadBetaHom
   const ctaGroup = ctaGroupToProps(block.solutionCtaGroup, 'solutionCtaGroup', options)
 
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: 'dark',
     problemRangeLabel: optionalText(block.problemRangeLabel, 'problemRangeLabel'),
     solutionRangeLabel: optionalText(block.solutionRangeLabel, 'solutionRangeLabel'),

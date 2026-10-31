@@ -13,6 +13,7 @@ interface ContactMethod {
   href: string
 }
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: Theme
   intro: SectionIntroContent
@@ -27,7 +28,7 @@ interface Props {
 const { id, theme = 'semi-dark', intro, image, imagePosition = 'left', form, contactHeading, contactMethods = [], headingLevel = 'h2' } = Astro.props as Props
 const methods = contactMethods.filter((method) => method.label && method.href)
 ---
-<section class="form-section-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-image-position={imagePosition}>
+<section class="form-section-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-image-position={imagePosition}>
   <div class="form-section-allentown__container">
     <div class="form-section-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
@@ -222,5 +223,13 @@ const methods = contactMethods.filter((method) => method.label && method.href)
     .form-section-allentown[data-image-position='right'] > .form-section-allentown__container { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
     .form-section-allentown[data-image-position='right'] .form-section-allentown__content { grid-column: 1; grid-row: 1; }
     .form-section-allentown[data-image-position='right'] .form-section-allentown__media { grid-column: 2; grid-row: 1; }
+  }
+</style>
+<style is:global>
+  .form-section-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

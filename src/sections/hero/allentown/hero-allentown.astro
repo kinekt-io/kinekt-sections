@@ -20,7 +20,7 @@ for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('ctas mu
 assertSafeImage(image, 'image')
 if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 ---
-<section class="hero-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="hero-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="hero-allentown__container">
     <header class="hero-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
@@ -176,5 +176,13 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
         align-items: stretch;
       }
     }
+  }
+</style>
+<style is:global>
+  .hero-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

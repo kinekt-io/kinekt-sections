@@ -1,5 +1,6 @@
 import type { Media, SectionIntro } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
+import type { SectionContentWidth } from '../../../shared/section-width.js'
 
 export type FormSectionImagePosition = 'left' | 'right'
 export type ContactMethodIcon = string
@@ -11,6 +12,7 @@ export interface ContactMethod {
 }
 
 export interface BetaFormSectionAllentownContent {
+  contentWidth?: SectionContentWidth
   theme: BetaTheme
   intro: SectionIntro
   image?: Media

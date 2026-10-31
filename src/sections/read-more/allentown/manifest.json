@@ -16,6 +16,14 @@
     "nodeId": "5240:411426"
   },
   "fields": {
+    "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": ["standard", "80", "70"],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+    },
     "theme": { "kind": "select", "required": true, "localized": true, "options": ["light", "semi-light", "semi-dark", "dark"] },
     "intro": { "kind": "component", "componentId": "components/intro/allentown", "required": true, "localized": true },
     "label": { "kind": "component", "componentId": "atoms/label/allentown", "required": false, "localized": true, "description": "Optional localized location or context label shown between the heading and description." },

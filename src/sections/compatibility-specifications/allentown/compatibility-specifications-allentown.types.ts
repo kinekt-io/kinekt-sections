@@ -1,3 +1,4 @@
+import type { SectionContentWidth } from '../../../shared/section-width.js'
 import type { SectionIntro } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 
@@ -12,6 +13,7 @@ export interface CompatiblePlatforms {
 }
 
 export interface CompatibilitySpecificationsContent {
+  contentWidth?: SectionContentWidth
   theme: BetaTheme
   intro: SectionIntro
   specifications: CompatibilitySpecification[]

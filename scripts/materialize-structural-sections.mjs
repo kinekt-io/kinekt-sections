@@ -420,6 +420,7 @@ for (const directory of await manifestDirectories(sections)) {
   const previewIntro = previewContent.intro ?? { accentHeading: 'Section overview', heading: manifest.title, description: 'A reusable content structure for technical decisions.' }
   const mediaMetricsTypes = `import type { Media, SectionIntro } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
+import type { SectionContentWidth } from '../../../shared/section-width.js'
 
 export interface MediaMetric {
   label: string
@@ -427,6 +428,7 @@ export interface MediaMetric {
 }
 
 export interface MediaMetricsAllentownContent {
+  contentWidth?: SectionContentWidth
   theme: BetaTheme
   intro: SectionIntro
   metrics: MediaMetric[]
@@ -447,6 +449,7 @@ export interface PayloadMediaMetricsAllentownDocument extends DraftFields<Omit<M
 import { createManifestBlock } from '../../../shared/manifest-block.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 import type { MediaMetricsAllentownContent, PayloadMediaMetricsAllentownDocument } from './${base}.types.js'
 
 const manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const
@@ -462,6 +465,7 @@ export function mediaMetricsAllentownToProps(data: PayloadMediaMetricsAllentownD
   const media = data.media
 
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(data.theme),
     intro: {
       accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'),
@@ -533,6 +537,7 @@ const content = resolveCatalogueAssets(rawContent) as typeof rawContent
   const formSectionTypes = `// Form Section native Payload contract type entrypoint.\nexport type { BetaFormSectionAllentownContent, ContactMethod, ContactMethodIcon, FormSectionImagePosition, PayloadBetaFormSectionAllentownDocument } from './form-section-allentown.contract.js'\n`
   const useCasesTypes = `import type { CtaGroup, RichText, SectionIntro } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
+import type { SectionContentWidth } from '../../../shared/section-width.js'
 
 export interface UseCasesAllentownItem {
   title: string
@@ -542,6 +547,7 @@ export interface UseCasesAllentownItem {
 }
 
 export interface BetaUseCasesAllentownContent {
+  contentWidth?: SectionContentWidth
   theme: BetaTheme
   intro: SectionIntro
   advantageHeading: string
@@ -562,6 +568,7 @@ import { createManifestBlock } from '${importAdapter}'
 import { ctaGroupToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { ${name}Content, Payload${name}Document, UseCasesAllentownItem } from './${base}.types.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
 const manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const
 
@@ -594,6 +601,7 @@ const itemToProps = (value: unknown, index: number, options: PayloadAdapterOptio
 
 export function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document, options: PayloadAdapterOptions = {}): ${name}Content {
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(data.theme),
     intro: introToProps(data.intro),
     advantageHeading: requireText(data.advantageHeading, 'advantageHeading'),
@@ -607,6 +615,7 @@ import { createManifestBlock } from '${importAdapter}'
 import { ctaGroupToProps, optionalText, requireArray, requireObject, requireSharpSolidIcon, requireText, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { ${name}Content, Payload${name}Document } from './${base}.types.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
 const manifest = ${JSON.stringify({ slug: manifest.slug, title: manifest.title, status: manifest.status, fields: manifest.fields }, null, 2)} as const
 
@@ -640,6 +649,7 @@ export function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${n
   const ctaGroup = ctaGroupToProps(block.solutionCtaGroup, 'solutionCtaGroup', options)
 
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: 'dark',
     problemRangeLabel: optionalText(block.problemRangeLabel, 'problemRangeLabel'),
     solutionRangeLabel: optionalText(block.solutionRangeLabel, 'solutionRangeLabel'),
@@ -669,7 +679,7 @@ export function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${n
           ? formSectionTypes
           : useCasesAdapter
             ? useCasesTypes
-            : `// @generated structural section — source manifest remains the contract.\nexport type ${name}Content = Record<string, unknown>\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`, manifest.slug === 'media-metrics-allentown' || solutionListContract || formSectionContract || useCasesAdapter)
+            : `// @generated structural section — source manifest remains the contract.\nimport type { SectionContentWidth } from '../../../shared/section-width.js'\nexport type ${name}Content = Record<string, unknown> & { contentWidth?: SectionContentWidth }\nexport type Payload${name}Document = ${name}Content & { id?: string }\n`, manifest.slug === 'media-metrics-allentown' || solutionListContract || formSectionContract || useCasesAdapter)
   await materialize(path.join(directory, `${base}.payload.ts`), manifest.slug === 'media-metrics-allentown'
     ? mediaMetricsPayload
     : caseStudiesContract

@@ -16,6 +16,14 @@
     "nodeId": "5639:526201"
   },
   "fields": {
+    "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": ["standard", "80", "70"],
+        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+    },
     "theme": {
       "kind": "select",
       "required": true,
@@ -28,12 +36,6 @@
       "required": true,
       "localized": true,
       "description": "Payload Lexical content. The paired CMS implementation permits standard headings, paragraphs, lists, links and blockquotes, plus only these inline blocks: components/intro/allentown, components/quote/allentown, components/editorial-media/allentown and components/editorial-columns/allentown."
-    }
-  },
-  "runtimeProps": {
-    "contentWidth": {
-      "kind": "editorialReadableWidth",
-      "source": "renderer"
     }
   }
 }

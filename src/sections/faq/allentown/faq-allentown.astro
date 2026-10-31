@@ -1,4 +1,5 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import { faChevronDown } from '@fortawesome/sharp-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import Callout from '../../../components/callout/allentown/callout-allentown.astro'
@@ -49,7 +50,7 @@ const calloutContent = callout?.intro && typeof callout.intro.heading === 'strin
 const CalloutHeading: HeadingLevel = headingLevel === 'h1' ? 'h2' : 'h3'
 const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]}`, path: faChevronDown.icon[4] as string }
 ---
-<section class="beta-faq-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="beta-faq-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="beta-faq-allentown__container">
     <div class="beta-faq-allentown__main">
       <header class="beta-faq-allentown__intro">
@@ -152,4 +153,12 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
   .beta-faq-allentown .beta-faq-allentown__callout { --kiw--callout-allentown-copy-gap: var(--space-s); width: min(100%, var(--kiw--faq-allentown-items-width)); margin-inline: auto; }
   @media (max-width: 49.999rem) { .beta-faq-allentown .beta-faq-allentown__question { line-height: 1.3; } }
   @media (prefers-reduced-motion: reduce) { .beta-faq-allentown .beta-faq-allentown__toggle { transition: none; } }
+</style>
+<style is:global>
+  .beta-faq-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

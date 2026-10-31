@@ -14,8 +14,10 @@ import {
   hasText,
   isActionableHref,
   requiredTextMessage,
+  sectionContentWidthField,
   sectionIntroFields,
 } from '../../../shared/payload-fields.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 import type {
   BetaFormSectionAllentownContent,
   ContactMethod,
@@ -38,6 +40,7 @@ export function createBetaFormSectionAllentownBlock({
       plural: 'PRERELEASE — Form Section Allentown blocks',
     },
     fields: [
+      sectionContentWidthField(),
       {
         name: 'theme',
         type: 'select',
@@ -121,6 +124,7 @@ export function betaFormSectionAllentownToProps(
   const contactMethods = contactMethodsToProps(data.contactMethods)
 
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(data.theme),
     intro: {
       accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'),

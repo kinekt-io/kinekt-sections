@@ -9,6 +9,7 @@ import { isSafeWebUrl } from '../../../urls.js'
 
 // The generated types (not-found-hero-allentown.types.ts) are still a generic record; these are the fields the manifest declares.
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: BetaTheme
   intro: SectionIntroContent
@@ -20,7 +21,7 @@ const { id, theme = 'semi-light', intro, ctaGroup, headingLevel = 'h1' } = Astro
 const actions = ctaGroupActions(ctaGroup)
 for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) or root-relative URL.')
 ---
-<section class="not-found-hero not-found-hero--allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="not-found-hero not-found-hero--allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="not-found-hero__container">
     <header class="not-found-hero__header">
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
@@ -155,5 +156,13 @@ for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('ctaGrou
   .not-found-hero--allentown .not-found-hero__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--kiw--not-found-hero-actions-gap); }
   @media (min-width: 50rem) {
     .not-found-hero--allentown .not-found-hero__header { max-inline-size: var(--kiw--not-found-hero-header-width); }
+  }
+</style>
+<style is:global>
+  .not-found-hero--allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

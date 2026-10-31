@@ -15,6 +15,7 @@ interface ContactMethod {
 }
 
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: 'light' | 'semi-light' | 'semi-dark' | 'dark'
   intro: SectionIntroContent
@@ -42,7 +43,7 @@ const chevronDown = fas.faChevronDown.icon
 const submitIcon = ctaIconPaths('paper-plane')
 ---
 
-<section class="beta-support-contact-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="beta-support-contact-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="beta-support-contact-allentown__container">
     <header class="beta-support-contact-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
@@ -252,4 +253,12 @@ const submitIcon = ctaIconPaths('paper-plane')
   .beta-support-contact-allentown, .beta-support-contact-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .beta-support-contact-allentown *, .beta-support-contact-allentown *::before, .beta-support-contact-allentown *::after { box-sizing: border-box; }
   .beta-support-contact-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .beta-support-contact-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

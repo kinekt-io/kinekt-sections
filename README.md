@@ -144,6 +144,14 @@ Override the `--mobile-*` and `--desktop-*` inputs rather than copying their equ
 
 Radius values are `--radius-none` (0), `--radius-xs` (2px), `--radius-s` (4px), `--radius-m` (8px), `--radius-l` (16px), `--radius-xl` (24px) and `--radius-xxl` (32px), expressed in rem. Buttons multiply their selected radius by `--buttons-has-radius`: `0` disables rounding, `1` enables it. The wireframe default is `0`.
 
+### Section content widths
+
+Every section exposes the localized Payload field **Content width**: `standard`, `80`, or `70`. The same choices are available in both catalogue inspectors. Omitted or null values use `standard`; existing content needs no migration.
+
+These are fixed maximum content widths based on `--desktop-content-width`, not percentages of the viewport: the default 90rem base produces 90rem, 72rem, and 63rem (1440px, 1152px, and 1008px at a 16px root). Containers use the available width until their selected cap is reached; gutters are additional and remain responsive. Main containers no longer impose a second, narrower section-specific cap. Internal columns and deliberate text-reading limits still belong to the component.
+
+Astro receives `contentWidth` and emits `data-kinekt-content-width`. Each section owns the preset rules in `<style is:global>`, mapping the selection to `--kinekt-section-content-width` and `--kinekt-component-content-width`. Keep these rules in new section renderers and use `sectionContentWidthField()` in their Payload factories. Backgrounds and full-bleed media do not inherit the narrower content cap. Hero Trinity's copy fills its content container below 50rem and uses half of it on desktop.
+
 ### Component defaults and theme roles
 
 Each section root carries `data-kinekt-section`. Its owning Astro component maps `--kiw--<section-slug>-<role>` overrides to canonical defaults in a static root rule inside its `<style is:global>` block; static mappings never use a root `style` attribute. Renderers define additional component aliases beside those styles. Use the nearest scale value instead of introducing a second spacing or typography scale.

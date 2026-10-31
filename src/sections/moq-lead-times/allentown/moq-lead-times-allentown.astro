@@ -12,6 +12,7 @@ type IntroInput = Omit<SectionIntroContent, 'description'> & { description?: Ric
 interface InfoRow { title: string; value: { text: string; icon?: string } }
 interface InfoColumn { title: string; rows: InfoRow[] }
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: SectionTheme
   headingLevel?: HeadingLevel
@@ -39,7 +40,7 @@ const columns = infoColumns
   }))
   .filter((column) => column.rows.length > 0)
 ---
-<section class="beta-moq-lead-times-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-kinekt-heading-level={headingLevel}>
+<section class="beta-moq-lead-times-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-kinekt-heading-level={headingLevel}>
   <div class="beta-moq-lead-times-allentown__container">
     <header class="beta-moq-lead-times-allentown__intro">
       <SectionIntro intro={introContent} headingLevel={headingLevel} />
@@ -130,4 +131,12 @@ const columns = infoColumns
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact-title { font-weight: var(--heading-font-weight); }
   .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__fact .label-allentown { --kinekt-label-tint: 15%; }
   @media (min-width: 50rem) { .beta-moq-lead-times-allentown > .beta-moq-lead-times-allentown__container { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; column-gap: var(--section-space-xl); } .beta-moq-lead-times-allentown .beta-moq-lead-times-allentown__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); align-self: center; } }
+</style>
+<style is:global>
+  .beta-moq-lead-times-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

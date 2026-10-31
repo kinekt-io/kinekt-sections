@@ -63,7 +63,7 @@ const startCount = Math.ceil(topics.length / 2)
 const baseId = id ?? `hd-cells-engineering-${Math.random().toString(36).slice(2, 8)}`
 const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
 ---
-<section class="hd-cells-engineering-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="hd-cells-engineering-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="hd-cells-engineering-allentown__container">
     <div class="hd-cells-engineering-allentown__cells">
       <header class="hd-cells-engineering-allentown__header">
@@ -449,4 +449,12 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
   .hd-cells-engineering-allentown, .hd-cells-engineering-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .hd-cells-engineering-allentown *, .hd-cells-engineering-allentown *::before, .hd-cells-engineering-allentown *::after { box-sizing: border-box; }
   .hd-cells-engineering-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .hd-cells-engineering-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

@@ -9,6 +9,18 @@ const manifest = {
   "title": "Comparison Overview Allentown",
   "status": "prerelease",
   "fields": {
+    "contentWidth": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "defaultValue": "standard",
+      "options": [
+        "standard",
+        "80",
+        "70"
+      ],
+      "description": "Maximum content width: Standard (100%), 80%, or 70%."
+    },
     "theme": {
       "kind": "select",
       "required": true,

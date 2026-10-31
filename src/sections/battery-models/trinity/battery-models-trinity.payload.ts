@@ -1,8 +1,9 @@
 import type { Block, CollectionSlug, Field } from 'payload'
-import { ctaFields, ctaStyleField, isSharpSolidIconNameOrEmpty, sectionIntroFields } from '../../../shared/payload-fields.js'
+import { ctaFields, ctaStyleField, isSharpSolidIconNameOrEmpty, sectionContentWidthField, sectionIntroFields } from '../../../shared/payload-fields.js'
 import { ctaToProps, ctaGroupToProps, mediaToProps, optionalCtaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BatteryModelsTrinityContent, BatteryRatingTrinity, PayloadBatteryModelsTrinityDocument } from './battery-models-trinity.types.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
 export interface CreateBatteryModelsTrinityBlockOptions {
   mediaCollection?: CollectionSlug
@@ -40,6 +41,7 @@ export function createBatteryModelsTrinityBlock({ mediaCollection = 'media', tar
       plural: 'PRERELEASE — Battery Models Trinity blocks',
     },
     fields: [
+      sectionContentWidthField(),
       {
         name: 'theme',
         type: 'select',
@@ -140,6 +142,7 @@ export function batteryModelsTrinityToProps(data: PayloadBatteryModelsTrinityDoc
   const calloutHeading = calloutIntro ? optionalText(calloutIntro.heading, 'callout.intro.heading') : undefined
 
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(block.theme),
     intro: introToProps(block.intro, 'intro'),
     ...(optionalCtaToProps(block.catalogueCta, 'catalogueCta', options) ? { catalogueCta: optionalCtaToProps(block.catalogueCta, 'catalogueCta', options) } : {}),

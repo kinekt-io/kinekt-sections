@@ -14,6 +14,7 @@
 - Add optional localized Sharp Solid title icons to Use Case items through Facility Fact's title-prefix slot, using the section's theme accent.
 - Add optional localized Solution List item CTA styles (`primary`, `secondary`, `clear`, or `clear-base`); retain CTA icons inside the rendered button.
 - Autoplay the HD Cells media accordion with six-second progress bars, synchronized media, hover/offscreen pause, and a permanent stop after explicit selection; reduced-motion and single-item views retain manual disclosures.
+- Add a localized Content width selector to all 53 sections and both catalogue inspectors: Standard, 80%, or 70% of the fixed desktop content-width cap, with responsive gutters and safe defaults for existing content.
 
 ### Changed
 
@@ -33,6 +34,7 @@
 - Remove HD Cells header width caps and use `primary-light` for its intro descriptions and cell subtitles through component tokens.
 - Reduce Proof Metrics gaps to `space-m`; keep values on one line and allow whole metric items to move to the next row instead.
 - Let Hero Allentown intro headings and descriptions fill the text column on desktop as well as mobile.
+- Normalize main section containers to the selected content-width cap while preserving internal column layouts and full-bleed media; let Hero Trinity copy fill its content container below 50rem.
 
 ### Fixed
 

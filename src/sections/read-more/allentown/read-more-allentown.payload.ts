@@ -2,7 +2,8 @@ import type { Block, CollectionSlug } from 'payload'
 import type { PayloadReadMoreDocument, ReadMoreContent } from './read-more-allentown.types.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { ctaGroupToProps, mediaToProps, optionalSharpSolidIcon, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
-import { ctaGroupFields, isSharpSolidIconNameOrEmpty } from '../../../shared/payload-fields.js'
+import { ctaGroupFields, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from '../../../shared/payload-fields.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
 export interface CreateReadMoreBlockOptions {
   mediaCollection?: CollectionSlug
@@ -15,6 +16,7 @@ export function createReadMoreBlock({ mediaCollection = 'media', targetCollectio
     interfaceName: 'ReadMoreAllentown',
     labels: { singular: 'BETA — Read More Allentown', plural: 'BETA — Read More Allentown blocks' },
     fields: [
+      sectionContentWidthField(),
       { name: 'theme', type: 'select', localized: true, required: true, defaultValue: 'light', options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })) },
       { name: 'intro', type: 'group', localized: true, fields: [{ name: 'accentHeading', type: 'text' }, { name: 'heading', type: 'text', required: true }, { name: 'description', type: 'richText' }] },
       { name: 'label', type: 'group', localized: true, fields: [{ name: 'text', type: 'text' }, { name: 'icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' } }] },
@@ -30,6 +32,7 @@ export function readMoreToProps(data: PayloadReadMoreDocument, options: PayloadA
   const labelText = label ? optionalText(label.text, 'label.text') : undefined
   const labelIcon = label ? optionalSharpSolidIcon(label.icon, 'label.icon') : undefined
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(data.theme),
     intro: {
       accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'),

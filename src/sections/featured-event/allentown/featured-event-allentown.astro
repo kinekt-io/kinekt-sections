@@ -1,4 +1,5 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import EventCard from '../../../components/event-card/allentown/event-card-allentown.astro'
 import type { EventCardContent, EventType } from '../../../components/event-card/allentown/event-card-allentown.astro'
@@ -21,6 +22,7 @@ export interface FeaturedEventSource extends Omit<EventCardContent, 'eventType'>
 }
 
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: Theme
   headingLevel?: HeadingLevel
@@ -48,7 +50,7 @@ const selected = newest(valid.filter((event) => event.featured === true)) ?? new
 const event: EventCardContent | undefined = selected ? { ...selected, eventType: selected.eventType ?? 'tulip' } : undefined
 const CardHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' : 'h4'
 ---
-<section class="featured-event-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="featured-event-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="featured-event-allentown__container">
     <header class="featured-event-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
@@ -185,4 +187,12 @@ const CardHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
   .featured-event-allentown, .featured-event-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .featured-event-allentown *, .featured-event-allentown *::before, .featured-event-allentown *::after { box-sizing: border-box; }
   .featured-event-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .featured-event-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

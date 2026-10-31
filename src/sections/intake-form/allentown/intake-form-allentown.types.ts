@@ -1,3 +1,4 @@
 // @generated structural section — source manifest remains the contract.
-export type BetaIntakeFormAllentownContent = Record<string, unknown>
+import type { SectionContentWidth } from '../../../shared/section-width.js'
+export type BetaIntakeFormAllentownContent = Record<string, unknown> & { contentWidth?: SectionContentWidth }
 export type PayloadBetaIntakeFormAllentownDocument = BetaIntakeFormAllentownContent & { id?: string }

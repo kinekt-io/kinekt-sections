@@ -39,6 +39,7 @@ const quoteText = (value: string): string => {
   class="case-studies-allentown"
   id={id}
   data-kinekt-section
+  data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'}
   data-kinekt-theme={theme}
 >
   <div class="case-studies-allentown__container">
@@ -670,5 +671,13 @@ const quoteText = (value: string): string => {
 <style is:global>
   @media (max-width: 49.999rem) {
     .case-studies-allentown { --kinekt-component-reading-width: var(--content-width); }
+  }
+</style>
+<style is:global>
+  .case-studies-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

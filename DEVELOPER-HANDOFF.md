@@ -198,6 +198,15 @@ Fluid outputs interpolate between mobile and desktop inputs, clamping outside th
 
 Choose the nearest scale value behind an overridable component variable. Do not preserve arbitrary old pixels through bespoke multipliers. Structural choices such as column ratios, aspect ratios and content-driven breakpoints remain component-owned.
 
+### Section width contract
+
+All section manifests include optional, localized `contentWidth` with values `standard`, `80`, and `70`. Payload factories use `sectionContentWidthField()`; adapters use `normalizeSectionContentWidth()`. Missing/null values mean `standard`; unsupported values are rejected. Preserve this field when resolving CMS data and forwarding props to Astro.
+
+Render `data-kinekt-content-width` on the section root. In its own `<style is:global>`, set `--kinekt-section-content-width` to `--desktop-content-width` or that fixed base multiplied by `.8` / `.7`, and bridge `--kinekt-component-content-width` to it. Main containers fill available space, centered, with the selected maximum plus both responsive gutters. Do not use `80%`/`70%` viewport widths or multiply the fluid `--content-width`: those would keep shrinking before the gutters require it.
+
+Preserve full-bleed backgrounds/media and internal column ratios. Do not reintroduce narrower main-container caps copied from a Figma frame; use the editor selection instead. Both isolated and master-list catalogue inspectors exercise this contract. Verify fixed desktop caps, small-screen shrinking, and existing content without the field.
+
+
 ### Native CSS nesting
 
 This pattern belongs inside the Astro component's `<style is:global>` block:

@@ -24,7 +24,7 @@ const { id, theme = 'light', intro, media, nextStepsHeading, nextSteps = [], hea
 const nextStepsHeadingLevel = headingLevel === 'h1' ? 'h2' : 'h3'
 const stepHeadingLevel = headingLevel === 'h1' ? 'h3' : 'h4'
 ---
-<section class="thank-you-hero thank-you-hero--allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="thank-you-hero thank-you-hero--allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="thank-you-hero__container">
     <div class="thank-you-hero__lead">
       <header class="thank-you-hero__header">
@@ -180,4 +180,12 @@ const stepHeadingLevel = headingLevel === 'h1' ? 'h3' : 'h4'
   .thank-you-hero, .thank-you-hero[data-kinekt-theme='light'] { color-scheme: light; }
   .thank-you-hero *, .thank-you-hero *::before, .thank-you-hero *::after { box-sizing: border-box; }
   .thank-you-hero [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .thank-you-hero--allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

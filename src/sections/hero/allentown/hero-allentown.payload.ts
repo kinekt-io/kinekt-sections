@@ -3,7 +3,8 @@ import type { Block, CollectionSlug } from 'payload'
 import type { HeroContent, PayloadHeroDocument } from './hero-allentown.types.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { ctaGroupToProps, mediaToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
-import { ctaGroupFields } from '../../../shared/payload-fields.js'
+import { ctaGroupFields, sectionContentWidthField } from '../../../shared/payload-fields.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
 export interface CreateHeroBlockOptions { mediaCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
@@ -15,6 +16,7 @@ export function createHeroBlock({ mediaCollection = 'media', targetCollections =
     slug: 'hero-allentown', interfaceName: 'HeroAllentown',
     labels: { singular: 'BETA — Hero Allentown', plural: 'BETA — Hero Allentown blocks' },
     fields: [
+      sectionContentWidthField(),
       { name: 'theme', type: 'select', required: true, defaultValue: 'dark', options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })) },
       { name: 'intro', type: 'group', label: 'Intro Block', localized: true, required: true, fields: [
         { name: 'accentHeading', type: 'text', label: 'Accent heading' },
@@ -32,6 +34,7 @@ export function heroToProps(data: PayloadHeroDocument, options: PayloadAdapterOp
   const intro = requireObject(data.intro, 'intro')
   const ctas = ctaGroupToProps(data.ctas, 'ctas', options)
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(data.theme),
     intro: { accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'), heading: requireText(intro.heading, 'intro.heading'), ...(intro.description ? { description: { html: richTextToHtml(intro.description, 'intro.description') } } : {}) },
     ...(ctas ? { ctas } : {}),

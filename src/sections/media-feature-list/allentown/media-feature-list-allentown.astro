@@ -12,7 +12,7 @@ interface Props extends MediaFeatureListContent {
 
 const { theme, direction, intro, label, media, features, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 ---
-<section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-section data-kinekt-theme={theme} data-kinekt-direction={direction}>
+<section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-kinekt-direction={direction}>
   <div class="media-feature-list__container">
     <header class="media-feature-list__header">
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading">
@@ -177,4 +177,12 @@ const { theme, direction, intro, label, media, features, headingLevel = 'h2', me
   .media-feature-list, .media-feature-list[data-kinekt-theme='light'] { color-scheme: light; }
   .media-feature-list *, .media-feature-list *::before, .media-feature-list *::after { box-sizing: border-box; }
   .media-feature-list [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .media-feature-list--allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

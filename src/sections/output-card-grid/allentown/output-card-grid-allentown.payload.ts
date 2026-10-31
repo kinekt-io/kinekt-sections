@@ -2,7 +2,8 @@ import type { Block, CollectionSlug } from 'payload'
 import type { OutputCardGridContent, PayloadOutputCardGridDocument } from './output-card-grid-allentown.types.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { ctaGroupToProps, mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
-import { ctaGroupFields } from '../../../shared/payload-fields.js'
+import { ctaGroupFields, sectionContentWidthField } from '../../../shared/payload-fields.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
 export interface CreateOutputCardGridBlockOptions { mediaCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
@@ -12,6 +13,7 @@ export function createOutputCardGridBlock({ mediaCollection = 'media', targetCol
     interfaceName: 'OutputCardGridAllentown',
     labels: { singular: 'BETA — Output Card Grid Allentown', plural: 'BETA — Output Card Grid Allentown blocks' },
     fields: [
+      sectionContentWidthField(),
       { name: 'theme', type: 'select', localized: true, required: true, defaultValue: 'light', options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })) },
       { name: 'intro', type: 'group', localized: true, fields: [{ name: 'accentHeading', type: 'text' }, { name: 'heading', type: 'text', required: true }, { name: 'description', type: 'richText' }] },
       { name: 'ctas', type: 'group', localized: true, fields: ctaGroupFields(targetCollections) },
@@ -27,6 +29,7 @@ export function outputCardGridToProps(data: PayloadOutputCardGridDocument, optio
   const label = optionalText(data.label, 'label')
 
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(data.theme),
     intro: {
       accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'),

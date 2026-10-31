@@ -3,7 +3,8 @@ import type { Block, CollectionSlug } from 'payload'
 import type { Cta, CtaIcon, Media, RichText, SectionIntro } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { ctaGroupToProps, ctaToProps, mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
-import { contentTargetField, ctaFields, isSharpSolidIconNameOrEmpty } from '../../../shared/payload-fields.js'
+import { contentTargetField, ctaFields, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from '../../../shared/payload-fields.js'
+import { normalizeSectionContentWidth, type SectionContentWidth } from '../../../shared/section-width.js'
 
 export type CaseStudyResult = {
   label: string
@@ -28,6 +29,7 @@ export type CaseStudySlide = {
 }
 
 export type CaseStudiesAllentownContent = {
+  contentWidth?: SectionContentWidth
   theme: 'light' | 'semi-light' | 'semi-dark' | 'dark'
   intro: SectionIntro
   sectionLabel?: string
@@ -68,6 +70,7 @@ export function createCaseStudiesAllentownBlock({
     interfaceName: 'CaseStudiesAllentown',
     labels: { singular: 'PRE-RELEASE — Case Studies Allentown', plural: 'PRE-RELEASE — Case Studies Allentown blocks' },
     fields: [
+      sectionContentWidthField(),
       {
         name: 'theme', type: 'select', localized: true, required: true, defaultValue: 'light',
         options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })),
@@ -144,6 +147,7 @@ export function caseStudiesAllentownToProps(
   const items = requireArray(carousel.items, 'carousel.items').map((item, index) => slideToProps(item, index, options))
 
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(data.theme),
     intro: {
       accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'),

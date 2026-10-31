@@ -58,6 +58,12 @@ const previewFallbackAsset = `${catalogueBase}placeholders/hero-trinity-street.w
             <label><input type="radio" name="theme" value="semi-dark" /> Semi-dark</label>
             <label><input type="radio" name="theme" value="dark" /> Dark</label>
           </fieldset>
+          <fieldset>
+            <legend>Content width</legend>
+            <label><input type="radio" name="content-width" value="standard" checked /> Standard</label>
+            <label><input type="radio" name="content-width" value="80" /> 80%</label>
+            <label><input type="radio" name="content-width" value="70" /> 70%</label>
+          </fieldset>
           <fieldset data-kinekt-intro-heading-options hidden>
             <legend>First intro heading</legend>
             <label><input type="radio" name="intro-heading-level" value="h1" /> H1</label>
@@ -167,6 +173,10 @@ const previewFallbackAsset = `${catalogueBase}placeholders/hero-trinity-street.w
       const initialThemeControl = Array.from(document.querySelectorAll<HTMLInputElement>('.preview-options input[name="theme"]'))
         .find((input) => input.value === initialTheme)
       if (initialThemeControl) initialThemeControl.checked = true
+      const initialContentWidth = surface?.querySelector<HTMLElement>('[data-kinekt-section]')?.dataset.kinektContentWidth ?? 'standard'
+      const initialWidthControl = Array.from(document.querySelectorAll<HTMLInputElement>('.preview-options input[name="content-width"]'))
+        .find((input) => input.value === initialContentWidth)
+      if (initialWidthControl) initialWidthControl.checked = true
       const initialIntroHeading = surface?.querySelector<HTMLHeadingElement>(':is(.section-intro__heading, [data-kinekt-intro-heading])')
       const introHeadingOptions = document.querySelector<HTMLFieldSetElement>('[data-kinekt-intro-heading-options]')
       if (initialIntroHeading && introHeadingOptions) {
@@ -220,6 +230,10 @@ const previewFallbackAsset = `${catalogueBase}placeholders/hero-trinity-street.w
           if (input.name === 'theme') {
             const section = surface.querySelector<HTMLElement>('[data-kinekt-section]')
             if (section) section.dataset.kinektTheme = input.value
+          }
+          if (input.name === 'content-width' && (input.value === 'standard' || input.value === '80' || input.value === '70')) {
+            const section = surface.querySelector<HTMLElement>('[data-kinekt-section]')
+            if (section) section.dataset.kinektContentWidth = input.value
           }
           if (input.name === 'intro-heading-level' && (input.value === 'h1' || input.value === 'h2' || input.value === 'h3' || input.value === 'h4')) {
             setIntroHeadingLevel(input.value)

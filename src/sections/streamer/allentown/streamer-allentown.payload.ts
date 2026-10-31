@@ -1,8 +1,9 @@
 import type { Block, CollectionSlug, Field } from 'payload'
-import { ctaFields, ctaStyleField, sectionIntroFields } from '../../../shared/payload-fields.js'
+import { ctaFields, ctaStyleField, sectionContentWidthField, sectionIntroFields } from '../../../shared/payload-fields.js'
 import { ctaGroupToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { PayloadStreamerAllentownDocument, StreamerAllentownContent } from './streamer-allentown.types.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
 export interface CreateStreamerAllentownBlockOptions {
   targetCollections?: CollectionSlug[]
@@ -37,6 +38,7 @@ export function createStreamerAllentownBlock({ targetCollections = ['pages'] }: 
       plural: 'PRERELEASE — Streamer Allentown blocks',
     },
     fields: [
+      sectionContentWidthField(),
       {
         name: 'theme',
         type: 'select',
@@ -57,6 +59,7 @@ export function streamerAllentownToProps(data: PayloadStreamerAllentownDocument,
   const ctas = ctaGroupToProps(block.ctas, 'ctas', options)
 
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(block.theme),
     intro: {
       heading: requireText(intro.heading, 'intro.heading'),

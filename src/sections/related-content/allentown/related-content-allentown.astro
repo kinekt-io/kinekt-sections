@@ -11,6 +11,7 @@ import { isSafeWebUrl } from '../../../urls.js'
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 type RelatedItem = { title?: string; excerpt?: string; href?: string; kind?: string; image?: unknown; media?: unknown; poster?: unknown }
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: Theme
   headingLevel?: 'h2' | 'h3'
@@ -36,7 +37,7 @@ const linkIcon = ctaIconPaths('arrow-right')
 const kindIcons: Record<string, string> = { article: 'newspaper', case: 'suitcase', 'case study': 'suitcase', 'white paper': 'file-lines', video: 'circle-play', blog: 'pen-nib', interview: 'microphone', news: 'bullhorn' }
 const kindIcon = (kind?: string) => (kind ? kindIcons[kind.trim().toLowerCase()] : undefined)
 ---
-<section class="related-content-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="related-content-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="related-content-allentown__container">
     <header class="related-content-allentown__header">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
@@ -229,4 +230,14 @@ const kindIcon = (kind?: string) => (kind ? kindIcons[kind.trim().toLowerCase()]
   .related-content-allentown, .related-content-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .related-content-allentown *, .related-content-allentown *::before, .related-content-allentown *::after { box-sizing: border-box; }
   .related-content-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .related-content-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    --kiw--related-content-allentown-container-width: var(--kinekt-section-content-width);
+    & > .related-content-allentown__container { max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-section-content-width) + (var(--kinekt-component-inline-space) * 2))); }
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

@@ -16,7 +16,7 @@ const { theme, intro, ctas, label, cards, headingLevel = 'h2' } = Astro.props as
 const actions = ctaGroupActions(ctas)
 const cardHeadingLevel = ('h' + Math.min(Number(headingLevel.slice(1)) + 1, 6)) as 'h2' | 'h3' | 'h4'
 ---
-<section class="output-card-grid output-card-grid--allentown" data-kinekt-section data-kinekt-theme={theme}>
+<section class="output-card-grid output-card-grid--allentown" data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="output-card-grid__container">
     <header class="output-card-grid__header">
       <div class="output-card-grid__header-content">
@@ -110,7 +110,6 @@ const cardHeadingLevel = ('h' + Math.min(Number(headingLevel.slice(1)) + 1, 6)) 
   /* Figma "Section - Customized Batteries" (5255:537962, semi-light). */
   .output-card-grid.output-card-grid--allentown[data-kinekt-section] {
     --kiw--output-card-grid-block-space: var(--section-gutter);
-    --kiw--output-card-grid-content-width: var(--width-xxl);
     --kiw--output-card-grid-major-gap: var(--section-space-l);
     --kiw--output-card-grid-header-width: var(--width-l);
     --kiw--output-card-grid-header-gap: var(--space-xl);
@@ -123,13 +122,11 @@ const cardHeadingLevel = ('h' + Math.min(Number(headingLevel.slice(1)) + 1, 6)) 
     --kiw--output-card-grid-grid-column-gap: var(--section-space-m);
     --kiw--output-card-grid-grid-row-gap: var(--section-space-s);
     --kinekt-section-output-card-grid-block-space: var(--kiw--output-card-grid-block-space);
-    --kinekt-section-output-card-grid-content-width: var(--kiw--output-card-grid-content-width);
     --kinekt-section-output-card-grid-major-gap: var(--kiw--output-card-grid-major-gap);
     --kinekt-section-output-card-grid-grid-column-gap: var(--kiw--output-card-grid-grid-column-gap);
     --kinekt-section-output-card-grid-grid-row-gap: var(--kiw--output-card-grid-grid-row-gap);
     --kinekt-section-output-card-grid-label-to-grid-gap: var(--kiw--output-card-grid-label-to-grid-gap);
     --kinekt-component-block-space: var(--kinekt-section-output-card-grid-block-space);
-    --kinekt-component-content-width: var(--kinekt-section-output-card-grid-content-width);
   }
   .output-card-grid.output-card-grid--allentown[data-kinekt-section] > .output-card-grid__container { gap: var(--kinekt-section-output-card-grid-major-gap); }
   .output-card-grid.output-card-grid--allentown[data-kinekt-section] .output-card-grid__header { display: grid; gap: var(--kiw--output-card-grid-header-gap); }
@@ -219,5 +216,13 @@ const cardHeadingLevel = ('h' + Math.min(Number(headingLevel.slice(1)) + 1, 6)) 
   }
 </style>
 <style is:global>
-  .output-card-grid--allentown[data-kinekt-section] { --kinekt-component-block-space: var(--kinekt-section-output-card-grid-block-space); --kinekt-component-content-width: var(--kinekt-section-output-card-grid-content-width); }
+  .output-card-grid--allentown[data-kinekt-section] { --kinekt-component-block-space: var(--kinekt-section-output-card-grid-block-space); }
+</style>
+<style is:global>
+  .output-card-grid--allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

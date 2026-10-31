@@ -1,7 +1,9 @@
 import type { Block } from 'payload'
+import { sectionContentWidthField } from '../../../shared/payload-fields.js'
 import type { CompatibilitySpecificationsContent, PayloadCompatibilitySpecificationsDocument } from './compatibility-specifications-allentown.types.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
 export function createCompatibilitySpecificationsBlock(): Block {
   return {
@@ -12,6 +14,7 @@ export function createCompatibilitySpecificationsBlock(): Block {
       plural: 'BETA — Compatibility Specifications Allentown blocks',
     },
     fields: [
+      sectionContentWidthField(),
       { name: 'theme', type: 'select', required: true, defaultValue: 'light', options: ['light', 'semi-light', 'semi-dark', 'dark'].map(value => ({ label: value, value })) },
       { name: 'intro', type: 'group', localized: true, fields: [{ name: 'accentHeading', type: 'text' }, { name: 'heading', type: 'text', required: true }, { name: 'description', type: 'richText' }] },
       { name: 'specifications', type: 'array', localized: true, required: true, minRows: 1, fields: [{ name: 'label', type: 'text', required: true }, { name: 'value', type: 'text', required: true }] },
@@ -25,6 +28,7 @@ export function compatibilitySpecificationsToProps(data: PayloadCompatibilitySpe
   const platforms = data.compatiblePlatforms == null ? undefined : requireObject(data.compatiblePlatforms, 'compatiblePlatforms')
 
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(data.theme),
     intro: {
       accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'),

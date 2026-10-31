@@ -1,4 +1,5 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import ChecklistItem, { type ChecklistItemContent } from '../../../components/checklist-item/allentown/checklist-item-allentown.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
@@ -22,6 +23,7 @@ export interface ComplianceCollageTile {
   label?: string
 }
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: BetaTheme
   /** Figma sets this as the page's main section (h1-size title), so it defaults to h1. */
@@ -53,7 +55,7 @@ const tiles = collage.filter((tile) => typeof tile?.anchor === 'string' && /^[A-
 // Figma's arrow-down-right uses the shared Sharp Solid arrow-up-left icon turned 180°.
 const tileIcon = ctaIconPaths('arrow-up-left')
 ---
-<section class:list={['compliance-overview-allentown', tiles.length > 0 && 'compliance-overview-allentown--with-collage']} id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class:list={['compliance-overview-allentown', tiles.length > 0 && 'compliance-overview-allentown--with-collage']} id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="compliance-overview-allentown__container">
     <div class="compliance-overview-allentown__content">
       <div class="compliance-overview-allentown__lead">
@@ -216,8 +218,21 @@ const tileIcon = ctaIconPaths('arrow-up-left')
   }
   @media (max-width: 49.999rem) {
     .compliance-overview-allentown { --kiw--compliance-overview-allentown-heading-line-height: 1.1; }
+    .compliance-overview-allentown {
+      & > .compliance-overview-allentown__container { grid-template-columns: minmax(0, 1fr); }
+      & .compliance-overview-allentown__tiles { grid-template-columns: repeat(2, minmax(0, var(--kiw--compliance-overview-allentown-tile-size))); }
+      & .compliance-overview-allentown__tile { max-inline-size: 100%; }
+    }
   }
   @media (min-width: 50rem) {
     .compliance-overview-allentown > .compliance-overview-allentown__container { grid-template-columns: minmax(0, var(--kiw--compliance-overview-allentown-content-max-width)) auto; justify-content: space-between; align-items: start; column-gap: var(--kiw--compliance-overview-allentown-column-gap); }
+  }
+</style>
+<style is:global>
+  .compliance-overview-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

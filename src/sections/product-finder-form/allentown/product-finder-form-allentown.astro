@@ -8,6 +8,7 @@ import type { BetaTheme } from '../../../shared/payload.js'
 
 // The generated types (product-finder-form-allentown.types.ts) are still a generic record; these are the fields the manifest declares.
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: BetaTheme
   intro: SectionIntroContent
@@ -23,7 +24,7 @@ interface Props {
 const { id, theme = 'light', intro, form, formLabel, headingLevel = 'h2' } = Astro.props as Props
 const hasPlaceholder = Astro.slots.has('form')
 ---
-<section class="product-finder-form-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="product-finder-form-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="product-finder-form-allentown__container">
     <header class="product-finder-form-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
@@ -132,8 +133,6 @@ const hasPlaceholder = Astro.slots.has('form')
 </style>
 <style is:global>
   :where(.product-finder-form-allentown) {
-    /* Figma Container is a hard 720 (no variable): half the content width, on the same ratio scale as the --width-* tokens. */
-    --kiw--product-finder-form-allentown-container-width: calc(var(--content-width) * 0.5);
     --kiw--product-finder-form-allentown-intro-to-form-gap: var(--section-space-l);
     --kiw--product-finder-form-allentown-heading-stack-gap: var(--space-xxs);
     --kiw--product-finder-form-allentown-intro-gap: var(--space-m);
@@ -149,7 +148,7 @@ const hasPlaceholder = Astro.slots.has('form')
     --kiw--form-embed-allentown-group-gap: var(--space-xl);
     --kiw--form-embed-allentown-option-min-width: 100%;
   }
-  .product-finder-form-allentown > .product-finder-form-allentown__container { display: grid; gap: var(--kiw--product-finder-form-allentown-intro-to-form-gap); width: 100%; max-width: min(var(--kinekt-component-site-width), calc(100% - (var(--kinekt-component-inline-space) * 2))); margin-inline: auto; }
+  .product-finder-form-allentown > .product-finder-form-allentown__container { display: grid; gap: var(--kiw--product-finder-form-allentown-intro-to-form-gap); width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
   .product-finder-form-allentown .product-finder-form-allentown__intro { min-width: 0; text-align: center; }
   .product-finder-form-allentown .section-intro { display: grid; justify-items: center; gap: var(--kiw--product-finder-form-allentown-intro-gap); }
   .product-finder-form-allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
@@ -158,7 +157,12 @@ const hasPlaceholder = Astro.slots.has('form')
   .product-finder-form-allentown .section-intro__description { max-width: none; color: var(--kiw--product-finder-form-allentown-description-color); font-size: var(--kiw--product-finder-form-allentown-description-size); line-height: var(--kinekt-component-text-line-height); text-wrap: balance; }
   .product-finder-form-allentown .section-intro__description > * { margin-block: 0; }
   .product-finder-form-allentown .product-finder-form-allentown__finder { display: grid; gap: var(--kiw--product-finder-form-allentown-finder-gap); min-width: 0; }
-  @media (min-width: 50rem) {
-    .product-finder-form-allentown > .product-finder-form-allentown__container { max-width: min(var(--kinekt-component-site-width), var(--kiw--product-finder-form-allentown-container-width), calc(100% - (var(--kinekt-component-inline-space) * 2))); }
+</style>
+<style is:global>
+  .product-finder-form-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

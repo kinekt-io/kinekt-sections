@@ -35,7 +35,7 @@ const introActions = ctaGroupActions(introCtaGroup)
 const listActions = ctaGroupActions(listCtaGroup)
 const classes = ['process-story-allentown', hasMedia && 'process-story-allentown--with-media'].filter(Boolean).join(' ')
 ---
-<section class={classes} id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class={classes} id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="process-story-allentown__container">
     <header class="process-story-allentown__intro">
       <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
@@ -217,4 +217,12 @@ const classes = ['process-story-allentown', hasMedia && 'process-story-allentown
   .process-story-allentown, .process-story-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .process-story-allentown *, .process-story-allentown *::before, .process-story-allentown *::after { box-sizing: border-box; }
   .process-story-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .process-story-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

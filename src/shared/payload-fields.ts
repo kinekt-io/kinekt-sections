@@ -1,4 +1,4 @@
-import type { CollectionSlug, Field } from 'payload'
+import type { CollectionSlug, Field, SelectField } from 'payload'
 import { isSafeWebUrl } from '../urls.js'
 
 export const requiredTextMessage = 'Enter non-empty text.'
@@ -7,6 +7,22 @@ export const sharpSolidIconMessage = 'Enter a Font Awesome 7 Sharp Solid icon na
 
 export const isSharpSolidIconNameOrEmpty = (value: unknown): true | string =>
   value === undefined || value === null || value === '' || typeof value === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value) || sharpSolidIconMessage
+
+export function sectionContentWidthField(): SelectField {
+  return {
+    name: 'contentWidth',
+    type: 'select',
+    label: 'Content width',
+    localized: true,
+    defaultValue: 'standard',
+    options: [
+      { label: 'Standard (100%)', value: 'standard' },
+      { label: '80%', value: '80' },
+      { label: '70%', value: '70' },
+    ],
+    admin: { description: 'Maximum content width. Backgrounds and full-bleed media are unchanged.' },
+  }
+}
 
 
 export function sectionIntroFields(): Field[] {

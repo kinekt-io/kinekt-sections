@@ -19,7 +19,7 @@ const descriptionHtml = (value: string | RichText | null | undefined) => value =
     : value.html
 const action = (value: any) => value?.cta ?? value
 ---
-<section class="beta-solution-list-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="beta-solution-list-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="beta-solution-list-allentown__container">
     <header class="beta-solution-list-allentown__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
     <nav class="beta-solution-list-allentown__toc" aria-label="Solutions in this section"><ul>{toc.map((item: any) => <li><a href={`#${item.id}`}>{item.label}</a></li>)}</ul></nav>
@@ -236,5 +236,13 @@ const action = (value: any) => value?.cta ?? value
     .beta-solution-list-allentown .beta-solution-list-allentown__heading-group h3 { max-width: var(--kinekt-component-reading-width); }
     .beta-solution-list-allentown .beta-solution-list-allentown__intro :is(.section-intro__heading, .section-intro__description) { max-width: var(--width-m); }
     .beta-solution-list-allentown .callout-allentown { gap: var(--space-l); }
+  }
+</style>
+<style is:global>
+  .beta-solution-list-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

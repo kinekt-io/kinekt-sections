@@ -1,11 +1,12 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import type { RichText } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 /** Payload sends raw Lexical (`{ root }`); pre-rendered HTML (`{ html }`) and plain strings are accepted too. */
-interface Props { id?: string; theme?: Theme; content: string | RichText | { html?: string } | { root: unknown } }
+interface Props { contentWidth?: import('../../../shared/section-width.js').SectionContentWidth; id?: string; theme?: Theme; content: string | RichText | { html?: string } | { root: unknown } }
 
 const { id, theme = 'light', content } = Astro.props as Props
 const isObject = typeof content === 'object' && content !== null
@@ -13,7 +14,7 @@ const html = isObject && 'html' in content && typeof content.html === 'string'
   ? content.html
   : isObject && 'root' in content ? richTextToHtml(content, 'content') : undefined
 ---
-<section class="editorial-content-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="editorial-content-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="editorial-content-allentown__container">
     {typeof content === 'string' && content && <p class="editorial-content-allentown__copy">{content}</p>}
     {html && <div class="editorial-content-allentown__copy" set:html={html} />}
@@ -192,5 +193,14 @@ const html = isObject && 'html' in content && typeof content.html === 'string'
     .editorial-content-allentown .editorial-content-allentown__copy [data-kinekt-editorial-columns]:has(> figure) { column-gap: var(--kiw--editorial-content-allentown-media-columns-gap); }
     .editorial-content-allentown .editorial-content-allentown__copy [data-kinekt-editorial-columns]:has(> figure:last-child) { grid-template-columns: var(--kiw--editorial-content-allentown-media-columns); }
     .editorial-content-allentown .editorial-content-allentown__copy [data-kinekt-editorial-columns]:has(> figure:first-child) { grid-template-columns: minmax(0, 4fr) minmax(0, 5fr); }
+  }
+</style>
+<style is:global>
+  .editorial-content-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+    & > .editorial-content-allentown__container { max-width: min(var(--website-width), calc(var(--kinekt-section-content-width) + (var(--kiw--editorial-content-allentown-inline-space) * 2))); }
   }
 </style>

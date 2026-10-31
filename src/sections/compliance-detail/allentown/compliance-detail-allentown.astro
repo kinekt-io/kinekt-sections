@@ -1,4 +1,5 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import ChecklistItem, { type ChecklistItemContent } from '../../../components/checklist-item/allentown/checklist-item-allentown.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
@@ -15,6 +16,7 @@ import { isSafeWebUrl } from '../../../urls.js'
 /** Rich text as it arrives: a plain string, pre-rendered `{ html }`, or raw Lexical JSON from the identity Payload adapter. */
 type RichTextInput = string | RichText | Record<string, unknown>
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   /** Stable section anchor (runtime `sectionAnchor`); Compliance Overview's collage links to it. */
   id?: string
   theme?: BetaTheme
@@ -47,7 +49,7 @@ for (const cta of ctas) if (!isSafeWebUrl(cta.href)) throw new Error('ctaGroup b
 const iconOf = (cta: Cta) => (isCtaIcon(cta.icon) ? ctaIconPaths(cta.icon) : undefined)
 const hasDetail = Boolean(detailHeading || detailHtml || items.length > 0 || ctas.length > 0)
 ---
-<section class="compliance-detail-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="compliance-detail-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="compliance-detail-allentown__container">
     <div class="compliance-detail-allentown__header">
       <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
@@ -203,5 +205,13 @@ const hasDetail = Boolean(detailHeading || detailHtml || items.length > 0 || cta
     .compliance-detail-allentown { --kiw--section-content-width: var(--kiw--compliance-detail-allentown-content-width, var(--width-xxl)); }
     .compliance-detail-allentown .compliance-detail-allentown__header { grid-template-columns: minmax(0, var(--kiw--compliance-detail-allentown-intro-max-width)) auto; justify-content: space-between; align-items: start; column-gap: var(--kiw--compliance-detail-allentown-header-gap); }
     .compliance-detail-allentown .compliance-detail-allentown__body { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--kiw--compliance-detail-allentown-body-gap); align-items: center; }
+  }
+</style>
+<style is:global>
+  .compliance-detail-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

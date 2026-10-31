@@ -8,6 +8,7 @@ import { ctaGroupActions, type Cta, type CtaGroup, type Media, type SectionIntro
 
 type CalloutCta = Partial<Cta> | null | undefined
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: SectionTheme
   intro: SectionIntroContent
@@ -33,7 +34,7 @@ const calloutContent = callout?.intro
   ? { intro: { ...callout.intro, accentHeading: callout.intro.accentHeading ?? callout.label }, ctaGroup: calloutGroup }
   : undefined
 ---
-<section class="proof-metrics-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="proof-metrics-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="proof-metrics-allentown__container">
     <div class="proof-metrics-allentown__intro-and-metrics">
       <header class="proof-metrics-allentown__intro">
@@ -258,4 +259,14 @@ const calloutContent = callout?.intro
     max-width: var(--kiw--proof-metrics-intro-width);
   }
 }
+</style>
+<style is:global>
+  .proof-metrics-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    --kiw--proof-metrics-content-width: var(--kinekt-section-content-width);
+    & > .proof-metrics-allentown__container { max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-section-content-width) + (var(--kiw--proof-metrics-inline-space) * 2))); }
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

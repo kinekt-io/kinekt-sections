@@ -1,7 +1,9 @@
+import type { SectionContentWidth } from '../../../shared/section-width.js'
 import type { CtaGroup, Media, SectionIntro } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 
 export interface HeroContent {
+  contentWidth?: SectionContentWidth
   theme?: BetaTheme
   intro: SectionIntro
   ctas?: CtaGroup

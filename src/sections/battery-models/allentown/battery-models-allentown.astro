@@ -1,4 +1,5 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 import Callout from '../../../components/callout/allentown/callout-allentown.astro'
@@ -23,6 +24,7 @@ interface CrossSellItem {
 }
 
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: SectionTheme
   intro: SectionIntroContent
@@ -57,7 +59,7 @@ const descriptionHtml = (description: BatteryModel['description']) => typeof des
 
 ---
 
-<section class="beta-battery-models-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="beta-battery-models-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="beta-battery-models-allentown__container">
     <div class="beta-battery-models-allentown__catalogue">
       <header class="beta-battery-models-allentown__intro">
@@ -309,5 +311,13 @@ const descriptionHtml = (description: BatteryModel['description']) => typeof des
 
   @media (max-width: 49.999rem) {
     .beta-battery-models-allentown :is(h1, h2, h3, h4, h5, h6) { max-width: 100vw; }
+  }
+</style>
+<style is:global>
+  .beta-battery-models-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

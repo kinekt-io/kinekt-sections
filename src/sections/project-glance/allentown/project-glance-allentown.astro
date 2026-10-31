@@ -5,13 +5,13 @@ import KeyFact from '../../../components/key-fact/allentown/key-fact-allentown.a
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 type Fact = { label?: string; description?: string | RichText }
-interface Props { id?: string; theme?: Theme; headingLevel?: 'h2' | 'h3'; heading: string; facts?: Fact[] }
+interface Props { contentWidth?: import('../../../shared/section-width.js').SectionContentWidth; id?: string; theme?: Theme; headingLevel?: 'h2' | 'h3'; heading: string; facts?: Fact[] }
 
 const { id, theme = 'semi-dark', headingLevel = 'h2', heading, facts = [] } = Astro.props as Props
 const Heading = headingLevel
 const validFacts = facts.filter((fact): fact is Required<Pick<Fact, 'label'>> & Fact => typeof fact?.label === 'string' && fact.label.trim().length > 0)
 ---
-<section class="project-glance-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="project-glance-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="project-glance-allentown__container">
     <Heading class="project-glance-allentown__heading">{heading}</Heading>
     {validFacts.length > 0 && <ul class="project-glance-allentown__facts">
@@ -64,5 +64,14 @@ const validFacts = facts.filter((fact): fact is Required<Pick<Fact, 'label'>> & 
       & .project-glance-allentown__facts { display: flex; flex-wrap: wrap; justify-content: center; max-width: calc(var(--kiw--project-glance-allentown-columns) * var(--kiw--project-glance-allentown-fact-width) + (var(--kiw--project-glance-allentown-columns) - 1) * var(--kiw--project-glance-allentown-facts-gap)); }
       & .project-glance-allentown__fact { flex: 0 1 calc((100% - (var(--kiw--project-glance-allentown-columns) - 1) * var(--kiw--project-glance-allentown-facts-gap)) / var(--kiw--project-glance-allentown-columns)); max-width: var(--kiw--project-glance-allentown-fact-width); }
     }
+  }
+</style>
+<style is:global>
+  .project-glance-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+    & > .project-glance-allentown__container { max-width: min(var(--website-width), calc(var(--kinekt-section-content-width) + (var(--kiw--project-glance-allentown-inline-space) * 2))); }
   }
 </style>

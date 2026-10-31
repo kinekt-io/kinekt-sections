@@ -30,7 +30,7 @@ const introContent: SectionIntroContent = { ...intro, description: introDescript
 const actions = ctaGroupActions(ctas)
 const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url === 'string')
 ---
-<section class="media-accordion-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="media-accordion-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="media-accordion-allentown__container">
     <header class="media-accordion-allentown__header">
       <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
@@ -206,4 +206,12 @@ const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url 
   .media-accordion-allentown, .media-accordion-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .media-accordion-allentown *, .media-accordion-allentown *::before, .media-accordion-allentown *::after { box-sizing: border-box; }
   .media-accordion-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .media-accordion-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

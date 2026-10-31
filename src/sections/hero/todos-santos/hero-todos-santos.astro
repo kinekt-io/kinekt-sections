@@ -14,6 +14,7 @@ interface Feature {
 
 
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   id?: string
   theme?: 'light' | 'semi-light' | 'semi-dark' | 'dark'
   headingLevel?: 'h1' | 'h2'
@@ -38,7 +39,7 @@ for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('ctas mu
 assertSafeImage(image, 'image')
 if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 ---
-<section class="hero-todos-santos" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="hero-todos-santos" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="hero-todos-santos__container">
     <div class="hero-todos-santos__content">
       <header class="hero-todos-santos__header">
@@ -192,4 +193,13 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
   .hero-todos-santos .hero-todos-santos__image { aspect-ratio: var(--kinekt-section-media-ratio); block-size: 100%; object-fit: cover; }
   @media (min-width: 50rem) { .hero-todos-santos .hero-todos-santos__container { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; justify-content: space-between; gap: var(--section-space-xxl); } .hero-todos-santos .hero-todos-santos__feature { grid-template-columns: minmax(0, 12.5rem) minmax(0, 1fr); gap: var(--space-m); } .hero-todos-santos .hero-todos-santos__media { block-size: var(--hero-todos-santos-media-height); } }
   @media (max-width: 49.99rem) { .hero-todos-santos { --kinekt-component-reading-width: var(--content-width); } }
+</style>
+<style is:global>
+  .hero-todos-santos[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    --hero-todos-santos-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

@@ -4,12 +4,25 @@ import { createManifestBlock } from '../../../shared/manifest-block.js'
 import { ctaGroupToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BetaUseCasesAllentownContent, PayloadBetaUseCasesAllentownDocument, UseCasesAllentownItem } from './use-cases-allentown.types.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
 const manifest = {
   "slug": "use-cases-allentown",
   "title": "Use Cases Allentown",
   "status": "prerelease",
   "fields": {
+    "contentWidth": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "defaultValue": "standard",
+      "options": [
+        "standard",
+        "80",
+        "70"
+      ],
+      "description": "Maximum content width: Standard (100%), 80%, or 70%."
+    },
     "theme": {
       "kind": "select",
       "required": true,
@@ -123,6 +136,7 @@ const itemToProps = (value: unknown, index: number, options: PayloadAdapterOptio
 
 export function betaUseCasesAllentownToProps(data: PayloadBetaUseCasesAllentownDocument, options: PayloadAdapterOptions = {}): BetaUseCasesAllentownContent {
   return {
+    contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(data.theme),
     intro: introToProps(data.intro),
     advantageHeading: requireText(data.advantageHeading, 'advantageHeading'),

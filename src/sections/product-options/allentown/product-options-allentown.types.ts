@@ -1,3 +1,4 @@
+import type { SectionContentWidth } from '../../../shared/section-width.js'
 import type { CtaGroup, Media, RichText, SectionIntro } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 
@@ -9,6 +10,7 @@ export interface ProductOption {
 }
 
 export interface ProductOptionsAllentownContent {
+  contentWidth?: SectionContentWidth
   theme: BetaTheme
   intro: SectionIntro
   ctas?: CtaGroup

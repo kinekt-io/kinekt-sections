@@ -1,4 +1,5 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import { faChevronDown } from '@fortawesome/sharp-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
@@ -91,7 +92,7 @@ const calloutContent = callout?.intro && typeof callout.intro.heading === 'strin
 const CalloutHeading: HeadingLevel = headingLevel === 'h1' ? 'h2' : 'h3'
 const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]}`, path: faChevronDown.icon[4] as string }
 ---
-<section class="faq-index-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-faq-index data-faq-index-count-label={resultCountLabel} data-faq-index-count-one-label={resultCountOneLabel}>
+<section class="faq-index-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme} data-faq-index data-faq-index-count-label={resultCountLabel} data-faq-index-count-one-label={resultCountOneLabel}>
   <div class="faq-index-allentown__container">
     <div class="faq-index-allentown__main">
       <header class="faq-index-allentown__intro">
@@ -362,4 +363,12 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
   .faq-index-allentown, .faq-index-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .faq-index-allentown *, .faq-index-allentown *::before, .faq-index-allentown *::after { box-sizing: border-box; }
   .faq-index-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .faq-index-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

@@ -178,6 +178,7 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
   class="insight-index-allentown"
   id={id}
   data-kinekt-section
+  data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'}
   data-kinekt-theme={theme}
   data-insight-index
   data-insight-index-page-size={pageSize}
@@ -834,4 +835,12 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
   .insight-index-allentown, .insight-index-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .insight-index-allentown *, .insight-index-allentown *::before, .insight-index-allentown *::after { box-sizing: border-box; }
   .insight-index-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .insight-index-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

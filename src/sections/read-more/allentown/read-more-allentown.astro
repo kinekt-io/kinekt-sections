@@ -8,6 +8,7 @@ import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   theme?: Theme
   headingLevel?: 'h1' | 'h2' | 'h3'
   intro: SectionIntroContent
@@ -20,7 +21,7 @@ interface Props {
 const { theme = 'light', intro, label, ctas, media, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props
 const actions = ctaGroupActions(ctas)
 ---
-<section class="read-more-allentown" data-kinekt-section data-kinekt-theme={theme}>
+<section class="read-more-allentown" data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="read-more-allentown__container">
     <header class="read-more-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel}>
@@ -145,5 +146,13 @@ const actions = ctaGroupActions(ctas)
   @media (min-width: 50rem) {
     :where(.read-more-allentown) { --kiw--read-more-allentown-content-width: var(--width-xxl); }
     .read-more-allentown > .read-more-allentown__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; column-gap: var(--kiw--read-more-allentown-column-gap); }
+  }
+</style>
+<style is:global>
+  .read-more-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

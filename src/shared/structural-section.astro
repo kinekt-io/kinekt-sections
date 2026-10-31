@@ -2,6 +2,7 @@
 import Button from '../controls/button/allentown/button-allentown.astro'
 import SectionIntro from '../primitives/section-intro/section-intro.astro'
 import StructuralContent from './structural-content.astro'
+import { normalizeSectionContentWidth, type SectionContentWidth } from './section-width'
 
 
 interface Cta {
@@ -41,6 +42,7 @@ interface Props {
   carouselControlStyle?: 'text' | 'icon'
   carouselControls?: 'next' | 'previous-next'
   carouselLoop?: boolean
+  contentWidth?: SectionContentWidth
 }
 
 function isCta(value: unknown): value is Required<Cta> {
@@ -59,14 +61,15 @@ function collectCtas(value: unknown): Required<Cta>[] {
   })
 }
 
-const { block, id, headingLevel = 'h2', intro, ctas, media, fields, content: explicitContent, pagefindUrl, pagefindFilters, carouselControlStyle = 'icon', carouselControls = 'previous-next', carouselLoop = false, ...implicitContent } = Astro.props
+const { block, id, headingLevel = 'h2', intro, ctas, media, fields, contentWidth: rawContentWidth, content: explicitContent, pagefindUrl, pagefindFilters, carouselControlStyle = 'icon', carouselControls = 'previous-next', carouselLoop = false, ...implicitContent } = Astro.props as Props
+const contentWidth = normalizeSectionContentWidth(rawContentWidth)
 const content = (explicitContent ?? implicitContent) as Record<string, unknown>
 const theme = content.theme === 'dark' || content.theme === 'semi-dark' || content.theme === 'semi-light' ? content.theme : 'light'
 const actions = collectCtas(ctas)
 const caseStudyAction = block.includes('case-studies') ? collectCtas(content.cta)[0] : undefined
 const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta'] : ['theme', 'intro', 'ctas', 'media']
 ---
-<section class={block} id={id} data-kinekt-section data-kinekt-structural-section data-kinekt-theme={theme}>
+<section class={block} id={id} data-kinekt-section data-kinekt-structural-section data-kinekt-content-width={contentWidth} data-kinekt-theme={theme}>
   <div class={`${block}__container`}>
     {(intro || actions.length > 0 || caseStudyAction) && (
       <header class={`${block}__header`}>
@@ -315,6 +318,14 @@ const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta']
     :where([data-kinekt-structural-section][class*='checklist-feature-list-allentown'], [data-kinekt-structural-section][class*='solution-list-allentown']) :is([class$='__items'], [class$='__features'], [class$='__metrics']) > li > article { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); column-gap: var(--section-space-xl); }
     :where([data-kinekt-structural-section][class*='tabs-allentown']) [role='tablist'] { gap: 0; }
     :where([data-kinekt-structural-section][class*='tabs-allentown']) [role='tab'] { padding-inline: var(--space-m); }
+  }
+</style>
+<style is:global>
+  [data-kinekt-structural-section][data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>
 

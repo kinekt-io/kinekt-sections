@@ -32,7 +32,7 @@ const ChildHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3'
 // Catalogue previews pass non-submitting placeholder fields in the `form` slot; production renders the embed only.
 const hasFormPlaceholder = Astro.slots.has('form')
 ---
-<section class="intake-form-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="intake-form-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="intake-form-allentown__container">
     <div class="intake-form-allentown__lead">
       <header class="intake-form-allentown__intro">
@@ -213,4 +213,12 @@ const hasFormPlaceholder = Astro.slots.has('form')
   .intake-form-allentown, .intake-form-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .intake-form-allentown *, .intake-form-allentown *::before, .intake-form-allentown *::after { box-sizing: border-box; }
   .intake-form-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .intake-form-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

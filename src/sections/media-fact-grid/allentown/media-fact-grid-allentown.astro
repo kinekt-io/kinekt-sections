@@ -10,6 +10,7 @@ import { richTextToHtml } from '../../../shared/rich-text.js'
 // The generated .types.ts is still generic (Record<string, unknown>), so the renderer types its props from the manifest here.
 interface FactCardContent { title: string; description: string | RichText; value: string }
 interface Props {
+  contentWidth?: import('../../../shared/section-width.js').SectionContentWidth
   theme: BetaTheme
   intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | null }
   media?: Media | null
@@ -26,7 +27,7 @@ const introDescription = intro.description == null || typeof intro.description =
 const introContent: SectionIntroContent = { ...intro, description: introDescription }
 const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url === 'string')
 ---
-<section class="media-fact-grid-allentown" data-kinekt-section data-kinekt-theme={theme}>
+<section class="media-fact-grid-allentown" data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="media-fact-grid-allentown__container">
     <div class:list={['media-fact-grid-allentown__lead', { 'media-fact-grid-allentown__lead--media': hasMedia }]}>
       <header class="media-fact-grid-allentown__intro">
@@ -190,4 +191,12 @@ const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url 
   .media-fact-grid-allentown, .media-fact-grid-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .media-fact-grid-allentown *, .media-fact-grid-allentown *::before, .media-fact-grid-allentown *::after { box-sizing: border-box; }
   .media-fact-grid-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .media-fact-grid-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

@@ -1,5 +1,6 @@
 import type { CtaGroup, RichText, SectionIntro } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
+import type { SectionContentWidth } from '../../../shared/section-width.js'
 
 export interface UseCasesAllentownItem {
   title: string
@@ -9,6 +10,7 @@ export interface UseCasesAllentownItem {
 }
 
 export interface BetaUseCasesAllentownContent {
+  contentWidth?: SectionContentWidth
   theme: BetaTheme
   intro: SectionIntro
   advantageHeading: string

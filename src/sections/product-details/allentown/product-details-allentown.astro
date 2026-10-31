@@ -31,7 +31,7 @@ const introContent: SectionIntroContent = { ...intro, description: introDescript
 const hasMedia = Boolean(image && typeof image === 'object' && typeof image.url === 'string')
 const visibleItems = items.filter((item) => typeof item?.title === 'string' && item.title !== '')
 ---
-<section class="product-details-allentown" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="product-details-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="product-details-allentown__container">
     <div class="product-details-allentown__lead">
       <header class="product-details-allentown__intro">
@@ -200,4 +200,12 @@ const visibleItems = items.filter((item) => typeof item?.title === 'string' && i
   .product-details-allentown, .product-details-allentown[data-kinekt-theme='light'] { color-scheme: light; }
   .product-details-allentown *, .product-details-allentown *::before, .product-details-allentown *::after { box-sizing: border-box; }
   .product-details-allentown [hidden] { display: none !important; }
+</style>
+<style is:global>
+  .product-details-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

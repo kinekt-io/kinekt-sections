@@ -87,7 +87,7 @@ const donutCalloutPath = `M${donutCalloutStart} ${donutCalloutStart}L${donutCall
 const donutCalloutStyle = `--kiw--homepage-problem-solution-donut-callout-run: ${donutCalloutRun}; --kiw--homepage-problem-solution-donut-callout-elbow: ${donutCallout.elbow}; --kiw--homepage-problem-solution-donut-callout-length: ${donutCallout.diagonal - donutCallout.gap + donutCallout.elbow};`
 const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice(2, 10)}`
 ---
-<section class="homepage-problem-solution-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-homepage-problem-solution>
+<section class="homepage-problem-solution-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-homepage-problem-solution>
   <div class="homepage-problem-solution-allentown__container" data-homepage-problem-solution-grid>
     {groups.map(({ state, intro, label }) => (
     <div class:list={['homepage-problem-solution-allentown__group', `homepage-problem-solution-allentown__group--${state}`]}>
@@ -549,4 +549,12 @@ const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice
   .homepage-problem-solution-allentown [hidden] { display: none !important; }
   /* The problem accent (--error) is tuned for dark canvases; on light ones it is darkened to stay readable. */
   .homepage-problem-solution-allentown:is([data-kinekt-theme='light'], [data-kinekt-theme='semi-light']) { --kiw--homepage-problem-solution-problem-accent-color: color-mix(in srgb, var(--error) 55%, var(--primary-ultra-dark)); }
+</style>
+<style is:global>
+  .homepage-problem-solution-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kinekt-component-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
 </style>

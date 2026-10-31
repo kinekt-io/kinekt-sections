@@ -1,4 +1,5 @@
 ---
+import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import BatteryCardTrinity from '../../../components/battery-card/trinity/battery-card-trinity.astro'
 import Callout from '../../../components/callout/allentown/callout-allentown.astro'
@@ -27,7 +28,7 @@ const catalogueIcon = ctaIconPaths(catalogueCta?.icon)
 const showDefaultCatalogueIcon = catalogueCta?.icon == null || catalogueCta.icon === ''
 ---
 
-<section class="battery-models-trinity" id={id} data-kinekt-section data-kinekt-theme={theme}>
+<section class="battery-models-trinity" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="battery-models-trinity__container">
     <header class="battery-models-trinity__header">
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
@@ -227,5 +228,13 @@ const showDefaultCatalogueIcon = catalogueCta?.icon == null || catalogueCta.icon
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
+  }
+</style>
+<style is:global>
+  .battery-models-trinity[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    --kiw--battery-models-trinity-content-width: var(--kinekt-section-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
   }
 </style>

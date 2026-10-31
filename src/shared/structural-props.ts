@@ -2,6 +2,7 @@ import { renderRichText } from './rich-text.js'
 import { isCtaStyle } from './content.js'
 import { isObjectRecord } from './type-guards.js'
 import { optionalCtaToProps, mediaToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from './payload.js'
+import { normalizeSectionContentWidth } from './section-width.js'
 
 const isMedia = (value: Record<string, unknown>): boolean => 'url' in value && 'alt' in value && 'width' in value && 'height' in value
 const isRichText = (value: Record<string, unknown>): boolean => 'root' in value
@@ -28,6 +29,7 @@ export function structuralSectionToProps(data: Record<string, unknown>, options:
 
   return {
     ...adaptValue(section, 'section', options) as Record<string, unknown>,
+    contentWidth: normalizeSectionContentWidth(section.contentWidth),
     theme: requireTheme(section.theme),
     intro: {
       accentHeading: optionalText(intro.accentHeading, 'intro.accentHeading'),
