@@ -1,0 +1,50 @@
+---
+import ProofMetricsTrinity from './proof-metrics-trinity.astro'
+
+const items = [
+  {
+    title: 'Audit-ready evidence',
+    description: { html: '<p>We turn operational findings into clear records that give review teams a reliable starting point.</p>' },
+    label: { label: 'Reporting window', value: { text: 'Quarterly' } },
+  },
+  {
+    title: 'Independent review',
+    description: { html: '<p>A second set of eyes tests the assumptions, controls and traceability behind each conclusion.</p>' },
+    label: { label: 'Review format', value: { text: 'Peer checked', icon: 'badge-check' } },
+  },
+  {
+    title: 'Practical action plans',
+    description: { html: '<p>Each recommendation names an owner, a priority and the evidence needed to close the loop.</p>' },
+  },
+  {
+    title: 'Reliable follow-through',
+    description: { html: '<p>Progress reviews keep improvements visible, so important actions do not disappear between meetings.</p>' },
+    label: { label: 'Status updates', value: { text: 'Monthly' } },
+  },
+]
+
+const callout = {
+  intro: {
+    accentHeading: 'Next review',
+    heading: 'Ready for a clearer view of your operations?',
+    description: 'Book a discovery call to discuss your current review process and where independent evidence could help.',
+  },
+  ctaGroup: {
+    buttons: [
+      { label: 'Plan a discovery call', href: '/contact/', style: 'primary' as const, icon: 'arrow-right' },
+      { label: 'Explore our approach', href: '/services/', style: 'clear-base' as const, icon: 'arrow-up-right' },
+    ],
+  },
+}
+---
+
+<ProofMetricsTrinity
+  theme="light"
+  intro={{
+    accentHeading: 'Testing & reliability',
+    heading: 'Evidence that supports confident decisions',
+    description: 'Our service audits make complex operations easier to assess, improve and explain to the people who rely on them.',
+  }}
+  items={items}
+  callout={callout}
+/>

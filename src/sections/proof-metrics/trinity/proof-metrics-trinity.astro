@@ -1,0 +1,184 @@
+---
+import '../../../styles/wireframe-tokens.css'
+import Callout from '../../../components/callout/allentown/callout-allentown.astro'
+import ResultItem from '../../../components/result-item/allentown/result-item-allentown.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
+import type { CtaGroup, RichText, SectionIntro as Intro, SectionTheme } from '../../../shared/content.js'
+
+interface ResultLabel {
+  label: string
+  value: { text: string; icon?: string }
+}
+
+interface Props {
+  id?: string
+  theme?: SectionTheme
+  contentWidth?: string
+  intro: Intro
+  items: { title: string; description: string | RichText; label?: ResultLabel | null }[]
+  callout?: { intro?: Intro; ctaGroup?: CtaGroup } | null
+  headingLevel?: 'h1' | 'h2' | 'h3'
+}
+
+const { id, theme = 'light', intro, items, callout, headingLevel = 'h2' } = Astro.props as Props
+const ItemHeading = `h${Number(headingLevel.slice(1)) + 1}` as 'h2' | 'h3' | 'h4'
+const descriptionHtml = (value: string | RichText) => typeof value === 'string' ? richTextToHtml(value, 'items.description') : value.html
+const hasResultLabel = (label: ResultLabel | null | undefined) => Boolean(label?.label?.trim() && label.value?.text?.trim())
+---
+
+<section class="proof-metrics-trinity" id={id} data-kinekt-section data-kinekt-theme={theme} data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)}>
+  <div class="proof-metrics-trinity__container">
+    <header class="proof-metrics-trinity__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
+    <ul class="proof-metrics-trinity__items">
+      {items.map((item) => (
+        <li class="proof-metrics-trinity__item">
+          <div class="proof-metrics-trinity__copy">
+            <ItemHeading class="proof-metrics-trinity__item-heading">{item.title}</ItemHeading>
+            <div class="proof-metrics-trinity__description" set:html={descriptionHtml(item.description)} />
+          </div>
+          {hasResultLabel(item.label) && <ResultItem class="proof-metrics-trinity__result" label={item.label!.label} value={item.label!.value} labelAs="p" size="l" />}
+        </li>
+      ))}
+    </ul>
+    {callout?.intro?.heading?.trim() && <Callout class="proof-metrics-trinity__callout" callout={{ intro: callout.intro, ctaGroup: callout.ctaGroup }} headingLevel={headingLevel === 'h1' ? 'h2' : 'h3'} />}
+  </div>
+</section>
+
+<style is:global>
+  :where(.proof-metrics-trinity[data-kinekt-section]) {
+    --kiw--proof-metrics-trinity-site-width: var(--website-width);
+    --kiw--proof-metrics-trinity-inline-space: var(--section-gutter);
+    --kiw--proof-metrics-trinity-block-space: var(--section-space-l);
+    --kiw--proof-metrics-trinity-container-gap: var(--section-space-l);
+    --kiw--proof-metrics-trinity-column-gap: var(--section-space-l);
+    --kiw--proof-metrics-trinity-row-gap: var(--section-space-m);
+    --kiw--proof-metrics-trinity-item-gap: var(--space-xl);
+    --kiw--proof-metrics-trinity-copy-gap: var(--space-xs);
+    --kiw--proof-metrics-trinity-item-heading-size: var(--h4);
+    --kiw--proof-metrics-trinity-description-size: var(--text-l);
+    --kiw--proof-metrics-trinity-canvas: var(--neutral-ultra-light);
+    --kiw--proof-metrics-trinity-ink: var(--primary-ultra-dark);
+    --kiw--proof-metrics-trinity-muted: var(--primary-semi-dark);
+    --kiw--proof-metrics-trinity-line: var(--primary-ultra-light);
+    --kiw--proof-metrics-trinity-accent: var(--accent-semi-dark);
+    --kiw--proof-metrics-trinity-action: var(--primary);
+    --kiw--proof-metrics-trinity-action-text: var(--white);
+    --kiw--proof-metrics-trinity-action-icon: var(--accent);
+    --kiw--section-button-height: var(--kiw--proof-metrics-trinity-button-height, var(--input-height));
+    --kiw--section-button-radius: var(--kiw--proof-metrics-trinity-button-radius, var(--buttons-radius));
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--proof-metrics-trinity-canvas));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--white));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--proof-metrics-trinity-ink));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--proof-metrics-trinity-muted));
+    --kinekt-component-subtle: var(--kinekt-section-subtle, var(--kinekt-component-muted));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--proof-metrics-trinity-line));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--proof-metrics-trinity-accent));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--proof-metrics-trinity-action));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--proof-metrics-trinity-action-text));
+    --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--proof-metrics-trinity-action-icon));
+    --kinekt-component-heading-font-family: var(--heading-font-family);
+    --kinekt-component-heading-font-weight: var(--heading-font-weight);
+    --kinekt-component-heading-letter-spacing: var(--heading-letter-spacing);
+    --kinekt-component-heading-line-height: var(--heading-line-height);
+    --kinekt-component-text-line-height: var(--text-line-height);
+  }
+
+  :where(.proof-metrics-trinity[data-kinekt-theme='semi-light']) {
+    --kiw--proof-metrics-trinity-canvas: var(--neutral-light);
+    --kiw--proof-metrics-trinity-action: var(--primary-semi-dark);
+  }
+
+  :where(.proof-metrics-trinity[data-kinekt-theme='semi-dark']) {
+    --kiw--proof-metrics-trinity-canvas: var(--primary-dark);
+    --kiw--proof-metrics-trinity-ink: var(--white);
+    --kiw--proof-metrics-trinity-muted: var(--primary-light);
+    --kiw--proof-metrics-trinity-line: var(--primary);
+    --kiw--proof-metrics-trinity-accent: var(--accent);
+  }
+
+  :where(.proof-metrics-trinity[data-kinekt-theme='dark']) {
+    --kiw--proof-metrics-trinity-canvas: var(--primary-ultra-dark);
+    --kiw--proof-metrics-trinity-ink: var(--white);
+    --kiw--proof-metrics-trinity-muted: var(--primary-ultra-light);
+    --kiw--proof-metrics-trinity-line: var(--primary);
+    --kiw--proof-metrics-trinity-accent: var(--accent);
+  }
+
+  .proof-metrics-trinity[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
+
+  .proof-metrics-trinity {
+    box-sizing: border-box;
+    padding-block: var(--kiw--proof-metrics-trinity-block-space);
+    color: var(--kinekt-component-ink);
+    background: var(--kinekt-component-canvas);
+    font-family: var(--text-font-family);
+    font-size: var(--text-m);
+    font-weight: var(--text-font-weight);
+    line-height: var(--text-line-height);
+
+    & *, & *::before, & *::after { box-sizing: border-box; }
+    & .proof-metrics-trinity__container {
+      display: grid;
+      inline-size: 100%;
+      max-inline-size: min(var(--kiw--proof-metrics-trinity-site-width), calc(var(--kinekt-section-content-width) + var(--kiw--proof-metrics-trinity-inline-space) * 2));
+      gap: var(--kiw--proof-metrics-trinity-container-gap);
+      margin-inline: auto;
+      padding-inline: var(--kiw--proof-metrics-trinity-inline-space);
+    }
+    & .proof-metrics-trinity__intro {
+      min-inline-size: 0;
+      & .section-intro { max-inline-size: none; --kinekt-component-reading-width: 100%; }
+    }
+    & .proof-metrics-trinity__items {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--kiw--proof-metrics-trinity-row-gap);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    & .proof-metrics-trinity__item {
+      display: grid;
+      align-content: start;
+      min-inline-size: 0;
+      gap: var(--kiw--proof-metrics-trinity-item-gap);
+      overflow-wrap: anywhere;
+    }
+    & .proof-metrics-trinity__copy { display: grid; gap: var(--kiw--proof-metrics-trinity-copy-gap); }
+    & .proof-metrics-trinity__item-heading {
+      margin: 0;
+      color: var(--kinekt-component-ink);
+      font-family: var(--heading-font-family);
+      font-size: var(--kiw--proof-metrics-trinity-item-heading-size);
+      font-weight: var(--heading-font-weight);
+      line-height: var(--heading-line-height);
+      letter-spacing: var(--heading-letter-spacing);
+    }
+    & .proof-metrics-trinity__description {
+      color: var(--kinekt-component-muted);
+      font-size: var(--kiw--proof-metrics-trinity-description-size);
+      & > :first-child { margin-block-start: 0; }
+      & > :last-child { margin-block-end: 0; }
+      & p { margin-block: var(--space-xxs); }
+    }
+    & .proof-metrics-trinity__result {
+      --kiw--result-item-allentown-label-ink: var(--kinekt-component-ink);
+    }
+    & .proof-metrics-trinity__callout {
+      --kiw--callout-allentown-title-size: var(--h4);
+      --kiw--callout-allentown-description-color: var(--kinekt-component-muted);
+      --kiw--callout-allentown-description-width: 100%;
+    }
+
+    @media (min-width: 50rem) {
+      & .proof-metrics-trinity__items { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--kiw--proof-metrics-trinity-row-gap) var(--kiw--proof-metrics-trinity-column-gap); }
+      & .proof-metrics-trinity__callout { --kiw--callout-allentown-title-size: var(--h3); }
+    }
+  }
+</style>

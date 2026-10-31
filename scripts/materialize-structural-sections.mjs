@@ -390,7 +390,7 @@ for (const directory of await manifestDirectories(sections)) {
   const manifest = JSON.parse(await readFile(path.join(directory, 'manifest.json'), 'utf8'))
 
   manifest.fields = expandComponentFields(manifest.fields)
-  if (['moq-lead-times-trinity', 'proof-metrics-allentown'].includes(manifest.slug)) {
+  if (['moq-lead-times-trinity', 'proof-metrics-allentown', 'proof-metrics-trinity'].includes(manifest.slug)) {
     // Clone expanded fields: shared atom fields are reused by other manifests.
     manifest.fields = structuredClone(manifest.fields)
     // Empty optional groups must remain saveable in Payload.
@@ -398,6 +398,12 @@ for (const directory of await manifestDirectories(sections)) {
     manifest.fields.callout.fields.intro.fields.heading.required = false
     if (manifest.slug === 'moq-lead-times-trinity') {
       manifest.fields.items.fields.label.fields.text.required = false
+    }
+    if (manifest.slug === 'proof-metrics-trinity') {
+      const label = manifest.fields.items.fields.label
+      label.fields.label.required = false
+      label.fields.value.required = false
+      label.fields.value.fields.text.required = false
     }
   }
   const relativeAstro = path.relative(directory, path.join(source, 'shared', 'structural-section.astro')).split(path.sep).join('/')
@@ -419,6 +425,7 @@ for (const directory of await manifestDirectories(sections)) {
     'steps-stage',
     'moq-lead-times-allentown',
     'moq-lead-times-trinity',
+    'proof-metrics-trinity',
   ]).has(manifest.slug)
   const caseStudiesContract = manifest.slug === 'case-studies-allentown'
   const solutionListContract = manifest.slug === 'solution-list-allentown'

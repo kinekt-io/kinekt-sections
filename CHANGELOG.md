@@ -40,6 +40,7 @@
 ### Fixed
 
 - Replace Output Card Grid Allentown's fixed Primary/Secondary Payload groups with the standard collapsed zero-to-two CTA array and per-action styles. Before updating a populated CMS, migrate stored `ctas.primary`/`ctas.secondary` objects to CTA rows, preserving their selected styles and targets.
+- Replace Read More Allentown's fixed Primary/Secondary Payload groups with the standard collapsed zero-to-two CTA array and per-action styles. Before updating a populated CMS, migrate stored `ctas.primary`/`ctas.secondary` objects to CTA rows, preserving their selected styles and targets.
 
 - Render configured arrow-right and arrow-down icons for Case Studies Allentown header and slide CTAs, retaining the current content-target contract and component-owned styles.
 - Normalize Use Cases rich-text descriptions and content-target CTA groups before rendering.

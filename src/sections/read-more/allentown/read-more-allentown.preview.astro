@@ -13,11 +13,20 @@ const content = {
     "icon": "location-dot"
   },
   "ctas": {
-    "primary": {
-      "label": "Talk to an expert",
-      "href": "#",
-      "icon": "arrow-right"
-    },
+    "buttons": [
+      {
+        "label": "Discuss a system requirement",
+        "href": "#",
+        "icon": "arrow-right",
+        "style": "primary"
+      },
+      {
+        "label": "Review integration guidance",
+        "href": "#",
+        "icon": "arrow-right",
+        "style": "clear"
+      }
+    ]
   },
   "media": {
     "url": "catalogue-asset:placeholder-1600x900.svg",
@@ -65,27 +74,6 @@ const fields = {
   "media": {
     "kind": "media"
   }
-}
-const intro = {
-  "accentHeading": "Energy systems built around real operating conditions",
-  "heading": "Energy systems built around real operating conditions",
-  "description": "Clear technical information helps teams assess operating conditions, integration constraints and the next engineering decision."
-}
-const ctas = {
-  "primary": {
-    "label": "Talk to an expert",
-    "href": "#"
-  },
-  "secondary": {
-    "label": "View technical details",
-    "href": "#"
-  }
-}
-const media = {
-  "url": "catalogue-asset:placeholder-1600x900.svg",
-  "alt": "Battery module and electrical interface",
-  "width": 1600,
-  "height": 900
 }
 const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`
 

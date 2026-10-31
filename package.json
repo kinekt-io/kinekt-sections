@@ -564,6 +564,17 @@
       "import": "./dist/sections/proof-metrics/allentown/proof-metrics-allentown.types.js",
       "types": "./dist/sections/proof-metrics/allentown/proof-metrics-allentown.types.d.ts"
     },
+    "./sections/proof-metrics-trinity.astro": "./src/sections/proof-metrics/trinity/proof-metrics-trinity.astro",
+    "./sections/proof-metrics-trinity.payload": {
+      "default": "./dist/sections/proof-metrics/trinity/proof-metrics-trinity.payload.js",
+      "import": "./dist/sections/proof-metrics/trinity/proof-metrics-trinity.payload.js",
+      "types": "./dist/sections/proof-metrics/trinity/proof-metrics-trinity.payload.d.ts"
+    },
+    "./sections/proof-metrics-trinity.types": {
+      "default": "./dist/sections/proof-metrics/trinity/proof-metrics-trinity.types.js",
+      "import": "./dist/sections/proof-metrics/trinity/proof-metrics-trinity.types.js",
+      "types": "./dist/sections/proof-metrics/trinity/proof-metrics-trinity.types.d.ts"
+    },
     "./sections/read-more-allentown.astro": "./src/sections/read-more/allentown/read-more-allentown.astro",
     "./sections/read-more-allentown.payload": {
       "default": "./dist/sections/read-more/allentown/read-more-allentown.payload.js",
