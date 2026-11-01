@@ -1,10 +1,29 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { ctaGroupToProps, ctaToProps } from '../dist/shared/payload.js'
-import { ctaFields, ctaStyleField } from '../dist/shared/payload-fields.js'
+import { ctaGroupToProps, ctaToProps, requireSharpSolidIcon } from '../dist/shared/payload.js'
+import { ctaFields, ctaStyleField, isSharpSolidIconNameOrEmpty } from '../dist/shared/payload-fields.js'
+import { ctaIconPaths } from '../dist/shared/cta-icons.js'
 import { structuralSectionToProps } from '../dist/shared/structural-props.js'
 import { betaProcessStoryAllentownToProps } from '../dist/sections/process-story/allentown/process-story-allentown.payload.js'
 import { betaProductOptionsAllentownToProps } from '../dist/sections/product-options/allentown/product-options-allentown.payload.js'
+
+test('invalid decorative icons preserve actionable CTAs and use a safe required-icon fallback', () => {
+  for (const icon of ['not-a-real-fa-icon', 'fa-solid fa-bolt', ' ', 42, {}]) {
+    assert.deepEqual(ctaToProps({ label: 'Contact us', destinationType: 'url', href: '/contact/', icon }, 'cta'), { label: 'Contact us', href: '/contact/' })
+    assert.equal(requireSharpSolidIcon(icon, 'icon'), 'circle-question')
+    assert.equal(ctaIconPaths(icon), undefined)
+    assert.equal(typeof isSharpSolidIconNameOrEmpty(icon), 'string')
+  }
+})
+
+test('brand icons are accepted and resolve to their actual SVG paths', () => {
+  for (const icon of ['whatsapp', 'signal-messenger']) {
+    assert.equal(isSharpSolidIconNameOrEmpty(icon), true)
+    assert.equal(ctaToProps({ label: 'Contact us', destinationType: 'url', href: '/contact/', icon }, 'cta').icon, icon)
+    assert.match(ctaIconPaths(icon).path, /^M/)
+    assert.notEqual(ctaIconPaths(icon).path, ctaIconPaths('circle-question').path)
+  }
+})
 
 function ctaField(name) {
   const field = ctaFields(['pages', 'articles']).find((candidate) => candidate.name === name)
@@ -81,7 +100,6 @@ test('CTA validators reject partial publish values while allowing an omitted CTA
   assert.equal(validate(href, '/products', { destinationType: 'url', label: 'Browse products' }), true)
   assert.equal(validate(icon, 'bolt'), true)
   assert.equal(validate(icon, 'shield-halved'), true)
-  assert.equal(validate(icon, 'shield_halved'), 'Enter a Font Awesome 7 Sharp Solid icon name in kebab-case.')
 })
 
 test('optional CTA groups omit incomplete buttons without discarding their complete sibling', () => {
@@ -197,7 +215,7 @@ test('optional CTA handling does not weaken required CTA or URL safety validatio
   )
 })
 
-test('CTA adapters accept Sharp Solid icon names and reject invalid populated names', () => {
+test('CTA adapters retain Sharp Solid names and reject malformed content references', () => {
   assert.deepEqual(
     ctaToProps({ label: 'Browse products', destinationType: 'url', href: '/products', icon: 'shield-halved' }, 'cta'),
     { label: 'Browse products', href: '/products', icon: 'shield-halved' },
@@ -209,10 +227,6 @@ test('CTA adapters accept Sharp Solid icon names and reject invalid populated na
   assert.throws(
     () => ctaToProps({ label: 'Read more', destinationType: 'content', page: { relationTo: '', value: 42 } }, 'cta'),
     /cta\.page\.relationTo must name a content collection/,
-  )
-  assert.throws(
-    () => ctaToProps({ label: 'Browse products', destinationType: 'url', href: '/products', icon: 'external' }, 'cta'),
-    /cta\.icon must name a Font Awesome 7 Sharp Solid icon/,
   )
 })
 

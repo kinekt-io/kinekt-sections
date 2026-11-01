@@ -1,12 +1,13 @@
 import type { CollectionSlug, Field, SelectField } from 'payload'
 import { isSafeWebUrl } from '../urls.js'
+import { isCtaIcon } from './cta-icons.js'
 
 export const requiredTextMessage = 'Enter non-empty text.'
 export const actionableHrefMessage = 'Enter an HTTP(S), root-relative, mailto:, or tel: link.'
-export const sharpSolidIconMessage = 'Enter a Font Awesome 7 Sharp Solid icon name in kebab-case.'
+export const sharpSolidIconMessage = 'Enter an installed Font Awesome 7 Sharp Solid or Brands icon name in kebab-case.'
 
 export const isSharpSolidIconNameOrEmpty = (value: unknown): true | string =>
-  value === undefined || value === null || value === '' || typeof value === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value) || sharpSolidIconMessage
+  value === undefined || value === null || value === '' || isCtaIcon(value) || sharpSolidIconMessage
 
 export function sectionContentWidthField(): SelectField {
   return {

@@ -12,14 +12,12 @@ export const requireArray = (value: unknown, field: string): unknown[] => { if (
 export const requireText = (value: unknown, field: string): string => { if (typeof value !== 'string' || value.trim().length === 0) throw new Error(`${field} must be non-empty text.`); return value }
 export const optionalText = (value: unknown, field: string): string | undefined => value === undefined || value === null || value === '' ? undefined : requireText(value, field)
 
-export const requireSharpSolidIcon = (value: unknown, field: string): string => {
-  const icon = requireText(value, field)
-  if (!isCtaIcon(icon)) throw new Error(`${field} must name a Font Awesome 7 Sharp Solid icon.`)
-  return icon
-}
+// Icons are decorative: stale or invalid editor input must not discard a page.
+export const requireSharpSolidIcon = (value: unknown, _field: string): string =>
+  isCtaIcon(value) ? value : 'circle-question'
 
-export const optionalSharpSolidIcon = (value: unknown, field: string): string | undefined =>
-  value === undefined || value === null || value === '' ? undefined : requireSharpSolidIcon(value, field)
+export const optionalSharpSolidIcon = (value: unknown, _field: string): string | undefined =>
+  isCtaIcon(value) ? value : undefined
 export const requireTheme = (value: unknown, field = 'theme'): BetaTheme => { if (value === 'light' || value === 'semi-light' || value === 'dark' || value === 'semi-dark') return value; throw new Error(`${field} must be light, semi-light, dark, or semi-dark.`) }
 const withMediaBaseUrl = (url: string, mediaBaseUrl: string | undefined): string => { if (url.startsWith('/') && mediaBaseUrl) return new URL(url, mediaBaseUrl).toString(); if (!isSafeWebUrl(url)) throw new Error('Media URL must be an HTTP(S) or root-relative URL.'); return url }
 export const mediaToProps = (value: unknown, field: string, { mediaBaseUrl }: PayloadAdapterOptions = {}): Media => {

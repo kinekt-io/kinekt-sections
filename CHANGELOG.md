@@ -4,6 +4,9 @@
 
 ### Added
 
+- Support Font Awesome Brands SVG icons alongside Sharp Solid, including WhatsApp and Signal.
+- Keep pages buildable when stored icon names are invalid: omit optional icons and use `circle-question` for required icons. Editor validation now checks the installed icon registry, not just name syntax.
+
 - Add prerelease Product Hero Trinity with the Battery Models Trinity card contract, an optional editable featured flightpath, and zero-to-two actions below the cards instead of a callout.
 - Add prerelease Battery Models Trinity with reusable model cards, editable one-to-five ratings, webshop/specification links, and an optional Callout.
 - Add prerelease Streamer Allentown with the standard Intro and optional zero-to-two CTA Group.

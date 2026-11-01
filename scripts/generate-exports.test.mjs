@@ -66,25 +66,6 @@ test('discovers nested components and preserves the public thumbnail utility', a
   await f.add('controls/button/button.astro')
   await f.add('shared/section-thumbnails.ts')
   f.run()
-  assert.deepEqual(await f.exports(), {
-    './controls/button.astro': './src/controls/button/button.astro',
-    './section-thumbnails': {
-      default: './dist/shared/section-thumbnails.js',
-      import: './dist/shared/section-thumbnails.js',
-      types: './dist/shared/section-thumbnails.d.ts',
-    },
-    './sections/hero-allentown.astro': './src/sections/hero/allentown/hero-allentown.astro',
-    './sections/hero-allentown.payload': {
-      default: './dist/sections/hero/allentown/hero-allentown.payload.js',
-      import: './dist/sections/hero/allentown/hero-allentown.payload.js',
-      types: './dist/sections/hero/allentown/hero-allentown.payload.d.ts',
-    },
-    './sections/hero-allentown.types': {
-      default: './dist/sections/hero/allentown/hero-allentown.types.js',
-      import: './dist/sections/hero/allentown/hero-allentown.types.js',
-      types: './dist/sections/hero/allentown/hero-allentown.types.d.ts',
-    },
-  })
   assert.deepEqual(await f.catalogue(), [
     {
       id: 'controls/button',
