@@ -148,6 +148,14 @@ entries.set('./section-thumbnails', {
     types: './dist/shared/section-thumbnails.d.ts',
   },
 })
+entries.set('./shared/payload-fields', {
+  source: 'shared/payload-fields.ts',
+  target: {
+    default: './dist/shared/payload-fields.js',
+    import: './dist/shared/payload-fields.js',
+    types: './dist/shared/payload-fields.d.ts',
+  },
+})
 if (!entries.size) throw new Error('No component entrypoints found inside src/.')
 
 const manifestPath = path.join(root, 'package.json')

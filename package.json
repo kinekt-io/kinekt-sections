@@ -674,6 +674,11 @@
       "import": "./dist/sections/use-cases/allentown/use-cases-allentown.types.js",
       "types": "./dist/sections/use-cases/allentown/use-cases-allentown.types.d.ts"
     },
+    "./shared/payload-fields": {
+      "default": "./dist/shared/payload-fields.js",
+      "import": "./dist/shared/payload-fields.js",
+      "types": "./dist/shared/payload-fields.d.ts"
+    },
     "./styles/wireframe-tokens.css": "./src/styles/wireframe-tokens.css"
   },
   "scripts": {
