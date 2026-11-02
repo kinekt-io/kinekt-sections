@@ -1,0 +1,170 @@
+---
+import '../../../styles/wireframe-tokens.css'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
+import { ctaGroupActions, type CtaGroup, type SectionIntro as Intro, type SectionTheme } from '../../../shared/content.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
+import type { ProgressListAllentownItem, ProgressListStatus } from './progress-list-allentown.types.js'
+
+interface Props {
+  id?: string
+  theme?: SectionTheme
+  contentWidth?: string
+  intro: Intro
+  itemHeading: string
+  statusHeading: string
+  items: ProgressListAllentownItem[]
+  ctaGroup?: CtaGroup
+  headingLevel?: 'h1' | 'h2' | 'h3'
+}
+
+const { id, theme = 'light', intro, itemHeading, statusHeading, items, ctaGroup, headingLevel = 'h2' } = Astro.props as Props
+const actions = ctaGroupActions(ctaGroup)
+const standardStatuses: Record<Exclude<ProgressListStatus, 'custom'>, { label: string; icon: string; tone: string }> = {
+  delayed: { label: 'Delayed', icon: 'clock', tone: 'warning' },
+  done: { label: 'Done', icon: 'circle-check', tone: 'success' },
+  'in-progress': { label: 'In progress', icon: 'arrows-rotate', tone: 'info' },
+  todo: { label: 'To do', icon: 'circle', tone: 'neutral' },
+  canceled: { label: 'Canceled', icon: 'ban', tone: 'error' },
+}
+const iconFor = (item: ProgressListAllentownItem) => ctaIconPaths(item.status === 'custom' ? item.customIcon : standardStatuses[item.status].icon) ?? ctaIconPaths('circle-question')!
+const labelFor = (item: ProgressListAllentownItem) => item.statusLabel ?? (item.status === 'custom' ? 'Custom status' : standardStatuses[item.status].label)
+const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom' ? item.customTone ?? 'neutral' : standardStatuses[item.status].tone
+---
+
+<section class="progress-list-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)}>
+  <div class="progress-list-allentown__container">
+    <header class="progress-list-allentown__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
+    <div class="progress-list-allentown__table-wrap">
+      <table class="progress-list-allentown__table">
+        <thead><tr><th scope="col">{itemHeading}</th><th scope="col">{statusHeading}</th></tr></thead>
+        <tbody>{items.map((item) => {
+          const icon = iconFor(item)
+          return <tr>
+            <th scope="row"><span class="progress-list-allentown__title">{item.title}</span>{item.reference && <span class="progress-list-allentown__reference">{item.reference}</span>}</th>
+            <td><span class="progress-list-allentown__status" data-tone={toneFor(item)}><svg aria-hidden="true" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg><span>{labelFor(item)}</span></span></td>
+          </tr>
+        })}</tbody>
+      </table>
+    </div>
+    {actions.length > 0 && <div class="progress-list-allentown__actions">{actions.map((action) => {
+      const icon = ctaIconPaths(action.icon)
+      return <Button href={action.href} label={action.label} style={action.style}>{icon && <svg aria-hidden="true" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
+    })}</div>}
+  </div>
+</section>
+
+<style is:global>
+  :where(.progress-list-allentown[data-kinekt-section]) {
+    --kiw--progress-list-allentown-canvas: var(--neutral-ultra-light);
+    --kiw--progress-list-allentown-ink: var(--primary-ultra-dark);
+    --kiw--progress-list-allentown-muted: var(--primary-semi-light);
+    --kiw--progress-list-allentown-line: var(--primary-ultra-light);
+    --kiw--progress-list-allentown-accent: var(--accent-semi-dark);
+    --kiw--progress-list-allentown-action: var(--primary);
+    --kiw--progress-list-allentown-action-text: var(--white);
+    --kiw--progress-list-allentown-action-icon: var(--accent);
+    --kiw--progress-list-allentown-section-space: var(--section-space-l);
+    --kiw--progress-list-allentown-content-gap: var(--section-space-s);
+    --kiw--progress-list-allentown-row-space: var(--space-xs);
+    --kiw--progress-list-allentown-title-size: var(--text-m);
+    --kiw--progress-list-allentown-status-mix: 40%;
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--progress-list-allentown-canvas));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--white));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--progress-list-allentown-ink));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--progress-list-allentown-muted));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--progress-list-allentown-line));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--progress-list-allentown-accent));
+    --kinekt-component-action: var(--kinekt-section-action, var(--kiw--progress-list-allentown-action));
+    --kinekt-component-action-text: var(--kinekt-section-action-text, var(--kiw--progress-list-allentown-action-text));
+    --kinekt-component-action-icon: var(--kinekt-section-action-icon, var(--kiw--progress-list-allentown-action-icon));
+    --kinekt-component-heading-font-family: var(--heading-font-family);
+    --kinekt-component-heading-font-weight: var(--heading-font-weight);
+    --kinekt-component-heading-letter-spacing: var(--heading-letter-spacing);
+    --kinekt-component-heading-line-height: var(--heading-line-height);
+    --kinekt-component-text-line-height: var(--text-line-height);
+    --kiw--section-button-height: var(--input-height);
+    --kiw--section-button-radius: var(--buttons-radius);
+  }
+
+  :where(.progress-list-allentown[data-kinekt-theme='semi-light']) { --kiw--progress-list-allentown-canvas: var(--neutral-light); --kiw--progress-list-allentown-action: var(--primary-semi-dark); }
+  :where(.progress-list-allentown[data-kinekt-theme='semi-dark']) { --kiw--progress-list-allentown-canvas: var(--primary-dark); --kiw--progress-list-allentown-ink: var(--white); --kiw--progress-list-allentown-muted: var(--primary-light); --kiw--progress-list-allentown-line: var(--primary); --kiw--progress-list-allentown-accent: var(--accent); }
+  :where(.progress-list-allentown[data-kinekt-theme='dark']) { --kiw--progress-list-allentown-canvas: var(--primary-ultra-dark); --kiw--progress-list-allentown-ink: var(--white); --kiw--progress-list-allentown-muted: var(--primary-ultra-light); --kiw--progress-list-allentown-line: var(--primary); --kiw--progress-list-allentown-accent: var(--accent); }
+  :where(.progress-list-allentown:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark'])) {
+    --kiw--progress-list-allentown-status-mix: 72%;
+  }
+
+  .progress-list-allentown[data-kinekt-section] {
+    --kinekt-section-content-width: var(--desktop-content-width);
+    &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+    &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
+
+  .progress-list-allentown {
+    box-sizing: border-box;
+    padding-block: var(--kiw--progress-list-allentown-section-space);
+    color: var(--kinekt-component-ink);
+    background: var(--kinekt-component-canvas);
+    font-family: var(--text-font-family);
+    font-size: var(--text-m);
+    font-weight: var(--text-font-weight);
+    line-height: var(--text-line-height);
+
+    & *, & *::before, & *::after { box-sizing: border-box; }
+    & .progress-list-allentown__container {
+      display: grid;
+      inline-size: 100%;
+      max-inline-size: min(var(--website-width), calc(var(--kinekt-section-content-width) + var(--section-gutter) * 2));
+      gap: var(--kiw--progress-list-allentown-content-gap);
+      margin-inline: auto;
+      padding-inline: var(--section-gutter);
+    }
+    & .progress-list-allentown__intro {
+      min-inline-size: 0;
+      text-align: center;
+      & .section-intro { max-inline-size: none; --kinekt-component-reading-width: 100%; }
+    }
+    & .progress-list-allentown__table-wrap { min-inline-size: 0; overflow-x: auto; }
+    & .progress-list-allentown__table {
+      inline-size: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      & th, & td { padding: var(--kiw--progress-list-allentown-row-space) 0; text-align: start; vertical-align: middle; }
+      & th:first-child { padding-inline-end: var(--space-s); }
+      & thead th { color: var(--kinekt-component-muted); font-size: var(--text-s); font-weight: var(--heading-font-weight); }
+      & thead th:first-child { inline-size: 80%; }
+      & tbody tr + tr { border-block-start: var(--border-width) solid var(--kinekt-component-line); }
+      & tbody th { color: var(--kinekt-component-ink); font-size: var(--kiw--progress-list-allentown-title-size); font-weight: var(--text-font-weight); line-height: var(--text-line-height); overflow-wrap: anywhere; }
+      & tbody td { overflow-wrap: anywhere; }
+    }
+    & .progress-list-allentown__title { display: inline; }
+    & .progress-list-allentown__reference { display: inline; margin-inline-start: var(--space-xs); color: var(--kinekt-component-muted); font-family: var(--text-font-family); font-size: var(--text-s); font-weight: var(--text-font-weight); line-height: var(--text-line-height); }
+    & .progress-list-allentown__status {
+      --kiw--progress-list-allentown-status-tone: var(--kinekt-component-muted);
+      display: inline-flex;
+      align-items: center;
+      inline-size: 100%;
+      max-inline-size: 100%;
+      padding: var(--space-xxs) var(--space-xs);
+      gap: var(--space-xxs);
+      color: var(--kinekt-component-ink);
+      background: color-mix(in srgb, var(--kiw--progress-list-allentown-status-tone) 8%, transparent);
+      font-size: var(--text-s);
+      line-height: var(--text-line-height);
+      overflow-wrap: anywhere;
+      & > span { min-inline-size: 0; }
+      & svg { flex: none; inline-size: 1em; block-size: 1em; color: var(--kiw--progress-list-allentown-status-tone); }
+      &[data-tone='info'] { --kiw--progress-list-allentown-status-tone: color-mix(in srgb, var(--info) var(--kiw--progress-list-allentown-status-mix), var(--kinekt-component-ink)); }
+      &[data-tone='success'] { --kiw--progress-list-allentown-status-tone: color-mix(in srgb, var(--success) var(--kiw--progress-list-allentown-status-mix), var(--kinekt-component-ink)); }
+      &[data-tone='warning'] { --kiw--progress-list-allentown-status-tone: color-mix(in srgb, var(--warning) var(--kiw--progress-list-allentown-status-mix), var(--kinekt-component-ink)); }
+      &[data-tone='error'] { --kiw--progress-list-allentown-status-tone: color-mix(in srgb, var(--error) var(--kiw--progress-list-allentown-status-mix), var(--kinekt-component-ink)); }
+    }
+    & .progress-list-allentown__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-s); }
+
+    @media (max-width: 30rem) {
+      & .progress-list-allentown__table thead th:first-child { inline-size: 62%; }
+      & .progress-list-allentown__reference { display: block; margin-inline-start: 0; margin-block-start: var(--space-xxxs); }
+    }
+  }
+</style>

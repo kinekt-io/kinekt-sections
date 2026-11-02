@@ -1,0 +1,26 @@
+---
+import ProgressListAllentown from './progress-list-allentown.astro'
+
+const items = [
+  { title: 'Project brief confirmed', reference: 'PLN-101', status: 'done' as const },
+  { title: 'Stakeholder review', reference: 'PLN-102', status: 'in-progress' as const },
+  { title: 'Accessibility audit', reference: 'PLN-103', status: 'todo' as const },
+  { title: 'Supplier documentation', reference: 'PLN-104', status: 'delayed' as const },
+  { title: 'Legacy intake process', reference: 'PLN-105', status: 'canceled' as const },
+  { title: 'Policy sign-off', reference: 'PLN-106', status: 'custom' as const, statusLabel: 'Awaiting counsel', customIcon: 'scale-balanced', customTone: 'info' as const },
+  { title: 'Training materials', reference: 'PLN-107', status: 'done' as const, statusLabel: 'Published' },
+  { title: 'Service readiness review', reference: 'PLN-108', status: 'in-progress' as const },
+  { title: 'Records retention schedule', reference: 'PLN-109', status: 'custom' as const, statusLabel: 'Needs attention', customIcon: 'triangle-exclamation', customTone: 'warning' as const },
+  { title: 'Incident response exercise', reference: 'PLN-110', status: 'todo' as const },
+  { title: 'Annual evidence archive', reference: 'PLN-111', status: 'custom' as const, statusLabel: 'Approved with notes', customIcon: 'circle-check', customTone: 'success' as const },
+]
+---
+
+<ProgressListAllentown
+  theme="light"
+  intro={{ accentHeading: 'Program readiness', heading: 'Delivery readiness overview', description: 'Track the work that keeps your program moving, from planning through review and approval.' }}
+  itemHeading="Item"
+  statusHeading="Status"
+  items={items}
+  ctaGroup={{ buttons: [{ label: 'View program details', href: '/program-details/', style: 'clear', icon: 'arrow-right' }] }}
+/>

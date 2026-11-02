@@ -4905,6 +4905,148 @@
     }
   },
   {
+    "id": "sections/progress-list/allentown",
+    "version": "26.11.0-beta.0",
+    "slug": "progress-list-allentown",
+    "category": "sections",
+    "tags": [
+      "progress",
+      "status",
+      "prerelease"
+    ],
+    "role": "progress-list",
+    "variation": "allentown",
+    "title": "Progress List Allentown",
+    "description": "A progress overview with titled rows, optional references and editable status badges.",
+    "status": "prerelease",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5784-631243",
+    "variants": {},
+    "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ]
+      },
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": true,
+        "defaultValue": "light",
+        "options": [
+          "light",
+          "semi-light",
+          "semi-dark",
+          "dark"
+        ]
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "itemHeading": {
+        "kind": "text",
+        "required": true,
+        "localized": true,
+        "defaultValue": "Item"
+      },
+      "statusHeading": {
+        "kind": "text",
+        "required": true,
+        "localized": true,
+        "defaultValue": "Status"
+      },
+      "items": {
+        "kind": "componentList",
+        "required": true,
+        "localized": true,
+        "minItems": 1,
+        "admin": {
+          "initCollapsed": true
+        },
+        "fields": {
+          "title": {
+            "kind": "text",
+            "required": true,
+            "localized": true
+          },
+          "reference": {
+            "kind": "text",
+            "required": false,
+            "localized": true
+          },
+          "status": {
+            "kind": "select",
+            "required": true,
+            "localized": true,
+            "defaultValue": "todo",
+            "options": [
+              "delayed",
+              "done",
+              "in-progress",
+              "todo",
+              "custom",
+              "canceled"
+            ]
+          },
+          "statusLabel": {
+            "kind": "text",
+            "required": false,
+            "localized": true,
+            "description": "Optional visible status text override; required for custom status."
+          },
+          "customIcon": {
+            "kind": "text",
+            "required": false,
+            "localized": true,
+            "description": "Optional Font Awesome icon name for custom status."
+          },
+          "customTone": {
+            "kind": "select",
+            "required": false,
+            "localized": true,
+            "defaultValue": "neutral",
+            "options": [
+              "neutral",
+              "info",
+              "success",
+              "warning",
+              "error"
+            ],
+            "description": "Semantic badge color for custom status."
+          }
+        }
+      },
+      "ctaGroup": {
+        "kind": "ctaGroup",
+        "required": false,
+        "localized": true,
+        "minItems": 0,
+        "maxItems": 2
+      }
+    },
+    "runtimeProps": {
+      "headingLevel": {
+        "kind": "headingLevel",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/progress-list/allentown/progress-list-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/progress-list/allentown.jpeg",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/progress-list-allentown.astro",
+      "payload": "@kinekt-io/components/sections/progress-list-allentown.payload",
+      "types": "@kinekt-io/components/sections/progress-list-allentown.types"
+    }
+  },
+  {
     "id": "sections/project-glance/allentown",
     "version": "26.10.0-beta.0",
     "slug": "project-glance-allentown",

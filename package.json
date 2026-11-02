@@ -542,6 +542,17 @@
       "import": "./dist/sections/product-options/allentown/product-options-allentown.types.js",
       "types": "./dist/sections/product-options/allentown/product-options-allentown.types.d.ts"
     },
+    "./sections/progress-list-allentown.astro": "./src/sections/progress-list/allentown/progress-list-allentown.astro",
+    "./sections/progress-list-allentown.payload": {
+      "default": "./dist/sections/progress-list/allentown/progress-list-allentown.payload.js",
+      "import": "./dist/sections/progress-list/allentown/progress-list-allentown.payload.js",
+      "types": "./dist/sections/progress-list/allentown/progress-list-allentown.payload.d.ts"
+    },
+    "./sections/progress-list-allentown.types": {
+      "default": "./dist/sections/progress-list/allentown/progress-list-allentown.types.js",
+      "import": "./dist/sections/progress-list/allentown/progress-list-allentown.types.js",
+      "types": "./dist/sections/progress-list/allentown/progress-list-allentown.types.d.ts"
+    },
     "./sections/project-glance-allentown.astro": "./src/sections/project-glance/allentown/project-glance-allentown.astro",
     "./sections/project-glance-allentown.payload": {
       "default": "./dist/sections/project-glance/allentown/project-glance-allentown.payload.js",
