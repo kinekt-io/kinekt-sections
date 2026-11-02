@@ -273,3 +273,7 @@ Only what you might trip over; everything else matches its frame within a few pi
 | tabs | 5255:538861 (**deleted**) | – |
 | moq-lead-times | 4811:283011 (**deleted**) | – |
 | action-contact | 4131:288 (not checked) | – |
+
+## Progress List typography
+
+Table header cells use `--text-l`, the shared heading font family, weight 500, line-height 1 and `--primary-dark`. Status text uses `--primary`, except `todo` and `custom`, which use `--primary-semi-light`. Status icon and badge tones remain independent of the text color. Component-level tokens allow customer overrides without hardcoding a customer font in shared sections.

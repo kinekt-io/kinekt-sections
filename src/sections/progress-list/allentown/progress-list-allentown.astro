@@ -41,7 +41,7 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
           const icon = iconFor(item)
           return <tr>
             <th scope="row"><span class="progress-list-allentown__title">{item.title}</span>{item.reference && <span class="progress-list-allentown__reference">{item.reference}</span>}</th>
-            <td><span class="progress-list-allentown__status" data-tone={toneFor(item)}><svg aria-hidden="true" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg><span>{labelFor(item)}</span></span></td>
+            <td><span class="progress-list-allentown__status" data-status={item.status} data-tone={toneFor(item)}><svg aria-hidden="true" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg><span>{labelFor(item)}</span></span></td>
           </tr>
         })}</tbody>
       </table>
@@ -66,7 +66,10 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
     --kiw--progress-list-allentown-section-space: var(--section-space-l);
     --kiw--progress-list-allentown-content-gap: var(--section-space-s);
     --kiw--progress-list-allentown-row-space: var(--space-s);
-    --kiw--progress-list-allentown-title-size: var(--text-m);
+    --kiw--progress-list-allentown-title-size: var(--text-l);
+    --kiw--progress-list-allentown-title-color: var(--primary-dark);
+    --kiw--progress-list-allentown-status-color: var(--primary);
+    --kiw--progress-list-allentown-status-muted-color: var(--primary-semi-light);
     --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--progress-list-allentown-canvas));
     --kinekt-component-surface: var(--kinekt-section-surface, var(--white));
     --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--progress-list-allentown-ink));
@@ -126,10 +129,10 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
       table-layout: fixed;
       & th, & td { padding: var(--kiw--progress-list-allentown-row-space) 0; text-align: start; vertical-align: middle; }
       & th:first-child { padding-inline-end: var(--space-s); }
-      & thead th { color: var(--kinekt-component-muted); font-size: var(--text-s); font-weight: var(--heading-font-weight); }
+      & th { color: var(--kiw--progress-list-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--progress-list-allentown-title-size); font-style: normal; font-weight: 500; line-height: 1; }
       & thead th:first-child { inline-size: 80%; }
       & tbody tr + tr { border-block-start: var(--border-width) solid var(--kinekt-component-line); }
-      & tbody th { color: var(--kinekt-component-ink); font-size: var(--kiw--progress-list-allentown-title-size); font-weight: var(--text-font-weight); line-height: var(--text-line-height); overflow-wrap: anywhere; }
+      & tbody th { overflow-wrap: anywhere; }
       & tbody td { overflow-wrap: anywhere; }
     }
     & .progress-list-allentown__title { display: inline; }
@@ -142,12 +145,13 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
       max-inline-size: 100%;
       padding: var(--space-xxs) var(--space-xs);
       gap: var(--space-xs);
-      color: var(--kinekt-component-ink);
+      color: var(--kiw--progress-list-allentown-status-color);
       background: color-mix(in srgb, var(--kiw--progress-list-allentown-status-tone) 8%, transparent);
       font-size: var(--text-s);
       line-height: var(--text-line-height);
       overflow-wrap: anywhere;
       & > span { min-inline-size: 0; }
+      &:is([data-status='custom'], [data-status='todo']) { color: var(--kiw--progress-list-allentown-status-muted-color); }
       & svg { flex: none; inline-size: .8125em; block-size: .8125em; overflow: visible; color: var(--kiw--progress-list-allentown-status-tone); }
       &[data-tone='info'] { --kiw--progress-list-allentown-status-tone: var(--info); }
       &[data-tone='success'] { --kiw--progress-list-allentown-status-tone: var(--success); }
