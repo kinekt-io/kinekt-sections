@@ -166,7 +166,7 @@ const FiltersHeading = headingLevel
 const CardHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' : 'h4'
 const fa = (definition: typeof faXmark) => ({ viewBox: `0 0 ${definition.icon[0]} ${definition.icon[1]}`, path: definition.icon[4] as string })
 const icons = { search: fa(faMagnifyingGlass), xmark: fa(faXmark), chevronDown: fa(faChevronDown), chevronLeft: fa(faChevronLeft), chevronRight: fa(faChevronRight) }
-const linkIcon = ctaIconPaths('arrow-right')
+const linkIcon = ctaIconPaths('chevron-right')
 const sortOptions = [
   { value: 'newest', label: labels.sortNewest },
   { value: 'oldest', label: labels.sortOldest },

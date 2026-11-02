@@ -47,7 +47,7 @@ const isMedia = (value: unknown): value is Media => typeof value === 'object' &&
 const media = featured && isMedia(featured.image) ? { ...featured.image, alt: typeof featured.image.alt === 'string' ? featured.image.alt : '' } : undefined
 const kind = featured?.kind?.trim() || 'Article'
 const FeaturedHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' : 'h4'
-const ctaIcon = ctaIconPaths('arrow-right')
+const ctaIcon = ctaIconPaths('chevron-right')
 ---
 <section class="featured-page-header-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="featured-page-header-allentown__container">
