@@ -152,6 +152,7 @@ const listActions = ctaGroupActions(listCtaGroup)
     --kiw--steps-stage-description-font-size: var(--text-l);
     --kiw--steps-stage-media-ratio: 16 / 9;
     --kiw--steps-stage-step-gap: var(--section-space-s);
+    --kiw--steps-stage-divider-space: var(--space-l);
     --kinekt-section-content-width: var(--kiw--steps-stage-container-width);
     --kinekt-section-gap: var(--kiw--steps-stage-stack-gap);
   }
@@ -194,8 +195,8 @@ const listActions = ctaGroupActions(listCtaGroup)
       min-width: 0;
 
       & + .steps-stage__step {
-        margin-block-start: calc(var(--kiw--steps-stage-step-gap) / 2);
-        padding-block-start: calc(var(--kiw--steps-stage-step-gap) / 2);
+        margin-block-start: var(--kiw--steps-stage-divider-space);
+        padding-block-start: var(--kiw--steps-stage-divider-space);
         border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
       }
     }
