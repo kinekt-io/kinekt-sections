@@ -157,10 +157,12 @@ const action = (value: any) => value?.cta ?? value
     --kiw--solution-list-allentown-toc-gap: var(--space-xxs);
     --kiw--solution-list-allentown-toc-block-space: var(--space-xs);
     --kiw--solution-list-allentown-toc-inline-space: var(--space-s);
+    --kiw--solution-list-allentown-toc-surface: var(--kinekt-component-surface);
+    --kiw--solution-list-allentown-toc-ink: var(--kinekt-component-muted);
+    --kiw--solution-list-allentown-toc-active-surface: var(--kinekt-component-action);
+    --kiw--solution-list-allentown-toc-active-ink: var(--kinekt-component-action-text);
     --kiw--solution-list-allentown-border-width: var(--border-width);
     --kiw--solution-list-allentown-line-color: var(--kinekt-component-line);
-    --kiw--solution-list-allentown-ink-color: var(--kinekt-component-ink);
-    --kiw--solution-list-allentown-surface-color: var(--kinekt-component-surface);
     --kiw--solution-list-allentown-item-gap: var(--space-s);
     --kiw--solution-list-allentown-media-filter: var(--media-filter);
     --kiw--solution-list-allentown-column-gap: var(--section-space-s);
@@ -193,11 +195,12 @@ const action = (value: any) => value?.cta ?? value
   .beta-solution-list-allentown .beta-solution-list-allentown__labels { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-block-end: calc(var(--solution-list-label-to-description) - var(--solution-list-heading-group-to-label)); }
   .beta-solution-list-allentown .beta-solution-list-allentown__label { margin: 0; }
   .beta-solution-list-allentown .beta-solution-list-allentown__actions { display: flex; margin-block-start: 0; }
-  .beta-solution-list-allentown .beta-solution-list-allentown__toc { inline-size: 100vw; margin-inline: calc(50% - 50vw); overflow-x: auto; }
-  .beta-solution-list-allentown .beta-solution-list-allentown__toc ul { display: flex; gap: var(--kiw--solution-list-allentown-toc-gap); width: max-content; min-width: 100%; margin: 0; padding-inline: var(--kiw--solution-list-allentown-inline-space); list-style: none; }
-  .beta-solution-list-allentown .beta-solution-list-allentown__toc a { display: block; padding: var(--kiw--solution-list-allentown-toc-block-space) var(--kiw--solution-list-allentown-toc-inline-space); border: var(--kiw--solution-list-allentown-border-width) solid var(--kiw--solution-list-allentown-line-color); color: var(--kinekt-component-muted); background: var(--kinekt-component-surface); font-weight: var(--heading-font-weight); text-decoration: none; white-space: nowrap; }
-  .beta-solution-list-allentown .beta-solution-list-allentown__toc a[aria-current='true'] { border-color: var(--kinekt-component-ink); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); }
-  .beta-solution-list-allentown .beta-solution-list-allentown__toc a:is(:focus-visible, :hover) { box-shadow: inset 0 0 0 calc(var(--kiw--solution-list-allentown-border-width) * 2) var(--kinekt-component-ink); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); }
+  .beta-solution-list-allentown .beta-solution-list-allentown__toc { inline-size: 100vw; margin-inline: calc(50% - 50vw); overflow-x: auto; overscroll-behavior-inline: contain; scroll-padding-inline: var(--kinekt-component-inline-space); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .beta-solution-list-allentown .beta-solution-list-allentown__toc::-webkit-scrollbar { display: none; }
+  .beta-solution-list-allentown .beta-solution-list-allentown__toc ul { display: flex; gap: var(--kiw--solution-list-allentown-toc-gap); inline-size: max-content; min-inline-size: 100%; margin: 0; padding-inline: var(--kinekt-component-inline-space); list-style: none; }
+  .beta-solution-list-allentown .beta-solution-list-allentown__toc a { display: block; padding: var(--kiw--solution-list-allentown-toc-block-space) var(--kiw--solution-list-allentown-toc-inline-space); border: var(--kiw--solution-list-allentown-border-width) solid var(--kiw--solution-list-allentown-line-color); color: var(--kiw--solution-list-allentown-toc-ink); background: var(--kiw--solution-list-allentown-toc-surface); font-weight: var(--heading-font-weight); text-decoration: none; white-space: nowrap; }
+  .beta-solution-list-allentown .beta-solution-list-allentown__toc a[aria-current='true'] { border-color: var(--kiw--solution-list-allentown-toc-active-surface); color: var(--kiw--solution-list-allentown-toc-active-ink); background: var(--kiw--solution-list-allentown-toc-active-surface); }
+  .beta-solution-list-allentown .beta-solution-list-allentown__toc a:not([aria-current='true']):is(:focus-visible, :hover) { box-shadow: inset 0 0 0 calc(var(--kiw--solution-list-allentown-border-width) * 2) var(--kinekt-component-ink); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); }
   .beta-solution-list-allentown .beta-solution-list-allentown__items { margin: 0; padding: 0; border-top: 0; list-style: none; }
   .beta-solution-list-allentown .beta-solution-list-allentown__items > li:last-child > article { border-bottom: 0; }
   .beta-solution-list-allentown .beta-solution-list-allentown__items article { display: grid; row-gap: var(--kiw--solution-list-allentown-item-gap); column-gap: 0; }
@@ -221,7 +224,7 @@ const action = (value: any) => value?.cta ?? value
   }
 
   .beta-solution-list-allentown :is([class$='__items'], [class$='__features'], [class$='__metrics']) > li > article {
-    padding: var(--space-xl) 0;
+    padding: var(--section-space-m) 0;
     border-width: 0 0 var(--kinekt-component-border-width);
     background: transparent;
   }
