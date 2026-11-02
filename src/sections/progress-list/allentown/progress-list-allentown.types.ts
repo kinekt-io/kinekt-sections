@@ -1,10 +1,10 @@
 import type { CtaGroup, SectionIntro, SectionTheme } from '../../../shared/content.js'
+import { progressCustomTones, progressStatuses, type ProgressCustomTone, type ProgressStatus } from '../../../shared/progress-status.js'
 import type { SectionContentWidth } from '../../../shared/section-width.js'
 
-export const progressListStatuses = ['delayed', 'done', 'in-progress', 'todo', 'custom', 'canceled'] as const
-export type ProgressListStatus = (typeof progressListStatuses)[number]
-export const progressListCustomTones = ['neutral', 'info', 'success', 'warning', 'error'] as const
-export type ProgressListCustomTone = (typeof progressListCustomTones)[number]
+export { progressStatuses as progressListStatuses, progressCustomTones as progressListCustomTones }
+export type ProgressListStatus = ProgressStatus
+export type ProgressListCustomTone = ProgressCustomTone
 
 export interface ProgressListAllentownItem {
   title: string

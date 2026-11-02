@@ -4,8 +4,9 @@ import Button from '../../../controls/button/allentown/button-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import { ctaGroupActions, type CtaGroup, type SectionIntro as Intro, type SectionTheme } from '../../../shared/content.js'
+import { progressStatusDefinitions } from '../../../shared/progress-status.js'
 import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
-import type { ProgressListAllentownItem, ProgressListStatus } from './progress-list-allentown.types.js'
+import type { ProgressListAllentownItem } from './progress-list-allentown.types.js'
 
 interface Props {
   id?: string
@@ -21,16 +22,13 @@ interface Props {
 
 const { id, theme = 'light', intro, itemHeading, statusHeading, items, ctaGroup, headingLevel = 'h2' } = Astro.props as Props
 const actions = ctaGroupActions(ctaGroup)
-const standardStatuses: Record<Exclude<ProgressListStatus, 'custom'>, { label: string; icon: string; tone: string }> = {
-  delayed: { label: 'Delayed', icon: 'clock', tone: 'warning' },
-  done: { label: 'Done', icon: 'circle-check', tone: 'success' },
-  'in-progress': { label: 'In progress', icon: 'arrows-rotate', tone: 'info' },
-  todo: { label: 'To do', icon: 'circle', tone: 'neutral' },
-  canceled: { label: 'Canceled', icon: 'ban', tone: 'error' },
-}
-const iconFor = (item: ProgressListAllentownItem) => ctaIconPaths(item.status === 'custom' ? item.customIcon : standardStatuses[item.status].icon) ?? ctaIconPaths('circle-question')!
-const labelFor = (item: ProgressListAllentownItem) => item.statusLabel ?? (item.status === 'custom' ? 'Custom status' : standardStatuses[item.status].label)
-const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom' ? item.customTone ?? 'neutral' : standardStatuses[item.status].tone
+const iconFor = (item: ProgressListAllentownItem) =>
+  ctaIconPaths(item.status === 'custom' ? item.customIcon ?? progressStatusDefinitions.custom.icon : progressStatusDefinitions[item.status].icon)
+  ?? ctaIconPaths('circle-question')!
+const labelFor = (item: ProgressListAllentownItem) => item.statusLabel ?? progressStatusDefinitions[item.status].label
+const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
+  ? item.customTone ?? progressStatusDefinitions.custom.tone
+  : progressStatusDefinitions[item.status].tone
 ---
 
 <section class="progress-list-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)}>

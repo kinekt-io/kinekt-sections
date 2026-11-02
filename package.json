@@ -553,6 +553,17 @@
       "import": "./dist/sections/progress-list/allentown/progress-list-allentown.types.js",
       "types": "./dist/sections/progress-list/allentown/progress-list-allentown.types.d.ts"
     },
+    "./sections/progress-roadmap-allentown.astro": "./src/sections/progress-roadmap/allentown/progress-roadmap-allentown.astro",
+    "./sections/progress-roadmap-allentown.payload": {
+      "default": "./dist/sections/progress-roadmap/allentown/progress-roadmap-allentown.payload.js",
+      "import": "./dist/sections/progress-roadmap/allentown/progress-roadmap-allentown.payload.js",
+      "types": "./dist/sections/progress-roadmap/allentown/progress-roadmap-allentown.payload.d.ts"
+    },
+    "./sections/progress-roadmap-allentown.types": {
+      "default": "./dist/sections/progress-roadmap/allentown/progress-roadmap-allentown.types.js",
+      "import": "./dist/sections/progress-roadmap/allentown/progress-roadmap-allentown.types.js",
+      "types": "./dist/sections/progress-roadmap/allentown/progress-roadmap-allentown.types.d.ts"
+    },
     "./sections/project-glance-allentown.astro": "./src/sections/project-glance/allentown/project-glance-allentown.astro",
     "./sections/project-glance-allentown.payload": {
       "default": "./dist/sections/project-glance/allentown/project-glance-allentown.payload.js",

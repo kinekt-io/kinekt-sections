@@ -1,0 +1,77 @@
+---
+import ProgressRoadmapAllentown from './progress-roadmap-allentown.astro'
+
+const items = [
+  {
+    title: 'Requirements map approved',
+    media: { url: `${import.meta.env.BASE_URL.replace(/\/$/, '')}/placeholders/placeholder-mark-144x144.svg`, alt: 'Northshore Works logo', width: 144, height: 144 },
+    referenceLabel: 'Workstream',
+    reference: 'R-24 / governance',
+    status: 'done' as const,
+    description: { html: '<p>The operating requirements and owners are confirmed for the next review cycle.</p>' },
+    facts: [{ label: 'Owner', value: 'Mira Cole' }, { label: 'Completed', value: '14 October' }],
+  },
+  {
+    title: 'Document control migration',
+    icon: 'folder-open',
+    referenceLabel: 'Reference',
+    reference: 'DOC-118',
+    status: 'in-progress' as const,
+    description: { html: '<p>Teams are moving controlled records into the new shared register.</p><ul><li>Archive duplicate templates</li><li>Confirm retention owners</li></ul>' },
+    facts: [{ label: 'Next review', value: '28 November' }],
+  },
+  {
+    title: 'Workshop evidence pack',
+    reference: 'ENG-041',
+    status: 'todo' as const,
+    description: { html: '<p>Prepare the evidence pack for the field workshop and share it with facilitators.</p>' },
+  },
+  {
+    title: 'Independent safety review',
+    referenceLabel: 'External review',
+    reference: 'SR-09',
+    status: 'delayed' as const,
+    statusLabel: 'Rescheduled after supplier evidence update',
+    description: { html: '<p>The review is waiting for a revised test record from the component supplier.</p>' },
+    facts: [{ label: 'New target', value: 'January review board' }],
+  },
+  {
+    title: 'Legacy audit workbook',
+    reference: 'ARCH-17',
+    status: 'canceled' as const,
+    description: { html: '<p>This workbook is superseded by the controlled register and will not be updated.</p>' },
+  },
+  {
+    title: 'Regional policy alignment',
+    referenceLabel: 'Decision record',
+    reference: 'A longer reference for the multi-region policy alignment review',
+    status: 'custom' as const,
+    statusLabel: 'Awaiting independent counsel',
+    customIcon: 'scale-balanced',
+    customTone: 'info' as const,
+    description: { html: '<p>Counsel is reviewing the proposed language before it moves to the steering group.</p>' },
+  },
+  {
+    title: 'Incident simulation briefing',
+    reference: 'SIM-56',
+    status: 'done' as const,
+    statusLabel: 'Briefing shared',
+    description: { html: '<p>Participants have received the scenario, contact list and escalation route.</p>' },
+  },
+  {
+    title: 'Quarterly assurance checkpoint',
+    icon: 'clipboard-check',
+    reference: 'Q4-ASSURE',
+    status: 'in-progress' as const,
+    description: { html: '<p>Collect the final team attestations for the quarterly checkpoint.</p>' },
+    facts: [{ label: 'Responses', value: '18 of 24' }, { label: 'Due', value: '6 December' }],
+  },
+]
+---
+
+<ProgressRoadmapAllentown
+  theme="semi-light"
+  intro={{ accentHeading: 'Compliance roadmap', heading: 'A clear route from evidence to assurance', description: 'Follow the practical work that keeps Northshore Works prepared for the next independent review.' }}
+  filterLabels={{ all: 'All work', delayed: 'Paused', done: 'Complete', inProgress: 'Under way', todo: 'Planned', custom: 'Review needed', canceled: 'Archived' }}
+  items={items}
+/>
