@@ -158,6 +158,7 @@ const methods = contactMethods.filter((method) => method.label && method.href)
     --kiw--form-section-allentown-contacts-heading-font-family: var(--heading-font-family);
     --kiw--form-section-allentown-contacts-heading-line-height: 1.2;
     --kiw--form-section-allentown-contacts-separator-space: var(--space-l);
+    --kiw--form-section-allentown-check-color: var(--accent-semi-dark);
   }
 
   .form-section-allentown > .form-section-allentown__container { gap: var(--kiw--form-section-allentown-container-gap); }
@@ -174,8 +175,8 @@ const methods = contactMethods.filter((method) => method.label && method.href)
     &:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) {
       --kiw--form-section-allentown-contacts-color: var(--primary-ultra-light);
       --kiw--form-section-allentown-contacts-heading-color: var(--white);
+      --kiw--form-section-allentown-check-color: var(--accent-light);
     }
-
     & .section-intro__heading {
       &:is(h1) { font-size: var(--kiw--form-section-allentown-heading-1-size, var(--h2)); }
       &:is(h2) { font-size: var(--kiw--form-section-allentown-heading-2-size, var(--h3)); }
@@ -214,6 +215,10 @@ const methods = contactMethods.filter((method) => method.label && method.href)
     & .form-section-allentown__form-embed + .form-section-allentown__contacts {
       padding-block-start: var(--kiw--form-section-allentown-contacts-separator-space);
       border-block-start: var(--kinekt-component-border-width) solid var(--kinekt-component-line);
+    }
+
+    & .section-intro__description > ul > li::before {
+      background-color: var(--kiw--form-section-allentown-check-color);
     }
   }
   .form-section-allentown .form-section-allentown__media { display: block; min-width: 0; }
