@@ -3,7 +3,7 @@ import '../../../styles/wireframe-tokens.css'
 import FormEmbed from '../../../components/form-embed/allentown/form-embed-allentown.astro'
 import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import type { FormModalPresentation, Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 type ImagePosition = 'left' | 'right'
@@ -20,19 +20,20 @@ interface Props {
   image?: Media
   imagePosition?: ImagePosition
   form: string
-  contactHeading?: string
+  formPresentation?: FormModalPresentation
   headingLevel?: 'h1' | 'h2' | 'h3'
+  contactHeading?: string
   contactMethods?: ContactMethod[]
 }
 
-const { id, theme = 'semi-dark', intro, image, imagePosition = 'left', form, contactHeading, contactMethods = [], headingLevel = 'h2' } = Astro.props as Props
+const { id, theme = 'semi-dark', intro, image, imagePosition = 'left', form, formPresentation, contactHeading, contactMethods = [], headingLevel = 'h2' } = Astro.props as Props
 const methods = contactMethods.filter((method) => method.label && method.href)
 ---
 <section class="form-section-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-image-position={imagePosition}>
   <div class="form-section-allentown__container">
     <div class="form-section-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
-      <FormEmbed class="form-section-allentown__form-embed" form={form} loadingLabel="Formulier wordt geladen" />
+      <FormEmbed class="form-section-allentown__form-embed" form={form} formPresentation={formPresentation} loadingLabel="Formulier wordt geladen" />
       {methods.length > 0 && <address class="form-section-allentown__contacts">
         {contactHeading && <p class="form-section-allentown__contacts-heading">{contactHeading}</p>}
         <ul>
@@ -161,7 +162,10 @@ const methods = contactMethods.filter((method) => method.label && method.href)
 
   .form-section-allentown > .form-section-allentown__container { gap: var(--kiw--form-section-allentown-container-gap); }
   .form-section-allentown :is(.section-intro__heading, .section-intro__description) { max-width: var(--kinekt-component-reading-width); }
-  @media (max-width: 49.99rem) { .form-section-allentown { --kinekt-component-reading-width: var(--content-width); } }
+  @media (max-width: 49.99rem) {
+    .form-section-allentown { --kinekt-component-reading-width: var(--content-width); }
+    .form-section-allentown .form-section-allentown__media { order: -1; }
+  }
   .form-section-allentown .form-section-allentown__content { display: grid; align-content: center; gap: var(--kiw--form-section-allentown-content-gap); }
   .form-section-allentown {
     --kiw--form-section-allentown-contacts-color: var(--primary);

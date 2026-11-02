@@ -1,4 +1,4 @@
-import type { Media, SectionIntro } from '../../../shared/content.js'
+import type { FormModalPresentation, Media, SectionIntro } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import type { SectionContentWidth } from '../../../shared/section-width.js'
 
@@ -18,6 +18,7 @@ export interface BetaFormSectionAllentownContent {
   image?: Media
   imagePosition: FormSectionImagePosition
   form: string
+  formPresentation?: FormModalPresentation
   contactHeading?: string
   contactMethods?: ContactMethod[]
 }

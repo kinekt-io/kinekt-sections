@@ -3,9 +3,9 @@ export type ProgressStatus = (typeof progressStatuses)[number]
 
 export const progressStatusDefinitions = {
   delayed: { label: 'Delayed', icon: 'clock', tone: 'warning' },
-  done: { label: 'Done', icon: 'circle-check', tone: 'success' },
-  'in-progress': { label: 'In progress', icon: 'arrows-rotate', tone: 'info' },
-  todo: { label: 'To do', icon: 'circle', tone: 'neutral' },
+  done: { label: 'Done', icon: 'check', tone: 'success' },
+  'in-progress': { label: 'In progress', icon: 'clock', tone: 'info' },
+  todo: { label: 'To do', icon: 'hourglass', tone: 'neutral' },
   custom: { label: 'Custom', icon: 'circle-question', tone: 'neutral' },
   canceled: { label: 'Canceled', icon: 'ban', tone: 'error' },
 } as const satisfies Readonly<Record<ProgressStatus, { label: string; icon: string; tone: string }>>

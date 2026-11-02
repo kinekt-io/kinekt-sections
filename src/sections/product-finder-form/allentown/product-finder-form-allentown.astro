@@ -3,7 +3,7 @@ import '../../../styles/wireframe-tokens.css'
 import FormEmbed from '../../../components/form-embed/allentown/form-embed-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
-import type { SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import type { FormModalPresentation, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 
 // The generated types (product-finder-form-allentown.types.ts) are still a generic record; these are the fields the manifest declares.
@@ -14,6 +14,7 @@ interface Props {
   intro: SectionIntroContent
   /** HubSpot embed code (manifest kind formEmbed). Executed by the integration inside FormEmbed. */
   form?: string | null
+  formPresentation?: FormModalPresentation | null
   /** Figma "Subtile + Flight Path" above the form. Not in the manifest yet (contract gap); rendered only when set. */
   formLabel?: string
   /** runtimeProps.layout: the only layout this renderer has. */
@@ -21,7 +22,7 @@ interface Props {
   headingLevel?: 'h1' | 'h2' | 'h3'
 }
 
-const { id, theme = 'light', intro, form, formLabel, headingLevel = 'h2' } = Astro.props as Props
+const { id, theme = 'light', intro, form, formPresentation, formLabel, headingLevel = 'h2' } = Astro.props as Props
 const hasPlaceholder = Astro.slots.has('form')
 ---
 <section class="product-finder-form-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
@@ -32,8 +33,8 @@ const hasPlaceholder = Astro.slots.has('form')
     <div class="product-finder-form-allentown__finder">
       {formLabel && <SubtitleFlightPath class="product-finder-form-allentown__label" text={formLabel} size="small" />}
       {hasPlaceholder
-        ? <FormEmbed class="product-finder-form-allentown__form-embed" form={form}><slot name="form" /></FormEmbed>
-        : <FormEmbed class="product-finder-form-allentown__form-embed" form={form} />}
+        ? <FormEmbed class="product-finder-form-allentown__form-embed" form={form} formPresentation={formPresentation}><slot name="form" /></FormEmbed>
+        : <FormEmbed class="product-finder-form-allentown__form-embed" form={form} formPresentation={formPresentation} />}
     </div>
   </div>
 </section>

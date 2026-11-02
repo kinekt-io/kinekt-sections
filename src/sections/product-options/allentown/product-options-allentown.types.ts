@@ -1,5 +1,5 @@
 import type { SectionContentWidth } from '../../../shared/section-width.js'
-import type { CtaGroup, Media, RichText, SectionIntro } from '../../../shared/content.js'
+import type { CtaGroup, FormModalPresentation, Media, RichText, SectionIntro } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 
 export interface ProductOption {
@@ -17,6 +17,7 @@ export interface ProductOptionsAllentownContent {
   options: ProductOption[]
   /** HubSpot embed code (manifest kind formEmbed). */
   form?: string | null
+  formPresentation?: FormModalPresentation
 }
 
 type DraftFields<T> = { [Field in keyof T]?: T[Field] | null }

@@ -4,6 +4,7 @@ export type CtaStyle = (typeof ctaStyles)[number]
 export const isCtaStyle = (value: unknown): value is CtaStyle => typeof value === 'string' && ctaStyles.includes(value as CtaStyle)
 export interface Cta { label: string; href: string; icon?: CtaIcon; style?: CtaStyle }
 export interface CtaGroup { buttons?: Cta[]; primary?: Cta | null; secondary?: Cta | null }
+export interface FormModalPresentation { enabled?: boolean; label?: string; style?: CtaStyle; icon?: CtaIcon }
 
 export const ctaGroupActions = (group: CtaGroup | Cta[] | Record<string, unknown> | null | undefined): Cta[] => {
   if (!group) return []

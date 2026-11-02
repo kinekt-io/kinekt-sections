@@ -3,7 +3,7 @@ import Button from '../controls/button/allentown/button-allentown.astro'
 import Label from '../atoms/label/allentown/label-allentown.astro'
 import FormEmbed from '../components/form-embed/allentown/form-embed-allentown.astro'
 import { faArrowLeft, faArrowRight } from '@fortawesome/sharp-solid-svg-icons'
-import { isCtaStyle, type CtaStyle } from './content.js'
+import { isCtaStyle, type CtaStyle, type FormModalPresentation } from './content.js'
 interface Field {
   kind: string
   id?: string
@@ -31,6 +31,7 @@ const Heading = `h${Math.min(level, 4)}` as 'h2' | 'h3' | 'h4'
 const comparison = fields.columns?.kind === 'infoItems' && fields.rows?.kind === 'componentList'
 const columns = Array.isArray(content.columns) ? content.columns : []
 const rows = Array.isArray(content.rows) ? content.rows : []
+const formPresentation = isRecord(content.formPresentation) ? content.formPresentation as FormModalPresentation : undefined
 const accordionRoles = new Set(['accordion-item', 'faq-item', 'product-detail-item', 'step'])
 
 function classFor(key: string) {
@@ -209,7 +210,7 @@ function buttonStyle(value: Record<string, unknown>, key: string): CtaStyle {
   }
 
   if (field.kind === 'formEmbed') {
-    return <FormEmbed class={className} form={typeof value === 'string' ? value : undefined} />
+    return <FormEmbed class={className} form={typeof value === 'string' ? value : undefined} formPresentation={formPresentation} />
   }
 
   if (field.kind === 'formReference' && isRecord(value)) {

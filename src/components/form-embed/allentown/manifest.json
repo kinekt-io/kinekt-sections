@@ -20,6 +20,12 @@
       "required": true,
       "localized": true,
       "description": "HubSpot embed code. The catalogue renders a safe placeholder; the integration owns execution of the embed."
+    },
+    "formPresentation": {
+      "kind": "formModal",
+      "required": false,
+      "localized": true,
+      "description": "Show the supplied form in a modal after an editor-configured opener is selected. Leave off to preserve the inline form."
     }
   }
 }

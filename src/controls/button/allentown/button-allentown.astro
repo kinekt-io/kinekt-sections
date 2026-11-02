@@ -1,18 +1,37 @@
 ---
+import type { HTMLAttributes } from 'astro/types'
 import type { CtaStyle } from '../../../shared/content.js'
-interface Props {
-  href: string
+
+interface Props extends Omit<HTMLAttributes<'button'>, 'children' | 'class' | 'style' | 'size' | 'type'> {
+  href?: string
+  as?: 'a' | 'button'
   label: string
   style?: CtaStyle
   size?: 's' | 'm' | 'l'
+  type?: 'button' | 'submit' | 'reset'
+  target?: string
+  rel?: string
   class?: string
+  [key: `data-${string}`]: string | boolean | undefined
 }
 
-const { href, label, style = 'primary', size = 'm', class: className } = Astro.props
+const {
+  href,
+  as = 'a',
+  label,
+  style = 'primary',
+  size = 'm',
+  type = 'button',
+  disabled,
+  class: className,
+  ...attributes
+} = Astro.props as Props
 const classes = ['button', `button--${style}`, size !== 'm' && `button--${size}`, className].filter(Boolean).join(' ')
 ---
 
-<a class={classes} href={href}>{label}<slot /></a>
+{as === 'button'
+  ? <button class={classes} type={type} disabled={disabled} {...attributes}>{label}<slot /></button>
+  : <a class={classes} href={href} {...attributes}>{label}<slot /></a>}
 
 <style is:global>
   /* Figma Button (4700:58121), Size=medium: padding S / M, icon gap XS, text-l at line-height 1, icon one step smaller.

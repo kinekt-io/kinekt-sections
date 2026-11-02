@@ -65,9 +65,8 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
     --kiw--progress-list-allentown-action-icon: var(--accent);
     --kiw--progress-list-allentown-section-space: var(--section-space-l);
     --kiw--progress-list-allentown-content-gap: var(--section-space-s);
-    --kiw--progress-list-allentown-row-space: var(--space-xs);
+    --kiw--progress-list-allentown-row-space: var(--space-s);
     --kiw--progress-list-allentown-title-size: var(--text-m);
-    --kiw--progress-list-allentown-status-mix: 40%;
     --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--progress-list-allentown-canvas));
     --kinekt-component-surface: var(--kinekt-section-surface, var(--white));
     --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--progress-list-allentown-ink));
@@ -89,9 +88,6 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
   :where(.progress-list-allentown[data-kinekt-theme='semi-light']) { --kiw--progress-list-allentown-canvas: var(--neutral-light); --kiw--progress-list-allentown-action: var(--primary-semi-dark); }
   :where(.progress-list-allentown[data-kinekt-theme='semi-dark']) { --kiw--progress-list-allentown-canvas: var(--primary-dark); --kiw--progress-list-allentown-ink: var(--white); --kiw--progress-list-allentown-muted: var(--primary-light); --kiw--progress-list-allentown-line: var(--primary); --kiw--progress-list-allentown-accent: var(--accent); }
   :where(.progress-list-allentown[data-kinekt-theme='dark']) { --kiw--progress-list-allentown-canvas: var(--primary-ultra-dark); --kiw--progress-list-allentown-ink: var(--white); --kiw--progress-list-allentown-muted: var(--primary-ultra-light); --kiw--progress-list-allentown-line: var(--primary); --kiw--progress-list-allentown-accent: var(--accent); }
-  :where(.progress-list-allentown:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark'])) {
-    --kiw--progress-list-allentown-status-mix: 72%;
-  }
 
   .progress-list-allentown[data-kinekt-section] {
     --kinekt-section-content-width: var(--desktop-content-width);
@@ -145,18 +141,18 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
       inline-size: 100%;
       max-inline-size: 100%;
       padding: var(--space-xxs) var(--space-xs);
-      gap: var(--space-xxs);
+      gap: var(--space-xs);
       color: var(--kinekt-component-ink);
       background: color-mix(in srgb, var(--kiw--progress-list-allentown-status-tone) 8%, transparent);
       font-size: var(--text-s);
       line-height: var(--text-line-height);
       overflow-wrap: anywhere;
       & > span { min-inline-size: 0; }
-      & svg { flex: none; inline-size: 1em; block-size: 1em; color: var(--kiw--progress-list-allentown-status-tone); }
-      &[data-tone='info'] { --kiw--progress-list-allentown-status-tone: color-mix(in srgb, var(--info) var(--kiw--progress-list-allentown-status-mix), var(--kinekt-component-ink)); }
-      &[data-tone='success'] { --kiw--progress-list-allentown-status-tone: color-mix(in srgb, var(--success) var(--kiw--progress-list-allentown-status-mix), var(--kinekt-component-ink)); }
-      &[data-tone='warning'] { --kiw--progress-list-allentown-status-tone: color-mix(in srgb, var(--warning) var(--kiw--progress-list-allentown-status-mix), var(--kinekt-component-ink)); }
-      &[data-tone='error'] { --kiw--progress-list-allentown-status-tone: color-mix(in srgb, var(--error) var(--kiw--progress-list-allentown-status-mix), var(--kinekt-component-ink)); }
+      & svg { flex: none; inline-size: .8125em; block-size: .8125em; overflow: visible; color: var(--kiw--progress-list-allentown-status-tone); }
+      &[data-tone='info'] { --kiw--progress-list-allentown-status-tone: var(--info); }
+      &[data-tone='success'] { --kiw--progress-list-allentown-status-tone: var(--success); }
+      &[data-tone='warning'] { --kiw--progress-list-allentown-status-tone: var(--warning); }
+      &[data-tone='error'] { --kiw--progress-list-allentown-status-tone: var(--error); }
     }
     & .progress-list-allentown__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-s); }
 

@@ -25,7 +25,7 @@ const tabs = [
     { label: '+1 202-555-0147', href: 'tel:+12025550147', style: 'primary' as const, icon: 'phone' },
     { label: 'hello@example.com', href: 'mailto:hello@example.com', style: 'secondary' as const, icon: 'envelope' },
   ] } },
-  { label: 'Send a request', form },
+  { label: 'Send a request', form, formPresentation: { enabled: true, label: 'Open request form', style: 'primary' as const, icon: 'paper-plane' } },
 ]
 ---
 <TabsAllentown contentWidth="80" theme="light" intro={{ accentHeading: 'Get in touch', heading: 'Talk with our local support team' }} tabsHeading="How would you like to get in touch?" tabs={tabs} />

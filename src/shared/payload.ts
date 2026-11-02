@@ -1,5 +1,5 @@
 import { isSafeWebUrl } from '../urls.js'
-import type { Cta, CtaGroup, Media } from './content.js'
+import type { Cta, CtaGroup, FormModalPresentation, Media } from './content.js'
 import { isCtaStyle } from './content.js'
 import { isCtaIcon } from './cta-icons.js'
 export type BetaTheme = 'light' | 'semi-light' | 'dark' | 'semi-dark'
@@ -18,6 +18,18 @@ export const requireSharpSolidIcon = (value: unknown, _field: string): string =>
 
 export const optionalSharpSolidIcon = (value: unknown, _field: string): string | undefined =>
   isCtaIcon(value) ? value : undefined
+
+export const formModalPresentationToProps = (value: unknown, field: string): FormModalPresentation | undefined => {
+  if (value === undefined || value === null) return undefined
+
+  const presentation = requireObject(value, field)
+  if (presentation.enabled !== true) return { enabled: false }
+
+  const label = requireText(presentation.label, `${field}.label`)
+  const style = isCtaStyle(presentation.style) ? presentation.style : 'primary'
+  const icon = optionalSharpSolidIcon(presentation.icon, `${field}.icon`)
+  return { enabled: true, label, style, ...(icon ? { icon } : {}) }
+}
 export const requireTheme = (value: unknown, field = 'theme'): BetaTheme => { if (value === 'light' || value === 'semi-light' || value === 'dark' || value === 'semi-dark') return value; throw new Error(`${field} must be light, semi-light, dark, or semi-dark.`) }
 const withMediaBaseUrl = (url: string, mediaBaseUrl: string | undefined): string => { if (url.startsWith('/') && mediaBaseUrl) return new URL(url, mediaBaseUrl).toString(); if (!isSafeWebUrl(url)) throw new Error('Media URL must be an HTTP(S) or root-relative URL.'); return url }
 export const mediaToProps = (value: unknown, field: string, { mediaBaseUrl }: PayloadAdapterOptions = {}): Media => {

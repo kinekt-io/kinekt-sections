@@ -210,7 +210,7 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     --kiw--process-story-trinity-duration: 6s;
     --kiw--process-story-trinity-container-gap: var(--section-space-m);
     --kiw--process-story-trinity-intro-width: var(--width-l);
-    --kiw--process-story-trinity-trigger-gap: var(--space-m);
+    --kiw--process-story-trinity-trigger-gap: var(--space-s);
     --kiw--process-story-trinity-ink-color: var(--kinekt-component-ink);
     --kiw--process-story-trinity-muted-color: var(--kinekt-component-muted);
     --kiw--process-story-trinity-marker-color: var(--kinekt-component-accent);
@@ -219,8 +219,6 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     --kiw--process-story-trinity-heading-weight: var(--heading-font-weight);
     --kiw--process-story-trinity-heading-letter-spacing: var(--heading-letter-spacing);
     --kiw--process-story-trinity-heading-line-height: var(--heading-line-height);
-    --kiw--process-story-trinity-panel-width: var(--width-m);
-    --kiw--process-story-trinity-panel-padding: var(--space-xl);
     --kiw--process-story-trinity-actions-gap: var(--space-s);
     --kiw--process-story-trinity-actions-space: var(--space-l);
     --kiw--process-story-trinity-border-width: var(--border-width);
@@ -252,7 +250,7 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     &[data-process-story-marker='icon'] .process-story-trinity__marker-number { display: none; }
     &[data-process-story-marker='icon'] .process-story-trinity__marker-icon { display: block; }
     & .process-story-trinity__title { font-size: var(--kiw--process-story-trinity-heading-size); font-weight: var(--kiw--process-story-trinity-heading-weight); line-height: var(--kiw--process-story-trinity-heading-line-height); }
-    & .process-story-trinity__panel { display: grid; max-width: var(--kiw--process-story-trinity-panel-width); padding-inline: 0 var(--kiw--process-story-trinity-panel-padding); }
+    & .process-story-trinity__panel { display: grid; width: 100%; margin-block-start: var(--space-s); padding: 0; }
     & .process-story-trinity__description { color: var(--kiw--process-story-trinity-muted-color); }
     & .process-story-trinity__description :first-child { margin-top: 0; }
     & .process-story-trinity__description :last-child { margin-bottom: 0; }

@@ -12,7 +12,7 @@ interface Props extends ProductOptionsAllentownContent {
   headingLevel?: 'h1' | 'h2' | 'h3'
 }
 
-const { theme, intro, ctas, options, form, headingLevel = 'h2' } = Astro.props as Props
+const { theme, intro, ctas, options, form, formPresentation, headingLevel = 'h2' } = Astro.props as Props
 
 const actions = ctaGroupActions(ctas)
 
@@ -43,7 +43,7 @@ const ChildHeading = `h${Number(headingLevel.slice(1)) + 1}` as ChildHeading
       ))}
     </ul>
 
-    {form && (
+    {(form || Astro.slots.has('form')) && (
       <>
         <hr class="product-options-allentown__divider" />
         <section class="product-options-allentown__form-section" aria-labelledby="product-options-form-heading">
@@ -51,7 +51,7 @@ const ChildHeading = `h${Number(headingLevel.slice(1)) + 1}` as ChildHeading
             <ChildHeading class="product-options-allentown__form-heading" id="product-options-form-heading">Discuss your requirements</ChildHeading>
             <p class="product-options-allentown__form-description">Share the operating context and priorities for your project. The selected form manages the questions, validation, and submission.</p>
           </div>
-          <FormEmbed class="product-options-allentown__form-embed" form={form}>
+          <FormEmbed class="product-options-allentown__form-embed" form={form} formPresentation={formPresentation}>
             <slot name="form" />
           </FormEmbed>
         </section>

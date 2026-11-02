@@ -6,7 +6,7 @@ import FormEmbed from '../../../components/form-embed/allentown/form-embed-allen
 import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import { ctaIconPaths } from '../../../shared/cta-icons.js'
-import type { SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import type { FormModalPresentation, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
 interface ContactMethod {
   icon?: string
@@ -24,6 +24,7 @@ interface Props {
   formHeading?: string
   /** HubSpot embed code (manifest kind formEmbed). */
   form?: string
+  formPresentation?: FormModalPresentation | null
   headingLevel?: 'h1' | 'h2' | 'h3'
 }
 
@@ -35,6 +36,7 @@ const {
   contactMethods = [],
   formHeading = 'Send a support request',
   form,
+  formPresentation,
   headingLevel = 'h2',
 } = Astro.props as Props
 
@@ -67,7 +69,7 @@ const submitIcon = ctaIconPaths('paper-plane')
 
       <section class="beta-support-contact-allentown__request">
         <h3 class="beta-support-contact-allentown__request-heading">{formHeading}</h3>
-        <FormEmbed form={form}>
+        <FormEmbed form={form} formPresentation={formPresentation}>
           <form action="#" method="post">
             <div class="form-embed-allentown__fields">
               <div class="form-embed-allentown__row">

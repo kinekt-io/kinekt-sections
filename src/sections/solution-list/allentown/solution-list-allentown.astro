@@ -22,7 +22,7 @@ const action = (value: any) => value?.cta ?? value
 <section class="beta-solution-list-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="beta-solution-list-allentown__container">
     <header class="beta-solution-list-allentown__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
-    <nav class="beta-solution-list-allentown__toc" aria-label="Solutions in this section"><ul>{toc.map((item: any) => <li><a href={`#${item.id}`}>{item.label}</a></li>)}</ul></nav>
+    <nav class="beta-solution-list-allentown__toc" aria-label="Solutions in this section"><ul>{toc.map((item: any, index: number) => <li><a href={`#${item.id}`} aria-current={index === 0 ? 'true' : undefined}>{item.label}</a></li>)}</ul></nav>
     <ul class="beta-solution-list-allentown__items">
       {items.map((item: any, index: number) => (
         <li id={toc[index].id}><article>
@@ -33,8 +33,7 @@ const action = (value: any) => value?.cta ?? value
                 {item.accentHeading && <p class="beta-solution-list-allentown__accent">{item.accentHeading}</p>}
                 <h3>{item.heading}</h3>
               </div>
-              {item.label?.text && <Label class="beta-solution-list-allentown__label" text={item.label.text} icon={item.label.icon} />}
-              {item.label && typeof item.label === 'string' && <Label class="beta-solution-list-allentown__label" text={item.label} />}
+              {item.labels?.length > 0 && <div class="beta-solution-list-allentown__labels">{item.labels.map((label: any) => <Label class="beta-solution-list-allentown__label" text={label.text} icon={label.icon} />)}</div>}
               {descriptionHtml(item.description) && <div class="beta-solution-list-allentown__description" set:html={descriptionHtml(item.description)} />}
             </div>
             {action(item.cta)?.label && (() => {
@@ -155,8 +154,7 @@ const action = (value: any) => value?.cta ?? value
     --kiw--solution-list-allentown-label-space: var(--space-l);
     --kiw--solution-list-allentown-container-gap: var(--space-xl);
     --kiw--solution-list-allentown-callout-block-space: var(--section-space-m);
-    --kiw--solution-list-allentown-inline-space: var(--section-gutter);
-    --kiw--solution-list-allentown-toc-gap: var(--space-xs);
+    --kiw--solution-list-allentown-toc-gap: var(--space-xxs);
     --kiw--solution-list-allentown-toc-block-space: var(--space-xs);
     --kiw--solution-list-allentown-toc-inline-space: var(--space-s);
     --kiw--solution-list-allentown-border-width: var(--border-width);
@@ -188,16 +186,18 @@ const action = (value: any) => value?.cta ?? value
   .beta-solution-list-allentown .beta-solution-list-allentown__body { row-gap: var(--solution-list-heading-group-to-label); }
   .beta-solution-list-allentown .beta-solution-list-allentown__heading-group { row-gap: var(--solution-list-accent-to-heading); }
   .beta-solution-list-allentown :is(.beta-solution-list-allentown__accent, h3, .beta-solution-list-allentown__description) { margin: 0; }
-  .beta-solution-list-allentown .beta-solution-list-allentown__accent { color: var(--kinekt-component-accent); }
+  .beta-solution-list-allentown .beta-solution-list-allentown__accent { color: var(--kinekt-component-accent); font-weight: 500; letter-spacing: .05em; }
   .beta-solution-list-allentown .beta-solution-list-allentown__description { color: var(--kinekt-component-muted); }
   .beta-solution-list-allentown .beta-solution-list-allentown__accent { text-transform: uppercase; }
   .beta-solution-list-allentown .beta-solution-list-allentown__heading-group h3 { font-size: var(--h4); line-height: var(--heading-line-height); }
-  .beta-solution-list-allentown .beta-solution-list-allentown__label { margin: 0 0 calc(var(--solution-list-label-to-description) - var(--solution-list-heading-group-to-label)); }
+  .beta-solution-list-allentown .beta-solution-list-allentown__labels { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-block-end: calc(var(--solution-list-label-to-description) - var(--solution-list-heading-group-to-label)); }
+  .beta-solution-list-allentown .beta-solution-list-allentown__label { margin: 0; }
   .beta-solution-list-allentown .beta-solution-list-allentown__actions { display: flex; margin-block-start: 0; }
   .beta-solution-list-allentown .beta-solution-list-allentown__toc { inline-size: 100vw; margin-inline: calc(50% - 50vw); overflow-x: auto; }
   .beta-solution-list-allentown .beta-solution-list-allentown__toc ul { display: flex; gap: var(--kiw--solution-list-allentown-toc-gap); width: max-content; min-width: 100%; margin: 0; padding-inline: var(--kiw--solution-list-allentown-inline-space); list-style: none; }
-  .beta-solution-list-allentown .beta-solution-list-allentown__toc a { display: block; padding: var(--kiw--solution-list-allentown-toc-block-space) var(--kiw--solution-list-allentown-toc-inline-space); border: var(--kiw--solution-list-allentown-border-width) solid var(--kiw--solution-list-allentown-line-color); color: var(--kiw--solution-list-allentown-line-color); font-weight: var(--heading-font-weight); text-decoration: none; white-space: nowrap; }
-  .beta-solution-list-allentown .beta-solution-list-allentown__toc a:is(:focus-visible, :hover) { box-shadow: inset 0 0 0 calc(var(--kiw--solution-list-allentown-border-width) * 2) var(--kiw--solution-list-allentown-ink-color); background: var(--kiw--solution-list-allentown-surface-color); }
+  .beta-solution-list-allentown .beta-solution-list-allentown__toc a { display: block; padding: var(--kiw--solution-list-allentown-toc-block-space) var(--kiw--solution-list-allentown-toc-inline-space); border: var(--kiw--solution-list-allentown-border-width) solid var(--kiw--solution-list-allentown-line-color); color: var(--kinekt-component-muted); background: var(--kinekt-component-surface); font-weight: var(--heading-font-weight); text-decoration: none; white-space: nowrap; }
+  .beta-solution-list-allentown .beta-solution-list-allentown__toc a[aria-current='true'] { border-color: var(--kinekt-component-ink); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); }
+  .beta-solution-list-allentown .beta-solution-list-allentown__toc a:is(:focus-visible, :hover) { box-shadow: inset 0 0 0 calc(var(--kiw--solution-list-allentown-border-width) * 2) var(--kinekt-component-ink); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); }
   .beta-solution-list-allentown .beta-solution-list-allentown__items { margin: 0; padding: 0; border-top: 0; list-style: none; }
   .beta-solution-list-allentown .beta-solution-list-allentown__items > li:last-child > article { border-bottom: 0; }
   .beta-solution-list-allentown .beta-solution-list-allentown__items article { display: grid; row-gap: var(--kiw--solution-list-allentown-item-gap); column-gap: 0; }
@@ -206,7 +206,7 @@ const action = (value: any) => value?.cta ?? value
   @media (min-width: 50rem) { .beta-solution-list-allentown .beta-solution-list-allentown__toc { display: none; } .beta-solution-list-allentown .beta-solution-list-allentown__items article { grid-template-columns: minmax(0, 0.45fr) minmax(0, 1.55fr); column-gap: var(--kiw--solution-list-allentown-column-gap); } }
   @media (max-width: 49.99rem) {
     .beta-solution-list-allentown { --kinekt-component-reading-width: var(--content-width); }
-    .beta-solution-list-allentown :is(.section-intro__heading, .callout-allentown__content, .beta-solution-list-allentown__heading-group h3) { max-width: var(--kinekt-component-reading-width); }
+    .beta-solution-list-allentown :is(.callout-allentown__content, .beta-solution-list-allentown__heading-group h3) { max-width: var(--kinekt-component-reading-width); }
   }
 </style>
 <style is:global>
@@ -221,7 +221,7 @@ const action = (value: any) => value?.cta ?? value
   }
 
   .beta-solution-list-allentown :is([class$='__items'], [class$='__features'], [class$='__metrics']) > li > article {
-    padding: var(--space-l) 0;
+    padding: var(--space-xl) 0;
     border-width: 0 0 var(--kinekt-component-border-width);
     background: transparent;
   }
@@ -234,7 +234,7 @@ const action = (value: any) => value?.cta ?? value
 
   @media (min-width: 50rem) {
     .beta-solution-list-allentown .beta-solution-list-allentown__heading-group h3 { max-width: var(--kinekt-component-reading-width); }
-    .beta-solution-list-allentown .beta-solution-list-allentown__intro :is(.section-intro__heading, .section-intro__description) { max-width: var(--width-m); }
+    .beta-solution-list-allentown .beta-solution-list-allentown__intro .section-intro__description { max-width: var(--width-m); }
     .beta-solution-list-allentown .callout-allentown { gap: var(--space-l); }
   }
 </style>

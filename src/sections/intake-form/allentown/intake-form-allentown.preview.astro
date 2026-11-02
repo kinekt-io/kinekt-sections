@@ -20,7 +20,8 @@ const content = {
     { text: 'Receive a clear proposal' },
   ],
   formHeading: 'Plan your call',
-  form: '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>',
+  form: '',
+  formPresentation: { enabled: true, label: 'Plan your call', style: 'primary' as const, icon: 'calendar' },
 }
 ---
 <IntakeFormAllentown {...content}>

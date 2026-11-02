@@ -12,7 +12,7 @@ export interface SolutionListAllentownItem {
   image: Media
   accentHeading?: string
   heading: string
-  label?: { text: string; icon?: string }
+  labels?: Array<{ text: string; icon?: string }>
   description: RichText
   cta: Cta
   ctaStyle?: CtaStyle
@@ -54,7 +54,7 @@ export function createSolutionListAllentownBlock({ mediaCollection = 'media', ta
           { name: 'image', label: 'Image', type: 'upload', relationTo: mediaCollection, localized: true, required: true },
           { name: 'accentHeading', label: 'Accent heading', type: 'text', localized: true },
           { name: 'heading', label: 'Heading', type: 'text', localized: true, required: true, validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' },
-          { name: 'label', label: 'Label', type: 'group', localized: true, fields: [{ name: 'text', label: 'Text', type: 'text' }, { name: 'icon', label: 'Icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' } }] },
+          { name: 'labels', label: 'Labels', type: 'array', localized: true, fields: [{ name: 'text', label: 'Text', type: 'text', required: true, validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' }, { name: 'icon', label: 'Icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' } }] },
           { name: 'description', label: 'Description', type: 'richText', localized: true, required: true },
           { name: 'destinationType', label: 'Link type', type: 'select', localized: true, required: true, defaultValue: 'page', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }] },
           { name: 'linkLabel', label: 'Link label', type: 'text', localized: true, required: true, validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' },
@@ -122,7 +122,7 @@ function introToProps(value: unknown, field: string): SectionIntro {
 
 function itemToProps(value: unknown, index: number, contentHref: SolutionListAllentownAdapterOptions['contentHref'], options: PayloadAdapterOptions): SolutionListAllentownItem {
   const item = requireObject(value, `items[${index}]`)
-  const label = item.label ? requireObject(item.label, `items[${index}].label`) : undefined
+  const labels = labelsToProps(item.labels, `items[${index}].labels`)
   const destination = destinationToProps(item, `items[${index}]`, 'linkLabel', contentHref)
   const ctaStyle = isCtaStyle(item.ctaStyle) ? item.ctaStyle : undefined
 
@@ -130,10 +130,26 @@ function itemToProps(value: unknown, index: number, contentHref: SolutionListAll
     image: mediaToProps(item.image, `items[${index}].image`, options),
     accentHeading: optionalText(item.accentHeading, `items[${index}].accentHeading`),
     heading: requireText(item.heading, `items[${index}].heading`),
-    ...(label && optionalText(label.text, `items[${index}].label.text`) ? { label: { text: requireText(label.text, `items[${index}].label.text`), ...(optionalSharpSolidIcon(label.icon, `items[${index}].label.icon`) ? { icon: optionalSharpSolidIcon(label.icon, `items[${index}].label.icon`) } : {}) } } : {}),
+    ...(labels?.length ? { labels } : {}),
     description: renderRichText(item.description, `items[${index}].description`),
     cta: destination,
     ...(ctaStyle ? { ctaStyle } : {}),
+  }
+}
+
+function labelsToProps(value: unknown, field: string): Array<{ text: string; icon?: string }> | undefined {
+  if (value === undefined || value === null) return undefined
+  if (!Array.isArray(value)) throw new Error(`${field} must be an array.`)
+  return value.map((label, index) => labelToProps(label, `${field}[${index}]`))
+}
+
+function labelToProps(value: unknown, field: string): { text: string; icon?: string } {
+  const label = requireObject(value, field)
+  const icon = optionalSharpSolidIcon(label.icon, `${field}.icon`)
+
+  return {
+    text: requireText(label.text, `${field}.text`),
+    ...(icon ? { icon } : {}),
   }
 }
 

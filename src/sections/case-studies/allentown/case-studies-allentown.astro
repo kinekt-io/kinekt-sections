@@ -499,6 +499,9 @@ const quoteText = (value: string): string => {
       display: grid;
       gap: var(--kiw--case-studies-allentown-results-heading-gap);
     }
+    & .case-studies-allentown__results-heading {
+      font-size: var(--h3);
+    }
     & .case-studies-allentown__results {
       display: flex;
       flex-wrap: wrap;
@@ -595,6 +598,16 @@ const quoteText = (value: string): string => {
     &[data-kinekt-theme='dark'],
     &[data-kinekt-theme='semi-dark'] {
       --kiw--case-studies-allentown-description-color: var(--primary-light);
+    }
+
+    @media (max-width: 49.999rem) {
+      & :is(.case-studies-allentown__title, .case-studies-allentown__description) {
+        width: 100%;
+        max-width: none;
+      }
+      & .case-studies-allentown__quote {
+        display: none;
+      }
     }
 
     @media (min-width: 50rem) {

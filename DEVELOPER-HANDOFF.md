@@ -264,10 +264,14 @@ Heading level is renderer-owned. Let the shared heading reset derive size from t
 Production forms are HubSpot embeds. Every form in a section or component uses the shared Form Embed (`src/components/form-embed/allentown/form-embed-allentown.astro`), the same block Form Section Allentown uses. Do not write form field markup or field CSS inside a section.
 
 - **Contract:** declare the field as `"kind": "formEmbed"` (the HubSpot embed code; Payload renders it as a textarea). Do not use `formReference` or a section-specific form shape.
-- **Renderer:** pass the code to `<FormEmbed form={form}>`. The integration executes the embed inside `[data-kinekt-hubspot-form-placeholder]`; the catalogue never runs it.
+- **Renderer:** pass the code to `<FormEmbed form={form} formPresentation={formPresentation}>`. The customer integration initializes the supplied provider code in `[data-kinekt-hubspot-form]`; catalogue fixtures do not submit.
 - **Preview placeholder:** put non-submitting placeholder fields in FormEmbed's default slot (or omit the slot for the generic placeholder). Structure them with the helper classes `form-embed-allentown__fields`, `__group`, `__row`, `__inline`, `__options` and `__select`, plus plain `<label>`, `<input>`, `<select>`, `<textarea>`, `<fieldset>`, `<details>` and `<button type="submit">`. Placeholder fields are content; their look comes from FormEmbed.
 - **Styling:** FormEmbed owns every field style (and styles a real HubSpot form the same way). A section may only tune the documented `--kiw--form-embed-allentown-*` variables. If a Figma frame shows a different field design, change FormEmbed for everyone, not one section.
 - Generated (structural) sections render `formEmbed` fields through FormEmbed automatically.
+- **Optional modal:** declare a localized `formPresentation` field with `"kind": "formModal"`. It contains `enabled`, `label`, `style` and optional FA icon; there is no destination URL. The opener uses the standard Button styles. Missing/disabled settings keep the form inline; enabling requires a label. For Tabs, configure this group per tab item.
+- **Modal lifecycle:** FormEmbed owns the native dialog, close control, backdrop, Escape handling and focus return. The provider DOM stays in one location so reopening does not reload embedded iframes or reset answers. Without JavaScript the form remains inline. Sections must not clone or reinitialize it.
+- **Form Section media:** the image is optional and appears above content on mobile, regardless of the desktop left/right setting.
+
 
 ## 6. Build useful previews
 

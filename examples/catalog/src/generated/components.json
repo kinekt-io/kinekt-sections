@@ -458,6 +458,12 @@
         "required": true,
         "localized": true,
         "description": "HubSpot embed code. The catalogue renders a safe placeholder; the integration owns execution of the embed."
+      },
+      "formPresentation": {
+        "kind": "formModal",
+        "required": false,
+        "localized": true,
+        "description": "Show the supplied form in a modal after an editor-configured opener is selected. Leave off to preserve the inline form."
       }
     },
     "runtimeProps": {},
@@ -2869,13 +2875,19 @@
           "left",
           "right"
         ],
-        "description": "Desktop media position. Mobile always presents content before media."
+        "description": "Desktop media position. Mobile always presents media above content."
       },
       "form": {
         "kind": "formEmbed",
         "required": true,
         "localized": true,
         "description": "Paste the complete HubSpot embed code. The frontend renders it in place."
+      },
+      "formPresentation": {
+        "kind": "formModal",
+        "required": false,
+        "localized": true,
+        "description": "Show the supplied form in a modal after an editor-configured opener is selected. Leave off to preserve the inline form."
       },
       "contactHeading": {
         "kind": "text",
@@ -3585,6 +3597,12 @@
         "required": true,
         "localized": true,
         "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
+      },
+      "formPresentation": {
+        "kind": "formModal",
+        "required": false,
+        "localized": true,
+        "description": "Show the supplied form in a modal after an editor-configured opener is selected. Leave off to preserve the inline form."
       }
     },
     "runtimeProps": {
@@ -4586,6 +4604,12 @@
         "required": true,
         "localized": true,
         "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
+      },
+      "formPresentation": {
+        "kind": "formModal",
+        "required": false,
+        "localized": true,
+        "description": "Show the supplied form in a modal after an editor-configured opener is selected. Leave off to preserve the inline form."
       }
     },
     "runtimeProps": {
@@ -4893,6 +4917,12 @@
         "required": false,
         "localized": true,
         "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
+      },
+      "formPresentation": {
+        "kind": "formModal",
+        "required": false,
+        "localized": true,
+        "description": "Show the supplied form in a modal after an editor-configured opener is selected. Leave off to preserve the inline form."
       }
     },
     "runtimeProps": {},
@@ -5983,6 +6013,12 @@
         "required": true,
         "localized": true,
         "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
+      },
+      "formPresentation": {
+        "kind": "formModal",
+        "required": false,
+        "localized": true,
+        "description": "Show the supplied form in a modal after an editor-configured opener is selected. Leave off to preserve the inline form."
       }
     },
     "runtimeProps": {

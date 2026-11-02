@@ -1,9 +1,10 @@
 import type { Block, CollectionSlug, Field } from 'payload'
 import { renderRichText } from './rich-text.js'
-import { ctaFields, ctaStyleField, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from './payload-fields.js'
+import { ctaFields, ctaStyleField, formModalPresentationFields, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from './payload-fields.js'
+import { formModalPresentationToProps } from './payload.js'
 import { normalizeSectionContentWidth } from './section-width.js'
 
-type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'insightSourceList' | 'contentReferenceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
+type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'formModal' | 'insightSourceList' | 'contentReferenceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
 
 interface ManifestFieldAdmin {
   description?: string
@@ -172,6 +173,12 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
     }
     // HubSpot embed code (production forms are embeds). Rendered by components/form-embed/allentown.
     case 'formEmbed': return { ...common, type: 'textarea', admin: { ...field.admin, rows: 8, description: field.description ?? 'Paste the HubSpot form embed code. The component preview keeps using a non-submitting placeholder form.' } }
+    case 'formModal': return {
+      ...common,
+      type: 'group',
+      admin: { initCollapsed: true, ...(field.description ? { description: field.description } : {}), ...field.admin },
+      fields: formModalPresentationFields(),
+    }
     case 'formReference': {
       if (!options.formCollection) throw new Error(`Field ${name} requires a formCollection; JSON fallback is forbidden.`)
       return { ...common, type: 'relationship', relationTo: options.formCollection }
@@ -205,6 +212,9 @@ function normalizeRichText(value: unknown, field: string): unknown {
   if (typeof value !== 'object' || value === null) return value
 
   const record = value as Record<string, unknown>
+  if ('enabled' in record && ('label' in record || Object.keys(record).every((key) => key === 'enabled'))) {
+    return formModalPresentationToProps(record, field)
+  }
   if ('root' in record) return renderRichText(record, field)
   return Object.fromEntries(Object.entries(record).map(([key, item]) => [key, normalizeRichText(item, `${field}.${key}`)]))
 }

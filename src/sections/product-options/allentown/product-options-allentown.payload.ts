@@ -1,7 +1,7 @@
 import type { Block, CollectionSlug } from 'payload'
 import { createManifestBlock } from '../../../shared/manifest-block.js'
 import { renderRichText } from '../../../shared/rich-text.js'
-import { ctaGroupToProps, mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { ctaGroupToProps, formModalPresentationToProps, mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import type { ProductOptionsAllentownContent, PayloadProductOptionsAllentownDocument } from './product-options-allentown.types.js'
 import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
@@ -69,6 +69,12 @@ const manifest = {
       "required": false,
       "localized": true,
       "description": "HubSpot embed code. The catalogue renders a safe placeholder through components/form-embed/allentown; the integration owns execution of the embed."
+    },
+    "formPresentation": {
+      "kind": "formModal",
+      "required": false,
+      "localized": true,
+      "description": "Show the supplied form in a modal after an editor-configured opener is selected. Leave off to preserve the inline form."
     }
   }
 } as const
@@ -88,6 +94,7 @@ export function betaProductOptionsAllentownToProps(data: PayloadProductOptionsAl
   const intro = requireObject(data.intro, 'intro')
   const ctas = ctaGroupToProps(data.ctas, 'ctas', options)
   const form = formToProps(data.form)
+  const formPresentation = formModalPresentationToProps(data.formPresentation, 'formPresentation')
 
   return {
     contentWidth: normalizeSectionContentWidth(data.contentWidth),
@@ -114,5 +121,6 @@ export function betaProductOptionsAllentownToProps(data: PayloadProductOptionsAl
       }
     }),
     ...(form === undefined ? {} : { form }),
+    ...(formPresentation ? { formPresentation } : {}),
   }
 }

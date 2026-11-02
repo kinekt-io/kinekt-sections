@@ -31,7 +31,8 @@ const content = {
     { image: placeholder('Energy density placeholder'), title: 'Energy density', description: 'Balance gravimetric and volumetric energy to extend endurance without compromising safety margins or power delivery.', benefits: ['High-density cell options', 'Optimised pack architecture', 'Safety margins built in'] },
     { image: placeholder('Weight placeholder'), title: 'Weight', description: 'Reduce mass across cells, structure and electronics so every gram goes to payload, range or flight time.', benefits: ['Weight-optimised structures', 'Integrated electronics', 'Mass budget per component'] },
   ],
-  form: '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>',
+  form: '',
+  formPresentation: { enabled: true, label: 'Configure your battery', style: 'primary' as const, icon: 'arrow-right' as const },
 }
 ---
 <ProductOptionsAllentown {...content}>

@@ -1,4 +1,4 @@
-import type { CollectionSlug, Field, SelectField } from 'payload'
+import type { CollectionSlug, Field, SelectField, TextField } from 'payload'
 import { isSafeWebUrl } from '../urls.js'
 import { isCtaIcon } from './cta-icons.js'
 
@@ -70,7 +70,7 @@ export function contactMethodFields(): Field[] {
   ]
 }
 
-export function ctaStyleField(): Field {
+export function ctaStyleField(): SelectField {
   return {
     name: 'style',
     type: 'select',
@@ -84,6 +84,46 @@ export function ctaStyleField(): Field {
       { label: 'Clear base', value: 'clear-base' },
     ],
   }
+}
+
+export function ctaIconField(): TextField {
+  return {
+    name: 'icon',
+    type: 'text',
+    label: 'Icon',
+    validate: isSharpSolidIconNameOrEmpty,
+    admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' },
+  }
+}
+
+export function formModalPresentationFields(): Field[] {
+
+  return [
+    {
+      name: 'enabled',
+      type: 'checkbox',
+      label: 'Show form in a modal',
+      defaultValue: false,
+      admin: { description: 'When enabled, visitors use the opener below to show the supplied form in a modal.' },
+    },
+    {
+      name: 'label',
+      type: 'text',
+      label: 'Opener label',
+      validate: (value: unknown, { siblingData }: { siblingData?: unknown }) =>
+        !siblingData || typeof siblingData !== 'object' || !('enabled' in siblingData) || siblingData.enabled !== true || hasText(value) || requiredTextMessage,
+      admin: { condition: (_, siblingData) => siblingData?.enabled === true },
+    },
+    {
+      ...ctaStyleField(),
+      required: false,
+      admin: { condition: (_, siblingData) => siblingData?.enabled === true },
+    },
+    {
+      ...ctaIconField(),
+      admin: { condition: (_, siblingData) => siblingData?.enabled === true },
+    },
+  ]
 }
 
 
@@ -116,13 +156,7 @@ export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], 
       validate: (value: unknown, { siblingData }: { siblingData?: unknown }) => validateOptionalCtaHref(value, siblingData),
     },
     ctaContentTargetField(targetCollections),
-    {
-      name: 'icon',
-      type: 'text',
-      label: 'Icon',
-      validate: isSharpSolidIconNameOrEmpty,
-      admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' },
-    },
+    ctaIconField(),
   ]
 }
 

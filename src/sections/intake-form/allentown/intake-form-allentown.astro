@@ -3,7 +3,7 @@ import '../../../styles/wireframe-tokens.css'
 import FormEmbed from '../../../components/form-embed/allentown/form-embed-allentown.astro'
 import IntakeStep, { type IntakeStepContent } from '../../../components/intake-step/allentown/intake-step-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { RichText, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import type { FormModalPresentation, RichText, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BetaIntakeFormAllentownContent } from './intake-form-allentown.types.js'
@@ -18,10 +18,11 @@ interface Props extends BetaIntakeFormAllentownContent {
   formHeading?: string | null
   /** HubSpot embed code (manifest kind formEmbed). Executed by the integration inside FormEmbed. */
   form?: string | null
+  formPresentation?: FormModalPresentation | null
   headingLevel?: 'h1' | 'h2' | 'h3'
 }
 
-const { id, theme = 'light', intro, stepsHeading, steps = [], formHeading, form, headingLevel = 'h2' } = Astro.props as Props
+const { id, theme = 'light', intro, stepsHeading, steps = [], formHeading, form, formPresentation, headingLevel = 'h2' } = Astro.props as Props
 
 const introDescription = intro.description == null || typeof intro.description === 'string'
   ? intro.description ?? undefined
@@ -56,9 +57,9 @@ const hasFormPlaceholder = Astro.slots.has('form')
     <div class="intake-form-allentown__form">
       {formHeading && <ChildHeading class="intake-form-allentown__form-heading">{formHeading}</ChildHeading>}
       {hasFormPlaceholder ? (
-        <FormEmbed class="intake-form-allentown__form-embed" form={form}><slot name="form" /></FormEmbed>
+        <FormEmbed class="intake-form-allentown__form-embed" form={form} formPresentation={formPresentation}><slot name="form" /></FormEmbed>
       ) : (
-        <FormEmbed class="intake-form-allentown__form-embed" form={form} />
+        <FormEmbed class="intake-form-allentown__form-embed" form={form} formPresentation={formPresentation} />
       )}
     </div>
   </div>

@@ -14,6 +14,7 @@
     "label": { "kind": "text", "required": true, "localized": true },
     "intro": { "kind": "component", "componentId": "components/intro/allentown", "required": false, "localized": true, "admin": { "initCollapsed": true }, "description": "Optional accent heading, heading and rich-text description. Every field may be left empty." },
     "ctaGroup": { "kind": "ctaGroup", "required": false, "localized": true, "minItems": 0, "maxItems": 2 },
-    "form": { "kind": "formEmbed", "required": false, "localized": true, "description": "Optional HubSpot embed code. Leave empty for an introduction or contact actions without a form." }
+    "form": { "kind": "formEmbed", "required": false, "localized": true, "description": "Optional HubSpot embed code. Leave empty for an introduction or contact actions without a form." },
+    "formPresentation": { "kind": "formModal", "required": false, "localized": true, "description": "Show the supplied form in a modal after an editor-configured opener is selected. Leave off to preserve the inline form." }
   }
 }

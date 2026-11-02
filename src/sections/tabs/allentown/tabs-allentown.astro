@@ -6,7 +6,7 @@ import Button from '../../../controls/button/allentown/button-allentown.astro'
 import { ctaGroupActions } from '../../../shared/content.js'
 import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
-import type { CtaGroup, SectionIntro as Intro, SectionTheme } from '../../../shared/content.js'
+import type { CtaGroup, FormModalPresentation, SectionIntro as Intro, SectionTheme } from '../../../shared/content.js'
 
 interface Props {
   id?: string
@@ -14,7 +14,7 @@ interface Props {
   contentWidth?: string
   intro: Intro
   tabsHeading?: string
-  tabs: { label: string; intro?: Partial<Intro>; ctaGroup?: CtaGroup; form?: string | null }[]
+  tabs: { label: string; intro?: Partial<Intro>; ctaGroup?: CtaGroup; form?: string | null; formPresentation?: FormModalPresentation | null }[]
   headingLevel?: 'h1' | 'h2' | 'h3'
 }
 const { id, theme = 'light', intro, tabsHeading, tabs, headingLevel = 'h2' } = Astro.props as Props
@@ -46,7 +46,7 @@ const hasIntro = (value?: Partial<Intro>) => Boolean(value?.accentHeading || val
               })}
             </div>}
           </div>}
-          {hasForm && <FormEmbed class="beta-tabs-allentown__form" form={tab.form} />}
+          {hasForm && <FormEmbed class="beta-tabs-allentown__form" form={tab.form} formPresentation={tab.formPresentation} />}
         </div>
       })}
     </div>

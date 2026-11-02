@@ -1,7 +1,7 @@
 import { renderRichText } from './rich-text.js'
 import { isCtaStyle } from './content.js'
 import { isObjectRecord } from './type-guards.js'
-import { optionalCtaToProps, mediaToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from './payload.js'
+import { formModalPresentationToProps, optionalCtaToProps, mediaToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from './payload.js'
 import { normalizeSectionContentWidth } from './section-width.js'
 
 const isMedia = (value: Record<string, unknown>): boolean => 'url' in value && 'alt' in value && 'width' in value && 'height' in value
@@ -12,6 +12,9 @@ function adaptValue(value: unknown, field: string, options: PayloadAdapterOption
   if (!isObjectRecord(value)) return value
   const entries = Object.entries(value)
   if (entries.length === 1 && entries[0][0] === 'value') return adaptValue(entries[0][1], `${field}.value`, options)
+  if ('enabled' in value && ('label' in value || Object.keys(value).every((key) => key === 'enabled'))) {
+    return formModalPresentationToProps(value, field)
+  }
   if ('destinationType' in value || ('label' in value && ('href' in value || 'page' in value))) {
     const cta = optionalCtaToProps(value, field, options)
     if (!cta) return undefined

@@ -2,6 +2,7 @@ import type { Block, CollectionSlug } from 'payload'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import {
   mediaToProps,
+  formModalPresentationToProps,
   optionalText,
   requireObject,
   requireSharpSolidIcon,
@@ -13,6 +14,7 @@ import {
   contactMethodFields,
   hasText,
   isActionableHref,
+  formModalPresentationFields,
   requiredTextMessage,
   sectionContentWidthField,
   sectionIntroFields,
@@ -77,7 +79,7 @@ export function createBetaFormSectionAllentownBlock({
           { label: 'Right', value: 'right' },
         ],
         admin: {
-          description: 'Desktop only. Mobile always presents the content before the image.',
+          description: 'Desktop only. Mobile always presents media above the content.',
         },
       },
       {
@@ -91,6 +93,16 @@ export function createBetaFormSectionAllentownBlock({
           rows: 8,
           description: 'Paste the HubSpot form embed code. The component preview keeps using a non-submitting placeholder form.',
         },
+      },
+      {
+        name: 'formPresentation',
+        type: 'group',
+        label: 'Form presentation',
+        localized: true,
+        admin: {
+          description: 'Show the supplied form in a modal after an editor-configured opener is selected. Leave off to preserve the inline form.',
+        },
+        fields: formModalPresentationFields(),
       },
       {
         name: 'contactHeading',
@@ -122,6 +134,7 @@ export function betaFormSectionAllentownToProps(
   }
 
   const contactMethods = contactMethodsToProps(data.contactMethods)
+  const formPresentation = formModalPresentationToProps(data.formPresentation, 'formPresentation')
 
   return {
     contentWidth: normalizeSectionContentWidth(data.contentWidth),
@@ -134,6 +147,7 @@ export function betaFormSectionAllentownToProps(
     ...(data.image ? { image: mediaToProps(data.image, 'image', options) } : {}),
     imagePosition,
     form: requireText(data.form, 'form'),
+    ...(formPresentation ? { formPresentation } : {}),
     ...(optionalText(data.contactHeading, 'contactHeading') ? { contactHeading: optionalText(data.contactHeading, 'contactHeading') } : {}),
     ...(contactMethods ? { contactMethods } : {}),
   }

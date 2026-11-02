@@ -115,6 +115,12 @@ const manifest = {
           "required": false,
           "localized": true,
           "description": "Optional HubSpot embed code. Leave empty for an introduction or contact actions without a form."
+        },
+        "formPresentation": {
+          "kind": "formModal",
+          "required": false,
+          "localized": true,
+          "description": "Show the supplied form in a modal after an editor-configured opener is selected. Leave off to preserve the inline form."
         }
       }
     }

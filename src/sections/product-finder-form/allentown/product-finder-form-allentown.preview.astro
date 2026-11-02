@@ -11,7 +11,8 @@ const content = {
     heading: 'Find the right battery for your system',
   },
   formLabel: 'Battery finder',
-  form: '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>',
+  form: '',
+  formPresentation: { enabled: true, label: 'Find your battery', style: 'primary' as const, icon: 'arrow-right' as const },
 }
 ---
 <ProductFinderFormAllentown {...content}>
