@@ -1580,7 +1580,7 @@
     "role": "case-studies",
     "variation": "allentown",
     "title": "Case Studies Allentown",
-    "description": "A reusable case studies section with an introduction, optional labelled divider, carousel and optional overview action.",
+    "description": "A reusable case studies section with an introduction, optional labelled divider, carousel and optional header CTA group.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411424&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -1627,11 +1627,13 @@
         "required": true,
         "localized": true
       },
-      "cta": {
-        "kind": "component",
-        "componentId": "controls/button/allentown",
+      "ctas": {
+        "kind": "ctaGroup",
         "required": false,
-        "localized": true
+        "localized": true,
+        "minItems": 0,
+        "maxItems": 2,
+        "description": "Add zero, one or two header actions. Set each style to Primary, Secondary, Clear or Clear base."
       }
     },
     "runtimeProps": {},
@@ -4437,6 +4439,23 @@
         "required": true,
         "localized": true
       },
+      "introCtaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": false,
+        "localized": true,
+        "description": "Optional primary, secondary or clear actions below the introduction.",
+        "fields": {
+          "buttons": {
+            "kind": "ctaGroup",
+            "required": false,
+            "localized": true,
+            "minItems": 0,
+            "maxItems": 2,
+            "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
+          }
+        }
+      },
       "items": {
         "kind": "componentList",
         "componentId": "components/process-item/trinity",
@@ -4444,6 +4463,23 @@
         "localized": true,
         "minItems": 1,
         "description": "Ordered process steps. The renderer owns the active state, timing bar, and pause behaviour."
+      },
+      "listCtaGroup": {
+        "kind": "component",
+        "componentId": "components/cta-group/allentown",
+        "required": false,
+        "localized": true,
+        "description": "Optional primary, secondary or clear actions below the process item list.",
+        "fields": {
+          "buttons": {
+            "kind": "ctaGroup",
+            "required": false,
+            "localized": true,
+            "minItems": 0,
+            "maxItems": 2,
+            "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
+          }
+        }
       }
     },
     "runtimeProps": {

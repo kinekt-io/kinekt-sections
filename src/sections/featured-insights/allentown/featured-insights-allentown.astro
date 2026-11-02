@@ -151,6 +151,7 @@ const featuredKindIcon = featured && kindIconOf(featured)
     --kiw--featured-insights-allentown-container-gap: var(--section-space-l);
     --kiw--featured-insights-allentown-intro-width: var(--kinekt-component-reading-width);
     --kiw--featured-insights-allentown-card-gap: var(--space-s);
+    --kiw--featured-insights-allentown-featured-media-to-label-gap: var(--space-l);
     --kiw--featured-insights-allentown-action-color: var(--kinekt-component-action);
     --kiw--featured-insights-allentown-label-size: var(--text-xs);
     --kiw--featured-insights-allentown-label-weight: var(--heading-font-weight);
@@ -176,6 +177,7 @@ const featuredKindIcon = featured && kindIconOf(featured)
   .featured-insights-allentown :is(.featured-insights-allentown__featured, .featured-insights-allentown__recent article) :is(h3, p) { margin: 0; }
   .featured-insights-allentown :is(.featured-insights-allentown__featured-title, .featured-insights-allentown__featured-description) { max-width: none; }
   .featured-insights-allentown .featured-insights-allentown__media img { aspect-ratio: var(--kiw--featured-insights-allentown-media-ratio, 16 / 9); object-fit: cover; }
+  .featured-insights-allentown .featured-insights-allentown__featured-header { margin-block-start: calc(var(--kiw--featured-insights-allentown-featured-media-to-label-gap) - var(--kiw--featured-insights-allentown-card-gap)); }
   .featured-insights-allentown .featured-insights-allentown__kind { display: inline-flex; align-items: center; gap: var(--kiw--featured-insights-allentown-link-gap); color: var(--kiw--featured-insights-allentown-kind-color); font-size: var(--kiw--featured-insights-allentown-label-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); }
   .featured-insights-allentown .featured-insights-allentown__kind-icon { width: 1em; height: 1em; flex: none; }
   .featured-insights-allentown :is(.featured-insights-allentown__recent-title, .featured-insights-allentown__recent-description) { max-width: var(--kiw--featured-insights-allentown-copy-width); }

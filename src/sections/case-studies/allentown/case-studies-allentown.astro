@@ -4,6 +4,7 @@ import SectionIntro from "../../../primitives/section-intro/section-intro.astro"
 import SubtitleFlightPath from "../../../primitives/subtitle-flight-path/subtitle-flight-path.astro";
 import Button from "../../../controls/button/allentown/button-allentown.astro";
 import Label from "../../../atoms/label/allentown/label-allentown.astro";
+import { ctaGroupActions } from "../../../shared/content.js";
 import { ctaIconPaths, isCtaIcon } from "../../../shared/cta-icons.js";
 import { richTextToHtml } from "../../../shared/rich-text.js";
 
@@ -13,18 +14,17 @@ const {
   intro,
   sectionLabel,
   carousel = {},
-  cta,
+  ctas,
   headingLevel = "h2",
   carouselControlStyle = "icon",
   carouselControls = "previous-next",
   carouselLoop = false,
 } = Astro.props as any;
 const items = Array.isArray(carousel.items) ? carousel.items : [];
-const action = cta?.cta ?? cta;
+const headerActions = ctaGroupActions(ctas);
 const hasCarousel = items.length > 1;
 const slideAction = (item: any) => item.cta?.cta ?? item.cta;
 const ctaIcon = (value: unknown) => (isCtaIcon(value) ? ctaIconPaths(value) : undefined);
-const actionIcon = ctaIcon(action?.icon);
 const previousIcon = ctaIconPaths("arrow-left")!;
 const nextIcon = ctaIconPaths("arrow-right")!;
 const quoteText = (value: string): string => {
@@ -52,26 +52,32 @@ const quoteText = (value: string): string => {
         )
       }
       {
-        action?.label && (
-          <div class="case-studies-allentown__cta">
-            <Button
-              class="case-studies-allentown__cta"
-              href={action.href}
-              label={action.label}
-            >
-              {actionIcon && (
-                <svg
-                  aria-hidden="true"
-                  width="1em"
-                  height="1em"
-                  viewBox={actionIcon.viewBox}
-                  fill="currentColor"
+        headerActions.length > 0 && (
+          <nav class="case-studies-allentown__cta" aria-label="Case studies actions">
+            {headerActions.map((action, index) => {
+              const actionIcon = ctaIcon(action.icon);
+              return (
+                <Button
+                  class="case-studies-allentown__cta"
+                  href={action.href}
+                  label={action.label}
+                  style={action.style ?? (index === 0 ? "primary" : "secondary")}
                 >
-                  <path d={actionIcon.path} />
-                </svg>
-              )}
-            </Button>
-          </div>
+                  {actionIcon && (
+                    <svg
+                      aria-hidden="true"
+                      width="1em"
+                      height="1em"
+                      viewBox={actionIcon.viewBox}
+                      fill="currentColor"
+                    >
+                      <path d={actionIcon.path} />
+                    </svg>
+                  )}
+                </Button>
+              );
+            })}
+          </nav>
         )
       }
     </header>

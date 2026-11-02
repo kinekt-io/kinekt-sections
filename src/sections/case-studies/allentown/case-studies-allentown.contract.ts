@@ -1,9 +1,9 @@
 import type { Block, CollectionSlug } from 'payload'
 
-import type { Cta, CtaIcon, Media, RichText, SectionIntro } from '../../../shared/content.js'
+import type { Cta, CtaGroup, CtaIcon, Media, RichText, SectionIntro } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { ctaGroupToProps, ctaToProps, mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
-import { contentTargetField, ctaFields, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from '../../../shared/payload-fields.js'
+import { contentTargetField, ctaFields, ctaStyleField, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from '../../../shared/payload-fields.js'
 import { normalizeSectionContentWidth, type SectionContentWidth } from '../../../shared/section-width.js'
 
 export type CaseStudyResult = {
@@ -34,7 +34,7 @@ export type CaseStudiesAllentownContent = {
   intro: SectionIntro
   sectionLabel?: string
   carousel: { items: CaseStudySlide[] }
-  cta?: Cta
+  ctas?: CtaGroup
 }
 
 export type PayloadCaseStudiesAllentownDocument = Record<string, unknown> & { id?: string }
@@ -85,8 +85,14 @@ export function createCaseStudiesAllentownBlock({
       },
       { name: 'sectionLabel', type: 'text', label: 'Carousel label', localized: true, admin: { description: 'Optional label displayed before the carousel with a decorative line.' } },
       {
-        name: 'cta', type: 'group', label: 'Header CTA', localized: true,
-        fields: ctaFields(targetRelation),
+        name: 'ctas',
+        type: 'array',
+        label: 'Header CTA Group',
+        localized: true,
+        minRows: 0,
+        maxRows: 2,
+        admin: { initCollapsed: true, description: 'Add zero, one or two actions. Set each style to Primary, Secondary, Clear or Clear base.' },
+        fields: [ctaStyleField(), ...ctaFields(targetRelation)],
       },
       {
         name: 'carousel', type: 'group', label: 'Carousel', localized: true, required: true,
@@ -156,7 +162,7 @@ export function caseStudiesAllentownToProps(
     },
     ...(optionalText(data.sectionLabel, 'sectionLabel') ? { sectionLabel: optionalText(data.sectionLabel, 'sectionLabel') } : {}),
     carousel: { items },
-    ...(optionalLinkedCta(data.cta, 'cta', options) ? { cta: optionalLinkedCta(data.cta, 'cta', options) } : {}),
+    ...(ctaGroupToProps(data.ctas, 'ctas', options) ? { ctas: ctaGroupToProps(data.ctas, 'ctas', options) } : {}),
   }
 }
 
@@ -214,9 +220,7 @@ function optionalQuote(value: unknown, field: string, options: PayloadAdapterOpt
   }
 }
 
-function optionalLinkedCta(value: unknown, field: string, options: PayloadAdapterOptions): Cta | undefined {
-  return ctaGroupToProps({ primary: value }, field, options)?.primary ?? undefined
-}
+
 
 
 function relationshipID(value: unknown, field: string): string {

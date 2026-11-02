@@ -56,6 +56,23 @@ const manifest = {
         }
       }
     },
+    "introCtaGroup": {
+      "kind": "component",
+      "componentId": "components/cta-group/allentown",
+      "required": false,
+      "localized": true,
+      "description": "Optional primary, secondary or clear actions below the introduction.",
+      "fields": {
+        "buttons": {
+          "kind": "ctaGroup",
+          "required": false,
+          "localized": true,
+          "minItems": 0,
+          "maxItems": 2,
+          "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
+        }
+      }
+    },
     "items": {
       "kind": "componentList",
       "componentId": "components/process-item/trinity",
@@ -104,6 +121,23 @@ const manifest = {
               "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
             }
           }
+        }
+      }
+    },
+    "listCtaGroup": {
+      "kind": "component",
+      "componentId": "components/cta-group/allentown",
+      "required": false,
+      "localized": true,
+      "description": "Optional primary, secondary or clear actions below the process item list.",
+      "fields": {
+        "buttons": {
+          "kind": "ctaGroup",
+          "required": false,
+          "localized": true,
+          "minItems": 0,
+          "maxItems": 2,
+          "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
         }
       }
     }
