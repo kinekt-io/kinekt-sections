@@ -26,6 +26,7 @@ export function createCompatibilitySpecificationsBlock(): Block {
 export function compatibilitySpecificationsToProps(data: PayloadCompatibilitySpecificationsDocument, _options: PayloadAdapterOptions = {}): CompatibilitySpecificationsContent {
   const intro = requireObject(data.intro, 'intro')
   const platforms = data.compatiblePlatforms == null ? undefined : requireObject(data.compatiblePlatforms, 'compatiblePlatforms')
+  const platformItems = Array.isArray(platforms?.items) ? platforms.items : []
 
   return {
     contentWidth: normalizeSectionContentWidth(data.contentWidth),
@@ -42,11 +43,11 @@ export function compatibilitySpecificationsToProps(data: PayloadCompatibilitySpe
         value: requireText(specification.value, `specifications[${index}].value`),
       }
     }),
-    ...(platforms
+    ...(platformItems?.length
       ? {
           compatiblePlatforms: {
-            heading: optionalText(platforms.heading, 'compatiblePlatforms.heading'),
-            items: requireArray(platforms.items, 'compatiblePlatforms.items').map((item, index) =>
+            heading: optionalText(platforms?.heading, 'compatiblePlatforms.heading'),
+            items: requireArray(platformItems, 'compatiblePlatforms.items').map((item, index) =>
               requireText(requireObject(item, `compatiblePlatforms.items[${index}]`).name, `compatiblePlatforms.items[${index}].name`),
             ),
           },
