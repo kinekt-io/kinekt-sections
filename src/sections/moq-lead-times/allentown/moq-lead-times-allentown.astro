@@ -95,10 +95,12 @@ const columns = infoColumns
     --kiw--moq-lead-times-allentown-action-gap: var(--space-s);
     --kiw--moq-lead-times-allentown-heading-size: var(--text-l);
     --kiw--moq-lead-times-allentown-intro-heading-size: var(--kinekt-section-heading-3-size, var(--h3));
+    --kiw--moq-lead-times-allentown-gradient-start: var(--primary-dark);
+    --kiw--moq-lead-times-allentown-gradient-end: var(--accent-dark);
     box-sizing: border-box;
     padding-block: var(--kinekt-component-block-space);
     color: var(--kinekt-component-ink);
-    background: var(--kinekt-component-canvas);
+    background: linear-gradient(253deg, var(--kiw--moq-lead-times-allentown-gradient-start) 30.93%, var(--kiw--moq-lead-times-allentown-gradient-end) 72.04%), var(--kiw--moq-lead-times-allentown-gradient-start);
     font-family: var(--kinekt-section-text-font-family, var(--text-font-family));
     font-size: var(--kinekt-section-text-m-size, var(--text-m));
     font-weight: var(--kinekt-section-text-font-weight, var(--text-font-weight));
@@ -110,6 +112,8 @@ const columns = infoColumns
   :where(.beta-moq-lead-times-allentown[data-kinekt-theme='semi-light']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--moq-lead-times-allentown-canvas, var(--neutral-light))); --kinekt-component-surface: var(--kinekt-section-surface, var(--kiw--moq-lead-times-allentown-surface, var(--white))); --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--moq-lead-times-allentown-ink, var(--primary-ultra-dark))); --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--moq-lead-times-allentown-muted, var(--primary-semi-dark))); --kinekt-component-line: var(--kinekt-section-line, var(--kiw--moq-lead-times-allentown-line, var(--primary-ultra-light))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--moq-lead-times-allentown-accent, var(--accent-semi-dark))); }
   :where(.beta-moq-lead-times-allentown[data-kinekt-theme='semi-dark']) { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--moq-lead-times-allentown-canvas, var(--primary-dark))); --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--moq-lead-times-allentown-accent, var(--accent))); }
   :where(.beta-moq-lead-times-allentown[data-kinekt-theme='dark']) { --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--moq-lead-times-allentown-accent, var(--accent))); }
+  :where(.beta-moq-lead-times-allentown[data-kinekt-theme='light']) { --kiw--moq-lead-times-allentown-gradient-start: var(--neutral-ultra-light); --kiw--moq-lead-times-allentown-gradient-end: var(--accent-ultra-light); }
+  :where(.beta-moq-lead-times-allentown[data-kinekt-theme='semi-light']) { --kiw--moq-lead-times-allentown-gradient-start: var(--neutral-light); --kiw--moq-lead-times-allentown-gradient-end: var(--accent-light); }
   :where(.beta-moq-lead-times-allentown[data-kinekt-heading-level='h1']) { --kiw--moq-lead-times-allentown-intro-heading-size: var(--kinekt-section-heading-2-size, var(--h2)); }
   :where(.beta-moq-lead-times-allentown[data-kinekt-heading-level='h2']) { --kiw--moq-lead-times-allentown-intro-heading-size: var(--kinekt-section-heading-3-size, var(--h3)); }
   :where(.beta-moq-lead-times-allentown[data-kinekt-heading-level='h3']) { --kiw--moq-lead-times-allentown-intro-heading-size: var(--kinekt-section-heading-4-size, var(--h4)); }
