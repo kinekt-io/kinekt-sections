@@ -149,13 +149,13 @@ const classes = ['process-story-allentown', hasMedia && 'process-story-allentown
     --kiw--process-story-heading-stack-gap: var(--space-xxs);
     --kiw--process-story-heading-size: var(--h2);
     --kiw--process-story-description-font-size: var(--text-l);
-    --kiw--process-story-media-ratio: 4 / 5;
+    --kiw--process-story-media-ratio: 16 / 9;
     --kiw--process-story-item-gap: var(--section-space-m);
     --kiw--process-story-actions-gap: var(--kiw--section-actions-gap);
     --kiw--process-story-actions-margin: var(--kiw--section-actions-margin);
     --kinekt-section-content-width: var(--kiw--process-story-container-width);
     --kinekt-section-gap: var(--kiw--process-story-stack-gap);
-  }
+    --kinekt-section-media-ratio: var(--kiw--process-story-media-ratio);
 
   .process-story-allentown .process-story-allentown__intro { display: grid; justify-items: start; gap: var(--kiw--process-story-actions-margin); min-width: 0; }
   .process-story-allentown .section-intro { display: grid; justify-items: start; gap: var(--kiw--process-story-intro-gap); }
@@ -182,7 +182,7 @@ const classes = ['process-story-allentown', hasMedia && 'process-story-allentown
   }
   @media (max-width: 49.999rem) {
     .process-story-allentown :is(h1, h2, h3, h4, h5, h6) { max-width: 100vw; }
-    .process-story-allentown__content .process-story-allentown__image { aspect-ratio: 1 / 1; }
+    .process-story-allentown { --kinekt-section-media-ratio: 1 / 1; }
   }
 </style>
 <style is:global>
