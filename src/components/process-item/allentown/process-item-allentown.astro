@@ -10,8 +10,6 @@ export interface ProcessItemContent {
   title: string
   description: string | RichText
   ctaGroup?: CtaGroup | { primaryButton?: Cta | null; secondaryButton?: Cta | null } | null
-  markerType?: 'label' | 'number'
-  number?: number
 }
 
 interface Props {
@@ -37,7 +35,7 @@ const descriptionHtml = typeof item.description === 'string'
   {(item.title || item.description) && (
     <div class="process-item-allentown__copy">
       {item.title && (
-        <Heading class="process-item-allentown__title">
+        <Heading class={['process-item-allentown__title', markerType === 'number' && 'process-item-allentown__title--numbered'].filter(Boolean).join(' ')}>
           {markerType === 'number' && <span class="process-item-allentown__number" aria-hidden="true">{displayNumber}</span>}
           <span class="process-item-allentown__title-text">{item.title}</span>
         </Heading>
@@ -72,7 +70,8 @@ const descriptionHtml = typeof item.description === 'string'
 
   .process-item-allentown { display: grid; gap: var(--kiw--process-item-allentown-gap); min-width: 0; }
   .process-item-allentown .process-item-allentown__copy { display: grid; gap: var(--kiw--process-item-allentown-copy-gap); }
-  .process-item-allentown .process-item-allentown__title { display: flex; align-items: center; gap: var(--kiw--process-item-allentown-title-gap); max-width: none; margin: 0; color: var(--kiw--process-item-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--process-item-allentown-title-size); font-weight: var(--heading-font-weight); line-height: 1.2; letter-spacing: var(--heading-letter-spacing); text-wrap: balance; }
+  .process-item-allentown .process-item-allentown__title { max-width: none; margin: 0; color: var(--kiw--process-item-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--process-item-allentown-title-size); font-weight: var(--heading-font-weight); line-height: 1.2; letter-spacing: var(--heading-letter-spacing); text-wrap: balance; }
+  .process-item-allentown .process-item-allentown__title--numbered { display: flex; align-items: center; gap: var(--kiw--process-item-allentown-title-gap); }
   .process-item-allentown .process-item-allentown__number { flex: none; color: var(--kiw--process-item-allentown-number-color); font-family: var(--kiw--process-item-allentown-number-font-family); font-weight: var(--kiw--process-item-allentown-number-font-weight); line-height: 1.2; }
   .process-item-allentown .process-item-allentown__title-text { min-width: 0; }
   .process-item-allentown .process-item-allentown__description { margin: 0; color: var(--kiw--process-item-allentown-description-color); font-size: var(--kiw--process-item-allentown-description-size); line-height: var(--kiw--process-item-allentown-description-line-height); white-space: pre-line; }
