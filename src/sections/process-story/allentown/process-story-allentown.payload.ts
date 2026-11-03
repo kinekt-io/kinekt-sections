@@ -85,9 +85,10 @@ const manifest = {
       "defaultValue": "label",
       "options": [
         "label",
-        "number"
+        "number",
+        "label-number"
       ],
-      "description": "Show each item’s label with its flight path, or show its zero-padded sequential number before the title."
+      "description": "Show each item’s label with its flight path, a zero-padded sequential number, or both together."
     },
     "items": {
       "kind": "componentList",

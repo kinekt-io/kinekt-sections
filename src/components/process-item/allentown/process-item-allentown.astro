@@ -14,7 +14,7 @@ export interface ProcessItemContent {
 
 interface Props {
   item: ProcessItemContent
-  markerType?: 'label' | 'number'
+  markerType?: 'label' | 'number' | 'label-number'
   number?: number
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   class?: string
@@ -24,6 +24,7 @@ const { item, markerType = 'label', number = 1, headingLevel = 'h3', class: clas
 const actions = ctaGroupActions(item.ctaGroup)
 const Heading = headingLevel
 const displayNumber = String(number).padStart(2, '0')
+const markerLabel = markerType === 'label-number' && item.label ? `${displayNumber} / ${item.label}` : item.label
 const classes = ['process-item-allentown', className].filter(Boolean).join(' ')
 const descriptionHtml = typeof item.description === 'string'
   ? richTextToHtml(item.description, 'process item description')
@@ -31,7 +32,7 @@ const descriptionHtml = typeof item.description === 'string'
 
 ---
 <div class={classes}>
-  {markerType === 'number' ? <p class="process-item-allentown__number" aria-hidden="true">{displayNumber}</p> : item.label && <SubtitleFlightPath text={item.label} caps />}
+  {markerType === 'number' ? <p class="process-item-allentown__number" aria-hidden="true">{displayNumber}</p> : markerLabel && <SubtitleFlightPath text={markerLabel} caps />}
   {(item.title || item.description) && (
     <div class="process-item-allentown__copy">
       {item.title && <Heading class="process-item-allentown__title">{item.title}</Heading>}
