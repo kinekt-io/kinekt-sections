@@ -36,9 +36,8 @@ const descriptionHtml = typeof item.description === 'string'
     <div class="process-item-allentown__copy">
       {item.title && (
         <Heading class={['process-item-allentown__title', markerType === 'number' && 'process-item-allentown__title--numbered'].filter(Boolean).join(' ')}>
-          {markerType === 'number' ? (
-            <><span class="process-item-allentown__number" aria-hidden="true">{displayNumber}</span><span class="process-item-allentown__title-text">{item.title}</span></>
-          ) : item.title}
+          {markerType === 'number' && <span class="process-item-allentown__number" aria-hidden="true">{displayNumber}</span>}
+          <span class="process-item-allentown__title-text">{item.title}</span>
         </Heading>
       )}
       <div class="process-item-allentown__description" set:html={descriptionHtml} />
