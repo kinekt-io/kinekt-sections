@@ -224,7 +224,7 @@ const descriptionHtml = (description: BatteryModel['description']) => typeof des
 </style>
 <style is:global>
   :where(.beta-battery-models-allentown) {
-    --kiw--battery-models-block-space: var(--section-space-xs);
+    --kiw--battery-models-block-space: var(--section-space-xl);
     --kiw--battery-models-container-width: var(--content-width);
     --kiw--battery-models-inline-space: var(--section-gutter);
     --kiw--battery-models-major-gap: var(--section-space-xl);
@@ -234,7 +234,8 @@ const descriptionHtml = (description: BatteryModel['description']) => typeof des
     --kiw--battery-models-intro-group-gap: var(--space-xl);
     --kiw--battery-models-heading-stack-gap: var(--space-xxs);
     --kiw--battery-models-actions-gap: var(--space-l);
-    --kiw--battery-models-models-gap: var(--space-xl);
+    --kiw--battery-models-models-column-gap: var(--space-xxl);
+    --kiw--battery-models-models-row-gap: var(--section-space-m);
     --kiw--battery-models-model-gap: var(--space-l);
     --kiw--battery-models-model-text-gap: var(--space-xl);
     --kiw--battery-models-model-copy-gap: var(--space-xs);
@@ -267,7 +268,7 @@ const descriptionHtml = (description: BatteryModel['description']) => typeof des
   .beta-battery-models-allentown .section-intro__heading-group { display: grid; gap: var(--kiw--battery-models-heading-stack-gap); }
   .beta-battery-models-allentown .beta-battery-models-allentown__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--kiw--battery-models-actions-gap); margin: 0; }
 
-  .beta-battery-models-allentown .beta-battery-models-allentown__models { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--kiw--battery-models-models-gap); margin: 0; padding: 0; list-style: none; }
+  .beta-battery-models-allentown .beta-battery-models-allentown__models { display: grid; grid-template-columns: minmax(0, 1fr); column-gap: var(--kiw--battery-models-models-column-gap); row-gap: var(--kiw--battery-models-models-row-gap); margin: 0; padding: 0; list-style: none; }
   .beta-battery-models-allentown .beta-battery-models-allentown__model { min-width: 0; }
   .beta-battery-models-allentown .beta-battery-models-allentown__model-card { display: grid; align-content: start; gap: var(--kiw--battery-models-model-gap); height: 100%; }
   .beta-battery-models-allentown .beta-battery-models-allentown__model-media { display: block; max-width: none; }
@@ -297,7 +298,7 @@ const descriptionHtml = (description: BatteryModel['description']) => typeof des
   .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell-title { max-width: none; color: var(--kiw--battery-models-cross-sell-title-color); font-size: var(--kiw--battery-models-cross-sell-item-title-size); line-height: var(--kiw--battery-models-cross-sell-title-line-height); }
 
   @media (min-width: 50rem) {
-    :where(.beta-battery-models-allentown) { --kiw--battery-models-block-space: var(--section-space-l); --kiw--battery-models-models-gap: var(--space-xxl); }
+    :where(.beta-battery-models-allentown) { --kiw--battery-models-block-space: var(--section-space-xl); }
     .beta-battery-models-allentown .beta-battery-models-allentown__intro { max-inline-size: var(--kiw--battery-models-intro-width); }
     .beta-battery-models-allentown .beta-battery-models-allentown__models { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .beta-battery-models-allentown .beta-battery-models-allentown__cross-sell { --kiw--callout-allentown-content-width: var(--kiw--battery-models-cross-sell-copy-width); }

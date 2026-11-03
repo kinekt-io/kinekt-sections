@@ -233,7 +233,7 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
     --kiw--section-content-width: var(--kiw--hd-cells-engineering-allentown-content-width, var(--content-width));
     --kiw--section-reading-width: var(--kiw--hd-cells-engineering-allentown-reading-width, var(--width-m));
     --kiw--section-inline-space: var(--kiw--hd-cells-engineering-allentown-inline-space, var(--section-gutter));
-    --kiw--section-block-space: var(--kiw--hd-cells-engineering-allentown-block-space, var(--section-space-l));
+    --kiw--section-block-space: var(--kiw--hd-cells-engineering-allentown-block-space, var(--section-space-xl));
     --kiw--section-gap: var(--kiw--hd-cells-engineering-allentown-gap, var(--content-gap));
     --kiw--section-radius: var(--kiw--hd-cells-engineering-allentown-radius, var(--radius-none));
     --kiw--section-border-width: var(--kiw--hd-cells-engineering-allentown-border-width, var(--border-width));
@@ -296,7 +296,7 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
      "High-density engineering" (1440): centred intro Column 864 → section-l → topics | 576 × 720 image | topics (gap section-m),
      each side a centred column of h4 topic tabs (gap section-xxl), the active one in ink with an accent underline. */
   :where(.hd-cells-engineering-allentown) {
-    --kiw--hd-cells-engineering-major-gap: var(--section-space-xxl);
+    --kiw--hd-cells-engineering-major-gap: calc(var(--section-space-xxl) * 2);
     --kiw--hd-cells-engineering-part-gap: var(--section-space-l);
     --kiw--hd-cells-engineering-header-width: var(--width-l);
     --kiw--hd-cells-engineering-intro-gap: var(--space-m);
@@ -318,6 +318,18 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
     --kiw--hd-cells-engineering-tab-active-color: var(--kinekt-component-ink);
     --kiw--hd-cells-engineering-tab-indicator-color: var(--kinekt-component-accent);
     --kinekt-section-gap: var(--kiw--hd-cells-engineering-major-gap);
+  }
+
+  .hd-cells-engineering-allentown:is([data-kinekt-theme='light'], [data-kinekt-theme='semi-light']) .hd-engineering-topic-allentown {
+    --kiw--hd-engineering-topic-allentown-media-border-color: var(--primary-semi-dark);
+  }
+
+  .hd-cells-engineering-allentown:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) .hd-engineering-topic-allentown {
+    --kiw--hd-engineering-topic-allentown-media-border-color: var(--primary-semi-light);
+  }
+
+  .hd-cells-engineering-allentown:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) .hd-cell-item-allentown {
+    --kiw--hd-cell-item-allentown-description-color: var(--primary-light);
   }
 
   .hd-cells-engineering-allentown :is(.hd-cells-engineering-allentown__cells, .hd-cells-engineering-allentown__engineering) { display: grid; gap: var(--kiw--hd-cells-engineering-part-gap); min-width: 0; }

@@ -154,6 +154,9 @@ const actions = ctaGroupActions(ctas)
     & .section-intro__heading:is(h1) { font-size: var(--h2); }
     & .section-intro__heading:is(h2) { font-size: var(--h3); }
     & .section-intro__heading:is(h3) { font-size: var(--h4); }
+    & .section-intro__heading:is(h4) { font-size: var(--h5); }
+    & .section-intro__heading:is(h5) { font-size: var(--h6); }
+    & .section-intro__heading:is(h6) { font-size: var(--text-xl); }
 
     & .section-intro__description {
       max-inline-size: var(--kiw--streamer-allentown-reading-width);
@@ -206,5 +209,11 @@ const actions = ctaGroupActions(ctas)
     & > .streamer-allentown__container { max-inline-size: min(var(--kiw--streamer-allentown-site-width), calc(var(--kinekt-section-content-width) + (var(--kiw--streamer-allentown-inline-space) * 2))); }
     &[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
     &[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  }
+  @media (max-width: 49.999rem) {
+    .streamer-allentown[data-kinekt-section] {
+      --kiw--streamer-allentown-content-width: 100%;
+      --kiw--streamer-allentown-reading-width: 100%;
+    }
   }
 </style>
