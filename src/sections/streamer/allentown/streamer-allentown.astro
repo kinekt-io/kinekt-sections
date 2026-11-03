@@ -35,7 +35,7 @@ const actions = ctaGroupActions(ctas)
     --kiw--streamer-allentown-site-width: var(--website-width);
     --kiw--streamer-allentown-content-width: var(--width-xxl);
     --kiw--streamer-allentown-inline-space: var(--section-gutter);
-    --kiw--streamer-allentown-block-space: var(--section-space-l);
+    --kiw--streamer-allentown-block-space: var(--section-space-xl);
     --kiw--streamer-allentown-gap: var(--section-space-s);
     --kiw--streamer-allentown-column-gap: var(--section-space-m);
     --kiw--streamer-allentown-reading-width: var(--width-l);
@@ -49,7 +49,7 @@ const actions = ctaGroupActions(ctas)
     --kiw--streamer-allentown-ink: var(--primary-ultra-dark);
     --kiw--streamer-allentown-muted: var(--primary-semi-dark);
     --kiw--streamer-allentown-line: var(--primary-ultra-light);
-    --kiw--streamer-allentown-accent: var(--accent-semi-dark);
+    --kiw--streamer-allentown-accent: var(--accent-dark);
     --kiw--streamer-allentown-action: var(--primary-ultra-dark);
     --kiw--streamer-allentown-action-text: var(--white);
     --kiw--streamer-allentown-action-icon: var(--accent-semi-dark);
@@ -73,6 +73,7 @@ const actions = ctaGroupActions(ctas)
 
   :where(.streamer-allentown[data-kinekt-section][data-kinekt-theme='light']) {
     --kiw--streamer-allentown-canvas: var(--neutral-ultra-light);
+    --kiw--streamer-allentown-accent: var(--accent-dark);
   }
 
   :where(.streamer-allentown[data-kinekt-section][data-kinekt-theme='semi-dark']) {
@@ -81,6 +82,7 @@ const actions = ctaGroupActions(ctas)
     --kiw--streamer-allentown-ink: var(--white);
     --kiw--streamer-allentown-muted: var(--primary-light);
     --kiw--streamer-allentown-line: var(--primary-semi-light);
+    --kiw--streamer-allentown-accent: var(--accent-light);
     --kiw--streamer-allentown-action: var(--white);
     --kiw--streamer-allentown-action-text: var(--primary-ultra-dark);
   }
@@ -91,6 +93,7 @@ const actions = ctaGroupActions(ctas)
     --kiw--streamer-allentown-ink: var(--white);
     --kiw--streamer-allentown-muted: var(--primary-ultra-light);
     --kiw--streamer-allentown-line: var(--primary-semi-light);
+    --kiw--streamer-allentown-accent: var(--accent-light);
     --kiw--streamer-allentown-action: var(--white);
     --kiw--streamer-allentown-action-text: var(--primary-ultra-dark);
   }
@@ -147,8 +150,10 @@ const actions = ctaGroupActions(ctas)
     & .section-intro__heading {
       max-inline-size: var(--kiw--streamer-allentown-reading-width);
       color: var(--kinekt-component-ink);
-      font-size: var(--kiw--streamer-allentown-heading-size);
     }
+    & .section-intro__heading:is(h1) { font-size: var(--h2); }
+    & .section-intro__heading:is(h2) { font-size: var(--h3); }
+    & .section-intro__heading:is(h3) { font-size: var(--h4); }
 
     & .section-intro__description {
       max-inline-size: var(--kiw--streamer-allentown-reading-width);
@@ -184,6 +189,12 @@ const actions = ctaGroupActions(ctas)
       & .streamer-allentown__actions {
         justify-content: end;
       }
+    }
+  }
+  @media (max-width: 49.999rem) {
+    .streamer-allentown[data-kinekt-section] {
+      --kiw--streamer-allentown-content-width: 100%;
+      --kiw--streamer-allentown-reading-width: 100%;
     }
   }
 </style>

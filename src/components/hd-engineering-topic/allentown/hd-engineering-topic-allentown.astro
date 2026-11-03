@@ -60,6 +60,7 @@ const plus = ctaIconPaths('plus')
   :where(.hd-engineering-topic-allentown) {
     --kiw--hd-engineering-topic-allentown-media-ratio: 4 / 5;
     --kiw--hd-engineering-topic-allentown-media-background: var(--kinekt-component-surface, transparent);
+    --kiw--hd-engineering-topic-allentown-media-border-color: var(--kinekt-component-line, currentColor);
     --kiw--hd-engineering-topic-allentown-card-inset: var(--space-m);
     --kiw--hd-engineering-topic-allentown-card-padding: var(--space-l);
     --kiw--hd-engineering-topic-allentown-card-gap: var(--space-xxl);
@@ -76,7 +77,7 @@ const plus = ctaIconPaths('plus')
 
   .hd-engineering-topic-allentown { position: relative; display: grid; min-width: 0; }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__media { display: block; min-width: 0; background: var(--kiw--hd-engineering-topic-allentown-media-background); }
-  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; block-size: auto; aspect-ratio: var(--kiw--hd-engineering-topic-allentown-media-ratio); object-fit: cover; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; block-size: auto; aspect-ratio: var(--kiw--hd-engineering-topic-allentown-media-ratio); object-fit: cover; border: var(--kinekt-component-border-width, var(--border-width)) solid var(--kiw--hd-engineering-topic-allentown-media-border-color); border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__card { display: grid; gap: var(--kiw--hd-engineering-topic-allentown-card-gap); padding: var(--kiw--hd-engineering-topic-allentown-card-padding); border-radius: var(--kiw--hd-engineering-topic-allentown-card-radius); background: var(--kiw--hd-engineering-topic-allentown-card-background); box-shadow: var(--kiw--hd-engineering-topic-allentown-card-shadow); }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__details { display: grid; gap: var(--kiw--hd-engineering-topic-allentown-card-gap); min-width: 0; }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__title { margin: 0; }

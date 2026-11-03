@@ -120,6 +120,7 @@ const hasIntro = (value?: Partial<Intro>) => Boolean(value?.accentHeading || val
   }
   .beta-tabs-allentown {
     box-sizing: border-box;
+    min-block-size: calc(100svh - (var(--section-space-xl) * 2));
     padding-block: var(--kiw--tabs-allentown-block-space);
     color: var(--kinekt-component-ink);
     background: var(--kinekt-component-canvas);
