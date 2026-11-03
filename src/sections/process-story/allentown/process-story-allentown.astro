@@ -18,13 +18,12 @@ interface Props extends BetaProcessStoryAllentownContent {
   introCtaGroup?: CtaGroup | null
   image?: Media | null
   items: ProcessItemContent[]
-  markerType?: 'label' | 'number'
   listCtaGroup?: CtaGroup | null
   headingLevel?: 'h1' | 'h2' | 'h3'
   mediaLoading?: 'eager' | 'lazy'
 }
 
-const { id, theme = 'light', intro, introCtaGroup, image, markerType = 'label', items = [], listCtaGroup, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
+const { id, theme = 'light', intro, introCtaGroup, image, items = [], listCtaGroup, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 const itemHeadingLevel = ({ h1: 'h2', h2: 'h3', h3: 'h4' } as const)[headingLevel] ?? 'h3'
 const introDescription = intro.description == null || typeof intro.description === 'string'
   ? intro.description ?? undefined
@@ -56,9 +55,9 @@ const classes = ['process-story-allentown', hasMedia && 'process-story-allentown
         <div class="process-story-allentown__list-column">
           {visibleItems.length > 0 && (
             <ul class="process-story-allentown__items">
-              {visibleItems.map((item, index) => (
+              {visibleItems.map((item) => (
                 <li class="process-story-allentown__item">
-                  <ProcessItem item={item} markerType={markerType} number={index + 1} headingLevel={itemHeadingLevel} />
+                  <ProcessItem item={item} headingLevel={itemHeadingLevel} />
                 </li>
               ))}
             </ul>
