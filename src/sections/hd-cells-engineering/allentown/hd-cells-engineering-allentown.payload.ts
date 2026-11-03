@@ -168,6 +168,13 @@ const manifest = {
           }
         }
       }
+    },
+    "moreInformationLabel": {
+      "kind": "text",
+      "required": false,
+      "localized": true,
+      "defaultValue": "More information",
+      "description": "Text for the control that reveals an engineering topic’s details."
     }
   }
 } as const
