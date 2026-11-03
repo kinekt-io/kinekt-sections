@@ -795,15 +795,16 @@
     "role": "process-item",
     "variation": "allentown",
     "title": "Process Item Allentown",
-    "description": "A reusable process-story item with label, title, description and optional actions.",
+    "description": "A reusable process-story item with an optional label, title, description and optional actions.",
     "status": "planned",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4779-130248&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
       "label": {
         "kind": "text",
-        "required": true,
-        "localized": true
+        "required": false,
+        "localized": true,
+        "description": "Displayed only when the parent Process Story uses label markers."
       },
       "title": {
         "kind": "text",
@@ -4321,7 +4322,7 @@
     "role": "process-story",
     "variation": "allentown",
     "title": "Process Story Allentown",
-    "description": "A reusable process-story section with optional media, labelled narrative items and optional action groups.",
+    "description": "A reusable process-story section with optional media, labelled or numbered narrative items and optional action groups.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4779-129512&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -4367,6 +4368,17 @@
         "kind": "media",
         "required": false,
         "localized": true
+      },
+      "markerType": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "label",
+        "options": [
+          "label",
+          "number"
+        ],
+        "description": "Show each item’s label with its flight path, or show its zero-padded sequential number before the title."
       },
       "items": {
         "kind": "componentList",

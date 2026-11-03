@@ -6,7 +6,7 @@ import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 
 export interface ProcessItemContent {
-  label: string
+  label?: string
   title: string
   description: string | RichText
   ctaGroup?: CtaGroup | { primaryButton?: Cta | null; secondaryButton?: Cta | null } | null
@@ -14,13 +14,16 @@ export interface ProcessItemContent {
 
 interface Props {
   item: ProcessItemContent
+  markerType?: 'label' | 'number'
+  number?: number
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   class?: string
 }
 
-const { item, headingLevel = 'h3', class: className } = Astro.props
+const { item, markerType = 'label', number = 1, headingLevel = 'h3', class: className } = Astro.props
 const actions = ctaGroupActions(item.ctaGroup)
 const Heading = headingLevel
+const displayNumber = String(number).padStart(2, '0')
 const classes = ['process-item-allentown', className].filter(Boolean).join(' ')
 const descriptionHtml = typeof item.description === 'string'
   ? richTextToHtml(item.description, 'process item description')
@@ -28,7 +31,7 @@ const descriptionHtml = typeof item.description === 'string'
 
 ---
 <div class={classes}>
-  {item.label && <SubtitleFlightPath text={item.label} caps />}
+  {markerType === 'number' ? <p class="process-item-allentown__number" aria-hidden="true">{displayNumber}</p> : item.label && <SubtitleFlightPath text={item.label} caps />}
   {(item.title || item.description) && (
     <div class="process-item-allentown__copy">
       {item.title && <Heading class="process-item-allentown__title">{item.title}</Heading>}
@@ -54,11 +57,15 @@ const descriptionHtml = typeof item.description === 'string'
     --kiw--process-item-allentown-description-size: var(--text-l);
     --kiw--process-item-allentown-description-line-height: 1.5;
     --kiw--process-item-allentown-description-color: var(--kinekt-component-muted, currentColor);
+    --kiw--process-item-allentown-number-color: var(--kinekt-component-accent, var(--accent-semi-dark));
+    --kiw--process-item-allentown-number-font-family: var(--mono-font-family);
+    --kiw--process-item-allentown-number-font-weight: 400;
   }
 
   .process-item-allentown { display: grid; gap: var(--kiw--process-item-allentown-gap); min-width: 0; }
   .process-item-allentown .process-item-allentown__copy { display: grid; gap: var(--kiw--process-item-allentown-copy-gap); }
   .process-item-allentown .process-item-allentown__title { max-width: none; margin: 0; color: var(--kiw--process-item-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--process-item-allentown-title-size); font-weight: var(--heading-font-weight); line-height: 1.2; letter-spacing: var(--heading-letter-spacing); text-wrap: balance; }
+  .process-item-allentown .process-item-allentown__number { margin: 0; color: var(--kiw--process-item-allentown-number-color); font-family: var(--kiw--process-item-allentown-number-font-family); font-size: var(--text-l); font-weight: var(--kiw--process-item-allentown-number-font-weight); line-height: 1; }
   .process-item-allentown .process-item-allentown__description { margin: 0; color: var(--kiw--process-item-allentown-description-color); font-size: var(--kiw--process-item-allentown-description-size); line-height: var(--kiw--process-item-allentown-description-line-height); white-space: pre-line; }
   .process-item-allentown .process-item-allentown__description > * { margin-block: 0; }
   .process-item-allentown .process-item-allentown__description > * + * { margin-block-start: var(--space-xs); }

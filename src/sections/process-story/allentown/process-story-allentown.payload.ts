@@ -78,6 +78,17 @@ const manifest = {
       "required": false,
       "localized": true
     },
+    "markerType": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "defaultValue": "label",
+      "options": [
+        "label",
+        "number"
+      ],
+      "description": "Show each item’s label with its flight path, or show its zero-padded sequential number before the title."
+    },
     "items": {
       "kind": "componentList",
       "componentId": "components/process-item/allentown",
@@ -87,8 +98,9 @@ const manifest = {
       "fields": {
         "label": {
           "kind": "text",
-          "required": true,
-          "localized": true
+          "required": false,
+          "localized": true,
+          "description": "Displayed only when the parent Process Story uses label markers."
         },
         "title": {
           "kind": "text",
