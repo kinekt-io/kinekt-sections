@@ -286,7 +286,8 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
 
     @media (min-width: 50rem) {
       & > .process-story-trinity__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; column-gap: var(--kiw--process-story-trinity-column-gap); }
-      & .process-story-trinity__steps { grid-column: 2; }
+      & .process-story-trinity__steps,
+      & .process-story-trinity__list-actions { grid-column: 2; }
     }
   }
 
