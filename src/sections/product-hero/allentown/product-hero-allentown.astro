@@ -8,7 +8,7 @@ import { ctaGroupActions, type Cta, type CtaGroup, type Media, type RichText, ty
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
-import { isSafeWebUrl } from '../../../urls.js'
+import { isSafeCtaHref, isSafeWebUrl } from '../../../urls.js'
 
 type RichTextInput = string | RichText | Record<string, unknown>
 
@@ -41,7 +41,7 @@ const toIntroDescription = (value: RichTextInput | null | undefined): RichText |
 const introContent: SectionIntroContent = { ...intro, description: toIntroDescription(intro.description) }
 
 const actions = ctaGroupActions(ctaGroup)
-for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) or root-relative URL.')
+for (const cta of actions) if (!isSafeCtaHref(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
 
 // The Payload adapter passes media through unchanged, so it may arrive as an ID; render only resolved, safe media objects.
 const isMedia = (value: unknown): value is Media => typeof value === 'object' && value !== null && typeof (value as Media).url === 'string' && isSafeWebUrl((value as Media).url)

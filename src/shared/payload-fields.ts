@@ -1,5 +1,5 @@
 import type { CollectionSlug, Field, SelectField, TextField } from 'payload'
-import { isSafeWebUrl } from '../urls.js'
+import { isSafeCtaHref, isSafeFragmentIdentifier } from '../urls.js'
 import { isCtaIcon } from './cta-icons.js'
 
 export const requiredTextMessage = 'Enter non-empty text.'
@@ -145,17 +145,29 @@ export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], 
       options: [{ label: 'Content', value: 'content' }, { label: 'URL', value: 'url' }],
       validate: (value: unknown) => value === undefined || value === null || value === 'content' || value === 'url' || 'Choose Content or URL.',
       hooks: {
-        afterRead: [({ value, siblingData }) => value === 'content' && !siblingData?.page && isSafeWebUrl(siblingData?.href) ? 'url' : value],
+        afterRead: [({ value, siblingData }) => value === 'content' && !siblingData?.page && isSafeCtaHref(siblingData?.href) ? 'url' : value],
       },
     },
     {
       name: 'href',
       type: 'text',
-      label: 'URL',
+      label: 'URL or anchor',
       admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' },
       validate: (value: unknown, { siblingData }: { siblingData?: unknown }) => validateOptionalCtaHref(value, siblingData),
     },
     ctaContentTargetField(targetCollections),
+    {
+      name: 'anchor',
+      type: 'text',
+      label: 'Anchor ID',
+      admin: {
+        condition: (_: unknown, siblingData: Record<string, unknown>) =>
+          siblingData?.destinationType === 'content',
+        description: 'Optional fragment on the selected content, starting with #. For example: #main-content.',
+      },
+      validate: (value: unknown, { siblingData }: { siblingData?: unknown }) =>
+        validateOptionalCtaAnchor(value, siblingData),
+    },
     ctaIconField(),
   ]
 }
@@ -169,8 +181,9 @@ export function ctaGroupFields(targetCollections: CollectionSlug | CollectionSlu
   }))
 }
 
-const ctaUrlMessage = 'Enter an absolute HTTP(S) URL or a site-root-relative path.'
-const ctaContentMessage = 'Select a content target.'
+const ctaUrlMessage = 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.'
+const ctaAnchorMessage = 'Enter an anchor that starts with #, for example #main-content.'
+const ctaContentMessage = 'Select content for this action.'
 
 function ctaSiblingData(value: unknown): Record<string, unknown> {
   if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
@@ -222,14 +235,21 @@ export function validateOptionalCtaSibling(
   const destinationType = ctaDestinationType(siblings)
   if (!destinationType) return 'Choose Content or URL.'
   if (destinationType === 'content') return hasRelationshipTarget(siblings.page) || ctaContentMessage
-  return isSafeWebUrl(siblings.href) || ctaUrlMessage
+  return isSafeCtaHref(siblings.href) || ctaUrlMessage
 }
 
 function validateOptionalCtaHref(value: unknown, siblingData: unknown): true | string {
   const siblings = ctaSiblingData(siblingData)
-  if (value !== undefined && value !== null && value !== '' && !isSafeWebUrl(value)) return ctaUrlMessage
-  if (hasText(siblings.label) && ctaDestinationType(siblings) === 'url' && !isSafeWebUrl(value)) return ctaUrlMessage
+  if (value !== undefined && value !== null && value !== '' && !isSafeCtaHref(value)) return ctaUrlMessage
+  if (hasText(siblings.label) && ctaDestinationType(siblings) === 'url' && !isSafeCtaHref(value)) return ctaUrlMessage
   return true
+}
+
+function validateOptionalCtaAnchor(value: unknown, siblingData: unknown): true | string {
+  const siblings = ctaSiblingData(siblingData)
+  if (value === undefined || value === null || value === '') return true
+  if (!isSafeFragmentIdentifier(value)) return ctaAnchorMessage
+  return ctaDestinationType(siblings) === 'content' ? true : ctaAnchorMessage
 }
 
 function ctaContentTargetField(targetCollections: CollectionSlug | CollectionSlug[]): Field {

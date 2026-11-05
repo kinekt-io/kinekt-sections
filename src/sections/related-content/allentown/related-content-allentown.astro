@@ -6,7 +6,7 @@ import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { Cta, Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
-import { isSafeWebUrl } from '../../../urls.js'
+import { isSafeCtaHref, isSafeWebUrl } from '../../../urls.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 type RelatedItem = { title?: string; excerpt?: string; href?: string; kind?: string; image?: unknown; media?: unknown; poster?: unknown }
@@ -27,7 +27,7 @@ const { id, theme = 'semi-light', headingLevel = 'h2', intro, contentSources = [
 const isMedia = (value: unknown): value is Media => typeof value === 'object' && value !== null && typeof (value as Media).url === 'string' && isSafeWebUrl((value as Media).url)
 const relatedItems = contentSources.filter((item): item is Required<Pick<RelatedItem, 'title' | 'href'>> & RelatedItem => typeof item?.title === 'string' && item.title.trim().length > 0 && typeof item.href === 'string' && isSafeWebUrl(item.href))
 const rawAction: unknown = cta && typeof cta === 'object' && 'cta' in cta ? cta.cta : cta
-const isCta = (value: unknown): value is Cta & Required<Pick<Cta, 'label' | 'href'>> => typeof value === 'object' && value !== null && typeof (value as Record<string, unknown>).label === 'string' && typeof (value as Record<string, unknown>).href === 'string' && isSafeWebUrl((value as Record<string, string>).href)
+const isCta = (value: unknown): value is Cta & Required<Pick<Cta, 'label' | 'href'>> => typeof value === 'object' && value !== null && typeof (value as Record<string, unknown>).label === 'string' && typeof (value as Record<string, unknown>).href === 'string' && isSafeCtaHref((value as Record<string, string>).href)
 const action = isCta(rawAction) ? rawAction : undefined
 const actionIcon = action && isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
 const itemMedia = (item: RelatedItem) => [item.image, item.media, item.poster].find(isMedia)

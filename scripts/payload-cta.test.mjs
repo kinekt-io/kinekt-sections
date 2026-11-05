@@ -73,6 +73,21 @@ test('CTA adapters retain complete URL and content destinations', () => {
   )
 })
 
+test('CTA adapters support same-page and selected-content anchors', () => {
+  assert.deepEqual(
+    ctaToProps({ label: 'View models', destinationType: 'url', href: '#our-models' }, 'cta'),
+    { label: 'View models', href: '#our-models' },
+  )
+  assert.deepEqual(
+    ctaToProps(
+      { label: 'Skip to specifications', destinationType: 'content', page: { relationTo: 'articles', value: 42 }, anchor: '#specifications' },
+      'cta',
+      { contentHref: () => '/articles/example?lang=uk' },
+    ),
+    { label: 'Skip to specifications', href: '/articles/example?lang=uk#specifications' },
+  )
+})
+
 test('CTA adapters retain clear-base styles and the shared editor field exposes it', () => {
   assert.deepEqual(
     ctaToProps({ label: 'Read the technical guide', destinationType: 'url', href: '/guide', style: 'clear-base' }, 'cta'),
@@ -92,12 +107,12 @@ test('CTA validators reject partial publish values while allowing an omitted CTA
   const icon = ctaField('icon')
   assert.deepEqual(page.relationTo, ['pages', 'articles'])
 
-  assert.equal(validate(label, undefined, { destinationType: 'url', icon: null }), true)
-  assert.equal(validate(label, 'Browse products', { destinationType: 'url' }), 'Enter an absolute HTTP(S) URL or a site-root-relative path.')
+  assert.equal(validate(label, 'Browse products', { destinationType: 'url' }), 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.')
   assert.equal(validate(label, undefined, { destinationType: 'url', href: '/products' }), 'Enter non-empty text.')
   assert.equal(validate(label, 'Read more', { destinationType: 'content', page: { relationTo: 'articles', value: 42 } }), true)
   assert.equal(validate(page, 42, { destinationType: 'content', label: 'Read more' }), true)
   assert.equal(validate(href, '/products', { destinationType: 'url', label: 'Browse products' }), true)
+  assert.equal(validate(href, '#our-models', { destinationType: 'url', label: 'Browse products' }), true)
   assert.equal(validate(icon, 'bolt'), true)
   assert.equal(validate(icon, 'shield-halved'), true)
 })
@@ -204,14 +219,18 @@ test('Process Story Allentown resolves CTA targets, styles and icons while dropp
   assert.deepEqual(contentHrefCalls, [['pages', '7'], ['articles', '42']])
 })
 
-test('optional CTA handling does not weaken required CTA or URL safety validation', () => {
+test('optional CTA groups omit unsafe buttons while direct CTA conversion rejects unsafe URLs', () => {
   assert.throws(
     () => ctaToProps({ label: '', href: '/services' }, 'required'),
     /required\.label must be non-empty text/,
   )
+  assert.equal(
+    ctaGroupToProps({ primary: { label: 'Contact', href: 'javascript:alert(1)' } }, 'ctas'),
+    undefined,
+  )
   assert.throws(
-    () => ctaGroupToProps({ primary: { label: 'Contact', href: 'javascript:alert(1)' } }, 'ctas'),
-    /ctas\.primary\.href must be an HTTP\(S\) or root-relative URL/,
+    () => ctaToProps({ label: 'Contact', href: 'javascript:alert(1)' }, 'cta'),
+    /cta\.href must be an HTTP\(S\) URL, root-relative URL, or anchor/,
   )
 })
 

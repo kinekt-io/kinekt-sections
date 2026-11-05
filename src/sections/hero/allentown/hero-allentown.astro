@@ -5,7 +5,7 @@ import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import { ctaGroupActions, type Media } from '../../../shared/content.js'
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { HeroContent } from './hero-allentown.types.js'
-import { isSafeWebUrl } from '../../../urls.js'
+import { isSafeCtaHref, isSafeWebUrl } from '../../../urls.js'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
 interface Props extends HeroContent { id?: string; headingLevel?: 'h1' | 'h2' }
 function assertSafeImage(image: Media, name: string): void {
@@ -16,7 +16,7 @@ function assertSafeImage(image: Media, name: string): void {
 }
 const { id, theme = 'dark', headingLevel = 'h1', intro, ctas, image, mobileImage } = Astro.props
 const actions = ctaGroupActions(ctas)
-for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('ctas must use an HTTP(S) or root-relative URL.')
+for (const cta of actions) if (!isSafeCtaHref(cta.href)) throw new Error('ctas must use an HTTP(S) URL, root-relative URL, or anchor.')
 assertSafeImage(image, 'image')
 if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 ---

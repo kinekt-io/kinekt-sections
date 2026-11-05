@@ -9,7 +9,7 @@ import { ctaGroupActions, type Cta, type CtaGroup, type RichText, type SectionIn
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
-import { isSafeWebUrl } from '../../../urls.js'
+import { isSafeCtaHref } from '../../../urls.js'
 import type { BetaHomepageProblemSolutionAllentownContent } from './homepage-problem-solution-allentown.types.js'
 // Fixed implementation assets (manifest runtimeProps problemMedia / solutionMedia): a dark night map of Paris, 1086 × 1086.
 import mapLarge from './assets/paris-night-map-1086.webp?url'
@@ -69,7 +69,7 @@ const hasTitle = (item: { title?: unknown } | null | undefined) => typeof item?.
 const visibleProblemItems = problemItems.filter(hasTitle)
 const visibleSolutionSteps = solutionSteps.filter(hasTitle)
 const actions = ctaGroupActions(solutionCtaGroup)
-for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('solutionCtaGroup buttons must use an HTTP(S) or root-relative URL.')
+for (const cta of actions) if (!isSafeCtaHref(cta.href)) throw new Error('solutionCtaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
 // One infographic in two static states. From 50rem (with motion allowed) the script hides the solution copy and
 // scrubs the problem copy from state 0 to 1 while it sticks beside both text groups (runtimeProps.scrollAnimation).
 const groups = [

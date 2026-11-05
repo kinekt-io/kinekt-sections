@@ -5,7 +5,7 @@
   "id": "components/cta-group/allentown",
   "slug": "cta-group-allentown",
   "title": "CTA Group Allentown",
-  "description": "An optional, collapsible group of up to two actions. Each action selects its own Button Allentown style.",
+  "description": "An optional, collapsible group of up to two actions. Each action has its own Button Allentown style, label, link type, content or URL target, optional content anchor, and icon.",
   "category": "components",
   "role": "cta-group",
   "variation": "allentown",
@@ -21,7 +21,7 @@
       "localized": true,
       "minItems": 0,
       "maxItems": 2,
-      "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
+      "description": "Add zero, one or two actions. Set each action’s style, label, Content or URL target, optional Content anchor, and optional icon."
     }
   }
 }

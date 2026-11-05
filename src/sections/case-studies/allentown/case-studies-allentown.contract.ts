@@ -169,8 +169,18 @@ export function caseStudiesAllentownToProps(
 function slideToProps(value: unknown, index: number, options: PayloadAdapterOptions): CaseStudySlide {
   const item = requireObject(value, `carousel.items[${index}]`)
   const cta = requireObject(item.cta, `carousel.items[${index}].cta`)
-  const destinationType = item.destinationType ?? (item.page ? 'content' : 'url')
-  const action = ctaToProps({ ...cta, destinationType, page: item.page, href: item.href }, `carousel.items[${index}].cta`, options)
+  const destinationType = item.destinationType ?? cta.destinationType ?? (item.page ?? cta.page ? 'content' : 'url')
+  const action = ctaToProps(
+    {
+      ...cta,
+      destinationType,
+      page: item.page ?? cta.page,
+      href: item.href ?? cta.href,
+      anchor: item.anchor ?? cta.anchor,
+    },
+    `carousel.items[${index}].cta`,
+    options,
+  )
   const page = item.page ? relationshipID(item.page, `carousel.items[${index}].page`) : undefined
   const quote = optionalQuote(item.quote, `carousel.items[${index}].quote`, options)
   const results = item.results === undefined || item.results === null || (Array.isArray(item.results) && item.results.length === 0)

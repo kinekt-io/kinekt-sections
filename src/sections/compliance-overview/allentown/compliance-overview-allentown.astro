@@ -9,7 +9,7 @@ import { ctaGroupActions, type Cta, type CtaGroup, type Media, type RichText, ty
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
-import { isSafeWebUrl } from '../../../urls.js'
+import { isSafeCtaHref } from '../../../urls.js'
 
 // The generated types (compliance-overview-allentown.types.ts) are still a generic record; these are the fields the manifest declares.
 /** Rich text as it arrives: a plain string, pre-rendered `{ html }`, or raw Lexical JSON from the identity Payload adapter. */
@@ -50,7 +50,7 @@ const introContent: SectionIntroContent = { ...intro, description: intro.descrip
 const items = checklistItems.filter((item) => item?.text)
 const ChecklistTitle = headingLevel === 'h1' ? 'h2' : 'h3'
 const actions = ctaGroupActions(ctaGroup)
-for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) or root-relative URL.')
+for (const cta of actions) if (!isSafeCtaHref(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
 const tiles = collage.filter((tile) => typeof tile?.anchor === 'string' && /^[A-Za-z][\w:.-]*$/.test(tile.anchor) && tile.certImage?.url)
 // Figma's arrow-down-right uses the shared Sharp Solid arrow-up-left icon turned 180°.
 const tileIcon = ctaIconPaths('arrow-up-left')

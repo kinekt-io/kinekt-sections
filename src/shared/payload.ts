@@ -1,4 +1,4 @@
-import { isSafeWebUrl } from '../urls.js'
+import { isSafeCtaHref, isSafeFragmentIdentifier, isSafeWebUrl } from '../urls.js'
 import type { Cta, CtaGroup, FormModalPresentation, Media } from './content.js'
 import { isCtaStyle } from './content.js'
 import { isCtaIcon } from './cta-icons.js'
@@ -79,13 +79,18 @@ export const ctaToProps = (value: unknown, field: string, options: PayloadAdapte
   const cta = requireObject(value, field)
   const destinationType = cta.destinationType ?? 'url'
   let href: string
+
   if (destinationType === 'content' || destinationType === 'page') {
     const target = relationshipTarget(cta.page, `${field}.page`)
     href = options.contentHref?.(target.collection, target.id) ?? ''
     if (!href) throw new Error(`${field}.page is not available in this static build.`)
+    if (cta.anchor !== undefined && cta.anchor !== null && cta.anchor !== '') {
+      if (!isSafeFragmentIdentifier(cta.anchor)) throw new Error(`${field}.anchor must start with # and contain a valid ID.`)
+      href = `${href}${cta.anchor}`
+    }
   } else if (destinationType === 'url') {
     href = requireText(cta.href, `${field}.href`)
-    if (!isSafeWebUrl(href)) throw new Error(`${field}.href must be an HTTP(S) or root-relative URL.`)
+    if (!isSafeCtaHref(href)) throw new Error(`${field}.href must be an HTTP(S) URL, root-relative URL, or anchor.`)
   } else {
     throw new Error(`${field}.destinationType must be content or url.`)
   }
@@ -98,14 +103,16 @@ export const optionalCtaToProps = (value: unknown, field: string, options: Paylo
   if (value === undefined || value === null) return undefined
   const cta = requireObject(value, field)
   if (typeof cta.label !== 'string' || cta.label.trim().length === 0) return undefined
-
   const destinationType = cta.destinationType ?? 'url'
+
   if (destinationType === 'content' || destinationType === 'page') {
     if (cta.page === undefined || cta.page === null || cta.page === '') return undefined
+    if (cta.anchor !== undefined && cta.anchor !== null && cta.anchor !== '' && !isSafeFragmentIdentifier(cta.anchor)) return undefined
   } else if (destinationType === 'url') {
-    if (typeof cta.href !== 'string' || cta.href.trim().length === 0) return undefined
+    if (typeof cta.href !== 'string' || cta.href.trim().length === 0 || !isSafeCtaHref(cta.href)) return undefined
+  } else {
+    return undefined
   }
-
   return ctaToProps(cta, field, options)
 }
 

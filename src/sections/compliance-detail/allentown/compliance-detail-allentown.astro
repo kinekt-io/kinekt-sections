@@ -9,7 +9,7 @@ import { ctaGroupActions, type Cta, type CtaGroup, type Media, type RichText, ty
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
-import { isSafeWebUrl } from '../../../urls.js'
+import { isSafeCtaHref } from '../../../urls.js'
 
 // The generated types (compliance-detail-allentown.types.ts) are still a generic record; these are the fields the manifest declares,
 // plus two optional renderer props for the detail column's title and copy, which Figma shows but the contract has no fields for (contract gap).
@@ -45,7 +45,7 @@ const detailHtml = toHtml(detailDescription, 'detailDescription')
 const DetailHeading = headingLevel === 'h2' ? 'h3' : 'h4'
 const items = checklistItems.filter((item) => item?.text)
 const ctas = ctaGroupActions(ctaGroup)
-for (const cta of ctas) if (!isSafeWebUrl(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) or root-relative URL.')
+for (const cta of ctas) if (!isSafeCtaHref(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
 const iconOf = (cta: Cta) => (isCtaIcon(cta.icon) ? ctaIconPaths(cta.icon) : undefined)
 const hasDetail = Boolean(detailHeading || detailHtml || items.length > 0 || ctas.length > 0)
 ---

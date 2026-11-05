@@ -4,7 +4,7 @@ import type { Cta, CtaGroup, CtaStyle, Media, RichText, SectionIntro } from '../
 import { isCtaStyle } from '../../../shared/content.js'
 import { renderRichText } from '../../../shared/rich-text.js'
 import { mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
-import { isSafeWebUrl } from '../../../urls.js'
+import { isSafeCtaHref, isSafeFragmentIdentifier, isSafeWebUrl } from '../../../urls.js'
 import { isSharpSolidIconNameOrEmpty, sectionContentWidthField } from '../../../shared/payload-fields.js'
 import { normalizeSectionContentWidth, type SectionContentWidth } from '../../../shared/section-width.js'
 
@@ -56,11 +56,11 @@ export function createSolutionListAllentownBlock({ mediaCollection = 'media', ta
           { name: 'heading', label: 'Heading', type: 'text', localized: true, required: true, validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' },
           { name: 'labels', label: 'Labels', type: 'array', localized: true, fields: [{ name: 'text', label: 'Text', type: 'text', required: true, validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' }, { name: 'icon', label: 'Icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' } }] },
           { name: 'description', label: 'Description', type: 'richText', localized: true, required: true },
-          { name: 'destinationType', label: 'Link type', type: 'select', localized: true, required: true, defaultValue: 'page', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }] },
+          { name: 'destinationType', label: 'Link type', type: 'select', localized: true, required: true, defaultValue: 'page', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }], hooks: { afterRead: [({ value, siblingData }) => value === 'page' && !siblingData?.page && isSafeCtaHref(siblingData?.href) ? 'url' : value] } },
           { name: 'linkLabel', label: 'Link label', type: 'text', localized: true, required: true, validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' },
-          { name: 'href', label: 'URL', type: 'text', localized: true, admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeWebUrl(value) || 'Enter an absolute HTTP(S) URL or a site-root-relative path.' },
+          { name: 'href', label: 'URL or anchor', type: 'text', localized: true, admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeCtaHref(value) || 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.' },
           targetField(targetRelation, true),
-          { name: 'icon', label: 'Icon', type: 'text', localized: true, validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example arrow-right or bolt.' } },
+          { name: 'anchor', label: 'Anchor ID', type: 'text', localized: true, admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'page', description: 'Optional fragment on the selected content, starting with #. For example: #main-content.' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeFragmentIdentifier(value) || 'Enter an anchor that starts with #, for example #main-content.' },
           { name: 'ctaStyle', label: 'CTA style', type: 'select', localized: true, options: [{ label: 'Primary', value: 'primary' }, { label: 'Secondary', value: 'secondary' }, { label: 'Clear', value: 'clear' }, { label: 'Clear base', value: 'clear-base' }], admin: { description: 'Leave empty to retain Clear.' } },
         ],
       },
@@ -96,10 +96,10 @@ function ctaGroupFields(targetRelation: CollectionSlug | CollectionSlug[]): Fiel
     type: 'group',
     fields: [
       { name: 'label', label: 'Link label', type: 'text' },
-      { name: 'destinationType', label: 'Link type', type: 'select', defaultValue: 'url', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }], hooks: { afterRead: [({ value, siblingData }) => value === 'page' && !siblingData?.page && isSafeWebUrl(siblingData?.href) ? 'url' : value] } },
-      { name: 'href', label: 'URL', type: 'text', admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeWebUrl(value) || 'Enter an absolute HTTP(S) URL or a site-root-relative path.' },
+      { name: 'destinationType', label: 'Link type', type: 'select', defaultValue: 'url', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }], hooks: { afterRead: [({ value, siblingData }) => value === 'page' && !siblingData?.page && isSafeCtaHref(siblingData?.href) ? 'url' : value] } },
+      { name: 'href', label: 'URL or anchor', type: 'text', admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeCtaHref(value) || 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.' },
       targetField(targetRelation),
-      { name: 'icon', label: 'Icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' } },
+      { name: 'anchor', label: 'Anchor ID', type: 'text', admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'page', description: 'Optional fragment on the selected content, starting with #. For example: #main-content.' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeFragmentIdentifier(value) || 'Enter an anchor that starts with #, for example #main-content.' },
     ],
   })) as Field[]
 }
@@ -161,11 +161,15 @@ function destinationToProps(value: Record<string, unknown>, field: string, label
     const target = relationshipTarget(value.page, `${field}.page`)
     const href = contentHref(target.collection, target.id)
     if (!href) throw new Error(`${field}.page is not available in this static build.`)
+    if (value.anchor !== undefined && value.anchor !== null && value.anchor !== '') {
+      if (!isSafeFragmentIdentifier(value.anchor)) throw new Error(`${field}.anchor must start with # and contain a valid ID.`)
+      return { label, href: `${href}${value.anchor}`, ...(icon ? { icon } : {}) }
+    }
     return { label, href, ...(icon ? { icon } : {}) }
   }
   if (value.destinationType === 'url') {
     const href = requireText(value.href, `${field}.href`)
-    if (!isSafeWebUrl(href)) throw new Error(`${field}.href must be an HTTP(S) or root-relative URL.`)
+    if (!isSafeCtaHref(href)) throw new Error(`${field}.href must be an HTTP(S) URL, root-relative URL, or anchor.`)
     return { label, href, ...(icon ? { icon } : {}) }
   }
   throw new Error(`${field}.destinationType must be page or url.`)

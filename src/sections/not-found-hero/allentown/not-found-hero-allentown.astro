@@ -5,7 +5,7 @@ import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import { ctaGroupActions, type Cta, type CtaGroup, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { BetaTheme } from '../../../shared/payload.js'
-import { isSafeWebUrl } from '../../../urls.js'
+import { isSafeCtaHref } from '../../../urls.js'
 
 // The generated types (not-found-hero-allentown.types.ts) are still a generic record; these are the fields the manifest declares.
 interface Props {
@@ -19,7 +19,7 @@ interface Props {
 
 const { id, theme = 'semi-light', intro, ctaGroup, headingLevel = 'h1' } = Astro.props
 const actions = ctaGroupActions(ctaGroup)
-for (const cta of actions) if (!isSafeWebUrl(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) or root-relative URL.')
+for (const cta of actions) if (!isSafeCtaHref(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
 ---
 <section class="not-found-hero not-found-hero--allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="not-found-hero__container">
