@@ -2740,7 +2740,7 @@
   },
   {
     "id": "sections/featured-page-header/allentown",
-    "version": "26.10.0-beta.0",
+    "version": "26.10.2-beta.26",
     "slug": "featured-page-header-allentown",
     "category": "sections",
     "tags": [
@@ -2751,7 +2751,7 @@
     "role": "featured-page-header",
     "variation": "allentown",
     "title": "Featured Page Header Allentown",
-    "description": "A reusable index-page header with a localized Intro and one renderer-selected featured insight from selected platform-managed sources.",
+    "description": "A reusable index-page header with a localized Intro and one renderer-selected featured item from selected published content.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411660&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -2788,11 +2788,11 @@
         "description": "Use the optional Intro description only in a renderer variation that supports it."
       },
       "insightSources": {
-        "kind": "insightSourceList",
+        "kind": "contentReferenceList",
         "required": true,
         "localized": true,
         "minItems": 1,
-        "description": "One or more active platform-managed Insight Sources."
+        "description": "Select published content. Its title, route, optional description, card image, article type, and subjects are rendered automatically."
       }
     },
     "runtimeProps": {
@@ -3465,7 +3465,7 @@
   },
   {
     "id": "sections/insight-index/allentown",
-    "version": "26.10.0-beta.0",
+    "version": "26.10.2-beta.26",
     "slug": "insight-index-allentown",
     "category": "sections",
     "tags": [
@@ -3476,7 +3476,7 @@
     "role": "insight-index",
     "variation": "allentown",
     "title": "Insight Index Allentown",
-    "description": "A reusable searchable and facet-filtered insight card index backed by selected platform-managed Insight Sources.",
+    "description": "A reusable searchable and facet-filtered insight card index backed by selected published content.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411675&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -3506,11 +3506,11 @@
         "description": "CMS-selected presentation setting passed to the renderer."
       },
       "insightSources": {
-        "kind": "insightSourceList",
+        "kind": "contentReferenceList",
         "required": true,
         "localized": true,
         "minItems": 1,
-        "description": "One or more active platform-managed Insight Sources to index."
+        "description": "Select published content. Its title, route, optional description, card image, article type, and subjects are rendered automatically."
       }
     },
     "runtimeProps": {
