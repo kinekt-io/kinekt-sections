@@ -15,13 +15,13 @@ interface Props {
   label?: { text: string; icon?: string }
   ctas: CtaGroup
   media: Media
-  mediaLoading?: 'eager' | 'lazy'
+  mediaAspectRatio?: '1:1' | '16:9' | '9:16' | '5:4' | '4:5'
 }
 
-const { theme = 'light', intro, label, ctas, media, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props
+const { theme = 'light', intro, label, ctas, media, mediaAspectRatio = '5:4', headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props
 const actions = ctaGroupActions(ctas)
 ---
-<section class="read-more-allentown" data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
+<section class="read-more-allentown" data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-media-aspect-ratio={mediaAspectRatio}>
   <div class="read-more-allentown__container">
     <header class="read-more-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel}>
@@ -124,6 +124,11 @@ const actions = ctaGroupActions(ctas)
     --kiw--read-more-allentown-actions-gap: var(--space-l);
     --kiw--read-more-allentown-media-ratio: 5 / 4;
   }
+  .read-more-allentown[data-media-aspect-ratio='1:1'] { --kiw--read-more-allentown-media-ratio: 1 / 1; }
+  .read-more-allentown[data-media-aspect-ratio='16:9'] { --kiw--read-more-allentown-media-ratio: 16 / 9; }
+  .read-more-allentown[data-media-aspect-ratio='9:16'] { --kiw--read-more-allentown-media-ratio: 9 / 16; }
+  .read-more-allentown[data-media-aspect-ratio='5:4'] { --kiw--read-more-allentown-media-ratio: 5 / 4; }
+  .read-more-allentown[data-media-aspect-ratio='4:5'] { --kiw--read-more-allentown-media-ratio: 4 / 5; }
 
   .read-more-allentown > .read-more-allentown__container { gap: var(--kiw--read-more-allentown-container-gap); }
   .read-more-allentown .read-more-allentown__content { display: grid; align-content: center; gap: var(--kiw--read-more-allentown-content-gap); }

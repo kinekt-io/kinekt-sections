@@ -16,13 +16,13 @@ interface Props extends BetaMediaAccordionAllentownContent {
   intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | null }
   ctas?: CtaGroup | Cta[] | null
   media?: Media | null
-  items: AccordionItemContent[]
+  mediaAspectRatio?: '1:1' | '16:9' | '9:16' | '5:4' | '4:5'
   id?: string
   headingLevel?: 'h1' | 'h2' | 'h3'
   mediaLoading?: 'eager' | 'lazy'
 }
 
-const { id, theme = 'light', intro, ctas, media, items = [], headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
+const { id, theme = 'light', intro, ctas, media, mediaAspectRatio = '5:4', items = [], headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 const introDescription = intro.description == null || typeof intro.description === 'string'
   ? intro.description ?? undefined
   : { html: typeof intro.description.html === 'string' ? intro.description.html : richTextToHtml(intro.description, 'intro.description') }
@@ -30,7 +30,7 @@ const introContent: SectionIntroContent = { ...intro, description: introDescript
 const actions = ctaGroupActions(ctas)
 const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url === 'string')
 ---
-<section class="media-accordion-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
+<section class="media-accordion-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-media-aspect-ratio={mediaAspectRatio}>
   <div class="media-accordion-allentown__container">
     <header class="media-accordion-allentown__header">
       <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
@@ -142,6 +142,11 @@ const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url 
     --kiw--media-accordion-items-width: var(--width-l);
     --kinekt-section-gap: var(--kiw--media-accordion-major-gap);
   }
+  .media-accordion-allentown[data-media-aspect-ratio='1:1'] { --kiw--media-accordion-media-ratio: 1 / 1; }
+  .media-accordion-allentown[data-media-aspect-ratio='16:9'] { --kiw--media-accordion-media-ratio: 16 / 9; }
+  .media-accordion-allentown[data-media-aspect-ratio='9:16'] { --kiw--media-accordion-media-ratio: 9 / 16; }
+  .media-accordion-allentown[data-media-aspect-ratio='5:4'] { --kiw--media-accordion-media-ratio: 5 / 4; }
+  .media-accordion-allentown[data-media-aspect-ratio='4:5'] { --kiw--media-accordion-media-ratio: 4 / 5; }
 
   .media-accordion-allentown .media-accordion-allentown__header { display: grid; justify-items: center; gap: var(--kiw--media-accordion-header-gap); width: 100%; margin-inline: auto; text-align: center; }
   .media-accordion-allentown .section-intro { display: grid; justify-items: center; gap: var(--kiw--media-accordion-intro-gap); }

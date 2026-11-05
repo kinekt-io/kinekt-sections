@@ -14,12 +14,12 @@ interface Props {
   theme: BetaTheme
   intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | null }
   media?: Media | null
-  facts: FactCardContent[]
+  mediaAspectRatio?: '1:1' | '16:9' | '9:16' | '5:4' | '4:5'
   headingLevel?: 'h1' | 'h2' | 'h3'
   mediaLoading?: 'eager' | 'lazy'
 }
 
-const { theme, intro, media, facts = [], headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
+const { theme, intro, media, mediaAspectRatio = '5:4', facts = [], headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 const factHeadingLevel = ({ h1: 'h2', h2: 'h3', h3: 'h4' } as const)[headingLevel] ?? 'h3'
 const introDescription = intro.description == null || typeof intro.description === 'string'
   ? intro.description ?? undefined
@@ -27,7 +27,7 @@ const introDescription = intro.description == null || typeof intro.description =
 const introContent: SectionIntroContent = { ...intro, description: introDescription }
 const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url === 'string')
 ---
-<section class="media-fact-grid-allentown" data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
+<section class="media-fact-grid-allentown" data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-media-aspect-ratio={mediaAspectRatio}>
   <div class="media-fact-grid-allentown__container">
     <div class:list={['media-fact-grid-allentown__lead', { 'media-fact-grid-allentown__lead--media': hasMedia }]}>
       <header class="media-fact-grid-allentown__intro">
@@ -128,6 +128,11 @@ const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url 
     --kinekt-section-content-width: var(--kiw--media-fact-grid-container-width);
     --kinekt-section-gap: var(--kiw--media-fact-grid-major-gap);
   }
+  .media-fact-grid-allentown[data-media-aspect-ratio='1:1'] { --kiw--media-fact-grid-media-ratio: 1 / 1; }
+  .media-fact-grid-allentown[data-media-aspect-ratio='16:9'] { --kiw--media-fact-grid-media-ratio: 16 / 9; }
+  .media-fact-grid-allentown[data-media-aspect-ratio='9:16'] { --kiw--media-fact-grid-media-ratio: 9 / 16; }
+  .media-fact-grid-allentown[data-media-aspect-ratio='5:4'] { --kiw--media-fact-grid-media-ratio: 5 / 4; }
+  .media-fact-grid-allentown[data-media-aspect-ratio='4:5'] { --kiw--media-fact-grid-media-ratio: 4 / 5; }
 
   .media-fact-grid-allentown .media-fact-grid-allentown__lead { display: grid; gap: var(--kiw--media-fact-grid-lead-gap); }
   .media-fact-grid-allentown .media-fact-grid-allentown__intro { min-width: 0; }

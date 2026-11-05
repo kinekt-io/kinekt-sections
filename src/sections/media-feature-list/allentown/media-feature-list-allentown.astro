@@ -7,12 +7,12 @@ import type { MediaFeatureListContent } from './media-feature-list-allentown.typ
 
 interface Props extends MediaFeatureListContent {
   headingLevel?: 'h1' | 'h2' | 'h3'
-  mediaLoading?: 'eager' | 'lazy'
+  mediaAspectRatio?: '1:1' | '16:9' | '9:16' | '5:4' | '4:5'
 }
 
-const { theme, direction, intro, label, media, features, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
+const { theme, direction, intro, label, media, mediaAspectRatio = '5:4', features, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 ---
-<section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-kinekt-direction={direction}>
+<section class:list={['media-feature-list', 'media-feature-list--allentown', `media-feature-list--${direction}`]} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-kinekt-direction={direction} data-media-aspect-ratio={mediaAspectRatio}>
   <div class="media-feature-list__container">
     <header class="media-feature-list__header">
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading">
@@ -119,6 +119,11 @@ const { theme, direction, intro, label, media, features, headingLevel = 'h2', me
     --kinekt-section-content-width: var(--kiw--media-feature-list-container-width);
     --kinekt-section-gap: var(--kiw--media-feature-list-major-gap);
   }
+  .media-feature-list--allentown[data-media-aspect-ratio='1:1'] { --kiw--media-feature-list-media-ratio: 1 / 1; }
+  .media-feature-list--allentown[data-media-aspect-ratio='16:9'] { --kiw--media-feature-list-media-ratio: 16 / 9; }
+  .media-feature-list--allentown[data-media-aspect-ratio='9:16'] { --kiw--media-feature-list-media-ratio: 9 / 16; }
+  .media-feature-list--allentown[data-media-aspect-ratio='5:4'] { --kiw--media-feature-list-media-ratio: 5 / 4; }
+  .media-feature-list--allentown[data-media-aspect-ratio='4:5'] { --kiw--media-feature-list-media-ratio: 4 / 5; }
   .media-feature-list--allentown .media-feature-list__container { gap: var(--kiw--media-feature-list-major-gap); }
   .media-feature-list--allentown .section-intro { display: grid; justify-items: start; gap: var(--kiw--media-feature-list-header-group-gap); }
   .media-feature-list--allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }

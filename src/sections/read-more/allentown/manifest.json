@@ -28,6 +28,7 @@
     "intro": { "kind": "component", "componentId": "components/intro/allentown", "required": true, "localized": true },
     "label": { "kind": "component", "componentId": "atoms/label/allentown", "required": false, "localized": true, "description": "Optional localized location or context label shown between the heading and description." },
     "ctas": { "kind": "ctaGroup", "required": false, "localized": true },
-    "media": { "kind": "media", "required": true, "localized": true }
+    "media": { "kind": "media", "required": true, "localized": true },
+    "mediaAspectRatio": { "kind": "select", "required": false, "localized": true, "defaultValue": "5:4", "options": ["1:1", "16:9", "9:16", "5:4", "4:5"], "description": "Media aspect ratio." }
   }
 }

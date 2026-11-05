@@ -64,7 +64,7 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
                   <ItemHeading class="progress-roadmap-allentown__title">{item.title}</ItemHeading>
                   {(item.referenceLabel || item.reference) && <p class="progress-roadmap-allentown__reference">{item.referenceLabel && <strong>{item.referenceLabel}</strong>}{item.referenceLabel && item.reference && ' '}{item.reference}</p>}
                 </div>
-                <span class="progress-roadmap-allentown__status" data-tone={toneFor(item)}>{statusIcon && <svg aria-hidden="true" focusable="false" viewBox={statusIcon.viewBox} fill="currentColor"><path d={statusIcon.path} /></svg>}<span>{itemLabelFor(item)}</span></span>
+                <span class="progress-roadmap-allentown__status" data-status={item.status} data-tone={toneFor(item)}>{statusIcon && <svg aria-hidden="true" focusable="false" viewBox={statusIcon.viewBox} fill="currentColor"><path d={statusIcon.path} /></svg>}<span>{itemLabelFor(item)}</span></span>
                 {description && <div class="progress-roadmap-allentown__description" set:html={description} />}
                 {facts.length > 0 && <dl class="progress-roadmap-allentown__facts">{facts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>}
               </div>
@@ -103,13 +103,18 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
     --kiw--progress-roadmap-allentown-muted: var(--primary-semi-dark);
     --kiw--progress-roadmap-allentown-line: var(--primary-ultra-light);
     --kiw--progress-roadmap-allentown-accent: var(--accent-semi-dark);
-    --kiw--progress-roadmap-allentown-status-mix: 40%;
+    --kiw--progress-roadmap-allentown-status-color: var(--primary);
+    --kiw--progress-roadmap-allentown-status-muted-color: var(--primary-semi-light);
     --kiw--progress-roadmap-allentown-section-space: var(--section-space-l);
     --kiw--progress-roadmap-allentown-body-gap: var(--section-space-l);
     --kiw--progress-roadmap-allentown-filter-gap: var(--space-xxs);
+    --kiw--progress-roadmap-allentown-filter-block-space: var(--space-xs);
+    --kiw--progress-roadmap-allentown-filter-inline-space: var(--space-s);
+    --kiw--progress-roadmap-allentown-filter-radius: var(--radius-xs);
     --kiw--progress-roadmap-allentown-filter-surface: var(--neutral);
     --kiw--progress-roadmap-allentown-filter-ink: var(--primary-semi-light);
-    --kiw--progress-roadmap-allentown-filter-active-ink: var(--base);
+    --kiw--progress-roadmap-allentown-filter-active-surface: var(--neutral);
+    --kiw--progress-roadmap-allentown-filter-active-ink: var(--base, var(--kinekt-component-ink));
     --kiw--progress-roadmap-allentown-item-space: var(--space-xxl);
     --kiw--progress-roadmap-allentown-item-gap: var(--space-xl);
     --kiw--progress-roadmap-allentown-heading-gap: var(--space-xs);
@@ -120,6 +125,7 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
     --kinekt-component-accent: var(--kiw--progress-roadmap-allentown-accent);
     --kinekt-component-muted: var(--kiw--progress-roadmap-allentown-muted);
     --kinekt-component-reading-width: 100%;
+    --kinekt-component-inline-space: var(--section-gutter);
   }
 
   :where(.progress-roadmap-allentown[data-kinekt-theme='semi-light']) {
@@ -131,9 +137,9 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
     --kiw--progress-roadmap-allentown-muted: var(--primary-light);
     --kiw--progress-roadmap-allentown-line: var(--primary);
     --kiw--progress-roadmap-allentown-accent: var(--accent);
-    --kiw--progress-roadmap-allentown-status-mix: 72%;
     --kiw--progress-roadmap-allentown-filter-surface: var(--primary-semi-dark);
     --kiw--progress-roadmap-allentown-filter-ink: var(--primary-light);
+    --kiw--progress-roadmap-allentown-filter-active-surface: var(--primary-semi-dark);
     --kiw--progress-roadmap-allentown-filter-active-ink: var(--white);
   }
   :where(.progress-roadmap-allentown[data-kinekt-theme='dark']) {
@@ -185,22 +191,21 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
     }
     & .progress-roadmap-allentown__filter {
       appearance: none;
+      display: block;
       border: var(--border-width) solid var(--kiw--progress-roadmap-allentown-filter-surface);
-      border-radius: var(--radius-xs);
-      padding: var(--space-xs) var(--space-s);
+      border-radius: var(--kiw--progress-roadmap-allentown-filter-radius);
+      padding: var(--kiw--progress-roadmap-allentown-filter-block-space) var(--kiw--progress-roadmap-allentown-filter-inline-space);
       color: var(--kiw--progress-roadmap-allentown-filter-ink);
       background: var(--kiw--progress-roadmap-allentown-filter-surface);
-      font-family: var(--mono-font-family);
-      font-size: var(--text-l);
+      font: inherit;
       font-weight: var(--heading-font-weight);
-      letter-spacing: var(--text-letter-spacing);
-      line-height: 1;
-      text-transform: uppercase;
+      text-decoration: none;
+      white-space: nowrap;
       cursor: pointer;
       &[aria-pressed='true'], &:hover {
+        border-color: var(--kiw--progress-roadmap-allentown-filter-active-surface);
         color: var(--kiw--progress-roadmap-allentown-filter-active-ink);
-        background: var(--kiw--progress-roadmap-allentown-filter-surface);
-        box-shadow: inset 0 0 0 calc(var(--border-width) * 2) var(--kiw--progress-roadmap-allentown-filter-active-ink);
+        background: var(--kiw--progress-roadmap-allentown-filter-active-surface);
       }
       &:focus-visible {
         outline: 2px solid var(--kiw--progress-roadmap-allentown-accent);
@@ -280,7 +285,7 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
       border: var(--border-width) solid color-mix(in srgb, var(--kiw--progress-roadmap-allentown-status-tone) 25%, transparent);
       border-radius: var(--radius-l);
       padding: calc((var(--space-xxs) + var(--space-xs)) / 2) var(--space-s);
-      color: var(--kiw--progress-roadmap-allentown-status-tone);
+      color: var(--kiw--progress-roadmap-allentown-status-color);
       background: color-mix(in srgb, var(--kiw--progress-roadmap-allentown-status-tone) 8%, transparent);
       font-family: var(--mono-font-family);
       font-size: var(--text-l);
@@ -290,11 +295,12 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
       text-transform: uppercase;
       overflow-wrap: anywhere;
       & span { min-inline-size: 0; }
-      & svg { flex: none; inline-size: var(--text-m); block-size: var(--text-m); overflow: visible; }
-      &[data-tone='info'] { --kiw--progress-roadmap-allentown-status-tone: color-mix(in srgb, var(--info) var(--kiw--progress-roadmap-allentown-status-mix), var(--kiw--progress-roadmap-allentown-ink)); }
-      &[data-tone='success'] { --kiw--progress-roadmap-allentown-status-tone: color-mix(in srgb, var(--success) var(--kiw--progress-roadmap-allentown-status-mix), var(--kiw--progress-roadmap-allentown-ink)); }
-      &[data-tone='warning'] { --kiw--progress-roadmap-allentown-status-tone: color-mix(in srgb, var(--warning) var(--kiw--progress-roadmap-allentown-status-mix), var(--kiw--progress-roadmap-allentown-ink)); }
-      &[data-tone='error'] { --kiw--progress-roadmap-allentown-status-tone: color-mix(in srgb, var(--error) var(--kiw--progress-roadmap-allentown-status-mix), var(--kiw--progress-roadmap-allentown-ink)); }
+      &:is([data-status='custom'], [data-status='todo']) { color: var(--kiw--progress-roadmap-allentown-status-muted-color); }
+      & svg { flex: none; inline-size: var(--text-m); block-size: var(--text-m); overflow: visible; color: var(--kiw--progress-roadmap-allentown-status-tone); }
+      &[data-tone='info'] { --kiw--progress-roadmap-allentown-status-tone: var(--info); }
+      &[data-tone='success'] { --kiw--progress-roadmap-allentown-status-tone: var(--success); }
+      &[data-tone='warning'] { --kiw--progress-roadmap-allentown-status-tone: var(--warning); }
+      &[data-tone='error'] { --kiw--progress-roadmap-allentown-status-tone: var(--error); }
     }
     & .progress-roadmap-allentown__description {
       inline-size: 100%;
@@ -321,6 +327,21 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
       & dd { color: var(--kiw--progress-roadmap-allentown-muted); }
     }
 
+    @media (max-width: 49.99rem) {
+      & .progress-roadmap-allentown__filters {
+        flex-wrap: nowrap;
+        inline-size: 100vw;
+        margin-inline: calc(50% - 50vw);
+        padding-inline: var(--kinekt-component-inline-space);
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        scroll-padding-inline: var(--kinekt-component-inline-space);
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      & .progress-roadmap-allentown__filters::-webkit-scrollbar { display: none; }
+      & .progress-roadmap-allentown__filter { flex: none; }
+    }
     @media (max-width: 30rem) {
       --kiw--progress-roadmap-allentown-visual-size: var(--space-xl);
       --kiw--progress-roadmap-allentown-item-gap: var(--space-m);

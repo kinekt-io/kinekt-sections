@@ -18,7 +18,7 @@ interface Props {
   theme?: Theme
   intro: SectionIntroContent
   image?: Media
-  imagePosition?: ImagePosition
+  imageAspectRatio?: '1:1' | '16:9' | '9:16' | '5:4' | '4:5'
   form: string
   formPresentation?: FormModalPresentation
   headingLevel?: 'h1' | 'h2' | 'h3'
@@ -26,10 +26,10 @@ interface Props {
   contactMethods?: ContactMethod[]
 }
 
-const { id, theme = 'semi-dark', intro, image, imagePosition = 'left', form, formPresentation, contactHeading, contactMethods = [], headingLevel = 'h2' } = Astro.props as Props
+const { id, theme = 'semi-dark', intro, image, imageAspectRatio = '5:4', imagePosition = 'left', form, formPresentation, contactHeading, contactMethods = [], headingLevel = 'h2' } = Astro.props as Props
 const methods = contactMethods.filter((method) => method.label && method.href)
 ---
-<section class="form-section-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-image-position={imagePosition}>
+<section class="form-section-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-image-position={imagePosition} data-image-aspect-ratio={imageAspectRatio}>
   <div class="form-section-allentown__container">
     <div class="form-section-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
@@ -221,7 +221,12 @@ const methods = contactMethods.filter((method) => method.label && method.href)
     }
   }
   .form-section-allentown .form-section-allentown__media { display: block; min-width: 0; }
-  .form-section-allentown .form-section-allentown__media img { aspect-ratio: 5 / 4; object-fit: cover; }
+  .form-section-allentown .form-section-allentown__media img { aspect-ratio: var(--kiw--form-section-allentown-media-ratio, 5 / 4); object-fit: cover; }
+  .form-section-allentown[data-image-aspect-ratio='1:1'] { --kiw--form-section-allentown-media-ratio: 1 / 1; }
+  .form-section-allentown[data-image-aspect-ratio='16:9'] { --kiw--form-section-allentown-media-ratio: 16 / 9; }
+  .form-section-allentown[data-image-aspect-ratio='9:16'] { --kiw--form-section-allentown-media-ratio: 9 / 16; }
+  .form-section-allentown[data-image-aspect-ratio='5:4'] { --kiw--form-section-allentown-media-ratio: 5 / 4; }
+  .form-section-allentown[data-image-aspect-ratio='4:5'] { --kiw--form-section-allentown-media-ratio: 4 / 5; }
   @media (min-width: 50rem) {
     .form-section-allentown :is(.section-intro__heading, .section-intro__description) { max-width: var(--kinekt-component-reading-width); }
     .form-section-allentown > .form-section-allentown__container { align-items: center; column-gap: var(--kiw--form-section-allentown-column-gap); }

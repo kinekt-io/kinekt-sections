@@ -27,6 +27,7 @@
     "theme": { "kind": "select", "required": true, "localized": true, "options": ["light", "semi-light", "semi-dark", "dark"], "description": "CMS-selected presentation setting passed to the renderer." },
     "intro": { "kind": "component", "componentId": "components/intro/allentown", "required": true, "localized": true },
     "image": { "kind": "media", "required": false, "localized": true },
+    "imageAspectRatio": { "kind": "select", "required": false, "localized": true, "defaultValue": "5:4", "options": ["1:1", "16:9", "9:16", "5:4", "4:5"], "description": "Image aspect ratio." },
     "imagePosition": { "kind": "select", "required": true, "localized": true, "options": ["left", "right"], "description": "Desktop media position. Mobile always presents media above content." },
     "form": { "kind": "formEmbed", "required": true, "localized": true, "description": "Paste the complete HubSpot embed code. The frontend renders it in place." },
     "formPresentation": { "kind": "formModal", "required": false, "localized": true, "description": "Show the supplied form in a modal after an editor-configured opener is selected. Leave off to preserve the inline form." },

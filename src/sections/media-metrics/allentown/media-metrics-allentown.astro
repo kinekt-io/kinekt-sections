@@ -7,11 +7,12 @@ import type { MediaMetricsAllentownContent } from './media-metrics-allentown.typ
 
 interface Props extends MediaMetricsAllentownContent {
   headingLevel?: 'h1' | 'h2' | 'h3'
+  mediaAspectRatio?: '1:1' | '16:9' | '9:16' | '5:4' | '4:5'
 }
 
-const { theme, intro, metrics, media, headingLevel = 'h2' } = Astro.props as Props
+const { theme, intro, metrics, media, mediaAspectRatio = '5:4', headingLevel = 'h2' } = Astro.props as Props
 ---
-<section class="media-metrics-allentown" data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
+<section class="media-metrics-allentown" data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-media-aspect-ratio={mediaAspectRatio}>
   <div class="media-metrics-allentown__container">
     <header class="media-metrics-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
@@ -111,6 +112,11 @@ const { theme, intro, metrics, media, headingLevel = 'h2' } = Astro.props as Pro
     --kiw--media-metrics-metric-width: var(--width-s);
     --kiw--media-metrics-media-ratio: 688 / 406;
     padding-block: var(--kiw--media-metrics-section-space);
+    &[data-media-aspect-ratio='1:1'] { --kiw--media-metrics-media-ratio: 1 / 1; }
+    &[data-media-aspect-ratio='16:9'] { --kiw--media-metrics-media-ratio: 16 / 9; }
+    &[data-media-aspect-ratio='9:16'] { --kiw--media-metrics-media-ratio: 9 / 16; }
+    &[data-media-aspect-ratio='5:4'] { --kiw--media-metrics-media-ratio: 5 / 4; }
+    &[data-media-aspect-ratio='4:5'] { --kiw--media-metrics-media-ratio: 4 / 5; }
 
     .media-metrics-allentown__container { display: grid; max-width: min(var(--kinekt-component-site-width), calc(var(--kiw--media-metrics-content-width) + (var(--kiw--media-metrics-inline-space) * 2))); gap: var(--kiw--media-metrics-major-gap); padding-inline: var(--kiw--media-metrics-inline-space); }
     .section-intro { display: grid; justify-items: start; gap: var(--kiw--media-metrics-intro-gap); }
