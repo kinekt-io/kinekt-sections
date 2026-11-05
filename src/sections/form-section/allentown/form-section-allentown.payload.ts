@@ -23,6 +23,7 @@ import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 import type {
   BetaFormSectionAllentownContent,
   ContactMethod,
+  FormSectionImageAspectRatio,
   PayloadBetaFormSectionAllentownDocument,
 } from './form-section-allentown.contract.js'
 
@@ -66,6 +67,14 @@ export function createBetaFormSectionAllentownBlock({
         label: 'Image',
         relationTo: mediaCollection,
         localized: true,
+      },
+      {
+        name: 'imageAspectRatio',
+        type: 'select',
+        label: 'Image aspect ratio',
+        localized: true,
+        defaultValue: '5:4',
+        options: ['1:1', '16:9', '9:16', '5:4', '4:5'].map((value) => ({ label: value, value })),
       },
       {
         name: 'imagePosition',
@@ -133,6 +142,11 @@ export function betaFormSectionAllentownToProps(
     throw new Error('imagePosition must be left or right.')
   }
 
+  const imageAspectRatio = data.imageAspectRatio ?? '5:4'
+  if (!isImageAspectRatio(imageAspectRatio)) {
+    throw new Error('imageAspectRatio must be 1:1, 16:9, 9:16, 5:4 or 4:5.')
+  }
+
   const contactMethods = contactMethodsToProps(data.contactMethods)
   const formPresentation = formModalPresentationToProps(data.formPresentation, 'formPresentation')
 
@@ -145,6 +159,7 @@ export function betaFormSectionAllentownToProps(
       ...(intro.description ? { description: { html: richTextToHtml(intro.description, 'intro.description') } } : {}),
     },
     ...(data.image ? { image: mediaToProps(data.image, 'image', options) } : {}),
+    imageAspectRatio,
     imagePosition,
     form: requireText(data.form, 'form'),
     ...(formPresentation ? { formPresentation } : {}),
@@ -153,6 +168,10 @@ export function betaFormSectionAllentownToProps(
   }
 }
 
+
+function isImageAspectRatio(value: unknown): value is FormSectionImageAspectRatio {
+  return value === '1:1' || value === '16:9' || value === '9:16' || value === '5:4' || value === '4:5'
+}
 
 function contactMethodsToProps(value: unknown): ContactMethod[] | undefined {
   if (value === undefined || value === null) return undefined

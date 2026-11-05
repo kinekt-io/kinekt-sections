@@ -22,6 +22,14 @@ export function createReadMoreBlock({ mediaCollection = 'media', targetCollectio
       { name: 'label', type: 'group', localized: true, fields: [{ name: 'text', type: 'text' }, { name: 'icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' } }] },
       { name: 'ctas', type: 'array', label: 'CTA Group', localized: true, minRows: 0, maxRows: 2, admin: { initCollapsed: true, description: 'Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base.' }, fields: [ctaStyleField(), ...ctaFields(targetCollections)] },
       { name: 'media', type: 'upload', relationTo: mediaCollection, localized: true, required: true },
+      {
+        name: 'mediaAspectRatio',
+        type: 'select',
+        label: 'Media aspect ratio',
+        localized: true,
+        defaultValue: '5:4',
+        options: ['1:1', '16:9', '9:16', '5:4', '4:5'].map((value) => ({ label: value, value })),
+      },
     ],
   }
 }
@@ -42,5 +50,6 @@ export function readMoreToProps(data: PayloadReadMoreDocument, options: PayloadA
     ...(labelText ? { label: { text: labelText, ...(labelIcon ? { icon: labelIcon } : {}) } } : {}),
     ctas: ctaGroupToProps(data.ctas, 'ctas', options) ?? {},
     media: mediaToProps(data.media, 'media', options),
+    mediaAspectRatio: data.mediaAspectRatio ?? '5:4',
   }
 }

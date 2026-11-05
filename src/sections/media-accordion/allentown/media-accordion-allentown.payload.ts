@@ -67,6 +67,20 @@ const manifest = {
       "localized": true,
       "description": "Optional editor-selected media, localized per locale. The renderer removes the media column when absent."
     },
+    "mediaAspectRatio": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "defaultValue": "5:4",
+      "options": [
+        "1:1",
+        "16:9",
+        "9:16",
+        "5:4",
+        "4:5"
+      ],
+      "description": "Media aspect ratio. Mobile media remains square."
+    },
     "items": {
       "kind": "componentList",
       "componentId": "components/accordion-item/allentown",

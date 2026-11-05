@@ -60,6 +60,20 @@ const manifest = {
       "required": false,
       "localized": true
     },
+    "mediaAspectRatio": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "defaultValue": "5:4",
+      "options": [
+        "1:1",
+        "16:9",
+        "9:16",
+        "5:4",
+        "4:5"
+      ],
+      "description": "Media aspect ratio. Mobile media remains square."
+    },
     "facts": {
       "kind": "componentList",
       "componentId": "components/fact-card/allentown",

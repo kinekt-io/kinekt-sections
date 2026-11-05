@@ -3,6 +3,7 @@ import type { BetaTheme } from '../../../shared/payload.js'
 import type { SectionContentWidth } from '../../../shared/section-width.js'
 
 export type FormSectionImagePosition = 'left' | 'right'
+export type FormSectionImageAspectRatio = '1:1' | '16:9' | '9:16' | '5:4' | '4:5'
 export type ContactMethodIcon = string
 
 export interface ContactMethod {
@@ -16,6 +17,7 @@ export interface BetaFormSectionAllentownContent {
   theme: BetaTheme
   intro: SectionIntro
   image?: Media
+  imageAspectRatio?: FormSectionImageAspectRatio
   imagePosition: FormSectionImagePosition
   form: string
   formPresentation?: FormModalPresentation
