@@ -8,6 +8,7 @@ import type { MediaFeatureListContent } from './media-feature-list-allentown.typ
 interface Props extends MediaFeatureListContent {
   headingLevel?: 'h1' | 'h2' | 'h3'
   mediaAspectRatio?: '1:1' | '16:9' | '9:16' | '5:4' | '4:5'
+  mediaLoading?: 'eager' | 'lazy'
 }
 
 const { theme, direction, intro, label, media, mediaAspectRatio = '5:4', features, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
