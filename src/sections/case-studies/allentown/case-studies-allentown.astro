@@ -636,7 +636,7 @@ const quoteText = (value: string): string => {
       }
       & .case-studies-allentown__carousel-slide-content {
         flex-direction: row;
-        align-items: flex-start;
+        align-items: center;
         gap: var(--case-studies-media-to-details);
       }
       & .case-studies-allentown__image {
@@ -682,7 +682,7 @@ const quoteText = (value: string): string => {
     :where(.case-studies-allentown) .case-studies-allentown__header { display: grid; grid-template-columns: minmax(0, var(--case-studies-header-content-width)) auto; align-items: end; column-gap: var(--case-studies-header-column-gap); justify-content: space-between; }
     :where(.case-studies-allentown) .case-studies-allentown__header-content { grid-column: 1; }
     :where(.case-studies-allentown) .case-studies-allentown__header > .case-studies-allentown__cta { grid-column: 2; align-self: end; }
-    :where(.case-studies-allentown) .case-studies-allentown__carousel-slide-content { flex-direction: row; align-items: center; gap: var(--case-studies-media-to-details); }
+    :where(.case-studies-allentown) .case-studies-allentown__carousel-slide-content { flex-direction: row; gap: var(--case-studies-media-to-details); }
     :where(.case-studies-allentown) .case-studies-allentown__image { flex: 1.2 1 0; }
     :where(.case-studies-allentown) .case-studies-allentown__carousel-slide-details { flex: 1 1 0; }
   }
