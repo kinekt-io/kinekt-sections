@@ -147,6 +147,9 @@ const actions = ctaGroupActions(ctas)
     :where(.read-more-allentown) { --kiw--read-more-allentown-content-width: var(--width-xxl); }
     .read-more-allentown > .read-more-allentown__container { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; column-gap: var(--kiw--read-more-allentown-column-gap); }
   }
+  @media (max-width: 49.999rem) {
+    .read-more-allentown > .read-more-allentown__container > .read-more-allentown__media { order: -1; }
+  }
 </style>
 <style is:global>
   .read-more-allentown[data-kinekt-section] {

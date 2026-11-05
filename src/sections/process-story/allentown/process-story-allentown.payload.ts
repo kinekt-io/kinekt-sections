@@ -78,6 +78,20 @@ const manifest = {
       "required": false,
       "localized": true
     },
+    "imageAspectRatio": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "defaultValue": "16:9",
+      "options": [
+        "1:1",
+        "5:4",
+        "4:5",
+        "16:9",
+        "9:16"
+      ],
+      "description": "Desktop image aspect ratio. Mobile media remains square."
+    },
     "markerType": {
       "kind": "select",
       "required": false,

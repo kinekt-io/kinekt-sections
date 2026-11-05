@@ -19,12 +19,12 @@ interface Props extends BetaProcessStoryAllentownContent {
   image?: Media | null
   items: ProcessItemContent[]
   markerType?: 'label' | 'number' | 'label-number'
+  imageAspectRatio?: '1:1' | '5:4' | '4:5' | '16:9' | '9:16'
   listCtaGroup?: CtaGroup | null
   headingLevel?: 'h1' | 'h2' | 'h3'
-  mediaLoading?: 'eager' | 'lazy'
 }
 
-const { id, theme = 'light', intro, introCtaGroup, image, items = [], markerType = 'label', listCtaGroup, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
+const { id, theme = 'light', intro, introCtaGroup, image, items = [], markerType = 'label', imageAspectRatio = '16:9', listCtaGroup, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
 const itemHeadingLevel = ({ h1: 'h2', h2: 'h3', h3: 'h4' } as const)[headingLevel] ?? 'h3'
 const introDescription = intro.description == null || typeof intro.description === 'string'
   ? intro.description ?? undefined
@@ -37,7 +37,7 @@ const listActions = ctaGroupActions(listCtaGroup)
 const ItemList = markerType === 'label' ? 'ul' : 'ol'
 const classes = ['process-story-allentown', hasMedia && 'process-story-allentown--with-media'].filter(Boolean).join(' ')
 ---
-<section class={classes} id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
+<section class={classes} id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-image-aspect-ratio={imageAspectRatio}>
   <div class="process-story-allentown__container">
     <header class="process-story-allentown__intro">
       <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
@@ -159,6 +159,11 @@ const classes = ['process-story-allentown', hasMedia && 'process-story-allentown
     --kinekt-section-gap: var(--kiw--process-story-stack-gap);
     --kinekt-section-media-ratio: var(--kiw--process-story-media-ratio);
   }
+  .process-story-allentown[data-image-aspect-ratio='1:1'] { --kiw--process-story-media-ratio: 1 / 1; }
+  .process-story-allentown[data-image-aspect-ratio='5:4'] { --kiw--process-story-media-ratio: 5 / 4; }
+  .process-story-allentown[data-image-aspect-ratio='4:5'] { --kiw--process-story-media-ratio: 4 / 5; }
+  .process-story-allentown[data-image-aspect-ratio='16:9'] { --kiw--process-story-media-ratio: 16 / 9; }
+  .process-story-allentown[data-image-aspect-ratio='9:16'] { --kiw--process-story-media-ratio: 9 / 16; }
 
   .process-story-allentown .process-story-allentown__intro { display: grid; justify-items: start; gap: var(--kiw--process-story-actions-margin); min-width: 0; }
   .process-story-allentown .section-intro { display: grid; justify-items: start; gap: var(--kiw--process-story-intro-gap); }
