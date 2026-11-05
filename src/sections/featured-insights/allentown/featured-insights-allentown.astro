@@ -156,9 +156,12 @@ const featuredKindIcon = featured && kindIconOf(featured)
     --kiw--featured-insights-allentown-label-size: var(--text-xs);
     --kiw--featured-insights-allentown-label-weight: var(--heading-font-weight);
     --kiw--featured-insights-allentown-copy-width: var(--width-m);
+    --kiw--featured-insights-allentown-kind-gap: .8ch;
+    --kiw--featured-insights-allentown-kind-size: var(--text-s);
+    --kiw--featured-insights-allentown-kind-icon-size: var(--text-xs);
     --kiw--featured-insights-allentown-link-gap: var(--space-xs);
-    --kiw--featured-insights-allentown-ink-color: var(--kinekt-component-ink);
-    --kiw--featured-insights-allentown-link-size: var(--text-s);
+    --kiw--featured-insights-allentown-link-size: var(--text-l);
+    --kiw--featured-insights-allentown-link-icon-size: var(--text-m);
     --kiw--featured-insights-allentown-line-color: var(--kinekt-component-line);
     --kiw--featured-insights-allentown-border-width: var(--border-width);
     --kiw--featured-insights-allentown-recent-heading-size: var(--h6);
@@ -178,10 +181,11 @@ const featuredKindIcon = featured && kindIconOf(featured)
   .featured-insights-allentown :is(.featured-insights-allentown__featured-title, .featured-insights-allentown__featured-description) { max-width: none; }
   .featured-insights-allentown .featured-insights-allentown__media img { aspect-ratio: var(--kiw--featured-insights-allentown-media-ratio, 16 / 9); object-fit: cover; }
   .featured-insights-allentown .featured-insights-allentown__featured-header { margin-block-start: calc(var(--kiw--featured-insights-allentown-featured-media-to-label-gap) - var(--kiw--featured-insights-allentown-card-gap)); }
-  .featured-insights-allentown .featured-insights-allentown__kind { display: inline-flex; align-items: center; gap: var(--kiw--featured-insights-allentown-link-gap); color: var(--kiw--featured-insights-allentown-kind-color); font-size: var(--kiw--featured-insights-allentown-label-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); }
-  .featured-insights-allentown .featured-insights-allentown__kind-icon { width: 1em; height: 1em; flex: none; }
+  .featured-insights-allentown .featured-insights-allentown__kind { display: inline-flex; align-items: center; gap: var(--kiw--featured-insights-allentown-kind-gap); color: var(--kiw--featured-insights-allentown-kind-color); font-size: var(--kiw--featured-insights-allentown-kind-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); }
+  .featured-insights-allentown .featured-insights-allentown__kind-icon { width: var(--kiw--featured-insights-allentown-kind-icon-size); height: var(--kiw--featured-insights-allentown-kind-icon-size); flex: none; }
   .featured-insights-allentown :is(.featured-insights-allentown__recent-title, .featured-insights-allentown__recent-description) { max-width: var(--kiw--featured-insights-allentown-copy-width); }
   .featured-insights-allentown .featured-insights-allentown__link { display: inline-flex; align-items: center; gap: var(--kiw--featured-insights-allentown-link-gap); width: max-content; min-height: auto; padding: 0; border-color: transparent; color: var(--kiw--featured-insights-allentown-ink-color); background: transparent; font-size: var(--kiw--featured-insights-allentown-link-size); font-weight: var(--kiw--featured-insights-allentown-label-weight); text-decoration: none; }
+  .featured-insights-allentown .featured-insights-allentown__link svg { width: var(--kiw--featured-insights-allentown-link-icon-size); height: var(--kiw--featured-insights-allentown-link-icon-size); }
   .featured-insights-allentown .featured-insights-allentown__link:hover { color: var(--kiw--featured-insights-allentown-action-color); }
   .featured-insights-allentown .featured-insights-allentown__recent { display: none; }
   .featured-insights-allentown {

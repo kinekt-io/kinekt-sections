@@ -206,6 +206,10 @@ const nextIcon = ctaIconPaths('chevron-right')!
       --kiw--battery-card-trinity-rating-size: var(--text-m);
     }
 
+    &:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) .battery-card-trinity__rating-label {
+      color: var(--primary-ultra-light);
+    }
+
     & .product-hero-trinity__actions {
       display: flex;
       flex-wrap: wrap;
