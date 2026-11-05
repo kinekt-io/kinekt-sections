@@ -24,7 +24,7 @@ const { item, markerType = 'label', number = 1, headingLevel = 'h3', class: clas
 const actions = ctaGroupActions(item.ctaGroup)
 const Heading = headingLevel
 const displayNumber = String(number).padStart(2, '0')
-const markerLabel = markerType === 'label-number' && item.label ? `${displayNumber} / ${item.label}` : item.label
+const hasNumberMarker = markerType === 'number' || markerType === 'label-number'
 const classes = ['process-item-allentown', className].filter(Boolean).join(' ')
 const descriptionHtml = typeof item.description === 'string'
   ? richTextToHtml(item.description, 'process item description')
@@ -32,10 +32,10 @@ const descriptionHtml = typeof item.description === 'string'
 
 ---
 <div class={classes}>
-  {markerType === 'number' ? <p class="process-item-allentown__number" aria-hidden="true">{displayNumber}</p> : markerLabel && <SubtitleFlightPath text={markerLabel} caps />}
+  {markerType !== 'number' && item.label && <SubtitleFlightPath text={item.label} caps />}
   {(item.title || item.description) && (
     <div class="process-item-allentown__copy">
-      {item.title && <Heading class="process-item-allentown__title">{item.title}</Heading>}
+      {item.title && <Heading class:list={['process-item-allentown__title', hasNumberMarker && 'process-item-allentown__title--numbered']}>{hasNumberMarker && <span class="process-item-allentown__number">{displayNumber}</span>}<span class="process-item-allentown__title-text">{item.title}</span></Heading>}
       <div class="process-item-allentown__description" set:html={descriptionHtml} />
     </div>
   )}
@@ -66,7 +66,9 @@ const descriptionHtml = typeof item.description === 'string'
   .process-item-allentown { display: grid; gap: var(--kiw--process-item-allentown-gap); min-width: 0; }
   .process-item-allentown .process-item-allentown__copy { display: grid; gap: var(--kiw--process-item-allentown-copy-gap); }
   .process-item-allentown .process-item-allentown__title { max-width: none; margin: 0; color: var(--kiw--process-item-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--process-item-allentown-title-size); font-weight: var(--heading-font-weight); line-height: 1.2; letter-spacing: var(--heading-letter-spacing); text-wrap: balance; }
-  .process-item-allentown .process-item-allentown__number { margin: 0; color: var(--kiw--process-item-allentown-number-color); font-family: var(--kiw--process-item-allentown-number-font-family); font-size: var(--text-l); font-weight: var(--kiw--process-item-allentown-number-font-weight); line-height: 1; }
+  .process-item-allentown .process-item-allentown__title--numbered { display: flex; align-items: baseline; gap: var(--space-s); }
+  .process-item-allentown .process-item-allentown__title-text { min-width: 0; }
+  .process-item-allentown .process-item-allentown__number { flex: 0 0 auto; margin: 0; color: var(--kiw--process-item-allentown-number-color); font-family: var(--kiw--process-item-allentown-number-font-family); font-size: inherit; font-weight: var(--kiw--process-item-allentown-number-font-weight); line-height: inherit; }
   .process-item-allentown .process-item-allentown__description { margin: 0; color: var(--kiw--process-item-allentown-description-color); font-size: var(--kiw--process-item-allentown-description-size); line-height: var(--kiw--process-item-allentown-description-line-height); white-space: pre-line; }
   .process-item-allentown .process-item-allentown__description > * { margin-block: 0; }
   .process-item-allentown .process-item-allentown__description > * + * { margin-block-start: var(--space-xs); }

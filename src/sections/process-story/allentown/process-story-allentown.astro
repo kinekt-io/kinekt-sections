@@ -34,6 +34,7 @@ const hasMedia = Boolean(image && typeof image === 'object' && typeof image.url 
 const visibleItems = items.filter((item) => (typeof item?.label === 'string' && item.label !== '') || (typeof item?.title === 'string' && item.title !== ''))
 const introActions = ctaGroupActions(introCtaGroup)
 const listActions = ctaGroupActions(listCtaGroup)
+const ItemList = markerType === 'label' ? 'ul' : 'ol'
 const classes = ['process-story-allentown', hasMedia && 'process-story-allentown--with-media'].filter(Boolean).join(' ')
 ---
 <section class={classes} id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
@@ -55,13 +56,13 @@ const classes = ['process-story-allentown', hasMedia && 'process-story-allentown
       {(visibleItems.length > 0 || listActions.length > 0) && (
         <div class="process-story-allentown__list-column">
           {visibleItems.length > 0 && (
-            <ul class="process-story-allentown__items">
+            <ItemList class="process-story-allentown__items">
               {visibleItems.map((item, index) => (
                 <li class="process-story-allentown__item">
                   <ProcessItem item={item} markerType={markerType} number={index + 1} headingLevel={itemHeadingLevel} />
                 </li>
               ))}
-            </ul>
+            </ItemList>
           )}
           {listActions.length > 0 && (
             <nav class="process-story-allentown__actions process-story-allentown__list-actions" aria-label="Process story actions">
