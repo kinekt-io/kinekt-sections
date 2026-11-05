@@ -41,7 +41,7 @@ export const mediaToProps = (value: unknown, field: string, { mediaBaseUrl }: Pa
   if (typeof width !== 'number' || !Number.isSafeInteger(width) || width <= 0) throw new Error(`${field}.width must be a positive integer.`)
   if (typeof height !== 'number' || !Number.isSafeInteger(height) || height <= 0) throw new Error(`${field}.height must be a positive integer.`)
   const renditions = typeof media.sizes === 'object' && media.sizes !== null ? media.sizes as Record<string, unknown> : {}
-  const sources = ['content480', 'content960', 'hero1440'].flatMap((name) => {
+  const sources = ['content480', 'content960', 'hero1440', 'hero2560'].flatMap((name) => {
     const rendition = renditions[name]
     if (typeof rendition !== 'object' || rendition === null || Array.isArray(rendition)) return []
     const props = rendition as Record<string, unknown>
