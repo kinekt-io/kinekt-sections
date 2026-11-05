@@ -57,11 +57,11 @@ const manifest = {
       }
     },
     "insightSources": {
-      "kind": "insightSourceList",
+      "kind": "contentReferenceList",
       "required": true,
       "localized": true,
       "minItems": 1,
-      "description": "One or more active platform-managed Insight Sources."
+      "description": "Select published content. Its title, route, optional description, card image, article type, and subjects are rendered automatically."
     }
   }
 } as const

@@ -33,11 +33,11 @@ const manifest = {
       "description": "CMS-selected presentation setting passed to the renderer."
     },
     "insightSources": {
-      "kind": "insightSourceList",
+      "kind": "contentReferenceList",
       "required": true,
       "localized": true,
       "minItems": 1,
-      "description": "One or more active platform-managed Insight Sources to index."
+      "description": "Select published content. Its title, route, optional description, card image, article type, and subjects are rendered automatically."
     }
   }
 } as const
