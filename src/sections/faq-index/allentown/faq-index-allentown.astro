@@ -25,6 +25,7 @@ export interface FaqIndexRecord {
   answer: RichTextInput
   /** Subject ids (or subject records) the FAQ belongs to. */
   subjects?: Array<string | FaqIndexSubject> | null
+  reviewStatus?: 'approved' | 'needs-customer-verification'
 }
 
 // The generated .types.ts is still generic (Record<string, unknown>), so the renderer types its props from the manifest here.
@@ -46,6 +47,10 @@ interface Props extends BetaFaqIndexAllentownContent {
   resultCountLabel?: string
   /** Singular form of `resultCountLabel`, used when one question is visible. */
   resultCountOneLabel?: string
+  /** Visible label marking customer-unverified source material. */
+  pendingReviewLabel?: string
+  /** Progressive disclosure label; `{count}` is replaced with remaining questions. */
+  loadMoreLabel?: string
 }
 
 const {
@@ -60,6 +65,8 @@ const {
   filterLabel = 'Filter questions by subject',
   resultCountLabel = '{count} questions',
   resultCountOneLabel = '{count} question',
+  pendingReviewLabel = 'Pending customer verification',
+  loadMoreLabel = 'Load more questions ({count})',
 } = Astro.props as Props
 
 const toHtml = (value: RichTextInput, field: string): string => {
@@ -77,7 +84,7 @@ const introContent = normaliseIntro(intro, 'intro.description')
 const subjectId = (subject: string | FaqIndexSubject): string => (typeof subject === 'string' ? subject : subject?.id ?? '').trim()
 const records = faqs
   .filter((faq) => faq && typeof faq.question === 'string' && faq.question.trim() !== '' && faq.answer != null && faq.answer !== '')
-  .map((faq) => ({ question: faq.question, answerHtml: toHtml(faq.answer, 'faq answer'), subjects: [...new Set((faq.subjects ?? []).map(subjectId).filter(Boolean))] }))
+  .map((faq) => ({ question: faq.question, answerHtml: toHtml(faq.answer, 'faq answer'), subjects: [...new Set((faq.subjects ?? []).map(subjectId).filter(Boolean))], needsCustomerVerification: faq.reviewStatus !== 'approved' }))
 // runtimeProps.subjectFilters = presentFaqSubjects: only subjects used by at least one shown FAQ get a filter.
 const present = new Set(records.flatMap((record) => record.subjects))
 const subjectList: FaqIndexSubject[] = subjects
@@ -92,7 +99,7 @@ const calloutContent = callout?.intro && typeof callout.intro.heading === 'strin
 const CalloutHeading: HeadingLevel = headingLevel === 'h1' ? 'h2' : 'h3'
 const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]}`, path: faChevronDown.icon[4] as string }
 ---
-<section class="faq-index-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme} data-faq-index data-faq-index-count-label={resultCountLabel} data-faq-index-count-one-label={resultCountOneLabel}>
+<section class="faq-index-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme} data-faq-index data-faq-index-count-label={resultCountLabel} data-faq-index-count-one-label={resultCountOneLabel} data-faq-index-initial-count="8" data-faq-index-load-more-label={loadMoreLabel}>
   <div class="faq-index-allentown__container">
     <div class="faq-index-allentown__main">
       <header class="faq-index-allentown__intro">
@@ -109,18 +116,20 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
           )}
           <ul class="faq-index-allentown__items" data-kinekt-disclosure-group data-faq-index-list>
             {records.map((record, index) => (
-              <li class="faq-index-allentown__item" data-faq-index-subjects={JSON.stringify(record.subjects)}>
+              <li class="faq-index-allentown__item" data-faq-index-subjects={JSON.stringify(record.subjects)} data-faq-needs-customer-verification={record.needsCustomerVerification ? 'true' : undefined}>
                 <details class="faq-index-allentown__faq" open={index === 0} data-kinekt-disclosure>
                   <summary class="faq-index-allentown__question">
                     <span class="faq-index-allentown__question-text">{record.question}</span>
                     <svg class="faq-index-allentown__toggle" aria-hidden="true" focusable="false" viewBox={chevron.viewBox}><path d={chevron.path} fill="currentColor" /></svg>
                   </summary>
+                  {record.needsCustomerVerification && <p class="faq-index-allentown__verification">{pendingReviewLabel}</p>}
                   <div class="faq-index-allentown__answer" set:html={record.answerHtml} />
                 </details>
               </li>
             ))}
           </ul>
-          {showFilters && <p class="faq-index-allentown__status" role="status" aria-live="polite" data-faq-index-status></p>}
+          <button class="faq-index-allentown__load-more" type="button" data-faq-index-load-more hidden>{loadMoreLabel.replace(' ({count})', '')}</button>
+          <p class="faq-index-allentown__status" role="status" aria-live="polite" data-faq-index-status></p>
         </div>
       )}
     </div>
@@ -145,16 +154,21 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
   // runtimeProps.accordion = firstOpenSingleOpen (shared disclosure group: opening one FAQ closes the others).
   initializeKinektInteractions()
 
-  // Progressive enhancement: without JavaScript every FAQ stays visible and the subject filters stay hidden.
+  // Progressive enhancement: without JavaScript every FAQ stays visible; filters and progressive disclosure activate only when this script runs.
   for (const section of document.querySelectorAll<HTMLElement>('[data-faq-index]')) {
+    if (section.dataset.faqIndexReady) continue
+    section.dataset.faqIndexReady = 'true'
     const filters = section.querySelector<HTMLElement>('[data-faq-index-filters]')
-    if (!filters || filters.dataset.faqIndexReady) continue
-    filters.dataset.faqIndexReady = 'true'
-    const buttons = [...filters.querySelectorAll<HTMLButtonElement>('[data-faq-index-filter]')]
+    const buttons = filters ? [...filters.querySelectorAll<HTMLButtonElement>('[data-faq-index-filter]')] : []
     const items = [...section.querySelectorAll<HTMLElement>('[data-faq-index-list] > li')]
     const status = section.querySelector<HTMLElement>('[data-faq-index-status]')
+    const loadMore = section.querySelector<HTMLButtonElement>('[data-faq-index-load-more]')
     const countLabel = section.dataset.faqIndexCountLabel || '{count} questions'
     const countOneLabel = section.dataset.faqIndexCountOneLabel || countLabel
+    const loadMoreLabel = section.dataset.faqIndexLoadMoreLabel || 'Load more questions ({count})'
+    const initialCount = Number.parseInt(section.dataset.faqIndexInitialCount || '8', 10) || 8
+    let displayedCount = initialCount
+    let activeSubject = ''
     const subjectsOf = (item: HTMLElement): string[] => {
       try {
         const value: unknown = JSON.parse(item.dataset.faqIndexSubjects || '[]')
@@ -164,20 +178,26 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
       }
     }
     const itemSubjects = new Map(items.map((item) => [item, subjectsOf(item)]))
-    const select = (button: HTMLButtonElement) => {
-      const subject = button.dataset.faqIndexFilter || ''
-      buttons.forEach((entry) => entry.setAttribute('aria-pressed', String(entry === button)))
-      const visible = items.filter((item) => {
-        const show = subject === '' || (itemSubjects.get(item) ?? []).includes(subject)
-        item.hidden = !show
-        return show
-      })
+    const select = (subject: string, reset = false) => {
+      if (reset) displayedCount = initialCount
+      activeSubject = subject
+      buttons.forEach((entry) => entry.setAttribute('aria-pressed', String((entry.dataset.faqIndexFilter || '') === subject)))
+      const matches = items.filter((item) => subject === '' || (itemSubjects.get(item) ?? []).includes(subject))
+      const visible = matches.slice(0, displayedCount)
+      items.forEach((item) => { item.hidden = !visible.includes(item) })
       // firstOpen applies to each filtered view: the first visible question opens and every other one closes.
       items.forEach((item) => { const details = item.querySelector('details'); if (details) details.open = item === visible[0] })
-      if (status) status.textContent = (visible.length === 1 ? countOneLabel : countLabel).replace('{count}', String(visible.length))
+      if (status) status.textContent = (matches.length === 1 ? countOneLabel : countLabel).replace('{count}', String(matches.length))
+      if (loadMore) {
+        const remaining = matches.length - visible.length
+        loadMore.hidden = remaining <= 0
+        loadMore.textContent = loadMoreLabel.replace('{count}', String(remaining))
+      }
     }
-    buttons.forEach((button) => button.addEventListener('click', () => select(button)))
-    filters.hidden = false
+    buttons.forEach((button) => button.addEventListener('click', () => select(button.dataset.faqIndexFilter || '', true)))
+    loadMore?.addEventListener('click', () => { displayedCount += initialCount; select(activeSubject) })
+    if (filters) filters.hidden = false
+    select(buttons.find((button) => button.getAttribute('aria-pressed') === 'true')?.dataset.faqIndexFilter || '')
   }
 </script>
 <style is:global>
@@ -296,10 +316,9 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
   .faq-index-allentown .faq-index-allentown__intro .section-intro__description > * { margin-block: 0; }
 
   .faq-index-allentown .faq-index-allentown__body { display: grid; gap: var(--kiw--faq-index-filters-gap); min-width: 0; }
-  .faq-index-allentown .faq-index-allentown__filters { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--kiw--faq-index-filter-gap); }
-  .faq-index-allentown .faq-index-allentown__filter { display: inline-flex; align-items: center; justify-content: center; margin: 0; padding: var(--kiw--faq-index-filter-padding-block) var(--kiw--faq-index-filter-padding-inline); border: 0; border-radius: var(--kiw--faq-index-filter-radius); color: var(--kiw--faq-index-filter-color); background: var(--kiw--faq-index-filter-background); font-family: var(--kinekt-component-font); font-size: var(--kiw--faq-index-filter-size); font-weight: var(--kiw--section-text-font-weight); line-height: 1; letter-spacing: inherit; text-align: center; white-space: nowrap; cursor: pointer; }
-  .faq-index-allentown .faq-index-allentown__filter:hover { color: var(--kiw--faq-index-filter-hover-color); }
-  .faq-index-allentown .faq-index-allentown__filter[aria-pressed='true'] { color: var(--kiw--faq-index-filter-active-color); background: var(--kiw--faq-index-filter-active-background); font-weight: var(--kiw--section-heading-font-weight); }
+  .faq-index-allentown .faq-index-allentown__filters { display: flex; flex-wrap: wrap; justify-content: start; gap: var(--kiw--faq-index-filter-gap); }
+  .faq-index-allentown .faq-index-allentown__filter { display: inline-flex; align-items: center; justify-content: center; margin: 0; padding: var(--kiw--faq-index-filter-padding-block) var(--kiw--faq-index-filter-padding-inline); border: var(--border-width) solid var(--kiw--faq-index-filter-background); border-radius: var(--kiw--faq-index-filter-radius); color: var(--kiw--faq-index-filter-color); background: var(--kiw--faq-index-filter-background); font-family: var(--kinekt-component-font); font-size: var(--kiw--faq-index-filter-size); font-weight: var(--kiw--section-heading-font-weight); line-height: 1; letter-spacing: inherit; text-align: center; white-space: nowrap; cursor: pointer; }
+  .faq-index-allentown .faq-index-allentown__filter:is(:hover, [aria-pressed='true']) { border-color: var(--kiw--faq-index-filter-active-background); color: var(--kiw--faq-index-filter-active-color); background: var(--kiw--faq-index-filter-active-background); }
   .faq-index-allentown .faq-index-allentown__filter:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kiw--faq-index-focus-color); outline-offset: calc(var(--border-width) * 2); }
 
   .faq-index-allentown .faq-index-allentown__items { display: grid; min-width: 0; margin: 0; padding: 0; list-style: none; }
@@ -316,12 +335,20 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
   .faq-index-allentown .faq-index-allentown__answer { margin-block-start: var(--kiw--faq-index-answer-gap); color: var(--kiw--faq-index-answer-color); font-size: var(--kiw--faq-index-answer-size); line-height: var(--kinekt-component-text-line-height); }
   .faq-index-allentown .faq-index-allentown__answer > * { margin-block: 0; }
   .faq-index-allentown .faq-index-allentown__answer > * + * { margin-block-start: var(--space-s); }
+  .faq-index-allentown .faq-index-allentown__verification { margin-block-start: var(--kiw--faq-index-answer-gap); color: var(--error); font-size: var(--text-s); font-weight: var(--kiw--section-heading-font-weight); }
+  .faq-index-allentown .faq-index-allentown__item[data-faq-needs-customer-verification='true'] :is(.faq-index-allentown__question, .faq-index-allentown__answer, .faq-index-allentown__toggle) { color: var(--error); }
+  .faq-index-allentown .faq-index-allentown__load-more { justify-self: center; margin: 0; padding: var(--kiw--faq-index-filter-padding-block) var(--kiw--faq-index-filter-padding-inline); border: var(--kiw--faq-index-divider-width) solid var(--kiw--faq-index-divider-color); border-radius: var(--kiw--faq-index-filter-radius); color: var(--kiw--faq-index-question-color); background: transparent; font: inherit; font-weight: var(--kiw--section-heading-font-weight); line-height: 1; cursor: pointer; }
+  .faq-index-allentown .faq-index-allentown__load-more:hover { color: var(--kiw--faq-index-toggle-color); border-color: var(--kiw--faq-index-toggle-color); }
+  .faq-index-allentown .faq-index-allentown__load-more:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kiw--faq-index-focus-color); outline-offset: calc(var(--border-width) * 2); }
   .faq-index-allentown .faq-index-allentown__status { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
   @media (min-width: 50rem) {
     :where(.faq-index-allentown) { --kiw--faq-index-allentown-content-width: var(--kiw--faq-index-container-width); }
   }
   @media (max-width: 49.999rem) {
+    .faq-index-allentown .faq-index-allentown__filters { flex-wrap: nowrap; inline-size: 100vw; margin-inline: calc(50% - 50vw); padding-inline: var(--kinekt-component-inline-space); overflow-x: auto; overscroll-behavior-inline: contain; scroll-padding-inline: var(--kinekt-component-inline-space); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .faq-index-allentown .faq-index-allentown__filters::-webkit-scrollbar { display: none; }
+    .faq-index-allentown .faq-index-allentown__filter { flex: none; }
     .faq-index-allentown .faq-index-allentown__question { line-height: 1.3; }
   }
   @media (prefers-reduced-motion: reduce) {

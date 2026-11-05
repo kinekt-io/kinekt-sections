@@ -101,7 +101,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaMediaFactGridAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaMediaFactGridAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaMediaFactGridAllentownBlock(options: CreateBetaMediaFactGridAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

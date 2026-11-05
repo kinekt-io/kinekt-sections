@@ -162,7 +162,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaProofMetricsTrinityBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaProofMetricsTrinityBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaProofMetricsTrinityBlock(options: CreateBetaProofMetricsTrinityBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

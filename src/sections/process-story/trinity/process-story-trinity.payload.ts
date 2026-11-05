@@ -144,7 +144,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaProcessStoryTrinityBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaProcessStoryTrinityBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaProcessStoryTrinityBlock(options: CreateBetaProcessStoryTrinityBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

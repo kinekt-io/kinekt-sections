@@ -126,7 +126,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaMediaAccordionAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaMediaAccordionAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaMediaAccordionAllentownBlock(options: CreateBetaMediaAccordionAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

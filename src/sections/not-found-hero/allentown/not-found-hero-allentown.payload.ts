@@ -74,7 +74,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaNotFoundHeroAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaNotFoundHeroAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaNotFoundHeroAllentownBlock(options: CreateBetaNotFoundHeroAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

@@ -156,7 +156,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaMoqLeadTimesTrinityBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaMoqLeadTimesTrinityBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaMoqLeadTimesTrinityBlock(options: CreateBetaMoqLeadTimesTrinityBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

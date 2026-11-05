@@ -83,7 +83,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaComplianceTextAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaComplianceTextAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaComplianceTextAllentownBlock(options: CreateBetaComplianceTextAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

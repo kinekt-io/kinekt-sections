@@ -187,7 +187,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaComparisonOverviewAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaComparisonOverviewAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaComparisonOverviewAllentownBlock(options: CreateBetaComparisonOverviewAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

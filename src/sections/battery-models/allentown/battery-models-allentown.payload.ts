@@ -177,7 +177,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaBatteryModelsAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaBatteryModelsAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaBatteryModelsAllentownBlock(options: CreateBetaBatteryModelsAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

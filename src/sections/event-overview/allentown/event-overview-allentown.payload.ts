@@ -58,7 +58,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaEventOverviewAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaEventOverviewAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaEventOverviewAllentownBlock(options: CreateBetaEventOverviewAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

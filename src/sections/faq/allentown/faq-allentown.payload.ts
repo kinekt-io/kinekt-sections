@@ -55,24 +55,12 @@ const manifest = {
         }
       }
     },
-    "items": {
-      "kind": "componentList",
-      "componentId": "components/faq-item/allentown",
+    "faqs": {
+      "kind": "faqReferenceList",
       "required": true,
       "localized": true,
       "minItems": 1,
-      "fields": {
-        "question": {
-          "kind": "text",
-          "required": true,
-          "localized": true
-        },
-        "answer": {
-          "kind": "textarea",
-          "required": true,
-          "localized": true
-        }
-      }
+      "description": "Select the published FAQ records that belong on this page. Their question, answer, category, and customer-verification state remain centrally managed."
     },
     "overviewCta": {
       "kind": "component",
@@ -137,7 +125,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaFaqAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaFaqAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaFaqAllentownBlock(options: CreateBetaFaqAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

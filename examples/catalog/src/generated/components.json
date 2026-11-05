@@ -2505,7 +2505,7 @@
     "role": "faq",
     "variation": "allentown",
     "title": "FAQ Allentown",
-    "description": "A reusable FAQ accordion with optional overview action and support callout.",
+    "description": "A reusable FAQ accordion that selects verified-or-pending central FAQ records, with an optional overview action and support callout.",
     "status": "beta",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4811-276546&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -2540,12 +2540,12 @@
         "required": true,
         "localized": true
       },
-      "items": {
-        "kind": "componentList",
-        "componentId": "components/faq-item/allentown",
+      "faqs": {
+        "kind": "faqReferenceList",
         "required": true,
         "localized": true,
-        "minItems": 1
+        "minItems": 1,
+        "description": "Select the published FAQ records that belong on this page. Their question, answer, category, and customer-verification state remain centrally managed."
       },
       "overviewCta": {
         "kind": "component",

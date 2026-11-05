@@ -63,7 +63,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaProjectGlanceAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaProjectGlanceAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaProjectGlanceAllentownBlock(options: CreateBetaProjectGlanceAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

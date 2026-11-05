@@ -93,7 +93,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaHeroTodosSantosBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaHeroTodosSantosBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaHeroTodosSantosBlock(options: CreateBetaHeroTodosSantosBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

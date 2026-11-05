@@ -164,7 +164,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaStepsStageBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaStepsStageBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaStepsStageBlock(options: CreateBetaStepsStageBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

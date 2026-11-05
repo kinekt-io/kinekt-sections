@@ -14,9 +14,10 @@ type RichTextInput = string | RichText | Record<string, unknown>
 type IntroInput = Omit<SectionIntroContent, 'description'> & { description?: RichTextInput | null }
 type CtaInput = Partial<Cta> | null | undefined
 
-interface FaqItem {
+interface FaqRecord {
   question: string
-  answer: string
+  answer: RichTextInput
+  reviewStatus?: 'approved' | 'needs-customer-verification'
 }
 
 interface Props extends BetaFaqAllentownContent {
@@ -24,12 +25,13 @@ interface Props extends BetaFaqAllentownContent {
   theme?: SectionTheme
   headingLevel?: HeadingLevel
   intro: IntroInput
-  items?: FaqItem[]
+  faqs?: FaqRecord[]
   overviewCta?: { cta?: CtaInput } | CtaInput
   callout?: { intro: IntroInput; ctaGroup?: CtaGroup | { primaryButton?: CtaInput; secondaryButton?: CtaInput } | null } | null
+  pendingReviewLabel?: string
 }
 
-const { id, theme = 'semi-light', headingLevel = 'h2', intro, items = [], overviewCta, callout } = Astro.props as Props
+const { id, theme = 'semi-light', headingLevel = 'h2', intro, faqs: selectedFaqs = [], overviewCta, callout, pendingReviewLabel = 'Pending customer verification' } = Astro.props as Props
 const toHtml = (value: RichTextInput, field: string): string => {
   if (typeof value === 'string') return value.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).map((part) => richTextToHtml(part, field)).join('')
   if (typeof value.html === 'string') return value.html
@@ -42,7 +44,9 @@ const normaliseIntro = (value: IntroInput, field: string): SectionIntroContent =
 const usableCta = (value: CtaInput): Cta | undefined => typeof value?.label === 'string' && value.label.trim() !== '' && typeof value.href === 'string' && value.href.trim() !== '' ? value as Cta : undefined
 const ctaFrom = (value: unknown): CtaInput => typeof value === 'object' && value !== null && 'cta' in value ? (value as { cta?: CtaInput }).cta : value as CtaInput
 const introContent = normaliseIntro(intro, 'intro.description')
-const faqs = items.filter((item) => typeof item?.question === 'string' && item.question.trim() !== '' && typeof item.answer === 'string' && item.answer.trim() !== '')
+const faqs = selectedFaqs
+  .filter((faq) => typeof faq?.question === 'string' && faq.question.trim() !== '' && faq.answer != null && faq.answer !== '')
+  .map((faq) => ({ ...faq, answerHtml: toHtml(faq.answer, `faqs.${faq.question}.answer`), needsCustomerVerification: faq.reviewStatus !== 'approved' }))
 const overviewAction = usableCta(ctaFrom(overviewCta))
 const calloutContent = callout?.intro && typeof callout.intro.heading === 'string' && callout.intro.heading.trim() !== ''
   ? { intro: normaliseIntro(callout.intro, 'callout.intro.description'), ctaGroup: { buttons: ctaGroupActions(callout.ctaGroup) } }
@@ -60,13 +64,14 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
       {faqs.length > 0 && (
         <ul class="beta-faq-allentown__items" data-kinekt-disclosure-group>
           {faqs.map((item, index) => (
-            <li class="beta-faq-allentown__item">
+            <li class="beta-faq-allentown__item" data-faq-needs-customer-verification={item.needsCustomerVerification ? 'true' : undefined}>
               <details class="beta-faq-allentown__faq" open={index === 0} data-kinekt-disclosure>
                 <summary class="beta-faq-allentown__question">
                   <span class="beta-faq-allentown__question-text">{item.question}</span>
                   <svg class="beta-faq-allentown__toggle" aria-hidden="true" focusable="false" viewBox={chevron.viewBox}><path d={chevron.path} fill="currentColor" /></svg>
                 </summary>
-                <p class="beta-faq-allentown__answer">{item.answer}</p>
+                {item.needsCustomerVerification && <p class="beta-faq-allentown__verification">{pendingReviewLabel}</p>}
+                <div class="beta-faq-allentown__answer" set:html={item.answerHtml} />
               </details>
             </li>
           ))}
@@ -149,6 +154,10 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
   .beta-faq-allentown .beta-faq-allentown__toggle { flex: none; inline-size: 1em; block-size: 1em; color: var(--kinekt-component-accent); transition: transform 150ms ease; }
   .beta-faq-allentown .beta-faq-allentown__faq[open] .beta-faq-allentown__toggle { transform: rotate(180deg); }
   .beta-faq-allentown .beta-faq-allentown__answer { margin: var(--kiw--faq-allentown-answer-gap) 0 0; color: var(--kinekt-component-muted); font-size: var(--kiw--faq-allentown-answer-size); line-height: var(--kinekt-component-text-line-height); white-space: pre-line; }
+  .beta-faq-allentown .beta-faq-allentown__answer > * { margin-block: 0; }
+  .beta-faq-allentown .beta-faq-allentown__answer > * + * { margin-block-start: var(--space-s); }
+  .beta-faq-allentown .beta-faq-allentown__verification { margin: var(--kiw--faq-allentown-answer-gap) 0 0; color: var(--error); font-size: var(--text-s); font-weight: var(--kinekt-section-heading-font-weight, var(--heading-font-weight)); }
+  .beta-faq-allentown .beta-faq-allentown__item[data-faq-needs-customer-verification='true'] :is(.beta-faq-allentown__question, .beta-faq-allentown__answer, .beta-faq-allentown__toggle) { color: var(--error); }
   .beta-faq-allentown .beta-faq-allentown__overview { display: flex; justify-content: center; }
   .beta-faq-allentown .beta-faq-allentown__callout { --kiw--callout-allentown-copy-gap: var(--space-s); width: min(100%, var(--kiw--faq-allentown-items-width)); margin-inline: auto; }
   @media (max-width: 49.999rem) {

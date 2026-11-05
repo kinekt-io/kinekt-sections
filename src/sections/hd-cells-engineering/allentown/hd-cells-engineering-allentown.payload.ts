@@ -179,7 +179,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaHdCellsEngineeringAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaHdCellsEngineeringAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaHdCellsEngineeringAllentownBlock(options: CreateBetaHdCellsEngineeringAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

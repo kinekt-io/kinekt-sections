@@ -8,18 +8,21 @@ import FaqAllentown from './faq-allentown.astro'
     heading: 'The information teams need before integrating a new energy system',
     description: 'Clear answers for the technical, operational and delivery questions that shape a confident next step.',
   }}
-  items={[
+  faqs={[
     {
-      question: 'Which operating conditions can the system support?',
-      answer: 'The final specification is validated against the intended operating range, integration constraints and relevant safety requirements.',
+      question: 'Can I see the test report before ordering?',
+      answer: 'We provide the UN38.3 test summary on request, and it accompanies every shipment.',
+      reviewStatus: 'approved',
     },
     {
-      question: 'How is the system validated before delivery?',
-      answer: 'Each build follows a documented test sequence with traceable measurements and an agreed acceptance threshold.',
+      question: 'Which charger do I need?',
+      answer: 'The charger must match the pack chemistry, maximum cell voltage and permitted charge current. Smart packs report their limits to a compatible charger.',
+      reviewStatus: 'needs-customer-verification',
     },
     {
-      question: 'Can the solution be adapted to a specific application?',
-      answer: 'Yes. Our engineering team can shape the energy system around the airframe, operating profile and programme constraints.',
+      question: 'How should packs be stored?',
+      answer: 'Storage conditions depend on the cell chemistry and pack configuration. Confirm the pack-specific instructions before publication.',
+      reviewStatus: 'needs-customer-verification',
     },
   ]}
   overviewCta={{ cta: { label: 'View all questions', href: '#' } }}

@@ -4,7 +4,7 @@ import { ctaFields, ctaStyleField, formModalPresentationFields, isSharpSolidIcon
 import { formModalPresentationToProps } from './payload.js'
 import { normalizeSectionContentWidth } from './section-width.js'
 
-type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'formModal' | 'insightSourceList' | 'contentReferenceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
+type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'faqReferenceList' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'formModal' | 'insightSourceList' | 'contentReferenceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
 
 interface ManifestFieldAdmin {
   description?: string
@@ -39,11 +39,13 @@ export type ManifestSectionDocument = Record<string, unknown> & { id?: string }
 export interface CreateManifestBlockOptions {
   mediaCollection?: CollectionSlug
   formCollection?: CollectionSlug
+  faqCollection?: CollectionSlug
   targetCollections?: CollectionSlug[]
 }
 
 type ResolvedOptions = CreateManifestBlockOptions & {
   mediaCollection: CollectionSlug
+  faqCollection?: CollectionSlug
   targetCollections: CollectionSlug[]
 }
 
@@ -129,6 +131,19 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
     case 'comparisonColumns': return { ...common, type: 'array', minRows: field.minItems, fields: [{ name: 'value', type: 'text', required: true }] }
     case 'processSteps': return { ...common, type: 'array', minRows: field.minItems, fields: [{ name: 'title', type: 'text', required: true }, { name: 'description', type: 'richText', required: true }] }
     case 'faqItems': return { ...common, type: 'array', minRows: field.minItems, fields: [{ name: 'question', type: 'text', required: true }, { name: 'answer', type: 'richText', required: true }] }
+    case 'faqReferenceList': {
+      if (!options.faqCollection) throw new Error(`Field ${name} requires a faqCollection; JSON fallback is forbidden.`)
+      return {
+        ...common,
+        type: 'relationship',
+        relationTo: options.faqCollection,
+        hasMany: true,
+        minRows: field.minItems,
+        maxRows: field.maxItems,
+        filterOptions: { _status: { equals: 'published' } },
+        admin: { initCollapsed: true, ...(field.description ? { description: field.description } : {}), ...field.admin },
+      }
+    }
     case 'comparisonRows': return {
       ...common,
       type: 'array',
@@ -191,6 +206,7 @@ export function createManifestBlock(manifest: SectionManifest, input: CreateMani
   const options: ResolvedOptions = {
     mediaCollection: input.mediaCollection ?? 'media',
     formCollection: input.formCollection,
+    faqCollection: input.faqCollection,
     targetCollections: input.targetCollections?.length ? input.targetCollections : ['pages'],
   }
 

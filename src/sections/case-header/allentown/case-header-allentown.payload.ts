@@ -107,7 +107,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaCaseHeaderAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaCaseHeaderAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaCaseHeaderAllentownBlock(options: CreateBetaCaseHeaderAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

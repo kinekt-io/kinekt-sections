@@ -114,7 +114,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaMoqLeadTimesAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaMoqLeadTimesAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaMoqLeadTimesAllentownBlock(options: CreateBetaMoqLeadTimesAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

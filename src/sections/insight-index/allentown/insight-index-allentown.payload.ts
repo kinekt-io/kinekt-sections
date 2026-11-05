@@ -42,7 +42,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaInsightIndexAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaInsightIndexAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaInsightIndexAllentownBlock(options: CreateBetaInsightIndexAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)
