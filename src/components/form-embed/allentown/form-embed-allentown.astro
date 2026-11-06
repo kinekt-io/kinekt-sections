@@ -212,6 +212,8 @@ const FormContainer = modalEnabled ? 'dialog' : 'div'
   .form-embed-allentown :is(button, input[type='submit'], input[type='button']):not(.button, .form-embed-allentown__modal-close) { display: inline-flex; align-items: center; gap: var(--space-xs); min-height: var(--kiw--section-button-height, var(--input-height)); padding: calc(var(--space-s) - var(--kiw--form-embed-allentown-border-width)) calc(var(--space-m) - var(--kiw--form-embed-allentown-border-width)); border: var(--kiw--form-embed-allentown-border-width) solid var(--kinekt-component-action); border-radius: calc(var(--buttons-has-radius) * var(--buttons-radius)); color: var(--kinekt-component-action-text); background: var(--kinekt-component-action); font-size: var(--text-l); font-weight: var(--heading-font-weight); line-height: 1; cursor: pointer; }
 
   .form-embed-allentown [data-kinekt-form-modal-open][hidden] { display: none; }
+  /* CTA Form targets must expose their opener to every parent action layout after modal initialization. Keep the wrapper before JavaScript so the inline-form fallback remains available. */
+  .form-embed-allentown--cta-action[data-kinekt-form-modal-ready='true'] { display: contents; }
   .form-embed-allentown:not([data-kinekt-form-modal-ready='true']) {
     & .form-embed-allentown__modal { display: block; position: static; width: auto; max-height: none; margin: 0; }
     & .form-embed-allentown__modal-panel { display: block; padding: 0; background: transparent; }
