@@ -10,12 +10,12 @@ import type { BetaInsightIndexAllentownContent } from './insight-index-allentown
 
 type HeadingLevel = 'h1' | 'h2' | 'h3'
 
-/** A governed insight subject. Subjects aren't in the `insightSourceList` contract yet (renderer-side extension, see the section report). */
+/** A governed subject attached to a rendered content record. */
 export interface InsightIndexSubject { id: string; label: string }
 
 /**
- * Mirrors the manifest's `insightSourceList` item (see `createManifestBlock`). The identity Payload adapter passes items
- * through unchanged, so `image` may be a Media object or an upload ID. `type` is the generic renderer's old name for `kind`.
+ * A resolved content record. The CMS adapter derives these from every published
+ * entry in the selected content type for the active Region and locale.
  */
 export interface InsightIndexSource {
   title: string

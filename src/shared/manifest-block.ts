@@ -4,7 +4,7 @@ import { ctaFields, ctaStyleField, formModalPresentationFields, isSharpSolidIcon
 import { formModalPresentationToProps } from './payload.js'
 import { normalizeSectionContentWidth } from './section-width.js'
 
-type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'faqReferenceList' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'formModal' | 'insightSourceList' | 'contentReferenceList' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
+type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'faqReferenceList' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'formModal' | 'insightSourceList' | 'contentReferenceList' | 'contentType' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
 
 interface ManifestFieldAdmin {
   description?: string
@@ -41,12 +41,14 @@ export interface CreateManifestBlockOptions {
   formCollection?: CollectionSlug
   faqCollection?: CollectionSlug
   targetCollections?: CollectionSlug[]
+  contentTypeOptions?: ReadonlyArray<{ label: string; value: CollectionSlug }>
 }
 
 type ResolvedOptions = CreateManifestBlockOptions & {
   mediaCollection: CollectionSlug
   faqCollection?: CollectionSlug
   targetCollections: CollectionSlug[]
+  contentTypeOptions: ReadonlyArray<{ label: string; value: CollectionSlug }>
 }
 
 const introFields = (): Field[] => [
@@ -186,6 +188,14 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
         { name: 'featured', type: 'checkbox', defaultValue: false },
       ],
     }
+    case 'contentType':
+      if (options.contentTypeOptions.length === 0) throw new Error(`Field ${name} requires contentTypeOptions; JSON fallback is forbidden.`)
+      return {
+        ...common,
+        type: 'select',
+        options: [...options.contentTypeOptions],
+        ...(field.description ? { admin: { description: field.description, ...field.admin } } : {}),
+      }
     // HubSpot embed code (production forms are embeds). Rendered by components/form-embed/allentown.
     case 'formEmbed': return { ...common, type: 'textarea', admin: { ...field.admin, rows: 8, description: field.description ?? 'Paste the HubSpot form embed code. The component preview keeps using a non-submitting placeholder form.' } }
     case 'formModal': return {
@@ -208,6 +218,7 @@ export function createManifestBlock(manifest: SectionManifest, input: CreateMani
     formCollection: input.formCollection,
     faqCollection: input.faqCollection,
     targetCollections: input.targetCollections?.length ? input.targetCollections : ['pages'],
+    contentTypeOptions: input.contentTypeOptions ?? [],
   }
 
   const released = manifest.status === 'released'

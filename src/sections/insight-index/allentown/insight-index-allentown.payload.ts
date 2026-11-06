@@ -32,17 +32,16 @@ const manifest = {
       ],
       "description": "CMS-selected presentation setting passed to the renderer."
     },
-    "insightSources": {
-      "kind": "contentReferenceList",
+    "contentType": {
+      "kind": "contentType",
       "required": true,
       "localized": true,
-      "minItems": 1,
-      "description": "Select published content. Its title, route, optional description, card image, article type, and subjects are rendered automatically."
+      "description": "Choose the content type that fills this index. The frontend lists its published records for the active Region and locale automatically."
     }
   }
 } as const
 
-export interface CreateBetaInsightIndexAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaInsightIndexAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[]; contentTypeOptions?: ReadonlyArray<{ label: string; value: CollectionSlug }> }
 
 export function createBetaInsightIndexAllentownBlock(options: CreateBetaInsightIndexAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

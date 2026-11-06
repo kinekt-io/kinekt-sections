@@ -3465,7 +3465,7 @@
   },
   {
     "id": "sections/insight-index/allentown",
-    "version": "26.10.2-beta.26",
+    "version": "26.10.2-beta.27",
     "slug": "insight-index-allentown",
     "category": "sections",
     "tags": [
@@ -3476,7 +3476,7 @@
     "role": "insight-index",
     "variation": "allentown",
     "title": "Insight Index Allentown",
-    "description": "A reusable searchable and facet-filtered insight card index backed by selected published content.",
+    "description": "A reusable searchable and facet-filtered index that automatically lists published content from an editor-selected content type.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411675&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -3505,12 +3505,11 @@
         ],
         "description": "CMS-selected presentation setting passed to the renderer."
       },
-      "insightSources": {
-        "kind": "contentReferenceList",
+      "contentType": {
+        "kind": "contentType",
         "required": true,
         "localized": true,
-        "minItems": 1,
-        "description": "Select published content. Its title, route, optional description, card image, article type, and subjects are rendered automatically."
+        "description": "Choose the content type that fills this index. The frontend lists its published records for the active Region and locale automatically."
       }
     },
     "runtimeProps": {
