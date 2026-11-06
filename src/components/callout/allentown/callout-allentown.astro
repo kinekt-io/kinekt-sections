@@ -143,6 +143,16 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
   }
 
   @media (min-width: 50rem) {
+    .callout-allentown .callout-allentown__action > .form-embed-allentown {
+      flex: 0 0 auto;
+    }
+
+    .callout-allentown .form-embed-allentown [data-kinekt-form-modal-open] {
+      white-space: nowrap;
+    }
+  }
+
+  @media (min-width: 50rem) {
     .callout-allentown .callout-allentown__body {
       grid-template-columns: var(--kiw--callout-allentown-desktop-body-columns);
       align-items: var(--kiw--callout-allentown-desktop-body-align-items);
