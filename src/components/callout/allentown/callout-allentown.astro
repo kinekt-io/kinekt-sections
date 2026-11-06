@@ -143,9 +143,8 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
   }
 
   @media (min-width: 50rem) {
-    .callout-allentown .callout-allentown__action > .form-embed-allentown {
-      flex: 0 0 auto;
-      inline-size: max-content;
+    .callout-allentown .callout-allentown__action > .form-embed-allentown[data-kinekt-form-modal-ready='true'] {
+      display: contents;
     }
 
     .callout-allentown .form-embed-allentown [data-kinekt-form-modal-open] {
