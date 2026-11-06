@@ -22,9 +22,10 @@ interface Props extends BetaProcessStoryAllentownContent {
   imageAspectRatio?: '1:1' | '5:4' | '4:5' | '16:9' | '9:16'
   listCtaGroup?: CtaGroup | null
   headingLevel?: 'h1' | 'h2' | 'h3'
+  mediaLoading?: 'eager' | 'lazy'
 }
 
-const { id, theme = 'light', intro, introCtaGroup, image, items = [], markerType = 'label', imageAspectRatio = '16:9', listCtaGroup, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
+const { id, theme = 'light', intro, introCtaGroup, image, items = [], markerType = 'label', imageAspectRatio = '16:9', listCtaGroup, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props
 const itemHeadingLevel = ({ h1: 'h2', h2: 'h3', h3: 'h4' } as const)[headingLevel] ?? 'h3'
 const introDescription = intro.description == null || typeof intro.description === 'string'
   ? intro.description ?? undefined

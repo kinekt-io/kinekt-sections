@@ -20,9 +20,10 @@ interface Props extends BetaMediaAccordionAllentownContent {
   id?: string
   headingLevel?: 'h1' | 'h2' | 'h3'
   mediaLoading?: 'eager' | 'lazy'
+  items?: AccordionItemContent[]
 }
 
-const { id, theme = 'light', intro, ctas, media, mediaAspectRatio = '5:4', items = [], headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
+const { id, theme = 'light', intro, ctas, media, mediaAspectRatio = '5:4', items = [], headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props
 const introDescription = intro.description == null || typeof intro.description === 'string'
   ? intro.description ?? undefined
   : { html: typeof intro.description.html === 'string' ? intro.description.html : richTextToHtml(intro.description, 'intro.description') }

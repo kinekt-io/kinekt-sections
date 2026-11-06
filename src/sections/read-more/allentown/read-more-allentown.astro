@@ -16,6 +16,7 @@ interface Props {
   ctas: CtaGroup
   media: Media
   mediaAspectRatio?: '1:1' | '16:9' | '9:16' | '5:4' | '4:5'
+  mediaLoading?: 'eager' | 'lazy'
 }
 
 const { theme = 'light', intro, label, ctas, media, mediaAspectRatio = '5:4', headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props

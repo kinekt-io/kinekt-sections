@@ -22,9 +22,10 @@ interface Props extends BetaStepsStageContent {
   id?: string
   headingLevel?: 'h1' | 'h2' | 'h3'
   mediaLoading?: 'eager' | 'lazy'
+  markerType?: 'number' | 'icon'
 }
 
-const { id, theme = 'light', intro, introCtaGroup, media, mediaAspectRatio = '5:4', markerType = 'number', steps = [], listCtaGroup, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
+const { id, theme = 'light', intro, introCtaGroup, media, mediaAspectRatio = '5:4', markerType = 'number', steps = [], listCtaGroup, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props
 const stepHeadingLevel = ({ h1: 'h2', h2: 'h3', h3: 'h4' } as const)[headingLevel] ?? 'h3'
 const introDescription = intro.description == null || typeof intro.description === 'string'
   ? intro.description ?? undefined

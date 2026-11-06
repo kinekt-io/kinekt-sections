@@ -17,9 +17,11 @@ interface Props {
   mediaAspectRatio?: '1:1' | '16:9' | '9:16' | '5:4' | '4:5'
   headingLevel?: 'h1' | 'h2' | 'h3'
   mediaLoading?: 'eager' | 'lazy'
+  facts?: FactCardContent[]
+  id?: string
 }
 
-const { theme, intro, media, mediaAspectRatio = '5:4', facts = [], headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props
+const { id, theme, intro, media, mediaAspectRatio = '5:4', facts = [], headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props
 const factHeadingLevel = ({ h1: 'h2', h2: 'h3', h3: 'h4' } as const)[headingLevel] ?? 'h3'
 const introDescription = intro.description == null || typeof intro.description === 'string'
   ? intro.description ?? undefined
@@ -27,7 +29,7 @@ const introDescription = intro.description == null || typeof intro.description =
 const introContent: SectionIntroContent = { ...intro, description: introDescription }
 const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url === 'string')
 ---
-<section class="media-fact-grid-allentown" data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-media-aspect-ratio={mediaAspectRatio}>
+<section class="media-fact-grid-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme} data-media-aspect-ratio={mediaAspectRatio}>
   <div class="media-fact-grid-allentown__container">
     <div class:list={['media-fact-grid-allentown__lead', { 'media-fact-grid-allentown__lead--media': hasMedia }]}>
       <header class="media-fact-grid-allentown__intro">
