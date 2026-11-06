@@ -2,6 +2,7 @@
 import '../../../styles/wireframe-tokens.css'
 import BatteryCardTrinity from '../../../components/battery-card/trinity/battery-card-trinity.astro'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
 import { ctaGroupActions } from '../../../shared/content.js'
@@ -59,12 +60,9 @@ const nextIcon = ctaIconPaths('chevron-right')!
       </div>
     </div>
     {actions.length > 0 && <nav class="product-hero-trinity__actions" aria-label="Section actions">
-      {actions.map((action, index) => {
-        const icon = ctaIconPaths(action.icon)
-        return <Button href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>
-          {icon && <svg aria-hidden="true" focusable="false" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}
-        </Button>
-      })}
+      {actions.map((action, index) => (
+        <CtaAction cta={action} style={action.style ?? (index === 0 ? 'primary' : 'clear')} />
+      ))}
     </nav>}
   </div>
 </section>

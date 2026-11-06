@@ -104,7 +104,7 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
       minRows: field.minItems ?? 0,
       maxRows: field.maxItems ?? 2,
       admin: { initCollapsed: true, ...(field.description ? { description: field.description } : {}), ...field.admin },
-      fields: [ctaStyleField(), ...ctaFields(options.targetCollections)],
+      fields: [ctaStyleField(), ...ctaFields(options.targetCollections, false, true)],
     }
     case 'sectionIntro': return { ...common, type: 'group', fields: introFields() }
     case 'component': {

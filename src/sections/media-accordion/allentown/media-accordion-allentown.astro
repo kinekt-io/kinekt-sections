@@ -1,11 +1,10 @@
 ---
 import '../../../styles/wireframe-tokens.css'
 import AccordionItem, { type AccordionItemContent } from '../../../components/accordion-item/allentown/accordion-item-allentown.astro'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import { ctaGroupActions, type Cta, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BetaMediaAccordionAllentownContent } from './media-accordion-allentown.types.js'
@@ -37,10 +36,9 @@ const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url 
       <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
       {actions.length > 0 && (
         <div class="media-accordion-allentown__actions">
-          {actions.map((cta) => {
-            const icon = isCtaIcon(cta.icon) ? ctaIconPaths(cta.icon) : undefined
-            return <Button href={cta.href} label={cta.label} style={cta.style ?? 'clear'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-          })}
+          {actions.map((cta) => (
+            <CtaAction cta={cta} style={cta.style ?? 'clear'} />
+          ))}
         </div>
       )}
     </header>

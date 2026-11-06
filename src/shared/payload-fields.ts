@@ -127,14 +127,14 @@ export function formModalPresentationFields(): Field[] {
 }
 
 
-export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], required = false): Field[] {
+export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], required = false, allowForm = false): Field[] {
   return [
     {
       name: 'label',
       type: 'text',
       label: 'Label',
       required,
-      validate: (value: unknown, options: { siblingData?: unknown }) => validateOptionalCtaSibling(value, options, required),
+      validate: (value: unknown, options: { siblingData?: unknown }) => validateOptionalCtaSibling(value, options, required, allowForm),
     },
     {
       name: 'destinationType',
@@ -142,8 +142,15 @@ export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], 
       label: 'Link type',
       required,
       defaultValue: 'url',
-      options: [{ label: 'Content', value: 'content' }, { label: 'URL', value: 'url' }],
-      validate: (value: unknown) => value === undefined || value === null || value === 'content' || value === 'url' || 'Choose Content or URL.',
+      options: [
+        { label: 'Content', value: 'content' },
+        { label: 'URL', value: 'url' },
+        ...(allowForm ? [{ label: 'Form', value: 'form' }] : []),
+      ],
+      validate: (value: unknown) =>
+        value === undefined || value === null || value === 'content' || value === 'url' || (allowForm && value === 'form')
+          ? true
+          : `Choose Content, URL${allowForm ? ', or Form' : ''}.`,
       hooks: {
         afterRead: [({ value, siblingData }) => value === 'content' && !siblingData?.page && isSafeCtaHref(siblingData?.href) ? 'url' : value],
       },
@@ -168,6 +175,21 @@ export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], 
       validate: (value: unknown, { siblingData }: { siblingData?: unknown }) =>
         validateOptionalCtaAnchor(value, siblingData),
     },
+    ...(allowForm ? [{
+      name: 'form',
+      type: 'textarea' as const,
+      label: 'HubSpot embed code',
+      admin: {
+        condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'form',
+        description: 'Paste the complete HubSpot embed code. This CTA opens it in a modal.',
+      },
+      validate: (value: unknown, { siblingData }: { siblingData?: unknown }) => {
+        const siblings = ctaSiblingData(siblingData)
+        return hasText(siblings.label) && ctaDestinationType(siblings, true) === 'form'
+          ? hasText(value) || formEmbedMessage
+          : true
+      },
+    }] : []),
     ctaIconField(),
   ]
 }
@@ -177,13 +199,14 @@ export function ctaGroupFields(targetCollections: CollectionSlug | CollectionSlu
     name,
     type: 'group',
     label: name.toLowerCase().includes('primary') ? 'Primary CTA' : 'Secondary CTA',
-    fields: [ctaStyleField(), ...ctaFields(targetCollections)],
+    fields: [ctaStyleField(), ...ctaFields(targetCollections, false, true)],
   }))
 }
 
 const ctaUrlMessage = 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.'
 const ctaAnchorMessage = 'Enter an anchor that starts with #, for example #main-content.'
 const ctaContentMessage = 'Select content for this action.'
+const formEmbedMessage = 'Paste the complete HubSpot embed code.'
 
 function ctaSiblingData(value: unknown): Record<string, unknown> {
   if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
@@ -206,15 +229,16 @@ function hasRelationshipTarget(value: unknown): boolean {
   return hasRelationshipTarget(relation.id)
 }
 
-function ctaDestinationType(siblingData: Record<string, unknown>): 'content' | 'url' | undefined {
+function ctaDestinationType(siblingData: Record<string, unknown>, allowForm = false): 'content' | 'url' | 'form' | undefined {
   const destinationType = siblingData.destinationType ?? 'url'
-  return destinationType === 'content' || destinationType === 'url' ? destinationType : undefined
+  return destinationType === 'content' || destinationType === 'url' || (allowForm && destinationType === 'form') ? destinationType : undefined
 }
 
 function hasCtaTarget(siblingData: Record<string, unknown>): boolean {
   const hasHref = siblingData.href !== undefined && siblingData.href !== null && siblingData.href !== ''
   const hasPage = siblingData.page !== undefined && siblingData.page !== null
-  return hasHref || hasPage
+  const hasForm = siblingData.form !== undefined && siblingData.form !== null && siblingData.form !== ''
+  return hasHref || hasPage || hasForm
 }
 
 /**
@@ -225,6 +249,7 @@ export function validateOptionalCtaSibling(
   value: unknown,
   { siblingData }: { siblingData?: unknown },
   required = false,
+  allowForm = false,
 ): true | string {
   const siblings = ctaSiblingData(siblingData)
   if (!hasText(value)) {
@@ -232,24 +257,26 @@ export function validateOptionalCtaSibling(
     return required ? requiredTextMessage : true
   }
 
-  const destinationType = ctaDestinationType(siblings)
-  if (!destinationType) return 'Choose Content or URL.'
+  const destinationType = ctaDestinationType(siblings, allowForm)
+  if (!destinationType) return `Choose Content, URL${allowForm ? ', or Form' : ''}.`
   if (destinationType === 'content') return hasRelationshipTarget(siblings.page) || ctaContentMessage
+  if (destinationType === 'form') return hasText(siblings.form) || formEmbedMessage
   return isSafeCtaHref(siblings.href) || ctaUrlMessage
 }
 
 function validateOptionalCtaHref(value: unknown, siblingData: unknown): true | string {
   const siblings = ctaSiblingData(siblingData)
+  if (ctaDestinationType(siblings, true) !== 'url') return true
   if (value !== undefined && value !== null && value !== '' && !isSafeCtaHref(value)) return ctaUrlMessage
-  if (hasText(siblings.label) && ctaDestinationType(siblings) === 'url' && !isSafeCtaHref(value)) return ctaUrlMessage
+  if (hasText(siblings.label) && !isSafeCtaHref(value)) return ctaUrlMessage
   return true
 }
 
 function validateOptionalCtaAnchor(value: unknown, siblingData: unknown): true | string {
   const siblings = ctaSiblingData(siblingData)
+  if (ctaDestinationType(siblings, true) !== 'content') return true
   if (value === undefined || value === null || value === '') return true
-  if (!isSafeFragmentIdentifier(value)) return ctaAnchorMessage
-  return ctaDestinationType(siblings) === 'content' ? true : ctaAnchorMessage
+  return isSafeFragmentIdentifier(value) ? true : ctaAnchorMessage
 }
 
 function ctaContentTargetField(targetCollections: CollectionSlug | CollectionSlug[]): Field {

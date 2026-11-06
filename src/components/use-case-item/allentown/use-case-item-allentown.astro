@@ -1,5 +1,5 @@
 ---
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import FacilityFact from '../../facility-fact/allentown/facility-fact-allentown.astro'
 import type { Cta, CtaGroup, RichText } from '../../../shared/content.js'
 import { ctaGroupActions } from '../../../shared/content.js'
@@ -30,10 +30,9 @@ const classes = ['use-case-item-allentown', className].filter(Boolean).join(' ')
   </FacilityFact>
   {actions.length > 0 && (
     <div class="use-case-item-allentown__actions">
-      {actions.map((cta) => {
-        const icon = isCtaIcon(cta.icon) ? ctaIconPaths(cta.icon) : undefined
-        return <Button href={cta.href} label={cta.label} style={cta.style ?? 'clear'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-      })}
+      {actions.map((cta) => (
+        <CtaAction cta={cta} style={cta.style ?? 'clear'} />
+      ))}
     </div>
   )}
 </article>

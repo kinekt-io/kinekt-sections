@@ -2,6 +2,7 @@
 import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import Callout from '../../../components/callout/allentown/callout-allentown.astro'
 import SpecPair from '../../../components/spec-pair/allentown/spec-pair-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
@@ -66,10 +67,9 @@ const descriptionHtml = (description: BatteryModel['description']) => typeof des
         <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
         {actions.length > 0 && (
           <nav class="beta-battery-models-allentown__actions" aria-label="Section actions">
-            {actions.map((action, index) => {
-              const icon = action.icon ? ctaIconPaths(action.icon) : undefined
-              return <Button class="beta-battery-models-allentown__action" href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-            })}
+            {actions.map((action, index) => (
+              <CtaAction cta={action} class="beta-battery-models-allentown__action" style={action.style ?? (index === 0 ? 'primary' : 'clear')} />
+            ))}
           </nav>
         )}
       </header>

@@ -20,7 +20,7 @@ export function createReadMoreBlock({ mediaCollection = 'media', targetCollectio
       { name: 'theme', type: 'select', localized: true, required: true, defaultValue: 'light', options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })) },
       { name: 'intro', type: 'group', localized: true, fields: [{ name: 'accentHeading', type: 'text' }, { name: 'heading', type: 'text', required: true }, { name: 'description', type: 'richText' }] },
       { name: 'label', type: 'group', localized: true, fields: [{ name: 'text', type: 'text' }, { name: 'icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' } }] },
-      { name: 'ctas', type: 'array', label: 'CTA Group', localized: true, minRows: 0, maxRows: 2, admin: { initCollapsed: true, description: 'Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base.' }, fields: [ctaStyleField(), ...ctaFields(targetCollections)] },
+      { name: 'ctas', type: 'array', label: 'CTA Group', localized: true, minRows: 0, maxRows: 2, admin: { initCollapsed: true, description: 'Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base.' }, fields: [ctaStyleField(), ...ctaFields(targetCollections, false, true)] },
       { name: 'media', type: 'upload', relationTo: mediaCollection, localized: true, required: true },
       {
         name: 'mediaAspectRatio',

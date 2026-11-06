@@ -1,8 +1,7 @@
 ---
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
 import { ctaGroupActions, type Cta, type CtaGroup, type RichText } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 
 export interface ProcessItemContent {
@@ -41,10 +40,9 @@ const descriptionHtml = typeof item.description === 'string'
   )}
   {actions.length > 0 && (
     <div class="process-item-allentown__actions">
-      {actions.map((action) => {
-        const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-        return <Button href={action.href} label={action.label} style={action.style ?? 'primary'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-      })}
+      {actions.map((action) => (
+        <CtaAction cta={action} style={action.style ?? 'primary'} />
+      ))}
     </div>
   )}
 </div>

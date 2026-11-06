@@ -1,10 +1,9 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import Label from '../../../atoms/label/allentown/label-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import { ctaGroupActions, type CtaGroup, type Media, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 interface Props {
@@ -29,10 +28,9 @@ const actions = ctaGroupActions(ctas)
         {label?.text && <Label slot="after-heading" class="read-more-allentown__label" text={label.text} icon={label.icon} />}
       </SectionIntro>
       {actions.length > 0 && <div class="read-more-allentown__actions">
-        {actions.map((action, index) => {
-          const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-          return <Button class="read-more-allentown__action" href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-        })}
+        {actions.map((action, index) => (
+          <CtaAction cta={action} class="read-more-allentown__action" style={action.style ?? (index === 0 ? 'primary' : 'clear')} />
+        ))}
       </div>}
     </header>
     <picture class="read-more-allentown__media">

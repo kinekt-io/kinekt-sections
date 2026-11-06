@@ -1,11 +1,10 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import OutputCard from '../../../components/output-card/allentown/output-card-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
 import { ctaGroupActions } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { OutputCardGridContent } from './output-card-grid-allentown.types.js'
 
 interface Props extends OutputCardGridContent {
@@ -24,10 +23,9 @@ const cardHeadingLevel = ('h' + Math.min(Number(headingLevel.slice(1)) + 1, 6)) 
       </div>
       {actions.length > 0 && (
         <nav class="output-card-grid__actions" aria-label="Section actions">
-          {actions.map((action, index) => {
-            const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-            return <Button class="output-card-grid__action" href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-          })}
+          {actions.map((action, index) => (
+            <CtaAction cta={action} class="output-card-grid__action" style={action.style ?? (index === 0 ? 'primary' : 'clear')} />
+          ))}
         </nav>
       )}
     </header>

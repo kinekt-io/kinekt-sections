@@ -3,10 +3,9 @@ import '../../../styles/wireframe-tokens.css'
 import HomepageProblemItem, { type HomepageProblemItemContent } from '../../../components/homepage-problem-item/allentown/homepage-problem-item-allentown.astro'
 import HomepageSolutionStep, { type HomepageSolutionStepContent } from '../../../components/homepage-solution-step/allentown/homepage-solution-step-allentown.astro'
 import Label from '../../../atoms/label/allentown/label-allentown.astro'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import { ctaGroupActions, type Cta, type CtaGroup, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { ctaGroupActions, isLinkCta, type Cta, type CtaGroup, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { isSafeCtaHref } from '../../../urls.js'
@@ -69,7 +68,7 @@ const hasTitle = (item: { title?: unknown } | null | undefined) => typeof item?.
 const visibleProblemItems = problemItems.filter(hasTitle)
 const visibleSolutionSteps = solutionSteps.filter(hasTitle)
 const actions = ctaGroupActions(solutionCtaGroup)
-for (const cta of actions) if (!isSafeCtaHref(cta.href)) throw new Error('solutionCtaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
+for (const cta of actions) if (isLinkCta(cta) && !isSafeCtaHref(cta.href)) throw new Error('solutionCtaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
 // One infographic in two static states. From 50rem (with motion allowed) the script hides the solution copy and
 // scrubs the problem copy from state 0 to 1 while it sticks beside both text groups (runtimeProps.scrollAnimation).
 const groups = [
@@ -160,10 +159,9 @@ const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice
         )}
         {state === 'solution' && actions.length > 0 && (
           <div class="homepage-problem-solution-allentown__actions">
-            {actions.map((cta, index) => {
-              const icon = isCtaIcon(cta.icon) ? ctaIconPaths(cta.icon) : undefined
-              return <Button href={cta.href} label={cta.label} style={cta.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-            })}
+            {actions.map((cta, index) => (
+              <CtaAction cta={cta} style={cta.style ?? (index === 0 ? 'primary' : 'clear')} />
+            ))}
           </div>
         )}
       </div>

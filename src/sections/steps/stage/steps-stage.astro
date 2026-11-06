@@ -1,7 +1,6 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import StepStage, { type StepStageContent } from '../../../components/step/stage/step-stage.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
@@ -43,10 +42,9 @@ const listActions = ctaGroupActions(listCtaGroup)
         <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
         {introActions.length > 0 && (
           <nav class="steps-stage__actions steps-stage__intro-actions" aria-label="Introduction actions">
-            {introActions.map((action) => {
-              const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-              return <Button href={action.href} label={action.label} style={action.style ?? 'primary'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-            })}
+            {introActions.map((action) => (
+              <CtaAction cta={action} style={action.style ?? 'primary'} />
+            ))}
           </nav>
         )}
       </header>
@@ -66,10 +64,9 @@ const listActions = ctaGroupActions(listCtaGroup)
         )}
         {listActions.length > 0 && (
           <nav class="steps-stage__actions steps-stage__list-actions" aria-label="Steps actions">
-            {listActions.map((action) => {
-              const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-              return <Button href={action.href} label={action.label} style={action.style ?? 'primary'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-            })}
+            {listActions.map((action) => (
+              <CtaAction cta={action} style={action.style ?? 'primary'} />
+            ))}
           </nav>
         )}
       </div>

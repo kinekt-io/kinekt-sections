@@ -1,8 +1,7 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import { ctaGroupActions } from '../../../shared/content.js'
 import type { StreamerAllentownContent } from './streamer-allentown.types.js'
 
@@ -19,12 +18,9 @@ const actions = ctaGroupActions(ctas)
     <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
     {actions.length > 0 && (
       <nav class="streamer-allentown__actions" aria-label="Section actions">
-        {actions.map((action, index) => {
-          const icon = action.icon ? ctaIconPaths(action.icon) : undefined
-          return <Button class="streamer-allentown__action" href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>
-            {icon && <svg aria-hidden="true" focusable="false" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}
-          </Button>
-        })}
+        {actions.map((action, index) => (
+          <CtaAction cta={action} class="streamer-allentown__action" style={action.style ?? (index === 0 ? 'primary' : 'clear')} />
+        ))}
       </nav>
     )}
   </div>

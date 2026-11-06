@@ -1,12 +1,11 @@
 ---
 import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import type { Cta, Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { ctaGroupActions, type Cta, type Media, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
 interface ContactMethod {
   icon?: string
@@ -41,7 +40,7 @@ const {
   headingLevel = 'h2',
 } = Astro.props as Props
 
-const actionList = actions.filter((action): action is Cta => Boolean(action?.label && action.href))
+const actionList = ctaGroupActions(actions)
 ---
 <section class="beta-action-contact-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="beta-action-contact-allentown__container">
@@ -58,10 +57,9 @@ const actionList = actions.filter((action): action is Cta => Boolean(action?.lab
               <div class="beta-action-contact-allentown__action-controls">
                 {actionList.length > 0 && (
                   <nav class="beta-action-contact-allentown__actions" aria-label="Contact actions">
-                    {actionList.map((action, index) => {
-                      const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-                      return <Button href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'secondary')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-                    })}
+                    {actionList.map((action, index) => (
+                      <CtaAction cta={action} style={action.style ?? (index === 0 ? 'primary' : 'secondary')} />
+                    ))}
                   </nav>
                 )}
                 {actionNote && <p class="beta-action-contact-allentown__action-note">{actionNote}</p>}

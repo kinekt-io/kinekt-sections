@@ -97,10 +97,11 @@ function ctaGroupFields(targetRelation: CollectionSlug | CollectionSlug[]): Fiel
     type: 'group',
     fields: [
       { name: 'label', label: 'Link label', type: 'text' },
-      { name: 'destinationType', label: 'Link type', type: 'select', defaultValue: 'url', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }], hooks: { afterRead: [({ value, siblingData }) => value === 'page' && !siblingData?.page && isSafeCtaHref(siblingData?.href) ? 'url' : value] } },
-      { name: 'href', label: 'URL or anchor', type: 'text', admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeCtaHref(value) || 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.' },
+      { name: 'destinationType', label: 'Link type', type: 'select', defaultValue: 'url', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }, { label: 'Form', value: 'form' }], hooks: { afterRead: [({ value, siblingData }) => value === 'page' && !siblingData?.page && isSafeCtaHref(siblingData?.href) ? 'url' : value] } },
+      { name: 'href', label: 'URL or anchor', type: 'text', admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown, { siblingData }: { siblingData?: Record<string, unknown> }) => siblingData?.destinationType !== 'url' || value === undefined || value === null || value === '' || isSafeCtaHref(value) || 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.' },
       targetField(targetRelation),
-      { name: 'anchor', label: 'Anchor ID', type: 'text', admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'page', description: 'Optional fragment on the selected content, starting with #. For example: #main-content.' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeFragmentIdentifier(value) || 'Enter an anchor that starts with #, for example #main-content.' },
+      { name: 'anchor', label: 'Anchor ID', type: 'text', admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'page', description: 'Optional fragment on the selected content, starting with #. For example: #main-content.' }, validate: (value: unknown, { siblingData }: { siblingData?: Record<string, unknown> }) => siblingData?.destinationType !== 'page' || value === undefined || value === null || value === '' || isSafeFragmentIdentifier(value) || 'Enter an anchor that starts with #, for example #main-content.' },
+      { name: 'form', label: 'HubSpot embed code', type: 'textarea', admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'form', description: 'Paste the complete HubSpot embed code. This CTA opens it in a modal.' } },
       { name: 'icon', label: 'Icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example arrow-right or bolt.' } },
     ],
   })) as Field[]
@@ -159,6 +160,9 @@ function destinationToProps(value: Record<string, unknown>, field: string, label
   const label = requireText(value[labelField], `${field}.${labelField}`)
   const icon = optionalSharpSolidIcon(value.icon, `${field}.icon`)
 
+  if (value.destinationType === 'form') {
+    return { label, form: requireText(value.form, `${field}.form`), ...(icon ? { icon } : {}) }
+  }
   if (value.destinationType === 'page') {
     const target = relationshipTarget(value.page, `${field}.page`)
     const href = contentHref(target.collection, target.id)
@@ -174,7 +178,7 @@ function destinationToProps(value: Record<string, unknown>, field: string, label
     if (!isSafeCtaHref(href)) throw new Error(`${field}.href must be an HTTP(S) URL, root-relative URL, or anchor.`)
     return { label, href, ...(icon ? { icon } : {}) }
   }
-  throw new Error(`${field}.destinationType must be page or url.`)
+  throw new Error(`${field}.destinationType must be page, url, or form.`)
 }
 
 function relationshipTarget(value: unknown, field: string): { collection: string; id: string } {

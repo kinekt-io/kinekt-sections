@@ -1,11 +1,10 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import FormEmbed from '../../../components/form-embed/allentown/form-embed-allentown.astro'
 import OutputCard from '../../../components/output-card/allentown/output-card-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import { ctaGroupActions } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { ProductOptionsAllentownContent } from './product-options-allentown.types.js'
 
 interface Props extends ProductOptionsAllentownContent {
@@ -25,10 +24,9 @@ const ChildHeading = `h${Number(headingLevel.slice(1)) + 1}` as ChildHeading
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
       {actions.length > 0 && (
         <nav class="product-options-allentown__actions" aria-label="Section actions">
-          {actions.map((action, index) => {
-            const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-            return <Button class="product-options-allentown__action" href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-          })}
+          {actions.map((action, index) => (
+            <CtaAction cta={action} class="product-options-allentown__action" style={action.style ?? (index === 0 ? 'primary' : 'clear')} />
+          ))}
         </nav>
       )}
     </header>

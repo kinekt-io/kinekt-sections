@@ -23,7 +23,7 @@ export function createOutputCardGridBlock({ mediaCollection = 'media', targetCol
         minRows: 0,
         maxRows: 2,
         admin: { initCollapsed: true },
-        fields: [ctaStyleField(), ...ctaFields(targetCollections)],
+        fields: [ctaStyleField(), ...ctaFields(targetCollections, false, true)],
       },
       { name: 'label', type: 'text', localized: true },
       { name: 'cards', type: 'array', localized: true, required: true, minRows: 1, fields: [{ name: 'image', type: 'upload', relationTo: mediaCollection, required: true }, { name: 'title', type: 'text', required: true }, { name: 'description', type: 'richText', required: true }] },

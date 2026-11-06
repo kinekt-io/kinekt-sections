@@ -23,7 +23,7 @@ function actionFields(targetCollections: CollectionSlug[]): Field[] {
       },
       fields: [
         ctaStyleField(),
-        ...ctaFields(targetCollections),
+        ...ctaFields(targetCollections, false, true),
       ],
     },
   ]

@@ -1,6 +1,6 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import { ctaGroupActions, type CtaGroup, type SectionIntro as Intro, type SectionTheme } from '../../../shared/content.js'
@@ -46,10 +46,9 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
         })}</tbody>
       </table>
     </div>
-    {actions.length > 0 && <div class="progress-list-allentown__actions">{actions.map((action) => {
-      const icon = ctaIconPaths(action.icon)
-      return <Button href={action.href} label={action.label} style={action.style}>{icon && <svg aria-hidden="true" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-    })}</div>}
+    {actions.length > 0 && <div class="progress-list-allentown__actions">{actions.map((action) => (
+      <CtaAction cta={action} style={action.style} />
+    ))}</div>}
   </div>
 </section>
 

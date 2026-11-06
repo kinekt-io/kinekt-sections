@@ -73,6 +73,28 @@ test('CTA adapters retain complete URL and content destinations', () => {
   )
 })
 
+test('CTA group actions retain valid HubSpot form targets', () => {
+  const form = ctaFields(['pages', 'articles'], false, true).find((candidate) => candidate.name === 'form')
+  assert.ok(form)
+  assert.equal(typeof form.validate, 'function')
+
+  assert.deepEqual(
+    ctaToProps(
+      { label: 'Book a call', destinationType: 'form', form: '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>' },
+      'cta',
+    ),
+    { label: 'Book a call', form: '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>' },
+  )
+  assert.equal(
+    form.validate('<script src="https://js.hsforms.net/forms/embed/v2.js"></script>', { siblingData: { destinationType: 'form', label: 'Book a call' } }),
+    true,
+  )
+  assert.equal(
+    form.validate(' ', { siblingData: { destinationType: 'form', label: 'Book a call' } }),
+    'Paste the complete HubSpot embed code.',
+  )
+})
+
 test('CTA adapters support same-page and selected-content anchors', () => {
   assert.deepEqual(
     ctaToProps({ label: 'View models', destinationType: 'url', href: '#our-models' }, 'cta'),

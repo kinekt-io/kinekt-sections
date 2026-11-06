@@ -26,7 +26,7 @@ export function createProductHeroTrinityBlock(options: CreateProductHeroTrinityB
           minRows: 0,
           maxRows: 2,
           admin: { initCollapsed: true, description: 'Optional actions below the model list. Add up to two buttons.' },
-          fields: [ctaStyleField(), ...ctaFields(options.targetCollections ?? ['pages'])],
+          fields: [ctaStyleField(), ...ctaFields(options.targetCollections ?? ['pages'], false, true)],
         }]
       }
       if (field.type === 'select' && field.name === 'theme') return [{ ...field, defaultValue: 'dark' }]

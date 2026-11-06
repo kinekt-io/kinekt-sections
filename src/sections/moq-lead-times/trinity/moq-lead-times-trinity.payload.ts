@@ -147,7 +147,7 @@ const manifest = {
               "localized": true,
               "minItems": 0,
               "maxItems": 2,
-              "description": "Add zero, one or two actions. Set each action’s style, label, Content or URL target, optional Content anchor, and optional icon."
+              "description": "Add zero, one or two actions. Set each action’s style, label, and Content, URL, or Form target. A Form target opens its HubSpot embed code in a modal."
             }
           }
         }

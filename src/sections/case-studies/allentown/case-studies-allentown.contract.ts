@@ -93,7 +93,7 @@ export function createCaseStudiesAllentownBlock({
         minRows: 0,
         maxRows: 2,
         admin: { initCollapsed: true, description: 'Add zero, one or two actions. Set each style to Primary, Secondary, Clear or Clear base.' },
-        fields: [ctaStyleField(), ...ctaFields(targetRelation)],
+        fields: [ctaStyleField(), ...ctaFields(targetRelation, false, true)],
       },
       {
         name: 'carousel', type: 'group', label: 'Carousel', localized: true, required: true,

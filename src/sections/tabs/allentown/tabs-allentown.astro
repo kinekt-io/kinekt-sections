@@ -2,9 +2,8 @@
 import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import FormEmbed from '../../../components/form-embed/allentown/form-embed-allentown.astro'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import { ctaGroupActions } from '../../../shared/content.js'
-import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 import type { CtaGroup, FormModalPresentation, SectionIntro as Intro, SectionTheme } from '../../../shared/content.js'
 
@@ -38,12 +37,9 @@ const hasIntro = (value?: Partial<Intro>) => Boolean(value?.accentHeading || val
           {(hasIntro(tab.intro) || actions.length > 0) && <div class="beta-tabs-allentown__panel-intro">
             {hasIntro(tab.intro) && <SectionIntro intro={{ ...tab.intro, heading: tab.intro?.heading ?? '' }} headingLevel={panelHeading} />}
             {actions.length > 0 && <div class="beta-tabs-allentown__actions">
-              {actions.map((action, actionIndex) => {
-                const icon = ctaIconPaths(action.icon)
-                return <Button href={action.href} label={action.label} style={action.style ?? (actionIndex === 0 ? 'primary' : 'clear')}>
-                  {icon && <svg data-kinekt-cta-icon aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}
-                </Button>
-              })}
+              {actions.map((action, actionIndex) => (
+                <CtaAction cta={action} style={action.style ?? (actionIndex === 0 ? 'primary' : 'clear')} />
+              ))}
             </div>}
           </div>}
           {hasForm && <FormEmbed class="beta-tabs-allentown__form" form={tab.form} formPresentation={tab.formPresentation} />}

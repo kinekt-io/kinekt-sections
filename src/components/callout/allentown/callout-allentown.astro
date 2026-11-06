@@ -1,8 +1,7 @@
 ---
 import SectionIntro from "../../../primitives/section-intro/section-intro.astro";
 import SubtitleFlightPath from "../../../primitives/subtitle-flight-path/subtitle-flight-path.astro";
-import Button from "../../../controls/button/allentown/button-allentown.astro";
-import { ctaIconPaths } from "../../../shared/cta-icons.js";
+import CtaAction from "../../../shared/cta-action-allentown.astro";
 import type {
   CtaGroup,
   SectionIntro as SectionIntroContent,
@@ -45,10 +44,9 @@ const contentIntro = { ...callout.intro, accentHeading: undefined };
         <div class="callout-allentown__action">
           {hasCustomActions ? <slot name="actions" /> : (
             <>
-              {actions.map((action, index) => {
-                const icon = action.icon ? ctaIconPaths(action.icon) : undefined;
-                return <Button href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')} size={buttonSize}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-              })}
+              {actions.map((action, index) => (
+                <CtaAction cta={action} style={action.style ?? (index === 0 ? 'primary' : 'clear')} size={buttonSize} />
+              ))}
             </>
           )}
         </div>

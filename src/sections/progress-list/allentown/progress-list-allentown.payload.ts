@@ -27,7 +27,7 @@ export function createProgressListAllentownBlock(options: CreateProgressListAlle
       { name: 'itemHeading', type: 'text', localized: true, required: true, defaultValue: 'Item', validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' },
       { name: 'statusHeading', type: 'text', localized: true, required: true, defaultValue: 'Status', validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' },
       { name: 'items', type: 'array', localized: true, required: true, minRows: 1, admin: { initCollapsed: true }, fields: itemFields },
-      { name: 'ctaGroup', type: 'array', localized: true, minRows: 0, maxRows: 2, admin: { initCollapsed: true }, fields: [ctaStyleField(), ...ctaFields(targetCollections)] },
+      { name: 'ctaGroup', type: 'array', localized: true, minRows: 0, maxRows: 2, admin: { initCollapsed: true }, fields: [ctaStyleField(), ...ctaFields(targetCollections, false, true)] },
     ],
   }
 }

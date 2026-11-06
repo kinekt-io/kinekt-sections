@@ -5,7 +5,7 @@
   "id": "components/cta-group/allentown",
   "slug": "cta-group-allentown",
   "title": "CTA Group Allentown",
-  "description": "An optional, collapsible group of up to two actions. Each action has its own Button Allentown style, label, link type, content or URL target, optional content anchor, and icon.",
+  "description": "An optional, collapsible group of up to two actions. Each action has its own Button Allentown style, label, and a Content, URL, or Form target. Form targets use the same HubSpot embed code as Form Section and open from the CTA button.",
   "category": "components",
   "role": "cta-group",
   "variation": "allentown",
@@ -21,7 +21,7 @@
       "localized": true,
       "minItems": 0,
       "maxItems": 2,
-      "description": "Add zero, one or two actions. Set each action’s style, label, Content or URL target, optional Content anchor, and optional icon."
+      "description": "Add zero, one or two actions. Set each action’s style, label, and Content, URL, or Form target. A Form target opens its HubSpot embed code in a modal."
     }
   }
 }

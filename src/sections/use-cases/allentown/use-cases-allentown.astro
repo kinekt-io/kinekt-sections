@@ -2,9 +2,8 @@
 import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
-import { ctaGroupActions, type CtaGroup, type SectionIntro as SectionIntroContent, type SectionTheme } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
+import { ctaGroupActions, isLinkCta, type CtaGroup, type SectionIntro as SectionIntroContent, type SectionTheme } from '../../../shared/content.js'
 import { isSafeCtaHref } from '../../../urls.js'
 
 import UseCaseItem, { type UseCaseItemContent } from '../../../components/use-case-item/allentown/use-case-item-allentown.astro'
@@ -31,7 +30,7 @@ const {
   headingLevel = 'h2',
 } = Astro.props as Props
 const actions = ctaGroupActions(ctaGroup)
-for (const action of actions) if (!isSafeCtaHref(action.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
+for (const action of actions) if (isLinkCta(action) && !isSafeCtaHref(action.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
 const sectionLabel = advantageHeading
 const itemHeadingLevel = (`h${Math.min(Number(headingLevel.slice(1)) + 1, 6)}`) as 'h2' | 'h3' | 'h4'
 ---
@@ -51,10 +50,9 @@ const itemHeadingLevel = (`h${Math.min(Number(headingLevel.slice(1)) + 1, 6)}`) 
         ))}
       </div>
       {actions.length > 0 && <nav class="beta-use-cases-allentown__actions" aria-label="Use case actions">
-        {actions.map((action, index) => {
-          const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-          return <Button href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'secondary')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-        })}
+        {actions.map((action, index) => (
+          <CtaAction cta={action} style={action.style ?? (index === 0 ? 'primary' : 'secondary')} />
+        ))}
       </nav>}
     </div>
   </div>

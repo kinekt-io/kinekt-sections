@@ -1,11 +1,10 @@
 ---
 import '../../../styles/wireframe-tokens.css'
 import { faCheck } from '@fortawesome/sharp-solid-svg-icons'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import { ctaGroupActions, type Cta, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { ctaGroupActions, isLinkCta, type Cta, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { isSafeCtaHref, isSafeWebUrl } from '../../../urls.js'
@@ -41,7 +40,7 @@ const toIntroDescription = (value: RichTextInput | null | undefined): RichText |
 const introContent: SectionIntroContent = { ...intro, description: toIntroDescription(intro.description) }
 
 const actions = ctaGroupActions(ctaGroup)
-for (const cta of actions) if (!isSafeCtaHref(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
+for (const cta of actions) if (isLinkCta(cta) && !isSafeCtaHref(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
 
 // The Payload adapter passes media through unchanged, so it may arrive as an ID; render only resolved, safe media objects.
 const isMedia = (value: unknown): value is Media => typeof value === 'object' && value !== null && typeof (value as Media).url === 'string' && isSafeWebUrl((value as Media).url)
@@ -70,10 +69,9 @@ const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
       </div>}
       {actions.length > 0 && <hr class="product-hero-allentown__divider" />}
       {actions.length > 0 && <div class="product-hero-allentown__actions">
-        {actions.map((action, index) => {
-          const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-          return <Button class="product-hero-allentown__action" size={index === 0 ? 'l' : 'm'} href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-        })}
+        {actions.map((action, index) => (
+          <CtaAction cta={action} class="product-hero-allentown__action" size={index === 0 ? 'l' : 'm'} style={action.style ?? (index === 0 ? 'primary' : 'clear')} />
+        ))}
       </div>}
     </div>
     {heroMedia && <KinektMedia media={heroMedia} mobileMedia={heroMobileMedia} class="product-hero-allentown__media" imageClass="product-hero-allentown__image" loading={mediaLoading} fetchpriority={mediaLoading === 'eager' ? 'high' : undefined} />}

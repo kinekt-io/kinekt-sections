@@ -1,9 +1,8 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import { ctaGroupActions, type Cta, type CtaGroup, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { ctaGroupActions, isLinkCta, type Cta, type CtaGroup, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { isSafeCtaHref } from '../../../urls.js'
 
@@ -19,7 +18,7 @@ interface Props {
 
 const { id, theme = 'semi-light', intro, ctaGroup, headingLevel = 'h1' } = Astro.props
 const actions = ctaGroupActions(ctaGroup)
-for (const cta of actions) if (!isSafeCtaHref(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
+for (const cta of actions) if (isLinkCta(cta) && !isSafeCtaHref(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
 ---
 <section class="not-found-hero not-found-hero--allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
   <div class="not-found-hero__container">
@@ -27,10 +26,9 @@ for (const cta of actions) if (!isSafeCtaHref(cta.href)) throw new Error('ctaGro
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
     </header>
     {actions.length > 0 && <div class="not-found-hero__actions">
-      {actions.map((action, index) => {
-        const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-        return <Button class="not-found-hero__action" size={index === 0 ? 'l' : undefined} href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-      })}
+      {actions.map((action, index) => (
+        <CtaAction cta={action} class="not-found-hero__action" size={index === 0 ? 'l' : undefined} style={action.style ?? (index === 0 ? 'primary' : 'clear')} />
+      ))}
     </div>}
   </div>
 </section>

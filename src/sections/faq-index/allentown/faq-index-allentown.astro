@@ -2,11 +2,10 @@
 import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import { faChevronDown } from '@fortawesome/sharp-solid-svg-icons'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import Callout from '../../../components/callout/allentown/callout-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import { ctaGroupActions, type Cta, type CtaGroup, type RichText, type SectionIntro as SectionIntroContent, type SectionTheme } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BetaFaqIndexAllentownContent } from './faq-index-allentown.types.js'
 
@@ -93,8 +92,7 @@ const subjectList: FaqIndexSubject[] = subjects
 const showFilters = subjectList.length > 1 || (subjectList.length === 1 && records.some((record) => !record.subjects.includes(subjectList[0].id)))
 
 // Callout: accept named legacy actions and repeatable editor-selected actions.
-const usableCta = (cta: CalloutCta): Cta | undefined => (typeof cta?.label === 'string' && cta.label !== '' && typeof cta.href === 'string' && cta.href !== '' ? (cta as Cta) : undefined)
-const calloutActions = ctaGroupActions(callout?.ctaGroup).map(usableCta).filter((cta): cta is Cta => Boolean(cta))
+const calloutActions = ctaGroupActions(callout?.ctaGroup)
 const calloutContent = callout?.intro && typeof callout.intro.heading === 'string' ? { intro: normaliseIntro(callout.intro, 'callout.intro.description') } : undefined
 const CalloutHeading: HeadingLevel = headingLevel === 'h1' ? 'h2' : 'h3'
 const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]}`, path: faChevronDown.icon[4] as string }
@@ -138,10 +136,9 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
       <Callout class="faq-index-allentown__callout" callout={calloutContent} size="medium" headingLevel={CalloutHeading}>
         {calloutActions.length > 0 && (
           <Fragment slot="actions">
-            {calloutActions.map((cta) => {
-              const icon = isCtaIcon(cta.icon) ? ctaIconPaths(cta.icon) : undefined
-              return <Button href={cta.href} label={cta.label} style={cta.style ?? 'clear'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-            })}
+            {calloutActions.map((cta) => (
+              <CtaAction cta={cta} style={cta.style ?? 'clear'} />
+            ))}
           </Fragment>
         )}
       </Callout>

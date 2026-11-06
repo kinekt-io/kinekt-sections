@@ -2,11 +2,10 @@
 import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import ChecklistItem, { type ChecklistItemContent } from '../../../components/checklist-item/allentown/checklist-item-allentown.astro'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import { ctaGroupActions, type Cta, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { ctaGroupActions, isLinkCta, type Cta, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { isSafeCtaHref } from '../../../urls.js'
@@ -45,8 +44,7 @@ const detailHtml = toHtml(detailDescription, 'detailDescription')
 const DetailHeading = headingLevel === 'h2' ? 'h3' : 'h4'
 const items = checklistItems.filter((item) => item?.text)
 const ctas = ctaGroupActions(ctaGroup)
-for (const cta of ctas) if (!isSafeCtaHref(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
-const iconOf = (cta: Cta) => (isCtaIcon(cta.icon) ? ctaIconPaths(cta.icon) : undefined)
+for (const cta of ctas) if (isLinkCta(cta) && !isSafeCtaHref(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
 const hasDetail = Boolean(detailHeading || detailHtml || items.length > 0 || ctas.length > 0)
 ---
 <section class="compliance-detail-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
@@ -77,10 +75,9 @@ const hasDetail = Boolean(detailHeading || detailHtml || items.length > 0 || cta
             )}
             {ctas.length > 0 && (
               <div class="compliance-detail-allentown__actions">
-                {ctas.map((cta) => {
-                  const icon = iconOf(cta)
-                  return <Button class="compliance-detail-allentown__action" size="s" href={cta.href} label={cta.label} style={cta.style ?? 'clear'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-                })}
+                {ctas.map((cta) => (
+                  <CtaAction cta={cta} class="compliance-detail-allentown__action" size="s" style={cta.style ?? 'clear'} />
+                ))}
               </div>
             )}
           </div>

@@ -27,9 +27,11 @@ interface Props {
   loadingLabel?: string
   formPresentation?: FormModalPresentation | null
   class?: string
+  openerClass?: string
+  openerSize?: 's' | 'm' | 'l'
 }
 
-const { form, loadingLabel = 'Form is loading', formPresentation, class: className } = Astro.props as Props
+const { form, loadingLabel = 'Form is loading', formPresentation, class: className, openerClass, openerSize } = Astro.props as Props
 const classes = ['form-embed-allentown', className].filter(Boolean).join(' ')
 const hasEmbed = typeof form === 'string' && form.trim() !== ''
 const hasPlaceholder = Astro.slots.has('default')
@@ -43,7 +45,7 @@ const dialogId = `form-embed-modal-${crypto.randomUUID()}`
 const FormContainer = modalEnabled ? 'dialog' : 'div'
 ---
 <div class={classes} data-kinekt-form-embed aria-label={loadingLabel}>
-  {modalEnabled && <Button as="button" label={modalLabel} style={modalStyle} type="button" aria-controls={dialogId} aria-expanded="false" aria-haspopup="dialog" data-kinekt-form-modal-open hidden>
+  {modalEnabled && <Button as="button" class={openerClass} label={modalLabel} style={modalStyle} size={openerSize} type="button" aria-controls={dialogId} aria-expanded="false" aria-haspopup="dialog" data-kinekt-form-modal-open hidden>
     {modalIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={modalIcon.viewBox} fill="currentColor"><path d={modalIcon.path} /></svg>}
   </Button>}
   <FormContainer class={modalEnabled ? 'form-embed-allentown__modal' : undefined} id={modalEnabled ? dialogId : undefined} aria-labelledby={modalEnabled ? `${dialogId}-title` : undefined} data-kinekt-form-modal={modalEnabled ? '' : undefined}>
@@ -95,6 +97,7 @@ const FormContainer = modalEnabled ? 'dialog' : 'div'
     opener.hidden = false
 
     opener.addEventListener('click', () => {
+      embed.dispatchEvent(new CustomEvent('kinekt:form-modal-open', { bubbles: true }))
       dialog.showModal()
       opener.setAttribute('aria-expanded', 'true')
     })

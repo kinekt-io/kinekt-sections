@@ -2,11 +2,10 @@
 import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
-import { ctaGroupActions, type Media } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { ctaGroupActions, isLinkCta, type Media } from '../../../shared/content.js'
 import type { HeroContent } from './hero-allentown.types.js'
 import { isSafeCtaHref, isSafeWebUrl } from '../../../urls.js'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 interface Props extends HeroContent { id?: string; headingLevel?: 'h1' | 'h2' }
 function assertSafeImage(image: Media, name: string): void {
   if (!isSafeWebUrl(image.url)) throw new Error(`${name}.url must be an HTTP(S) or root-relative URL.`)
@@ -16,7 +15,7 @@ function assertSafeImage(image: Media, name: string): void {
 }
 const { id, theme = 'dark', headingLevel = 'h1', intro, ctas, image, mobileImage } = Astro.props
 const actions = ctaGroupActions(ctas)
-for (const cta of actions) if (!isSafeCtaHref(cta.href)) throw new Error('ctas must use an HTTP(S) URL, root-relative URL, or anchor.')
+for (const cta of actions) if (isLinkCta(cta) && !isSafeCtaHref(cta.href)) throw new Error('ctas must use an HTTP(S) URL, root-relative URL, or anchor.')
 assertSafeImage(image, 'image')
 if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
 ---
@@ -25,10 +24,9 @@ if (mobileImage) assertSafeImage(mobileImage, 'mobileImage')
     <header class="hero-allentown__content">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
       {actions.length > 0 && <div class="hero-allentown__actions">
-        {actions.map((action, index) => {
-          const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-          return <Button class="hero-allentown__action" href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-hero-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-        })}
+        {actions.map((action, index) => (
+          <CtaAction cta={action} class="hero-allentown__action" style={action.style ?? (index === 0 ? 'primary' : 'clear')} />
+        ))}
       </div>}
     </header>
     <KinektMedia class="hero-allentown__media" imageClass="hero-allentown__image" media={image} mobileMedia={mobileImage} loading="eager" fetchpriority="high" />

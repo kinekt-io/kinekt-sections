@@ -78,8 +78,16 @@ const relationshipTarget = (value: unknown, field: string): { collection: string
 export const ctaToProps = (value: unknown, field: string, options: PayloadAdapterOptions = {}): Cta => {
   const cta = requireObject(value, field)
   const destinationType = cta.destinationType ?? 'url'
-  let href: string
+  const label = requireText(cta.label, `${field}.label`)
+  const icon = optionalSharpSolidIcon(cta.icon, `${field}.icon`)
+  const style = isCtaStyle(cta.style) ? { style: cta.style } : {}
 
+  if (destinationType === 'form') {
+    const form = requireText(cta.form, `${field}.form`)
+    return { label, form, ...style, ...(icon ? { icon } : {}) }
+  }
+
+  let href: string
   if (destinationType === 'content' || destinationType === 'page') {
     const target = relationshipTarget(cta.page, `${field}.page`)
     href = options.contentHref?.(target.collection, target.id) ?? ''
@@ -92,11 +100,9 @@ export const ctaToProps = (value: unknown, field: string, options: PayloadAdapte
     href = requireText(cta.href, `${field}.href`)
     if (!isSafeCtaHref(href)) throw new Error(`${field}.href must be an HTTP(S) URL, root-relative URL, or anchor.`)
   } else {
-    throw new Error(`${field}.destinationType must be content or url.`)
+    throw new Error(`${field}.destinationType must be content, url, or form.`)
   }
-  const icon = optionalSharpSolidIcon(cta.icon, `${field}.icon`)
-  const style = isCtaStyle(cta.style) ? { style: cta.style } : {}
-  return { label: requireText(cta.label, `${field}.label`), href, ...style, ...(icon ? { icon } : {}) }
+  return { label, href, ...style, ...(icon ? { icon } : {}) }
 }
 
 export const optionalCtaToProps = (value: unknown, field: string, options: PayloadAdapterOptions = {}): Cta | undefined => {
@@ -110,6 +116,8 @@ export const optionalCtaToProps = (value: unknown, field: string, options: Paylo
     if (cta.anchor !== undefined && cta.anchor !== null && cta.anchor !== '' && !isSafeFragmentIdentifier(cta.anchor)) return undefined
   } else if (destinationType === 'url') {
     if (typeof cta.href !== 'string' || cta.href.trim().length === 0 || !isSafeCtaHref(cta.href)) return undefined
+  } else if (destinationType === 'form') {
+    if (typeof cta.form !== 'string' || cta.form.trim().length === 0) return undefined
   } else {
     return undefined
   }

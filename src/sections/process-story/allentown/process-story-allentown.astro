@@ -1,11 +1,10 @@
 ---
 import '../../../styles/wireframe-tokens.css'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import ProcessItem, { type ProcessItemContent } from '../../../components/process-item/allentown/process-item-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import { ctaGroupActions, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import type { BetaProcessStoryAllentownContent } from './process-story-allentown.types.js'
@@ -44,10 +43,9 @@ const classes = ['process-story-allentown', hasMedia && 'process-story-allentown
       <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
       {introActions.length > 0 && (
         <nav class="process-story-allentown__actions process-story-allentown__intro-actions" aria-label="Introduction actions">
-          {introActions.map((action) => {
-            const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-            return <Button href={action.href} label={action.label} style={action.style ?? 'primary'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-          })}
+          {introActions.map((action) => (
+            <CtaAction cta={action} style={action.style ?? 'primary'} />
+          ))}
         </nav>
       )}
     </header>
@@ -67,10 +65,9 @@ const classes = ['process-story-allentown', hasMedia && 'process-story-allentown
           )}
           {listActions.length > 0 && (
             <nav class="process-story-allentown__actions process-story-allentown__list-actions" aria-label="Process story actions">
-              {listActions.map((action) => {
-                const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-                return <Button href={action.href} label={action.label} style={action.style ?? 'primary'}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-              })}
+              {listActions.map((action) => (
+                <CtaAction cta={action} style={action.style ?? 'primary'} />
+              ))}
             </nav>
           )}
         </div>

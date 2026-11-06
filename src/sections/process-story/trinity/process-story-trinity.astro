@@ -1,9 +1,9 @@
 ---
 import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import { ctaGroupActions, type Cta, type CtaGroup, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 
 interface ProcessItem {
@@ -39,10 +39,9 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     <header class="process-story-trinity__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} />
       {introActions.length > 0 && <nav class="process-story-trinity__cta-group process-story-trinity__intro-actions" aria-label="Introduction actions">
-        {introActions.map((action, index) => {
-          const actionIcon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-          return <Button href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'secondary')} size="l">{actionIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={actionIcon.viewBox} fill="currentColor"><path d={actionIcon.path} /></svg>}</Button>
-        })}
+        {introActions.map((action, index) => (
+          <CtaAction cta={action} style={action.style ?? (index === 0 ? 'primary' : 'secondary')} size="l" />
+        ))}
       </nav>}
     </header>
     <ol class="process-story-trinity__steps" aria-label="Process steps">
@@ -63,10 +62,9 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
             <div class="process-story-trinity__panel">
               {itemDescriptionHtml && <div class="process-story-trinity__description" set:html={itemDescriptionHtml} />}
               {actions.length > 0 && <div class="process-story-trinity__cta-group">
-                {actions.map((action, actionIndex) => {
-                  const actionIcon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-                  return <Button href={action.href} label={action.label} style={action.style ?? (actionIndex === 0 ? 'primary' : 'secondary')} size="l">{actionIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={actionIcon.viewBox} fill="currentColor"><path d={actionIcon.path} /></svg>}</Button>
-                })}
+                {actions.map((action, actionIndex) => (
+                  <CtaAction cta={action} style={action.style ?? (actionIndex === 0 ? 'primary' : 'secondary')} size="l" />
+                ))}
               </div>}
             </div>
           </details>
@@ -74,10 +72,9 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
       })}
     </ol>
     {listActions.length > 0 && <nav class="process-story-trinity__cta-group process-story-trinity__list-actions" aria-label="Process story actions">
-      {listActions.map((action, index) => {
-        const actionIcon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-        return <Button href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'secondary')} size="l">{actionIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={actionIcon.viewBox} fill="currentColor"><path d={actionIcon.path} /></svg>}</Button>
-      })}
+      {listActions.map((action, index) => (
+        <CtaAction cta={action} style={action.style ?? (index === 0 ? 'primary' : 'secondary')} size="l" />
+      ))}
     </nav>}
   </div>
 </section>

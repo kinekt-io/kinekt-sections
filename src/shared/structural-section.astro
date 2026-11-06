@@ -1,14 +1,10 @@
 ---
-import Button from '../controls/button/allentown/button-allentown.astro'
+import CtaAction from './cta-action-allentown.astro'
 import SectionIntro from '../primitives/section-intro/section-intro.astro'
 import StructuralContent from './structural-content.astro'
+import { ctaGroupActions, isFormCta, isLinkCta, type Cta } from './content.js'
 import { normalizeSectionContentWidth, type SectionContentWidth } from './section-width'
 
-
-interface Cta {
-  label?: string
-  href?: string
-}
 
 interface Media {
   url?: string
@@ -45,20 +41,10 @@ interface Props {
   contentWidth?: SectionContentWidth
 }
 
-function isCta(value: unknown): value is Required<Cta> {
-  return typeof value === 'object'
-    && value !== null
-    && typeof (value as Cta).label === 'string'
-    && typeof (value as Cta).href === 'string'
-}
-
-function collectCtas(value: unknown): Required<Cta>[] {
+function collectCtas(value: unknown): Cta[] {
+  if (isLinkCta(value) || isFormCta(value)) return [value]
   if (!value || typeof value !== 'object') return []
-  return Object.values(value as Record<string, unknown>).flatMap((candidate) => {
-    if (isCta(candidate)) return [candidate]
-    if (!candidate || typeof candidate !== 'object') return []
-    return Object.values(candidate as Record<string, unknown>).filter(isCta)
-  })
+  return ctaGroupActions(value as Record<string, unknown>)
 }
 
 const { block, id, headingLevel = 'h2', intro, ctas, media, fields, contentWidth: rawContentWidth, content: explicitContent, pagefindUrl, pagefindFilters, carouselControlStyle = 'icon', carouselControls = 'previous-next', carouselLoop = false, ...implicitContent } = Astro.props as Props
@@ -75,10 +61,10 @@ const contentOmit = caseStudyAction ? ['theme', 'intro', 'ctas', 'media', 'cta']
       <header class={`${block}__header`}>
         {intro && <div class={`${block}__header-content`}><SectionIntro intro={intro} headingLevel={headingLevel} /></div>}
         {caseStudyAction ? (
-          <div class={`${block}__cta`}><Button class={`${block}__cta`} href={caseStudyAction.href} label={caseStudyAction.label} /></div>
+          <div class={`${block}__cta`}><CtaAction cta={caseStudyAction} class={`${block}__cta`} /></div>
         ) : actions.length > 0 && (
           <nav class={`${block}__actions`} aria-label="Section actions">
-            {actions.map((cta, index) => <Button class={`${block}__action ${block}__action--${index === 0 ? 'primary' : 'secondary'}`} href={cta.href} label={cta.label} style={index === 0 ? 'primary' : 'secondary'} />)}
+            {actions.map((cta, index) => <CtaAction cta={cta} class={`${block}__action ${block}__action--${index === 0 ? 'primary' : 'secondary'}`} style={index === 0 ? 'primary' : 'secondary'} />)}
           </nav>
         )}
       </header>

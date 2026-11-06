@@ -1,9 +1,10 @@
 ---
 import Button from '../controls/button/allentown/button-allentown.astro'
+import CtaAction from './cta-action-allentown.astro'
 import Label from '../atoms/label/allentown/label-allentown.astro'
 import FormEmbed from '../components/form-embed/allentown/form-embed-allentown.astro'
 import { faArrowLeft, faArrowRight } from '@fortawesome/sharp-solid-svg-icons'
-import { isCtaStyle, type CtaStyle, type FormModalPresentation } from './content.js'
+import { ctaGroupActions, isCtaStyle, type CtaStyle, type FormModalPresentation } from './content.js'
 interface Field {
   kind: string
   id?: string
@@ -205,8 +206,9 @@ function buttonStyle(value: Record<string, unknown>, key: string): CtaStyle {
       : buttonStyle(value, key)
     return <Button class={className} href={value.href} label={value.label} style={style} />
   }
-  if (field.kind === 'ctaGroup' && isRecord(value)) {
-    return <nav class={className} aria-label="Section actions">{Object.entries(value).map(([style, cta]) => isRecord(cta) && typeof cta.href === 'string' && typeof cta.label === 'string' && <Button href={cta.href} label={cta.label} style={buttonStyle(cta, style)} />)}</nav>
+  if (field.kind === 'ctaGroup' && (isRecord(value) || Array.isArray(value))) {
+    const actions = ctaGroupActions(value)
+    return <nav class={className} aria-label="Section actions">{actions.map((cta, index) => <CtaAction cta={cta} style={cta.style ?? (index === 0 ? 'primary' : 'secondary')} />)}</nav>
   }
 
   if (field.kind === 'formEmbed') {

@@ -1,0 +1,18 @@
+---
+import Button from '../controls/button/allentown/button-allentown.astro'
+import FormEmbed from '../components/form-embed/allentown/form-embed-allentown.astro'
+import { ctaIconPaths, isCtaIcon } from './cta-icons.js'
+import { isFormCta, type Cta, type CtaStyle } from './content.js'
+
+interface Props {
+  cta: Cta
+  style?: CtaStyle
+  class?: string
+  size?: 's' | 'm' | 'l'
+}
+
+const { cta, style, class: className, size } = Astro.props as Props
+const resolvedStyle = style ?? cta.style ?? 'primary'
+const icon = isCtaIcon(cta.icon) ? ctaIconPaths(cta.icon) : undefined
+---
+{isFormCta(cta) ? <FormEmbed form={cta.form} formPresentation={{ enabled: true, label: cta.label, style: resolvedStyle, ...(cta.icon ? { icon: cta.icon } : {}) }} openerClass={className} openerSize={size} /> : <Button class={className} href={cta.href} label={cta.label} style={resolvedStyle} size={size}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>}

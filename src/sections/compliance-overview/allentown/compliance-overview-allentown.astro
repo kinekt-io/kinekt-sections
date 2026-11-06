@@ -2,11 +2,11 @@
 import { normalizeSectionContentWidth } from '../../../shared/section-width'
 import '../../../styles/wireframe-tokens.css'
 import ChecklistItem, { type ChecklistItemContent } from '../../../components/checklist-item/allentown/checklist-item-allentown.astro'
-import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import { ctaGroupActions, type Cta, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { ctaGroupActions, isLinkCta, type Cta, type CtaGroup, type Media, type RichText, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import type { BetaTheme } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { isSafeCtaHref } from '../../../urls.js'
@@ -50,7 +50,7 @@ const introContent: SectionIntroContent = { ...intro, description: intro.descrip
 const items = checklistItems.filter((item) => item?.text)
 const ChecklistTitle = headingLevel === 'h1' ? 'h2' : 'h3'
 const actions = ctaGroupActions(ctaGroup)
-for (const cta of actions) if (!isSafeCtaHref(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
+for (const cta of actions) if (isLinkCta(cta) && !isSafeCtaHref(cta.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
 const tiles = collage.filter((tile) => typeof tile?.anchor === 'string' && /^[A-Za-z][\w:.-]*$/.test(tile.anchor) && tile.certImage?.url)
 // Figma's arrow-down-right uses the shared Sharp Solid arrow-up-left icon turned 180°.
 const tileIcon = ctaIconPaths('arrow-up-left')
@@ -71,10 +71,9 @@ const tileIcon = ctaIconPaths('arrow-up-left')
       </div>
       {actions.length > 0 && (
         <div class="compliance-overview-allentown__actions">
-          {actions.map((action, index) => {
-            const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
-            return <Button class="compliance-overview-allentown__action" size={index === 0 ? 'l' : undefined} href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'clear')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
-          })}
+          {actions.map((action, index) => (
+            <CtaAction cta={action} class="compliance-overview-allentown__action" size={index === 0 ? 'l' : undefined} style={action.style ?? (index === 0 ? 'primary' : 'clear')} />
+          ))}
         </div>
       )}
     </div>
