@@ -2,9 +2,12 @@
 import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
-import UseCaseItem, { type UseCaseItemContent } from '../../../components/use-case-item/allentown/use-case-item-allentown.astro'
-import type { SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
+import Button from '../../../controls/button/allentown/button-allentown.astro'
+import { ctaGroupActions, type CtaGroup, type SectionIntro as SectionIntroContent, type SectionTheme } from '../../../shared/content.js'
+import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { isSafeCtaHref } from '../../../urls.js'
 
+import UseCaseItem, { type UseCaseItemContent } from '../../../components/use-case-item/allentown/use-case-item-allentown.astro'
 type UseCase = UseCaseItemContent
 
 interface Props {
@@ -14,6 +17,7 @@ interface Props {
   intro: SectionIntroContent
   advantageHeading?: string
   items: UseCase[]
+  ctaGroup?: CtaGroup
   headingLevel?: 'h1' | 'h2' | 'h3'
 }
 
@@ -23,8 +27,11 @@ const {
   intro,
   advantageHeading,
   items,
+  ctaGroup,
   headingLevel = 'h2',
 } = Astro.props as Props
+const actions = ctaGroupActions(ctaGroup)
+for (const action of actions) if (!isSafeCtaHref(action.href)) throw new Error('ctaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
 const sectionLabel = advantageHeading
 const itemHeadingLevel = (`h${Math.min(Number(headingLevel.slice(1)) + 1, 6)}`) as 'h2' | 'h3' | 'h4'
 ---
@@ -43,6 +50,12 @@ const itemHeadingLevel = (`h${Math.min(Number(headingLevel.slice(1)) + 1, 6)}`) 
           <UseCaseItem class="beta-use-cases-allentown__item" item={item} headingLevel={itemHeadingLevel} />
         ))}
       </div>
+      {actions.length > 0 && <nav class="beta-use-cases-allentown__actions" aria-label="Use case actions">
+        {actions.map((action, index) => {
+          const icon = isCtaIcon(action.icon) ? ctaIconPaths(action.icon) : undefined
+          return <Button href={action.href} label={action.label} style={action.style ?? (index === 0 ? 'primary' : 'secondary')}>{icon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={icon.viewBox} fill="currentColor"><path d={icon.path} /></svg>}</Button>
+        })}
+      </nav>}
     </div>
   </div>
 </section>
@@ -189,6 +202,7 @@ const itemHeadingLevel = (`h${Math.min(Number(headingLevel.slice(1)) + 1, 6)}`) 
   .beta-use-cases-allentown .beta-use-cases-allentown__content { display: grid; gap: var(--use-cases-label-gap); min-width: 0; }
   .beta-use-cases-allentown .beta-use-cases-allentown__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--use-cases-row-gap) var(--use-cases-column-gap); }
   .beta-use-cases-allentown .beta-use-cases-allentown__item { --kiw--facility-fact-allentown-title-size: var(--use-cases-item-heading-size); --kiw--facility-fact-allentown-description-size: var(--use-cases-description-size); }
+  .beta-use-cases-allentown .beta-use-cases-allentown__actions { display: flex; flex-wrap: wrap; gap: var(--kiw--section-actions-gap); }
 
   @media (min-width: 50rem) {
     .beta-use-cases-allentown .beta-use-cases-allentown__intro { max-inline-size: var(--use-cases-intro-width); }

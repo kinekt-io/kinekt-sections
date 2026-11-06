@@ -380,10 +380,10 @@ const quoteText = (value: string): string => {
   :where(.case-studies-allentown) {
     --kiw--case-studies-allentown-content-width: var(--content-width);
     --kiw--case-studies-allentown-carousel-gap: var(--section-space-m);
-    --kiw--case-studies-allentown-label-gap: var(--space-s);
+    --kiw--case-studies-allentown-label-gap: var(--space-xs);
     --kiw--case-studies-allentown-header-gap: var(--space-m);
     --kiw--case-studies-allentown-header-width: var(--width-l);
-    --kiw--case-studies-allentown-intro-width: 60ch;
+    --kiw--case-studies-allentown-intro-width: 100%;
     --kiw--case-studies-allentown-header-column-gap: var(--space-xl);
     --kiw--case-studies-allentown-summary-space: var(--section-space-xs);
     --kiw--case-studies-allentown-media-gap: var(--section-space-l);
@@ -436,8 +436,8 @@ const quoteText = (value: string): string => {
     & .case-studies-allentown__header-content,
     & .case-studies-allentown__header-content .section-intro,
     & .case-studies-allentown__header-content :is(.section-intro__heading, .section-intro__description) {
-      width: auto;
-      max-width: var(--kiw--case-studies-allentown-intro-width);
+      width: 100%;
+      max-width: none;
     }
     & .case-studies-allentown__carousel {
       display: grid;
@@ -619,10 +619,7 @@ const quoteText = (value: string): string => {
     @media (min-width: 50rem) {
       & .case-studies-allentown__header {
         display: grid;
-        grid-template-columns: minmax(
-            0,
-            var(--case-studies-header-content-width)
-          ) auto;
+        grid-template-columns: minmax(0, 1fr) auto;
         align-items: end;
         column-gap: var(--case-studies-header-column-gap);
         justify-content: space-between;
@@ -679,7 +676,7 @@ const quoteText = (value: string): string => {
   .case-studies-allentown .case-studies-allentown__carousel-slide .case-studies-allentown__cta > a { border: var(--kinekt-component-border-width) solid transparent; }
 
   @media (min-width: 50rem) {
-    :where(.case-studies-allentown) .case-studies-allentown__header { display: grid; grid-template-columns: minmax(0, var(--case-studies-header-content-width)) auto; align-items: end; column-gap: var(--case-studies-header-column-gap); justify-content: space-between; }
+    :where(.case-studies-allentown) .case-studies-allentown__header { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; column-gap: var(--case-studies-header-column-gap); justify-content: space-between; }
     :where(.case-studies-allentown) .case-studies-allentown__header-content { grid-column: 1; }
     :where(.case-studies-allentown) .case-studies-allentown__header > .case-studies-allentown__cta { grid-column: 2; align-self: end; }
     :where(.case-studies-allentown) .case-studies-allentown__carousel-slide-content { flex-direction: row; gap: var(--case-studies-media-to-details); }

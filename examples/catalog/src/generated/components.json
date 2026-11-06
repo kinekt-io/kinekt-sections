@@ -6436,6 +6436,14 @@
         "required": true,
         "localized": true,
         "minItems": 1
+      },
+      "ctaGroup": {
+        "kind": "ctaGroup",
+        "required": false,
+        "localized": true,
+        "minItems": 0,
+        "maxItems": 2,
+        "description": "Optional actions shown below the use-case items."
       }
     },
     "runtimeProps": {},

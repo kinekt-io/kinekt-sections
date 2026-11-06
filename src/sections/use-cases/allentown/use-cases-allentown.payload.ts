@@ -98,11 +98,19 @@ const manifest = {
               "localized": true,
               "minItems": 0,
               "maxItems": 2,
-              "description": "Add zero, one or two actions. Set the style of each action to Primary, Secondary, Clear or Clear base."
+              "description": "Add zero, one or two actions. Set each action’s style, label, Content or URL target, optional Content anchor, and optional icon."
             }
           }
         }
       }
+    },
+    "ctaGroup": {
+      "kind": "ctaGroup",
+      "required": false,
+      "localized": true,
+      "minItems": 0,
+      "maxItems": 2,
+      "description": "Optional actions shown below the use-case items."
     }
   }
 } as const
