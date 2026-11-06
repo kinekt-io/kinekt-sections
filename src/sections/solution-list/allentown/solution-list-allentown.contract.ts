@@ -62,6 +62,7 @@ export function createSolutionListAllentownBlock({ mediaCollection = 'media', ta
           targetField(targetRelation, true),
           { name: 'anchor', label: 'Anchor ID', type: 'text', localized: true, admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'page', description: 'Optional fragment on the selected content, starting with #. For example: #main-content.' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeFragmentIdentifier(value) || 'Enter an anchor that starts with #, for example #main-content.' },
           { name: 'ctaStyle', label: 'CTA style', type: 'select', localized: true, options: [{ label: 'Primary', value: 'primary' }, { label: 'Secondary', value: 'secondary' }, { label: 'Clear', value: 'clear' }, { label: 'Clear base', value: 'clear-base' }], admin: { description: 'Leave empty to retain Clear.' } },
+          { name: 'icon', label: 'Icon', type: 'text', localized: true, validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example arrow-right or bolt.' } },
         ],
       },
       { name: 'callout', label: 'Callout', type: 'group', localized: true, fields: [{ name: 'intro', label: 'Intro block', type: 'group', required: true, fields: introFields() }, { name: 'ctaGroup', label: 'CTA group', type: 'group', required: true, fields: ctaGroupFields(targetRelation) }] },
@@ -100,6 +101,7 @@ function ctaGroupFields(targetRelation: CollectionSlug | CollectionSlug[]): Fiel
       { name: 'href', label: 'URL or anchor', type: 'text', admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeCtaHref(value) || 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.' },
       targetField(targetRelation),
       { name: 'anchor', label: 'Anchor ID', type: 'text', admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'page', description: 'Optional fragment on the selected content, starting with #. For example: #main-content.' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeFragmentIdentifier(value) || 'Enter an anchor that starts with #, for example #main-content.' },
+      { name: 'icon', label: 'Icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example arrow-right or bolt.' } },
     ],
   })) as Field[]
 }

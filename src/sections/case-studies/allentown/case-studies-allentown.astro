@@ -412,6 +412,7 @@ const quoteText = (value: string): string => {
   .case-studies-allentown {
     --kinekt-section-content-width: var(--kiw--case-studies-allentown-content-width);
     --case-studies-carousel-to-slide: var(--kiw--case-studies-allentown-carousel-gap);
+    --case-studies-label-to-viewport: var(--space-xxl);
     --case-studies-header-gap: var(--kiw--case-studies-allentown-header-gap);
     --case-studies-header-content-width: var(--kiw--case-studies-allentown-intro-width);
     --case-studies-header-column-gap: var(--kiw--case-studies-allentown-header-column-gap);
@@ -442,6 +443,7 @@ const quoteText = (value: string): string => {
     & .case-studies-allentown__carousel {
       display: grid;
       gap: var(--case-studies-carousel-to-slide);
+      row-gap: var(--case-studies-label-to-viewport);
     }
     & .case-studies-allentown__carousel-label {
       --kiw--subtitle-flight-path-gap: var(--kiw--case-studies-allentown-label-gap);
