@@ -87,7 +87,10 @@ const shield = fas.faShieldHalved.icon
   .contact-channels-allentown__privacy svg { flex: 0 0 auto; color: var(--kinekt-component-accent); }
   .contact-channels-allentown__actions { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-block-start: var(--space-xs); }
   .contact-channels-allentown__actions > * { flex: 1 1 var(--width-xs); }
-  .contact-channels-allentown:is([data-kinekt-theme='dark'], [data-kinekt-theme='semi-dark']) .button--secondary {
+  .contact-channels-allentown:is([data-kinekt-theme='dark'], [data-kinekt-theme='semi-dark']) .button {
+    --kinekt-component-action: var(--primary-semi-dark);
+    --kinekt-component-action-text: var(--white);
+    --kinekt-component-action-icon: var(--accent);
     --kiw--button-allentown-secondary-background: var(--primary-semi-dark);
     --kiw--button-allentown-secondary-text: var(--white);
     --kiw--button-allentown-secondary-icon: var(--accent);
