@@ -95,6 +95,12 @@ const shield = fas.faShieldHalved.icon
     --kiw--button-allentown-secondary-text: var(--white);
     --kiw--button-allentown-secondary-icon: var(--accent);
   }
+  .contact-channels-allentown:is([data-kinekt-theme='dark'], [data-kinekt-theme='semi-dark']) .button--primary:is(:hover, :focus-visible) {
+    --kiw--button-allentown-secondary-background: var(--primary);
+  }
+  .contact-channels-allentown:is([data-kinekt-theme='dark'], [data-kinekt-theme='semi-dark']) .button--secondary:is(:hover, :focus-visible) {
+    --kinekt-component-action: var(--primary);
+  }
   @media (min-width: 50rem) { .contact-channels-allentown__container { grid-template-columns: minmax(0, 1fr) minmax(0, .95fr); align-items: center; column-gap: var(--section-space-xl); } }
   @media (max-width: 49.999rem) { .contact-channels-allentown__channels { padding-inline-start: 0; padding-block-start: var(--section-space-s); border-inline-start: 0; border-block-start: var(--border-width) solid var(--kinekt-component-line); } }
   .contact-channels-allentown[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
