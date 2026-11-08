@@ -220,7 +220,7 @@ const FormContainer = modalEnabled ? 'dialog' : 'div'
     & :is(.form-embed-allentown__modal-title, .form-embed-allentown__modal-close) { display: none; }
   }
   .form-embed-allentown .form-embed-allentown__modal {
-    width: min(calc(100vw - (var(--space-l) * 2)), var(--width-xl));
+    width: min(calc(100vw - (var(--space-l) * 2)), calc(var(--content-width) / 2));
     max-width: none;
     max-height: calc(100dvh - (var(--space-l) * 2));
     margin: auto;
