@@ -219,16 +219,77 @@ const FormContainer = modalEnabled ? 'dialog' : 'div'
     & .form-embed-allentown__modal-panel { display: block; padding: 0; background: transparent; }
     & :is(.form-embed-allentown__modal-title, .form-embed-allentown__modal-close) { display: none; }
   }
-  .form-embed-allentown .form-embed-allentown__modal { width: min(calc(100vw - (var(--space-l) * 2)), var(--width-xl)); max-width: none; max-height: calc(100dvh - (var(--space-l) * 2)); margin: auto; padding: 0; border: 0; background: transparent; color: var(--kinekt-component-ink); }
+  .form-embed-allentown .form-embed-allentown__modal {
+    width: min(calc(100vw - (var(--space-l) * 2)), var(--width-xl));
+    max-width: none;
+    max-height: calc(100dvh - (var(--space-l) * 2));
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-xl);
+    background: transparent;
+    color: var(--primary-ultra-dark);
+    overflow: hidden;
+  }
   .form-embed-allentown .form-embed-allentown__modal::backdrop { background: color-mix(in srgb, var(--primary-ultra-dark) 72%, transparent); }
-  .form-embed-allentown .form-embed-allentown__modal-panel { position: relative; display: grid; max-height: inherit; overflow: auto; padding: var(--section-space-xs) var(--space-l) var(--space-l); background: var(--kinekt-component-surface); }
+  .form-embed-allentown .form-embed-allentown__modal-panel {
+    --kinekt-component-ink: var(--primary-ultra-dark);
+    --kinekt-component-muted: var(--primary-semi-dark);
+    --kinekt-component-surface: var(--white);
+    --kinekt-component-action: var(--primary-ultra-dark);
+    --kinekt-component-action-text: var(--white);
+    --kinekt-component-action-icon: var(--accent);
+    --kinekt-component-accent: var(--accent);
+    --kiw--form-embed-allentown-ink: var(--primary-ultra-dark);
+    --kiw--form-embed-allentown-field-background: var(--neutral-light);
+    --kiw--form-embed-allentown-field-border: var(--neutral-semi-light);
+    --kiw--form-embed-allentown-placeholder: var(--primary-semi-light);
+    --kiw--form-embed-allentown-select-placeholder: var(--primary-semi-light);
+    --kiw--form-embed-allentown-option-text: var(--primary-dark);
+    --kiw--form-embed-allentown-radio-ring: var(--primary);
+    --kiw--form-embed-allentown-toggle-text: var(--primary-semi-light);
+    position: relative;
+    display: grid;
+    max-height: inherit;
+    overflow: auto;
+    padding: var(--space-xl);
+    color: var(--primary-ultra-dark);
+    background: var(--white);
+  }
   .form-embed-allentown .form-embed-allentown__modal-title { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
-  .form-embed-allentown .form-embed-allentown__modal-close { position: sticky; z-index: 1; inset-block-start: 0; justify-self: end; inline-size: var(--space-xl); block-size: var(--space-xl); padding: 0; border: 0; color: var(--kinekt-component-ink); background: transparent; font: inherit; font-size: var(--text-xl); line-height: 1; cursor: pointer; }
-  .form-embed-allentown .form-embed-allentown__modal-close:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kinekt-component-accent); outline-offset: var(--space-xxs); }
+  .form-embed-allentown .form-embed-allentown__modal-close {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: var(--space-m);
+    inset-inline-end: var(--space-m);
+    display: grid;
+    place-items: center;
+    inline-size: var(--space-xl);
+    block-size: var(--space-xl);
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: var(--primary-ultra-dark);
+    background: var(--neutral-light);
+    font: inherit;
+    font-size: var(--text-xl);
+    line-height: 1;
+    cursor: pointer;
+  }
+  .form-embed-allentown .form-embed-allentown__modal-close:is(:hover, :focus-visible) { color: var(--white); background: var(--primary-semi-dark); }
+  .form-embed-allentown .form-embed-allentown__modal-close:focus-visible { outline: calc(var(--border-width) * 2) solid var(--accent); outline-offset: var(--space-xxs); }
   .form-embed-allentown .form-embed-allentown__modal-content { min-width: 0; }
+  .form-embed-allentown .form-embed-allentown__modal :is(.hsfc-Heading, h1, h2, h3, h4, h5, h6) {
+    color: var(--primary-ultra-dark) !important;
+    font-family: var(--heading-font-family) !important;
+    font-size: var(--h3) !important;
+    font-weight: var(--heading-font-weight) !important;
+    line-height: var(--heading-line-height) !important;
+  }
   @media (max-width: 49.999rem) {
     .form-embed-allentown .form-embed-allentown__modal { width: calc(100vw - (var(--space-m) * 2)); max-height: calc(100dvh - (var(--space-m) * 2)); }
-    .form-embed-allentown .form-embed-allentown__modal-panel { padding: var(--space-m); }
+    .form-embed-allentown .form-embed-allentown__modal-panel { padding: var(--space-l); }
+    .form-embed-allentown .form-embed-allentown__modal-close { inset-block-start: var(--space-s); inset-inline-end: var(--space-s); }
   }
 
   /* Field with an attached submit (Form Section "Book a call"). */
