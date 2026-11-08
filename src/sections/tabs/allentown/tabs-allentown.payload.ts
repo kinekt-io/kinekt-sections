@@ -61,6 +61,21 @@ const manifest = {
       "localized": true,
       "description": "Optional image below the introduction."
     },
+    "mediaAspectRatio": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "defaultValue": "original",
+      "options": [
+        "original",
+        "1:1",
+        "16:9",
+        "9:16",
+        "5:4",
+        "4:5"
+      ],
+      "description": "Image aspect ratio. Original preserves the uploaded image dimensions; every other option crops with cover."
+    },
     "tabsHeading": {
       "kind": "text",
       "required": false,

@@ -1,0 +1,94 @@
+---
+import '../../../styles/wireframe-tokens.css'
+import { fass as fas } from '@fortawesome/sharp-solid-svg-icons'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import { ctaGroupActions, type Cta, type RichText, type SectionIntro as SectionIntroContent, type SectionTheme } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
+
+interface Props {
+  id?: string
+  theme?: SectionTheme
+  contentWidth?: string
+  intro: Omit<SectionIntroContent, 'description'> & { description?: string | RichText | null }
+  contactHeading: string
+  availability: string | RichText
+  privacyNote?: string | null
+  actions: Cta[]
+  headingLevel?: 'h1' | 'h2' | 'h3'
+}
+
+const { id, theme = 'dark', contentWidth, intro, contactHeading, availability, privacyNote, actions, headingLevel = 'h2' } = Astro.props as Props
+const description = intro.description == null || typeof intro.description === 'string'
+  ? intro.description ?? undefined
+  : { html: typeof intro.description.html === 'string' ? intro.description.html : richTextToHtml(intro.description, 'intro.description') }
+const introContent: SectionIntroContent = { ...intro, description }
+const availabilityHtml = typeof availability === 'string' ? availability : typeof availability.html === 'string' ? availability.html : richTextToHtml(availability, 'availability')
+const contactActions = ctaGroupActions(actions)
+const shield = fas.faShieldHalved.icon
+---
+<section class="contact-channels-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-kinekt-content-width={normalizeSectionContentWidth(contentWidth)}>
+  <div class="contact-channels-allentown__container">
+    <header class="contact-channels-allentown__intro">
+      <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
+    </header>
+    <aside class="contact-channels-allentown__channels" aria-label={contactHeading}>
+      <h3 class="contact-channels-allentown__heading">{contactHeading}</h3>
+      <div class="contact-channels-allentown__availability" set:html={availabilityHtml} />
+      {privacyNote && <p class="contact-channels-allentown__privacy"><svg aria-hidden="true" width="1em" height="1em" viewBox={`0 0 ${shield[0]} ${shield[1]}`} fill="currentColor"><path d={shield[4] as string} /></svg><span>{privacyNote}</span></p>}
+      <nav class="contact-channels-allentown__actions" aria-label={`${contactHeading} actions`}>
+        {contactActions.map((action, index) => <CtaAction cta={action} style={action.style ?? (index === 0 ? 'secondary' : 'secondary')} />)}
+      </nav>
+    </aside>
+  </div>
+</section>
+
+<style is:global>
+  .contact-channels-allentown[data-kinekt-section] {
+    --kiw--contact-channels-allentown-site-width: var(--website-width);
+    --kiw--contact-channels-allentown-inline-space: var(--section-gutter);
+    --kiw--contact-channels-allentown-block-space: var(--section-space-l);
+    --kiw--contact-channels-allentown-gap: var(--section-space-l);
+    --kiw--contact-channels-allentown-canvas: var(--primary-ultra-dark);
+    --kiw--contact-channels-allentown-ink: var(--white);
+    --kiw--contact-channels-allentown-muted: var(--primary-light);
+    --kiw--contact-channels-allentown-line: var(--primary);
+    --kiw--contact-channels-allentown-accent: var(--accent);
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--kiw--contact-channels-allentown-canvas));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--kiw--contact-channels-allentown-ink));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--kiw--contact-channels-allentown-muted));
+    --kinekt-component-line: var(--kinekt-section-line, var(--kiw--contact-channels-allentown-line));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--kiw--contact-channels-allentown-accent));
+  }
+  .contact-channels-allentown[data-kinekt-theme='light'] { --kiw--contact-channels-allentown-canvas: var(--neutral-ultra-light); --kiw--contact-channels-allentown-ink: var(--primary-ultra-dark); --kiw--contact-channels-allentown-muted: var(--primary-semi-dark); --kiw--contact-channels-allentown-line: var(--primary-light); --kiw--contact-channels-allentown-accent: var(--accent-semi-dark); }
+  .contact-channels-allentown[data-kinekt-theme='semi-light'] { --kiw--contact-channels-allentown-canvas: var(--neutral-light); --kiw--contact-channels-allentown-ink: var(--primary-ultra-dark); --kiw--contact-channels-allentown-muted: var(--primary-semi-dark); --kiw--contact-channels-allentown-line: var(--primary-light); --kiw--contact-channels-allentown-accent: var(--accent-semi-dark); }
+  .contact-channels-allentown[data-kinekt-theme='semi-dark'] { --kiw--contact-channels-allentown-canvas: var(--primary-dark); }
+  .contact-channels-allentown {
+    box-sizing: border-box;
+    padding-block: var(--kiw--contact-channels-allentown-block-space);
+    color: var(--kinekt-component-ink);
+    background: var(--kinekt-component-canvas);
+    font-family: var(--text-font-family);
+    font-size: var(--text-m);
+    line-height: var(--text-line-height);
+  }
+  .contact-channels-allentown *, .contact-channels-allentown *::before, .contact-channels-allentown *::after { box-sizing: border-box; }
+  .contact-channels-allentown__container { display: grid; gap: var(--kiw--contact-channels-allentown-gap); inline-size: 100%; max-inline-size: min(var(--kiw--contact-channels-allentown-site-width), calc(var(--kinekt-section-content-width, var(--desktop-content-width)) + var(--kiw--contact-channels-allentown-inline-space) * 2)); margin-inline: auto; padding-inline: var(--kiw--contact-channels-allentown-inline-space); }
+  .contact-channels-allentown__intro { min-inline-size: 0; }
+  .contact-channels-allentown__intro .section-intro { max-inline-size: var(--width-l); }
+  .contact-channels-allentown__intro .section-intro__heading { color: inherit; }
+  .contact-channels-allentown__intro .section-intro__description { color: var(--kinekt-component-muted); }
+  .contact-channels-allentown__channels { display: grid; align-content: start; gap: var(--space-s); min-inline-size: 0; padding-inline-start: var(--section-space-s); border-inline-start: var(--border-width) solid var(--kinekt-component-line); }
+  .contact-channels-allentown__heading { margin: 0; font: inherit; font-size: var(--h5); font-weight: var(--heading-font-weight); color: inherit; }
+  .contact-channels-allentown__availability { color: var(--kinekt-component-muted); }
+  .contact-channels-allentown__availability > * { margin: 0; }
+  .contact-channels-allentown__privacy { display: flex; gap: var(--space-xxs); align-items: center; margin: 0; color: var(--kinekt-component-muted); font-size: var(--text-s); }
+  .contact-channels-allentown__privacy svg { flex: 0 0 auto; color: var(--kinekt-component-accent); }
+  .contact-channels-allentown__actions { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-block-start: var(--space-xs); }
+  .contact-channels-allentown__actions > * { flex: 1 1 var(--width-xs); }
+  @media (min-width: 50rem) { .contact-channels-allentown__container { grid-template-columns: minmax(0, 1fr) minmax(0, .95fr); align-items: center; column-gap: var(--section-space-xl); } }
+  @media (max-width: 49.999rem) { .contact-channels-allentown__channels { padding-inline-start: 0; padding-block-start: var(--section-space-s); border-inline-start: 0; border-block-start: var(--border-width) solid var(--kinekt-component-line); } }
+  .contact-channels-allentown[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+  .contact-channels-allentown[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+</style>

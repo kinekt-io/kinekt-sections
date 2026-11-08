@@ -434,6 +434,7 @@ for (const directory of await manifestDirectories(sections)) {
     'featured-insights-allentown',
     'battery-models-allentown',
     'steps-stage',
+    'contact-channels-allentown',
     'moq-lead-times-allentown',
     'moq-lead-times-trinity',
     'proof-metrics-trinity',

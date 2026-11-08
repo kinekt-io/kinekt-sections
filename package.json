@@ -190,6 +190,17 @@
       "import": "./dist/sections/compliance-text/allentown/compliance-text-allentown.types.js",
       "types": "./dist/sections/compliance-text/allentown/compliance-text-allentown.types.d.ts"
     },
+    "./sections/contact-channels-allentown.astro": "./src/sections/contact-channels/allentown/contact-channels-allentown.astro",
+    "./sections/contact-channels-allentown.payload": {
+      "default": "./dist/sections/contact-channels/allentown/contact-channels-allentown.payload.js",
+      "import": "./dist/sections/contact-channels/allentown/contact-channels-allentown.payload.js",
+      "types": "./dist/sections/contact-channels/allentown/contact-channels-allentown.payload.d.ts"
+    },
+    "./sections/contact-channels-allentown.types": {
+      "default": "./dist/sections/contact-channels/allentown/contact-channels-allentown.types.js",
+      "import": "./dist/sections/contact-channels/allentown/contact-channels-allentown.types.js",
+      "types": "./dist/sections/contact-channels/allentown/contact-channels-allentown.types.d.ts"
+    },
     "./sections/density-comparison-allentown.astro": "./src/sections/density-comparison/allentown/density-comparison-allentown.astro",
     "./sections/density-comparison-allentown.payload": {
       "default": "./dist/sections/density-comparison/allentown/density-comparison-allentown.payload.js",

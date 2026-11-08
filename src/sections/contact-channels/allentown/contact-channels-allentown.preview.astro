@@ -1,0 +1,14 @@
+---
+import ContactChannelsAllentown from './contact-channels-allentown.astro'
+---
+<ContactChannelsAllentown
+  theme="dark"
+  intro={{ accentHeading: 'Work with our experts', heading: 'Tell us your platform needs', description: 'Reach our team directly on end-to-end encrypted channels. Every message gets an answer within 15 minutes.' }}
+  contactHeading="Get in touch:"
+  availability={{ html: '<p>Mon–Fri 10:00–19:00 (Kyiv time) | 09:00–18:00 (CET)</p>' }}
+  privacyNote="Every conversation is handled securely by a real person on our team."
+  actions={[
+    { label: 'Message us on WhatsApp', href: 'https://wa.me/15550101111', style: 'secondary', icon: 'comments' },
+    { label: 'Message us on Signal', href: 'https://signal.me/#eu/example', style: 'secondary', icon: 'comments' },
+  ]}
+/>

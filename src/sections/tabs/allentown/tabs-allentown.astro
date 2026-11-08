@@ -14,18 +14,19 @@ interface Props {
   contentWidth?: string
   intro: Intro
   media?: Media | null
+  mediaAspectRatio?: 'original' | '1:1' | '16:9' | '9:16' | '5:4' | '4:5'
   tabsHeading?: string
   tabs: { label: string; intro?: Partial<Intro>; ctaGroup?: CtaGroup; form?: string | null; formPresentation?: FormModalPresentation | null }[]
   headingLevel?: 'h1' | 'h2' | 'h3'
 }
-const { id, theme = 'light', intro, media, tabsHeading, tabs, headingLevel = 'h2' } = Astro.props as Props
+const { id, theme = 'light', intro, media, mediaAspectRatio = 'original', tabsHeading, tabs, headingLevel = 'h2' } = Astro.props as Props
 const prefix = `tabs-${crypto.randomUUID()}`
 const panelHeading = headingLevel === 'h1' ? 'h2' : 'h3'
 const hasIntro = (value?: Partial<Intro>) => Boolean(value?.accentHeading || value?.heading || value?.description)
 const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url === 'string' && media.url !== '')
 ---
 
-<section class="beta-tabs-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)}>
+<section class="beta-tabs-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-media-aspect-ratio={mediaAspectRatio}>
   <div class="beta-tabs-allentown__container">
     <header class="beta-tabs-allentown__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
     {hasMedia && media && <KinektMedia media={media} class="beta-tabs-allentown__media" imageClass="beta-tabs-allentown__image" />}
@@ -144,6 +145,11 @@ const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url 
     & .section-intro { --kinekt-component-reading-width: 100%; max-inline-size: none; }
     & .beta-tabs-allentown__media { display: block; inline-size: 100%; max-inline-size: var(--kiw--tabs-allentown-tablist-width); margin-inline: auto; }
     & .beta-tabs-allentown__image { display: block; inline-size: 100%; block-size: auto; border-radius: var(--kinekt-component-radius); }
+    &[data-media-aspect-ratio='1:1'] .beta-tabs-allentown__image { aspect-ratio: 1 / 1; object-fit: cover; }
+    &[data-media-aspect-ratio='16:9'] .beta-tabs-allentown__image { aspect-ratio: 16 / 9; object-fit: cover; }
+    &[data-media-aspect-ratio='9:16'] .beta-tabs-allentown__image { aspect-ratio: 9 / 16; object-fit: cover; }
+    &[data-media-aspect-ratio='5:4'] .beta-tabs-allentown__image { aspect-ratio: 5 / 4; object-fit: cover; }
+    &[data-media-aspect-ratio='4:5'] .beta-tabs-allentown__image { aspect-ratio: 4 / 5; object-fit: cover; }
     & .beta-tabs-allentown__content { display: grid; justify-items: center; gap: var(--kiw--tabs-allentown-content-gap); min-inline-size: 0; }
     & .beta-tabs-allentown__prompt { margin: 0; text-align: center; font-size: var(--h5); font-weight: var(--heading-font-weight); line-height: 1.2; }
     & .beta-tabs-allentown__tablist {

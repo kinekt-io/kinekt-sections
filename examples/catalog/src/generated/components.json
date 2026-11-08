@@ -2126,6 +2126,97 @@
     }
   },
   {
+    "id": "sections/contact-channels/allentown",
+    "version": "26.10.0-beta.0",
+    "slug": "contact-channels-allentown",
+    "category": "sections",
+    "tags": [
+      "conversion",
+      "contact",
+      "beta"
+    ],
+    "role": "contact-channels",
+    "variation": "allentown",
+    "title": "Contact Channels Allentown",
+    "description": "A compact two-column contact section with availability details, a privacy note and one or two direct contact actions.",
+    "status": "beta",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5744-773926&m=dev",
+    "variants": {},
+    "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70"
+        ]
+      },
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": true,
+        "defaultValue": "dark",
+        "options": [
+          "light",
+          "semi-light",
+          "semi-dark",
+          "dark"
+        ]
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "contactHeading": {
+        "kind": "text",
+        "required": true,
+        "localized": true
+      },
+      "availability": {
+        "kind": "richText",
+        "required": true,
+        "localized": true,
+        "description": "Availability or response-time details shown below the contact heading."
+      },
+      "privacyNote": {
+        "kind": "text",
+        "required": false,
+        "localized": true,
+        "description": "Optional short privacy or handling reassurance shown with a renderer-owned shield icon."
+      },
+      "actions": {
+        "kind": "ctaGroup",
+        "required": true,
+        "localized": true,
+        "minItems": 1,
+        "maxItems": 2,
+        "description": "Add one or two direct contact actions. Set each action’s style, label and Content, URL or Form target."
+      }
+    },
+    "runtimeProps": {
+      "headingLevel": {
+        "kind": "headingLevel",
+        "source": "renderer"
+      },
+      "privacyIcon": {
+        "kind": "shield",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/contact-channels/allentown/contact-channels-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/contact-channels/allentown.jpeg",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/contact-channels-allentown.astro",
+      "payload": "@kinekt-io/components/sections/contact-channels-allentown.payload",
+      "types": "@kinekt-io/components/sections/contact-channels-allentown.types"
+    }
+  },
+  {
     "id": "sections/density-comparison/allentown",
     "version": "26.10.0-beta.0",
     "slug": "density-comparison-allentown",
@@ -6277,6 +6368,21 @@
         "required": false,
         "localized": true,
         "description": "Optional image below the introduction."
+      },
+      "mediaAspectRatio": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "original",
+        "options": [
+          "original",
+          "1:1",
+          "16:9",
+          "9:16",
+          "5:4",
+          "4:5"
+        ],
+        "description": "Image aspect ratio. Original preserves the uploaded image dimensions; every other option crops with cover."
       },
       "tabsHeading": {
         "kind": "text",
