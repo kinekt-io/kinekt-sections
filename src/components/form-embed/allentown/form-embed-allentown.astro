@@ -286,6 +286,46 @@ const FormContainer = modalEnabled ? 'dialog' : 'div'
     font-weight: var(--heading-font-weight) !important;
     line-height: var(--heading-line-height) !important;
   }
+  /* HubSpot writes theme defaults on its renderer root. A dialog is always a light surface,
+     so reset both its custom properties and rendered controls inside the modal only. */
+  .form-embed-allentown .form-embed-allentown__modal [data-hsfc-id='Renderer'] {
+    --hsf-default-heading__font-family: var(--heading-font-family) !important;
+    --hsf-default-heading__color: var(--primary-ultra-dark) !important;
+    --hsf-default-richtext__font-family: var(--text-font-family) !important;
+    --hsf-default-richtext__color: var(--primary-ultra-dark) !important;
+    --hsf-default-button__font-family: var(--heading-font-family) !important;
+    --hsf-default-button__color: var(--white) !important;
+    --hsf-default-button__background-color: var(--primary-ultra-dark) !important;
+    --hsf-default-field-label__font-family: var(--text-font-family) !important;
+    --hsf-default-field-label__color: var(--primary-ultra-dark) !important;
+    --hsf-default-field-input__font-family: var(--text-font-family) !important;
+    --hsf-default-field-input__color: var(--primary-ultra-dark) !important;
+    --hsf-default-field-input__background-color: var(--neutral-light) !important;
+    --hsf-default-field-input__placeholder-color: var(--primary-semi-light) !important;
+    --hsf-default-field-input__border-color: var(--neutral-semi-light) !important;
+    --hsf-default-field-textarea__font-family: var(--text-font-family) !important;
+    --hsf-default-field-textarea__color: var(--primary-ultra-dark) !important;
+    --hsf-default-field-textarea__background-color: var(--neutral-light) !important;
+    --hsf-default-field-textarea__placeholder-color: var(--primary-semi-light) !important;
+    --hsf-default-field-textarea__border-color: var(--neutral-semi-light) !important;
+    --hsf-default-field-checkbox__background-color: var(--neutral-light) !important;
+    --hsf-default-field-checkbox__color: var(--primary-ultra-dark) !important;
+    --hsf-default-field-checkbox__border-color: var(--neutral-semi-light) !important;
+    --hsf-default-field-radio__background-color: var(--neutral-light) !important;
+    --hsf-default-field-radio__color: var(--primary-ultra-dark) !important;
+    --hsf-default-field-radio__border-color: var(--neutral-semi-light) !important;
+  }
+  .form-embed-allentown .form-embed-allentown__modal [data-hsfc-id='Renderer'] :is(.hsfc-RichText, .hsfc-FieldLabel) { color: var(--primary-ultra-dark) !important; }
+  .form-embed-allentown .form-embed-allentown__modal [data-hsfc-id='Renderer'] :is(.hsfc-FieldDescription, .hsfc-FieldFooter) { color: var(--primary-semi-dark) !important; }
+  .form-embed-allentown .form-embed-allentown__modal [data-hsfc-id='Renderer'] :is(.hsfc-TextInput, .hsfc-TextareaInput, .hsfc-CheckboxInput, .hsfc-RadioInput) {
+    color: var(--primary-ultra-dark) !important;
+    background-color: var(--neutral-light) !important;
+    border-color: var(--neutral-semi-light) !important;
+  }
+  .form-embed-allentown .form-embed-allentown__modal [data-hsfc-id='Renderer'] .hsfc-Button {
+    color: var(--white) !important;
+    background-color: var(--primary-ultra-dark) !important;
+  }
   @media (max-width: 49.999rem) {
     .form-embed-allentown .form-embed-allentown__modal { width: calc(100vw - (var(--space-m) * 2)); max-height: calc(100dvh - (var(--space-m) * 2)); }
     .form-embed-allentown .form-embed-allentown__modal-panel { padding: var(--space-l); }
