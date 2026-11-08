@@ -7,6 +7,7 @@ import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitl
 import { faChevronRight } from '@fortawesome/sharp-solid-svg-icons'
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
 import type { Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
+import { articleTypeLabel } from '../../../shared/article-type.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 interface Cta { label: string; href: string; style?: 'primary' | 'secondary' | 'clear' | 'clear-base'; icon?: string }
@@ -33,9 +34,8 @@ const { id, theme = 'light', headingLevel = 'h2', intro, insightSources = [], ct
 const action = cta && ('cta' in cta ? cta.cta : cta)
 const featured = insightSources.find((insight) => insight.featured) ?? insightSources[0]
 const recent = insightSources.filter((insight) => insight !== featured).slice(0, 3)
-const kindLabel = (kind?: string): string | undefined => kind?.replace(/[-_]/g, ' ').replace(/\b\w/g, (letter) => letter.toUpperCase())
 const kindIconOf = (insight: Insight) => isCtaIcon(insight.kindIcon) ? ctaIconPaths(insight.kindIcon) : undefined
-const featuredKindLabel = kindLabel(featured?.kind)
+const featuredKindLabel = articleTypeLabel(featured?.kind)
 const featuredKindIcon = featured && kindIconOf(featured)
 ---
 <section class="featured-insights-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
@@ -58,7 +58,7 @@ const featuredKindIcon = featured && kindIconOf(featured)
       {(recent.length > 0 || action) && <div class:list={['featured-insights-allentown__recent', action && 'featured-insights-allentown__recent--with-action']}>
         <SubtitleFlightPath class="featured-insights-allentown__recent-header" text="Most recent" size="small" />
         <ol class="featured-insights-allentown__recent-list">{recent.map((insight) => {
-          const kindLabelValue = kindLabel(insight.kind)
+          const kindLabelValue = articleTypeLabel(insight.kind)
           const kindIcon = kindIconOf(insight)
           return <li class="featured-insights-allentown__recent-list-item"><article class="featured-insights-allentown__recent-article">
             {kindLabelValue && <p class="featured-insights-allentown__kind">{kindIcon && <svg class="featured-insights-allentown__kind-icon" aria-hidden="true" focusable="false" viewBox={kindIcon.viewBox} fill="currentColor"><path d={kindIcon.path} /></svg>}<span class="featured-insights-allentown__kind-label">{kindLabelValue}</span></p>}

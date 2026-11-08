@@ -6,6 +6,7 @@ import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import SubtitleFlightPath from '../../../primitives/subtitle-flight-path/subtitle-flight-path.astro'
 import type { Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import { ctaIconPaths } from '../../../shared/cta-icons.js'
+import { articleTypeLabel } from '../../../shared/article-type.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 type HeadingLevel = 'h1' | 'h2' | 'h3'
@@ -45,7 +46,7 @@ const featured = newest(valid.filter((source) => source.featured)) ?? newest(val
 
 const isMedia = (value: unknown): value is Media => typeof value === 'object' && value !== null && typeof (value as Media).url === 'string'
 const media = featured && isMedia(featured.image) ? { ...featured.image, alt: typeof featured.image.alt === 'string' ? featured.image.alt : '' } : undefined
-const kind = featured?.kind?.trim() || 'Article'
+const kind = articleTypeLabel(featured?.kind) ?? 'Article'
 const FeaturedHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' : 'h4'
 const ctaIcon = ctaIconPaths('chevron-right')
 ---

@@ -6,6 +6,7 @@ import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { Cta, Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 import { ctaIconPaths, isCtaIcon } from '../../../shared/cta-icons.js'
+import { articleTypeLabel } from '../../../shared/article-type.js'
 import { isSafeCtaHref, isSafeWebUrl } from '../../../urls.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
@@ -50,7 +51,10 @@ const kindIcon = (kind?: string) => (kind ? kindIcons[kind.trim().toLowerCase()]
           <div class="related-content-allentown__body">
             <div class="related-content-allentown__copy">
               <div class="related-content-allentown__heading-group">
-                {item.kind && <Label class="related-content-allentown__kind" text={item.kind} icon={kindIcon(item.kind)} size="s" />}
+                {(() => {
+                  const label = articleTypeLabel(item.kind)
+                  return label && <Label class="related-content-allentown__kind" text={label} icon={kindIcon(item.kind)} size="s" />
+                })()}
                 <CardHeading class="related-content-allentown__title"><a href={item.href}>{item.title}</a></CardHeading>
               </div>
               {item.excerpt && <p class="related-content-allentown__excerpt">{item.excerpt}</p>}

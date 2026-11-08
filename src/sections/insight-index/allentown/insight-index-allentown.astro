@@ -6,6 +6,7 @@ import Button from '../../../controls/button/allentown/button-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import type { Media, SectionTheme } from '../../../shared/content.js'
 import { ctaIconPaths } from '../../../shared/cta-icons.js'
+import { articleTypeLabel } from '../../../shared/article-type.js'
 import type { BetaInsightIndexAllentownContent } from './insight-index-allentown.types.js'
 
 type HeadingLevel = 'h1' | 'h2' | 'h3'
@@ -132,7 +133,7 @@ const subjectRecord = (subject: string | InsightIndexSubject): InsightIndexSubje
 const records = insightSources
   .filter((source) => source && text(source.title) !== '' && text(source.href) !== '')
   .map((source, index) => {
-    const kind = text(source.kind) || text(source.type)
+    const kind = articleTypeLabel(text(source.kind) || text(source.type)) ?? ''
     const sourceSubjects = (source.subjects ?? []).map(subjectRecord).filter((subject): subject is InsightIndexSubject => Boolean(subject))
     return {
       index,
