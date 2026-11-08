@@ -11,7 +11,7 @@ const media = (alt: string) => ({ url: placeholder('placeholder-1600x900.svg'), 
     accentHeading: 'Find your battery',
     heading: 'Power your drone',
   }}
-  catalogueCta={{ label: 'View all packs in the webshop', href: '#catalogue' }}
+  catalogueCta={{ label: 'Request the full catalogue', form: '<p>Catalogue form preview</p>' }}
   models={[
     {
       image: media('Compact battery module for high-output missions'),
@@ -25,8 +25,8 @@ const media = (alt: string) => ({ url: placeholder('placeholder-1600x900.svg'), 
         { label: 'Payload', score: 3 },
         { label: 'Weight', score: 1 },
       ],
-      webshopCta: { label: 'View in webshop', href: '#16ah' },
-      specificationCta: { label: 'Download specs', href: '#16ah-specs' },
+      webshopCta: { label: 'Request webshop access', form: '<p>Webshop form preview</p>' },
+      specificationCta: { label: 'Download specs', form: '<p>Specification form preview</p>' },
     },
     {
       image: media('High-capacity battery module for long-endurance platforms'),
@@ -65,6 +65,6 @@ const media = (alt: string) => ({ url: placeholder('placeholder-1600x900.svg'), 
       heading: 'Match a battery model to the way your platform operates',
       description: 'Share the operating profile, power demand and payload constraints. An engineer will help narrow the right configuration.',
     },
-    ctaGroup: { primary: { label: 'Contact an engineer', href: '#contact', style: 'primary' } },
+    ctaGroup: { primary: { label: 'Contact an engineer', form: '<p>Contact form preview</p>', style: 'primary' } },
   }}
 />

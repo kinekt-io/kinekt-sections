@@ -1,8 +1,9 @@
 ---
 import { faArrowUpRightFromSquare } from '@fortawesome/sharp-solid-svg-icons'
 import Button from '../../../controls/button/allentown/button-allentown.astro'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
-import type { Cta, Media, RichText } from '../../../shared/content.js'
+import { isFormCta, type Cta, type Media, type RichText } from '../../../shared/content.js'
 import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 interface Rating {
@@ -66,12 +67,18 @@ const descriptionHtml = typeof card.description === 'string'
     </dl>
 
     <nav class="battery-card-trinity__actions" aria-label={`${card.title} actions`}>
-      <Button class="battery-card-trinity__webshop-action" href={card.webshopCta.href} label={card.webshopCta.label} style="clear">
-        {webshopIcon
-          ? <svg class="battery-card-trinity__external-icon" aria-hidden="true" focusable="false" viewBox={webshopIcon.viewBox} fill="currentColor"><path d={webshopIcon.path} /></svg>
-          : showDefaultWebshopIcon && <svg class="battery-card-trinity__external-icon" aria-hidden="true" focusable="false" viewBox={`0 0 ${faArrowUpRightFromSquare.icon[0]} ${faArrowUpRightFromSquare.icon[1]}`} fill="currentColor"><path d={faArrowUpRightFromSquare.icon[4] as string} /></svg>}
-      </Button>
-      {card.specificationCta && <Button class="battery-card-trinity__specification-action" href={card.specificationCta.href} label={card.specificationCta.label} style="clear">{specificationIcon && <svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={specificationIcon.viewBox} fill="currentColor"><path d={specificationIcon.path} /></svg>}</Button>}
+      {isFormCta(card.webshopCta)
+        ? <CtaAction class="battery-card-trinity__webshop-action" cta={card.webshopCta} style="clear" />
+        : <Button class="battery-card-trinity__webshop-action" href={card.webshopCta.href} label={card.webshopCta.label} style="clear">
+          {webshopIcon
+            ? <svg class="battery-card-trinity__external-icon" aria-hidden="true" focusable="false" viewBox={webshopIcon.viewBox} fill="currentColor"><path d={webshopIcon.path} /></svg>
+            : showDefaultWebshopIcon && <svg class="battery-card-trinity__external-icon" aria-hidden="true" focusable="false" viewBox={`0 0 ${faArrowUpRightFromSquare.icon[0]} ${faArrowUpRightFromSquare.icon[1]}`} fill="currentColor"><path d={faArrowUpRightFromSquare.icon[4] as string} /></svg>}
+        </Button>
+      }
+      {card.specificationCta && (isFormCta(card.specificationCta)
+        ? <CtaAction class="battery-card-trinity__specification-action" cta={card.specificationCta} style="clear" />
+        : <Button class="battery-card-trinity__specification-action" href={card.specificationCta.href} label={card.specificationCta.label} style="clear">{specificationIcon && <svg aria-hidden="true" focusable="false" width="1em" height="1em" viewBox={specificationIcon.viewBox} fill="currentColor"><path d={specificationIcon.path} /></svg>}</Button>
+      )}
     </nav>
   </div>
 </article>

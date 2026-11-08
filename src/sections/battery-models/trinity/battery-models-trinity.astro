@@ -8,6 +8,8 @@ import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import { faArrowUpRightFromSquare } from '@fortawesome/sharp-solid-svg-icons'
 import type { BatteryModelsTrinityContent } from './battery-models-trinity.types.js'
 import { ctaIconPaths } from '../../../shared/cta-icons.js'
+import CtaAction from '../../../shared/cta-action-allentown.astro'
+import { isFormCta } from '../../../shared/content.js'
 
 interface Props extends BatteryModelsTrinityContent {
   headingLevel?: 'h1' | 'h2' | 'h3'
@@ -32,11 +34,14 @@ const showDefaultCatalogueIcon = catalogueCta?.icon == null || catalogueCta.icon
   <div class="battery-models-trinity__container">
     <header class="battery-models-trinity__header">
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
-      {catalogueCta && <Button class="battery-models-trinity__catalogue-cta" href={catalogueCta.href} label={catalogueCta.label} style="clear">
-        {catalogueIcon
-          ? <svg aria-hidden="true" focusable="false" viewBox={catalogueIcon.viewBox} fill="currentColor"><path d={catalogueIcon.path} /></svg>
-          : showDefaultCatalogueIcon && <svg aria-hidden="true" focusable="false" viewBox={`0 0 ${faArrowUpRightFromSquare.icon[0]} ${faArrowUpRightFromSquare.icon[1]}`} fill="currentColor"><path d={faArrowUpRightFromSquare.icon[4] as string} /></svg>}
-      </Button>}
+      {catalogueCta && (isFormCta(catalogueCta)
+        ? <CtaAction class="battery-models-trinity__catalogue-cta" cta={catalogueCta} style="clear" />
+        : <Button class="battery-models-trinity__catalogue-cta" href={catalogueCta.href} label={catalogueCta.label} style="clear">
+          {catalogueIcon
+            ? <svg aria-hidden="true" focusable="false" viewBox={catalogueIcon.viewBox} fill="currentColor"><path d={catalogueIcon.path} /></svg>
+            : showDefaultCatalogueIcon && <svg aria-hidden="true" focusable="false" viewBox={`0 0 ${faArrowUpRightFromSquare.icon[0]} ${faArrowUpRightFromSquare.icon[1]}`} fill="currentColor"><path d={faArrowUpRightFromSquare.icon[4] as string} /></svg>}
+        </Button>
+      )}
     </header>
 
     <ul class="battery-models-trinity__models">

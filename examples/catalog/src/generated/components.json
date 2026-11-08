@@ -95,7 +95,7 @@
     "role": "battery-card",
     "variation": "trinity",
     "title": "Battery Card Trinity",
-    "description": "A localized battery model card with media, an optional best-for marker, configurable five-point ratings, a required webshop action and optional specification download.",
+    "description": "A localized battery model card with media, an optional best-for marker, configurable five-point ratings, a required webshop action and optional specification download. Each CTA accepts Content, URL or Form targets.",
     "status": "planned",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-537149&t=DdGjpoAvVqSIinWT-11",
     "variants": {},
@@ -137,13 +137,13 @@
         "kind": "cta",
         "required": true,
         "localized": true,
-        "description": "Required webshop action for this battery model."
+        "description": "Required action for this battery model. Choose a Content, URL or Form target."
       },
       "specificationCta": {
         "kind": "cta",
         "required": false,
         "localized": true,
-        "description": "Optional specification download or detail action."
+        "description": "Optional specification download or detail action. Choose a Content, URL or Form target."
       }
     },
     "runtimeProps": {},
@@ -1427,7 +1427,7 @@
     "role": "battery-models",
     "variation": "trinity",
     "title": "Battery Models Trinity",
-    "description": "A product-model comparison with media, editor-defined performance ratings, mandatory webshop actions and an optional contact callout.",
+    "description": "A product-model comparison with media, editor-defined performance ratings, mandatory webshop actions and an optional contact callout. Every CTA accepts Content, URL or Form targets.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5255-537149&t=DdGjpoAvVqSIinWT-11",
     "variants": {},
@@ -1466,7 +1466,7 @@
         "kind": "cta",
         "required": false,
         "localized": true,
-        "description": "Optional heading action, for example a link to the full webshop catalogue."
+        "description": "Optional heading action. Choose a Content, URL or Form target."
       },
       "models": {
         "kind": "componentList",

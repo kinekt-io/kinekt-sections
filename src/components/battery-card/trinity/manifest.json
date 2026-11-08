@@ -5,7 +5,7 @@
   "id": "components/battery-card/trinity",
   "slug": "battery-card-trinity",
   "title": "Battery Card Trinity",
-  "description": "A localized battery model card with media, an optional best-for marker, configurable five-point ratings, a required webshop action and optional specification download.",
+  "description": "A localized battery model card with media, an optional best-for marker, configurable five-point ratings, a required webshop action and optional specification download. Each CTA accepts Content, URL or Form targets.",
   "category": "components",
   "role": "battery-card",
   "variation": "trinity",
@@ -21,7 +21,7 @@
     "bestForText": { "kind": "text", "required": false, "localized": true },
     "description": { "kind": "richText", "required": true, "localized": true },
     "ratings": { "kind": "componentList", "componentId": "components/battery-rating/trinity", "required": true, "localized": true, "minItems": 1 },
-    "webshopCta": { "kind": "cta", "required": true, "localized": true, "description": "Required webshop action for this battery model." },
-    "specificationCta": { "kind": "cta", "required": false, "localized": true, "description": "Optional specification download or detail action." }
+    "webshopCta": { "kind": "cta", "required": true, "localized": true, "description": "Required action for this battery model. Choose a Content, URL or Form target." },
+    "specificationCta": { "kind": "cta", "required": false, "localized": true, "description": "Optional specification download or detail action. Choose a Content, URL or Form target." }
   }
 }
