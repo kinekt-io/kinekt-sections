@@ -1,30 +1,34 @@
 ---
 import '../../../styles/wireframe-tokens.css'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import FormEmbed from '../../../components/form-embed/allentown/form-embed-allentown.astro'
 import CtaAction from '../../../shared/cta-action-allentown.astro'
 import { ctaGroupActions } from '../../../shared/content.js'
 import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
-import type { CtaGroup, FormModalPresentation, SectionIntro as Intro, SectionTheme } from '../../../shared/content.js'
+import type { CtaGroup, FormModalPresentation, Media, SectionIntro as Intro, SectionTheme } from '../../../shared/content.js'
 
 interface Props {
   id?: string
   theme?: SectionTheme
   contentWidth?: string
   intro: Intro
+  media?: Media | null
   tabsHeading?: string
   tabs: { label: string; intro?: Partial<Intro>; ctaGroup?: CtaGroup; form?: string | null; formPresentation?: FormModalPresentation | null }[]
   headingLevel?: 'h1' | 'h2' | 'h3'
 }
-const { id, theme = 'light', intro, tabsHeading, tabs, headingLevel = 'h2' } = Astro.props as Props
+const { id, theme = 'light', intro, media, tabsHeading, tabs, headingLevel = 'h2' } = Astro.props as Props
 const prefix = `tabs-${crypto.randomUUID()}`
 const panelHeading = headingLevel === 'h1' ? 'h2' : 'h3'
 const hasIntro = (value?: Partial<Intro>) => Boolean(value?.accentHeading || value?.heading || value?.description)
+const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url === 'string' && media.url !== '')
 ---
 
 <section class="beta-tabs-allentown" id={id} data-kinekt-section data-kinekt-theme={theme} data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)}>
   <div class="beta-tabs-allentown__container">
     <header class="beta-tabs-allentown__intro"><SectionIntro intro={intro} headingLevel={headingLevel} /></header>
+    {hasMedia && media && <KinektMedia media={media} class="beta-tabs-allentown__media" imageClass="beta-tabs-allentown__image" />}
     <div class="beta-tabs-allentown__content" data-kinekt-tabs>
       {tabsHeading && <p class="beta-tabs-allentown__prompt" id={`${prefix}-prompt`}>{tabsHeading}</p>}
       <div class="beta-tabs-allentown__tablist" role="tablist" aria-labelledby={tabsHeading ? `${prefix}-prompt` : undefined} aria-label={tabsHeading ? undefined : intro.heading}>
@@ -138,6 +142,8 @@ const hasIntro = (value?: Partial<Intro>) => Boolean(value?.accentHeading || val
       text-align: center;
     }
     & .section-intro { --kinekt-component-reading-width: 100%; max-inline-size: none; }
+    & .beta-tabs-allentown__media { display: block; inline-size: 100%; max-inline-size: var(--kiw--tabs-allentown-tablist-width); margin-inline: auto; }
+    & .beta-tabs-allentown__image { display: block; inline-size: 100%; block-size: auto; border-radius: var(--kinekt-component-radius); }
     & .beta-tabs-allentown__content { display: grid; justify-items: center; gap: var(--kiw--tabs-allentown-content-gap); min-inline-size: 0; }
     & .beta-tabs-allentown__prompt { margin: 0; text-align: center; font-size: var(--h5); font-weight: var(--heading-font-weight); line-height: 1.2; }
     & .beta-tabs-allentown__tablist {

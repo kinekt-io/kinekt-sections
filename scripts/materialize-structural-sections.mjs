@@ -191,6 +191,7 @@ function sampleField(field, key, depth = 0, index = 0) {
   if (field.kind === 'cta') return { label: 'Explore the specification', href: '#' }
   if (field.kind === 'ctaGroup') return { primary: { label: 'Talk to an expert', href: '#' }, secondary: { label: 'View technical details', href: '#' } }
   if (field.kind === 'formEmbed') return '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>'
+  if (field.kind === 'embedHtml') return '<iframe title="Video preview" src="https://player.vimeo.com/video/000000000" allowfullscreen></iframe>'
   if (field.kind === 'formModal') return { enabled: true, label: 'Start your enquiry', style: 'primary', icon: 'paper-plane' }
   if (field.kind === 'formReference') return { name: 'Project enquiry', description: 'A governed form reference for product, engineering and partnership enquiries.' }
   if (field.kind === 'faqReferenceList') return Array.from({ length: Math.max(field.minItems ?? 1, 3) }, (_, itemIndex) => ({

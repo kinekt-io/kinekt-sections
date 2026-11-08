@@ -55,6 +55,12 @@ const manifest = {
         }
       }
     },
+    "media": {
+      "kind": "media",
+      "required": false,
+      "localized": true,
+      "description": "Optional image below the introduction."
+    },
     "tabsHeading": {
       "kind": "text",
       "required": false,

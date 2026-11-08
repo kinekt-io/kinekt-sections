@@ -12,12 +12,14 @@ const content = {
   introCtaGroup: {
     buttons: [{ label: 'Discuss your project', href: '/contact/', style: 'primary' as const, icon: 'arrow-right' as const }],
   },
+  mediaType: 'video' as const,
   media: {
     url: placeholder('placeholder-1600x900.svg'),
     alt: 'A prototype prepared for a design review',
     width: 1600,
     height: 900,
   },
+  videoEmbedHtml: '<iframe title="Video preview" src="https://player.vimeo.com/video/000000000" allowfullscreen></iframe>',
   steps: [
     {
       title: 'Agree on the requirements',

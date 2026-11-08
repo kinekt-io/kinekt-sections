@@ -16,6 +16,8 @@ interface Props extends BetaStepsStageContent {
   introCtaGroup?: CtaGroup | null
   listCtaGroup?: CtaGroup | null
   media?: Media | null
+  mediaType?: 'image' | 'video'
+  videoEmbedHtml?: string | null
   mediaAspectRatio?: '1:1' | '16:9' | '9:16' | '5:4' | '4:5'
   steps: StepStageContent[]
   id?: string
@@ -24,13 +26,14 @@ interface Props extends BetaStepsStageContent {
   markerType?: 'number' | 'icon'
 }
 
-const { id, theme = 'light', intro, introCtaGroup, media, mediaAspectRatio = '5:4', markerType = 'number', steps = [], listCtaGroup, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props
+const { id, theme = 'light', intro, introCtaGroup, media, mediaType = 'image', videoEmbedHtml, mediaAspectRatio = '5:4', markerType = 'number', steps = [], listCtaGroup, headingLevel = 'h2', mediaLoading = 'lazy' } = Astro.props as Props
 const stepHeadingLevel = ({ h1: 'h2', h2: 'h3', h3: 'h4' } as const)[headingLevel] ?? 'h3'
 const introDescription = intro.description == null || typeof intro.description === 'string'
   ? intro.description ?? undefined
   : { html: typeof intro.description.html === 'string' ? intro.description.html : richTextToHtml(intro.description, 'intro.description') }
 const introContent: SectionIntroContent = { ...intro, description: introDescription }
 const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url === 'string' && media.url !== '')
+const hasVideoEmbed = mediaType === 'video' && typeof videoEmbedHtml === 'string' && videoEmbedHtml.trim() !== ''
 const visibleSteps = steps.filter((step) => typeof step?.title === 'string' && step.title !== '')
 const introActions = ctaGroupActions(introCtaGroup)
 const listActions = ctaGroupActions(listCtaGroup)
@@ -48,7 +51,10 @@ const listActions = ctaGroupActions(listCtaGroup)
           </nav>
         )}
       </header>
-      {hasMedia && media && <KinektMedia media={media} class="steps-stage__media" imageClass="steps-stage__image" loading={mediaLoading} />}
+      {hasVideoEmbed ? (
+        <div class="steps-stage__video-embed" data-kinekt-video-embed set:html={videoEmbedHtml} />
+      ) : hasMedia && media && <KinektMedia media={media} class="steps-stage__media" imageClass="steps-stage__image" loading={mediaLoading} />}
+      {hasVideoEmbed && hasMedia && media && <noscript><KinektMedia media={media} class="steps-stage__media" imageClass="steps-stage__image" loading={mediaLoading} /></noscript>}
     </div>
 
     {(visibleSteps.length > 0 || listActions.length > 0) && (
@@ -170,6 +176,8 @@ const listActions = ctaGroupActions(listCtaGroup)
   .steps-stage .section-intro__description > * { margin-block: 0; }
   .steps-stage .steps-stage__media { display: block; min-width: 0; }
   .steps-stage .steps-stage__image { display: block; inline-size: 100%; max-inline-size: 100%; block-size: auto; aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--steps-stage-media-ratio)); object-fit: cover; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+  .steps-stage .steps-stage__video-embed { display: block; min-width: 0; overflow: hidden; aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--steps-stage-media-ratio)); border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+  .steps-stage .steps-stage__video-embed :is(iframe, video, embed, object) { display: block; inline-size: 100%; block-size: 100%; border: 0; }
 
   .steps-stage {
     & .steps-stage__list-column {

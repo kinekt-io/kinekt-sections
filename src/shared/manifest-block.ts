@@ -4,7 +4,7 @@ import { ctaFields, ctaStyleField, formModalPresentationFields, isSharpSolidIcon
 import { formModalPresentationToProps } from './payload.js'
 import { normalizeSectionContentWidth } from './section-width.js'
 
-type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'faqReferenceList' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'formModal' | 'insightSourceList' | 'contentReferenceList' | 'contentType' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
+type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'embedHtml' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'faqReferenceList' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'formModal' | 'insightSourceList' | 'contentReferenceList' | 'contentType' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
 
 interface ManifestFieldAdmin {
   description?: string
@@ -196,6 +196,8 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
         options: [...options.contentTypeOptions],
         ...(field.description ? { admin: { description: field.description, ...field.admin } } : {}),
       }
+    // Trusted editor-provided HTML for non-form integrations such as video embeds.
+    case 'embedHtml': return { ...common, type: 'textarea', admin: { ...field.admin, rows: 8, description: field.description ?? 'Paste trusted HTML embed code.' } }
     // HubSpot embed code (production forms are embeds). Rendered by components/form-embed/allentown.
     case 'formEmbed': return { ...common, type: 'textarea', admin: { ...field.admin, rows: 8, description: field.description ?? 'Paste the HubSpot form embed code. The component preview keeps using a non-submitting placeholder form.' } }
     case 'formModal': return {
