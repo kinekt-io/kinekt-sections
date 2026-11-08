@@ -226,7 +226,7 @@ const FormContainer = modalEnabled ? 'dialog' : 'div'
     margin: auto;
     padding: 0;
     border: 0;
-    border-radius: var(--radius-xl);
+    border-radius: 0.5rem;
     background: transparent;
     color: var(--primary-ultra-dark);
     overflow: hidden;
@@ -252,7 +252,8 @@ const FormContainer = modalEnabled ? 'dialog' : 'div'
     display: grid;
     max-height: inherit;
     overflow: auto;
-    padding: 31.25px;
+    padding-block: var(--space-xl);
+    padding-inline: var(--space-xxl);
     color: var(--primary-ultra-dark);
     background: var(--white);
   }
@@ -324,7 +325,6 @@ const FormContainer = modalEnabled ? 'dialog' : 'div'
   }
   @media (max-width: 49.999rem) {
     .form-embed-allentown .form-embed-allentown__modal { width: calc(100vw - (var(--space-m) * 2)); max-height: calc(100dvh - (var(--space-m) * 2)); }
-    .form-embed-allentown .form-embed-allentown__modal-panel { padding: 31.25px; }
     .form-embed-allentown .form-embed-allentown__modal-close { inset-block-start: var(--space-s); inset-inline-end: var(--space-s); }
   }
 
