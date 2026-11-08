@@ -252,7 +252,7 @@ const FormContainer = modalEnabled ? 'dialog' : 'div'
     display: grid;
     max-height: inherit;
     overflow: auto;
-    padding: var(--space-xl);
+    padding: 31.25px;
     color: var(--primary-ultra-dark);
     background: var(--white);
   }
@@ -262,21 +262,17 @@ const FormContainer = modalEnabled ? 'dialog' : 'div'
     z-index: 1;
     inset-block-start: var(--space-m);
     inset-inline-end: var(--space-m);
-    display: grid;
-    place-items: center;
-    inline-size: var(--space-xl);
-    block-size: var(--space-xl);
+    display: block;
     padding: 0;
     border: 0;
-    border-radius: 50%;
     color: var(--primary-ultra-dark);
-    background: var(--neutral-light);
+    background: transparent;
     font: inherit;
     font-size: var(--text-xl);
     line-height: 1;
     cursor: pointer;
   }
-  .form-embed-allentown .form-embed-allentown__modal-close:is(:hover, :focus-visible) { color: var(--white); background: var(--primary-semi-dark); }
+  .form-embed-allentown .form-embed-allentown__modal-close:is(:hover, :focus-visible) { color: var(--primary); background: transparent; }
   .form-embed-allentown .form-embed-allentown__modal-close:focus-visible { outline: calc(var(--border-width) * 2) solid var(--accent); outline-offset: var(--space-xxs); }
   .form-embed-allentown .form-embed-allentown__modal-content { min-width: 0; }
   .form-embed-allentown .form-embed-allentown__modal :is(.hsfc-Heading, h1, h2, h3, h4, h5, h6) {
@@ -328,7 +324,7 @@ const FormContainer = modalEnabled ? 'dialog' : 'div'
   }
   @media (max-width: 49.999rem) {
     .form-embed-allentown .form-embed-allentown__modal { width: calc(100vw - (var(--space-m) * 2)); max-height: calc(100dvh - (var(--space-m) * 2)); }
-    .form-embed-allentown .form-embed-allentown__modal-panel { padding: var(--space-l); }
+    .form-embed-allentown .form-embed-allentown__modal-panel { padding: 31.25px; }
     .form-embed-allentown .form-embed-allentown__modal-close { inset-block-start: var(--space-s); inset-inline-end: var(--space-s); }
   }
 
