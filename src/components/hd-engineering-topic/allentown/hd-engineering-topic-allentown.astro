@@ -23,10 +23,11 @@ interface Props {
   moreInformationLabel?: string
   titleAs?: 'p' | 'h3' | 'h4'
   mediaLoading?: 'eager' | 'lazy'
+  mediaFetchpriority?: 'high' | 'low' | 'auto'
   class?: string
 }
 
-const { topic, id, moreInformationLabel = 'More information', titleAs = 'h3', mediaLoading = 'lazy', class: className } = Astro.props
+const { topic, id, moreInformationLabel = 'More information', titleAs = 'h3', mediaLoading = 'lazy', mediaFetchpriority, class: className } = Astro.props
 const classes = ['hd-engineering-topic-allentown', className].filter(Boolean).join(' ')
 const descriptionHtml = typeof topic.description === 'string'
   ? richTextToHtml(topic.description, 'hd engineering topic description')
@@ -36,7 +37,7 @@ const hasMedia = Boolean(topic.media && typeof topic.media.url === 'string' && t
 const plus = ctaIconPaths('plus')
 ---
 <div class={classes} data-hd-engineering-topic>
-  {hasMedia && <KinektMedia media={topic.media} class="hd-engineering-topic-allentown__media" imageClass="hd-engineering-topic-allentown__image" loading={mediaLoading} />}
+  {hasMedia && <KinektMedia media={topic.media} class="hd-engineering-topic-allentown__media" imageClass="hd-engineering-topic-allentown__image" loading={mediaLoading} fetchpriority={mediaFetchpriority} />}
   <div class="hd-engineering-topic-allentown__card">
     <div class="hd-engineering-topic-allentown__details" id={`${id}-details`} data-hd-engineering-topic-details>
       <SubtitleFlightPath text={topic.title} as={titleAs} class="hd-engineering-topic-allentown__title" />

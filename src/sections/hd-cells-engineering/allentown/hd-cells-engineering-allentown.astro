@@ -25,7 +25,6 @@ interface Props extends BetaHdCellsEngineeringAllentownContent {
   moreInformationLabel?: string
   /** Accessible name of the topic tabs; defaults to the engineering heading. */
   topicsLabel?: string
-  mediaLoading?: 'eager' | 'lazy'
 }
 
 const {
@@ -38,7 +37,6 @@ const {
   engineeringTopics = [],
   moreInformationLabel = 'More information',
   topicsLabel,
-  mediaLoading = 'lazy',
 } = Astro.props as Props
 
 const toHtml = (value: RichTextInput, field: string): string => {
@@ -74,7 +72,7 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
           <div class="hd-cells-engineering-allentown__cells-media">
             {cellMedia.map(({ media, index }, position) => (
               <div class="hd-cells-engineering-allentown__cell-media" data-hd-cell-media={index} hidden={position !== 0}>
-                <KinektMedia media={media} imageClass="hd-cells-engineering-allentown__cell-image" loading={mediaLoading} />
+                <KinektMedia media={media} imageClass="hd-cells-engineering-allentown__cell-image" loading="eager" fetchpriority="high" />
               </div>
             ))}
           </div>
@@ -112,7 +110,7 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
           <div class="hd-cells-engineering-allentown__panels">
             {topics.map((topic, index) => (
               <div class="hd-cells-engineering-allentown__panel" id={`${topicIds[index]}-panel`} aria-labelledby={topics.length > 1 ? `${topicIds[index]}-tab` : undefined} data-hd-engineering-panel>
-                <HdEngineeringTopic topic={topic} id={topicIds[index]} moreInformationLabel={moreInformationLabel} titleAs={topicHeadingLevel} mediaLoading={mediaLoading} />
+                <HdEngineeringTopic topic={topic} id={topicIds[index]} moreInformationLabel={moreInformationLabel} titleAs={topicHeadingLevel} mediaLoading="eager" mediaFetchpriority="high" />
               </div>
             ))}
           </div>
