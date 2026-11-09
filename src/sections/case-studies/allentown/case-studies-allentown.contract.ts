@@ -5,7 +5,8 @@ import { richTextToHtml } from '../../../shared/rich-text.js'
 import { ctaGroupToProps, ctaToProps, mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { contentTargetField, ctaFields, ctaStyleField, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from '../../../shared/payload-fields.js'
 import { normalizeSectionContentWidth, type SectionContentWidth } from '../../../shared/section-width.js'
-import { isSafeCtaHref, isSafeFragmentIdentifier } from '../../../urls.js'
+import { isSafeCtaHref } from '../../../urls.js'
+import { isSafeCtaAnchor } from '../../../shared/cta-anchor.js'
 
 export type CaseStudyResult = {
   label: string
@@ -104,7 +105,7 @@ export function createCaseStudiesAllentownBlock({
             { name: 'destinationType', type: 'select', label: 'Link type', required: true, defaultValue: 'content', options: [{ label: 'Content', value: 'content' }, { label: 'URL', value: 'url' }], hooks: { afterRead: [({ value, siblingData }) => value === 'content' && !siblingData?.page && isSafeCtaHref(siblingData?.href) ? 'url' : value] } },
             { name: 'href', type: 'text', label: 'URL or anchor', admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeCtaHref(value) || 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.' },
             contentTargetField(targetRelation),
-            { name: 'anchor', type: 'text', label: 'Anchor ID', admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'content', description: 'Optional fragment on the selected content, starting with #. For example: #main-content.' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeFragmentIdentifier(value) || 'Enter an anchor that starts with #, for example #main-content.' },
+            { name: 'anchor', type: 'text', label: 'Anchor ID and query', admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'content', description: 'Optional anchor on the selected content. Add query parameters after it, for example #insights?mediaType=case.' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeCtaAnchor(value) || 'Enter an anchor starting with # and optional query parameters, for example #insights?mediaType=case.' },
             { name: 'logo', type: 'upload', label: 'Logo', relationTo: mediaCollection, localized: true },
             { name: 'title', type: 'text', label: 'Title', localized: true, required: true, validate: textRequired },
             { name: 'description', type: 'richText', label: 'Description', localized: true },

@@ -1,5 +1,6 @@
 import type { CollectionSlug, Field, SelectField, TextField } from 'payload'
-import { isSafeCtaHref, isSafeFragmentIdentifier } from '../urls.js'
+import { isSafeCtaHref } from '../urls.js'
+import { isSafeCtaAnchor } from './cta-anchor.js'
 import { isCtaIcon } from './cta-icons.js'
 
 export const requiredTextMessage = 'Enter non-empty text.'
@@ -166,11 +167,11 @@ export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], 
     {
       name: 'anchor',
       type: 'text',
-      label: 'Anchor ID',
+      label: 'Anchor ID and query',
       admin: {
         condition: (_: unknown, siblingData: Record<string, unknown>) =>
           siblingData?.destinationType === 'content',
-        description: 'Optional fragment on the selected content, starting with #. For example: #main-content.',
+        description: 'Optional anchor on the selected content. Add query parameters after it, for example #insights?mediaType=case.',
       },
       validate: (value: unknown, { siblingData }: { siblingData?: unknown }) =>
         validateOptionalCtaAnchor(value, siblingData),
@@ -204,7 +205,7 @@ export function ctaGroupFields(targetCollections: CollectionSlug | CollectionSlu
 }
 
 const ctaUrlMessage = 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.'
-const ctaAnchorMessage = 'Enter an anchor that starts with #, for example #main-content.'
+const ctaAnchorMessage = 'Enter an anchor starting with # and optional query parameters, for example #insights?mediaType=case.'
 const ctaContentMessage = 'Select content for this action.'
 const formEmbedMessage = 'Paste the complete HubSpot embed code.'
 
@@ -276,7 +277,7 @@ function validateOptionalCtaAnchor(value: unknown, siblingData: unknown): true |
   const siblings = ctaSiblingData(siblingData)
   if (ctaDestinationType(siblings, true) !== 'content') return true
   if (value === undefined || value === null || value === '') return true
-  return isSafeFragmentIdentifier(value) ? true : ctaAnchorMessage
+  return isSafeCtaAnchor(value) ? true : ctaAnchorMessage
 }
 
 function ctaContentTargetField(targetCollections: CollectionSlug | CollectionSlug[]): Field {

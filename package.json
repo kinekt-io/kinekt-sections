@@ -707,6 +707,11 @@
       "import": "./dist/sections/use-cases/allentown/use-cases-allentown.types.js",
       "types": "./dist/sections/use-cases/allentown/use-cases-allentown.types.d.ts"
     },
+    "./shared/cta-anchor": {
+      "default": "./dist/shared/cta-anchor.js",
+      "import": "./dist/shared/cta-anchor.js",
+      "types": "./dist/shared/cta-anchor.d.ts"
+    },
     "./shared/payload-fields": {
       "default": "./dist/shared/payload-fields.js",
       "import": "./dist/shared/payload-fields.js",

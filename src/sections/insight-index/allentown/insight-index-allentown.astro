@@ -395,19 +395,36 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
 
     const selected = (facet: string) => checkboxes.filter((box) => box.dataset.insightIndexFacet === facet && box.checked).map((box) => box.value)
 
-    // Deep links use repeated `mediaType` and `subject` parameters, e.g.
+    // Deep links use repeated facet parameters, e.g.
     // `/insights/?mediaType=case&subject=high-density`. Values match either
     // the stable checkbox value or its visible label, case-insensitively.
-    const urlFilters = new URLSearchParams(window.location.search)
+    const facetNames = [...new Set(checkboxes
+      .map((box) => box.dataset.insightIndexFacet)
+      .filter((facet): facet is string => typeof facet === 'string' && facet.length > 0))]
     const normalized = (value: string | undefined) => value?.trim().toLowerCase() ?? ''
-    const requestedValues = (facet: string) => new Set(urlFilters.getAll(facet).map(normalized).filter(Boolean))
-    const requestedMediaTypes = requestedValues('mediaType')
-    const requestedSubjects = requestedValues('subject')
-    checkboxes.forEach((box) => {
-      const requested = box.dataset.insightIndexFacet === 'mediaType' ? requestedMediaTypes : requestedSubjects
-      if (requested.size === 0) return
-      box.checked = requested.has(normalized(box.value)) || requested.has(normalized(box.dataset.label))
-    })
+    const requestedValues = (params: URLSearchParams, facet: string) => new Set(params.getAll(facet).map(normalized).filter(Boolean))
+    const setFacetsFromUrl = () => {
+      const urlFilters = new URLSearchParams(window.location.search)
+      const requestedByFacet = new Map(facetNames.map((facet) => [facet, requestedValues(urlFilters, facet)]))
+      checkboxes.forEach((box) => {
+        const facet = box.dataset.insightIndexFacet
+        const requested = facet ? requestedByFacet.get(facet) : undefined
+        box.checked = Boolean(requested?.has(normalized(box.value)) || requested?.has(normalized(box.dataset.label)))
+      })
+    }
+    const syncFacetsToUrl = () => {
+      const url = new URL(window.location.href)
+      facetNames.forEach((facet) => url.searchParams.delete(facet))
+      checkboxes.forEach((box) => {
+        const facet = box.dataset.insightIndexFacet
+        if (box.checked && facet) url.searchParams.append(facet, box.value)
+      })
+      const href = `${url.pathname}${url.search}${url.hash}`
+      if (href !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
+        window.history.replaceState(window.history.state, '', href)
+      }
+    }
+    setFacetsFromUrl()
     const matchesQuery = (item: (typeof items)[number]) => {
       if (!state.query) return true
       if (state.providerMatches) return state.providerMatches.has(item.key)
@@ -454,7 +471,7 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
           chip.querySelector('.insight-index-allentown__chip-facet')!.textContent = `${facetLabel}:`
           chip.querySelector('.insight-index-allentown__chip-value')!.textContent = box.dataset.label || box.value
           button.setAttribute('aria-label', labels.removeFilter.replace('{filter}', `${facetLabel}: ${box.dataset.label || box.value}`))
-          button.addEventListener('click', () => { box.checked = false; state.page = 1; render(); (query ?? box).focus() })
+          button.addEventListener('click', () => { box.checked = false; state.page = 1; syncFacetsToUrl(); render(); (query ?? box).focus() })
           return chip
         }))
         active.hidden = checked.length === 0
@@ -523,7 +540,13 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
       if (!section.kinektInsightIndexSearch) void loadPagefind(pagefindUrl()).catch(() => undefined)
     }, { once: true })
     // Facet changes re-run the query so the Pagefind filters follow the selection.
-    checkboxes.forEach((box) => box.addEventListener('change', () => { state.page = 1; if (state.query) void runSearch(); else render() }))
+    checkboxes.forEach((box) => box.addEventListener('change', () => { state.page = 1; syncFacetsToUrl(); if (state.query) void runSearch(); else render() }))
+    window.addEventListener('popstate', () => {
+      setFacetsFromUrl()
+      state.page = 1
+      if (state.query) void runSearch()
+      else render()
+    })
     steps.forEach((step) => step.addEventListener('click', () => { state.page += Number(step.dataset.insightIndexPageStep); render(true) }))
 
     // Sort: a disclosure button with a native radio group.

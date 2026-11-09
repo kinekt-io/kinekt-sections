@@ -1,4 +1,5 @@
-import { isSafeCtaHref, isSafeFragmentIdentifier, isSafeWebUrl } from '../urls.js'
+import { isSafeCtaHref, isSafeWebUrl } from '../urls.js'
+import { appendCtaAnchor, isSafeCtaAnchor } from './cta-anchor.js'
 import type { Cta, CtaGroup, FormModalPresentation, Media } from './content.js'
 import { isCtaStyle } from './content.js'
 import { isCtaIcon } from './cta-icons.js'
@@ -93,8 +94,9 @@ export const ctaToProps = (value: unknown, field: string, options: PayloadAdapte
     href = options.contentHref?.(target.collection, target.id) ?? ''
     if (!href) throw new Error(`${field}.page is not available in this static build.`)
     if (cta.anchor !== undefined && cta.anchor !== null && cta.anchor !== '') {
-      if (!isSafeFragmentIdentifier(cta.anchor)) throw new Error(`${field}.anchor must start with # and contain a valid ID.`)
-      href = `${href}${cta.anchor}`
+      const hrefWithAnchor = appendCtaAnchor(href, cta.anchor)
+      if (!hrefWithAnchor) throw new Error(`${field}.anchor must start with # and may include query parameters.`)
+      href = hrefWithAnchor
     }
   } else if (destinationType === 'url') {
     href = requireText(cta.href, `${field}.href`)
@@ -113,7 +115,7 @@ export const optionalCtaToProps = (value: unknown, field: string, options: Paylo
 
   if (destinationType === 'content' || destinationType === 'page') {
     if (cta.page === undefined || cta.page === null || cta.page === '') return undefined
-    if (cta.anchor !== undefined && cta.anchor !== null && cta.anchor !== '' && !isSafeFragmentIdentifier(cta.anchor)) return undefined
+    if (cta.anchor !== undefined && cta.anchor !== null && cta.anchor !== '' && !isSafeCtaAnchor(cta.anchor)) return undefined
   } else if (destinationType === 'url') {
     if (typeof cta.href !== 'string' || cta.href.trim().length === 0 || !isSafeCtaHref(cta.href)) return undefined
   } else if (destinationType === 'form') {

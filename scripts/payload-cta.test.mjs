@@ -95,18 +95,18 @@ test('CTA group actions retain valid HubSpot form targets', () => {
   )
 })
 
-test('CTA adapters support same-page and selected-content anchors', () => {
+test('CTA adapters place anchor query parameters before the fragment', () => {
   assert.deepEqual(
     ctaToProps({ label: 'View models', destinationType: 'url', href: '#our-models' }, 'cta'),
     { label: 'View models', href: '#our-models' },
   )
   assert.deepEqual(
     ctaToProps(
-      { label: 'Skip to specifications', destinationType: 'content', page: { relationTo: 'articles', value: 42 }, anchor: '#specifications' },
+      { label: 'Skip to specifications', destinationType: 'content', page: { relationTo: 'articles', value: 42 }, anchor: '#specifications?mediaType=case' },
       'cta',
       { contentHref: () => '/articles/example?lang=uk' },
     ),
-    { label: 'Skip to specifications', href: '/articles/example?lang=uk#specifications' },
+    { label: 'Skip to specifications', href: '/articles/example?lang=uk&mediaType=case#specifications' },
   )
 })
 

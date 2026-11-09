@@ -148,6 +148,14 @@ entries.set('./section-thumbnails', {
     types: './dist/shared/section-thumbnails.d.ts',
   },
 })
+entries.set('./shared/cta-anchor', {
+  source: 'shared/cta-anchor.ts',
+  target: {
+    default: './dist/shared/cta-anchor.js',
+    import: './dist/shared/cta-anchor.js',
+    types: './dist/shared/cta-anchor.d.ts',
+  },
+})
 entries.set('./shared/payload-fields', {
   source: 'shared/payload-fields.ts',
   target: {

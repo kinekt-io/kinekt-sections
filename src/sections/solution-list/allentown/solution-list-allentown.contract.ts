@@ -4,7 +4,8 @@ import type { Cta, CtaGroup, CtaStyle, Media, RichText, SectionIntro } from '../
 import { isCtaStyle } from '../../../shared/content.js'
 import { renderRichText } from '../../../shared/rich-text.js'
 import { mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
-import { isSafeCtaHref, isSafeFragmentIdentifier, isSafeWebUrl } from '../../../urls.js'
+import { isSafeCtaHref, isSafeWebUrl } from '../../../urls.js'
+import { appendCtaAnchor, isSafeCtaAnchor } from '../../../shared/cta-anchor.js'
 import { isSharpSolidIconNameOrEmpty, sectionContentWidthField } from '../../../shared/payload-fields.js'
 import { normalizeSectionContentWidth, type SectionContentWidth } from '../../../shared/section-width.js'
 
@@ -60,7 +61,7 @@ export function createSolutionListAllentownBlock({ mediaCollection = 'media', ta
           { name: 'linkLabel', label: 'Link label', type: 'text', localized: true, required: true, validate: (value: unknown) => hasText(value) || 'Enter non-empty text.' },
           { name: 'href', label: 'URL or anchor', type: 'text', localized: true, admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeCtaHref(value) || 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.' },
           targetField(targetRelation, true),
-          { name: 'anchor', label: 'Anchor ID', type: 'text', localized: true, admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'page', description: 'Optional fragment on the selected content, starting with #. For example: #main-content.' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeFragmentIdentifier(value) || 'Enter an anchor that starts with #, for example #main-content.' },
+          { name: 'anchor', label: 'Anchor ID and query', type: 'text', localized: true, admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'page', description: 'Optional anchor on the selected content. Add query parameters after it, for example #insights?mediaType=case.' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeCtaAnchor(value) || 'Enter an anchor starting with # and optional query parameters, for example #insights?mediaType=case.' },
           { name: 'ctaStyle', label: 'CTA style', type: 'select', localized: true, options: [{ label: 'Primary', value: 'primary' }, { label: 'Secondary', value: 'secondary' }, { label: 'Clear', value: 'clear' }, { label: 'Clear base', value: 'clear-base' }], admin: { description: 'Leave empty to retain Clear.' } },
           { name: 'icon', label: 'Icon', type: 'text', localized: true, validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example arrow-right or bolt.' } },
         ],
@@ -100,7 +101,7 @@ function ctaGroupFields(targetRelation: CollectionSlug | CollectionSlug[]): Fiel
       { name: 'destinationType', label: 'Link type', type: 'select', defaultValue: 'url', options: [{ label: 'Content', value: 'page' }, { label: 'URL', value: 'url' }, { label: 'Form', value: 'form' }], hooks: { afterRead: [({ value, siblingData }) => value === 'page' && !siblingData?.page && isSafeCtaHref(siblingData?.href) ? 'url' : value] } },
       { name: 'href', label: 'URL or anchor', type: 'text', admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown, { siblingData }: { siblingData?: Record<string, unknown> }) => siblingData?.destinationType !== 'url' || value === undefined || value === null || value === '' || isSafeCtaHref(value) || 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.' },
       targetField(targetRelation),
-      { name: 'anchor', label: 'Anchor ID', type: 'text', admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'page', description: 'Optional fragment on the selected content, starting with #. For example: #main-content.' }, validate: (value: unknown, { siblingData }: { siblingData?: Record<string, unknown> }) => siblingData?.destinationType !== 'page' || value === undefined || value === null || value === '' || isSafeFragmentIdentifier(value) || 'Enter an anchor that starts with #, for example #main-content.' },
+      { name: 'anchor', label: 'Anchor ID and query', type: 'text', admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'page', description: 'Optional anchor on the selected content. Add query parameters after it, for example #insights?mediaType=case.' }, validate: (value: unknown, { siblingData }: { siblingData?: Record<string, unknown> }) => siblingData?.destinationType !== 'page' || value === undefined || value === null || value === '' || isSafeCtaAnchor(value) || 'Enter an anchor starting with # and optional query parameters, for example #insights?mediaType=case.' },
       { name: 'form', label: 'HubSpot embed code', type: 'textarea', admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'form', description: 'Paste the complete HubSpot embed code. This CTA opens it in a modal.' } },
       { name: 'icon', label: 'Icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example arrow-right or bolt.' } },
     ],
@@ -168,8 +169,9 @@ function destinationToProps(value: Record<string, unknown>, field: string, label
     const href = contentHref(target.collection, target.id)
     if (!href) throw new Error(`${field}.page is not available in this static build.`)
     if (value.anchor !== undefined && value.anchor !== null && value.anchor !== '') {
-      if (!isSafeFragmentIdentifier(value.anchor)) throw new Error(`${field}.anchor must start with # and contain a valid ID.`)
-      return { label, href: `${href}${value.anchor}`, ...(icon ? { icon } : {}) }
+      const hrefWithAnchor = appendCtaAnchor(href, value.anchor)
+      if (!hrefWithAnchor) throw new Error(`${field}.anchor must start with # and may include query parameters.`)
+      return { label, href: hrefWithAnchor, ...(icon ? { icon } : {}) }
     }
     return { label, href, ...(icon ? { icon } : {}) }
   }
