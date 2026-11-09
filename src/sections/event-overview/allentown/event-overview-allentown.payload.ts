@@ -55,6 +55,16 @@ const manifest = {
         }
       }
     },
+    "contentType": {
+      "kind": "contentType",
+      "required": true,
+      "localized": true,
+      "defaultValue": "events",
+      "options": [
+        "events"
+      ],
+      "description": "Choose the Event content type that supplies this section."
+    },
     "hideFirstUpcoming": {
       "kind": "checkbox",
       "required": false,
@@ -65,7 +75,7 @@ const manifest = {
   }
 } as const
 
-export interface CreateBetaEventOverviewAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaEventOverviewAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[]; contentTypeOptions?: ReadonlyArray<{ label: string; value: CollectionSlug }> }
 
 export function createBetaEventOverviewAllentownBlock(options: CreateBetaEventOverviewAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

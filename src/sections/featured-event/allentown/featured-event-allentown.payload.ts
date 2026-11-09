@@ -54,11 +54,21 @@ const manifest = {
           "localized": true
         }
       }
+    },
+    "contentType": {
+      "kind": "contentType",
+      "required": true,
+      "localized": true,
+      "defaultValue": "events",
+      "options": [
+        "events"
+      ],
+      "description": "Choose the Event content type that supplies this section."
     }
   }
 } as const
 
-export interface CreateBetaFeaturedEventAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+export interface CreateBetaFeaturedEventAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[]; contentTypeOptions?: ReadonlyArray<{ label: string; value: CollectionSlug }> }
 
 export function createBetaFeaturedEventAllentownBlock(options: CreateBetaFeaturedEventAllentownBlockOptions = {}): Block {
   return createManifestBlock(manifest, options)

@@ -2352,7 +2352,7 @@
   },
   {
     "id": "sections/event-overview/allentown",
-    "version": "26.10.0-beta.2",
+    "version": "26.10.0-beta.3",
     "slug": "event-overview-allentown",
     "category": "sections",
     "tags": [
@@ -2397,6 +2397,16 @@
         "componentId": "components/intro/allentown",
         "required": true,
         "localized": true
+      },
+      "contentType": {
+        "kind": "contentType",
+        "required": true,
+        "localized": true,
+        "defaultValue": "events",
+        "options": [
+          "events"
+        ],
+        "description": "Choose the Event content type that supplies this section."
       },
       "hideFirstUpcoming": {
         "kind": "checkbox",
@@ -2674,7 +2684,7 @@
   },
   {
     "id": "sections/featured-event/allentown",
-    "version": "26.10.0-beta.1",
+    "version": "26.10.0-beta.2",
     "slug": "featured-event-allentown",
     "category": "sections",
     "tags": [
@@ -2719,6 +2729,16 @@
         "componentId": "components/intro/allentown",
         "required": true,
         "localized": true
+      },
+      "contentType": {
+        "kind": "contentType",
+        "required": true,
+        "localized": true,
+        "defaultValue": "events",
+        "options": [
+          "events"
+        ],
+        "description": "Choose the Event content type that supplies this section."
       }
     },
     "runtimeProps": {

@@ -189,14 +189,19 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
         { name: 'featured', type: 'checkbox', defaultValue: false },
       ],
     }
-    case 'contentType':
-      if (options.contentTypeOptions.length === 0) throw new Error(`Field ${name} requires contentTypeOptions; JSON fallback is forbidden.`)
+    case 'contentType': {
+      const availableContentTypes = field.options
+        ? options.contentTypeOptions.filter(({ value }) => field.options?.includes(value))
+        : options.contentTypeOptions
+      if (availableContentTypes.length === 0) throw new Error(`Field ${name} requires one or more configured content type options.`)
       return {
         ...common,
         type: 'select',
-        options: [...options.contentTypeOptions],
+        defaultValue: field.defaultValue,
+        options: [...availableContentTypes],
         ...(field.description ? { admin: { description: field.description, ...field.admin } } : {}),
       }
+    }
     // Trusted editor-provided HTML for non-form integrations such as video embeds.
     case 'embedHtml': return { ...common, type: 'textarea', admin: { ...field.admin, rows: 8, description: field.description ?? 'Paste trusted HTML embed code.' } }
     // HubSpot embed code (production forms are embeds). Rendered by components/form-embed/allentown.
