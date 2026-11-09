@@ -46,13 +46,13 @@ const Heading = headingLevel
 const featured = presentation === 'featured'
 const eventTypeLabel = { ...defaultEventTypeLabels, ...eventTypeLabels }[event.eventType] ?? defaultEventTypeLabels.tulip
 
-// Figma shows the date as "2026 / 10 / 24"; a multi-day event becomes "start - end".
+// Figma shows the date as "2026/10/24"; a multi-day event becomes "start - end".
 const dateParts = (value?: string | null) => {
   if (!value) return undefined
   const date = new Date(value)
   if (Number.isNaN(date.getTime())) return undefined
   const parts = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(date).map((part) => [part.type, part.value]))
-  return { iso: `${parts.year}-${parts.month}-${parts.day}`, label: `${parts.year} / ${parts.month} / ${parts.day}` }
+  return { iso: `${parts.year}-${parts.month}-${parts.day}`, label: `${parts.year}/${parts.month}/${parts.day}` }
 }
 const start = dateParts(event.startDateTime)
 const endCandidate = dateParts(event.endDateTime)
