@@ -59,7 +59,7 @@ const manifest = {
       "kind": "checkbox",
       "required": false,
       "localized": true,
-      "defaultValue": false,
+      "defaultValue": true,
       "description": "Hide the nearest upcoming Event when Featured Event already appears above this overview."
     }
   }

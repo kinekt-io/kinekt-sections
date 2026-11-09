@@ -2352,7 +2352,7 @@
   },
   {
     "id": "sections/event-overview/allentown",
-    "version": "26.10.0-beta.1",
+    "version": "26.10.0-beta.2",
     "slug": "event-overview-allentown",
     "category": "sections",
     "tags": [
@@ -2402,7 +2402,7 @@
         "kind": "checkbox",
         "required": false,
         "localized": true,
-        "defaultValue": false,
+        "defaultValue": true,
         "description": "Hide the nearest upcoming Event when Featured Event already appears above this overview."
       }
     },

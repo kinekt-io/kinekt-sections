@@ -28,7 +28,7 @@ interface Props {
   timeZone?: string
 }
 
-const { id, theme = 'light', headingLevel = 'h2', intro, hideFirstUpcoming = false, events = [], eventTypeLabels, loadMoreLabel = 'Load more future events', timeZone } = Astro.props as Props
+const { id, theme = 'light', headingLevel = 'h2', intro, hideFirstUpcoming = true, events = [], eventTypeLabels, loadMoreLabel = 'Load more future events', timeZone } = Astro.props as Props
 
 const pageSize = 6
 const startTime = (event: EventCardContent): number => {
