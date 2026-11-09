@@ -11,14 +11,11 @@ type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 type HeadingLevel = 'h1' | 'h2' | 'h3'
 
 /*
- * runtimeProps.eventMapping = eventRecord (title, media, location, startDateTime, endDateTime, description, button).
- * `featured` and `publishedAt` drive runtimeProps.eventSelection; `eventType` is optional because the
- * featured presentation doesn't show it.
+ * runtimeProps.eventMapping = eventRecord (title, media, location, startDateTime, endDateTime, description).
+ * The renderer chooses the first upcoming published Event for the active region and locale.
  */
 export interface FeaturedEventSource extends Omit<EventCardContent, 'eventType'> {
   eventType?: EventType
-  featured?: boolean
-  publishedAt?: string | null
 }
 
 interface Props {
@@ -38,15 +35,20 @@ interface Props {
 
 const { id, theme = 'light', headingLevel = 'h2', intro, events = [], eventStageLabel = 'Featured event', timeZone, mediaLoading = 'lazy' } = Astro.props as Props
 
-// runtimeProps.eventSelection = newestFeaturedThenNewestPublished: the newest featured Event, else the newest
-// published one. Events without a valid publishedAt rank last; ties keep the input order.
-const publishedTime = (event: FeaturedEventSource): number => {
-  const time = event.publishedAt ? Date.parse(event.publishedAt) : Number.NaN
+const startTime = (event: FeaturedEventSource): number => {
+  const time = Date.parse(event.startDateTime)
+  return Number.isNaN(time) ? Number.POSITIVE_INFINITY : time
+}
+const endTime = (event: FeaturedEventSource): number => {
+  const time = Date.parse(event.endDateTime ?? event.startDateTime)
   return Number.isNaN(time) ? Number.NEGATIVE_INFINITY : time
 }
-const newest = (list: FeaturedEventSource[]): FeaturedEventSource | undefined => list.reduce<FeaturedEventSource | undefined>((best, event) => (!best || publishedTime(event) > publishedTime(best) ? event : best), undefined)
 const valid = events.filter((event) => event && typeof event.title === 'string' && event.title !== '' && typeof event.location === 'string' && typeof event.startDateTime === 'string')
-const selected = newest(valid.filter((event) => event.featured === true)) ?? newest(valid)
+const selected = valid
+  .filter((event) => endTime(event) >= Date.now())
+  .map((event, index) => ({ event, index }))
+  .sort((left, right) => startTime(left.event) - startTime(right.event) || left.index - right.index)
+  .at(0)?.event
 const event: EventCardContent | undefined = selected ? { ...selected, eventType: selected.eventType ?? 'tulip' } : undefined
 const CardHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' : 'h4'
 ---

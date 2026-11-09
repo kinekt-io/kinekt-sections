@@ -2352,7 +2352,7 @@
   },
   {
     "id": "sections/event-overview/allentown",
-    "version": "26.10.0-beta.0",
+    "version": "26.10.0-beta.1",
     "slug": "event-overview-allentown",
     "category": "sections",
     "tags": [
@@ -2397,6 +2397,13 @@
         "componentId": "components/intro/allentown",
         "required": true,
         "localized": true
+      },
+      "hideFirstUpcoming": {
+        "kind": "checkbox",
+        "required": false,
+        "localized": true,
+        "defaultValue": false,
+        "description": "Hide the nearest upcoming Event when Featured Event already appears above this overview."
       }
     },
     "runtimeProps": {
@@ -2667,7 +2674,7 @@
   },
   {
     "id": "sections/featured-event/allentown",
-    "version": "26.10.0-beta.0",
+    "version": "26.10.0-beta.1",
     "slug": "featured-event-allentown",
     "category": "sections",
     "tags": [
@@ -2678,7 +2685,7 @@
     "role": "featured-event",
     "variation": "allentown",
     "title": "Featured Event Allentown",
-    "description": "A reusable section with a localized introduction and the newest published featured Event in the active region and locale.",
+    "description": "A reusable section with a localized introduction and the nearest future published Event in the active region and locale.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-415942&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -2716,12 +2723,12 @@
     },
     "runtimeProps": {
       "eventSelection": {
-        "kind": "newestFeaturedThenNewestPublished",
+        "kind": "nearestFuturePublishedEvent",
         "source": "activeRegionAndLocale"
       },
       "eventMapping": {
         "kind": "eventRecord",
-        "source": "title,media,location,startDateTime,endDateTime,description,button"
+        "source": "title,eventType,media,location,startDateTime,endDateTime,description"
       },
       "eventStage": {
         "kind": "flightPath",

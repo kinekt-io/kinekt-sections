@@ -2,7 +2,6 @@
 import FeaturedEventAllentown from './featured-event-allentown.astro'
 const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/') + 'placeholders/' + name
 
-const button = { label: 'Book a slot', href: '#', icon: 'arrow-right' as const }
 const media = (alt: string) => ({ url: placeholder('placeholder-800x600.svg'), alt, width: 800, height: 600 })
 
 const content = {
@@ -11,7 +10,7 @@ const content = {
     accentHeading: '/ Meet us in person',
     heading: 'Upcoming events',
   },
-  // The renderer picks the newest featured Event (Battery Tech Day), not the newest published one.
+  // The renderer selects the earliest future Event (Battery Tech Day).
   events: [
     {
       title: 'Battery Tech Day Benelux',
@@ -20,9 +19,6 @@ const content = {
       endDateTime: '2027-03-11T16:00:00.000Z',
       description: 'Meet our engineers for a day of talks on cell selection, thermal design and certification. Bring your duty cycle and we will walk through the trade-offs that shape a reliable battery system.',
       media: media('Neutral wireframe placeholder for an exhibition stand'),
-      button,
-      featured: true,
-      publishedAt: '2026-10-01',
     },
     {
       title: 'The Battery Show Europe',
@@ -31,9 +27,6 @@ const content = {
       endDateTime: '2027-05-20T15:00:00.000Z',
       description: 'Visit the Tulip Tech stand to see our latest high-density packs.',
       media: media('Neutral wireframe placeholder for a trade fair hall'),
-      button,
-      featured: true,
-      publishedAt: '2026-09-12',
     },
     {
       title: 'Drone battery integration workshop',
@@ -41,8 +34,6 @@ const content = {
       startDateTime: '2027-04-08T08:00:00.000Z',
       description: 'A hands-on session on integrating battery packs into UAV platforms.',
       media: media('Neutral wireframe placeholder for a workshop'),
-      button,
-      publishedAt: '2026-10-20',
     },
   ],
 }

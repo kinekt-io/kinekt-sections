@@ -4,7 +4,7 @@ import { ctaFields, ctaStyleField, formModalPresentationFields, isSharpSolidIcon
 import { formModalPresentationToProps } from './payload.js'
 import { normalizeSectionContentWidth } from './section-width.js'
 
-type FieldKind = 'text' | 'textarea' | 'richText' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'embedHtml' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'faqReferenceList' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'formModal' | 'insightSourceList' | 'contentReferenceList' | 'contentType' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
+type FieldKind = 'text' | 'textarea' | 'richText' | 'checkbox' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'embedHtml' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'faqReferenceList' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'formModal' | 'insightSourceList' | 'contentReferenceList' | 'contentType' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
 
 interface ManifestFieldAdmin {
   description?: string
@@ -15,7 +15,7 @@ interface ManifestField {
   kind: FieldKind
   required: boolean
   localized: boolean
-  defaultValue?: string
+  defaultValue?: string | boolean
   options?: readonly string[]
   minItems?: number
   maxItems?: number
@@ -85,6 +85,7 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
     case 'textarea': return { ...common, type: 'textarea' }
     case 'richText': return { ...common, type: 'richText' }
     case 'dateTime': return { ...common, type: 'date', admin: { ...field.admin, date: { pickerAppearance: 'dayAndTime' } } }
+    case 'checkbox': return { ...common, type: 'checkbox', defaultValue: field.defaultValue === true }
     case 'select':
       if (name === 'contentWidth') return { ...sectionContentWidthField(), ...common }
       return {

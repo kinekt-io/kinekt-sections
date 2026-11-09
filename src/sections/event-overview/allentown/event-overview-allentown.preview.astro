@@ -1,7 +1,6 @@
 ---
 import EventOverview from './event-overview-allentown.astro'
 
-const button = { label: 'Book a slot', href: '#', icon: 'arrow-right' as const }
 
 const content = {
   theme: 'light' as const,
@@ -11,14 +10,14 @@ const content = {
   },
   // Unsorted on purpose: the renderer sorts by start date and shows six per page.
   events: [
-    { eventType: 'national' as const, title: 'Battery Tech Day Benelux', location: 'Evoluon, Eindhoven, Netherlands', startDateTime: '2027-03-11T08:00:00.000Z', endDateTime: '2027-03-11T16:00:00.000Z', button },
-    { eventType: 'tulip' as const, title: 'Tulip open factory day', location: 'Tulip Tech headquarters, Netherlands', startDateTime: '2027-02-04T08:00:00.000Z', endDateTime: '2027-02-04T15:00:00.000Z', button },
-    { eventType: 'international' as const, title: 'The Battery Show Europe', location: 'Messe Stuttgart, Germany', startDateTime: '2027-05-18T07:00:00.000Z', endDateTime: '2027-05-20T15:00:00.000Z', button },
-    { eventType: 'tulip' as const, title: 'Drone battery integration workshop', location: 'Tulip Tech headquarters, Netherlands', startDateTime: '2027-04-08T08:00:00.000Z', button },
-    { eventType: 'national' as const, title: 'Dutch Drone Days', location: 'Space Expo, Noordwijk, Netherlands', startDateTime: '2027-06-02T07:30:00.000Z', endDateTime: '2027-06-03T15:00:00.000Z', button },
-    { eventType: 'international' as const, title: 'Eurosatory defence exhibition', location: 'Paris Nord Villepinte, France', startDateTime: '2027-06-14T07:00:00.000Z', endDateTime: '2027-06-18T15:00:00.000Z', button },
-    { eventType: 'tulip' as const, title: 'Certification and compliance clinic', location: 'Online webinar', startDateTime: '2027-07-01T13:00:00.000Z', button },
-    { eventType: 'international' as const, title: 'Commercial UAV Expo', location: 'Las Vegas, United States', startDateTime: '2027-09-07T16:00:00.000Z', endDateTime: '2027-09-09T23:00:00.000Z', button },
+    { eventType: 'national' as const, title: 'Battery Tech Day Benelux', location: 'Evoluon, Eindhoven, Netherlands', startDateTime: '2027-03-11T08:00:00.000Z', endDateTime: '2027-03-11T16:00:00.000Z' },
+    { eventType: 'tulip' as const, title: 'Tulip open factory day', location: 'Tulip Tech headquarters, Netherlands', startDateTime: '2027-02-04T08:00:00.000Z', endDateTime: '2027-02-04T15:00:00.000Z' },
+    { eventType: 'international' as const, title: 'The Battery Show Europe', location: 'Messe Stuttgart, Germany', startDateTime: '2027-05-18T07:00:00.000Z', endDateTime: '2027-05-20T15:00:00.000Z' },
+    { eventType: 'tulip' as const, title: 'Drone battery integration workshop', location: 'Tulip Tech headquarters, Netherlands', startDateTime: '2027-04-08T08:00:00.000Z' },
+    { eventType: 'national' as const, title: 'Dutch Drone Days', location: 'Space Expo, Noordwijk, Netherlands', startDateTime: '2027-06-02T07:30:00.000Z', endDateTime: '2027-06-03T15:00:00.000Z' },
+    { eventType: 'international' as const, title: 'Eurosatory defence exhibition', location: 'Paris Nord Villepinte, France', startDateTime: '2027-06-14T07:00:00.000Z', endDateTime: '2027-06-18T15:00:00.000Z' },
+    { eventType: 'tulip' as const, title: 'Certification and compliance clinic', location: 'Online webinar', startDateTime: '2027-07-01T13:00:00.000Z' },
+    { eventType: 'international' as const, title: 'Commercial UAV Expo', location: 'Las Vegas, United States', startDateTime: '2027-09-07T16:00:00.000Z', endDateTime: '2027-09-09T23:00:00.000Z' },
   ],
 }
 ---

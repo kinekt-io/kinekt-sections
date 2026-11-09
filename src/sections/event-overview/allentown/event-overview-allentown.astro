@@ -16,6 +16,8 @@ interface Props {
   theme?: Theme
   headingLevel?: HeadingLevel
   intro: SectionIntroContent
+  /** Omit the first upcoming event when it is already rendered by Featured Event. */
+  hideFirstUpcoming?: boolean
   /** runtimeProps.eventSelection: future published Events for the active region and locale (selected by the platform). */
   events?: EventCardContent[]
   /** Localised flight-path labels per event type, passed to each card. */
@@ -26,17 +28,21 @@ interface Props {
   timeZone?: string
 }
 
-const { id, theme = 'light', headingLevel = 'h2', intro, events = [], eventTypeLabels, loadMoreLabel = 'Load more future events', timeZone } = Astro.props as Props
+const { id, theme = 'light', headingLevel = 'h2', intro, hideFirstUpcoming = false, events = [], eventTypeLabels, loadMoreLabel = 'Load more future events', timeZone } = Astro.props as Props
 
-// runtimeProps.pagination: six cards per page, revealed by the load-more control (every card renders without JavaScript).
 const pageSize = 6
-// runtimeProps.sort = startDateTimeAscending; events without a valid start date go last, ties keep their order.
 const startTime = (event: EventCardContent): number => {
   const time = Date.parse(event.startDateTime)
   return Number.isNaN(time) ? Number.POSITIVE_INFINITY : time
 }
+const endTime = (event: EventCardContent): number => {
+  const time = Date.parse(event.endDateTime ?? event.startDateTime)
+  return Number.isNaN(time) ? Number.NEGATIVE_INFINITY : time
+}
 const valid = events.filter((event) => event && typeof event.title === 'string' && event.title !== '' && typeof event.location === 'string' && typeof event.startDateTime === 'string')
-const sorted = valid.map((event, index) => ({ event, index })).sort((a, b) => startTime(a.event) - startTime(b.event) || a.index - b.index).map(({ event }) => event)
+const upcoming = valid.filter((event) => endTime(event) >= Date.now())
+const sorted = upcoming.map((event, index) => ({ event, index })).sort((a, b) => startTime(a.event) - startTime(b.event) || a.index - b.index).map(({ event }) => event)
+const displayed = hideFirstUpcoming ? sorted.slice(1) : sorted
 const CardHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' : 'h4'
 const loadMoreIcon = ctaIconPaths('plus')
 ---
@@ -45,10 +51,10 @@ const loadMoreIcon = ctaIconPaths('plus')
     <header class="event-overview-allentown__intro">
       <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
     </header>
-    {sorted.length > 0 && <ul class="event-overview-allentown__events" data-event-overview-list>
-      {sorted.map((event) => <li class="event-overview-allentown__event"><EventCard event={event} headingLevel={CardHeading} eventTypeLabels={eventTypeLabels} timeZone={timeZone} /></li>)}
+    {displayed.length > 0 && <ul class="event-overview-allentown__events" data-event-overview-list>
+      {displayed.map((event) => <li class="event-overview-allentown__event"><EventCard event={event} headingLevel={CardHeading} eventTypeLabels={eventTypeLabels} timeZone={timeZone} /></li>)}
     </ul>}
-    {sorted.length > pageSize && <button class="button button--clear button--l event-overview-allentown__load-more" type="button" data-event-overview-load-more hidden>{loadMoreLabel}{loadMoreIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={loadMoreIcon.viewBox} fill="currentColor"><path d={loadMoreIcon.path} /></svg>}</button>}
+    {displayed.length > pageSize && <button class="button button--clear button--l event-overview-allentown__load-more" type="button" data-event-overview-load-more hidden>{loadMoreLabel}{loadMoreIcon && <svg data-kinekt-cta-icon aria-hidden="true" width="1em" height="1em" viewBox={loadMoreIcon.viewBox} fill="currentColor"><path d={loadMoreIcon.path} /></svg>}</button>}
   </div>
 </section>
 <script>
