@@ -4512,7 +4512,7 @@
     "role": "process-story",
     "variation": "allentown",
     "title": "Process Story Allentown",
-    "description": "A reusable process-story section with optional media, labelled or numbered narrative items and optional action groups.",
+    "description": "A reusable process-story section with optional image or video media, labelled or numbered narrative items and optional action groups.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=4779-129512&t=mG3L6xlBzomA03GY-11",
     "variants": {},
@@ -4554,10 +4554,28 @@
         "localized": true,
         "description": "Optional primary, secondary or clear actions below the introduction."
       },
+      "mediaType": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "image",
+        "options": [
+          "image",
+          "video"
+        ],
+        "description": "Show the image or a trusted HTML video embed."
+      },
       "image": {
         "kind": "media",
         "required": false,
-        "localized": true
+        "localized": true,
+        "description": "Image shown when Media type is Image. Optional static fallback when Media type is Video."
+      },
+      "videoEmbedHtml": {
+        "kind": "embedHtml",
+        "required": false,
+        "localized": true,
+        "description": "Paste trusted video embed HTML. Required when Media type is Video."
       },
       "imageAspectRatio": {
         "kind": "select",
@@ -4571,7 +4589,7 @@
           "16:9",
           "9:16"
         ],
-        "description": "Desktop image aspect ratio. Mobile media remains square."
+        "description": "Desktop media aspect ratio. Mobile media remains square."
       },
       "markerType": {
         "kind": "select",

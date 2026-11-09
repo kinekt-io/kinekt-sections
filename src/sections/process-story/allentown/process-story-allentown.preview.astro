@@ -18,12 +18,15 @@ const content: ComponentProps<typeof ProcessStory> = {
       { label: 'Explore our approach', href: '/approach', style: 'clear' },
     ],
   },
+  mediaType: 'video' as const,
+  videoEmbedHtml: '<iframe title="Process Story video preview" src="https://player.vimeo.com/video/000000000" allowfullscreen></iframe>',
   image: {
     url: placeholder('placeholder-800x1000.svg'),
     alt: 'Battery engineers reviewing a prototype pack',
     width: 800,
     height: 1000,
   },
+  markerType: 'label-number' as const,
   items: [
     {
       label: 'Select',

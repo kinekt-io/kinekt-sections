@@ -73,10 +73,28 @@ const manifest = {
         }
       }
     },
+    "mediaType": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "defaultValue": "image",
+      "options": [
+        "image",
+        "video"
+      ],
+      "description": "Show the image or a trusted HTML video embed."
+    },
     "image": {
       "kind": "media",
       "required": false,
-      "localized": true
+      "localized": true,
+      "description": "Image shown when Media type is Image. Optional static fallback when Media type is Video."
+    },
+    "videoEmbedHtml": {
+      "kind": "embedHtml",
+      "required": false,
+      "localized": true,
+      "description": "Paste trusted video embed HTML. Required when Media type is Video."
     },
     "imageAspectRatio": {
       "kind": "select",
@@ -90,7 +108,7 @@ const manifest = {
         "16:9",
         "9:16"
       ],
-      "description": "Desktop image aspect ratio. Mobile media remains square."
+      "description": "Desktop media aspect ratio. Mobile media remains square."
     },
     "markerType": {
       "kind": "select",
