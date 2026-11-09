@@ -46,7 +46,7 @@ const Heading = headingLevel
 const featured = presentation === 'featured'
 const eventTypeLabel = { ...defaultEventTypeLabels, ...eventTypeLabels }[event.eventType] ?? defaultEventTypeLabels.tulip
 
-// Figma shows the date as "2026 / 10 / 24"; a multi-day event becomes "start – end".
+// Figma shows the date as "2026 / 10 / 24"; a multi-day event becomes "start - end".
 const dateParts = (value?: string | null) => {
   if (!value) return undefined
   const date = new Date(value)
@@ -86,7 +86,7 @@ const classes = ['event-card-allentown', `event-card-allentown--${presentation}`
       {start && (
         <li class="event-card-allentown__meta-item">
           <span class="event-card-allentown__meta-icon" aria-hidden="true"><svg aria-hidden="true" focusable="false" viewBox={dateIcon.viewBox} fill="currentColor"><path d={dateIcon.path} /></svg></span>
-          <span class="event-card-allentown__meta-text"><time datetime={start.iso}>{start.label}</time>{end && <> – <time datetime={end.iso}>{end.label}</time></>}</span>
+          <span class="event-card-allentown__meta-text"><time datetime={start.iso}>{start.label}</time>{end && <> - <time datetime={end.iso}>{end.label}</time></>}</span>
         </li>
       )}
     </ul>

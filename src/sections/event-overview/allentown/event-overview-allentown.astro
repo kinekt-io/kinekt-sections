@@ -144,9 +144,7 @@ const loadMoreIcon = ctaIconPaths('plus')
     --kiw--event-overview-heading-size: var(--kiw--section-heading-3-size);
     --kiw--event-overview-description-size: var(--text-l);
     --kiw--event-overview-column-gap: var(--section-space-l);
-    --kiw--event-overview-divider-gap: var(--section-space-s);
-    --kiw--event-overview-divider-width: var(--kinekt-component-border-width);
-    --kiw--event-overview-divider-color: var(--kinekt-component-line);
+    --kiw--event-overview-row-gap: var(--section-space-l);
   }
 
   .event-overview-allentown > .event-overview-allentown__container { display: grid; justify-items: start; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--kiw--event-overview-group-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
@@ -159,25 +157,17 @@ const loadMoreIcon = ctaIconPaths('plus')
   .event-overview-allentown .section-intro__heading { max-width: none; font-size: var(--kiw--event-overview-heading-size); }
   .event-overview-allentown .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--kiw--event-overview-description-size); line-height: var(--kinekt-component-text-line-height); }
   .event-overview-allentown .section-intro__description > * { margin-block: 0; }
-  .event-overview-allentown .event-overview-allentown__events { --kiw--event-overview-columns: 1; display: grid; grid-template-columns: repeat(var(--kiw--event-overview-columns), minmax(0, 1fr)); column-gap: var(--kiw--event-overview-column-gap); row-gap: calc((var(--kiw--event-overview-divider-gap) * 2) + var(--kiw--event-overview-divider-width)); justify-self: stretch; margin: 0; padding: 0; list-style: none; }
-  .event-overview-allentown .event-overview-allentown__event { position: relative; min-width: 0; }
+  .event-overview-allentown .event-overview-allentown__events { --kiw--event-overview-columns: 1; display: grid; grid-template-columns: repeat(var(--kiw--event-overview-columns), minmax(0, 1fr)); column-gap: var(--kiw--event-overview-column-gap); row-gap: var(--kiw--event-overview-row-gap); justify-self: stretch; margin: 0; padding: 0; list-style: none; }
+  .event-overview-allentown .event-overview-allentown__event { min-width: 0; }
   .event-overview-allentown .event-overview-allentown__event:focus { outline: none; }
-  /* Figma "Divider" between card rows (line role): each card after the first row draws its part and bridges the column gap to its right neighbour. */
-  .event-overview-allentown .event-overview-allentown__event::before { position: absolute; inset-block-start: calc(-1 * (var(--kiw--event-overview-divider-gap) + var(--kiw--event-overview-divider-width))); inset-inline: 0; block-size: var(--kiw--event-overview-divider-width); background: var(--kiw--event-overview-divider-color); content: none; }
-  .event-overview-allentown .event-overview-allentown__event:nth-child(n + 2)::before { content: ''; }
   .event-overview-allentown .event-overview-allentown__load-more { justify-self: start; }
   @media (min-width: 50rem) {
     .event-overview-allentown { --kiw--event-overview-allentown-content-width: var(--kiw--event-overview-container-width); }
     .event-overview-allentown .event-overview-allentown__intro { max-width: var(--kiw--event-overview-intro-width); }
     .event-overview-allentown .event-overview-allentown__events { --kiw--event-overview-columns: 2; }
-    .event-overview-allentown .event-overview-allentown__event:nth-child(2)::before { content: none; }
-    .event-overview-allentown .event-overview-allentown__event:nth-child(2n + 1)::before { inset-inline-end: calc(-1 * var(--kiw--event-overview-column-gap)); }
   }
   @media (min-width: 75rem) {
     .event-overview-allentown .event-overview-allentown__events { --kiw--event-overview-columns: 3; }
-    .event-overview-allentown .event-overview-allentown__event:nth-child(3)::before { content: none; }
-    .event-overview-allentown .event-overview-allentown__event:nth-child(n)::before { inset-inline-end: 0; }
-    .event-overview-allentown .event-overview-allentown__event:is(:nth-child(3n + 1), :nth-child(3n + 2))::before { inset-inline-end: calc(-1 * var(--kiw--event-overview-column-gap)); }
   }
 </style>
 <style is:global>

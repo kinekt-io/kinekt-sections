@@ -64,6 +64,13 @@ const manifest = {
         "events"
       ],
       "description": "Choose the Event content type that supplies this section."
+    },
+    "eventStageLabel": {
+      "kind": "text",
+      "required": false,
+      "localized": true,
+      "defaultValue": "Featured event",
+      "description": "Label above the selected Event card."
     }
   }
 } as const

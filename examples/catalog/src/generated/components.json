@@ -2684,7 +2684,7 @@
   },
   {
     "id": "sections/featured-event/allentown",
-    "version": "26.10.0-beta.2",
+    "version": "26.10.0-beta.3",
     "slug": "featured-event-allentown",
     "category": "sections",
     "tags": [
@@ -2739,6 +2739,13 @@
           "events"
         ],
         "description": "Choose the Event content type that supplies this section."
+      },
+      "eventStageLabel": {
+        "kind": "text",
+        "required": false,
+        "localized": true,
+        "defaultValue": "Featured event",
+        "description": "Label above the selected Event card."
       }
     },
     "runtimeProps": {
@@ -2749,10 +2756,6 @@
       "eventMapping": {
         "kind": "eventRecord",
         "source": "title,eventType,media,location,startDateTime,endDateTime,description"
-      },
-      "eventStage": {
-        "kind": "flightPath",
-        "source": "renderer"
       }
     },
     "previewSource": "sections/featured-event/allentown/featured-event-allentown.preview.astro",
