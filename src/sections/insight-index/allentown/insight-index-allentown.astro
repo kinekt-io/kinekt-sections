@@ -394,6 +394,20 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
     let searchTimer: number | undefined
 
     const selected = (facet: string) => checkboxes.filter((box) => box.dataset.insightIndexFacet === facet && box.checked).map((box) => box.value)
+
+    // Deep links use repeated `mediaType` and `subject` parameters, e.g.
+    // `/insights/?mediaType=case&subject=high-density`. Values match either
+    // the stable checkbox value or its visible label, case-insensitively.
+    const urlFilters = new URLSearchParams(window.location.search)
+    const normalized = (value: string | undefined) => value?.trim().toLowerCase() ?? ''
+    const requestedValues = (facet: string) => new Set(urlFilters.getAll(facet).map(normalized).filter(Boolean))
+    const requestedMediaTypes = requestedValues('mediaType')
+    const requestedSubjects = requestedValues('subject')
+    checkboxes.forEach((box) => {
+      const requested = box.dataset.insightIndexFacet === 'mediaType' ? requestedMediaTypes : requestedSubjects
+      if (requested.size === 0) return
+      box.checked = requested.has(normalized(box.value)) || requested.has(normalized(box.dataset.label))
+    })
     const matchesQuery = (item: (typeof items)[number]) => {
       if (!state.query) return true
       if (state.providerMatches) return state.providerMatches.has(item.key)
