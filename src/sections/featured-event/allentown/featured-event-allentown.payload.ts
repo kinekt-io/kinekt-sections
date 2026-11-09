@@ -69,8 +69,8 @@ const manifest = {
       "kind": "text",
       "required": false,
       "localized": true,
-      "defaultValue": "Featured event",
-      "description": "Label above the selected Event card."
+      "defaultValue": "",
+      "description": "Optional label above the selected Event card; leave empty to show only the flight path."
     }
   }
 } as const

@@ -2684,7 +2684,7 @@
   },
   {
     "id": "sections/featured-event/allentown",
-    "version": "26.10.0-beta.3",
+    "version": "26.10.0-beta.4",
     "slug": "featured-event-allentown",
     "category": "sections",
     "tags": [
@@ -2744,8 +2744,8 @@
         "kind": "text",
         "required": false,
         "localized": true,
-        "defaultValue": "Featured event",
-        "description": "Label above the selected Event card."
+        "defaultValue": "",
+        "description": "Optional label above the selected Event card; leave empty to show only the flight path."
       }
     },
     "runtimeProps": {

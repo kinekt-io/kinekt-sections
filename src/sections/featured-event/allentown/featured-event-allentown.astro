@@ -33,7 +33,7 @@ interface Props {
   mediaLoading?: 'eager' | 'lazy'
 }
 
-const { id, theme = 'light', headingLevel = 'h2', intro, events = [], eventStageLabel = 'Featured event', timeZone, mediaLoading = 'lazy' } = Astro.props as Props
+const { id, theme = 'light', headingLevel = 'h2', intro, events = [], eventStageLabel = '', timeZone, mediaLoading = 'lazy' } = Astro.props as Props
 
 const startTime = (event: FeaturedEventSource): number => {
   const time = Date.parse(event.startDateTime)
