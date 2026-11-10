@@ -7,6 +7,22 @@ import { structuralSectionToProps } from '../dist/shared/structural-props.js'
 import { betaProcessStoryAllentownToProps } from '../dist/sections/process-story/allentown/process-story-allentown.payload.js'
 import { betaProductOptionsAllentownToProps } from '../dist/sections/product-options/allentown/product-options-allentown.payload.js'
 import { isSafeCtaAnchor } from '../dist/shared/cta-anchor.js'
+import { createManifestBlock } from '../dist/shared/manifest-block.js'
+
+test('manifest section labels omit lifecycle status while retaining legacy block slugs', () => {
+  const block = createManifestBlock({
+    slug: 'hero-allentown',
+    title: 'Hero Allentown',
+    status: 'beta',
+    fields: {},
+  })
+
+  assert.equal(block.slug, 'beta-hero-allentown')
+  assert.deepEqual(block.labels, {
+    singular: 'Hero Allentown',
+    plural: 'Hero Allentown blocks',
+  })
+})
 
 test('invalid decorative icons preserve actionable CTAs and use a safe required-icon fallback', () => {
   for (const icon of ['not-a-real-fa-icon', 'fa-solid fa-bolt', ' ', 42, {}]) {

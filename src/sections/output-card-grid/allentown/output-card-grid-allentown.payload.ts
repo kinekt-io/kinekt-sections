@@ -11,7 +11,7 @@ export function createOutputCardGridBlock({ mediaCollection = 'media', targetCol
   return {
     slug: 'output-card-grid-allentown',
     interfaceName: 'OutputCardGridAllentown',
-    labels: { singular: 'BETA — Output Card Grid Allentown', plural: 'BETA — Output Card Grid Allentown blocks' },
+    labels: { singular: 'Output Card Grid Allentown', plural: 'Output Card Grid Allentown blocks' },
     fields: [
       sectionContentWidthField(),
       { name: 'theme', type: 'select', localized: true, required: true, defaultValue: 'light', options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })) },

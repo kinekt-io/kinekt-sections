@@ -52,7 +52,7 @@ export function createProgressRoadmapAllentownBlock(options: CreateProgressRoadm
   return {
     slug: 'progress-roadmap-allentown',
     interfaceName: 'ProgressRoadmapAllentown',
-    labels: { singular: 'PRERELEASE — Progress Roadmap Allentown', plural: 'PRERELEASE — Progress Roadmap Allentown blocks' },
+    labels: { singular: 'Progress Roadmap Allentown', plural: 'Progress Roadmap Allentown blocks' },
     fields: [
       sectionContentWidthField(),
       {

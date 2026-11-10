@@ -70,7 +70,7 @@ export function createCaseStudiesAllentownBlock({
   return {
     slug: 'case-studies-allentown',
     interfaceName: 'CaseStudiesAllentown',
-    labels: { singular: 'PRE-RELEASE — Case Studies Allentown', plural: 'PRE-RELEASE — Case Studies Allentown blocks' },
+    labels: { singular: 'Case Studies Allentown', plural: 'Case Studies Allentown blocks' },
     fields: [
       sectionContentWidthField(),
       {

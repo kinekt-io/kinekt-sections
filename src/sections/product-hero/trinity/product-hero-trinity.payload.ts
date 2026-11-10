@@ -13,8 +13,8 @@ export function createProductHeroTrinityBlock(options: CreateProductHeroTrinityB
     slug: 'beta-product-hero-trinity',
     interfaceName: 'ProductHeroTrinity',
     labels: {
-      singular: 'PRERELEASE — Product Hero Trinity',
-      plural: 'PRERELEASE — Product Hero Trinity blocks',
+      singular: 'Product Hero Trinity',
+      plural: 'Product Hero Trinity blocks',
     },
     fields: base.fields.flatMap((field): Field[] => {
       if ('name' in field && field.name === 'callout') {

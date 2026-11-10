@@ -44,7 +44,7 @@ export function createSolutionListAllentownBlock({ mediaCollection = 'media', ta
   return {
     slug: 'beta-solution-list-allentown',
     interfaceName: 'BetaSolutionListAllentown',
-    labels: { singular: 'PRERELEASE — Solution List Allentown', plural: 'PRERELEASE — Solution List Allentown blocks' },
+    labels: { singular: 'Solution List Allentown', plural: 'Solution List Allentown blocks' },
     fields: [
       sectionContentWidthField(),
       { name: 'theme', type: 'select', localized: true, required: true, defaultValue: 'semi-light', options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })) },

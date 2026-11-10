@@ -39,8 +39,8 @@ export function createBetaFormSectionAllentownBlock({
     slug: 'beta-form-section-allentown',
     interfaceName: 'BetaFormSectionAllentown',
     labels: {
-      singular: 'PRERELEASE — Form Section Allentown',
-      plural: 'PRERELEASE — Form Section Allentown blocks',
+      singular: 'Form Section Allentown',
+      plural: 'Form Section Allentown blocks',
     },
     fields: [
       sectionContentWidthField(),
