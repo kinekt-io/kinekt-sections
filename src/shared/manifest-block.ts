@@ -40,6 +40,7 @@ export interface CreateManifestBlockOptions {
   mediaCollection?: CollectionSlug
   embedCollection?: CollectionSlug
   formCollection?: CollectionSlug
+  faqCollection?: CollectionSlug
   targetCollections?: CollectionSlug[]
   contentTypeOptions?: ReadonlyArray<{ label: string; value: CollectionSlug }>
 }
@@ -246,6 +247,7 @@ export function createManifestBlock(manifest: SectionManifest, input: CreateMani
     mediaCollection: input.mediaCollection ?? 'media',
     embedCollection: input.embedCollection ?? input.formCollection ?? 'embeds',
     formCollection: input.formCollection ?? input.embedCollection ?? 'embeds',
+    faqCollection: input.faqCollection,
     targetCollections: input.targetCollections?.length ? input.targetCollections : ['pages'],
     contentTypeOptions: input.contentTypeOptions ?? [],
   }
