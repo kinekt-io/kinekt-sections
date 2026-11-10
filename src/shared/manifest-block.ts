@@ -272,6 +272,8 @@ function normalizeRichText(value: unknown, field: string): unknown {
   }
   if ('root' in record) return renderRichText(record, field)
   return Object.fromEntries(Object.entries(record).map(([key, item]) => {
+    // Linked documents are routing targets, not child sections of this block.
+    if (key === 'page') return [key, item]
     if (key === 'form') return [key, optionalFormToProps(item, `${field}.${key}`)]
     if (key.endsWith('EmbedHtml') && typeof item === 'object' && item !== null && !Array.isArray(item)) {
       return [key, embedToProps(item, `${field}.${key}`)]

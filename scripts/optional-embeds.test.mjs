@@ -21,3 +21,14 @@ test('structural video relationships become renderer embed code', () => {
   })
   assert.equal(props.videoEmbedHtml, '<iframe></iframe>')
 })
+
+test('content links do not convert forms inside their depth-limited target document', () => {
+  const page = { relationTo: 'pages', value: { id: 'contact', layout: [{ form: 'unpopulated-form-id' }] } }
+  const props = manifestToProps({
+    ctaGroup: [{ label: 'Contact', destinationType: 'content', href: '/contact/', page }],
+    form: { embedCode: '<form></form>' },
+  })
+  assert.equal(props.ctaGroup[0].href, '/contact/')
+  assert.equal(props.ctaGroup[0].page.value.id, 'contact')
+  assert.equal(props.form, '<form></form>')
+})
