@@ -18,7 +18,7 @@ export const embedToProps = (value: unknown, field: string): string => {
 }
 export const formToProps = (value: unknown, field: string): string => embedToProps(value, field)
 export const optionalFormToProps = (value: unknown, field: string): string | undefined =>
-  value === undefined || value === null ? undefined : formToProps(value, field)
+  value === undefined || value === null || value === '' ? undefined : formToProps(value, field)
 
 
 // Icons are decorative: stale or invalid editor input must not discard a page.

@@ -1,7 +1,7 @@
 import type { Block, CollectionSlug, Field } from 'payload'
 import { renderRichText } from './rich-text.js'
 import { ctaFields, ctaStyleField, formModalPresentationFields, isSharpSolidIconNameOrEmpty, availableEmbedsInCurrentRegion, availableFormEmbedsInCurrentRegion, sectionContentWidthField } from './payload-fields.js'
-import { embedToProps, formModalPresentationToProps, formToProps } from './payload.js'
+import { embedToProps, formModalPresentationToProps, optionalFormToProps } from './payload.js'
 import { normalizeSectionContentWidth } from './section-width.js'
 
 type FieldKind = 'text' | 'textarea' | 'richText' | 'checkbox' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'embedHtml' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'faqReferenceList' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'formModal' | 'insightSourceList' | 'contentReferenceList' | 'contentType' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
@@ -272,7 +272,7 @@ function normalizeRichText(value: unknown, field: string): unknown {
   }
   if ('root' in record) return renderRichText(record, field)
   return Object.fromEntries(Object.entries(record).map(([key, item]) => {
-    if (key === 'form') return [key, formToProps(item, `${field}.${key}`)]
+    if (key === 'form') return [key, optionalFormToProps(item, `${field}.${key}`)]
     if (key.endsWith('EmbedHtml') && typeof item === 'object' && item !== null && !Array.isArray(item)) {
       return [key, embedToProps(item, `${field}.${key}`)]
     }
