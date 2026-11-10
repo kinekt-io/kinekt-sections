@@ -20,6 +20,7 @@
 - Autoplay the HD Cells media accordion with six-second progress bars, synchronized media, hover/offscreen pause, and a permanent stop after explicit selection; reduced-motion and single-item views retain manual disclosures.
 - Add a localized Content width selector to all 53 sections and both catalogue inspectors: Standard, 80%, or 70% of the fixed desktop content-width cap, with responsive gutters and safe defaults for existing content.
 - Add localized image-or-video media selection to Process Story Allentown. Trusted video embed HTML renders at the selected aspect ratio and an optional image remains its no-JavaScript fallback.
+- Accept browser-valid CTA content-target anchors in the form `?query=value#element-id`; reject the former reversed query/fragment order.
 
 ### Changed
 

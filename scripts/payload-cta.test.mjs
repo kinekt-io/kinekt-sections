@@ -6,6 +6,7 @@ import { ctaIconPaths } from '../dist/shared/cta-icons.js'
 import { structuralSectionToProps } from '../dist/shared/structural-props.js'
 import { betaProcessStoryAllentownToProps } from '../dist/sections/process-story/allentown/process-story-allentown.payload.js'
 import { betaProductOptionsAllentownToProps } from '../dist/sections/product-options/allentown/product-options-allentown.payload.js'
+import { isSafeCtaAnchor } from '../dist/shared/cta-anchor.js'
 
 test('invalid decorative icons preserve actionable CTAs and use a safe required-icon fallback', () => {
   for (const icon of ['not-a-real-fa-icon', 'fa-solid fa-bolt', ' ', 42, {}]) {
@@ -95,14 +96,16 @@ test('CTA group actions retain valid HubSpot form targets', () => {
   )
 })
 
-test('CTA adapters place anchor query parameters before the fragment', () => {
+test('CTA adapters accept query parameters before the anchor fragment', () => {
   assert.deepEqual(
     ctaToProps({ label: 'View models', destinationType: 'url', href: '#our-models' }, 'cta'),
     { label: 'View models', href: '#our-models' },
   )
+  assert.equal(isSafeCtaAnchor('?mediaType=case#specifications'), true)
+  assert.equal(isSafeCtaAnchor('#specifications?mediaType=case'), false)
   assert.deepEqual(
     ctaToProps(
-      { label: 'Skip to specifications', destinationType: 'content', page: { relationTo: 'articles', value: 42 }, anchor: '#specifications?mediaType=case' },
+      { label: 'Skip to specifications', destinationType: 'content', page: { relationTo: 'articles', value: 42 }, anchor: '?mediaType=case#specifications' },
       'cta',
       { contentHref: () => '/articles/example?lang=uk' },
     ),

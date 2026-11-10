@@ -105,7 +105,16 @@ export function createCaseStudiesAllentownBlock({
             { name: 'destinationType', type: 'select', label: 'Link type', required: true, defaultValue: 'content', options: [{ label: 'Content', value: 'content' }, { label: 'URL', value: 'url' }], hooks: { afterRead: [({ value, siblingData }) => value === 'content' && !siblingData?.page && isSafeCtaHref(siblingData?.href) ? 'url' : value] } },
             { name: 'href', type: 'text', label: 'URL or anchor', admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeCtaHref(value) || 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.' },
             contentTargetField(targetRelation),
-            { name: 'anchor', type: 'text', label: 'Anchor ID and query', admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'content', description: 'Optional anchor on the selected content. Add query parameters after it, for example #insights?mediaType=case.' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeCtaAnchor(value) || 'Enter an anchor starting with # and optional query parameters, for example #insights?mediaType=case.' },
+            {
+              name: 'anchor',
+              type: 'text',
+              label: 'Query parameters and anchor',
+              admin: {
+                condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'content',
+                description: 'Optional query parameters followed by an anchor, for example ?mediaType=case#insights.',
+              },
+              validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeCtaAnchor(value) || 'Enter an anchor such as #insights or query parameters followed by an anchor, for example ?mediaType=case#insights.',
+            },
             { name: 'logo', type: 'upload', label: 'Logo', relationTo: mediaCollection, localized: true },
             { name: 'title', type: 'text', label: 'Title', localized: true, required: true, validate: textRequired },
             { name: 'description', type: 'richText', label: 'Description', localized: true },

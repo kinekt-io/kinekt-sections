@@ -95,7 +95,7 @@ export const ctaToProps = (value: unknown, field: string, options: PayloadAdapte
     if (!href) throw new Error(`${field}.page is not available in this static build.`)
     if (cta.anchor !== undefined && cta.anchor !== null && cta.anchor !== '') {
       const hrefWithAnchor = appendCtaAnchor(href, cta.anchor)
-      if (!hrefWithAnchor) throw new Error(`${field}.anchor must start with # and may include query parameters.`)
+      if (!hrefWithAnchor) throw new Error(`${field}.anchor must be #anchor or ?query=value#anchor.`)
       href = hrefWithAnchor
     }
   } else if (destinationType === 'url') {
