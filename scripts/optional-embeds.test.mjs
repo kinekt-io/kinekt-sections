@@ -12,3 +12,12 @@ test('tabs with no optional form retain their content while populated forms reso
   assert.equal(structuralSectionToProps({ theme: 'light', intro: { heading: 'Contact' }, form: null }).form, undefined)
   assert.throws(() => ctaToProps({ label: 'Download', destinationType: 'form', form: null }, 'cta'), /must be an object/)
 })
+
+test('structural video relationships become renderer embed code', () => {
+  const props = structuralSectionToProps({
+    theme: 'light',
+    intro: { heading: 'Process' },
+    videoEmbedHtml: { id: 'video', embedCode: '<iframe></iframe>' },
+  })
+  assert.equal(props.videoEmbedHtml, '<iframe></iframe>')
+})

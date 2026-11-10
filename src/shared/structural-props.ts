@@ -1,7 +1,7 @@
 import { renderRichText } from './rich-text.js'
 import { isCtaStyle } from './content.js'
 import { isObjectRecord } from './type-guards.js'
-import { formModalPresentationToProps, optionalFormToProps, optionalCtaToProps, mediaToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from './payload.js'
+import { embedToProps, formModalPresentationToProps, optionalFormToProps, optionalCtaToProps, mediaToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from './payload.js'
 import { normalizeSectionContentWidth } from './section-width.js'
 
 const isMedia = (value: Record<string, unknown>): boolean => 'url' in value && 'alt' in value && 'width' in value && 'height' in value
@@ -11,6 +11,7 @@ function adaptValue(value: unknown, field: string, options: PayloadAdapterOption
   if (field.endsWith('.form')) return optionalFormToProps(value, field)
   if (Array.isArray(value)) return value.map((item, index) => adaptValue(item, `${field}[${index}]`, options)).filter((item) => item !== undefined)
   if (!isObjectRecord(value)) return value
+  if (field.endsWith('.videoEmbedHtml')) return embedToProps(value, field)
   const entries = Object.entries(value)
   if (entries.length === 1 && entries[0][0] === 'value') return adaptValue(entries[0][1], `${field}.value`, options)
   if ('enabled' in value && ('label' in value || Object.keys(value).every((key) => key === 'enabled'))) {
