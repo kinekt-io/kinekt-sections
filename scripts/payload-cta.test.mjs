@@ -90,25 +90,28 @@ test('CTA adapters retain complete URL and content destinations', () => {
   )
 })
 
-test('CTA group actions retain valid HubSpot form targets', () => {
+test('CTA group actions select reusable Forms available to the current Region', () => {
   const form = ctaFields(['pages', 'articles'], false, true).find((candidate) => candidate.name === 'form')
   assert.ok(form)
+  assert.equal(form.relationTo, 'forms')
   assert.equal(typeof form.validate, 'function')
+  assert.equal(typeof form.filterOptions, 'function')
+  assert.deepEqual(form.filterOptions({ data: { tenant: 'region-us' } }), { availableRegions: { in: ['region-us'] } })
 
   assert.deepEqual(
     ctaToProps(
-      { label: 'Book a call', destinationType: 'form', form: '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>' },
+      { label: 'Book a call', destinationType: 'form', form: { id: 'form-1', embedCode: '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>' } },
       'cta',
     ),
     { label: 'Book a call', form: '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>' },
   )
   assert.equal(
-    form.validate('<script src="https://js.hsforms.net/forms/embed/v2.js"></script>', { siblingData: { destinationType: 'form', label: 'Book a call' } }),
+    form.validate('form-1', { siblingData: { destinationType: 'form', label: 'Book a call' } }),
     true,
   )
   assert.equal(
-    form.validate(' ', { siblingData: { destinationType: 'form', label: 'Book a call' } }),
-    'Paste the complete HubSpot embed code.',
+    form.validate(null, { siblingData: { destinationType: 'form', label: 'Book a call' } }),
+    'Select a form.',
   )
 })
 

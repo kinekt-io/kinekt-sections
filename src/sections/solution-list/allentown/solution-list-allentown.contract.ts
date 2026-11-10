@@ -3,10 +3,10 @@ import type { Block, CollectionSlug, Field } from 'payload'
 import type { Cta, CtaGroup, CtaStyle, Media, RichText, SectionIntro } from '../../../shared/content.js'
 import { isCtaStyle } from '../../../shared/content.js'
 import { renderRichText } from '../../../shared/rich-text.js'
-import { mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { formToProps, mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { isSafeCtaHref, isSafeWebUrl } from '../../../urls.js'
 import { appendCtaAnchor, isSafeCtaAnchor } from '../../../shared/cta-anchor.js'
-import { isSharpSolidIconNameOrEmpty, sectionContentWidthField } from '../../../shared/payload-fields.js'
+import { formReferenceField, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from '../../../shared/payload-fields.js'
 import { normalizeSectionContentWidth, type SectionContentWidth } from '../../../shared/section-width.js'
 
 export interface SolutionListAllentownItem {
@@ -31,6 +31,7 @@ export type PayloadSolutionListAllentownDocument = Record<string, unknown> & { i
 
 export interface CreateSolutionListAllentownBlockOptions {
   mediaCollection?: CollectionSlug
+  formCollection?: CollectionSlug
   targetCollections?: CollectionSlug[]
 }
 
@@ -38,7 +39,7 @@ export interface SolutionListAllentownAdapterOptions extends PayloadAdapterOptio
   contentHref: (collection: string, documentID: string) => string | undefined
 }
 
-export function createSolutionListAllentownBlock({ mediaCollection = 'media', targetCollections = ['pages'] }: CreateSolutionListAllentownBlockOptions = {}): Block {
+export function createSolutionListAllentownBlock({ mediaCollection = 'media', formCollection = 'forms', targetCollections = ['pages'] }: CreateSolutionListAllentownBlockOptions = {}): Block {
   const targetRelation = targetCollections.length === 1 ? targetCollections[0] : targetCollections
 
   return {
@@ -76,7 +77,7 @@ export function createSolutionListAllentownBlock({ mediaCollection = 'media', ta
           { name: 'icon', label: 'Icon', type: 'text', localized: true, validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example arrow-right or bolt.' } },
         ],
       },
-      { name: 'callout', label: 'Callout', type: 'group', localized: true, fields: [{ name: 'intro', label: 'Intro block', type: 'group', required: true, fields: introFields() }, { name: 'ctaGroup', label: 'CTA group', type: 'group', required: true, fields: ctaGroupFields(targetRelation) }] },
+      { name: 'callout', label: 'Callout', type: 'group', localized: true, fields: [{ name: 'intro', label: 'Intro block', type: 'group', required: true, fields: introFields() }, { name: 'ctaGroup', label: 'CTA group', type: 'group', required: true, fields: ctaGroupFields(targetRelation, formCollection) }] },
     ],
   }
 }
@@ -101,7 +102,7 @@ function introFields(): Field[] {
   ]
 }
 
-function ctaGroupFields(targetRelation: CollectionSlug | CollectionSlug[]): Field[] {
+function ctaGroupFields(targetRelation: CollectionSlug | CollectionSlug[], formCollection: CollectionSlug): Field[] {
   return [['primaryButton', 'Primary CTA'], ['secondaryButton', 'Secondary CTA']].map(([name, label]) => ({
     name,
     label,
@@ -121,7 +122,13 @@ function ctaGroupFields(targetRelation: CollectionSlug | CollectionSlug[]): Fiel
         },
         validate: (value: unknown, { siblingData }: { siblingData?: Record<string, unknown> }) => siblingData?.destinationType !== 'page' || value === undefined || value === null || value === '' || isSafeCtaAnchor(value) || 'Enter an anchor such as #insights or query parameters followed by an anchor, for example ?mediaType=case#insights.',
       },
-      { name: 'form', label: 'HubSpot embed code', type: 'textarea', admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'form', description: 'Paste the complete HubSpot embed code. This CTA opens it in a modal.' } },
+      {
+        ...formReferenceField('form', formCollection),
+        admin: {
+          condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'form',
+          description: 'Choose the reusable form this CTA opens in a modal.',
+        },
+      },
       { name: 'icon', label: 'Icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example arrow-right or bolt.' } },
     ],
   })) as Field[]
@@ -181,7 +188,7 @@ function destinationToProps(value: Record<string, unknown>, field: string, label
   const icon = optionalSharpSolidIcon(value.icon, `${field}.icon`)
 
   if (value.destinationType === 'form') {
-    return { label, form: requireText(value.form, `${field}.form`), ...(icon ? { icon } : {}) }
+    return { label, form: formToProps(value.form, `${field}.form`), ...(icon ? { icon } : {}) }
   }
   if (value.destinationType === 'page') {
     const target = relationshipTarget(value.page, `${field}.page`)

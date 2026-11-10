@@ -1,7 +1,7 @@
 import type { Block, CollectionSlug, Field } from 'payload'
 import { renderRichText } from './rich-text.js'
-import { ctaFields, ctaStyleField, formModalPresentationFields, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from './payload-fields.js'
-import { formModalPresentationToProps } from './payload.js'
+import { ctaFields, ctaStyleField, formModalPresentationFields, isSharpSolidIconNameOrEmpty, availableFormsInCurrentRegion, sectionContentWidthField } from './payload-fields.js'
+import { formModalPresentationToProps, formToProps } from './payload.js'
 import { normalizeSectionContentWidth } from './section-width.js'
 
 type FieldKind = 'text' | 'textarea' | 'richText' | 'checkbox' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'embedHtml' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'faqReferenceList' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'formModal' | 'insightSourceList' | 'contentReferenceList' | 'contentType' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
@@ -98,14 +98,14 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
     case 'media':
     case 'video': return { ...common, type: 'upload', relationTo: options.mediaCollection }
     case 'mediaList': return { ...common, type: 'array', minRows: field.minItems, fields: [{ name: 'media', type: 'upload', relationTo: options.mediaCollection, required: true }] }
-    case 'cta': return { ...common, type: 'group', fields: ctaFields(options.targetCollections, field.required) }
+    case 'cta': return { ...common, type: 'group', fields: ctaFields(options.targetCollections, field.required, true, options.formCollection ?? 'forms') }
     case 'ctaGroup': return {
       ...common,
       type: 'array',
       minRows: field.minItems ?? 0,
       maxRows: field.maxItems ?? 2,
       admin: { initCollapsed: true, ...(field.description ? { description: field.description } : {}), ...field.admin },
-      fields: [ctaStyleField(), ...ctaFields(options.targetCollections, false, true)],
+      fields: [ctaStyleField(), ...ctaFields(options.targetCollections, false, true, options.formCollection ?? 'forms')],
     }
     case 'sectionIntro': return { ...common, type: 'group', fields: introFields() }
     case 'component': {
@@ -204,17 +204,27 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
     }
     // Trusted editor-provided HTML for non-form integrations such as video embeds.
     case 'embedHtml': return { ...common, type: 'textarea', admin: { ...field.admin, rows: 8, description: field.description ?? 'Paste trusted HTML embed code.' } }
-    // HubSpot embed code (production forms are embeds). Rendered by components/form-embed/allentown.
-    case 'formEmbed': return { ...common, type: 'textarea', admin: { ...field.admin, rows: 8, description: field.description ?? 'Paste the HubSpot form embed code. The component preview keeps using a non-submitting placeholder form.' } }
+    // Forms are managed globally. Sections select a Form rather than storing executable embed code.
+    case 'formEmbed':
+    case 'formReference': {
+      if (!options.formCollection) throw new Error(`Field ${name} requires a formCollection; JSON fallback is forbidden.`)
+      return {
+        ...common,
+        type: 'relationship',
+        relationTo: options.formCollection,
+        label: 'Form',
+        filterOptions: availableFormsInCurrentRegion,
+        admin: {
+          description: 'Choose a reusable form. Platform admins manage forms and decide which Regions can use them.',
+          ...field.admin,
+        },
+      }
+    }
     case 'formModal': return {
       ...common,
       type: 'group',
       admin: { initCollapsed: true, ...(field.description ? { description: field.description } : {}), ...field.admin },
       fields: formModalPresentationFields(),
-    }
-    case 'formReference': {
-      if (!options.formCollection) throw new Error(`Field ${name} requires a formCollection; JSON fallback is forbidden.`)
-      return { ...common, type: 'relationship', relationTo: options.formCollection }
     }
     default: throw new Error(`Unsupported manifest field kind on ${name}; JSON fallback is forbidden.`)
   }
@@ -248,7 +258,7 @@ function normalizeRichText(value: unknown, field: string): unknown {
     return formModalPresentationToProps(record, field)
   }
   if ('root' in record) return renderRichText(record, field)
-  return Object.fromEntries(Object.entries(record).map(([key, item]) => [key, normalizeRichText(item, `${field}.${key}`)]))
+  return Object.fromEntries(Object.entries(record).map(([key, item]) => [key, key === 'form' ? formToProps(item, `${field}.${key}`) : normalizeRichText(item, `${field}.${key}`)]))
 }
 
 export function manifestToProps<T extends ManifestSectionDocument>(data: T): T {

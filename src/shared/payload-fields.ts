@@ -1,4 +1,4 @@
-import type { CollectionSlug, Field, SelectField, TextField } from 'payload'
+import type { CollectionSlug, Field, RelationshipField, SelectField, TextField } from 'payload'
 import { isSafeCtaHref } from '../urls.js'
 import { isSafeCtaAnchor } from './cta-anchor.js'
 import { isCtaIcon } from './cta-icons.js'
@@ -25,6 +25,38 @@ export function sectionContentWidthField(): SelectField {
     admin: { description: 'Maximum content width. Backgrounds and full-bleed media are unchanged.' },
   }
 }
+const regionID = (value: unknown): string | undefined => {
+  if (typeof value === 'string' && value.trim()) return value
+  if (typeof value === 'number' && Number.isSafeInteger(value)) return String(value)
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return undefined
+  const record = value as Record<string, unknown>
+  return regionID(record.id ?? record.value ?? record.region)
+}
+
+export const availableFormsInCurrentRegion = ({ data, id }: { data?: unknown; id?: unknown }) => {
+  const record = typeof data === 'object' && data !== null && !Array.isArray(data)
+    ? data as Record<string, unknown>
+    : undefined
+  const currentRegion = regionID(record?.tenant) ?? regionID(record?.id) ?? regionID(id)
+  return currentRegion ? { availableRegions: { in: [currentRegion] } } : false
+}
+
+export function formReferenceField(name: string, formCollection: CollectionSlug, required = false, localized = false): RelationshipField {
+  return {
+    name,
+    type: 'relationship',
+    relationTo: formCollection,
+    label: 'Form',
+    required,
+    localized,
+    filterOptions: availableFormsInCurrentRegion,
+    validate: (value: unknown) => !required || hasRelationshipTarget(value) || formEmbedMessage,
+    admin: {
+      description: 'Choose a reusable form. Platform admins manage forms and decide which Regions can use them.',
+    },
+  }
+}
+
 
 
 export function sectionIntroFields(): Field[] {
@@ -128,7 +160,7 @@ export function formModalPresentationFields(): Field[] {
 }
 
 
-export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], required = false, allowForm = false): Field[] {
+export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], required = false, allowForm = false, formCollection: CollectionSlug = 'forms'): Field[] {
   return [
     {
       name: 'label',
@@ -177,17 +209,15 @@ export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], 
         validateOptionalCtaAnchor(value, siblingData),
     },
     ...(allowForm ? [{
-      name: 'form',
-      type: 'textarea' as const,
-      label: 'HubSpot embed code',
+      ...formReferenceField('form', formCollection),
       admin: {
         condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'form',
-        description: 'Paste the complete HubSpot embed code. This CTA opens it in a modal.',
+        description: 'Choose the reusable form this CTA opens in a modal.',
       },
       validate: (value: unknown, { siblingData }: { siblingData?: unknown }) => {
         const siblings = ctaSiblingData(siblingData)
         return hasText(siblings.label) && ctaDestinationType(siblings, true) === 'form'
-          ? hasText(value) || formEmbedMessage
+          ? hasRelationshipTarget(value) || formEmbedMessage
           : true
       },
     }] : []),
@@ -207,7 +237,7 @@ export function ctaGroupFields(targetCollections: CollectionSlug | CollectionSlu
 const ctaUrlMessage = 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.'
 const ctaAnchorMessage = 'Enter an anchor such as #insights or query parameters followed by an anchor, for example ?mediaType=case#insights.'
 const ctaContentMessage = 'Select content for this action.'
-const formEmbedMessage = 'Paste the complete HubSpot embed code.'
+const formEmbedMessage = 'Select a form.'
 
 function ctaSiblingData(value: unknown): Record<string, unknown> {
   if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
@@ -238,7 +268,7 @@ function ctaDestinationType(siblingData: Record<string, unknown>, allowForm = fa
 function hasCtaTarget(siblingData: Record<string, unknown>): boolean {
   const hasHref = siblingData.href !== undefined && siblingData.href !== null && siblingData.href !== ''
   const hasPage = siblingData.page !== undefined && siblingData.page !== null
-  const hasForm = siblingData.form !== undefined && siblingData.form !== null && siblingData.form !== ''
+  const hasForm = hasRelationshipTarget(siblingData.form)
   return hasHref || hasPage || hasForm
 }
 
@@ -261,7 +291,7 @@ export function validateOptionalCtaSibling(
   const destinationType = ctaDestinationType(siblings, allowForm)
   if (!destinationType) return `Choose Content, URL${allowForm ? ', or Form' : ''}.`
   if (destinationType === 'content') return hasRelationshipTarget(siblings.page) || ctaContentMessage
-  if (destinationType === 'form') return hasText(siblings.form) || formEmbedMessage
+  if (destinationType === 'form') return hasRelationshipTarget(siblings.form) || formEmbedMessage
   return isSafeCtaHref(siblings.href) || ctaUrlMessage
 }
 

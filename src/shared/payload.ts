@@ -12,6 +12,13 @@ export const requireObject = (value: unknown, field: string): Record<string, unk
 export const requireArray = (value: unknown, field: string): unknown[] => { if (!Array.isArray(value) || value.length === 0) throw new Error(`${field} must contain at least one item.`); return value }
 export const requireText = (value: unknown, field: string): string => { if (typeof value !== 'string' || value.trim().length === 0) throw new Error(`${field} must be non-empty text.`); return value }
 export const optionalText = (value: unknown, field: string): string | undefined => value === undefined || value === null || value === '' ? undefined : requireText(value, field)
+export const formToProps = (value: unknown, field: string): string => {
+  const form = requireObject(value, field)
+  return requireText(form.embedCode, `${field}.embedCode`)
+}
+export const optionalFormToProps = (value: unknown, field: string): string | undefined =>
+  value === undefined || value === null ? undefined : formToProps(value, field)
+
 
 // Icons are decorative: stale or invalid editor input must not discard a page.
 export const requireSharpSolidIcon = (value: unknown, _field: string): string =>
@@ -84,7 +91,7 @@ export const ctaToProps = (value: unknown, field: string, options: PayloadAdapte
   const style = isCtaStyle(cta.style) ? { style: cta.style } : {}
 
   if (destinationType === 'form') {
-    const form = requireText(cta.form, `${field}.form`)
+    const form = formToProps(cta.form, `${field}.form`)
     return { label, form, ...style, ...(icon ? { icon } : {}) }
   }
 
@@ -119,7 +126,7 @@ export const optionalCtaToProps = (value: unknown, field: string, options: Paylo
   } else if (destinationType === 'url') {
     if (typeof cta.href !== 'string' || cta.href.trim().length === 0 || !isSafeCtaHref(cta.href)) return undefined
   } else if (destinationType === 'form') {
-    if (typeof cta.form !== 'string' || cta.form.trim().length === 0) return undefined
+    if (cta.form === undefined || cta.form === null) return undefined
   } else {
     return undefined
   }

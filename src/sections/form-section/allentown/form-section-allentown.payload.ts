@@ -3,6 +3,7 @@ import { richTextToHtml } from '../../../shared/rich-text.js'
 import {
   mediaToProps,
   formModalPresentationToProps,
+  formToProps,
   optionalText,
   requireObject,
   requireSharpSolidIcon,
@@ -12,10 +13,9 @@ import {
 } from '../../../shared/payload.js'
 import {
   contactMethodFields,
-  hasText,
   isActionableHref,
   formModalPresentationFields,
-  requiredTextMessage,
+  formReferenceField,
   sectionContentWidthField,
   sectionIntroFields,
 } from '../../../shared/payload-fields.js'
@@ -30,10 +30,12 @@ import type {
 
 export interface CreateBetaFormSectionAllentownBlockOptions {
   mediaCollection?: CollectionSlug
+  formCollection?: CollectionSlug
 }
 
 export function createBetaFormSectionAllentownBlock({
   mediaCollection = 'media',
+  formCollection = 'forms',
 }: CreateBetaFormSectionAllentownBlockOptions = {}): Block {
   return {
     slug: 'beta-form-section-allentown',
@@ -91,18 +93,7 @@ export function createBetaFormSectionAllentownBlock({
           description: 'Desktop only. Mobile always presents media above the content.',
         },
       },
-      {
-        name: 'form',
-        type: 'textarea',
-        label: 'HubSpot embed code',
-        localized: true,
-        required: true,
-        validate: (value: unknown) => hasText(value) || requiredTextMessage,
-        admin: {
-          rows: 8,
-          description: 'Paste the HubSpot form embed code. The component preview keeps using a non-submitting placeholder form.',
-        },
-      },
+      formReferenceField('form', formCollection, true, true),
       {
         name: 'formPresentation',
         type: 'group',
@@ -161,7 +152,7 @@ export function betaFormSectionAllentownToProps(
     ...(data.image ? { image: mediaToProps(data.image, 'image', options) } : {}),
     imageAspectRatio,
     imagePosition,
-    form: requireText(data.form, 'form'),
+    form: formToProps(data.form, 'form'),
     ...(formPresentation ? { formPresentation } : {}),
     ...(optionalText(data.contactHeading, 'contactHeading') ? { contactHeading: optionalText(data.contactHeading, 'contactHeading') } : {}),
     ...(contactMethods ? { contactMethods } : {}),

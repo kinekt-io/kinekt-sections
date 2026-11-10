@@ -1,7 +1,7 @@
 import type { Block, CollectionSlug } from 'payload'
 import { createManifestBlock } from '../../../shared/manifest-block.js'
 import { renderRichText } from '../../../shared/rich-text.js'
-import { ctaGroupToProps, formModalPresentationToProps, mediaToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { ctaGroupToProps, formModalPresentationToProps, mediaToProps, optionalFormToProps, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import type { ProductOptionsAllentownContent, PayloadProductOptionsAllentownDocument } from './product-options-allentown.types.js'
 import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
@@ -86,8 +86,7 @@ export function createBetaProductOptionsAllentownBlock(options: CreateBetaProduc
 }
 
 function formToProps(value: PayloadProductOptionsAllentownDocument['form']): ProductOptionsAllentownContent['form'] | undefined {
-  if (value === undefined || value === null) return undefined
-  return optionalText(value, 'form')
+  return optionalFormToProps(value, 'form')
 }
 
 export function betaProductOptionsAllentownToProps(data: PayloadProductOptionsAllentownDocument, options: PayloadAdapterOptions = {}): ProductOptionsAllentownContent {
