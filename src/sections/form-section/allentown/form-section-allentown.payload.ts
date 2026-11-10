@@ -35,7 +35,7 @@ export interface CreateBetaFormSectionAllentownBlockOptions {
 
 export function createBetaFormSectionAllentownBlock({
   mediaCollection = 'media',
-  formCollection = 'forms',
+  formCollection = 'embeds',
 }: CreateBetaFormSectionAllentownBlockOptions = {}): Block {
   return {
     slug: 'beta-form-section-allentown',

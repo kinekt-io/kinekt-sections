@@ -94,7 +94,7 @@ const manifest = {
       "kind": "embedHtml",
       "required": false,
       "localized": true,
-      "description": "Paste trusted video embed HTML. Required when Media type is Video."
+      "description": "Choose a reusable Video embed. Required when Media type is Video."
     },
     "imageAspectRatio": {
       "kind": "select",

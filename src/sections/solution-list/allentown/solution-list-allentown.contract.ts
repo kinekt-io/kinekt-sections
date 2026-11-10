@@ -39,7 +39,7 @@ export interface SolutionListAllentownAdapterOptions extends PayloadAdapterOptio
   contentHref: (collection: string, documentID: string) => string | undefined
 }
 
-export function createSolutionListAllentownBlock({ mediaCollection = 'media', formCollection = 'forms', targetCollections = ['pages'] }: CreateSolutionListAllentownBlockOptions = {}): Block {
+export function createSolutionListAllentownBlock({ mediaCollection = 'media', formCollection = 'embeds', targetCollections = ['pages'] }: CreateSolutionListAllentownBlockOptions = {}): Block {
   const targetRelation = targetCollections.length === 1 ? targetCollections[0] : targetCollections
 
   return {

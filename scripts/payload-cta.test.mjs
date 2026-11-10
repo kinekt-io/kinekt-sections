@@ -7,7 +7,7 @@ import { structuralSectionToProps } from '../dist/shared/structural-props.js'
 import { betaProcessStoryAllentownToProps } from '../dist/sections/process-story/allentown/process-story-allentown.payload.js'
 import { betaProductOptionsAllentownToProps } from '../dist/sections/product-options/allentown/product-options-allentown.payload.js'
 import { isSafeCtaAnchor } from '../dist/shared/cta-anchor.js'
-import { createManifestBlock } from '../dist/shared/manifest-block.js'
+import { createManifestBlock, manifestToProps } from '../dist/shared/manifest-block.js'
 
 test('manifest section labels omit lifecycle status while retaining legacy block slugs', () => {
   const block = createManifestBlock({
@@ -93,10 +93,13 @@ test('CTA adapters retain complete URL and content destinations', () => {
 test('CTA group actions select reusable Forms available to the current Region', () => {
   const form = ctaFields(['pages', 'articles'], false, true).find((candidate) => candidate.name === 'form')
   assert.ok(form)
-  assert.equal(form.relationTo, 'forms')
+  assert.equal(form.relationTo, 'embeds')
   assert.equal(typeof form.validate, 'function')
   assert.equal(typeof form.filterOptions, 'function')
-  assert.deepEqual(form.filterOptions({ data: { tenant: 'region-us' } }), { availableRegions: { in: ['region-us'] } })
+  assert.deepEqual(form.filterOptions({ data: { tenant: 'region-us' } }), {
+    availableRegions: { in: ['region-us'] },
+    embedType: { equals: 'form' },
+  })
 
   assert.deepEqual(
     ctaToProps(
@@ -112,6 +115,28 @@ test('CTA group actions select reusable Forms available to the current Region', 
   assert.equal(
     form.validate(null, { siblingData: { destinationType: 'form', label: 'Book a call' } }),
     'Select a form.',
+  )
+})
+
+test('video embeds select reusable Video Embeds available to the current Region', () => {
+  const block = createManifestBlock({
+    slug: 'video-test',
+    title: 'Video test',
+    status: 'released',
+    fields: {
+      videoEmbedHtml: { kind: 'embedHtml', required: false, localized: true },
+    },
+  })
+  const videoEmbed = block.fields.find((field) => field.name === 'videoEmbedHtml')
+
+  assert.equal(videoEmbed.relationTo, 'embeds')
+  assert.deepEqual(videoEmbed.filterOptions({ data: { tenant: 'region-ua' } }), {
+    availableRegions: { in: ['region-ua'] },
+    embedType: { equals: 'video' },
+  })
+  assert.deepEqual(
+    manifestToProps({ videoEmbedHtml: { id: 'video-1', embedCode: '<iframe src=\"https://player.vimeo.com/video/1\"></iframe>' } }),
+    { videoEmbedHtml: '<iframe src=\"https://player.vimeo.com/video/1\"></iframe>', contentWidth: 'standard' },
   )
 })
 

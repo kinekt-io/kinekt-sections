@@ -12,10 +12,11 @@ export const requireObject = (value: unknown, field: string): Record<string, unk
 export const requireArray = (value: unknown, field: string): unknown[] => { if (!Array.isArray(value) || value.length === 0) throw new Error(`${field} must contain at least one item.`); return value }
 export const requireText = (value: unknown, field: string): string => { if (typeof value !== 'string' || value.trim().length === 0) throw new Error(`${field} must be non-empty text.`); return value }
 export const optionalText = (value: unknown, field: string): string | undefined => value === undefined || value === null || value === '' ? undefined : requireText(value, field)
-export const formToProps = (value: unknown, field: string): string => {
-  const form = requireObject(value, field)
-  return requireText(form.embedCode, `${field}.embedCode`)
+export const embedToProps = (value: unknown, field: string): string => {
+  const embed = requireObject(value, field)
+  return requireText(embed.embedCode, `${field}.embedCode`)
 }
+export const formToProps = (value: unknown, field: string): string => embedToProps(value, field)
 export const optionalFormToProps = (value: unknown, field: string): string | undefined =>
   value === undefined || value === null ? undefined : formToProps(value, field)
 

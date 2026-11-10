@@ -33,13 +33,18 @@ const regionID = (value: unknown): string | undefined => {
   return regionID(record.id ?? record.value ?? record.region)
 }
 
-export const availableFormsInCurrentRegion = ({ data, id }: { data?: unknown; id?: unknown }) => {
-  const record = typeof data === 'object' && data !== null && !Array.isArray(data)
-    ? data as Record<string, unknown>
-    : undefined
-  const currentRegion = regionID(record?.tenant) ?? regionID(record?.id) ?? regionID(id)
-  return currentRegion ? { availableRegions: { in: [currentRegion] } } : false
-}
+export const availableEmbedsInCurrentRegion = (embedType: 'form' | 'video') =>
+  ({ data, id }: { data?: unknown; id?: unknown }) => {
+    const record = typeof data === 'object' && data !== null && !Array.isArray(data)
+      ? data as Record<string, unknown>
+      : undefined
+    const currentRegion = regionID(record?.tenant) ?? regionID(record?.id) ?? regionID(id)
+    return currentRegion
+      ? { availableRegions: { in: [currentRegion] }, embedType: { equals: embedType } }
+      : false
+  }
+
+export const availableFormEmbedsInCurrentRegion = availableEmbedsInCurrentRegion('form')
 
 export function formReferenceField(name: string, formCollection: CollectionSlug, required = false, localized = false): RelationshipField {
   return {
@@ -49,10 +54,10 @@ export function formReferenceField(name: string, formCollection: CollectionSlug,
     label: 'Form',
     required,
     localized,
-    filterOptions: availableFormsInCurrentRegion,
+    filterOptions: availableFormEmbedsInCurrentRegion,
     validate: (value: unknown) => !required || hasRelationshipTarget(value) || formEmbedMessage,
     admin: {
-      description: 'Choose a reusable form. Platform admins manage forms and decide which Regions can use them.',
+      description: 'Choose a reusable Form embed. Platform admins manage Embeds and decide which Regions can use them.',
     },
   }
 }
@@ -160,7 +165,7 @@ export function formModalPresentationFields(): Field[] {
 }
 
 
-export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], required = false, allowForm = false, formCollection: CollectionSlug = 'forms'): Field[] {
+export function ctaFields(targetCollections: CollectionSlug | CollectionSlug[], required = false, allowForm = false, formCollection: CollectionSlug = 'embeds'): Field[] {
   return [
     {
       name: 'label',

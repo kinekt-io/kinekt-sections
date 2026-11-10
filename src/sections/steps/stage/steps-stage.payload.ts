@@ -82,7 +82,7 @@ const manifest = {
         "image",
         "video"
       ],
-      "description": "Show the image or a trusted HTML video embed."
+      "description": "Show the image or a reusable Video embed."
     },
     "media": {
       "kind": "media",
@@ -94,7 +94,7 @@ const manifest = {
       "kind": "embedHtml",
       "required": false,
       "localized": true,
-      "description": "Paste trusted video embed HTML. Required when Media type is Video."
+      "description": "Choose a reusable Video embed. Required when Media type is Video."
     },
     "mediaAspectRatio": {
       "kind": "select",
