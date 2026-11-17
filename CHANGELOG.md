@@ -24,6 +24,8 @@
 
 ### Changed
 
+- Replace Case Studies slide-copy fields with localized Manual article selection and Automatic content-type/article-type filters. Consumers must hydrate `carousel.items` from published articles in the current region and migrate existing article destinations to `caseSources`. Empty automatic results render no section; missing hydration is rejected.
+
 - Render semantic component icons with Font Awesome 7 Pro Sharp Solid SVG definitions instead of Free Solid or handcrafted stroke glyphs.
 - Accept optional free-text Sharp Solid icon names in Payload icon fields, including CTA groups, with runtime validation of populated names.
 - Require a build-only Pro Package Token for dependency installation; keep icon fonts and credentials out of browser output.

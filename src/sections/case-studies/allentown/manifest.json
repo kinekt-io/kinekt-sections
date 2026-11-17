@@ -1,11 +1,11 @@
 {
   "$schema": "https://kinekt.io/schemas/component-manifest.schema.json",
   "schemaVersion": 1,
-  "version": "26.10.1",
+  "version": "26.11.0",
   "id": "sections/case-studies/allentown",
   "slug": "case-studies-allentown",
   "title": "Case Studies Allentown",
-  "description": "A reusable case studies section with an introduction, optional labelled divider, carousel and optional header CTA group.",
+  "description": "A reusable case studies section with an introduction, optional labelled divider, article-selected carousel and optional header CTA group.",
   "category": "sections",
   "tags": [
     "insights",
@@ -57,11 +57,48 @@
       "localized": true,
       "description": "Optional label displayed before the case carousel with a decorative line."
     },
-    "carousel": {
-      "kind": "component",
-      "componentId": "patterns/case-study-carousel/allentown",
+    "selectionMode": {
+      "kind": "select",
       "required": true,
-      "localized": true
+      "localized": true,
+      "defaultValue": "manual",
+      "options": [
+        "manual",
+        "automatic"
+      ],
+      "description": "Choose Manual to select published articles in display order, or Automatic to list published articles matching the filters."
+    },
+    "caseSources": {
+      "kind": "contentReferenceList",
+      "required": false,
+      "localized": true,
+      "minItems": 1,
+      "description": "Manual selection only. Select one or more published articles in display order. Every carousel card is populated from the selected article."
+    },
+    "contentType": {
+      "kind": "contentType",
+      "required": false,
+      "localized": true,
+      "defaultValue": "articles",
+      "options": [
+        "articles"
+      ],
+      "description": "Automatic selection only. Choose the article content type to list."
+    },
+    "articleType": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "options": [
+        "case",
+        "article",
+        "whitepaper",
+        "video",
+        "blog",
+        "interview",
+        "news"
+      ],
+      "description": "Automatic selection only. Optionally limit results to one article type."
     },
     "ctas": {
       "kind": "ctaGroup",

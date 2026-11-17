@@ -46,6 +46,18 @@ export const availableEmbedsInCurrentRegion = (embedType: 'form' | 'video') =>
 
 export const availableFormEmbedsInCurrentRegion = availableEmbedsInCurrentRegion('form')
 
+/** Restricts article relationships to published records in the enclosing Page Region. */
+export const availablePublishedContentInCurrentRegion =
+  ({ data, id }: { data?: unknown; id?: unknown }) => {
+    const record = typeof data === 'object' && data !== null && !Array.isArray(data)
+      ? data as Record<string, unknown>
+      : undefined
+    const currentRegion = regionID(record?.tenant) ?? regionID(record?.id) ?? regionID(id)
+    return currentRegion
+      ? { _status: { equals: 'published' }, tenant: { equals: currentRegion } }
+      : false
+  }
+
 export function formReferenceField(name: string, formCollection: CollectionSlug, required = false, localized = false): RelationshipField {
   return {
     name,
