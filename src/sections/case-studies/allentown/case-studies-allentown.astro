@@ -35,6 +35,7 @@ const quoteText = (value: string): string => {
 };
 ---
 
+{items.length > 0 && (
 <section
   class="case-studies-allentown"
   id={id}
@@ -297,7 +298,8 @@ const quoteText = (value: string): string => {
       }
     </div>
   </div>
-</section>
+  </section>
+)}
 <script>
   import { initializeKinektInteractions } from "../../../shared/interactions";
   initializeKinektInteractions();
