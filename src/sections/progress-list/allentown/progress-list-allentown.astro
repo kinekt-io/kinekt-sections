@@ -130,9 +130,9 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
       & th, & td { padding: var(--kiw--progress-list-allentown-row-space) 0; text-align: start; vertical-align: middle; }
       & th:first-child { padding-inline-end: var(--space-s); }
       & th { color: var(--kiw--progress-list-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--progress-list-allentown-title-size); font-style: normal; font-weight: 500; line-height: 1; }
-      & thead th:first-child { inline-size: 80%; }
+      & thead th:first-child { inline-size: 80%; font-size: var(--text-l); font-weight: 500; }
       & tbody tr + tr { border-block-start: var(--border-width) solid var(--kinekt-component-line); }
-      & tbody th { overflow-wrap: anywhere; }
+      & tbody th { overflow-wrap: anywhere; font-size: var(--text-xl); font-weight: 400; }
       & tbody td { overflow-wrap: anywhere; }
     }
     & .progress-list-allentown__title { display: inline; }
@@ -141,13 +141,14 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
       --kiw--progress-list-allentown-status-tone: var(--kinekt-component-muted);
       display: inline-flex;
       align-items: center;
-      inline-size: 100%;
+      inline-size: fit-content;
       max-inline-size: 100%;
       padding: var(--space-xxs) var(--space-xs);
       gap: var(--space-xs);
       color: var(--kiw--progress-list-allentown-status-color);
       background: color-mix(in srgb, var(--kiw--progress-list-allentown-status-tone) 8%, transparent);
-      font-size: var(--text-s);
+      font-size: var(--text-m);
+      font-weight: 500;
       line-height: var(--text-line-height);
       overflow-wrap: anywhere;
       & > span { min-inline-size: 0; }

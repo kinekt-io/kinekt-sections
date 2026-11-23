@@ -97,6 +97,18 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
 </script>
 
 <style is:global>
+  @media (prefers-reduced-motion: no-preference) {
+    .progress-roadmap-allentown__item:not([hidden]) {
+      animation: progress-roadmap-reveal 180ms ease-out;
+    }
+  }
+  @keyframes progress-roadmap-reveal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>
+
+<style is:global>
   :where(.progress-roadmap-allentown[data-kinekt-section]) {
     --kiw--progress-roadmap-allentown-canvas: var(--neutral-ultra-light);
     --kiw--progress-roadmap-allentown-ink: var(--primary-ultra-dark);
@@ -196,7 +208,7 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
       color: var(--kiw--progress-roadmap-allentown-filter-ink);
       background: var(--kiw--progress-roadmap-allentown-filter-surface);
       font: inherit;
-      font-weight: var(--heading-font-weight);
+      font-weight: var(--text-font-weight);
       text-decoration: none;
       white-space: nowrap;
       cursor: pointer;
@@ -306,7 +318,7 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
       & > :first-child { margin-block-start: 0; }
       & > :last-child { margin-block-end: 0; }
       & :is(ul, ol) { padding-inline-start: var(--space-l); }
-      & li + li { margin-block-start: var(--space-xs); }
+      & li + li { margin-block-start: var(--space-xxs); }
     }
     & .progress-roadmap-allentown__facts {
       inline-size: 100%;
@@ -318,7 +330,7 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
         padding-block: var(--space-xxs);
         & + div { border-block-start: var(--border-width) solid var(--kiw--progress-roadmap-allentown-line); }
         &:first-child { padding-block-start: 0; }
-        &:last-child { padding-block-end: 0; }
+        &:last-child { border-block-end: var(--border-width) solid var(--kiw--progress-roadmap-allentown-line); }
       }
       & :is(dt, dd) { margin: 0; overflow-wrap: anywhere; }
       & dd { color: var(--kiw--progress-roadmap-allentown-muted); }
