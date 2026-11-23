@@ -52,7 +52,7 @@
       "kind": "contentReferenceList",
       "required": false,
       "localized": true,
-      "minItems": 1,
+      "minItems": 0,
       "description": "Manual selection only. Select one or more published content items in display order. In Automatic mode, leave this empty; the CMS request path supplies matching related Articles."
     },
     "cta": {

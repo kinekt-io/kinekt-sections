@@ -35,7 +35,6 @@ export interface CreateBetaRelatedContentAllentownBlockOptions {
   formCollection?: CollectionSlug
 }
 
-const textRequired = (value: unknown) => typeof value === 'string' && value.trim().length > 0 || 'Enter non-empty text.'
 
 /**
  * Article-driven Related Content block.
@@ -66,14 +65,14 @@ export function createBetaRelatedContentAllentownBlock({
     fields: [
       sectionContentWidthField(),
       {
-        name: 'theme', type: 'select', localized: true, required: true, defaultValue: 'light',
+        name: 'theme', type: 'select', localized: true, required: true,
         options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })),
       },
       {
         name: 'intro', type: 'group', label: 'Intro Block', localized: true, required: true,
         fields: [
           { name: 'accentHeading', type: 'text', label: 'Accent heading' },
-          { name: 'heading', type: 'text', label: 'Heading', required: true, validate: textRequired },
+          { name: 'heading', type: 'text', label: 'Heading', required: true },
           { name: 'description', type: 'richText', label: 'Description' },
         ],
       },
@@ -98,7 +97,7 @@ export function createBetaRelatedContentAllentownBlock({
       {
         name: 'cta', type: 'group', label: 'Overview action', localized: true,
         admin: { description: 'Optional Content-or-URL overview action.' },
-        fields: ctaFields(ctaTargetRelation, false, true, formCollection),
+        fields: [{ name: 'cta', type: 'group', fields: ctaFields(ctaTargetRelation, false, true, formCollection) }],
       },
     ],
   }
