@@ -1,7 +1,9 @@
-// @generated structural section — source manifest remains the contract.
+/** Related selection extends the existing expanded manifest schema. */
 import type { Block, CollectionSlug } from 'payload'
-import { createManifestBlock, manifestToProps } from '../../../shared/manifest-block.js'
-import type { BetaRelatedContentAllentownContent, PayloadBetaRelatedContentAllentownDocument } from './related-content-allentown.types.js'
+import { createManifestBlock } from '../../../shared/manifest-block.js'
+import { withRelatedContentSelection } from './related-content-allentown.contract.js'
+export { betaRelatedContentAllentownToProps } from './related-content-allentown.contract.js'
+export type { RelatedContentSelectionMode } from './related-content-allentown.contract.js'
 
 const manifest = {
   "slug": "related-content-allentown",
@@ -55,12 +57,22 @@ const manifest = {
         }
       }
     },
+    "selectionMode": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "options": [
+        "automatic",
+        "manual"
+      ],
+      "description": "Automatic when left empty: show related published Articles selected by the CMS request path. Choose Manual to select published content in display order."
+    },
     "contentSources": {
       "kind": "contentReferenceList",
-      "required": true,
+      "required": false,
       "localized": true,
-      "minItems": 1,
-      "description": "Explicitly select published related content. Each card derives its content type, title, card excerpt, hero image or video poster, and route from the selected document."
+      "minItems": 0,
+      "description": "Manual selection only. Select one or more published content items in display order. In Automatic mode, leave this empty; the CMS request path supplies matching related Articles."
     },
     "cta": {
       "kind": "component",
@@ -82,9 +94,5 @@ const manifest = {
 export interface CreateBetaRelatedContentAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
 
 export function createBetaRelatedContentAllentownBlock(options: CreateBetaRelatedContentAllentownBlockOptions = {}): Block {
-  return createManifestBlock(manifest, options)
-}
-
-export function betaRelatedContentAllentownToProps(data: PayloadBetaRelatedContentAllentownDocument): BetaRelatedContentAllentownContent {
-  return manifestToProps(data)
+  return withRelatedContentSelection(createManifestBlock(manifest, options))
 }

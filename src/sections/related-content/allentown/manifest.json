@@ -5,7 +5,7 @@
   "id": "sections/related-content/allentown",
   "slug": "related-content-allentown",
   "title": "Related Content Allentown",
-  "description": "A related-posts section with an intro, explicitly selected published content and an optional overview action.",
+  "description": "A related-posts section with an intro, automatic article selection by default, an optional manual override, and an optional overview action.",
   "category": "sections",
   "tags": ["article", "case-study", "related-content"],
   "role": "related-content",
@@ -37,12 +37,22 @@
       "required": true,
       "localized": true
     },
+    "selectionMode": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "options": [
+        "automatic",
+        "manual"
+      ],
+      "description": "Automatic when left empty: show related published Articles selected by the CMS request path. Choose Manual to select published content in display order."
+    },
     "contentSources": {
       "kind": "contentReferenceList",
-      "required": true,
+      "required": false,
       "localized": true,
-      "minItems": 1,
-      "description": "Explicitly select published related content. Each card derives its content type, title, card excerpt, hero image or video poster, and route from the selected document."
+      "minItems": 0,
+      "description": "Manual selection only. Select one or more published content items in display order. In Automatic mode, leave this empty; the CMS request path supplies matching related Articles."
     },
     "cta": {
       "kind": "component",
