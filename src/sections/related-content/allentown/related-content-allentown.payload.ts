@@ -59,14 +59,13 @@ const manifest = {
     },
     "selectionMode": {
       "kind": "select",
-      "required": true,
+      "required": false,
       "localized": true,
-      "defaultValue": "automatic",
       "options": [
         "automatic",
         "manual"
       ],
-      "description": "Choose Automatic to show the related published Articles selected by the CMS request path, or Manual to select published content in display order."
+      "description": "Automatic when left empty: show related published Articles selected by the CMS request path. Choose Manual to select published content in display order."
     },
     "contentSources": {
       "kind": "contentReferenceList",
