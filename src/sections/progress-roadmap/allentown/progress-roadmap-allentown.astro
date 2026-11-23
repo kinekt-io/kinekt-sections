@@ -84,10 +84,17 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
       filters.dataset.progressRoadmapReady = 'true'
       const buttons = [...filters.querySelectorAll<HTMLButtonElement>('[data-progress-roadmap-filter]')]
       const items = [...section.querySelectorAll<HTMLElement>('[data-progress-roadmap-item]')]
+      const results = section.querySelector<HTMLElement>('[data-progress-roadmap-items]')
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+      let reveal: Animation | undefined
       buttons.forEach((button) => button.addEventListener('click', () => {
         const selected = button.dataset.progressRoadmapFilter || ''
         buttons.forEach((entry) => entry.setAttribute('aria-pressed', String(entry === button)))
         items.forEach((item) => { item.hidden = selected !== '' && item.dataset.progressRoadmapItem !== selected })
+        reveal?.cancel()
+        if (results && !reducedMotion.matches) {
+          reveal = results.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 180, easing: 'ease-out' })
+        }
       }))
       filters.hidden = false
     }
@@ -95,18 +102,6 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
   initializeRoadmaps()
   document.addEventListener('astro:page-load', initializeRoadmaps)
 </script>
-
-<style is:global>
-  @media (prefers-reduced-motion: no-preference) {
-    .progress-roadmap-allentown__item:not([hidden]) {
-      animation: progress-roadmap-reveal 180ms ease-out;
-    }
-  }
-  @keyframes progress-roadmap-reveal {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-</style>
 
 <style is:global>
   :where(.progress-roadmap-allentown[data-kinekt-section]) {
