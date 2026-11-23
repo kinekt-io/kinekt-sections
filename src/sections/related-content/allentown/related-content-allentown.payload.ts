@@ -1,3 +1,99 @@
-/** Payload entrypoint for the Article-driven Related Content contract. Consumers MUST resolve either Automatic or Manual selection into contentSources before calling the adapter. */
-export { betaRelatedContentAllentownToProps, createBetaRelatedContentAllentownBlock } from './related-content-allentown.contract.js'
-export type { CreateBetaRelatedContentAllentownBlockOptions, RelatedContentSelectionMode } from './related-content-allentown.contract.js'
+/** Related selection extends the existing expanded manifest schema. */
+import type { Block, CollectionSlug } from 'payload'
+import { createManifestBlock } from '../../../shared/manifest-block.js'
+import { withRelatedContentSelection } from './related-content-allentown.contract.js'
+export { betaRelatedContentAllentownToProps } from './related-content-allentown.contract.js'
+export type { RelatedContentSelectionMode } from './related-content-allentown.contract.js'
+
+const manifest = {
+  "slug": "related-content-allentown",
+  "title": "Related Content Allentown",
+  "status": "prerelease",
+  "fields": {
+    "contentWidth": {
+      "kind": "select",
+      "required": false,
+      "localized": true,
+      "defaultValue": "standard",
+      "options": [
+        "standard",
+        "80",
+        "70"
+      ],
+      "description": "Maximum content width: Standard (100%), 80%, or 70%."
+    },
+    "theme": {
+      "kind": "select",
+      "required": true,
+      "localized": true,
+      "options": [
+        "light",
+        "semi-light",
+        "semi-dark",
+        "dark"
+      ],
+      "description": "CMS-selected presentation setting passed to the renderer."
+    },
+    "intro": {
+      "kind": "component",
+      "componentId": "components/intro/allentown",
+      "required": true,
+      "localized": true,
+      "fields": {
+        "accentHeading": {
+          "kind": "text",
+          "required": false,
+          "localized": true
+        },
+        "heading": {
+          "kind": "text",
+          "required": true,
+          "localized": true
+        },
+        "description": {
+          "kind": "richText",
+          "required": false,
+          "localized": true
+        }
+      }
+    },
+    "selectionMode": {
+      "kind": "select",
+      "required": true,
+      "localized": true,
+      "defaultValue": "automatic",
+      "options": [
+        "automatic",
+        "manual"
+      ],
+      "description": "Choose Automatic to show the related published Articles selected by the CMS request path, or Manual to select published content in display order."
+    },
+    "contentSources": {
+      "kind": "contentReferenceList",
+      "required": false,
+      "localized": true,
+      "minItems": 0,
+      "description": "Manual selection only. Select one or more published content items in display order. In Automatic mode, leave this empty; the CMS request path supplies matching related Articles."
+    },
+    "cta": {
+      "kind": "component",
+      "componentId": "controls/button/allentown",
+      "required": false,
+      "localized": true,
+      "description": "Optional Content-or-URL overview action.",
+      "fields": {
+        "cta": {
+          "kind": "cta",
+          "required": true,
+          "localized": true
+        }
+      }
+    }
+  }
+} as const
+
+export interface CreateBetaRelatedContentAllentownBlockOptions { mediaCollection?: CollectionSlug; formCollection?: CollectionSlug; faqCollection?: CollectionSlug; targetCollections?: CollectionSlug[] }
+
+export function createBetaRelatedContentAllentownBlock(options: CreateBetaRelatedContentAllentownBlockOptions = {}): Block {
+  return withRelatedContentSelection(createManifestBlock(manifest, options))
+}

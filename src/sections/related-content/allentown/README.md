@@ -6,7 +6,7 @@ The section frame is "Section - Featured insights" in both templates: [Article T
 
 - The localized **Related content selection** defaults to **Automatic**. The CMS request path supplies up to three published, Region- and locale-scoped Article cards that match the current Article type and, when present, overlapping Subjects. It excludes the current Article and orders candidates by publication date, newest first.
 - **Manual** is an override. It requires one or more editor-ordered, published relationships from the configured content collections. The picker is hidden in Automatic mode.
-- The shared Payload entrypoint exposes `createBetaRelatedContentAllentownBlock({ targetCollections, contentCollections, formCollection })`. `contentCollections` defaults to `targetCollections` for the Manual picker; `targetCollections` and `formCollection` configure the optional overview action.
+- The shared Payload entrypoint keeps `createBetaRelatedContentAllentownBlock({ targetCollections, formCollection })`. It extends the existing manifest-built schema only for selection behavior, preserving reusable nested CTA fields, manual row fields, media options, and existing routable targets.
 - The integration adapter receives renderer-shaped `contentSources` from the CMS request path. The Astro renderer does not query content or synthesize cards.
 - Automatic selection can resolve to no cards. The section still renders its intro and optional overview CTA without a phantom card.
 - Each resolved card derives its title, excerpt, image, metadata, and canonical route from the selected record. Automatic mode selects Articles; Manual mode retains all configured routable content collections.

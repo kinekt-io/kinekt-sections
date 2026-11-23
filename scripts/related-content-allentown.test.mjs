@@ -4,7 +4,7 @@ import test from 'node:test'
 import {
   betaRelatedContentAllentownToProps,
   createBetaRelatedContentAllentownBlock,
-} from '../dist/sections/related-content/allentown/related-content-allentown.contract.js'
+} from '../dist/sections/related-content/allentown/related-content-allentown.payload.js'
 
 function documentWith(overrides = {}) {
   return {
@@ -16,7 +16,7 @@ function documentWith(overrides = {}) {
 
 test('requires a selection only in manual mode and shows its picker only there', () => {
   const fields = new Map(createBetaRelatedContentAllentownBlock({
-    contentCollections: ['articles', 'pages', 'documents'],
+    targetCollections: ['articles', 'pages', 'documents'],
   }).fields.map(field => [field.name, field]))
   const sources = fields.get('contentSources')
   const manual = { siblingData: { selectionMode: 'manual' } }
