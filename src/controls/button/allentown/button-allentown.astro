@@ -2,6 +2,7 @@
 import type { HTMLAttributes } from 'astro/types'
 import type { CtaStyle } from '../../../shared/content.js'
 
+
 interface Props extends Omit<HTMLAttributes<'button'>, 'children' | 'class' | 'style' | 'size' | 'type'> {
   href?: string
   as?: 'a' | 'button'

@@ -200,7 +200,7 @@ const methods = contactMethods.filter((method) => method.label && method.href)
       }
 
       & ul { display: grid; gap: var(--kiw--form-section-allentown-embed-gap); margin: 0; padding: 0; list-style: none; }
-      & a {
+      & a:not(.button) {
         display: inline-flex;
         align-items: center;
         gap: var(--kiw--form-section-allentown-embed-gap);

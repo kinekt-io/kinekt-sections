@@ -91,6 +91,7 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     const triggers = steps.map((step) => step.querySelector<HTMLElement>('[data-process-story-trigger]')!)
     let activeIndex = 0
     let pausedByPointer = false
+    let pausedByFocus = false
     let outsideViewport = true
     let stoppedByClick = false
 
@@ -109,7 +110,7 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     }
 
     const syncTimerState = () => {
-      setTimerState(stoppedByClick || pausedByPointer || outsideViewport ? 'paused' : 'running')
+      setTimerState(stoppedByClick || pausedByPointer || pausedByFocus || outsideViewport ? 'paused' : 'running')
     }
 
     root.addEventListener('animationend', (event) => {
@@ -119,13 +120,24 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     })
 
     show(0)
-    root.addEventListener('pointerenter', () => {
-      pausedByPointer = true
-      syncTimerState()
-    })
-    root.addEventListener('pointerleave', () => {
-      pausedByPointer = false
-      syncTimerState()
+    steps.forEach((step) => {
+      step.addEventListener('pointerenter', () => {
+        pausedByPointer = true
+        syncTimerState()
+      })
+      step.addEventListener('pointerleave', () => {
+        pausedByPointer = false
+        syncTimerState()
+      })
+      step.addEventListener('focusin', () => {
+        pausedByFocus = true
+        syncTimerState()
+      })
+      step.addEventListener('focusout', (event) => {
+        if (event.relatedTarget instanceof Node && step.contains(event.relatedTarget)) return
+        pausedByFocus = false
+        syncTimerState()
+      })
     })
     triggers.forEach((trigger, index) => trigger.addEventListener('click', (event) => {
       event.preventDefault()
@@ -247,10 +259,10 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     --process-story-trinity-duration: var(--kiw--process-story-trinity-duration);
 
     & > .process-story-trinity__container { gap: var(--kiw--process-story-trinity-container-gap); }
-    & .process-story-trinity__intro { max-width: var(--kiw--process-story-trinity-intro-width); }
+    & .process-story-trinity__intro { display: flex; flex-direction: column; gap: var(--space-xl); max-width: var(--kiw--process-story-trinity-intro-width); }
+    & .process-story-trinity__intro > .process-story-trinity__intro-actions { margin-top: 0; }
     & .process-story-trinity__steps { display: grid; gap: var(--process-story-trinity-step-gap); margin: 0; padding: 0; list-style: none; }
     & .process-story-trinity__step { position: relative; display: grid; gap: var(--process-story-trinity-step-gap); min-width: 0; padding: var(--process-story-trinity-step-padding) 0 var(--process-story-trinity-step-padding) calc(var(--process-story-trinity-step-padding) + var(--kiw--process-story-trinity-step-gap)); border: 0; background: transparent; }
-    & .process-story-trinity__disclosure { min-width: 0; margin: 0; padding: 0; border: 0; background: transparent; }
     & .process-story-trinity__trigger { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--kiw--process-story-trinity-trigger-gap); align-items: center; width: 100%; min-height: 0; padding: 0; color: var(--kiw--process-story-trinity-ink-color); background: transparent; text-align: left; cursor: pointer; list-style: none; appearance: none; }
     & .process-story-trinity__trigger::marker { display: none; content: none; }
     & .process-story-trinity__trigger::-webkit-details-marker { display: none; }
@@ -276,6 +288,12 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     &[data-process-story-timer-state='running'] [data-process-story-active] .process-story-trinity__timer > span { animation-play-state: running; }
     &[data-process-story-stopped='true'] [data-process-story-active] .process-story-trinity__timer > span { transform: scaleY(1); animation: none; }
 
+    @supports (interpolate-size: allow-keywords) and selector(details::details-content) {
+      & { interpolate-size: allow-keywords; }
+      & .process-story-trinity__disclosure::details-content { block-size: 0; overflow: clip; transition: block-size 250ms ease, content-visibility 250ms allow-discrete; }
+      & .process-story-trinity__disclosure[open]::details-content { block-size: auto; }
+    }
+
     @media (max-width: 49.999rem) {
       & .process-story-trinity__intro,
       & .process-story-trinity__steps { width: 100%; max-width: none; }
@@ -290,9 +308,12 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
 
   @keyframes process-story-trinity-timer { to { transform: scaleY(1); } }
 
-  @media (prefers-reduced-motion: reduce) {
-    .process-story-trinity .process-story-trinity__timer { display: none; }
-  }
+    @media (prefers-reduced-motion: reduce) {
+      .process-story-trinity .process-story-trinity__timer { display: none; }
+      @supports (interpolate-size: allow-keywords) and selector(details::details-content) {
+        .process-story-trinity .process-story-trinity__disclosure::details-content { transition: none; }
+      }
+    }
 </style>
 <style is:global>
   :where(.process-story-trinity) .process-story-trinity__trigger { justify-content: space-between; font-weight: var(--kiw--process-story-trinity-heading-weight); }

@@ -4,6 +4,7 @@ import '../../../styles/wireframe-tokens.css'
 import CtaAction from '../../../shared/cta-action-allentown.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import { ctaGroupActions, type Cta, type Media, type SectionIntro as SectionIntroContent } from '../../../shared/content.js'
 
@@ -41,6 +42,7 @@ const {
 } = Astro.props as Props
 
 const actionList = ctaGroupActions(actions)
+const actionNoteIcon = ctaIconPaths('circle-info')!
 ---
 <section class="beta-action-contact-allentown" id={id} data-kinekt-section data-kinekt-content-width={normalizeSectionContentWidth(Astro.props.contentWidth)} data-kinekt-theme={theme}>
   <div class="beta-action-contact-allentown__container">
@@ -62,7 +64,7 @@ const actionList = ctaGroupActions(actions)
                     ))}
                   </nav>
                 )}
-                {actionNote && <p class="beta-action-contact-allentown__action-note">{actionNote}</p>}
+                {actionNote && <p class="beta-action-contact-allentown__action-note"><svg aria-hidden="true" viewBox={actionNoteIcon.viewBox} fill="currentColor"><path d={actionNoteIcon.path} /></svg><span>{actionNote}</span></p>}
               </div>
             )}
           </section>
@@ -186,7 +188,8 @@ const actionList = ctaGroupActions(actions)
     .beta-action-contact-allentown__action-controls { display: flex; flex-direction: column; align-items: flex-start; gap: var(--action-contact-control-gap); }
     .beta-action-contact-allentown__action-heading { max-width: none; font-size: var(--text-xl); line-height: var(--text-line-height); }
     .beta-action-contact-allentown__actions { margin-top: 0; }
-    .beta-action-contact-allentown__action-note { max-width: var(--kiw--action-contact-allentown-note-width, var(--kinekt-component-reading-width)); margin: 0; color: var(--kinekt-component-muted); }
+    .beta-action-contact-allentown__action-note { --action-contact-note-icon-size: var(--space-s); display: flex; align-items: flex-start; max-width: var(--kiw--action-contact-allentown-note-width, var(--kinekt-component-reading-width)); margin: 0; gap: var(--space-xs); color: var(--kinekt-component-muted); }
+    .beta-action-contact-allentown__action-note svg { flex: none; inline-size: var(--action-contact-note-icon-size); block-size: var(--action-contact-note-icon-size); margin-block-start: var(--space-xxxs); }
     .beta-action-contact-allentown__contact { gap: var(--action-contact-action-gap); padding-top: var(--action-contact-detail-gap); border-top: var(--kinekt-component-border-width) solid var(--kinekt-component-line); }
     .beta-action-contact-allentown__contact-heading { max-width: 22ch; font-size: var(--text-l); line-height: var(--text-line-height); }
     ul.beta-action-contact-allentown__contact-methods { display: grid; width: 100%; gap: var(--action-contact-control-gap); margin: 0; padding: 0; border: 0; list-style: none; }
