@@ -342,3 +342,10 @@ The source repository is named `kinekt-sections`. The package name is `@kinekt-i
   - [Section – Compliance Component – Intro + Image, “Compliance roadmap”](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5744-796023).
 
 Customer-owned Payload configurations can import `ctaFields` and `ctaStyleField` from `@kinekt-io/components/shared/payload-fields` to reuse the section action contract. Compose them inside a localized array with `minRows: 0`, `maxRows: 2` and `admin.initCollapsed: true`. Pass the allowed content collections to `ctaFields`; resolve its `destinationType: 'content'` / `page` relationship against the customer's published, region-scoped routes.
+
+## Shared presentation behavior
+
+- Process Story Allentown keeps its stacked layout below `50rem`, uses equal media/content columns from `50rem`, and defaults to `1fr 2fr` from `75rem`. A consumer can set `--kiw--process-story-columns` on a section to override both two-column layouts without adding editor data.
+- Progress List uses an automatic table layout: the status column takes the widest label, including icon and padding, and every status badge fills that cell. The title column takes the remaining width; the existing mobile table scroller remains.
+- Button Allentown recognizes official WhatsApp/Signal destinations by URL host or native scheme. Recognized links render one leading brand SVG and suppress the ordinary icon slot. `data-kinekt-messaging` and `data-kinekt-messaging-icon` identify `whatsapp` or `signal` for consumer-owned colors, badges and sizing. Ordinary links, native buttons and their slots are unchanged. Action Contact and Form Section route messaging contact methods through this same button; other contact methods retain their plain links.
+- Action Contact adds a decorative information icon only when its existing `actionNote` has content. No new editor field is required.

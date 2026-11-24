@@ -126,14 +126,13 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
       inline-size: 100%;
       min-inline-size: 48rem;
       border-collapse: collapse;
-      table-layout: fixed;
+      table-layout: auto;
       & th, & td { padding: var(--kiw--progress-list-allentown-row-space) 0; text-align: start; vertical-align: middle; }
-      & th:first-child { padding-inline-end: var(--space-s); }
+      & :is(th, td):first-child { inline-size: 100%; padding-inline-end: var(--space-s); }
       & th { color: var(--kiw--progress-list-allentown-title-color); font-family: var(--heading-font-family); font-size: var(--kiw--progress-list-allentown-title-size); font-style: normal; font-weight: 500; line-height: 1; }
-      & thead th:first-child { inline-size: 80%; font-size: var(--text-l); font-weight: 500; }
       & tbody tr + tr { border-block-start: var(--border-width) solid var(--kinekt-component-line); }
       & tbody th { overflow-wrap: anywhere; font-size: var(--text-xl); font-weight: 400; }
-      & tbody td { overflow-wrap: anywhere; }
+      & tbody td { overflow-wrap: anywhere; white-space: nowrap; }
     }
     & .progress-list-allentown__title { display: inline; }
     & .progress-list-allentown__reference { display: inline; margin-inline-start: var(--space-xs); color: var(--kinekt-component-muted); font-family: var(--text-font-family); font-size: var(--text-s); font-weight: var(--text-font-weight); line-height: var(--text-line-height); }
@@ -141,7 +140,7 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
       --kiw--progress-list-allentown-status-tone: var(--kinekt-component-muted);
       display: inline-flex;
       align-items: center;
-      inline-size: fit-content;
+      inline-size: 100%;
       max-inline-size: 100%;
       padding: var(--space-xxs) var(--space-xs);
       gap: var(--space-xs);
@@ -162,7 +161,6 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
     & .progress-list-allentown__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-s); }
 
     @media (max-width: 30rem) {
-      & .progress-list-allentown__table thead th:first-child { inline-size: 62%; }
       & .progress-list-allentown__reference { display: block; margin-inline-start: 0; margin-block-start: var(--space-xxxs); }
     }
   }
