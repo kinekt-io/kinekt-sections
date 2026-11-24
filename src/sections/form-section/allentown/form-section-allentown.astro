@@ -4,8 +4,6 @@ import FormEmbed from '../../../components/form-embed/allentown/form-embed-allen
 import ContactIcon from '../../../primitives/contact-icon/contact-icon.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import type { FormModalPresentation, Media, SectionIntro as SectionIntroContent } from '../../../shared/content.js'
-import ButtonAllentown from '../../../controls/button/allentown/button-allentown.astro'
-import { messagingPlatform } from '../../../shared/messaging-target.js'
 
 type Theme = 'light' | 'semi-light' | 'semi-dark' | 'dark'
 type ImagePosition = 'left' | 'right'
@@ -40,15 +38,7 @@ const methods = contactMethods.filter((method) => method.label && method.href)
       {methods.length > 0 && <address class="form-section-allentown__contacts">
         {contactHeading && <p class="form-section-allentown__contacts-heading">{contactHeading}</p>}
         <ul>
-          {methods.map((method) => (
-            <li>
-              {messagingPlatform(method.href) ? (
-                <ButtonAllentown href={method.href} label={method.label} />
-              ) : (
-                <a href={method.href}>{method.icon && <ContactIcon name={method.icon} />}<span>{method.label}</span></a>
-              )}
-            </li>
-          ))}
+          {methods.map((method) => <li><a href={method.href}>{method.icon && <ContactIcon name={method.icon} />}<span>{method.label}</span></a></li>)}
         </ul>
       </address>}
     </div>

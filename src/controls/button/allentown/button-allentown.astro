@@ -1,8 +1,6 @@
 ---
 import type { HTMLAttributes } from 'astro/types'
 import type { CtaStyle } from '../../../shared/content.js'
-import { ctaIconPaths } from '../../../shared/cta-icons.js'
-import { messagingPlatform } from '../../../shared/messaging-target.js'
 
 
 interface Props extends Omit<HTMLAttributes<'button'>, 'children' | 'class' | 'style' | 'size' | 'type'> {
@@ -27,17 +25,14 @@ const {
   type = 'button',
   disabled,
   class: className,
-  'data-kinekt-messaging': _messagingAttribute,
   ...attributes
 } = Astro.props as Props
-const messaging = as === 'a' ? messagingPlatform(href) : undefined
-const messagingIcon = messaging ? ctaIconPaths(messaging === 'whatsapp' ? 'whatsapp' : 'signal-messenger') : undefined
 const classes = ['button', `button--${style}`, size !== 'm' && `button--${size}`, className].filter(Boolean).join(' ')
 ---
 
 {as === 'button'
   ? <button class={classes} type={type} disabled={disabled} {...attributes}>{label}<slot /></button>
-  : <a class={classes} href={href} {...attributes} data-kinekt-messaging={messaging}>{messagingIcon && <svg data-kinekt-messaging-icon={messaging} aria-hidden="true" focusable="false" viewBox={messagingIcon.viewBox} fill="currentColor"><path d={messagingIcon.path} /></svg>}{label}{!messaging && <slot />}</a>}
+  : <a class={classes} href={href} {...attributes}>{label}<slot /></a>}
 
 <style is:global>
   /* Figma Button (4700:58121), Size=medium: padding S / M, icon gap XS, text-l at line-height 1, icon one step smaller.
