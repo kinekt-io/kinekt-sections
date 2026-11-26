@@ -8,6 +8,12 @@ const manifest = {
   "title": "Related Content Allentown",
   "status": "prerelease",
   "fields": {
+    "cardReadMoreIcon": {
+      "kind": "text",
+      "required": false,
+      "localized": true,
+      "description": "Optional installed CTA icon for every related-content card Read More link. Empty uses chevron-right."
+    },
     "contentWidth": {
       "kind": "select",
       "required": false,
@@ -62,12 +68,6 @@ const manifest = {
       "localized": true,
       "minItems": 1,
       "description": "Explicitly select published related content. Each card derives its content type, title, card excerpt, hero image or video poster, and route from the selected document."
-    },
-    "cardReadMoreIcon": {
-      "kind": "text",
-      "required": false,
-      "localized": true,
-      "description": "Optional installed CTA icon for every related-content card Read More link. Empty uses chevron-right."
     },
     "cta": {
       "kind": "component",
