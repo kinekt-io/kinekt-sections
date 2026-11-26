@@ -209,20 +209,95 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
       tabsRoot.setAttribute('data-kinekt-tabs', '')
     }
 
-    // Topic details: collapsed behind the "More information" toggle.
-    section.querySelectorAll<HTMLButtonElement>('[data-hd-engineering-topic-toggle]').forEach((toggle) => {
-      const details = document.getElementById(toggle.getAttribute('aria-controls') ?? '')
-      if (!details) return
-      const setExpanded = (expanded: boolean) => {
-        toggle.setAttribute('aria-expanded', String(expanded))
-        details.hidden = !expanded
+    initializeKinektInteractions(section)
+
+    // Topic details are readable by default without JavaScript. With enhancement, each starts open and closes once
+    // after three visible seconds; a person's explicit choice always cancels that automatic behavior.
+    type TopicDetailsState = {
+      toggle: HTMLButtonElement
+      details: HTMLElement
+      panel: HTMLElement | null
+      autoCloseEligible: boolean
+      visible: boolean
+      timer: number | undefined
+    }
+    const detailsById = new Map(
+      Array.from(section.querySelectorAll<HTMLElement>('[data-hd-engineering-topic-details]')).map((details) => [details.id, details]),
+    )
+    const topicDetails: TopicDetailsState[] = Array.from(section.querySelectorAll<HTMLButtonElement>('[data-hd-engineering-topic-toggle]')).flatMap((toggle) => {
+      const details = detailsById.get(toggle.getAttribute('aria-controls') ?? '')
+      if (!details) return []
+      return [{
+        toggle,
+        details,
+        panel: toggle.closest<HTMLElement>('[data-hd-engineering-panel]'),
+        autoCloseEligible: true,
+        visible: false,
+        timer: undefined,
+      }]
+    })
+    const isExpanded = (state: TopicDetailsState) => state.toggle.getAttribute('aria-expanded') === 'true'
+    const isPanelActive = (state: TopicDetailsState) => !state.panel?.hidden
+    const setExpanded = (state: TopicDetailsState, expanded: boolean) => {
+      state.toggle.setAttribute('aria-expanded', String(expanded))
+      state.details.hidden = !expanded
+    }
+    const cancelAutoClose = (state: TopicDetailsState) => {
+      if (state.timer === undefined) return
+      window.clearTimeout(state.timer)
+      state.timer = undefined
+    }
+    const syncAutoClose = (state: TopicDetailsState) => {
+      if (!state.autoCloseEligible || !state.visible || !isPanelActive(state) || !isExpanded(state)) {
+        cancelAutoClose(state)
+        return
       }
-      setExpanded(false)
-      toggle.hidden = false
-      toggle.addEventListener('click', () => setExpanded(toggle.getAttribute('aria-expanded') !== 'true'))
+      if (state.timer !== undefined) return
+      state.timer = window.setTimeout(() => {
+        state.timer = undefined
+        if (!state.autoCloseEligible || !state.visible || !isPanelActive(state) || !isExpanded(state)) return
+        if (state.details.contains(document.activeElement)) {
+          // Focused content must remain available; treat it as a deliberate interaction rather than hiding it.
+          state.autoCloseEligible = false
+          return
+        }
+        setExpanded(state, false)
+        state.autoCloseEligible = false
+      }, 3000)
+    }
+
+    topicDetails.forEach((state) => {
+      state.toggle.hidden = false
+      setExpanded(state, true)
+      state.toggle.addEventListener('click', () => {
+        cancelAutoClose(state)
+        state.autoCloseEligible = false
+        setExpanded(state, !isExpanded(state))
+      })
     })
 
-    initializeKinektInteractions(section)
+    if (topicDetails.length > 0) {
+      const stateByObservedElement = new Map<HTMLElement, TopicDetailsState>()
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const state = stateByObservedElement.get(entry.target as HTMLElement)
+          if (!state) return
+          state.visible = entry.isIntersecting
+          syncAutoClose(state)
+        })
+      }, { threshold: 0.1 })
+      topicDetails.forEach((state) => {
+        const observedElement = state.panel ?? state.details
+        stateByObservedElement.set(observedElement, state)
+        observer.observe(observedElement)
+      })
+      new MutationObserver((records) => {
+        records.forEach((record) => {
+          const state = topicDetails.find((candidate) => candidate.panel === record.target)
+          if (state) syncAutoClose(state)
+        })
+      }).observe(tabsRoot ?? section, { attributes: true, attributeFilter: ['hidden'], subtree: true })
+    }
   })
 </script>
 <style is:global>

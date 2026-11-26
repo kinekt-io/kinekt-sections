@@ -146,11 +146,17 @@ Radius values are `--radius-none` (0), `--radius-xs` (2px), `--radius-s` (4px), 
 
 ### Section content widths
 
-Every section exposes the localized Payload field **Content width**: `standard`, `80`, or `70`. The same choices are available in both catalogue inspectors. Omitted or null values use `standard`; existing content needs no migration.
+Every section exposes the localized Payload field **Content width**: `standard`, `80`, `70`, or `50`. The same choices are available in both catalogue inspectors. Omitted or null values use `standard`, except Editorial Content, whose default is `50`. Explicit stored choices are preserved; existing content needs no data migration.
 
-These are fixed maximum content widths based on `--desktop-content-width`, not percentages of the viewport: the default 90rem base produces 90rem, 72rem, and 63rem (1440px, 1152px, and 1008px at a 16px root). Containers use the available width until their selected cap is reached; gutters are additional and remain responsive. Main containers no longer impose a second, narrower section-specific cap. Internal columns and deliberate text-reading limits still belong to the component.
+These are fixed maximum content widths based on `--desktop-content-width`, not percentages of the viewport: the default 90rem base produces 90rem, 72rem, 63rem, and 45rem (1440px, 1152px, 1008px, and 720px at a 16px root). Containers use the available width until their selected cap is reached; gutters are additional and remain responsive. Main containers no longer impose a second, narrower section-specific cap. Internal columns and deliberate text-reading limits still belong to the component.
 
 Astro receives `contentWidth` and emits `data-kinekt-content-width`. Each section owns the preset rules in `<style is:global>`, mapping the selection to `--kinekt-section-content-width` and `--kinekt-component-content-width`. Keep these rules in new section renderers and use `sectionContentWidthField()` in their Payload factories. Backgrounds and full-bleed media do not inherit the narrower content cap. Hero Trinity's copy fills its content container below 50rem and uses half of it on desktop.
+
+Case Studies and Related Content expose a localized section-level `cardReadMoreIcon` using the existing CTA icon catalogue. Missing or empty values render `chevron-right`; the chosen icon applies to every card in that section, not to the source article or section-level overview CTA.
+
+Section filters use the consumer-overridable `--kiw--sticky-offset` (default `0px`) for sticky positioning. Consumers with fixed or sticky headers must provide their occupied header height. FAQ Index filters wrap; Roadmap and Solution List retain their own overflow behavior.
+
+On mobile, Read More hides its media, Form Section uses centered square images, and Product Options uses shrinkable 1:2 image/copy columns. HD Cells initially opens its default information panel, auto-closing after three visible seconds; manual More information opening stays open until explicitly closed. A focused information panel is never automatically hidden.
 
 ### Component defaults and theme roles
 

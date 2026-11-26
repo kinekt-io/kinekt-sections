@@ -228,6 +228,9 @@ const methods = contactMethods.filter((method) => method.label && method.href)
   .form-section-allentown[data-image-aspect-ratio='9:16'] { --kiw--form-section-allentown-media-ratio: 9 / 16; }
   .form-section-allentown[data-image-aspect-ratio='5:4'] { --kiw--form-section-allentown-media-ratio: 5 / 4; }
   .form-section-allentown[data-image-aspect-ratio='4:5'] { --kiw--form-section-allentown-media-ratio: 4 / 5; }
+  @media (max-width: 49.99rem) {
+    .form-section-allentown .form-section-allentown__media img { aspect-ratio: 1 / 1; object-position: center center; }
+  }
   @media (min-width: 50rem) {
     .form-section-allentown :is(.section-intro__heading, .section-intro__description) { max-width: var(--kinekt-component-reading-width); }
     .form-section-allentown > .form-section-allentown__container { align-items: center; column-gap: var(--kiw--form-section-allentown-column-gap); }

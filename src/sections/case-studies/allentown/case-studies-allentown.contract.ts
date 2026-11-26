@@ -3,7 +3,7 @@ import type { Block, CollectionSlug } from 'payload'
 import type { Cta, CtaGroup, CtaIcon, Media, RichText, SectionIntro } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { ctaGroupToProps, ctaToProps, mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
-import { contentTargetField, ctaFields, ctaStyleField, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from '../../../shared/payload-fields.js'
+import { contentTargetField, ctaFields, ctaIconField, ctaStyleField, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from '../../../shared/payload-fields.js'
 import { normalizeSectionContentWidth, type SectionContentWidth } from '../../../shared/section-width.js'
 import { isSafeCtaHref } from '../../../urls.js'
 import { isSafeCtaAnchor } from '../../../shared/cta-anchor.js'
@@ -35,6 +35,7 @@ export type CaseStudiesAllentownContent = {
   theme: 'light' | 'semi-light' | 'semi-dark' | 'dark'
   intro: SectionIntro
   sectionLabel?: string
+  cardReadMoreIcon?: CtaIcon
   carousel: { items: CaseStudySlide[] }
   ctas?: CtaGroup
 }
@@ -86,6 +87,13 @@ export function createCaseStudiesAllentownBlock({
         ],
       },
       { name: 'sectionLabel', type: 'text', label: 'Carousel label', localized: true, admin: { description: 'Optional label displayed before the carousel with a decorative line.' } },
+      {
+        ...ctaIconField(),
+        name: 'cardReadMoreIcon',
+        label: 'Card Read More icon',
+        localized: true,
+        admin: { description: 'Optional icon for every case card Read More link. Empty uses chevron-right.' },
+      },
       {
         name: 'ctas',
         type: 'array',
@@ -152,6 +160,7 @@ export function caseStudiesAllentownToProps(
 ): CaseStudiesAllentownContent {
   const intro = requireObject(data.intro, 'intro')
   const carousel = requireObject(data.carousel, 'carousel')
+  const cardReadMoreIcon = optionalSharpSolidIcon(data.cardReadMoreIcon, 'cardReadMoreIcon')
   const options = { ...payloadOptions, contentHref }
   const items = requireArray(carousel.items, 'carousel.items').map((item, index) => slideToProps(item, index, options))
 
@@ -164,6 +173,7 @@ export function caseStudiesAllentownToProps(
       ...(intro.description ? { description: { html: richTextToHtml(intro.description, 'intro.description') } } : {}),
     },
     ...(optionalText(data.sectionLabel, 'sectionLabel') ? { sectionLabel: optionalText(data.sectionLabel, 'sectionLabel') } : {}),
+    ...(cardReadMoreIcon ? { cardReadMoreIcon } : {}),
     carousel: { items },
     ...(ctaGroupToProps(data.ctas, 'ctas', options) ? { ctas: ctaGroupToProps(data.ctas, 'ctas', options) } : {}),
   }

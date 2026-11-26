@@ -215,3 +215,8 @@
   --motion-easing: ease;
 }
 }
+
+:root body [data-kinekt-section][data-kinekt-content-width='50'] {
+  --kinekt-section-content-width: calc(var(--desktop-content-width) * .5);
+  --kinekt-component-content-width: var(--kinekt-section-content-width);
+}

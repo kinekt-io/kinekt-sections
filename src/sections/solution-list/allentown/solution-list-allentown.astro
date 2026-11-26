@@ -157,8 +157,8 @@ const action = (value: any) => value?.cta ?? value
     --kiw--solution-list-allentown-toc-gap: var(--space-xxs);
     --kiw--solution-list-allentown-toc-block-space: var(--space-xs);
     --kiw--solution-list-allentown-toc-inline-space: var(--space-s);
-    --kiw--solution-list-allentown-toc-radius: var(--radius-xs, var(--kinekt-component-radius));
-    --kiw--solution-list-allentown-toc-surface: var(--neutral);
+    --kiw--solution-list-allentown-toc-radius: var(--radius-m);
+    --kiw--solution-list-allentown-toc-surface: var(--neutral-semi-light);
     --kiw--solution-list-allentown-toc-ink: var(--primary-semi-light);
     --kiw--solution-list-allentown-toc-active-surface: var(--neutral);
     --kiw--solution-list-allentown-toc-active-ink: var(--base, var(--kinekt-component-ink));
@@ -167,6 +167,12 @@ const action = (value: any) => value?.cta ?? value
     --kiw--solution-list-allentown-item-gap: var(--space-s);
     --kiw--solution-list-allentown-media-filter: var(--media-filter);
     --kiw--solution-list-allentown-column-gap: var(--section-space-s);
+  }
+  :where(.beta-solution-list-allentown:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark'])) {
+    --kiw--solution-list-allentown-toc-surface: var(--kinekt-component-surface);
+    --kiw--solution-list-allentown-toc-ink: var(--kinekt-component-muted);
+    --kiw--solution-list-allentown-toc-active-surface: var(--primary);
+    --kiw--solution-list-allentown-toc-active-ink: var(--kinekt-component-ink);
   }
 
   .beta-solution-list-allentown { --kinekt-section-card-media-ratio: 1 / 1; --solution-list-accent-to-heading: var(--kiw--solution-list-allentown-accent-gap); --solution-list-heading-group-to-label: var(--kiw--solution-list-allentown-heading-gap); --solution-list-label-to-description: var(--kiw--solution-list-allentown-label-space); --solution-list-body-to-action: var(--kiw--solution-list-allentown-label-space); }
@@ -194,13 +200,13 @@ const action = (value: any) => value?.cta ?? value
   .beta-solution-list-allentown .beta-solution-list-allentown__accent { text-transform: uppercase; }
   .beta-solution-list-allentown .beta-solution-list-allentown__heading-group h3 { font-size: var(--h4); line-height: var(--heading-line-height); }
   .beta-solution-list-allentown .beta-solution-list-allentown__labels { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-block-end: calc(var(--solution-list-label-to-description) - var(--solution-list-heading-group-to-label)); }
-  .beta-solution-list-allentown .beta-solution-list-allentown__label { margin: 0; }
+  .beta-solution-list-allentown .beta-solution-list-allentown__label { margin: 0; padding-block: calc((var(--space-xxs) + var(--space-xs)) / 2); padding-inline: var(--space-s); line-height: 1; }
   .beta-solution-list-allentown .beta-solution-list-allentown__actions { display: flex; margin-block-start: 0; }
-  .beta-solution-list-allentown .beta-solution-list-allentown__toc { inline-size: 100vw; margin-inline: calc(50% - 50vw); overflow-x: auto; overscroll-behavior-inline: contain; scroll-padding-inline: var(--kinekt-component-inline-space); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .beta-solution-list-allentown .beta-solution-list-allentown__toc { position: sticky; inset-block-start: var(--kiw--sticky-offset, 0px); z-index: 1; align-self: start; background: var(--kinekt-component-canvas); inline-size: 100vw; margin-inline: calc(50% - 50vw); overflow-x: auto; overscroll-behavior-inline: contain; scroll-padding-inline: var(--kinekt-component-inline-space); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .beta-solution-list-allentown .beta-solution-list-allentown__toc::-webkit-scrollbar { display: none; }
   .beta-solution-list-allentown .beta-solution-list-allentown__toc ul { display: flex; gap: var(--kiw--solution-list-allentown-toc-gap); inline-size: max-content; min-inline-size: 100%; margin: 0; padding-inline: var(--kinekt-component-inline-space); list-style: none; }
-  .beta-solution-list-allentown .beta-solution-list-allentown__toc a { display: block; padding: var(--kiw--solution-list-allentown-toc-block-space) var(--kiw--solution-list-allentown-toc-inline-space); border: var(--kiw--solution-list-allentown-border-width) solid var(--kiw--solution-list-allentown-line-color); border-radius: var(--kiw--solution-list-allentown-toc-radius); color: var(--kiw--solution-list-allentown-toc-ink); background: var(--kiw--solution-list-allentown-toc-surface); font-weight: var(--heading-font-weight); text-decoration: none; white-space: nowrap; }
-  .beta-solution-list-allentown .beta-solution-list-allentown__toc a[aria-current='true'] { border-color: var(--kiw--solution-list-allentown-toc-active-surface); color: var(--kiw--solution-list-allentown-toc-active-ink); background: var(--kiw--solution-list-allentown-toc-active-surface); }
+  .beta-solution-list-allentown .beta-solution-list-allentown__toc a { display: inline-flex; align-items: center; justify-content: center; padding: var(--kiw--solution-list-allentown-toc-block-space) var(--kiw--solution-list-allentown-toc-inline-space); border: var(--kiw--solution-list-allentown-border-width) solid var(--kiw--solution-list-allentown-toc-surface); border-radius: var(--kiw--solution-list-allentown-toc-radius); color: var(--kiw--solution-list-allentown-toc-ink); background: var(--kiw--solution-list-allentown-toc-surface); font-size: var(--text-m); font-weight: 400; line-height: 1; text-decoration: none; white-space: nowrap; }
+  .beta-solution-list-allentown .beta-solution-list-allentown__toc a[aria-current='true'] { border-color: var(--kiw--solution-list-allentown-toc-active-surface); color: var(--kiw--solution-list-allentown-toc-active-ink); background: var(--kiw--solution-list-allentown-toc-active-surface); font-weight: var(--heading-font-weight); }
   .beta-solution-list-allentown .beta-solution-list-allentown__toc a:not([aria-current='true']):is(:focus-visible, :hover) { border-color: var(--kiw--solution-list-allentown-toc-active-surface); color: var(--kiw--solution-list-allentown-toc-active-ink); background: var(--kiw--solution-list-allentown-toc-active-surface); }
   .beta-solution-list-allentown .beta-solution-list-allentown__items { margin: 0; padding: 0; border-top: 0; list-style: none; }
   .beta-solution-list-allentown .beta-solution-list-allentown__items > li:last-child > article { border-bottom: 0; }

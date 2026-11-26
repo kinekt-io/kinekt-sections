@@ -58,6 +58,7 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
                 <button type="button" data-kinekt-preview-width="standard" aria-pressed="true">Standard</button>
                 <button type="button" data-kinekt-preview-width="80" aria-pressed="false">80%</button>
                 <button type="button" data-kinekt-preview-width="70" aria-pressed="false">70%</button>
+                <button type="button" data-kinekt-preview-width="50" aria-pressed="false">50%</button>
               </div>
               <button class="section-preview__info" type="button" data-kinekt-section-info={component.slug} aria-label={`More information about ${component.title}`}>i</button>
               <a href={`${catalogueBase}components/${component.id}/`}>Open isolated preview →</a>
@@ -95,7 +96,7 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
         })
       }
 
-      function setPreviewWidth(preview: HTMLElement, width: 'standard' | '80' | '70') {
+      function setPreviewWidth(preview: HTMLElement, width: 'standard' | '80' | '70' | '50') {
         const section = preview.querySelector<HTMLElement>('[data-kinekt-section]')
         if (!section) return
         section.dataset.kinektContentWidth = width
@@ -108,7 +109,7 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
         const theme = preview.querySelector<HTMLElement>('[data-kinekt-section]')?.dataset.kinektTheme
         setPreviewTheme(preview, theme === 'semi-light' || theme === 'dark' || theme === 'semi-dark' ? theme : 'light')
         const width = preview.querySelector<HTMLElement>('[data-kinekt-section]')?.dataset.kinektContentWidth
-        setPreviewWidth(preview, width === '80' || width === '70' ? width : 'standard')
+        setPreviewWidth(preview, width === '80' || width === '70' || width === '50' ? width : 'standard')
       })
 
       document.addEventListener('click', (event) => {
@@ -120,7 +121,7 @@ const catalogueBase = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.B
         const widthButton = target.closest<HTMLButtonElement>('[data-kinekt-preview-width]')
         const widthPreview = widthButton?.closest<HTMLElement>('.section-preview')
         const width = widthButton?.dataset.kinektPreviewWidth
-        if (widthPreview && (width === 'standard' || width === '80' || width === '70')) return setPreviewWidth(widthPreview, width)
+        if (widthPreview && (width === 'standard' || width === '80' || width === '70' || width === '50')) return setPreviewWidth(widthPreview, width)
 
         const info = target.closest<HTMLButtonElement>('[data-kinekt-section-info]')
         if (info) return (document.getElementById(`section-${info.dataset.kinektSectionInfo}`) as HTMLDialogElement | null)?.showModal()

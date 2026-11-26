@@ -16,9 +16,10 @@ const manifest = {
       "options": [
         "standard",
         "80",
-        "70"
+        "70",
+        "50"
       ],
-      "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
     },
     "theme": {
       "kind": "select",
@@ -61,6 +62,12 @@ const manifest = {
       "localized": true,
       "minItems": 1,
       "description": "Explicitly select published related content. Each card derives its content type, title, card excerpt, hero image or video poster, and route from the selected document."
+    },
+    "cardReadMoreIcon": {
+      "kind": "text",
+      "required": false,
+      "localized": true,
+      "description": "Optional installed CTA icon for every related-content card Read More link. Empty uses chevron-right."
     },
     "cta": {
       "kind": "component",

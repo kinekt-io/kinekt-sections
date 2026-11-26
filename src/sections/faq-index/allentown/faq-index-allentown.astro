@@ -315,6 +315,7 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
   .faq-index-allentown .faq-index-allentown__body { display: grid; gap: var(--kiw--faq-index-filters-gap); min-width: 0; }
   .faq-index-allentown .faq-index-allentown__filters { display: flex; flex-wrap: wrap; justify-content: start; gap: var(--kiw--faq-index-filter-gap); }
   .faq-index-allentown .faq-index-allentown__filter { display: inline-flex; align-items: center; justify-content: center; margin: 0; padding: var(--kiw--faq-index-filter-padding-block) var(--kiw--faq-index-filter-padding-inline); border: var(--border-width) solid var(--kiw--faq-index-filter-background); border-radius: var(--kiw--faq-index-filter-radius); color: var(--kiw--faq-index-filter-color); background: var(--kiw--faq-index-filter-background); font-family: var(--kinekt-component-font); font-size: var(--kiw--faq-index-filter-size); font-weight: var(--kiw--section-heading-font-weight); line-height: 1; letter-spacing: inherit; text-align: center; white-space: nowrap; cursor: pointer; }
+  .faq-index-allentown .faq-index-allentown__filter:not([aria-pressed='true']) { font-weight: 400; }
   .faq-index-allentown .faq-index-allentown__filter:is(:hover, [aria-pressed='true']) { border-color: var(--kiw--faq-index-filter-active-background); color: var(--kiw--faq-index-filter-active-color); background: var(--kiw--faq-index-filter-active-background); }
   .faq-index-allentown .faq-index-allentown__filter:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kiw--faq-index-focus-color); outline-offset: calc(var(--border-width) * 2); }
 
@@ -343,9 +344,6 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
     :where(.faq-index-allentown) { --kiw--faq-index-allentown-content-width: var(--kiw--faq-index-container-width); }
   }
   @media (max-width: 49.999rem) {
-    .faq-index-allentown .faq-index-allentown__filters { flex-wrap: nowrap; inline-size: 100vw; margin-inline: calc(50% - 50vw); padding-inline: var(--kinekt-component-inline-space); overflow-x: auto; overscroll-behavior-inline: contain; scroll-padding-inline: var(--kinekt-component-inline-space); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-    .faq-index-allentown .faq-index-allentown__filters::-webkit-scrollbar { display: none; }
-    .faq-index-allentown .faq-index-allentown__filter { flex: none; }
     .faq-index-allentown .faq-index-allentown__question { line-height: 1.3; }
   }
   @media (prefers-reduced-motion: reduce) {
