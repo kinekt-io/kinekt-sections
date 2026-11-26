@@ -1,7 +1,7 @@
 import type { Block, CollectionSlug, Field } from 'payload'
 import { renderRichText } from './rich-text.js'
-import { ctaFields, ctaStyleField, formModalPresentationFields, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from './payload-fields.js'
-import { formModalPresentationToProps } from './payload.js'
+import { ctaFields, ctaStyleField, formModalPresentationFields, isSharpSolidIconNameOrEmpty, availableEmbedsInCurrentRegion, availableFormEmbedsInCurrentRegion, sectionContentWidthField } from './payload-fields.js'
+import { embedToProps, formModalPresentationToProps, optionalFormToProps } from './payload.js'
 import { normalizeSectionContentWidth } from './section-width.js'
 
 type FieldKind = 'text' | 'textarea' | 'richText' | 'checkbox' | 'select' | 'dateTime' | 'cta' | 'ctaGroup' | 'media' | 'mediaList' | 'video' | 'embedHtml' | 'infoItems' | 'featureItems' | 'processSteps' | 'faqItems' | 'faqReferenceList' | 'comparisonColumns' | 'comparisonRows' | 'formReference' | 'formEmbed' | 'formModal' | 'insightSourceList' | 'contentReferenceList' | 'contentType' | 'sectionIntro' | 'theme' | 'component' | 'componentList'
@@ -38,6 +38,7 @@ export type ManifestSectionDocument = Record<string, unknown> & { id?: string }
 
 export interface CreateManifestBlockOptions {
   mediaCollection?: CollectionSlug
+  embedCollection?: CollectionSlug
   formCollection?: CollectionSlug
   faqCollection?: CollectionSlug
   targetCollections?: CollectionSlug[]
@@ -46,6 +47,7 @@ export interface CreateManifestBlockOptions {
 
 type ResolvedOptions = CreateManifestBlockOptions & {
   mediaCollection: CollectionSlug
+  embedCollection: CollectionSlug
   faqCollection?: CollectionSlug
   targetCollections: CollectionSlug[]
   contentTypeOptions: ReadonlyArray<{ label: string; value: CollectionSlug }>
@@ -87,7 +89,7 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
     case 'dateTime': return { ...common, type: 'date', admin: { ...field.admin, date: { pickerAppearance: 'dayAndTime' } } }
     case 'checkbox': return { ...common, type: 'checkbox', defaultValue: field.defaultValue === true }
     case 'select':
-      if (name === 'contentWidth') return { ...sectionContentWidthField(), ...common }
+      if (name === 'contentWidth') return { ...sectionContentWidthField(), ...common, defaultValue: normalizeSectionContentWidth(field.defaultValue) }
       return {
         ...common,
         type: 'select',
@@ -98,14 +100,14 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
     case 'media':
     case 'video': return { ...common, type: 'upload', relationTo: options.mediaCollection }
     case 'mediaList': return { ...common, type: 'array', minRows: field.minItems, fields: [{ name: 'media', type: 'upload', relationTo: options.mediaCollection, required: true }] }
-    case 'cta': return { ...common, type: 'group', fields: ctaFields(options.targetCollections, field.required) }
+    case 'cta': return { ...common, type: 'group', fields: ctaFields(options.targetCollections, field.required, true, options.formCollection ?? 'embeds') }
     case 'ctaGroup': return {
       ...common,
       type: 'array',
       minRows: field.minItems ?? 0,
       maxRows: field.maxItems ?? 2,
       admin: { initCollapsed: true, ...(field.description ? { description: field.description } : {}), ...field.admin },
-      fields: [ctaStyleField(), ...ctaFields(options.targetCollections, false, true)],
+      fields: [ctaStyleField(), ...ctaFields(options.targetCollections, false, true, options.formCollection ?? 'embeds')],
     }
     case 'sectionIntro': return { ...common, type: 'group', fields: introFields() }
     case 'component': {
@@ -202,19 +204,39 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
         ...(field.description ? { admin: { description: field.description, ...field.admin } } : {}),
       }
     }
-    // Trusted editor-provided HTML for non-form integrations such as video embeds.
-    case 'embedHtml': return { ...common, type: 'textarea', admin: { ...field.admin, rows: 8, description: field.description ?? 'Paste trusted HTML embed code.' } }
-    // HubSpot embed code (production forms are embeds). Rendered by components/form-embed/allentown.
-    case 'formEmbed': return { ...common, type: 'textarea', admin: { ...field.admin, rows: 8, description: field.description ?? 'Paste the HubSpot form embed code. The component preview keeps using a non-submitting placeholder form.' } }
+    // Video embeds are managed globally and scoped to Regions.
+    case 'embedHtml': return {
+      ...common,
+      type: 'relationship',
+      relationTo: options.embedCollection,
+      label: 'Video embed',
+      filterOptions: availableEmbedsInCurrentRegion('video'),
+      admin: {
+        description: 'Choose a reusable Video embed. Platform admins manage Embeds and decide which Regions can use them.',
+        ...field.admin,
+      },
+    }
+    // Forms are managed globally. Sections select a Form rather than storing executable embed code.
+    case 'formEmbed':
+    case 'formReference': {
+      if (!options.formCollection) throw new Error(`Field ${name} requires a formCollection; JSON fallback is forbidden.`)
+      return {
+        ...common,
+        type: 'relationship',
+        relationTo: options.formCollection,
+        label: 'Form',
+        filterOptions: availableFormEmbedsInCurrentRegion,
+        admin: {
+          description: 'Choose a reusable Form embed. Platform admins manage Embeds and decide which Regions can use them.',
+          ...field.admin,
+        },
+      }
+    }
     case 'formModal': return {
       ...common,
       type: 'group',
       admin: { initCollapsed: true, ...(field.description ? { description: field.description } : {}), ...field.admin },
       fields: formModalPresentationFields(),
-    }
-    case 'formReference': {
-      if (!options.formCollection) throw new Error(`Field ${name} requires a formCollection; JSON fallback is forbidden.`)
-      return { ...common, type: 'relationship', relationTo: options.formCollection }
     }
     default: throw new Error(`Unsupported manifest field kind on ${name}; JSON fallback is forbidden.`)
   }
@@ -223,21 +245,19 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
 export function createManifestBlock(manifest: SectionManifest, input: CreateManifestBlockOptions = {}): Block {
   const options: ResolvedOptions = {
     mediaCollection: input.mediaCollection ?? 'media',
-    formCollection: input.formCollection,
+    embedCollection: input.embedCollection ?? input.formCollection ?? 'embeds',
+    formCollection: input.formCollection ?? input.embedCollection ?? 'embeds',
     faqCollection: input.faqCollection,
     targetCollections: input.targetCollections?.length ? input.targetCollections : ['pages'],
     contentTypeOptions: input.contentTypeOptions ?? [],
   }
 
   const released = manifest.status === 'released'
-  const statusLabel = manifest.status === 'prerelease' ? 'PRERELEASE' : 'BETA'
   const name = manifest.slug.split('-').map((part) => part[0]?.toUpperCase() + part.slice(1)).join('')
   return {
     slug: `${released ? '' : 'beta-'}${manifest.slug}`,
     interfaceName: `${released ? '' : 'Beta'}${name}`,
-    labels: released
-      ? { singular: manifest.title, plural: `${manifest.title} blocks` }
-      : { singular: `${statusLabel} — ${manifest.title}`, plural: `${statusLabel} — ${manifest.title} blocks` },
+    labels: { singular: manifest.title, plural: `${manifest.title} blocks` },
     fields: Object.entries(manifest.fields).map(([fieldName, field]) => fieldFor(fieldName, field, options)),
   }
 }
@@ -251,7 +271,15 @@ function normalizeRichText(value: unknown, field: string): unknown {
     return formModalPresentationToProps(record, field)
   }
   if ('root' in record) return renderRichText(record, field)
-  return Object.fromEntries(Object.entries(record).map(([key, item]) => [key, normalizeRichText(item, `${field}.${key}`)]))
+  return Object.fromEntries(Object.entries(record).map(([key, item]) => {
+    // Linked documents are routing targets, not child sections of this block.
+    if (key === 'page') return [key, item]
+    if (key === 'form') return [key, optionalFormToProps(item, `${field}.${key}`)]
+    if (key.endsWith('EmbedHtml') && typeof item === 'object' && item !== null && !Array.isArray(item)) {
+      return [key, embedToProps(item, `${field}.${key}`)]
+    }
+    return [key, normalizeRichText(item, `${field}.${key}`)]
+  }))
 }
 
 export function manifestToProps<T extends ManifestSectionDocument>(data: T): T {

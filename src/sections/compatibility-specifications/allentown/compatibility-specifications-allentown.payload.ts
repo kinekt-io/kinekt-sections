@@ -10,8 +10,8 @@ export function createCompatibilitySpecificationsBlock(): Block {
     slug: 'compatibility-specifications-allentown',
     interfaceName: 'CompatibilitySpecificationsAllentown',
     labels: {
-      singular: 'BETA — Compatibility Specifications Allentown',
-      plural: 'BETA — Compatibility Specifications Allentown blocks',
+      singular: 'Compatibility Specifications Allentown',
+      plural: 'Compatibility Specifications Allentown blocks',
     },
     fields: [
       sectionContentWidthField(),

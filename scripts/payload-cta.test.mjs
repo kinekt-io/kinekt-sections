@@ -6,6 +6,23 @@ import { ctaIconPaths } from '../dist/shared/cta-icons.js'
 import { structuralSectionToProps } from '../dist/shared/structural-props.js'
 import { betaProcessStoryAllentownToProps } from '../dist/sections/process-story/allentown/process-story-allentown.payload.js'
 import { betaProductOptionsAllentownToProps } from '../dist/sections/product-options/allentown/product-options-allentown.payload.js'
+import { isSafeCtaAnchor } from '../dist/shared/cta-anchor.js'
+import { createManifestBlock, manifestToProps } from '../dist/shared/manifest-block.js'
+
+test('manifest section labels omit lifecycle status while retaining legacy block slugs', () => {
+  const block = createManifestBlock({
+    slug: 'hero-allentown',
+    title: 'Hero Allentown',
+    status: 'beta',
+    fields: {},
+  })
+
+  assert.equal(block.slug, 'beta-hero-allentown')
+  assert.deepEqual(block.labels, {
+    singular: 'Hero Allentown',
+    plural: 'Hero Allentown blocks',
+  })
+})
 
 test('invalid decorative icons preserve actionable CTAs and use a safe required-icon fallback', () => {
   for (const icon of ['not-a-real-fa-icon', 'fa-solid fa-bolt', ' ', 42, {}]) {
@@ -73,36 +90,66 @@ test('CTA adapters retain complete URL and content destinations', () => {
   )
 })
 
-test('CTA group actions retain valid HubSpot form targets', () => {
+test('CTA group actions select reusable Forms available to the current Region', () => {
   const form = ctaFields(['pages', 'articles'], false, true).find((candidate) => candidate.name === 'form')
   assert.ok(form)
+  assert.equal(form.relationTo, 'embeds')
   assert.equal(typeof form.validate, 'function')
+  assert.equal(typeof form.filterOptions, 'function')
+  assert.deepEqual(form.filterOptions({ data: { tenant: 'region-us' } }), {
+    availableRegions: { in: ['region-us'] },
+    embedType: { equals: 'form' },
+  })
 
   assert.deepEqual(
     ctaToProps(
-      { label: 'Book a call', destinationType: 'form', form: '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>' },
+      { label: 'Book a call', destinationType: 'form', form: { id: 'form-1', embedCode: '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>' } },
       'cta',
     ),
     { label: 'Book a call', form: '<script src="https://js.hsforms.net/forms/embed/v2.js"></script>' },
   )
   assert.equal(
-    form.validate('<script src="https://js.hsforms.net/forms/embed/v2.js"></script>', { siblingData: { destinationType: 'form', label: 'Book a call' } }),
+    form.validate('form-1', { siblingData: { destinationType: 'form', label: 'Book a call' } }),
     true,
   )
   assert.equal(
-    form.validate(' ', { siblingData: { destinationType: 'form', label: 'Book a call' } }),
-    'Paste the complete HubSpot embed code.',
+    form.validate(null, { siblingData: { destinationType: 'form', label: 'Book a call' } }),
+    'Select a form.',
   )
 })
 
-test('CTA adapters place anchor query parameters before the fragment', () => {
+test('video embeds select reusable Video Embeds available to the current Region', () => {
+  const block = createManifestBlock({
+    slug: 'video-test',
+    title: 'Video test',
+    status: 'released',
+    fields: {
+      videoEmbedHtml: { kind: 'embedHtml', required: false, localized: true },
+    },
+  })
+  const videoEmbed = block.fields.find((field) => field.name === 'videoEmbedHtml')
+
+  assert.equal(videoEmbed.relationTo, 'embeds')
+  assert.deepEqual(videoEmbed.filterOptions({ data: { tenant: 'region-ua' } }), {
+    availableRegions: { in: ['region-ua'] },
+    embedType: { equals: 'video' },
+  })
+  assert.deepEqual(
+    manifestToProps({ videoEmbedHtml: { id: 'video-1', embedCode: '<iframe src=\"https://player.vimeo.com/video/1\"></iframe>' } }),
+    { videoEmbedHtml: '<iframe src=\"https://player.vimeo.com/video/1\"></iframe>', contentWidth: 'standard' },
+  )
+})
+
+test('CTA adapters accept query parameters before the anchor fragment', () => {
   assert.deepEqual(
     ctaToProps({ label: 'View models', destinationType: 'url', href: '#our-models' }, 'cta'),
     { label: 'View models', href: '#our-models' },
   )
+  assert.equal(isSafeCtaAnchor('?mediaType=case#specifications'), true)
+  assert.equal(isSafeCtaAnchor('#specifications?mediaType=case'), false)
   assert.deepEqual(
     ctaToProps(
-      { label: 'Skip to specifications', destinationType: 'content', page: { relationTo: 'articles', value: 42 }, anchor: '#specifications?mediaType=case' },
+      { label: 'Skip to specifications', destinationType: 'content', page: { relationTo: 'articles', value: 42 }, anchor: '?mediaType=case#specifications' },
       'cta',
       { contentHref: () => '/articles/example?lang=uk' },
     ),

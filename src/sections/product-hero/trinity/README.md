@@ -15,7 +15,7 @@ The [manifest](manifest.json) reuses Battery Models Trinity's intro, optional ca
 
 ## Integration
 
-Register `createProductHeroTrinityBlock({ mediaCollection, targetCollections })` from `@kinekt-io/components/sections/product-hero-trinity.payload` in the consuming Payload layout field. Its block slug is `beta-product-hero-trinity`; the editor label is `PRERELEASE — Product Hero Trinity`.
+Register `createProductHeroTrinityBlock({ mediaCollection, targetCollections })` from `@kinekt-io/components/sections/product-hero-trinity.payload` in the consuming Payload layout field. Its block slug is `beta-product-hero-trinity`; the editor label is `Product Hero Trinity`.
 
 Convert populated documents with `productHeroTrinityToProps(document, { mediaBaseUrl, contentHref })`. Pass the resulting props to the default Astro export from `@kinekt-io/components/sections/product-hero-trinity.astro`. The `contentHref` resolver must resolve selected content in the current static build.
 

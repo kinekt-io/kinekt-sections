@@ -20,8 +20,16 @@
 - Autoplay the HD Cells media accordion with six-second progress bars, synchronized media, hover/offscreen pause, and a permanent stop after explicit selection; reduced-motion and single-item views retain manual disclosures.
 - Add a localized Content width selector to all 53 sections and both catalogue inspectors: Standard, 80%, or 70% of the fixed desktop content-width cap, with responsive gutters and safe defaults for existing content.
 - Add localized image-or-video media selection to Process Story Allentown. Trusted video embed HTML renders at the selected aspect ratio and an optional image remains its no-JavaScript fallback.
+- Accept browser-valid CTA content-target anchors in the form `?query=value#element-id`; reject the former reversed query/fragment order.
 
 ### Changed
+
+- Align Featured Insights titles/excerpts, Density Comparison values and Progress List headings/statuses with their component typography tokens; keep status labels content-sized.
+- Balance Case Studies intro and Solution List callout copy, and enlarge Solution List media to one third of the desktop row.
+- Pause Process Story Trinity auto-progression on individual step hover or focus, not the section background. Use an exact `space-xl` intro/action gap.
+- Progressively animate Process Story Trinity and Media Accordion disclosure heights with native intrinsic-size transitions; reduced-motion preferences retain immediate disclosure changes.
+- Add a reduced-motion-aware roadmap filter reveal, tighter description-list spacing and the final facts-row divider.
+- Replace Case Studies slide-copy fields with localized Manual article selection and Automatic content-type/article-type filters. Consumers must hydrate `carousel.items` from published articles in the current region and migrate existing article destinations to `caseSources`. Empty automatic results render no section; missing hydration is rejected.
 
 - Render semantic component icons with Font Awesome 7 Pro Sharp Solid SVG definitions instead of Free Solid or handcrafted stroke glyphs.
 - Accept optional free-text Sharp Solid icon names in Payload icon fields, including CTA groups, with runtime validation of populated names.
@@ -40,7 +48,7 @@
 - Reduce Proof Metrics gaps to `space-m`; keep values on one line and allow whole metric items to move to the next row instead.
 - Let Hero Allentown intro headings and descriptions fill the text column on desktop as well as mobile.
 - Normalize main section containers to the selected content-width cap while preserving internal column layouts and full-bleed media; let Hero Trinity copy fill its content container below 50rem.
-- Use equal desktop columns for Process Story Allentown with media. Numbered modes use an ordered list and place the zero-padded number beside each process-item title.
+- Use 1:2 media-to-content desktop columns for Process Story Allentown with media. Numbered modes retain their ordered list and zero-padded markers.
 
 ### Fixed
 

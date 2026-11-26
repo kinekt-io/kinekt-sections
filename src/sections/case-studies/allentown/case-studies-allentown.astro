@@ -37,6 +37,7 @@ const quoteText = (value: string): string => {
 };
 ---
 
+{items.length > 0 && (
 <section
   class="case-studies-allentown"
   id={id}
@@ -296,7 +297,8 @@ const quoteText = (value: string): string => {
       }
     </div>
   </div>
-</section>
+  </section>
+)}
 <script>
   import { initializeKinektInteractions } from "../../../shared/interactions";
   initializeKinektInteractions();
@@ -490,6 +492,7 @@ const quoteText = (value: string): string => {
       max-width: var(--kiw--case-studies-allentown-header-width);
       margin: 0;
       color: var(--kiw--case-studies-allentown-description-color);
+      text-wrap: balance;
     }
     & .case-studies-allentown__carousel-slide-content {
       gap: var(--case-studies-summary-to-content);

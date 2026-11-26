@@ -37,8 +37,8 @@ export function createBatteryModelsTrinityBlock({ mediaCollection = 'media', tar
     slug: 'beta-battery-models-trinity',
     interfaceName: 'BatteryModelsTrinity',
     labels: {
-      singular: 'PRERELEASE — Battery Models Trinity',
-      plural: 'PRERELEASE — Battery Models Trinity blocks',
+      singular: 'Battery Models Trinity',
+      plural: 'Battery Models Trinity blocks',
     },
     fields: [
       sectionContentWidthField(),

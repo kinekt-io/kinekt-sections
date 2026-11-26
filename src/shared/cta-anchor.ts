@@ -1,4 +1,4 @@
-const ctaAnchor = /^#([A-Za-z][\w:.-]*)(?:\?([^\u0000-\u001F\u007F\\\s#?]+))?$/u
+const ctaAnchor = /^(?:\?([^\u0000-\u001F\u007F\\\s#?]+))?#([A-Za-z][\w:.-]*)$/u
 
 export interface CtaAnchorTarget {
   fragment: string
@@ -6,16 +6,14 @@ export interface CtaAnchorTarget {
 }
 
 /**
- * Parses the editor-facing CTA anchor syntax: `#section-id` or
- * `#section-id?mediaType=case`. The query is returned before the fragment when
- * composing the final URL because browsers do not send query parameters after
- * a hash to the destination page.
+ * Parses a browser-valid CTA anchor: `#section-id` or
+ * `?mediaType=case#section-id`.
  */
 export function parseCtaAnchor(value: unknown): CtaAnchorTarget | undefined {
   if (typeof value !== 'string') return undefined
   const match = ctaAnchor.exec(value)
   if (!match) return undefined
-  return { fragment: `#${match[1]}`, ...(match[2] ? { query: match[2] } : {}) }
+  return { fragment: `#${match[2]}`, ...(match[1] ? { query: match[1] } : {}) }
 }
 
 export function isSafeCtaAnchor(value: unknown): value is string {

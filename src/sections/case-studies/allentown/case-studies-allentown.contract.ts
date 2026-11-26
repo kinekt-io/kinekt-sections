@@ -2,19 +2,18 @@ import type { Block, CollectionSlug } from 'payload'
 
 import type { Cta, CtaGroup, CtaIcon, Media, RichText, SectionIntro } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
-import { ctaGroupToProps, ctaToProps, mediaToProps, optionalSharpSolidIcon, optionalText, requireArray, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
-import { contentTargetField, ctaFields, ctaIconField, ctaStyleField, isSharpSolidIconNameOrEmpty, sectionContentWidthField } from '../../../shared/payload-fields.js'
+import { ctaGroupToProps, mediaToProps, optionalSharpSolidIcon, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import { availablePublishedContentInCurrentRegion, ctaFields, ctaIconField, ctaStyleField, sectionContentWidthField } from '../../../shared/payload-fields.js'
 import { normalizeSectionContentWidth, type SectionContentWidth } from '../../../shared/section-width.js'
 import { isSafeCtaHref } from '../../../urls.js'
-import { isSafeCtaAnchor } from '../../../shared/cta-anchor.js'
 
 export type CaseStudyResult = {
   label: string
   value: { text?: string; icon?: string }
 }
 
+/** A renderer-owned card hydrated from an article by the CMS request path. */
 export type CaseStudySlide = {
-  page?: string
   logo?: Media
   title: string
   description?: string | RichText
@@ -36,42 +35,67 @@ export type CaseStudiesAllentownContent = {
   intro: SectionIntro
   sectionLabel?: string
   cardReadMoreIcon?: CtaIcon
+  /** Always renderer-shaped, populated from the selected published articles. */
   carousel: { items: CaseStudySlide[] }
   ctas?: CtaGroup
 }
 
 export type PayloadCaseStudiesAllentownDocument = Record<string, unknown> & { id?: string }
 export type CaseStudyCtaIcon = CtaIcon
+export type CaseStudiesSelectionMode = 'manual' | 'automatic'
+
+export interface CaseStudiesArticleTypeOption {
+  label: string
+  value: string
+}
 
 export interface CreateCaseStudiesAllentownBlockOptions {
-  mediaCollection?: CollectionSlug
+  /** Article collections available to Manual selection and Automatic content type filtering. */
+  articleCollections?: CollectionSlug[]
+  /** Content type options permitted for Automatic selection. */
+  contentTypeOptions?: ReadonlyArray<{ label: string; value: CollectionSlug }>
+  /** Article type options permitted for Automatic selection. */
+  articleTypeOptions?: ReadonlyArray<CaseStudiesArticleTypeOption>
   pageCollection?: CollectionSlug
   targetCollections?: CollectionSlug[]
 }
 
-export interface CaseStudiesAllentownAdapterOptions extends PayloadAdapterOptions {
-  contentHref: (collection: string, documentID: string) => string | undefined
-}
-
-
 const textRequired = (value: unknown) => hasText(value) || 'Enter non-empty text.'
 
 /**
- * A manually ordered Case Studies carousel with content-or-URL destinations.
+ * Article-driven Case Studies block.
  *
- * Slide copy and media remain local to the carousel. Content destinations are
- * resolved to their canonical route at manifest-build time.
+ * Manual mode stores a localized, editor-ordered list of published article
+ * relationships. Automatic mode stores its content type and optional article
+ * type filter. The CMS request path scopes both modes to the active Region and
+ * locale, selects published articles, resolves canonical article links, and
+ * supplies the renderer-owned `carousel.items` projection.
  */
 export function createCaseStudiesAllentownBlock({
-  mediaCollection = 'media',
+  articleCollections = ['articles'],
+  contentTypeOptions = articleCollections.map((value) => ({ label: value, value })),
+  articleTypeOptions = [
+    { label: 'Case', value: 'case' },
+    { label: 'Article', value: 'article' },
+    { label: 'Whitepaper', value: 'whitepaper' },
+    { label: 'Video', value: 'video' },
+    { label: 'Blog', value: 'blog' },
+    { label: 'Interview', value: 'interview' },
+    { label: 'News', value: 'news' },
+  ],
   pageCollection = 'pages',
   targetCollections = [pageCollection],
 }: CreateCaseStudiesAllentownBlockOptions = {}): Block {
   const targetRelation = targetCollections.length === 1 ? targetCollections[0] : targetCollections
+  const availableContentTypes = contentTypeOptions.filter(({ value }) => articleCollections.includes(value))
+  if (articleCollections.length === 0 || availableContentTypes.length === 0) {
+    throw new Error('Case Studies requires one or more configured article collections as Automatic content type options.')
+  }
+
   return {
     slug: 'case-studies-allentown',
     interfaceName: 'CaseStudiesAllentown',
-    labels: { singular: 'PRE-RELEASE — Case Studies Allentown', plural: 'PRE-RELEASE — Case Studies Allentown blocks' },
+    labels: { singular: 'Case Studies Allentown', plural: 'Case Studies Allentown blocks' },
     fields: [
       sectionContentWidthField(),
       {
@@ -95,65 +119,55 @@ export function createCaseStudiesAllentownBlock({
         admin: { description: 'Optional icon for every case card Read More link. Empty uses chevron-right.' },
       },
       {
-        name: 'ctas',
-        type: 'array',
-        label: 'Header CTA Group',
-        localized: true,
-        minRows: 0,
-        maxRows: 2,
-        admin: { initCollapsed: true, description: 'Add zero, one or two actions. Set each style to Primary, Secondary, Clear or Clear base.' },
-        fields: [ctaStyleField(), ...ctaFields(targetRelation, false, true)],
+        name: 'selectionMode', type: 'select', label: 'Case study selection', localized: true, required: true, defaultValue: 'manual',
+        options: [{ label: 'Manual', value: 'manual' }, { label: 'Automatic', value: 'automatic' }],
+        admin: { description: 'Select published articles in display order, or list published articles using the Automatic filters.' },
       },
       {
-        name: 'carousel', type: 'group', label: 'Carousel', localized: true, required: true,
+        name: 'caseSources', type: 'array', label: 'Case study articles', localized: true, minRows: 0,
+        validate: (value: unknown, { siblingData }: { siblingData?: Record<string, unknown> }) =>
+          siblingData?.selectionMode !== 'manual' || Array.isArray(value) && value.length > 0 || 'Select at least one published article.',
+        admin: {
+          condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.selectionMode === 'manual',
+          description: 'Select one or more published articles. Drag rows to set display order. Each card is populated from article metadata and layout.',
+        },
         fields: [{
-          name: 'items', type: 'array', label: 'Case studies', minRows: 1, required: true,
-          admin: { description: 'Drag to set display order. A Page can be used only once.' },
-          fields: [
-            { name: 'destinationType', type: 'select', label: 'Link type', required: true, defaultValue: 'content', options: [{ label: 'Content', value: 'content' }, { label: 'URL', value: 'url' }], hooks: { afterRead: [({ value, siblingData }) => value === 'content' && !siblingData?.page && isSafeCtaHref(siblingData?.href) ? 'url' : value] } },
-            { name: 'href', type: 'text', label: 'URL or anchor', admin: { condition: (_, siblingData) => siblingData?.destinationType === 'url' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeCtaHref(value) || 'Enter an absolute HTTP(S) URL, a site-root-relative path, or an anchor such as #main-content.' },
-            contentTargetField(targetRelation),
-            { name: 'anchor', type: 'text', label: 'Anchor ID and query', admin: { condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.destinationType === 'content', description: 'Optional anchor on the selected content. Add query parameters after it, for example #insights?mediaType=case.' }, validate: (value: unknown) => value === undefined || value === null || value === '' || isSafeCtaAnchor(value) || 'Enter an anchor starting with # and optional query parameters, for example #insights?mediaType=case.' },
-            { name: 'logo', type: 'upload', label: 'Logo', relationTo: mediaCollection, localized: true },
-            { name: 'title', type: 'text', label: 'Title', localized: true, required: true, validate: textRequired },
-            { name: 'description', type: 'richText', label: 'Description', localized: true },
-            { name: 'image', type: 'upload', label: 'Image', relationTo: mediaCollection, localized: true, required: true },
-            { name: 'resultsHeading', type: 'text', label: 'Results heading', localized: true, admin: { description: 'Optional heading above the results for this slide.' } },
-            {
-              name: 'results', type: 'array', label: 'Results', localized: true,
-              validate: (value: unknown, { data }) => (data as Record<string, unknown> | undefined)?._status === 'draft' || value === undefined || value === null || Array.isArray(value) || 'Results must be a list.',
-              fields: [
-                { name: 'label', type: 'text', label: 'Label', required: true, validate: textRequired },
-                { name: 'value', type: 'group', label: 'Value', required: true, fields: [
-                  { name: 'text', type: 'text', label: 'Text', required: true, validate: textRequired },
-                  { name: 'icon', type: 'text', label: 'Icon', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' } },
-                ] },
-              ],
-            },
-            {
-              name: 'quote', type: 'group', label: 'Quote', localized: true,
-              fields: [
-                { name: 'quote', type: 'textarea', label: 'Quote', validate: validateQuoteSibling },
-                { name: 'authorName', type: 'text', label: 'Author name', validate: validateQuoteSibling },
-                { name: 'authorRole', type: 'text', label: 'Author role', validate: validateQuoteSibling },
-                { name: 'avatar', type: 'upload', label: 'Author portrait', relationTo: mediaCollection, validate: validateQuoteSibling },
-              ],
-            },
-            {
-              name: 'cta', type: 'group', label: 'Slide CTA', localized: true, required: true,
-              admin: { description: 'Uses the Content target or URL selected for this slide.' },
-              fields: [
-                { name: 'label', type: 'text', label: 'Button text', required: true, validate: textRequired },
-                { name: 'icon', type: 'text', label: 'Icon', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid icon name, for example bolt or shield-halved.' } },
-              ],
-            },
-          ],
+          name: 'content', type: 'relationship', relationTo: articleCollections, required: true,
+          filterOptions: availablePublishedContentInCurrentRegion,
         }],
+      },
+      {
+        name: 'contentType', type: 'select', label: 'Content type', localized: true, required: false, defaultValue: articleCollections[0],
+        options: [...availableContentTypes],
+        validate: (value: unknown, { siblingData }: { siblingData?: Record<string, unknown> }) =>
+          siblingData?.selectionMode !== 'automatic' || typeof value === 'string' && value.length > 0 || 'Choose an article content type.',
+        admin: {
+          condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.selectionMode === 'automatic',
+          description: 'Choose the article content type to list automatically.',
+        },
+      },
+      {
+        name: 'articleType', type: 'select', label: 'Article type', localized: true,
+        options: [...articleTypeOptions],
+        admin: {
+          condition: (_: unknown, siblingData: Record<string, unknown>) => siblingData?.selectionMode === 'automatic',
+          description: 'Optionally limit automatic results to one article type.',
+        },
+      },
+      {
+        name: 'ctas', type: 'array', label: 'Header CTA Group', localized: true, minRows: 0, maxRows: 2,
+        admin: { initCollapsed: true, description: 'Add zero, one or two actions. Set each style to Primary, Secondary, Clear or Clear base.' },
+        fields: [ctaStyleField(), ...ctaFields(targetRelation, false, true)],
       },
     ],
   }
 }
 
+/**
+ * Adapts a CMS-hydrated carousel projection. `carousel.items` may be empty
+ * when Automatic selection finds no matching published articles; that state
+ * deliberately renders no phantom card.
+ */
 export function caseStudiesAllentownToProps(
   data: PayloadCaseStudiesAllentownDocument,
   { contentHref, ...payloadOptions }: CaseStudiesAllentownAdapterOptions,
@@ -162,7 +176,7 @@ export function caseStudiesAllentownToProps(
   const carousel = requireObject(data.carousel, 'carousel')
   const cardReadMoreIcon = optionalSharpSolidIcon(data.cardReadMoreIcon, 'cardReadMoreIcon')
   const options = { ...payloadOptions, contentHref }
-  const items = requireArray(carousel.items, 'carousel.items').map((item, index) => slideToProps(item, index, options))
+  const items = optionalArray(carousel.items, 'carousel.items').map((item, index) => slideToProps(item, index, options))
 
   return {
     contentWidth: normalizeSectionContentWidth(data.contentWidth),
@@ -179,37 +193,28 @@ export function caseStudiesAllentownToProps(
   }
 }
 
+export interface CaseStudiesAllentownAdapterOptions extends PayloadAdapterOptions {
+  contentHref: (collection: string, documentID: string) => string | undefined
+}
+
 function slideToProps(value: unknown, index: number, options: PayloadAdapterOptions): CaseStudySlide {
   const item = requireObject(value, `carousel.items[${index}]`)
   const cta = requireObject(item.cta, `carousel.items[${index}].cta`)
-  const destinationType = item.destinationType ?? cta.destinationType ?? (item.page ?? cta.page ? 'content' : 'url')
-  const action = ctaToProps(
-    {
-      ...cta,
-      destinationType,
-      page: item.page ?? cta.page,
-      href: item.href ?? cta.href,
-      anchor: item.anchor ?? cta.anchor,
-    },
-    `carousel.items[${index}].cta`,
-    options,
-  )
-  const page = item.page ? relationshipID(item.page, `carousel.items[${index}].page`) : undefined
-  const quote = optionalQuote(item.quote, `carousel.items[${index}].quote`, options)
-  const results = item.results === undefined || item.results === null || (Array.isArray(item.results) && item.results.length === 0)
+  const results = item.results === undefined || item.results === null
     ? undefined
-    : requireArray(item.results, `carousel.items[${index}].results`).map((result, resultIndex) => resultToProps(result, index, resultIndex))
+    : optionalArray(item.results, `carousel.items[${index}].results`).map((result, resultIndex) => resultToProps(result, index, resultIndex))
+  const resultsHeading = optionalText(item.resultsHeading, `carousel.items[${index}].resultsHeading`)
+  const quote = optionalQuote(item.quote, `carousel.items[${index}].quote`, options)
 
   return {
-    ...(page ? { page } : {}),
     ...(item.logo ? { logo: mediaToProps(item.logo, `carousel.items[${index}].logo`, options) } : {}),
     title: requireText(item.title, `carousel.items[${index}].title`),
     ...(item.description ? { description: { html: richTextToHtml(item.description, `carousel.items[${index}].description`) } } : {}),
     image: mediaToProps(item.image, `carousel.items[${index}].image`, options),
     ...(results?.length ? { results } : {}),
-    ...(optionalText(item.resultsHeading, `carousel.items[${index}].resultsHeading`) ? { resultsHeading: optionalText(item.resultsHeading, `carousel.items[${index}].resultsHeading`) } : {}),
+    ...(resultsHeading ? { resultsHeading } : {}),
     ...(quote ? { quote } : {}),
-    cta: action,
+    cta: hydratedCtaToProps(cta, `carousel.items[${index}].cta`),
   }
 }
 
@@ -243,36 +248,19 @@ function optionalQuote(value: unknown, field: string, options: PayloadAdapterOpt
   }
 }
 
+function hydratedCtaToProps(value: Record<string, unknown>, field: string): Cta {
+  const href = requireText(value.href, `${field}.href`)
+  if (!isSafeCtaHref(href)) throw new Error(`${field}.href must be an HTTP(S) URL, root-relative URL, or anchor.`)
+  const label = optionalText(value.label, `${field}.label`) ?? 'Read more'
+  const icon = optionalSharpSolidIcon(value.icon, `${field}.icon`)
+  return { label, href, ...(icon ? { icon } : {}) }
+}
 
-
-
-function relationshipID(value: unknown, field: string): string {
-  if (typeof value === 'string' || typeof value === 'number') return String(value)
-  const relation = requireObject(value, field)
-  if (typeof relation.relationTo === 'string') {
-    const document = relation.value
-    if (typeof document === 'string' || typeof document === 'number') return String(document)
-    return String(requireObject(document, `${field}.value`).id)
-  }
-  if (typeof relation.id === 'string' || typeof relation.id === 'number') return String(relation.id)
-  throw new Error(`${field} must reference content.`)
+function optionalArray(value: unknown, field: string): unknown[] {
+  if (!Array.isArray(value)) throw new Error(`${field} must be an array.`)
+  return value
 }
 
 function hasText(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0
-}
-
-function validateQuoteSibling(
-  _value: unknown,
-  { data, siblingData }: { data?: unknown; siblingData?: unknown },
-): true | string {
-  if ((data as Record<string, unknown> | undefined)?._status === 'draft') return true
-  const siblings = requireObject(siblingData ?? {}, 'quote')
-  const quote = hasText(siblings.quote)
-  const authorName = hasText(siblings.authorName)
-  const hasAuthorRole = hasText(siblings.authorRole)
-  const hasAvatar = siblings.avatar !== undefined && siblings.avatar !== null
-  if (!quote && (authorName || hasAuthorRole || hasAvatar)) return 'Author details require a quote.'
-  if (quote && (hasAuthorRole || hasAvatar) && !authorName) return 'Author role and portrait require an author name.'
-  return true
 }

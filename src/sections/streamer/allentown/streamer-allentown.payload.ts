@@ -34,8 +34,8 @@ export function createStreamerAllentownBlock({ targetCollections = ['pages'] }: 
     slug: 'beta-streamer-allentown',
     interfaceName: 'StreamerAllentown',
     labels: {
-      singular: 'PRERELEASE — Streamer Allentown',
-      plural: 'PRERELEASE — Streamer Allentown blocks',
+      singular: 'Streamer Allentown',
+      plural: 'Streamer Allentown blocks',
     },
     fields: [
       sectionContentWidthField(),

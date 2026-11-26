@@ -19,7 +19,7 @@ export function createProgressListAllentownBlock(options: CreateProgressListAlle
 
   return {
     slug: 'progress-list-allentown',
-    labels: { singular: 'PRERELEASE — Progress List Allentown', plural: 'PRERELEASE — Progress List Allentown blocks' },
+    labels: { singular: 'Progress List Allentown', plural: 'Progress List Allentown blocks' },
     fields: [
       sectionContentWidthField(),
       { name: 'theme', type: 'select', localized: true, required: true, defaultValue: 'light', options: [{ label: 'Light', value: 'light' }, { label: 'Semi-light', value: 'semi-light' }, { label: 'Semi-dark', value: 'semi-dark' }, { label: 'Dark', value: 'dark' }] },

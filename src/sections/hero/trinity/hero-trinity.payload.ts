@@ -14,7 +14,7 @@ const requiredTextValidationMessage = 'Enter non-empty text.'
 export function createHeroBlock({ mediaCollection = 'media', targetCollections = ['pages'] }: CreateHeroBlockOptions = {}): Block {
   return {
     slug: 'hero-trinity', interfaceName: 'HeroTrinity',
-    labels: { singular: 'BETA — Hero Trinity', plural: 'BETA — Hero Trinity blocks' },
+    labels: { singular: 'Hero Trinity', plural: 'Hero Trinity blocks' },
     fields: [
       sectionContentWidthField(),
       { name: 'theme', type: 'select', required: true, defaultValue: 'dark', options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })) },

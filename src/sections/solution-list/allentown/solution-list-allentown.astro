@@ -213,7 +213,7 @@ const action = (value: any) => value?.cta ?? value
   .beta-solution-list-allentown .beta-solution-list-allentown__items article { display: grid; row-gap: var(--kiw--solution-list-allentown-item-gap); column-gap: 0; }
   .beta-solution-list-allentown :is(.beta-solution-list-allentown__media, .beta-solution-list-allentown__image) { display: block; width: 100%; }
   .beta-solution-list-allentown .beta-solution-list-allentown__image { aspect-ratio: 1 / 1; object-fit: cover; filter: var(--kiw--solution-list-allentown-media-filter); }
-  @media (min-width: 50rem) { .beta-solution-list-allentown .beta-solution-list-allentown__toc { display: none; } .beta-solution-list-allentown .beta-solution-list-allentown__items article { grid-template-columns: minmax(0, 0.45fr) minmax(0, 1.55fr); column-gap: var(--kiw--solution-list-allentown-column-gap); } }
+  @media (min-width: 50rem) { .beta-solution-list-allentown .beta-solution-list-allentown__toc { display: none; } }
   @media (max-width: 49.99rem) {
     .beta-solution-list-allentown { --kinekt-component-reading-width: var(--content-width); }
     .beta-solution-list-allentown :is(.callout-allentown__content, .beta-solution-list-allentown__heading-group h3) { max-width: var(--kinekt-component-reading-width); }
@@ -235,9 +235,10 @@ const action = (value: any) => value?.cta ?? value
     border-width: 0 0 var(--kinekt-component-border-width);
     background: transparent;
   }
+  .beta-solution-list-allentown .callout-allentown__content .section-intro__description { text-wrap: balance; }
   @media (min-width: 50rem) {
     .beta-solution-list-allentown .beta-solution-list-allentown__items article {
-      grid-template-columns: minmax(0, 0.45fr) minmax(0, 1.55fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
       column-gap: var(--kiw--solution-list-allentown-column-gap);
     }
   }

@@ -17,135 +17,52 @@ function documentWith(overrides = {}) {
   return {
     theme: 'light',
     intro: { heading: 'Case studies' },
-    carousel: {
-      items: [{
-        destinationType: 'url',
-        href: '/case-study',
-        title: 'Example case study',
-        image: media,
-        cta: { label: 'Read more' },
-      }],
-    },
+    carousel: { items: [] },
     ...overrides,
   }
-}
-
-function slideWith(overrides = {}) {
-  return documentWith({
-    carousel: {
-      items: [{
-        destinationType: 'url',
-        href: '/case-study',
-        title: 'Example case study',
-        image: media,
-        cta: { label: 'Read more' },
-        ...overrides,
-      }],
-    },
-  })
 }
 
 function toProps(document) {
   return caseStudiesAllentownToProps(document, { contentHref: () => '/content' })
 }
 
-function quoteValidators() {
-  const block = createCaseStudiesAllentownBlock()
-  const carousel = block.fields.find((field) => field.name === 'carousel')
-  const items = carousel.fields.find((field) => field.name === 'items')
-  const quote = items.fields.find((field) => field.name === 'quote')
-  return quote.fields.map((field) => field.validate)
-}
+test('switching selection modes requires articles only for manual mode and a content type only for automatic mode', () => {
+  const fields = new Map(createCaseStudiesAllentownBlock().fields.map(field => [field.name, field]))
+  const manual = { siblingData: { selectionMode: 'manual' } }
+  const automatic = { siblingData: { selectionMode: 'automatic' } }
+  const sources = fields.get('caseSources').validate
+  const contentType = fields.get('contentType').validate
 
-function resultsValidator() {
-  const block = createCaseStudiesAllentownBlock()
-  const carousel = block.fields.find((field) => field.name === 'carousel')
-  const items = carousel.fields.find((field) => field.name === 'items')
-  return items.fields.find((field) => field.name === 'results').validate
-}
-
-test('omits absent results and strictly adapts populated result rows', () => {
-  for (const results of [undefined, null, []]) {
-    assert.equal('results' in toProps(slideWith({ results })).carousel.items[0], false)
-  }
-
-  assert.deepEqual(toProps(slideWith({
-    results: [{ label: 'Runtime', value: { text: '8 hours', icon: 'clock' } }],
-  })).carousel.items[0].results, [{ label: 'Runtime', value: { text: '8 hours', icon: 'clock' } }])
-
-  assert.throws(() => toProps(slideWith({ results: {} })), /results must contain at least one item/)
-  assert.throws(() => toProps(slideWith({ results: [{ label: '', value: { text: '8 hours' } }] })), /results\[0\]\.label must be non-empty text/)
-  assert.throws(() => toProps(slideWith({ results: [{ label: 'Runtime', value: {} }] })), /results\[0\]\.value\.text must be non-empty text/)
+  assert.equal(typeof sources([], manual), 'string')
+  assert.equal(sources([{ content: { relationTo: 'articles', value: 'article-a' } }], manual), true)
+  assert.equal(sources([], automatic), true)
+  assert.equal(typeof contentType(undefined, automatic), 'string')
+  assert.equal(contentType('articles', automatic), true)
+  assert.equal(contentType(undefined, manual), true)
 })
 
-test('quote adapter accepts anonymous quotes and rejects incomplete attribution', () => {
-  assert.equal('quote' in toProps(slideWith({ quote: {} })).carousel.items[0], false)
-  assert.deepEqual(toProps(slideWith({ quote: { quote: 'Anonymous feedback' } })).carousel.items[0].quote, {
-    quote: 'Anonymous feedback',
-  })
-  assert.deepEqual(toProps(slideWith({ quote: { quote: 'Named feedback', authorName: 'Morgan' } })).carousel.items[0].quote, {
-    quote: 'Named feedback',
-    authorName: 'Morgan',
-  })
-  assert.deepEqual(toProps(slideWith({ quote: { quote: 'Full attribution', authorName: 'Morgan', authorRole: 'Engineer', avatar: media } })).carousel.items[0].quote, {
-    quote: 'Full attribution',
-    authorName: 'Morgan',
-    authorRole: 'Engineer',
-    avatar: media,
-  })
-
-  for (const quote of [
-    { authorName: 'Morgan' },
-    { authorRole: 'Engineer' },
-    { avatar: media },
-    { quote: 'Feedback', authorRole: 'Engineer' },
-    { quote: 'Feedback', avatar: media },
-  ]) {
-    assert.throws(() => toProps(slideWith({ quote })), /author details require a quote|author role and portrait require an author name/)
-  }
+test('adapts an empty hydrated automatic selection without a phantom card', () => {
+  assert.deepEqual(toProps(documentWith()).carousel.items, [])
 })
 
-test('quote sibling validation enforces publish dependencies but bypasses drafts', () => {
-  const validators = quoteValidators()
-  const publish = { _status: 'published' }
-  const draft = { _status: 'draft' }
-  const valid = [
-    {},
-    { quote: 'Anonymous feedback' },
-    { quote: 'Named feedback', authorName: 'Morgan' },
-    { quote: 'Full attribution', authorName: 'Morgan', authorRole: 'Engineer', avatar: 'media-id' },
-  ]
+test('preserves the CMS-provided canonical article CTA in the renderer projection', () => {
+  const props = toProps(documentWith({
+    carousel: {
+      items: [{
+        title: 'Example case study',
+        image: media,
+        cta: { href: '/cases/example-case-study/' },
+      }],
+    },
+  }))
 
-  const invalid = [
-    { authorName: 'Morgan' },
-    { authorRole: 'Engineer' },
-    { avatar: 'media-id' },
-    { quote: 'Feedback', authorRole: 'Engineer' },
-    { quote: 'Feedback', avatar: 'media-id' },
-  ]
-
-  for (const siblingData of valid) {
-    for (const validate of validators) assert.equal(validate(undefined, { data: publish, siblingData }), true)
-  }
-  for (const siblingData of invalid) {
-    for (const validate of validators) assert.notEqual(validate(undefined, { data: publish, siblingData }), true)
-    for (const validate of validators) assert.equal(validate(undefined, { data: draft, siblingData }), true)
-  }
-})
-
-test('header CTA group omits incomplete buttons while retaining a complete action', () => {
-  assert.equal('ctas' in toProps(documentWith({ ctas: [] })), false)
-  assert.deepEqual(toProps(documentWith({ ctas: [{ label: 'Browse reports', destinationType: 'url', href: '/reports', style: 'primary' }] })).ctas, {
-    buttons: [{ label: 'Browse reports', href: '/reports', style: 'primary' }],
-    primary: { label: 'Browse reports', href: '/reports', style: 'primary' },
-    secondary: undefined,
+  assert.deepEqual(props.carousel.items[0].cta, {
+    label: 'Read more',
+    href: '/cases/example-case-study/',
   })
-  assert.equal('ctas' in toProps(documentWith({ ctas: [{ destinationType: 'url', href: '/reports', style: 'primary' }] })), false)
 })
 
-test('results validation allows empty optional state and drafts but rejects non-arrays on publish', () => {
-  const validate = resultsValidator()
-  for (const value of [undefined, null, []]) assert.equal(validate(value, { data: { _status: 'published' } }), true)
-  assert.notEqual(validate({}, { data: { _status: 'published' } }), true)
-  assert.equal(validate({}, { data: { _status: 'draft' } }), true)
+test('missing hydration is rejected rather than silently hiding selected articles', () => {
+  assert.throws(() => toProps(documentWith({ carousel: undefined })))
+  assert.throws(() => toProps(documentWith({ carousel: {} })))
 })

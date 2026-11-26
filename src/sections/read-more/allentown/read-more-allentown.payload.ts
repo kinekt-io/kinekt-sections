@@ -14,7 +14,7 @@ export function createReadMoreBlock({ mediaCollection = 'media', targetCollectio
   return {
     slug: 'read-more-allentown',
     interfaceName: 'ReadMoreAllentown',
-    labels: { singular: 'BETA — Read More Allentown', plural: 'BETA — Read More Allentown blocks' },
+    labels: { singular: 'Read More Allentown', plural: 'Read More Allentown blocks' },
     fields: [
       sectionContentWidthField(),
       { name: 'theme', type: 'select', localized: true, required: true, defaultValue: 'light', options: ['light', 'semi-light', 'semi-dark', 'dark'].map((value) => ({ label: value, value })) },
