@@ -182,9 +182,10 @@ const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice
     const stage = section.querySelector<HTMLElement>('[data-homepage-problem-solution-stage="problem"]')
     if (!grid || !stage) continue
     const labels = { problem: stage.dataset.homepageProblemSolutionProblemLabel ?? '', solution: stage.dataset.homepageProblemSolutionSolutionLabel ?? '' }
-    const stickyEnd = section.querySelector<HTMLElement>('[data-homepage-problem-solution-sticky-end]')
+    // The solution title—not the following page section—defines the completed animation state.
+    const animationEnd = section.querySelector<HTMLElement>('[data-homepage-problem-solution-sticky-end] .section-intro__heading')
+      ?? section.querySelector<HTMLElement>('[data-homepage-problem-solution-sticky-end]')
     let stickyTop = 0
-    let endOffset = 0
     // Progress points at which each callout plays (CSS variables, read on measure).
     const callouts = [
       { attribute: 'data-homepage-problem-solution-range-callout', property: '--kiw--homepage-problem-solution-range-callout-at', at: 0.55 },
@@ -196,10 +197,10 @@ const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice
     const update = () => {
       frame = 0
       if (!section.hasAttribute('data-homepage-problem-solution-animated')) return
-      // The stage travels from the top of the grid to the end of the solution steps (the bottom margin keeps it clear
-      // of the CTA); progress is how far along that travel it is.
+      // Progress completes when the second internal title reaches the sticky image. Sticky positioning itself remains
+      // constrained by the grid, so the image releases naturally at this section's bottom.
       const gridBox = grid.getBoundingClientRect()
-      const travel = gridBox.height - stage.offsetHeight - endOffset
+      const travel = animationEnd ? Math.max(0, animationEnd.getBoundingClientRect().top - gridBox.top) : 0
       const value = travel > 0 ? Math.min(Math.max((stickyTop - gridBox.top) / travel, 0), 1) : 0
       const next = value.toFixed(4)
       if (next === progress) return
@@ -214,13 +215,8 @@ const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice
       const style = getComputedStyle(stage)
       stickyTop = Number.parseFloat(style.top) || 0
       for (const callout of callouts) callout.at = Number.parseFloat(style.getPropertyValue(callout.property)) || callout.at
-      // Sticky stops at the end of its grid area; a bottom margin makes it stop earlier, with its top level with the top
-      // of the solution text (the eyebrow).
-      stage.style.removeProperty('margin-block-end')
-      endOffset = section.hasAttribute('data-homepage-problem-solution-animated') && stickyEnd
-        ? Math.max(0, grid.getBoundingClientRect().bottom - (stickyEnd.getBoundingClientRect().top + stage.offsetHeight))
-        : 0
-      if (endOffset) stage.style.setProperty('margin-block-end', `${endOffset}px`)
+      // The grid is the sticky containing block; do not add an artificial end margin, so the image releases at the
+      // actual section bottom rather than at an unrelated page boundary.
       progress = ''
       schedule()
     }
@@ -496,10 +492,8 @@ const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice
     .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group--problem > * { grid-row: 1; }
     .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group--solution > * { grid-row: 2; }
     .homepage-problem-solution-allentown .homepage-problem-solution-allentown__stage--problem { align-self: start; }
-    /* Top-aligned with the solution eyebrow, where the scroll animation's sticky stage also stops. */
-    .homepage-problem-solution-allentown .homepage-problem-solution-allentown__stage--solution { align-self: start; }
-    /* Scroll animation (set by the script): the problem stage sticks, centred in the viewport, from the problem text to the end of the solution group. */
-    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--problem { grid-row: 1 / span 2; position: sticky; top: max(var(--kiw--homepage-problem-solution-sticky-space), (100svh - var(--kiw--homepage-problem-solution-sticky-size)) / 2); max-inline-size: var(--kiw--homepage-problem-solution-sticky-size); }
+    /* Scroll animation (set by the script): the problem stage sticks at the section's top, then releases with its grid. */
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--problem { grid-row: 1 / span 2; position: sticky; top: var(--kiw--homepage-problem-solution-sticky-space); max-inline-size: var(--kiw--homepage-problem-solution-sticky-size); }
     .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--problem .homepage-problem-solution-allentown__scene { will-change: transform; }
     .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--solution { display: none; }
   }

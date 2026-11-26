@@ -140,11 +140,13 @@ const actionIcon = action && isCtaIcon(action.icon) ? ctaIconPaths(action.icon) 
     }
   }
   .density-comparison-allentown .density-comparison-allentown__table-wrap { overflow-x: auto; }
-  .density-comparison-allentown .density-comparison-allentown__table { width: 100%; min-width: 48rem; border: 0; border-collapse: collapse; background: transparent; text-align: left; }
+  .density-comparison-allentown .density-comparison-allentown__table { width: max-content; min-width: 100%; border: 0; border-collapse: collapse; background: transparent; text-align: left; }
   .density-comparison-allentown .density-comparison-allentown__table :is(th, td) { padding: var(--kiw--density-comparison-allentown-cell-space); border: 0; border-bottom: var(--kiw--density-comparison-allentown-border-width) solid var(--kiw--density-comparison-allentown-line-color); background: transparent; vertical-align: middle; }
   .density-comparison-allentown .density-comparison-allentown__table tbody tr:last-child :is(th, td) { border-bottom: 0; }
   .density-comparison-allentown .density-comparison-allentown__table thead th { font-weight: var(--kiw--density-comparison-allentown-heading-weight); }
-  .density-comparison-allentown .density-comparison-allentown__table tbody th { width: 32%; font-weight: var(--kiw--density-comparison-allentown-heading-weight); }
+  .density-comparison-allentown .density-comparison-allentown__table :is(thead th:first-child, tbody th) { width: 1%; }
+  .density-comparison-allentown .density-comparison-allentown__table :is(thead th:not(:first-child), td) { white-space: nowrap; }
+  .density-comparison-allentown .density-comparison-allentown__table tbody th { font-weight: var(--kiw--density-comparison-allentown-heading-weight); }
   .density-comparison-allentown .density-comparison-allentown__table th[scope='row'] { font-size: var(--text-xl); }
   .density-comparison-allentown .density-comparison-allentown__table {
     & th {

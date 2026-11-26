@@ -1,9 +1,10 @@
-export type SectionContentWidth = 'standard' | '80' | '70'
+export type SectionContentWidth = 'standard' | '80' | '70' | '50'
 
 const sectionContentWidths: Record<SectionContentWidth, true> = {
   standard: true,
   '80': true,
   '70': true,
+  '50': true,
 }
 
 /**
@@ -15,5 +16,5 @@ export function normalizeSectionContentWidth(value: unknown): SectionContentWidt
   if (typeof value === 'string' && Object.hasOwn(sectionContentWidths, value)) {
     return value as SectionContentWidth
   }
-  throw new Error('contentWidth must be one of standard, 80, or 70.')
+  throw new Error('contentWidth must be one of standard, 80, 70, or 50.')
 }

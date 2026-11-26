@@ -159,6 +159,11 @@ const toneFor = (item: ProgressListAllentownItem) => item.status === 'custom'
       &[data-tone='error'] { --kiw--progress-list-allentown-status-tone: var(--error); }
     }
     & .progress-list-allentown__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-s); }
+    @media (max-width: 49.999rem) {
+      & .progress-list-allentown__intro { text-align: start; }
+      & .progress-list-allentown__actions { justify-content: flex-start; }
+    }
+
 
     @media (max-width: 30rem) {
       & .progress-list-allentown__reference { display: block; margin-inline-start: 0; margin-block-start: var(--space-xxxs); }

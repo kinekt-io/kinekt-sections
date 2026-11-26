@@ -701,7 +701,7 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
     --kiw--insight-index-control-mark-color: var(--kinekt-component-accent);
     --kiw--insight-index-results-gap: var(--section-space-s);
     --kiw--insight-index-cards-column-gap: var(--section-space-xs);
-    --kiw--insight-index-cards-row-gap: var(--section-space-s);
+    --kiw--insight-index-cards-row-gap: var(--section-space-m);
     --kiw--insight-index-card-gap: var(--space-l);
     --kiw--insight-index-media-ratio: 16 / 9;
     --kiw--insight-index-entry-gap: var(--space-l);
@@ -823,12 +823,7 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
   @media (min-width: 50rem) {
     :where(.insight-index-allentown) { --kiw--insight-index-allentown-content-width: var(--kiw--insight-index-container-width); }
     .insight-index-allentown .insight-index-allentown__items { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    /* With JavaScript the filter sidebar sits beside the results (one card column until 75rem). */
     .insight-index-allentown[data-insight-index-enhanced] .insight-index-allentown__body { grid-template-columns: var(--kiw--insight-index-sidebar-width) minmax(0, 1fr); align-items: start; }
-    .insight-index-allentown[data-insight-index-enhanced] .insight-index-allentown__items { grid-template-columns: minmax(0, 1fr); }
-  }
-  @media (min-width: 75rem) {
-    .insight-index-allentown[data-insight-index-enhanced] .insight-index-allentown__items { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 49.999rem) {
     .insight-index-allentown .insight-index-allentown__title { line-height: 1.2; }

@@ -10,6 +10,12 @@ const manifest = {
   "title": "Related Content Allentown",
   "status": "prerelease",
   "fields": {
+    "cardReadMoreIcon": {
+      "kind": "text",
+      "required": false,
+      "localized": true,
+      "description": "Optional installed CTA icon for every related-content card Read More link. Empty uses chevron-right."
+    },
     "contentWidth": {
       "kind": "select",
       "required": false,
@@ -18,9 +24,10 @@ const manifest = {
       "options": [
         "standard",
         "80",
-        "70"
+        "70",
+        "50"
       ],
-      "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
     },
     "theme": {
       "kind": "select",

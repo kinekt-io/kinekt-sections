@@ -21,6 +21,7 @@ export function sectionContentWidthField(): SelectField {
       { label: 'Standard (100%)', value: 'standard' },
       { label: '80%', value: '80' },
       { label: '70%', value: '70' },
+      { label: '50%', value: '50' },
     ],
     admin: { description: 'Maximum content width. Backgrounds and full-bleed media are unchanged.' },
   }

@@ -89,7 +89,7 @@ function fieldFor(name: string, field: ManifestField, options: ResolvedOptions, 
     case 'dateTime': return { ...common, type: 'date', admin: { ...field.admin, date: { pickerAppearance: 'dayAndTime' } } }
     case 'checkbox': return { ...common, type: 'checkbox', defaultValue: field.defaultValue === true }
     case 'select':
-      if (name === 'contentWidth') return { ...sectionContentWidthField(), ...common }
+      if (name === 'contentWidth') return { ...sectionContentWidthField(), ...common, defaultValue: normalizeSectionContentWidth(field.defaultValue) }
       return {
         ...common,
         type: 'select',

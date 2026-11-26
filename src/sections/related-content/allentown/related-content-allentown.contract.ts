@@ -1,9 +1,10 @@
 import type { Block } from 'payload'
 
-import type { Cta, SectionIntro } from '../../../shared/content.js'
-import { optionalCtaToProps, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
+import type { Cta, CtaIcon, SectionIntro } from '../../../shared/content.js'
+import { optionalCtaToProps, optionalSharpSolidIcon, optionalText, requireObject, requireText, requireTheme, type PayloadAdapterOptions } from '../../../shared/payload.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { normalizeSectionContentWidth, type SectionContentWidth } from '../../../shared/section-width.js'
+import { ctaIconField } from '../../../shared/payload-fields.js'
 
 export type RelatedContentSelectionMode = 'automatic' | 'manual'
 
@@ -21,6 +22,7 @@ export interface BetaRelatedContentAllentownContent {
   intro: SectionIntro
   /** Always renderer-shaped, supplied by the CMS request path for either selection mode. */
   contentSources: RelatedContentCard[]
+  cardReadMoreIcon?: CtaIcon
   cta?: Cta
 }
 
@@ -30,6 +32,15 @@ export type PayloadBetaRelatedContentAllentownDocument = Record<string, unknown>
 export const withRelatedContentSelection = (block: Block): Block => ({
   ...block,
   fields: block.fields.map((field) => {
+    if ('name' in field && field.name === 'cardReadMoreIcon') {
+      return {
+        ...ctaIconField(),
+        name: 'cardReadMoreIcon',
+        label: 'Card Read More icon',
+        localized: true,
+        admin: { description: 'Optional icon for every related-content card Read More link. Empty uses chevron-right.' },
+      }
+    }
     if (!('name' in field) || field.name !== 'contentSources' || field.type !== 'array') return field
     return {
       ...field,
@@ -58,6 +69,7 @@ export function betaRelatedContentAllentownToProps(
     ? undefined
     : optionalCtaToProps(requireObject(data.cta, 'cta').cta, 'cta.cta', options)
   const sources = data.contentSources ?? []
+  const cardReadMoreIcon = optionalSharpSolidIcon(data.cardReadMoreIcon, 'cardReadMoreIcon')
   if (!Array.isArray(sources)) throw new Error('contentSources must be an array.')
 
   return {
@@ -69,6 +81,7 @@ export function betaRelatedContentAllentownToProps(
       ...(intro.description ? { description: { html: richTextToHtml(intro.description, 'intro.description') } } : {}),
     },
     contentSources: sources.map((source, index) => relatedContentCardToProps(source, index)),
+    ...(cardReadMoreIcon ? { cardReadMoreIcon } : {}),
     ...(cta ? { cta } : {}),
   }
 }

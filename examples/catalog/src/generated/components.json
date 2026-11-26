@@ -1194,9 +1194,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -1290,9 +1291,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -1363,9 +1365,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -1440,9 +1443,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -1518,9 +1522,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -1586,6 +1591,12 @@
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-411424&t=mG3L6xlBzomA03GY-11",
     "variants": {},
     "fields": {
+      "cardReadMoreIcon": {
+        "kind": "text",
+        "required": false,
+        "localized": true,
+        "description": "Optional installed CTA icon for every case card Read More link. Empty uses chevron-right."
+      },
       "contentWidth": {
         "kind": "select",
         "required": false,
@@ -1594,9 +1605,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -1709,9 +1721,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -1779,9 +1792,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -1855,9 +1869,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -1925,9 +1940,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -2018,9 +2034,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -2103,9 +2120,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -2188,8 +2206,10 @@
         "options": [
           "standard",
           "80",
-          "70"
-        ]
+          "70",
+          "50"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -2279,9 +2299,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -2351,13 +2372,14 @@
         "kind": "select",
         "required": false,
         "localized": true,
-        "defaultValue": "standard",
+        "defaultValue": "50",
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -2413,9 +2435,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -2505,9 +2528,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -2586,9 +2610,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -2663,9 +2688,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -2745,9 +2771,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -2829,9 +2856,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -2922,9 +2950,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -3001,9 +3030,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -3121,9 +3151,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -3215,9 +3246,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -3300,9 +3332,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -3390,9 +3423,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "intro": {
         "kind": "component",
@@ -3475,9 +3509,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "problemIntro": {
         "kind": "component",
@@ -3647,9 +3682,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -3734,9 +3770,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -3827,9 +3864,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -3933,9 +3971,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -4023,9 +4062,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -4122,9 +4162,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -4209,9 +4250,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -4309,8 +4351,10 @@
         "options": [
           "standard",
           "80",
-          "70"
-        ]
+          "70",
+          "50"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -4415,9 +4459,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -4488,9 +4533,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -4562,9 +4608,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -4696,9 +4743,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -4804,9 +4852,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -4892,9 +4941,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -4967,9 +5017,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -5065,8 +5116,10 @@
         "options": [
           "standard",
           "80",
-          "70"
-        ]
+          "70",
+          "50"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -5153,9 +5206,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -5275,8 +5329,10 @@
         "options": [
           "standard",
           "80",
-          "70"
-        ]
+          "70",
+          "50"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -5418,8 +5474,10 @@
         "options": [
           "standard",
           "80",
-          "70"
-        ]
+          "70",
+          "50"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -5628,9 +5686,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -5699,9 +5758,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -5788,8 +5848,10 @@
         "options": [
           "standard",
           "80",
-          "70"
-        ]
+          "70",
+          "50"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -5888,9 +5950,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -5963,11 +6026,17 @@
     "role": "related-content",
     "variation": "allentown",
     "title": "Related Content Allentown",
-    "description": "A related-posts section with an intro, explicitly selected published content and an optional overview action.",
+    "description": "A related-posts section with an intro, automatic article selection by default, an optional manual override, and an optional overview action.",
     "status": "prerelease",
     "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5639-526230&t=OtYEVTRRdAJJYQ0v-11",
     "variants": {},
     "fields": {
+      "cardReadMoreIcon": {
+        "kind": "text",
+        "required": false,
+        "localized": true,
+        "description": "Optional installed CTA icon for every related-content card Read More link. Empty uses chevron-right."
+      },
       "contentWidth": {
         "kind": "select",
         "required": false,
@@ -5976,9 +6045,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -5998,12 +6068,22 @@
         "required": true,
         "localized": true
       },
+      "selectionMode": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "options": [
+          "automatic",
+          "manual"
+        ],
+        "description": "Automatic when left empty: show related published Articles selected by the CMS request path. Choose Manual to select published content in display order."
+      },
       "contentSources": {
         "kind": "contentReferenceList",
-        "required": true,
+        "required": false,
         "localized": true,
-        "minItems": 1,
-        "description": "Explicitly select published related content. Each card derives its content type, title, card excerpt, hero image or video poster, and route from the selected document."
+        "minItems": 0,
+        "description": "Manual selection only. Select one or more published content items in display order. In Automatic mode, leave this empty; the CMS request path supplies matching related Articles."
       },
       "cta": {
         "kind": "component",
@@ -6053,9 +6133,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -6128,9 +6209,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -6264,9 +6346,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -6330,9 +6413,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -6427,8 +6511,10 @@
         "options": [
           "standard",
           "80",
-          "70"
-        ]
+          "70",
+          "50"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -6534,9 +6620,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",
@@ -6618,9 +6705,10 @@
         "options": [
           "standard",
           "80",
-          "70"
+          "70",
+          "50"
         ],
-        "description": "Maximum content width: Standard (100%), 80%, or 70%."
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
       },
       "theme": {
         "kind": "select",

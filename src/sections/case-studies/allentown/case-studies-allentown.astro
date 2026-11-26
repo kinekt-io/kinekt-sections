@@ -11,13 +11,14 @@ import { richTextToHtml } from "../../../shared/rich-text.js";
 const {
   id,
   theme = "light",
+  headingLevel = "h2",
   intro,
   sectionLabel,
+  cardReadMoreIcon,
   carousel = {},
   ctas,
-  headingLevel = "h2",
   carouselControlStyle = "icon",
-  carouselControls = "previous-next",
+  carouselControls = "next",
   carouselLoop = false,
 } = Astro.props as any;
 const items = Array.isArray(carousel.items) ? carousel.items : [];
@@ -25,8 +26,9 @@ const headerActions = ctaGroupActions(ctas);
 const hasCarousel = items.length > 1;
 const slideAction = (item: any) => item.cta?.cta ?? item.cta;
 const ctaIcon = (value: unknown) => (isCtaIcon(value) ? ctaIconPaths(value) : undefined);
-const previousIcon = ctaIconPaths("arrow-left")!;
-const nextIcon = ctaIconPaths("arrow-right")!;
+const cardReadMoreLinkIcon = ctaIcon(cardReadMoreIcon) ?? ctaIconPaths("chevron-right")!;
+const previousIcon = ctaIconPaths("chevron-left")!;
+const nextIcon = ctaIconPaths("chevron-right")!;
 const quoteText = (value: string): string => {
   const text = value.trim();
   const wrapped = (text.startsWith("“") && text.endsWith("”"))
@@ -112,7 +114,6 @@ const quoteText = (value: string): string => {
           {
             items.map((item: any) => {
               const itemAction = slideAction(item);
-              const itemActionIcon = ctaIcon(itemAction?.icon);
               return (
                 <li
                   class="case-studies-allentown__carousel-slide"
@@ -209,17 +210,15 @@ const quoteText = (value: string): string => {
                               label={itemAction.label}
                               style="clear"
                             >
-                              {itemActionIcon && (
-                                <svg
-                                  aria-hidden="true"
-                                  width="1em"
-                                  height="1em"
-                                  viewBox={itemActionIcon.viewBox}
-                                  fill="currentColor"
-                                >
-                                  <path d={itemActionIcon.path} />
-                                </svg>
-                              )}
+                              <svg
+                                aria-hidden="true"
+                                width="1em"
+                                height="1em"
+                                viewBox={cardReadMoreLinkIcon.viewBox}
+                                fill="currentColor"
+                              >
+                                <path d={cardReadMoreLinkIcon.path} />
+                              </svg>
                             </Button>
                           </div>
                         )}
@@ -593,18 +592,21 @@ const quoteText = (value: string): string => {
       background: transparent;
     }
     & [data-kinekt-carousel-pagination] {
-      gap: var(--case-studies-pagination-gap, var(--kiw--case-studies-allentown-results-gap));
+      gap: var(--space-xxs);
     }
     & :is([data-kinekt-carousel-previous], [data-kinekt-carousel-next]) {
       min-height: 0;
       padding: 0;
       border: 0;
-      color: var(--kiw--case-studies-allentown-ink-color);
+      color: var(--kinekt-component-accent);
       background: transparent;
       font-size: var(--case-studies-pagination-icon-size, var(--kiw--case-studies-allentown-quote-size));
     }
     & [data-kinekt-carousel-indicators] {
-      gap: var(--case-studies-pagination-indicator-gap, var(--space-xxs));
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+      gap: var(--space-xs);
     }
     &[data-kinekt-theme='dark'],
     &[data-kinekt-theme='semi-dark'] {
@@ -676,8 +678,11 @@ const quoteText = (value: string): string => {
   :where(.case-studies-allentown) .case-studies-allentown__header-content { max-width: none; }
   :where(.case-studies-allentown) :is(.case-studies-allentown__logo, .case-studies-allentown__quote-avatar) { max-width: none; }
   .case-studies-allentown :is([data-kinekt-carousel-previous], [data-kinekt-carousel-next]) { min-height: 0; border-color: currentColor; }
-  :where(.case-studies-allentown) .case-studies-allentown__carousel-counter { color: var(--kiw--case-studies-allentown-ink-color); }
-  .case-studies-allentown :is([data-kinekt-carousel-separator], [data-kinekt-carousel-total]) { color: var(--kiw--case-studies-allentown-muted-color); }
+  .case-studies-allentown [data-kinekt-carousel-control-icon] svg { color: var(--kinekt-component-accent); }
+  :where(.case-studies-allentown) .case-studies-allentown__carousel-counter { color: var(--kinekt-component-accent); font-size: var(--text-m); font-weight: 400; }
+  .case-studies-allentown :is([data-kinekt-carousel-separator], [data-kinekt-carousel-total]) { color: var(--primary-light); }
+  .case-studies-allentown [data-kinekt-carousel-dot]::after { height: var(--border-width-thick, 2px); background: var(--kinekt-component-line); }
+  .case-studies-allentown [data-kinekt-carousel-dot][aria-current='true']::after { background: var(--primary-light); }
   .case-studies-allentown .case-studies-allentown__carousel-slide .case-studies-allentown__cta > a { border: var(--kinekt-component-border-width) solid transparent; }
 
   @media (min-width: 50rem) {

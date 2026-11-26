@@ -16,9 +16,10 @@ const manifest = {
       "options": [
         "standard",
         "80",
-        "70"
+        "70",
+        "50"
       ],
-      "description": "Maximum content width: Standard (100%), 80%, or 70%."
+      "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
     },
     "theme": {
       "kind": "select",

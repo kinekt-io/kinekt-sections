@@ -199,6 +199,8 @@ const ChildHeading = `h${Number(headingLevel.slice(1)) + 1}` as ChildHeading
     .product-options-allentown { --kiw--product-options-options-columns: 3; }
   }
   @media (max-width: 49.99rem) {
+    .product-options-allentown .product-options-allentown__option > .output-card-allentown { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+    .product-options-allentown .output-card-allentown__media { inline-size: 100%; }
     .product-options-allentown[data-kinekt-section] { --kinekt-component-reading-width: var(--content-width); }
   }
 </style>
