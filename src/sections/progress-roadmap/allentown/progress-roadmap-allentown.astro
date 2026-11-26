@@ -219,7 +219,7 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
       }
     }
     & .progress-roadmap-allentown__items {
-      inline-size: fit-content;
+      inline-size: 100%;
       max-inline-size: 100%;
       min-inline-size: 0;
     }
@@ -322,11 +322,16 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
       & li + li { margin-block-start: var(--space-xs); }
     }
     & .progress-roadmap-allentown__facts {
-      inline-size: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, max-content) minmax(0, max-content);
+      column-gap: var(--space-s);
+      inline-size: fit-content;
+      max-inline-size: 100%;
       margin: 0;
       & > div {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+        grid-template-columns: subgrid;
+        grid-column: 1 / -1;
         gap: var(--space-s);
         padding-block: var(--space-xxs);
         & + div { border-block-start: var(--border-width) solid var(--kiw--progress-roadmap-allentown-line); }

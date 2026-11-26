@@ -675,10 +675,11 @@ const quoteText = (value: string): string => {
   :where(.case-studies-allentown) .case-studies-allentown__header-content { max-width: none; }
   :where(.case-studies-allentown) :is(.case-studies-allentown__logo, .case-studies-allentown__quote-avatar) { max-width: none; }
   .case-studies-allentown :is([data-kinekt-carousel-previous], [data-kinekt-carousel-next]) { min-height: 0; border-color: currentColor; }
+  .case-studies-allentown [data-kinekt-carousel-control-icon] svg { color: var(--kinekt-component-accent); }
   :where(.case-studies-allentown) .case-studies-allentown__carousel-counter { color: var(--kinekt-component-accent); font-size: var(--text-m); font-weight: 400; }
-  .case-studies-allentown :is([data-kinekt-carousel-separator], [data-kinekt-carousel-total]) { color: var(--kiw--case-studies-allentown-muted-color); }
+  .case-studies-allentown :is([data-kinekt-carousel-separator], [data-kinekt-carousel-total]) { color: var(--primary-light); }
   .case-studies-allentown [data-kinekt-carousel-dot]::after { height: var(--border-width-thick, 2px); background: var(--kinekt-component-line); }
-  .case-studies-allentown [data-kinekt-carousel-dot][aria-current='true']::after { background: var(--kiw--case-studies-allentown-muted-color); }
+  .case-studies-allentown [data-kinekt-carousel-dot][aria-current='true']::after { background: var(--primary-light); }
   .case-studies-allentown .case-studies-allentown__carousel-slide .case-studies-allentown__cta > a { border: var(--kinekt-component-border-width) solid transparent; }
 
   @media (min-width: 50rem) {
