@@ -378,8 +378,10 @@ const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice
     /* Lines draw at one speed, so a longer line takes longer (white: 50 units = 250ms). */
     --kiw--homepage-problem-solution-callout-draw-speed: 5ms;
     --kiw--homepage-problem-solution-callout-text-duration: 300ms;
+    --kiw--homepage-problem-solution-sticky-offset: var(--kiw--sticky-offset, 0px);
     --kiw--homepage-problem-solution-sticky-space: var(--section-space-s);
-    --kiw--homepage-problem-solution-sticky-size: min(var(--kiw--homepage-problem-solution-media-width), 100svh - 2 * var(--kiw--homepage-problem-solution-sticky-space));
+    --kiw--homepage-problem-solution-sticky-top: calc(var(--kiw--homepage-problem-solution-sticky-offset) + var(--kiw--homepage-problem-solution-sticky-space));
+    --kiw--homepage-problem-solution-sticky-size: min(var(--kiw--homepage-problem-solution-media-width), max(0px, calc(100svh - var(--kiw--homepage-problem-solution-sticky-offset) - (var(--kiw--homepage-problem-solution-sticky-space) * 2))));
     --kinekt-section-gap: var(--kiw--homepage-problem-solution-group-gap);
   }
 
@@ -492,8 +494,8 @@ const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice
     .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group--problem > * { grid-row: 1; }
     .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group--solution > * { grid-row: 2; }
     .homepage-problem-solution-allentown .homepage-problem-solution-allentown__stage--problem { align-self: start; }
-    /* Scroll animation (set by the script): the problem stage sticks at the section's top, then releases with its grid. */
-    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--problem { grid-row: 1 / span 2; position: sticky; top: var(--kiw--homepage-problem-solution-sticky-space); max-inline-size: var(--kiw--homepage-problem-solution-sticky-size); }
+    /* Scroll animation (set by the script): the problem stage sticks below the site header, then releases with its grid. */
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--problem { grid-row: 1 / span 2; position: sticky; top: var(--kiw--homepage-problem-solution-sticky-top); align-self: start; max-inline-size: var(--kiw--homepage-problem-solution-sticky-size); }
     .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--problem .homepage-problem-solution-allentown__scene { will-change: transform; }
     .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--solution { display: none; }
   }

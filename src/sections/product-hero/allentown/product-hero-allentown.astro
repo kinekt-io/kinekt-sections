@@ -183,8 +183,7 @@ const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
   .product-hero-allentown .product-hero-allentown__check { position: absolute; inset-block-start: calc((1lh - var(--kiw--product-hero-check-size)) / 2); inset-inline-start: 0; inline-size: var(--kiw--product-hero-check-size); block-size: var(--kiw--product-hero-check-size); color: var(--kiw--product-hero-check-color); fill: currentColor; }
   .product-hero-allentown .product-hero-allentown__divider { width: 100%; height: 0; margin: 0; border: 0; border-block-start: var(--kinekt-component-border-width) solid var(--kiw--product-hero-divider-color); }
   .product-hero-allentown .product-hero-allentown__actions { display: flex; flex-wrap: wrap; align-items: center; column-gap: var(--kiw--product-hero-actions-gap); row-gap: var(--kiw--product-hero-actions-row-gap); }
-  .product-hero-allentown .product-hero-allentown__media { display: block; min-width: 0; }
-  .product-hero-allentown .product-hero-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; height: auto; aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--product-hero-media-ratio)); object-fit: cover; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+  .product-hero-allentown .product-hero-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; height: auto; aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--product-hero-media-ratio)); object-fit: contain; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
   @media (max-width: 49.999rem) {
     /* Figma's line-height 1 assumes single-line rows; give wrapped rows room on narrow screens. */
     .product-hero-allentown { --kiw--product-hero-feature-line-height: 1.3; }

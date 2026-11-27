@@ -15,14 +15,16 @@ const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
       <header class="compatibility-specifications__intro">
         <SectionIntro intro={intro} headingLevel={headingLevel} accentStyle="heading" />
       </header>
-      <dl class="compatibility-specifications__list">
-        {specifications.map((specification) => (
-          <div class="compatibility-specifications__item">
-            <dt>{specification.label}</dt>
-            <dd>{specification.value}</dd>
-          </div>
-        ))}
-      </dl>
+      <div class="compatibility-specifications__list-scroll">
+        <dl class="compatibility-specifications__list">
+          {specifications.map((specification) => (
+            <div class="compatibility-specifications__item">
+              <dt>{specification.label}</dt>
+              <dd>{specification.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </div>
     {compatiblePlatforms && (
       <section class="compatibility-specifications__platforms" aria-labelledby={compatiblePlatforms.heading ? 'compatibility-platforms-heading' : undefined}>
@@ -156,6 +158,7 @@ const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
   .compatibility-specifications--allentown .compatibility-specifications__specifications-group { display: grid; gap: var(--kinekt-section-compatibility-specifications-intro-list-gap); }
   .compatibility-specifications--allentown .section-intro { display: grid; justify-items: start; gap: var(--kiw--compatibility-specifications-intro-gap); }
   .compatibility-specifications--allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
+  .compatibility-specifications--allentown .compatibility-specifications__list-scroll { min-width: 0; }
   .compatibility-specifications--allentown .section-intro__heading-group { display: grid; gap: var(--kiw--compatibility-specifications-heading-stack-gap); }
   .compatibility-specifications--allentown .section-intro__heading { max-width: none; font-size: var(--kiw--section-heading-2-size); }
   .compatibility-specifications--allentown .section-intro__description { max-width: none; }
@@ -175,6 +178,9 @@ const [checkWidth, checkHeight, , , checkPath] = faCheck.icon
   }
   @media (max-width: 49.999rem) {
     .compatibility-specifications--allentown :is(h1, h2, h3, h4, h5, h6) { max-width: 100vw; }
+    .compatibility-specifications--allentown .compatibility-specifications__list-scroll { overflow-x: auto; }
+    .compatibility-specifications--allentown .compatibility-specifications__list { inline-size: max-content; min-inline-size: 100%; }
+    .compatibility-specifications--allentown .compatibility-specifications__item { grid-template-columns: max-content max-content; align-items: start; }
   }
 </style>
 <style is:global>

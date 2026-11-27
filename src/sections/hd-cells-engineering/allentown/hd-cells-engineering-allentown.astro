@@ -221,6 +221,7 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
       manual: boolean
       visible: boolean
       timer: number | undefined
+      closeAnimation: Animation | undefined
     }
     const detailsById = new Map(
       Array.from(section.querySelectorAll<HTMLElement>('[data-hd-engineering-topic-details]')).map((details) => [details.id, details]),
@@ -235,13 +236,48 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
         manual: false,
         visible: false,
         timer: undefined,
+        closeAnimation: undefined,
       }]
     })
     const isExpanded = (state: TopicDetailsState) => state.toggle.getAttribute('aria-expanded') === 'true'
     const isPanelActive = (state: TopicDetailsState) => !state.panel?.hidden
+    const cancelCloseAnimation = (state: TopicDetailsState) => {
+      state.closeAnimation?.cancel()
+      state.closeAnimation = undefined
+      state.details.style.removeProperty('height')
+      state.details.style.removeProperty('opacity')
+      state.details.style.removeProperty('overflow')
+    }
     const setExpanded = (state: TopicDetailsState, expanded: boolean) => {
       state.toggle.setAttribute('aria-expanded', String(expanded))
-      state.details.hidden = !expanded
+      if (expanded) {
+        cancelCloseAnimation(state)
+        state.details.hidden = false
+        return
+      }
+      if (state.details.hidden) return
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        state.details.hidden = true
+        return
+      }
+      const height = state.details.getBoundingClientRect().height
+      if (height === 0) {
+        state.details.hidden = true
+        return
+      }
+      cancelCloseAnimation(state)
+      state.details.style.height = `${height}px`
+      state.details.style.overflow = 'hidden'
+      const closeAnimation = state.details.animate(
+        [{ height: `${height}px`, opacity: 1 }, { height: '0px', opacity: 0 }],
+        { duration: 240, easing: 'ease-out', fill: 'both' },
+      )
+      state.closeAnimation = closeAnimation
+      closeAnimation.onfinish = () => {
+        if (state.closeAnimation !== closeAnimation) return
+        state.details.hidden = true
+        cancelCloseAnimation(state)
+      }
     }
     const cancelAutoClose = (state: TopicDetailsState) => {
       if (state.timer === undefined) return
@@ -278,18 +314,19 @@ const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
     })
 
     if (topicDetails.length > 0) {
-      const stateByDetails = new Map<HTMLElement, TopicDetailsState>()
+      const stateByPanel = new Map<HTMLElement, TopicDetailsState>()
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          const state = stateByDetails.get(entry.target as HTMLElement)
+          const state = stateByPanel.get(entry.target as HTMLElement)
           if (!state) return
           state.visible = entry.isIntersecting
           syncAutoClose(state)
         })
       }, { threshold: 0.1 })
       topicDetails.forEach((state) => {
-        stateByDetails.set(state.details, state)
-        observer.observe(state.details)
+        const panel = state.panel ?? state.details
+        stateByPanel.set(panel, state)
+        observer.observe(panel)
       })
       new MutationObserver((records) => {
         records.forEach((record) => {

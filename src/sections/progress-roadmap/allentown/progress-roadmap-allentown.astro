@@ -197,6 +197,7 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
       align-self: start;
       justify-content: start;
       gap: var(--kiw--progress-roadmap-allentown-filter-gap);
+      padding-block: var(--space-l);
       background: var(--kiw--progress-roadmap-allentown-canvas);
     }
     & .progress-roadmap-allentown__filter {
@@ -325,8 +326,9 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
       overflow-wrap: anywhere;
       & > :first-child { margin-block-start: 0; }
       & > :last-child { margin-block-end: 0; }
-      & :is(ul, ol) { padding-inline-start: var(--space-l); }
-      & li + li { margin-block-start: var(--space-xxs); }
+      & ul { margin: 0; padding-inline-start: var(--space-l); }
+      & ul li { margin-block-start: 0; }
+      & > ul > li::before { background-color: var(--kiw--progress-roadmap-allentown-accent); }
     }
     & .progress-roadmap-allentown__facts {
       display: grid;
@@ -350,12 +352,23 @@ const ItemHeading = headingLevel === 'h1' ? 'h2' : headingLevel === 'h2' ? 'h3' 
     }
 
     @media (max-width: 49.99rem) {
+      --kiw--progress-roadmap-allentown-visual-size: calc(var(--section-space-l) * 1.4);
+      --kiw--progress-roadmap-allentown-icon-size: calc(var(--h3) * 1.4);
       & .progress-roadmap-allentown__item:has(> .progress-roadmap-allentown__visual) {
         grid-template-columns: minmax(0, 1fr);
       }
+      & .progress-roadmap-allentown__filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      & .progress-roadmap-allentown__filters::-webkit-scrollbar { display: none; }
+      & .progress-roadmap-allentown__filter { flex: none; }
     }
     @media (max-width: 30rem) {
-      --kiw--progress-roadmap-allentown-visual-size: var(--space-xl);
+      --kiw--progress-roadmap-allentown-visual-size: calc(var(--space-xl) * 1.4);
       --kiw--progress-roadmap-allentown-item-gap: var(--space-m);
       & .progress-roadmap-allentown__content { display: contents; }
       & .progress-roadmap-allentown__content > :not(.progress-roadmap-allentown__heading-group) { grid-column: 1 / -1; }

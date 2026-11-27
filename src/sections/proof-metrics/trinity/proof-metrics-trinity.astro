@@ -124,7 +124,6 @@ const hasResultLabel = (label: ResultLabel | null | undefined) => Boolean(label?
 
     & *, & *::before, & *::after { box-sizing: border-box; }
     & .proof-metrics-trinity__container {
-      display: grid;
       inline-size: 100%;
       max-inline-size: min(var(--kiw--proof-metrics-trinity-site-width), calc(var(--kinekt-section-content-width) + var(--kiw--proof-metrics-trinity-inline-space) * 2));
       gap: var(--kiw--proof-metrics-trinity-container-gap);
@@ -133,7 +132,8 @@ const hasResultLabel = (label: ResultLabel | null | undefined) => Boolean(label?
     }
     & .proof-metrics-trinity__intro {
       min-inline-size: 0;
-      & .section-intro { max-inline-size: none; --kinekt-component-reading-width: 100%; }
+      & .section-intro { max-inline-size: 864px; --kinekt-component-reading-width: 100%; }
+      & .section-intro :is(.section-intro__heading, .section-intro__description) { text-wrap: balance; }
     }
     & .proof-metrics-trinity__items {
       display: grid;

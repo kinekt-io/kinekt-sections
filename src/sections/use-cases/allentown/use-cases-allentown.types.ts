@@ -15,12 +15,14 @@ export interface BetaUseCasesAllentownContent {
   intro: SectionIntro
   advantageHeading: string
   items: UseCasesAllentownItem[]
+  ctaGroup?: CtaGroup
 }
 
 type DraftFields<T> = { [Field in keyof T]?: T[Field] | null }
 
-export interface PayloadBetaUseCasesAllentownDocument extends DraftFields<Omit<BetaUseCasesAllentownContent, 'intro' | 'items'>> {
+export interface PayloadBetaUseCasesAllentownDocument extends DraftFields<Omit<BetaUseCasesAllentownContent, 'intro' | 'items' | 'ctaGroup'>> {
   blockType?: string
   intro?: { accentHeading?: string | null; heading?: string | null; description?: unknown } | null
   items?: Array<{ title?: string | null; icon?: string | null; description?: unknown; ctaGroup?: unknown } | null> | null
+  ctaGroup?: unknown
 }

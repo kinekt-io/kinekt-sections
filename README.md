@@ -154,7 +154,7 @@ Astro receives `contentWidth` and emits `data-kinekt-content-width`. Each sectio
 
 Case Studies and Related Content expose a localized section-level `cardReadMoreIcon` using the existing CTA icon catalogue. Missing or empty values render `chevron-right`; the chosen icon applies to every card in that section, not to the source article or section-level overview CTA.
 
-Section filters use the consumer-overridable `--kiw--sticky-offset` (default `0px`) for sticky positioning. Consumers with fixed or sticky headers must provide their occupied header height. FAQ Index filters wrap; Roadmap and Solution List retain their own overflow behavior.
+Section filters use the consumer-overridable `--kiw--sticky-offset` (default `0px`) for sticky positioning. Consumers with fixed or sticky headers must provide their occupied header height. Solution List and Progress Roadmap use `--space-l` block padding; Roadmap retains a horizontally scrollable, non-wrapping mobile filter row. FAQ Index filters wrap.
 
 On mobile, Read More hides its media, Form Section uses centered square images, and Product Options uses shrinkable 1:2 image/copy columns. HD Cells initially opens its default information panel, auto-closing after three visible seconds; manual More information opening stays open until explicitly closed. A focused information panel is never automatically hidden.
 
@@ -177,7 +177,11 @@ The structural renderers now activate the renderer-owned behaviours recorded in 
 - Accordion Item, Product Detail Item and Step lists use native `<details>` disclosures. The first item is open server-side; a small enhancement keeps each declared group single-open.
 - Tabs use the WAI-ARIA tab pattern with mouse, arrow-key, `Home` and `End` navigation. The first panel remains visible without JavaScript.
 - Case Study Carousel uses [`embla-carousel`](https://www.embla-carousel.com/): touch/drag support, previous/next buttons, disabled endpoint controls and an announced slide position. Cards remain a readable list before JavaScript.
+- Case Studies Allentown defaults to a looping carousel with previous/next controls and a spaced `1 / 4` counter. Its counter uses `--text-xl`, the consumer's `--kinekt-component-mono` family and weight `500`; explicitly supplied carousel options remain authoritative.
 - Insight Index uses Pagefind’s JavaScript API for its text search, scoped by `pagefindFilters` and the selected Media type / Subject filters (OR). Result URLs are matched to the server-rendered cards, and the facets, sorting and four-per-page pagination run on that list. When the Pagefind bundle is unavailable, the same query falls back to the cards’ title and excerpt. A consumer can replace the search by setting `section.kinektInsightIndexSearch` to a function that returns result URLs.
+- Insight Index staggers visible cards after facet changes, including history navigation and chip removal. Interrupted transitions are cancelled; reduced-motion users receive the final state without animation.
+- HD Cells closes information panels over `240ms`, then removes the completed animation effect so manual reopening remains visible. Reduced motion closes immediately. Topic cards preload their images and use a translucent, blurred information overlay.
+- Use Cases forwards its existing root `ctaGroup` through Payload conversion as well as Astro rendering. No new editor field or content migration is required.
 
 The shared package includes Embla because its API controls the generated carousel. Pagefind is deliberately not bundled: it must index the consuming frontend’s completed static output. Add Pagefind after the Astro build and pass the actual bundle location when it differs from `/pagefind/pagefind.js`:
 

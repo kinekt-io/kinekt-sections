@@ -390,9 +390,13 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
     const sortOptions = [...section.querySelectorAll<HTMLInputElement>('[data-insight-index-sort-option]')]
 
     const state = { query: '', sort: 'newest' as SortValue, page: 1, providerMatches: null as Set<string> | null }
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     let searchRun = 0
     let searchTimer: number | undefined
-
+    let facetAnimationRun = 0
+    let facetAnimationFrame: number | undefined
+    let facetAnimationTimer: number | undefined
+    let facetAnimatedItems: HTMLElement[] = []
     const selected = (facet: string) => checkboxes.filter((box) => box.dataset.insightIndexFacet === facet && box.checked).map((box) => box.value)
 
     // Deep links use repeated facet parameters, e.g.
@@ -441,7 +445,44 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
       return [...shown].sort((a, b) => a - b).flatMap((page, index, all) => (index > 0 && page - all[index - 1] > 1 ? [null, page] : [page]))
     }
 
+    const clearFacetAnimation = () => {
+      facetAnimationRun += 1
+      if (facetAnimationFrame !== undefined) { window.cancelAnimationFrame(facetAnimationFrame); facetAnimationFrame = undefined }
+      if (facetAnimationTimer !== undefined) { window.clearTimeout(facetAnimationTimer); facetAnimationTimer = undefined }
+      facetAnimatedItems.forEach((element) => {
+        element.classList.remove('insight-index-allentown__item--facet-enter')
+        element.style.removeProperty('--kiw--insight-index-facet-animation-delay')
+      })
+      facetAnimatedItems = []
+    }
+    const animateFacetChange = () => {
+      if (reducedMotion.matches) return
+      const visibleItems = items.filter(({ element }) => !element.hidden)
+      if (visibleItems.length === 0) return
+      const run = facetAnimationRun
+      facetAnimationFrame = window.requestAnimationFrame(() => {
+        facetAnimationFrame = undefined
+        if (run !== facetAnimationRun) return
+        const animatedItems = visibleItems.map(({ element }) => element)
+        facetAnimatedItems = animatedItems
+        animatedItems.forEach((element, index) => {
+          element.style.setProperty('--kiw--insight-index-facet-animation-delay', `${index * 60}ms`)
+          element.classList.add('insight-index-allentown__item--facet-enter')
+        })
+        facetAnimationTimer = window.setTimeout(() => {
+          if (run !== facetAnimationRun) return
+          animatedItems.forEach((element) => {
+            element.classList.remove('insight-index-allentown__item--facet-enter')
+            element.style.removeProperty('--kiw--insight-index-facet-animation-delay')
+          })
+          facetAnimatedItems = []
+          facetAnimationTimer = undefined
+        }, 240 + ((animatedItems.length - 1) * 60))
+      })
+    }
+
     const render = (focusResults = false) => {
+      clearFacetAnimation()
       const mediaTypes = selected('mediaType')
       const subjects = selected('subject')
       // runtimeProps.facetMatching = orWithinFacetAndAcrossFacets: any selected value of any facet matches.
@@ -471,7 +512,7 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
           chip.querySelector('.insight-index-allentown__chip-facet')!.textContent = `${facetLabel}:`
           chip.querySelector('.insight-index-allentown__chip-value')!.textContent = box.dataset.label || box.value
           button.setAttribute('aria-label', labels.removeFilter.replace('{filter}', `${facetLabel}: ${box.dataset.label || box.value}`))
-          button.addEventListener('click', () => { box.checked = false; state.page = 1; syncFacetsToUrl(); render(); (query ?? box).focus() })
+          button.addEventListener('click', () => { box.checked = false; applyFacetChange(); (query ?? box).focus() })
           return chip
         }))
         active.hidden = checked.length === 0
@@ -502,10 +543,11 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
       section.dispatchEvent(new CustomEvent('kinekt:insight-index-change', { bubbles: true, detail: { query: state.query, mediaTypes, subjects, sort: state.sort, page: state.page, pages: total, count: matched.length } }))
     }
 
-    const runSearch = async () => {
+    const runSearch = async (animateFacetResults = false) => {
       const run = ++searchRun
       state.providerMatches = null
       render()
+      if (animateFacetResults) animateFacetChange()
       if (!state.query) return
       const provider = section.kinektInsightIndexSearch ?? pagefindProvider
       const base = parse<Record<string, unknown> | undefined>(section.dataset.insightIndexPagefindFilters, undefined)
@@ -523,6 +565,7 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
         if (run !== searchRun || !Array.isArray(result)) return
         state.providerMatches = new Set(result.map(pathKey))
         render()
+        if (animateFacetResults) animateFacetChange()
       } catch {
         // Bundle unavailable or provider failed: keep the local title + excerpt match.
       }
@@ -539,13 +582,19 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
     query?.addEventListener('focus', () => {
       if (!section.kinektInsightIndexSearch) void loadPagefind(pagefindUrl()).catch(() => undefined)
     }, { once: true })
+    const applyFacetChange = () => {
+      state.page = 1
+      syncFacetsToUrl()
+      if (state.query) void runSearch(true)
+      else { render(); animateFacetChange() }
+    }
     // Facet changes re-run the query so the Pagefind filters follow the selection.
-    checkboxes.forEach((box) => box.addEventListener('change', () => { state.page = 1; syncFacetsToUrl(); if (state.query) void runSearch(); else render() }))
+    checkboxes.forEach((box) => box.addEventListener('change', applyFacetChange))
     window.addEventListener('popstate', () => {
       setFacetsFromUrl()
       state.page = 1
-      if (state.query) void runSearch()
-      else render()
+      if (state.query) void runSearch(true)
+      else { render(); animateFacetChange() }
     })
     steps.forEach((step) => step.addEventListener('click', () => { state.page += Number(step.dataset.insightIndexPageStep); render(true) }))
 
@@ -649,7 +698,7 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
   :where(.insight-index-allentown) {
     --kiw--insight-index-container-width: var(--content-width);
     --kiw--insight-index-group-gap: var(--section-space-s);
-    --kiw--insight-index-body-gap: var(--section-space-s);
+    --kiw--insight-index-body-gap: var(--kinekt-component-gap);
     --kiw--insight-index-sidebar-width: var(--width-s);
     --kiw--insight-index-summary-gap: var(--space-m);
     --kiw--insight-index-title-gap: var(--space-xxs);
@@ -789,6 +838,7 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
   .insight-index-allentown .insight-index-allentown__item { min-width: 0; }
   .insight-index-allentown .insight-index-allentown__item:focus { outline: none; }
   .insight-index-allentown .insight-index-allentown__item:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kiw--insight-index-focus-color); outline-offset: var(--space-xxs); }
+  .insight-index-allentown .insight-index-allentown__item--facet-enter { animation: kiw-insight-index-facet-enter 240ms ease both; animation-delay: var(--kiw--insight-index-facet-animation-delay, 0ms); }
   .insight-index-allentown .insight-index-allentown__card { display: grid; align-content: start; gap: var(--kiw--insight-index-card-gap); min-width: 0; }
   .insight-index-allentown .insight-index-allentown__media { display: block; min-width: 0; }
   .insight-index-allentown .insight-index-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; height: auto; aspect-ratio: var(--kinekt-section-media-ratio, var(--kiw--insight-index-media-ratio)); object-fit: cover; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
@@ -829,8 +879,13 @@ const clientLabels = { removeFilter: labels.removeFilter, page: labels.page, res
     .insight-index-allentown .insight-index-allentown__title { line-height: 1.2; }
     .insight-index-allentown .insight-index-allentown__sort-panel { inset-inline: 0 auto; }
   }
+  @keyframes kiw-insight-index-facet-enter {
+    from { opacity: 0; transform: translateY(var(--space-xs)); }
+    to { opacity: 1; transform: translateY(0); }
+  }
   @media (prefers-reduced-motion: reduce) {
-    .insight-index-allentown .insight-index-allentown__sort-toggle > .insight-index-allentown__icon { transition: none; }
+    .insight-index-allentown .insight-index-allentown__sort-toggle > .insight-index-allentown__icon,
+    .insight-index-allentown .insight-index-allentown__item--facet-enter { animation: none; transition: none; }
   }
 </style>
 <style is:global>

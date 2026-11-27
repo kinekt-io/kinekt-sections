@@ -159,7 +159,7 @@ const chevron = { viewBox: `0 0 ${faChevronDown.icon[0]} ${faChevronDown.icon[1]
   .beta-faq-allentown .beta-faq-allentown__answer > * + * { margin-block-start: var(--space-s); }
   .beta-faq-allentown .beta-faq-allentown__verification { margin: var(--kiw--faq-allentown-answer-gap) 0 0; color: var(--error); font-size: var(--text-s); font-weight: var(--kinekt-section-heading-font-weight, var(--heading-font-weight)); }
   .beta-faq-allentown .beta-faq-allentown__item[data-faq-needs-customer-verification='true'] :is(.beta-faq-allentown__question, .beta-faq-allentown__answer, .beta-faq-allentown__toggle) { color: var(--error); }
-  .beta-faq-allentown .beta-faq-allentown__overview { display: flex; justify-content: flex-start; }
+  .beta-faq-allentown .beta-faq-allentown__overview { display: flex; justify-content: flex-start; width: min(100%, var(--kiw--faq-allentown-items-width)); margin-inline: auto; }
   .beta-faq-allentown .beta-faq-allentown__overview .button--clear { color: var(--kinekt-component-accent); }
   .beta-faq-allentown .beta-faq-allentown__callout { --kiw--callout-allentown-copy-gap: var(--space-s); width: min(100%, var(--kiw--faq-allentown-items-width)); margin-inline: auto; }
   @media (max-width: 49.999rem) {
