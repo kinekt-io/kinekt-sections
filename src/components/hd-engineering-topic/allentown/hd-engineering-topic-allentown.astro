@@ -62,7 +62,7 @@ const plus = ctaIconPaths('plus')
     --kiw--hd-engineering-topic-allentown-media-ratio: 4 / 5;
     --kiw--hd-engineering-topic-allentown-media-background: var(--kinekt-component-surface, transparent);
     --kiw--hd-engineering-topic-allentown-media-border-color: var(--kinekt-component-line, currentColor);
-    --kiw--hd-engineering-topic-allentown-card-inset: var(--space-m);
+    --kiw--hd-engineering-topic-allentown-card-inset: calc(var(--space-xxs) * -1);
     --kiw--hd-engineering-topic-allentown-card-padding: var(--space-l);
     --kiw--hd-engineering-topic-allentown-card-gap: var(--space-xxl);
     --kiw--hd-engineering-topic-allentown-card-radius: 6px;
@@ -102,7 +102,7 @@ const plus = ctaIconPaths('plus')
 
   @media (min-width: 50rem) {
     /* The card overlays the bottom of the image and grows upwards when expanded. */
-    .hd-engineering-topic-allentown .hd-engineering-topic-allentown__media + .hd-engineering-topic-allentown__card { position: absolute; inset-inline-start: var(--kiw--hd-engineering-topic-allentown-card-inset); inset-inline-end: calc(var(--space-xxs) * -1); inset-block-end: calc(var(--space-xxs) * -1); }
+    .hd-engineering-topic-allentown .hd-engineering-topic-allentown__media + .hd-engineering-topic-allentown__card { position: absolute; inset-inline: var(--kiw--hd-engineering-topic-allentown-card-inset); inset-block-end: var(--kiw--hd-engineering-topic-allentown-card-inset); }
   }
   @media (max-width: 49.999rem) {
     .hd-engineering-topic-allentown .hd-engineering-topic-allentown__card { border-start-start-radius: 0; border-start-end-radius: 0; }
