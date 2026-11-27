@@ -1,0 +1,261 @@
+---
+import '../../../styles/wireframe-tokens.css'
+import HdEngineeringTopic, { type HdEngineeringTopicContent } from '../../../components/hd-engineering-topic/allentown/hd-engineering-topic-allentown.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { RichText, SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import type { BetaHdEngineeringAllentownContent } from './hd-engineering-allentown.types.js'
+
+type RichTextInput = string | RichText | Record<string, unknown>
+type IntroInput = Omit<SectionIntroContent, 'description'> & { description?: RichTextInput | null }
+
+interface Props extends BetaHdEngineeringAllentownContent {
+  id?: string
+  theme?: SectionTheme
+  headingLevel?: 'h2' | 'h3'
+  intro: IntroInput
+  engineeringTopics: HdEngineeringTopicContent[]
+  moreInformationLabel?: string
+  /** Runtime accessibility label, derived from the localized intro heading when omitted. */
+  topicsLabel?: string
+}
+
+const { id, theme = 'light', headingLevel = 'h2', intro, engineeringTopics = [], moreInformationLabel = 'More information', topicsLabel } = Astro.props as Props
+const toHtml = (value: RichTextInput, field: string): string => {
+  if (typeof value === 'string') return value.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).map((part) => richTextToHtml(part, field)).join('')
+  if (typeof value.html === 'string') return value.html
+  return richTextToHtml(value, field)
+}
+const introContent: SectionIntroContent = {
+  ...intro,
+  description: intro.description == null || typeof intro.description === 'string' ? intro.description ?? undefined : { html: toHtml(intro.description, 'intro.description') },
+}
+const topicHeadingLevel = headingLevel === 'h2' ? 'h3' : 'h4'
+const topics = engineeringTopics.filter((topic) => topic && typeof topic.title === 'string' && topic.title !== '')
+const startCount = Math.ceil(topics.length / 2)
+const baseId = id ?? `hd-engineering-${Math.random().toString(36).slice(2, 8)}`
+const topicIds = topics.map((_, index) => `${baseId}-topic-${index + 1}`)
+---
+<section class="hd-engineering-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
+  <div class="hd-engineering-allentown__container">
+    <header class="hd-engineering-allentown__header">
+      <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
+    </header>
+    {topics.length > 0 && (
+      <div class="hd-engineering-allentown__topics" data-hd-engineering-tabs>
+        {topics.length > 1 && (
+          <div class="hd-engineering-allentown__tablist" aria-label={topicsLabel ?? introContent.heading} data-hd-engineering-tablist hidden>
+            {[topics.slice(0, startCount), topics.slice(startCount)].map((group, side) => (
+              <div class:list={['hd-engineering-allentown__tab-column', side === 0 ? 'hd-engineering-allentown__tab-column--start' : 'hd-engineering-allentown__tab-column--end']}>
+                {group.map((topic, groupIndex) => {
+                  const index = side === 0 ? groupIndex : startCount + groupIndex
+                  return <button class="hd-engineering-allentown__tab" type="button" id={`${topicIds[index]}-tab`} aria-controls={`${topicIds[index]}-panel`} aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1} data-hd-engineering-tab>{topic.title}</button>
+                })}
+              </div>
+            ))}
+          </div>
+        )}
+        <div class="hd-engineering-allentown__panels">
+          {topics.map((topic, index) => (
+            <div class="hd-engineering-allentown__panel" id={`${topicIds[index]}-panel`} aria-labelledby={topics.length > 1 ? `${topicIds[index]}-tab` : undefined} data-hd-engineering-panel>
+              <HdEngineeringTopic topic={topic} id={topicIds[index]} moreInformationLabel={moreInformationLabel} titleAs={topicHeadingLevel} mediaLoading="eager" mediaFetchpriority="high" />
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+<script>
+  import { initializeKinektInteractions } from '../../../shared/interactions'
+
+  document.querySelectorAll<HTMLElement>('.hd-engineering-allentown[data-kinekt-section]').forEach((section) => {
+    if (section.hasAttribute('data-hd-engineering-enhanced')) return
+    section.setAttribute('data-hd-engineering-enhanced', '')
+
+    const tabsRoot = section.querySelector<HTMLElement>('[data-hd-engineering-tabs]')
+    const tablist = tabsRoot?.querySelector<HTMLElement>('[data-hd-engineering-tablist]')
+    const tabs = Array.from(tabsRoot?.querySelectorAll<HTMLButtonElement>('[data-hd-engineering-tab]') ?? [])
+    const panels = Array.from(tabsRoot?.querySelectorAll<HTMLElement>('[data-hd-engineering-panel]') ?? [])
+    if (tabsRoot && tablist && tabs.length > 1 && tabs.length === panels.length) {
+      tablist.setAttribute('role', 'tablist')
+      tablist.hidden = false
+      tabs.forEach((tab, index) => {
+        tab.setAttribute('role', 'tab')
+        tab.setAttribute('aria-selected', String(index === 0))
+        tab.tabIndex = index === 0 ? 0 : -1
+      })
+      panels.forEach((panel, index) => {
+        panel.setAttribute('role', 'tabpanel')
+        panel.hidden = index !== 0
+      })
+      tabsRoot.setAttribute('data-kinekt-tabs', '')
+    }
+    initializeKinektInteractions(section)
+
+    type TopicDetailsState = {
+      toggle: HTMLButtonElement
+      details: HTMLElement
+      panel: HTMLElement | null
+      manual: boolean
+      visible: boolean
+      timer: number | undefined
+      closeAnimation: Animation | undefined
+    }
+    const detailsById = new Map(Array.from(section.querySelectorAll<HTMLElement>('[data-hd-engineering-topic-details]')).map((details) => [details.id, details]))
+    const topicDetails: TopicDetailsState[] = Array.from(section.querySelectorAll<HTMLButtonElement>('[data-hd-engineering-topic-toggle]')).flatMap((toggle) => {
+      const details = detailsById.get(toggle.getAttribute('aria-controls') ?? '')
+      return details ? [{ toggle, details, panel: toggle.closest<HTMLElement>('[data-hd-engineering-panel]'), manual: false, visible: false, timer: undefined, closeAnimation: undefined }] : []
+    })
+    const isExpanded = (state: TopicDetailsState) => state.toggle.getAttribute('aria-expanded') === 'true'
+    const isPanelActive = (state: TopicDetailsState) => !state.panel?.hidden
+    const cancelCloseAnimation = (state: TopicDetailsState) => {
+      state.closeAnimation?.cancel()
+      state.closeAnimation = undefined
+      state.details.style.removeProperty('height')
+      state.details.style.removeProperty('opacity')
+      state.details.style.removeProperty('overflow')
+    }
+    const setExpanded = (state: TopicDetailsState, expanded: boolean) => {
+      state.toggle.setAttribute('aria-expanded', String(expanded))
+      if (expanded) {
+        cancelCloseAnimation(state)
+        state.details.hidden = false
+        return
+      }
+      if (state.details.hidden) return
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        state.details.hidden = true
+        return
+      }
+      const height = state.details.getBoundingClientRect().height
+      if (height === 0) {
+        state.details.hidden = true
+        return
+      }
+      cancelCloseAnimation(state)
+      state.details.style.height = `${height}px`
+      state.details.style.overflow = 'hidden'
+      const closeAnimation = state.details.animate([{ height: `${height}px`, opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 240, easing: 'ease-out', fill: 'both' })
+      state.closeAnimation = closeAnimation
+      closeAnimation.onfinish = () => {
+        if (state.closeAnimation !== closeAnimation) return
+        state.details.hidden = true
+        cancelCloseAnimation(state)
+      }
+    }
+    const cancelAutoClose = (state: TopicDetailsState) => {
+      if (state.timer === undefined) return
+      window.clearTimeout(state.timer)
+      state.timer = undefined
+    }
+    const syncAutoClose = (state: TopicDetailsState) => {
+      if (state.manual || !state.visible || !isPanelActive(state) || !isExpanded(state)) {
+        cancelAutoClose(state)
+        return
+      }
+      if (state.timer !== undefined) return
+      state.timer = window.setTimeout(() => {
+        state.timer = undefined
+        if (state.manual || !state.visible || !isPanelActive(state) || !isExpanded(state) || state.details.contains(document.activeElement)) return
+        setExpanded(state, false)
+      }, 3000)
+    }
+    const activateAutomaticDetails = (state: TopicDetailsState) => {
+      if (state.manual || !isPanelActive(state)) return
+      setExpanded(state, true)
+      syncAutoClose(state)
+    }
+    topicDetails.forEach((state) => {
+      state.toggle.hidden = false
+      setExpanded(state, true)
+      state.toggle.addEventListener('click', () => {
+        state.manual = true
+        cancelAutoClose(state)
+        setExpanded(state, !isExpanded(state))
+      })
+    })
+    if (topicDetails.length === 0) return
+    const stateByPanel = new Map<HTMLElement, TopicDetailsState>()
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const state = stateByPanel.get(entry.target as HTMLElement)
+        if (!state) return
+        state.visible = entry.isIntersecting
+        syncAutoClose(state)
+      })
+    }, { threshold: 0.1 })
+    topicDetails.forEach((state) => {
+      const panel = state.panel ?? state.details
+      stateByPanel.set(panel, state)
+      observer.observe(panel)
+    })
+    new MutationObserver((records) => {
+      records.forEach((record) => {
+        const state = topicDetails.find((candidate) => candidate.panel === record.target)
+        if (!state) return
+        if (isPanelActive(state)) activateAutomaticDetails(state)
+        else cancelAutoClose(state)
+      })
+    }).observe(tabsRoot ?? section, { attributes: true, attributeFilter: ['hidden'], subtree: true })
+  })
+</script>
+<style is:global>
+  :where(.hd-engineering-allentown) {
+    --kinekt-component-site-width: var(--kinekt-section-site-width, var(--website-width));
+    --kinekt-component-content-width: var(--kinekt-section-content-width, var(--content-width));
+    --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--width-m));
+    --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--section-gutter));
+    --kinekt-component-block-space: var(--kinekt-section-block-space, var(--section-space-xl));
+    --kinekt-component-radius: var(--kinekt-section-radius, var(--radius-none));
+    --kinekt-component-border-width: var(--kinekt-section-border-width, var(--border-width));
+    --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--media-filter));
+    --kinekt-component-font: var(--kinekt-section-font, var(--text-font-family));
+    --kinekt-component-heading-font-family: var(--kinekt-section-heading-font-family, var(--heading-font-family));
+    --kinekt-component-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--heading-font-weight));
+    --kinekt-component-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--heading-letter-spacing));
+    --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--heading-line-height));
+    --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--text-line-height));
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--neutral-ultra-light));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--white));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--primary-ultra-dark));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--primary-semi-dark));
+    --kinekt-component-line: var(--kinekt-section-line, var(--primary-ultra-light));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--accent-semi-dark));
+    --hd-engineering-layout-gap: var(--section-space-m);
+    --hd-engineering-tabs-gap: var(--section-space-xxl);
+    --hd-engineering-media-width: var(--width-m);
+  }
+  .hd-engineering-allentown[data-kinekt-theme='semi-light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--neutral-light)); }
+  .hd-engineering-allentown[data-kinekt-theme='semi-dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--primary-dark)); --kinekt-component-surface: var(--kinekt-section-surface, var(--primary-semi-dark)); --kinekt-component-ink: var(--kinekt-section-ink, var(--white)); --kinekt-component-muted: var(--kinekt-section-muted, var(--primary-light)); --kinekt-component-line: var(--kinekt-section-line, var(--primary)); }
+  .hd-engineering-allentown[data-kinekt-theme='dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--primary-ultra-dark)); --kinekt-component-surface: var(--kinekt-section-surface, var(--primary-semi-dark)); --kinekt-component-ink: var(--kinekt-section-ink, var(--white)); --kinekt-component-muted: var(--kinekt-section-muted, var(--primary-ultra-light)); --kinekt-component-line: var(--kinekt-section-line, var(--primary)); }
+  .hd-engineering-allentown { box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--text-m); font-weight: var(--text-font-weight); line-height: var(--kinekt-component-text-line-height); letter-spacing: var(--text-letter-spacing); }
+  .hd-engineering-allentown, .hd-engineering-allentown[data-kinekt-theme='light'] { color-scheme: light; }
+  .hd-engineering-allentown *, .hd-engineering-allentown *::before, .hd-engineering-allentown *::after { box-sizing: border-box; }
+  .hd-engineering-allentown [hidden] { display: none !important; }
+  .hd-engineering-allentown[data-kinekt-section] { --kinekt-section-content-width: var(--desktop-content-width); }
+  .hd-engineering-allentown[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+  .hd-engineering-allentown[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  .hd-engineering-allentown[data-kinekt-content-width='50'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .5); }
+  .hd-engineering-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--section-space-l); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
+  .hd-engineering-allentown__header { display: grid; justify-items: center; width: 100%; text-align: center; }
+  .hd-engineering-allentown .section-intro { display: grid; justify-items: center; gap: var(--space-m); }
+  .hd-engineering-allentown .section-intro__heading-group { display: grid; justify-items: center; gap: var(--space-xxs); }
+  .hd-engineering-allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
+  .hd-engineering-allentown .section-intro__heading { max-width: none; font-size: var(--h2); }
+  .hd-engineering-allentown .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--text-xl); text-wrap: balance; }
+  .hd-engineering-allentown .section-intro__description > * { margin-block: 0; }
+  .hd-engineering-allentown__topics { display: grid; gap: var(--hd-engineering-layout-gap); min-width: 0; }
+  .hd-engineering-allentown__tablist { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-xs) var(--space-xl); min-width: 0; }
+  .hd-engineering-allentown__tab-column { display: contents; }
+  .hd-engineering-allentown__tab { padding: calc((var(--space-xxs) + var(--space-xs)) / 2) 0; border: 0; border-block-end: var(--kinekt-component-border-width) solid transparent; border-radius: 0; color: var(--kinekt-component-muted); background: transparent; font-family: var(--kinekt-component-heading-font-family); font-size: var(--h4); font-weight: var(--kinekt-component-heading-font-weight); line-height: 1; letter-spacing: var(--kinekt-component-heading-letter-spacing); text-align: inherit; white-space: nowrap; cursor: pointer; }
+  .hd-engineering-allentown__tab:hover, .hd-engineering-allentown__tab[aria-selected='true'] { color: var(--kinekt-component-ink); }
+  .hd-engineering-allentown__tab[aria-selected='true'] { border-block-end-color: var(--kinekt-component-accent); }
+  .hd-engineering-allentown__tab:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kinekt-component-accent); outline-offset: var(--space-xxs); }
+  .hd-engineering-allentown__panels, .hd-engineering-allentown__panel { display: grid; min-width: 0; }
+  .hd-engineering-allentown:is([data-kinekt-theme='light'], [data-kinekt-theme='semi-light']) .hd-engineering-topic-allentown { --kiw--hd-engineering-topic-allentown-media-border-color: var(--primary-semi-dark); }
+  .hd-engineering-allentown:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) .hd-engineering-topic-allentown { --kiw--hd-engineering-topic-allentown-media-border-color: var(--primary-semi-light); }
+  @media (prefers-reduced-motion: no-preference) { .hd-engineering-allentown[data-hd-engineering-enhanced] .hd-engineering-allentown__panel:not([hidden]) { animation: hd-engineering-allentown-fade 320ms ease-out; } .hd-engineering-allentown__tab { transition: color 200ms ease-out, border-color 200ms ease-out; } }
+  @keyframes hd-engineering-allentown-fade { from { opacity: 0; } to { opacity: 1; } }
+  @media (min-width: 50rem) { .hd-engineering-allentown__topics { grid-template-columns: minmax(0, 1fr) minmax(0, var(--hd-engineering-media-width)) minmax(0, 1fr); } .hd-engineering-allentown__tablist { display: grid; grid-column: 1 / -1; grid-row: 1; grid-template-columns: subgrid; column-gap: var(--hd-engineering-layout-gap); } .hd-engineering-allentown__tab-column { display: flex; flex-direction: column; justify-content: center; gap: var(--hd-engineering-tabs-gap); min-width: 0; } .hd-engineering-allentown__tab-column--start { grid-column: 1; align-items: flex-end; text-align: end; } .hd-engineering-allentown__tab-column--end { grid-column: 3; align-items: flex-start; text-align: start; } .hd-engineering-allentown__tab { max-width: 100%; white-space: normal; } .hd-engineering-allentown__panels { grid-column: 2; grid-row: 1; } }
+</style>

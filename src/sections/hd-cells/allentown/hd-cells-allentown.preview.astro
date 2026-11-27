@@ -1,0 +1,21 @@
+---
+import HdCells from './hd-cells-allentown.astro'
+
+const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`) + `placeholders/${name}`
+const media = (alt: string) => ({ url: placeholder('placeholder-1000x800.svg'), alt, width: 1000, height: 800 })
+
+const content = {
+  theme: 'dark' as const,
+  intro: {
+    accentHeading: '/ High-density cells',
+    heading: 'More energy starts at cell level',
+    description: 'The performance of a battery pack begins with the cells inside it. Tulip selects high-density cell technologies that store more usable energy within the same weight.',
+  },
+  cellItems: [
+    { media: media('High-density cylindrical cells arranged in a module'), title: 'Higher energy density', subtitle: 'Smarter use of space', description: 'High-density cells increase the amount of usable energy available per kilogram and per liter. That creates more performance potential without simply making the battery larger or heavier.' },
+    { media: media('Compact battery module inside a drone airframe'), title: 'Smarter use of space', subtitle: 'Get more from the space you already have', description: 'More energy in the same envelope lets platforms fly longer or carry more payload without redesigning the airframe around the battery.' },
+    { media: media('Cell samples on a test bench'), title: 'Selected for the mission', subtitle: 'The right cell depends on what the platform needs', description: 'Cell chemistry and format are chosen for the duty cycle: high discharge for lift-off and manoeuvres, or maximum capacity for long endurance missions.' },
+  ],
+}
+---
+<HdCells {...content} />

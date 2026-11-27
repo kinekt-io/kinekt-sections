@@ -18,8 +18,8 @@ const {
   carousel = {},
   ctas,
   carouselControlStyle = "icon",
-  carouselControls = "next",
-  carouselLoop = false,
+  carouselControls = "previous-next",
+  carouselLoop = true,
 } = Astro.props as any;
 const items = Array.isArray(carousel.items) ? carousel.items : [];
 const headerActions = ctaGroupActions(ctas);
@@ -257,7 +257,7 @@ const quoteText = (value: string): string => {
               aria-atomic="true"
             >
               <span data-kinekt-carousel-current aria-hidden="true">1</span>
-              <span data-kinekt-carousel-separator aria-hidden="true">/</span>
+              <span data-kinekt-carousel-separator aria-hidden="true"> / </span>
               <span data-kinekt-carousel-total aria-hidden="true">{items.length}</span>
               <span
                 class="case-studies-allentown__carousel-status"
@@ -679,7 +679,7 @@ const quoteText = (value: string): string => {
   :where(.case-studies-allentown) :is(.case-studies-allentown__logo, .case-studies-allentown__quote-avatar) { max-width: none; }
   .case-studies-allentown :is([data-kinekt-carousel-previous], [data-kinekt-carousel-next]) { min-height: 0; border-color: currentColor; }
   .case-studies-allentown [data-kinekt-carousel-control-icon] svg { color: var(--kinekt-component-accent); }
-  :where(.case-studies-allentown) .case-studies-allentown__carousel-counter { color: var(--kinekt-component-accent); font-size: var(--text-m); font-weight: 400; }
+  :where(.case-studies-allentown) .case-studies-allentown__carousel-counter { color: var(--kinekt-component-accent); font-family: var(--kinekt-component-mono); font-size: var(--text-xl); font-weight: 500; }
   .case-studies-allentown :is([data-kinekt-carousel-separator], [data-kinekt-carousel-total]) { color: var(--primary-light); }
   .case-studies-allentown [data-kinekt-carousel-dot]::after { height: var(--border-width-thick, 2px); background: var(--kinekt-component-line); }
   .case-studies-allentown [data-kinekt-carousel-dot][aria-current='true']::after { background: var(--primary-light); }

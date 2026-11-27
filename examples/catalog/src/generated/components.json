@@ -3221,6 +3221,163 @@
     }
   },
   {
+    "id": "sections/hd-cells/allentown",
+    "version": "26.10.0-beta.1",
+    "slug": "hd-cells-allentown",
+    "category": "sections",
+    "tags": [
+      "engineering",
+      "product",
+      "beta"
+    ],
+    "role": "hd-cells",
+    "variation": "allentown",
+    "title": "HD Cells Allentown",
+    "description": "A reusable interactive high-density cells section.",
+    "status": "prerelease",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412556&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70",
+          "50"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
+      },
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": true,
+        "options": [
+          "light",
+          "semi-light",
+          "semi-dark",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "cellItems": {
+        "kind": "componentList",
+        "componentId": "components/hd-cell-item/allentown",
+        "minItems": 1,
+        "required": true,
+        "localized": true
+      }
+    },
+    "runtimeProps": {
+      "activeCell": {
+        "kind": "firstListItem",
+        "source": "renderer"
+      },
+      "cellInteraction": {
+        "kind": "handImplementedMediaDisclosureTimer",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/hd-cells/allentown/hd-cells-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/hd-cells/allentown.jpeg",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/hd-cells-allentown.astro",
+      "payload": "@kinekt-io/components/sections/hd-cells-allentown.payload",
+      "types": "@kinekt-io/components/sections/hd-cells-allentown.types"
+    }
+  },
+  {
+    "id": "sections/hd-engineering/allentown",
+    "version": "26.10.0-beta.1",
+    "slug": "hd-engineering-allentown",
+    "category": "sections",
+    "tags": [
+      "engineering",
+      "product",
+      "beta"
+    ],
+    "role": "hd-engineering",
+    "variation": "allentown",
+    "title": "HD Engineering Allentown",
+    "description": "A reusable interactive high-density engineering section.",
+    "status": "prerelease",
+    "figmaUrl": "https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412556&t=mG3L6xlBzomA03GY-11",
+    "variants": {},
+    "fields": {
+      "contentWidth": {
+        "kind": "select",
+        "required": false,
+        "localized": true,
+        "defaultValue": "standard",
+        "options": [
+          "standard",
+          "80",
+          "70",
+          "50"
+        ],
+        "description": "Maximum content width: Standard (100%), 80%, 70%, or 50%."
+      },
+      "theme": {
+        "kind": "select",
+        "required": true,
+        "localized": true,
+        "options": [
+          "light",
+          "semi-light",
+          "semi-dark",
+          "dark"
+        ],
+        "description": "CMS-selected presentation setting passed to the renderer."
+      },
+      "intro": {
+        "kind": "component",
+        "componentId": "components/intro/allentown",
+        "required": true,
+        "localized": true
+      },
+      "engineeringTopics": {
+        "kind": "componentList",
+        "componentId": "components/hd-engineering-topic/allentown",
+        "minItems": 1,
+        "required": true,
+        "localized": true
+      },
+      "moreInformationLabel": {
+        "kind": "text",
+        "required": false,
+        "localized": true,
+        "defaultValue": "More information",
+        "description": "Text for the control that reveals an engineering topic’s details."
+      }
+    },
+    "runtimeProps": {
+      "activeEngineeringTopic": {
+        "kind": "firstListItem",
+        "source": "renderer"
+      },
+      "engineeringInteraction": {
+        "kind": "handImplementedTopicHotspotsAndTransitions",
+        "source": "renderer"
+      }
+    },
+    "previewSource": "sections/hd-engineering/allentown/hd-engineering-allentown.preview.astro",
+    "thumbnailURL": "https://kinekt-io.github.io/kinekt-sections/thumbnails/sections/hd-engineering/allentown.jpeg",
+    "entries": {
+      "astro": "@kinekt-io/components/sections/hd-engineering-allentown.astro",
+      "payload": "@kinekt-io/components/sections/hd-engineering-allentown.payload",
+      "types": "@kinekt-io/components/sections/hd-engineering-allentown.types"
+    }
+  },
+  {
     "id": "sections/hero/allentown",
     "version": "26.10.0-beta.0",
     "slug": "hero-allentown",
@@ -5606,19 +5763,6 @@
             "kind": "text",
             "required": false,
             "localized": true
-          },
-          "customTone": {
-            "kind": "select",
-            "required": false,
-            "localized": true,
-            "defaultValue": "neutral",
-            "options": [
-              "neutral",
-              "info",
-              "success",
-              "warning",
-              "error"
-            ]
           },
           "description": {
             "kind": "richText",

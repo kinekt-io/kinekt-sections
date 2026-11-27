@@ -1,5 +1,5 @@
 import type { Media, RichText, SectionIntro, SectionTheme } from '../../../shared/content.js'
-import type { ProgressCustomTone, ProgressStatus } from '../../../shared/progress-status.js'
+import type { ProgressStatus } from '../../../shared/progress-status.js'
 import type { SectionContentWidth } from '../../../shared/section-width.js'
 
 export interface ProgressRoadmapAllentownFilterLabels {
@@ -26,7 +26,6 @@ export interface ProgressRoadmapAllentownItem {
   status: ProgressStatus
   statusLabel?: string
   customIcon?: string
-  customTone?: ProgressCustomTone
   description?: RichText
   facts?: ProgressRoadmapAllentownFact[]
 }

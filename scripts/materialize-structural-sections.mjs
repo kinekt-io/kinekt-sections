@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url'
 const root = fileURLToPath(new URL('../', import.meta.url))
 const source = path.join(root, 'src')
 const sections = path.join(source, 'sections')
+const targetSlug = process.argv[2]
 
 async function manifestDirectories(directory, result = []) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -395,6 +396,7 @@ async function materialize(filename, source, force = false) {
 
 for (const directory of await manifestDirectories(sections)) {
   const manifest = JSON.parse(await readFile(path.join(directory, 'manifest.json'), 'utf8'))
+  if (targetSlug && manifest.slug !== targetSlug) continue
 
   manifest.fields = expandComponentFields(manifest.fields)
   if (['moq-lead-times-trinity', 'proof-metrics-allentown', 'proof-metrics-trinity'].includes(manifest.slug)) {
@@ -591,14 +593,16 @@ export interface BetaUseCasesAllentownContent {
   intro: SectionIntro
   advantageHeading: string
   items: UseCasesAllentownItem[]
+  ctaGroup?: CtaGroup
 }
 
 type DraftFields<T> = { [Field in keyof T]?: T[Field] | null }
 
-export interface PayloadBetaUseCasesAllentownDocument extends DraftFields<Omit<BetaUseCasesAllentownContent, 'intro' | 'items'>> {
+export interface PayloadBetaUseCasesAllentownDocument extends DraftFields<Omit<BetaUseCasesAllentownContent, 'intro' | 'items' | 'ctaGroup'>> {
   blockType?: string
   intro?: { accentHeading?: string | null; heading?: string | null; description?: unknown } | null
   items?: Array<{ title?: string | null; icon?: string | null; description?: unknown; ctaGroup?: unknown } | null> | null
+  ctaGroup?: unknown
 }
 `
   const useCasesPayload = `// @generated Use Cases Payload contract from the manifest.
@@ -639,12 +643,14 @@ const itemToProps = (value: unknown, index: number, options: PayloadAdapterOptio
 }
 
 export function ${name[0].toLowerCase() + name.slice(1)}ToProps(data: Payload${name}Document, options: PayloadAdapterOptions = {}): ${name}Content {
+  const ctaGroup = ctaGroupToProps(data.ctaGroup, 'ctaGroup', options)
   return {
     contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(data.theme),
     intro: introToProps(data.intro),
     advantageHeading: requireText(data.advantageHeading, 'advantageHeading'),
     items: requireArray(data.items, 'items').map((item, index) => itemToProps(item, index, options)),
+    ...(ctaGroup ? { ctaGroup } : {}),
   }
 }
 `

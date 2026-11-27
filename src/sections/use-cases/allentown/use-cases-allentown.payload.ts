@@ -144,11 +144,13 @@ const itemToProps = (value: unknown, index: number, options: PayloadAdapterOptio
 }
 
 export function betaUseCasesAllentownToProps(data: PayloadBetaUseCasesAllentownDocument, options: PayloadAdapterOptions = {}): BetaUseCasesAllentownContent {
+  const ctaGroup = ctaGroupToProps(data.ctaGroup, 'ctaGroup', options)
   return {
     contentWidth: normalizeSectionContentWidth(data.contentWidth),
     theme: requireTheme(data.theme),
     intro: introToProps(data.intro),
     advantageHeading: requireText(data.advantageHeading, 'advantageHeading'),
     items: requireArray(data.items, 'items').map((item, index) => itemToProps(item, index, options)),
+    ...(ctaGroup ? { ctaGroup } : {}),
   }
 }

@@ -133,6 +133,18 @@ const manifest = {
           "minItems": 0,
           "maxItems": 2
         },
+        "actionNote": {
+          "kind": "text",
+          "required": false,
+          "localized": true,
+          "description": "Optional plain-text note displayed below this tab's actions."
+        },
+        "actionNoteIcon": {
+          "kind": "text",
+          "required": false,
+          "localized": true,
+          "description": "Optional Font Awesome 7 Sharp Solid icon name displayed with this tab's action note."
+        },
         "form": {
           "kind": "formEmbed",
           "required": false,

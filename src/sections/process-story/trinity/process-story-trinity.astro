@@ -259,8 +259,8 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     --process-story-trinity-duration: var(--kiw--process-story-trinity-duration);
 
     & > .process-story-trinity__container { gap: var(--kiw--process-story-trinity-container-gap); }
-    & .process-story-trinity__intro { display: flex; flex-direction: column; gap: var(--space-xl); max-width: var(--kiw--process-story-trinity-intro-width); }
-    & .process-story-trinity__intro > .process-story-trinity__intro-actions { margin-top: 0; }
+    & .process-story-trinity__intro { display: flex; flex-direction: column; gap: 0; max-width: var(--kiw--process-story-trinity-intro-width); }
+    & .process-story-trinity__intro > .process-story-trinity__intro-actions { margin-top: var(--section-space-xs); }
     & .process-story-trinity__steps { display: grid; gap: var(--process-story-trinity-step-gap); margin: 0; padding: 0; list-style: none; }
     & .process-story-trinity__step { position: relative; display: grid; gap: var(--process-story-trinity-step-gap); min-width: 0; padding: var(--process-story-trinity-step-padding) 0 var(--process-story-trinity-step-padding) calc(var(--process-story-trinity-step-padding) + var(--kiw--process-story-trinity-step-gap)); border: 0; background: transparent; }
     & .process-story-trinity__trigger { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--kiw--process-story-trinity-trigger-gap); align-items: center; width: 100%; min-height: 0; padding: 0; color: var(--kiw--process-story-trinity-ink-color); background: transparent; text-align: left; cursor: pointer; list-style: none; appearance: none; }
@@ -282,7 +282,6 @@ const descriptionHtml = (value: ProcessItem['description']) => value == null || 
     & .process-story-trinity__description :first-child { margin-top: 0; }
     & .process-story-trinity__description :last-child { margin-bottom: 0; }
     & .process-story-trinity__cta-group { display: flex; flex-wrap: wrap; gap: var(--kiw--process-story-trinity-actions-gap); margin-top: var(--kiw--process-story-trinity-actions-space); }
-    & .process-story-trinity__intro-actions { margin-top: var(--section-space-xs); }
     & .process-story-trinity__timer { position: absolute; inset-block: var(--process-story-trinity-step-padding); inset-inline-start: 0; display: block; inline-size: var(--kiw--process-story-trinity-border-width); overflow: hidden; background: var(--kiw--process-story-trinity-line-color); }
     & .process-story-trinity__timer > span { display: block; width: 100%; height: 100%; transform: scaleY(0); transform-origin: top; background: var(--kiw--process-story-trinity-marker-color); }
     & [data-process-story-active] .process-story-trinity__timer > span { animation: process-story-trinity-timer var(--process-story-trinity-duration) linear both; animation-play-state: paused; }

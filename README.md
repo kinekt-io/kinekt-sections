@@ -154,9 +154,11 @@ Astro receives `contentWidth` and emits `data-kinekt-content-width`. Each sectio
 
 Case Studies and Related Content expose a localized section-level `cardReadMoreIcon` using the existing CTA icon catalogue. Missing or empty values render `chevron-right`; the chosen icon applies to every card in that section, not to the source article or section-level overview CTA.
 
-Section filters use the consumer-overridable `--kiw--sticky-offset` (default `0px`) for sticky positioning. Consumers with fixed or sticky headers must provide their occupied header height. FAQ Index filters wrap; Roadmap and Solution List retain their own overflow behavior.
+Section filters use the consumer-overridable `--kiw--sticky-offset` (default `0px`) for sticky positioning. Consumers with fixed or sticky headers must provide their occupied header height. Solution List and Progress Roadmap use `--space-l` block padding; Roadmap retains a horizontally scrollable, non-wrapping mobile filter row. FAQ Index filters wrap.
 
 On mobile, Read More hides its media, Form Section uses centered square images, and Product Options uses shrinkable 1:2 image/copy columns. HD Cells initially opens its default information panel, auto-closing after three visible seconds; manual More information opening stays open until explicitly closed. A focused information panel is never automatically hidden.
+
+Problem/Solution uses one scroll-scrubbed sticky infographic on mobile and desktop when motion is allowed; progress completes at its second internal heading and the image releases with the section. Reduced-motion and no-JavaScript views retain both readable static states. Solution List labels use literal `--space-xs` padding on both axes, zero margin and line-height1. FAQ overview actions center on desktop and align with the FAQ list's left edge on mobile. Insights bounds the sidebar's internal grid and search input, so intrinsic input widths and long facet labels cannot paint over the positive sidebar/result gap.
 
 ### Component defaults and theme roles
 
@@ -175,9 +177,13 @@ The token migration is part of this source revision. Installing it through a pub
 The structural renderers now activate the renderer-owned behaviours recorded in their manifests:
 
 - Accordion Item, Product Detail Item and Step lists use native `<details>` disclosures. The first item is open server-side; a small enhancement keeps each declared group single-open.
-- Tabs use the WAI-ARIA tab pattern with mouse, arrow-key, `Home` and `End` navigation. The first panel remains visible without JavaScript.
+- Tabs use the WAI-ARIA tab pattern with mouse, arrow-key, `Home` and `End` navigation. Each tab can store localized optional `actionNote` and `actionNoteIcon` below its actions and before its form. Notes are plain text; an empty/whitespace note hides the note and icon, and no copy or icon is invented. Without JavaScript all panels remain readable.
 - Case Study Carousel uses [`embla-carousel`](https://www.embla-carousel.com/): touch/drag support, previous/next buttons, disabled endpoint controls and an announced slide position. Cards remain a readable list before JavaScript.
+- Case Studies Allentown defaults to a looping carousel with previous/next controls and a spaced `1 / 4` counter. Its counter uses `--text-xl`, the consumer's `--kinekt-component-mono` family and weight `500`; explicitly supplied carousel options remain authoritative.
 - Insight Index uses Pagefind’s JavaScript API for its text search, scoped by `pagefindFilters` and the selected Media type / Subject filters (OR). Result URLs are matched to the server-rendered cards, and the facets, sorting and four-per-page pagination run on that list. When the Pagefind bundle is unavailable, the same query falls back to the cards’ title and excerpt. A consumer can replace the search by setting `section.kinektInsightIndexSearch` to a function that returns result URLs.
+- Insight Index staggers visible cards after facet changes, including history navigation and chip removal. Interrupted transitions are cancelled; reduced-motion users receive the final state without animation.
+- HD Cells closes information panels over `240ms`, then removes the completed animation effect so manual reopening remains visible. Reduced motion closes immediately. Topic cards preload their images and use a translucent, blurred information overlay.
+- Use Cases forwards its existing root `ctaGroup` through Payload conversion as well as Astro rendering. No new editor field or content migration is required.
 
 The shared package includes Embla because its API controls the generated carousel. Pagefind is deliberately not bundled: it must index the consuming frontend’s completed static output. Add Pagefind after the Astro build and pass the actual bundle location when it differs from `/pagefind/pagefind.js`:
 
@@ -345,6 +351,7 @@ The source repository is named `kinekt-sections`. The package name is `@kinekt-i
   - [Section – Certification Overview](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5784-631243).
 
 - **Progress Roadmap Allentown** (`sections/progress-roadmap-allentown.astro`, Payload block `progress-roadmap-allentown`) is prerelease. Editors manage the items inside the section: title, optional media or SVG icon, reference label/text, status, rich-text description and optional label/value facts. It shares the six-status contract and custom-status validation with Progress List. Localized filter labels control the visible names; only statuses present in the section appear, with an All option. Filtering uses native buttons with `aria-pressed`; without JavaScript every item remains readable. Dividers appear only between visible items. Default theme: `semi-light`; all four themes and content-width presets are supported.
+  Roadmap status-label text, icons, border and tint derive from the section's theme-aware accent for every status. Its former `customTone` control is removed; Progress List retains its independent semantic/custom tone contract.
   - [Section – Compliance Component – Intro + Image, “Compliance roadmap”](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5744-796023).
 
 Customer-owned Payload configurations can import `ctaFields` and `ctaStyleField` from `@kinekt-io/components/shared/payload-fields` to reuse the section action contract. Compose them inside a localized array with `minRows: 0`, `maxRows: 2` and `admin.initCollapsed: true`. Pass the allowed content collections to `ctaFields`; resolve its `destinationType: 'content'` / `page` relationship against the customer's published, region-scoped routes.
@@ -355,3 +362,13 @@ Customer-owned Payload configurations can import `ctaFields` and `ctaStyleField`
 - Progress List uses an automatic table layout: the status column takes the widest label, including icon and padding, and every status badge fills that cell. The title column takes the remaining width; the existing mobile table scroller remains.
 - Button Allentown renders the label and configured icon slot unchanged for every destination. It does not classify messaging URLs or inject brand SVGs. Customer stylesheets can add decorative logos with URL selectors and pseudo-elements while preserving the independently selected CTA icon. Action Contact and Form Section retain ordinary contact links.
 - Action Contact adds a decorative information icon only when its existing `actionNote` has content. No new editor field is required.
+
+## Standalone high-density sections
+
+`HD Cells Allentown` (`beta-hd-cells-allentown`) and `HD Engineering Allentown` (`beta-hd-engineering-allentown`) are independent prerelease sections decomposed from [High-density tech — Section HD Cells + Engineering](https://www.figma.com/design/7rHrxb3twyBvPo9QxkOBly/KSW-1-Tulip-Tech-Website?node-id=5240-412556). Each owns localized `theme`, `contentWidth` and `intro`; neither adds a gradient.
+
+- HD Cells owns the existing required `cellItems` list. Native disclosures remain readable without JavaScript; enhancement switches media and runs the existing six-second timer with hover/visibility pause, manual stop and reduced-motion handling.
+- HD Engineering owns the existing required `engineeringTopics` list and optional localized `moreInformationLabel`. Topic tabs retain roving keyboard focus; default details close after three visible seconds, while manual state persists and focused content is protected. Close animation respects reduced motion.
+
+The owner selected manual content replacement before old retirement. The still-live `beta-hd-cells-engineering-allentown` contract remains registered and unchanged; existing records are not rewritten or implicitly projected into two blocks. For each replacement, copy `cellsIntro` into the Cells `intro`, `engineeringIntro` into the Engineering `intro`, and retain the corresponding lists, media relationships, locale values, widths and optional information label. Preview/publish the replacements before removing the old block from that layout, and update affected section links. Retire the old contract only after all relevant pages, archives and historical/version requirements have been reviewed.
+

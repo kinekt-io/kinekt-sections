@@ -69,8 +69,8 @@ const visibleProblemItems = problemItems.filter(hasTitle)
 const visibleSolutionSteps = solutionSteps.filter(hasTitle)
 const actions = ctaGroupActions(solutionCtaGroup)
 for (const cta of actions) if (isLinkCta(cta) && !isSafeCtaHref(cta.href)) throw new Error('solutionCtaGroup buttons must use an HTTP(S) URL, root-relative URL, or anchor.')
-// One infographic in two static states. From 50rem (with motion allowed) the script hides the solution copy and
-// scrubs the problem copy from state 0 to 1 while it sticks beside both text groups (runtimeProps.scrollAnimation).
+// One infographic in two static states. With motion allowed, the script hides the solution copy and scrubs the
+// problem copy from state 0 to 1 while it sticks beside both text groups (runtimeProps.scrollAnimation).
 const groups = [
   { state: 'problem' as const, intro: problemIntroContent, label: problemInfographicLabel },
   { state: 'solution' as const, intro: solutionIntroContent, label: solutionInfographicLabel },
@@ -170,9 +170,9 @@ const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice
   </div>
 </section>
 <script>
-  // runtimeProps.scrollAnimation (progressive): from 50rem with motion allowed, one sticky infographic scrubs from the
-  // problem state (0) to the solution state (1). Otherwise (phones, reduced motion, no JS) both static states stay.
-  const motion = window.matchMedia('(min-width: 50rem) and (prefers-reduced-motion: no-preference)')
+  // runtimeProps.scrollAnimation (progressive): with motion allowed, one sticky infographic scrubs from the problem
+  // state (0) to the solution state (1). With reduced motion or no JS, both static states stay.
+  const motion = window.matchMedia('(prefers-reduced-motion: no-preference)')
   const progressProperty = '--kiw--homepage-problem-solution-progress'
 
   for (const section of document.querySelectorAll<HTMLElement>('[data-homepage-problem-solution]')) {
@@ -378,8 +378,10 @@ const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice
     /* Lines draw at one speed, so a longer line takes longer (white: 50 units = 250ms). */
     --kiw--homepage-problem-solution-callout-draw-speed: 5ms;
     --kiw--homepage-problem-solution-callout-text-duration: 300ms;
+    --kiw--homepage-problem-solution-sticky-offset: var(--kiw--sticky-offset, 0px);
     --kiw--homepage-problem-solution-sticky-space: var(--section-space-s);
-    --kiw--homepage-problem-solution-sticky-size: min(var(--kiw--homepage-problem-solution-media-width), 100svh - 2 * var(--kiw--homepage-problem-solution-sticky-space));
+    --kiw--homepage-problem-solution-sticky-top: calc(var(--kiw--homepage-problem-solution-sticky-offset) + var(--kiw--homepage-problem-solution-sticky-space));
+    --kiw--homepage-problem-solution-sticky-size: min(var(--kiw--homepage-problem-solution-media-width), max(0px, calc(100svh - var(--kiw--homepage-problem-solution-sticky-offset) - (var(--kiw--homepage-problem-solution-sticky-space) * 2))));
     --kinekt-section-gap: var(--kiw--homepage-problem-solution-group-gap);
   }
 
@@ -492,16 +494,29 @@ const gradientId = `homepage-problem-solution-${Math.random().toString(36).slice
     .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group--problem > * { grid-row: 1; }
     .homepage-problem-solution-allentown .homepage-problem-solution-allentown__group--solution > * { grid-row: 2; }
     .homepage-problem-solution-allentown .homepage-problem-solution-allentown__stage--problem { align-self: start; }
-    /* Scroll animation (set by the script): the problem stage sticks at the section's top, then releases with its grid. */
-    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--problem { grid-row: 1 / span 2; position: sticky; top: var(--kiw--homepage-problem-solution-sticky-space); max-inline-size: var(--kiw--homepage-problem-solution-sticky-size); }
+    /* Scroll animation (set by the script): the problem stage sticks below the site header, then releases with its grid. */
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--problem { grid-row: 1 / span 2; position: sticky; top: var(--kiw--homepage-problem-solution-sticky-top); align-self: start; max-inline-size: var(--kiw--homepage-problem-solution-sticky-size); }
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--problem .homepage-problem-solution-allentown__scene { will-change: transform; }
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--solution { display: none; }
+  }
+  @media (max-width: 49.999rem) {
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] { --kiw--homepage-problem-solution-sticky-size: max(0px, calc(100svh - var(--kiw--homepage-problem-solution-sticky-offset) - (var(--kiw--homepage-problem-solution-sticky-space) * 2))); }
+    .homepage-problem-solution-allentown :is(h1, h2, h3, h4, h5, h6) { max-width: 100vw; }
+    /*
+     * Enhanced phones use the same two-row grid as desktop: the first stage spans the two text rows, so its sticky
+     * containing block lasts through the solution. The problem text reserves the stage's capped square before its
+     * first line; the sticky, opaque canvas stays above text as it scrolls behind it.
+     */
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] > .homepage-problem-solution-allentown__container { grid-template-columns: minmax(0, 1fr); }
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__group { display: contents; }
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--problem { grid-column: 1; grid-row: 1 / span 2; position: sticky; z-index: 1; top: var(--kiw--homepage-problem-solution-sticky-top); align-self: start; max-inline-size: var(--kiw--homepage-problem-solution-sticky-size); }
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__group--problem .homepage-problem-solution-allentown__text { grid-column: 1; grid-row: 1; padding-block-start: calc(min(100%, var(--kiw--homepage-problem-solution-sticky-size)) + var(--kiw--homepage-problem-solution-stack-gap)); }
+    .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__group--solution .homepage-problem-solution-allentown__text { grid-column: 1; grid-row: 2; }
     .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--problem .homepage-problem-solution-allentown__scene { will-change: transform; }
     .homepage-problem-solution-allentown[data-homepage-problem-solution-animated] .homepage-problem-solution-allentown__stage--solution { display: none; }
   }
   @media (min-width: 75rem) {
     .homepage-problem-solution-allentown .homepage-problem-solution-allentown__problems { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 49.999rem) {
-    .homepage-problem-solution-allentown :is(h1, h2, h3, h4, h5, h6) { max-width: 100vw; }
   }
 </style>
 <style is:global>

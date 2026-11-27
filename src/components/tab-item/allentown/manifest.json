@@ -5,7 +5,7 @@
   "id": "components/tab-item/allentown",
   "slug": "tab-item-allentown",
   "title": "Tab Item Allentown",
-  "description": "A localized tab with an optional introduction, optional action group and optional form embed.",
+  "description": "A localized tab with an optional introduction, action group, action note with icon and form embed.",
   "category": "components",
   "role": "tab-item",
   "variation": "allentown",
@@ -14,6 +14,8 @@
     "label": { "kind": "text", "required": true, "localized": true },
     "intro": { "kind": "component", "componentId": "components/intro/allentown", "required": false, "localized": true, "admin": { "initCollapsed": true }, "description": "Optional accent heading, heading and rich-text description. Every field may be left empty." },
     "ctaGroup": { "kind": "ctaGroup", "required": false, "localized": true, "minItems": 0, "maxItems": 2 },
+    "actionNote": { "kind": "text", "required": false, "localized": true, "description": "Optional plain-text note displayed below this tab's actions." },
+    "actionNoteIcon": { "kind": "text", "required": false, "localized": true, "description": "Optional Font Awesome 7 Sharp Solid icon name displayed with this tab's action note." },
     "form": { "kind": "formEmbed", "required": false, "localized": true, "description": "Optional HubSpot embed code. Leave empty for an introduction or contact actions without a form." },
     "formPresentation": { "kind": "formModal", "required": false, "localized": true, "description": "Show the supplied form in a modal after an editor-configured opener is selected. Leave off to preserve the inline form." }
   }

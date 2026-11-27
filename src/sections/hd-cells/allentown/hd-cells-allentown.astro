@@ -1,0 +1,192 @@
+---
+import '../../../styles/wireframe-tokens.css'
+import HdCellItem, { type HdCellItemContent } from '../../../components/hd-cell-item/allentown/hd-cell-item-allentown.astro'
+import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
+import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
+import type { RichText, SectionIntro as SectionIntroContent, SectionTheme } from '../../../shared/content.js'
+import { richTextToHtml } from '../../../shared/rich-text.js'
+import type { BetaHdCellsAllentownContent } from './hd-cells-allentown.types.js'
+
+type RichTextInput = string | RichText | Record<string, unknown>
+type IntroInput = Omit<SectionIntroContent, 'description'> & { description?: RichTextInput | null }
+
+interface Props extends BetaHdCellsAllentownContent {
+  id?: string
+  theme?: SectionTheme
+  headingLevel?: 'h2' | 'h3'
+  intro: IntroInput
+  cellItems: HdCellItemContent[]
+}
+
+const { id, theme = 'light', headingLevel = 'h2', intro, cellItems = [] } = Astro.props as Props
+const toHtml = (value: RichTextInput, field: string): string => {
+  if (typeof value === 'string') return value.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean).map((part) => richTextToHtml(part, field)).join('')
+  if (typeof value.html === 'string') return value.html
+  return richTextToHtml(value, field)
+}
+const introContent: SectionIntroContent = {
+  ...intro,
+  description: intro.description == null || typeof intro.description === 'string' ? intro.description ?? undefined : { html: toHtml(intro.description, 'intro.description') },
+}
+const hasMedia = (media: unknown): boolean => Boolean(media && typeof media === 'object' && typeof (media as { url?: unknown }).url === 'string' && (media as { url: string }).url !== '')
+const cells = cellItems.filter((item) => item && typeof item.title === 'string' && item.title !== '')
+const cellMedia = cells.map((item, index) => ({ media: item.media, index })).filter((entry) => hasMedia(entry.media))
+---
+<section class="hd-cells-allentown" id={id} data-kinekt-section data-kinekt-content-width={Astro.props.contentWidth ?? 'standard'} data-kinekt-theme={theme}>
+  <div class="hd-cells-allentown__container">
+    <header class="hd-cells-allentown__header">
+      <SectionIntro intro={introContent} headingLevel={headingLevel} accentStyle="heading" />
+    </header>
+    <div class:list={['hd-cells-allentown__body', { 'hd-cells-allentown__body--media': cellMedia.length > 0 }]}>
+      {cellMedia.length > 0 && (
+        <div class="hd-cells-allentown__media">
+          {cellMedia.map(({ media, index }, position) => (
+            <div class="hd-cells-allentown__media-item" data-hd-cell-media={index} hidden={position !== 0}>
+              <KinektMedia media={media} imageClass="hd-cells-allentown__image" loading="eager" fetchpriority="high" />
+            </div>
+          ))}
+        </div>
+      )}
+      <ul class="hd-cells-allentown__list" data-kinekt-disclosure-group>
+        {cells.map((item, index) => (
+          <li class="hd-cells-allentown__cell">
+            <span class="hd-cells-allentown__timer" aria-hidden="true"><span></span></span>
+            <HdCellItem item={item} index={index} open={index === 0} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+<script>
+  import { initializeKinektInteractions } from '../../../shared/interactions'
+
+  document.querySelectorAll<HTMLElement>('.hd-cells-allentown[data-kinekt-section]').forEach((section) => {
+    if (section.hasAttribute('data-hd-cells-enhanced')) return
+    section.setAttribute('data-hd-cells-enhanced', '')
+    initializeKinektInteractions(section)
+
+
+    const media = Array.from(section.querySelectorAll<HTMLElement>('[data-hd-cell-media]'))
+    section.querySelectorAll<HTMLDetailsElement>('details[data-hd-cell-item]').forEach((details) => {
+      details.addEventListener('toggle', () => {
+        const index = details.dataset.hdCellItem
+        if (!details.open || !media.some((item) => item.dataset.hdCellMedia === index)) return
+        media.forEach((item) => { item.hidden = item.dataset.hdCellMedia !== index })
+      })
+    })
+
+    const body = section.querySelector<HTMLElement>('.hd-cells-allentown__body--media')
+    const disclosures = Array.from(body?.querySelectorAll<HTMLDetailsElement>('details[data-hd-cell-item]') ?? [])
+    if (!body || disclosures.length <= 1 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const rows = disclosures.map((details) => details.parentElement!)
+    let activeIndex = 0
+    let hovered = body.matches(':hover')
+    let visible = false
+    let stopped = false
+    body.dataset.hdCellTimed = 'true'
+
+    const syncTimer = () => {
+      body.dataset.hdCellTimerState = stopped || hovered || !visible ? 'paused' : 'running'
+    }
+    const show = (index: number) => {
+      activeIndex = index
+      disclosures.forEach((details, itemIndex) => {
+        const active = itemIndex === index
+        rows[itemIndex].toggleAttribute('data-hd-cell-active', active)
+        details.open = active
+      })
+    }
+    body.addEventListener('animationend', (event) => {
+      if (stopped || event.animationName !== 'hd-cells-allentown-timer') return
+      if (event.target !== rows[activeIndex].querySelector('.hd-cells-allentown__timer > span')) return
+      show((activeIndex + 1) % disclosures.length)
+    })
+    body.addEventListener('pointerenter', () => { hovered = true; syncTimer() })
+    body.addEventListener('pointerleave', () => { hovered = false; syncTimer() })
+    disclosures.forEach((details, index) => {
+      details.querySelector('summary')?.addEventListener('click', (event) => {
+        event.preventDefault()
+        stopped = true
+        body.dataset.hdCellStopped = 'true'
+        show(index)
+        syncTimer()
+      })
+    })
+    show(0)
+    syncTimer()
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting
+      syncTimer()
+    }, { threshold: 0.2 }).observe(body)
+  })
+</script>
+<style is:global>
+  :where(.hd-cells-allentown) {
+    --kinekt-component-site-width: var(--kinekt-section-site-width, var(--website-width));
+    --kinekt-component-content-width: var(--kinekt-section-content-width, var(--content-width));
+    --kinekt-component-reading-width: var(--kinekt-section-reading-width, var(--width-m));
+    --kinekt-component-inline-space: var(--kinekt-section-inline-space, var(--section-gutter));
+    --kinekt-component-block-space: var(--kinekt-section-block-space, var(--section-space-xl));
+    --kinekt-component-gap: var(--kinekt-section-gap, var(--content-gap));
+    --kinekt-component-radius: var(--kinekt-section-radius, var(--radius-none));
+    --kinekt-component-border-width: var(--kinekt-section-border-width, var(--border-width));
+    --kinekt-component-media-filter: var(--kinekt-section-media-filter, var(--media-filter));
+    --kinekt-component-font: var(--kinekt-section-font, var(--text-font-family));
+    --kinekt-component-heading-font-family: var(--kinekt-section-heading-font-family, var(--heading-font-family));
+    --kinekt-component-heading-font-weight: var(--kinekt-section-heading-font-weight, var(--heading-font-weight));
+    --kinekt-component-heading-letter-spacing: var(--kinekt-section-heading-letter-spacing, var(--heading-letter-spacing));
+    --kinekt-component-heading-line-height: var(--kinekt-section-heading-line-height, var(--heading-line-height));
+    --kinekt-component-text-line-height: var(--kinekt-section-text-line-height, var(--text-line-height));
+    --kinekt-component-canvas: var(--kinekt-section-canvas, var(--neutral-ultra-light));
+    --kinekt-component-surface: var(--kinekt-section-surface, var(--white));
+    --kinekt-component-ink: var(--kinekt-section-ink, var(--primary-ultra-dark));
+    --kinekt-component-muted: var(--kinekt-section-muted, var(--primary-semi-dark));
+    --kinekt-component-line: var(--kinekt-section-line, var(--primary-ultra-light));
+    --kinekt-component-accent: var(--kinekt-section-accent, var(--accent-semi-dark));
+    --hd-cells-header-width: var(--width-l);
+    --hd-cells-body-width: var(--width-xxl);
+    --hd-cells-body-gap: var(--section-space-l);
+    --hd-cells-list-gap: var(--section-space-s);
+  }
+  .hd-cells-allentown[data-kinekt-theme='semi-light'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--neutral-light)); }
+  .hd-cells-allentown[data-kinekt-theme='semi-dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--primary-dark)); --kinekt-component-surface: var(--kinekt-section-surface, var(--primary-semi-dark)); --kinekt-component-ink: var(--kinekt-section-ink, var(--white)); --kinekt-component-muted: var(--kinekt-section-muted, var(--primary-light)); --kinekt-component-line: var(--kinekt-section-line, var(--primary)); }
+  .hd-cells-allentown[data-kinekt-theme='dark'] { --kinekt-component-canvas: var(--kinekt-section-canvas, var(--primary-ultra-dark)); --kinekt-component-surface: var(--kinekt-section-surface, var(--primary-semi-dark)); --kinekt-component-ink: var(--kinekt-section-ink, var(--white)); --kinekt-component-muted: var(--kinekt-section-muted, var(--primary-ultra-light)); --kinekt-component-line: var(--kinekt-section-line, var(--primary)); }
+  .hd-cells-allentown { box-sizing: border-box; padding-block: var(--kinekt-component-block-space); color: var(--kinekt-component-ink); background: var(--kinekt-component-canvas); font-family: var(--kinekt-component-font); font-size: var(--text-m); font-weight: var(--text-font-weight); line-height: var(--kinekt-component-text-line-height); letter-spacing: var(--text-letter-spacing); }
+  .hd-cells-allentown, .hd-cells-allentown[data-kinekt-theme='light'] { color-scheme: light; }
+  .hd-cells-allentown *, .hd-cells-allentown *::before, .hd-cells-allentown *::after { box-sizing: border-box; }
+  .hd-cells-allentown [hidden] { display: none !important; }
+  .hd-cells-allentown[data-kinekt-section] { --kinekt-section-content-width: var(--desktop-content-width); }
+  .hd-cells-allentown[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
+  .hd-cells-allentown[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
+  .hd-cells-allentown[data-kinekt-content-width='50'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .5); }
+  .hd-cells-allentown__container { display: grid; width: 100%; max-width: min(var(--kinekt-component-site-width), calc(var(--kinekt-component-content-width) + (var(--kinekt-component-inline-space) * 2))); gap: var(--hd-cells-body-gap); margin-inline: auto; padding-inline: var(--kinekt-component-inline-space); }
+  .hd-cells-allentown__header { display: grid; justify-items: center; width: 100%; text-align: center; }
+  .hd-cells-allentown .section-intro { display: grid; justify-items: center; gap: var(--space-m); }
+  .hd-cells-allentown .section-intro__heading-group { display: grid; justify-items: center; gap: var(--space-xxs); }
+  .hd-cells-allentown .section-intro :is(.section-intro__accent, .section-intro__heading, .section-intro__description) { margin: 0; }
+  .hd-cells-allentown .section-intro__heading { max-width: none; font-size: var(--h2); }
+  .hd-cells-allentown .section-intro__description { max-width: none; color: var(--kinekt-component-muted); font-size: var(--text-xl); text-wrap: balance; }
+  .hd-cells-allentown .section-intro__description > * { margin-block: 0; }
+  .hd-cells-allentown__body { display: grid; gap: var(--hd-cells-body-gap); min-width: 0; max-width: var(--hd-cells-body-width); width: 100%; margin-inline: auto; }
+  .hd-cells-allentown__media { display: grid; min-width: 0; }
+  .hd-cells-allentown__media-item { grid-area: 1 / 1; min-width: 0; background: var(--kinekt-component-surface); }
+  .hd-cells-allentown__media-item > .kinekt-media { display: block; }
+  .hd-cells-allentown__image { display: block; width: 100%; max-width: 100%; aspect-ratio: 5 / 4; object-fit: cover; border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
+  .hd-cells-allentown__list { display: grid; align-content: start; gap: var(--hd-cells-list-gap); min-width: 0; margin: 0; padding: 0; list-style: none; }
+  .hd-cells-allentown__cell { position: relative; min-width: 0; }
+  .hd-cells-allentown:is([data-kinekt-theme='light'], [data-kinekt-theme='semi-light']) .hd-cell-item-allentown { --kiw--hd-cell-item-allentown-description-color: var(--primary-dark); }
+  .hd-cells-allentown:is([data-kinekt-theme='semi-dark'], [data-kinekt-theme='dark']) .hd-cell-item-allentown { --kiw--hd-cell-item-allentown-description-color: var(--primary-light); }
+  .hd-cells-allentown__timer { display: none; }
+  .hd-cells-allentown__body[data-hd-cell-timed] .hd-cell-item-allentown > .hd-cell-item-allentown__summary::before { content: none; }
+  .hd-cells-allentown__body[data-hd-cell-timed] .hd-cells-allentown__timer { position: absolute; z-index: 1; inset-block: 0; inset-inline-start: 0; display: block; width: calc(var(--border-width) * 2); overflow: hidden; pointer-events: none; background: var(--kinekt-component-line); }
+  .hd-cells-allentown__body[data-hd-cell-timed] .hd-cells-allentown__timer > span { display: block; width: 100%; height: 100%; background: var(--kinekt-component-accent); transform: scaleY(0); transform-origin: top; }
+  .hd-cells-allentown__body[data-hd-cell-timed] [data-hd-cell-active] .hd-cells-allentown__timer > span { animation: hd-cells-allentown-timer var(--hd-cells-duration, 6s) linear both; animation-play-state: paused; }
+  .hd-cells-allentown__body[data-hd-cell-timer-state='running'] [data-hd-cell-active] .hd-cells-allentown__timer > span { animation-play-state: running; }
+  .hd-cells-allentown__body[data-hd-cell-stopped='true'] [data-hd-cell-active] .hd-cells-allentown__timer > span { animation: none; transform: scaleY(1); }
+  @keyframes hd-cells-allentown-timer { to { transform: scaleY(1); } }
+  @media (prefers-reduced-motion: no-preference) { .hd-cells-allentown[data-hd-cells-enhanced] .hd-cells-allentown__media-item:not([hidden]) { animation: hd-cells-allentown-fade 320ms ease-out; } }
+  @keyframes hd-cells-allentown-fade { from { opacity: 0; } to { opacity: 1; } }
+  @media (min-width: 50rem) { .hd-cells-allentown__body--media { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; } .hd-cells-allentown__body:not(.hd-cells-allentown__body--media) .hd-cells-allentown__list { max-width: var(--hd-cells-header-width); margin-inline: auto; } }
+</style>

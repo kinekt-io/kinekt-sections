@@ -55,23 +55,23 @@ const plus = ctaIconPaths('plus')
   </div>
 </div>
 <style is:global>
-  /* Figma "Frame 44827" (5240:412598): a 576 × 720 (4:5) image with a "Content Item Description" card (5240:412600) inset space-m at the
-     bottom. Collapsed it holds a clear-alt "More information +" Button; expanded (5240:412580) a Subtile + Flight Path Small header,
-     space-xxl, then the topic copy (text-m, 1.5), a divider and up to two titled labels. */
+  /* Figma "Frame 44827" (5240:412598): a 576 × 720 (4:5) image with a "Content Item Description" card.
+     The reviewed overlay extends by space-xxs at both inline edges and the block end. Collapsed it holds a clear-alt
+     "More information +" Button; expanded it shows a flight-path title, topic copy, divider and up to two titled labels. */
   :where(.hd-engineering-topic-allentown) {
     --kiw--hd-engineering-topic-allentown-media-ratio: 4 / 5;
     --kiw--hd-engineering-topic-allentown-media-background: var(--kinekt-component-surface, transparent);
     --kiw--hd-engineering-topic-allentown-media-border-color: var(--kinekt-component-line, currentColor);
-    --kiw--hd-engineering-topic-allentown-card-inset: var(--space-m);
+    --kiw--hd-engineering-topic-allentown-card-inset: calc(var(--space-xxs) * -1);
     --kiw--hd-engineering-topic-allentown-card-padding: var(--space-l);
     --kiw--hd-engineering-topic-allentown-card-gap: var(--space-xxl);
-    --kiw--hd-engineering-topic-allentown-card-radius: var(--radius-l);
-    --kiw--hd-engineering-topic-allentown-card-background: var(--kinekt-component-surface, transparent);
-    /* Figma adds a soft black drop shadow and a faint gradient; not reproduced (no shadow token; colours come from roles). */
+    --kiw--hd-engineering-topic-allentown-card-radius: 6px;
+    --kiw--hd-engineering-topic-allentown-card-background: rgb(0 29 15 / 30%);
+    --kiw--hd-engineering-topic-allentown-card-ink: var(--white);
     --kiw--hd-engineering-topic-allentown-card-shadow: none;
     --kiw--hd-engineering-topic-allentown-body-gap: var(--space-m);
     --kiw--hd-engineering-topic-allentown-description-size: var(--text-m);
-    --kiw--hd-engineering-topic-allentown-description-color: var(--kinekt-component-muted, inherit);
+    --kiw--hd-engineering-topic-allentown-description-color: var(--kiw--hd-engineering-topic-allentown-card-ink);
     --kiw--hd-engineering-topic-allentown-divider-color: var(--kinekt-component-line, currentColor);
     --kiw--hd-engineering-topic-allentown-labels-gap: var(--space-xl);
   }
@@ -79,7 +79,10 @@ const plus = ctaIconPaths('plus')
   .hd-engineering-topic-allentown { position: relative; display: grid; min-width: 0; }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__media { display: block; min-width: 0; background: var(--kiw--hd-engineering-topic-allentown-media-background); }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__image { display: block; inline-size: 100%; max-inline-size: 100%; block-size: auto; aspect-ratio: var(--kiw--hd-engineering-topic-allentown-media-ratio); object-fit: cover; border: var(--kinekt-component-border-width, var(--border-width)) solid var(--kiw--hd-engineering-topic-allentown-media-border-color); border-radius: var(--kinekt-component-radius); filter: var(--kinekt-component-media-filter); }
-  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__card { display: grid; gap: var(--kiw--hd-engineering-topic-allentown-card-gap); padding: var(--kiw--hd-engineering-topic-allentown-card-padding); border-radius: var(--kiw--hd-engineering-topic-allentown-card-radius); background: var(--kiw--hd-engineering-topic-allentown-card-background); box-shadow: var(--kiw--hd-engineering-topic-allentown-card-shadow); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__card { display: grid; gap: var(--kiw--hd-engineering-topic-allentown-card-gap); padding: var(--kiw--hd-engineering-topic-allentown-card-padding); border-radius: var(--kiw--hd-engineering-topic-allentown-card-radius); color: var(--kiw--hd-engineering-topic-allentown-card-ink); background: var(--kiw--hd-engineering-topic-allentown-card-background); backdrop-filter: blur(4px); box-shadow: var(--kiw--hd-engineering-topic-allentown-card-shadow); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__card .subtitle-flight-path { --kiw--subtitle-flight-path-color: var(--kiw--hd-engineering-topic-allentown-card-ink); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__card .result-item-allentown { --kiw--result-item-allentown-label-ink: var(--kiw--hd-engineering-topic-allentown-card-ink); }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__card .label-allentown { --kiw--label-allentown-ink: var(--kiw--hd-engineering-topic-allentown-card-ink); }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__details { display: grid; gap: var(--kiw--hd-engineering-topic-allentown-card-gap); min-width: 0; }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__title { margin: 0; }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__body { display: grid; gap: var(--kiw--hd-engineering-topic-allentown-body-gap); }
@@ -94,7 +97,7 @@ const plus = ctaIconPaths('plus')
     padding-block-start: var(--kiw--hd-engineering-topic-allentown-body-gap);
     border-block-start: var(--kinekt-component-border-width, var(--border-width)) solid var(--kiw--hd-engineering-topic-allentown-divider-color);
   }
-  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__toggle { justify-self: start; font-family: inherit; }
+  .hd-engineering-topic-allentown .hd-engineering-topic-allentown__toggle { justify-self: start; color: var(--kiw--hd-engineering-topic-allentown-card-ink); font-family: inherit; }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__toggle:focus-visible { outline: calc(var(--border-width) * 2) solid var(--kinekt-component-accent, currentColor); outline-offset: var(--space-xxs); }
   .hd-engineering-topic-allentown .hd-engineering-topic-allentown__toggle[aria-expanded='true'] > svg { transform: rotate(45deg); }
   /* Collapsed (enhanced) state: only the toggle shows, as in the Figma frame. */

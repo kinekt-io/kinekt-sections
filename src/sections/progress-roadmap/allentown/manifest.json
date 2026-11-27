@@ -42,7 +42,6 @@
         "status": { "kind": "select", "required": true, "localized": true, "defaultValue": "todo", "options": ["delayed", "done", "in-progress", "todo", "custom", "canceled"] },
         "statusLabel": { "kind": "text", "required": false, "localized": true, "description": "Optional visible status text override; required for custom status." },
         "customIcon": { "kind": "text", "required": false, "localized": true },
-        "customTone": { "kind": "select", "required": false, "localized": true, "defaultValue": "neutral", "options": ["neutral", "info", "success", "warning", "error"] },
         "description": { "kind": "richText", "required": false, "localized": true },
         "facts": {
           "kind": "componentList", "required": false, "localized": true, "minItems": 0,

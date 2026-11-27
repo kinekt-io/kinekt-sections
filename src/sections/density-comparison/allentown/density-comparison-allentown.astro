@@ -145,7 +145,7 @@ const actionIcon = action && isCtaIcon(action.icon) ? ctaIconPaths(action.icon) 
   .density-comparison-allentown .density-comparison-allentown__table tbody tr:last-child :is(th, td) { border-bottom: 0; }
   .density-comparison-allentown .density-comparison-allentown__table thead th { font-weight: var(--kiw--density-comparison-allentown-heading-weight); }
   .density-comparison-allentown .density-comparison-allentown__table :is(thead th:first-child, tbody th) { width: 1%; }
-  .density-comparison-allentown .density-comparison-allentown__table :is(thead th:not(:first-child), td) { white-space: nowrap; }
+  .density-comparison-allentown .density-comparison-allentown__table :is(thead th:not(:first-child), tbody th, td) { white-space: nowrap; }
   .density-comparison-allentown .density-comparison-allentown__table tbody th { font-weight: var(--kiw--density-comparison-allentown-heading-weight); }
   .density-comparison-allentown .density-comparison-allentown__table th[scope='row'] { font-size: var(--text-xl); }
   .density-comparison-allentown .density-comparison-allentown__table {

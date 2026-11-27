@@ -311,6 +311,17 @@
       "import": "./dist/sections/form-section/allentown/form-section-allentown.types.js",
       "types": "./dist/sections/form-section/allentown/form-section-allentown.types.d.ts"
     },
+    "./sections/hd-cells-allentown.astro": "./src/sections/hd-cells/allentown/hd-cells-allentown.astro",
+    "./sections/hd-cells-allentown.payload": {
+      "default": "./dist/sections/hd-cells/allentown/hd-cells-allentown.payload.js",
+      "import": "./dist/sections/hd-cells/allentown/hd-cells-allentown.payload.js",
+      "types": "./dist/sections/hd-cells/allentown/hd-cells-allentown.payload.d.ts"
+    },
+    "./sections/hd-cells-allentown.types": {
+      "default": "./dist/sections/hd-cells/allentown/hd-cells-allentown.types.js",
+      "import": "./dist/sections/hd-cells/allentown/hd-cells-allentown.types.js",
+      "types": "./dist/sections/hd-cells/allentown/hd-cells-allentown.types.d.ts"
+    },
     "./sections/hd-cells-engineering-allentown.astro": "./src/sections/hd-cells-engineering/allentown/hd-cells-engineering-allentown.astro",
     "./sections/hd-cells-engineering-allentown.payload": {
       "default": "./dist/sections/hd-cells-engineering/allentown/hd-cells-engineering-allentown.payload.js",
@@ -321,6 +332,17 @@
       "default": "./dist/sections/hd-cells-engineering/allentown/hd-cells-engineering-allentown.types.js",
       "import": "./dist/sections/hd-cells-engineering/allentown/hd-cells-engineering-allentown.types.js",
       "types": "./dist/sections/hd-cells-engineering/allentown/hd-cells-engineering-allentown.types.d.ts"
+    },
+    "./sections/hd-engineering-allentown.astro": "./src/sections/hd-engineering/allentown/hd-engineering-allentown.astro",
+    "./sections/hd-engineering-allentown.payload": {
+      "default": "./dist/sections/hd-engineering/allentown/hd-engineering-allentown.payload.js",
+      "import": "./dist/sections/hd-engineering/allentown/hd-engineering-allentown.payload.js",
+      "types": "./dist/sections/hd-engineering/allentown/hd-engineering-allentown.payload.d.ts"
+    },
+    "./sections/hd-engineering-allentown.types": {
+      "default": "./dist/sections/hd-engineering/allentown/hd-engineering-allentown.types.js",
+      "import": "./dist/sections/hd-engineering/allentown/hd-engineering-allentown.types.js",
+      "types": "./dist/sections/hd-engineering/allentown/hd-engineering-allentown.types.d.ts"
     },
     "./sections/hero-allentown.astro": "./src/sections/hero/allentown/hero-allentown.astro",
     "./sections/hero-allentown.payload": {

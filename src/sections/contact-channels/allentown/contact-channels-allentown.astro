@@ -3,7 +3,7 @@ import '../../../styles/wireframe-tokens.css'
 import { fass as fas } from '@fortawesome/sharp-solid-svg-icons'
 import CtaAction from '../../../shared/cta-action-allentown.astro'
 import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
-import { ctaGroupActions, type Cta, type RichText, type SectionIntro as SectionIntroContent, type SectionTheme } from '../../../shared/content.js'
+import { ctaGroupActions, isFormCta, type Cta, type RichText, type SectionIntro as SectionIntroContent, type SectionTheme } from '../../../shared/content.js'
 import { richTextToHtml } from '../../../shared/rich-text.js'
 import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 
@@ -38,7 +38,9 @@ const shield = fas.faShieldHalved.icon
       <div class="contact-channels-allentown__availability" set:html={availabilityHtml} />
       {privacyNote && <p class="contact-channels-allentown__privacy"><svg aria-hidden="true" width="1em" height="1em" viewBox={`0 0 ${shield[0]} ${shield[1]}`} fill="currentColor"><path d={shield[4] as string} /></svg><span>{privacyNote}</span></p>}
       <nav class="contact-channels-allentown__actions" aria-label={`${contactHeading} actions`}>
-        {contactActions.map((action, index) => <CtaAction cta={action} style={action.style ?? (index === 0 ? 'secondary' : 'secondary')} />)}
+        {contactActions.map((action) => (
+          <CtaAction class="contact-channels-allentown__action" cta={isFormCta(action) ? action : { ...action, icon: 'chevron-right' }} style={action.style ?? 'secondary'} />
+        ))}
       </nav>
     </aside>
   </div>
@@ -79,14 +81,17 @@ const shield = fas.faShieldHalved.icon
   .contact-channels-allentown__intro .section-intro { max-inline-size: var(--width-l); }
   .contact-channels-allentown__intro .section-intro__heading { color: inherit; }
   .contact-channels-allentown__intro .section-intro__description { color: var(--kinekt-component-muted); }
-  .contact-channels-allentown__channels { display: grid; align-content: start; gap: var(--space-s); min-inline-size: 0; padding-inline-start: var(--section-space-s); border-inline-start: var(--border-width) solid var(--kinekt-component-line); }
+  .contact-channels-allentown__channels { display: grid; align-content: start; gap: var(--space-s); min-inline-size: 0; }
   .contact-channels-allentown__heading { margin: 0; font: inherit; font-size: var(--h5); font-weight: var(--heading-font-weight); color: inherit; }
   .contact-channels-allentown__availability { color: var(--kinekt-component-muted); }
   .contact-channels-allentown__availability > * { margin: 0; }
-  .contact-channels-allentown__privacy { display: flex; gap: var(--space-xxs); align-items: center; margin: 0; color: var(--kinekt-component-muted); font-size: var(--text-s); }
-  .contact-channels-allentown__privacy svg { flex: 0 0 auto; color: var(--kinekt-component-accent); }
+  .contact-channels-allentown__privacy { display: flex; gap: var(--space-xxs); align-items: center; margin: 0; color: var(--primary-semi-light); font-size: var(--text-s); }
+  .contact-channels-allentown__privacy svg { flex: 0 0 auto; color: var(--primary-semi-light); }
   .contact-channels-allentown__actions { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-block-start: var(--space-xs); }
-  .contact-channels-allentown__actions > * { flex: 1 1 var(--width-xs); }
+  .contact-channels-allentown__actions > * { flex: 1 1 var(--width-xs); min-inline-size: max-content; }
+  .contact-channels-allentown__actions .button { white-space: nowrap; }
+  .contact-channels-allentown__action { justify-content: space-between; }
+  .contact-channels-allentown__action > svg { margin-inline-start: auto; }
   .contact-channels-allentown:is([data-kinekt-theme='dark'], [data-kinekt-theme='semi-dark']) .button {
     --kinekt-component-action: var(--primary-semi-dark);
     --kinekt-component-action-text: var(--white);
@@ -101,8 +106,7 @@ const shield = fas.faShieldHalved.icon
   .contact-channels-allentown:is([data-kinekt-theme='dark'], [data-kinekt-theme='semi-dark']) .button--secondary:is(:hover, :focus-visible) {
     --kinekt-component-action: var(--primary);
   }
-  @media (min-width: 50rem) { .contact-channels-allentown__container { grid-template-columns: minmax(0, 1fr) minmax(0, .95fr); align-items: center; column-gap: var(--section-space-xl); } }
-  @media (max-width: 49.999rem) { .contact-channels-allentown__channels { padding-inline-start: 0; padding-block-start: var(--section-space-s); border-inline-start: 0; border-block-start: var(--border-width) solid var(--kinekt-component-line); } }
+  @media (min-width: 50rem) { .contact-channels-allentown__container { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); align-items: center; column-gap: var(--section-space-xl); } }
   .contact-channels-allentown[data-kinekt-content-width='80'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .8); }
   .contact-channels-allentown[data-kinekt-content-width='70'] { --kinekt-section-content-width: calc(var(--desktop-content-width) * .7); }
 </style>
