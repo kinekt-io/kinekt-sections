@@ -1,0 +1,22 @@
+---
+import HdEngineering from './hd-engineering-allentown.astro'
+
+const placeholder = (name: string) => (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`) + `placeholders/${name}`
+const media = (alt: string) => ({ url: placeholder('placeholder-800x1000.svg'), alt, width: 800, height: 1000 })
+
+const content = {
+  theme: 'dark' as const,
+  intro: {
+    accentHeading: '/ High-density engineering',
+    heading: 'Turn cell performance into platform performance',
+    description: 'High-density cells are only part of the equation. The way they are configured, packaged, cooled and integrated determines how much of that performance reaches the platform.',
+  },
+  engineeringTopics: [
+    { media: media('Exploded view of the pack architecture'), title: 'Pack architecture', description: 'Cell layout, enclosure and internal architecture are optimized to maximize usable energy within available space and weight.', labels: [{ label: 'Assembly time', value: { text: '18% faster', icon: 'stopwatch' } }, { label: 'Service access', value: { text: 'Tool-free', icon: 'screwdriver-wrench' } }] },
+    { media: media('Battery management system board'), title: 'Electrical optimization', description: 'Interconnects, busbars and the battery management system are tuned to keep losses low and deliver stable power under peak load.' },
+    { media: media('Thermal image of a pack under load'), title: 'Thermal performance', description: 'Heat paths and spacing between cells keep temperatures even, so the pack sustains high discharge rates without derating.' },
+    { media: media('Battery pack mounted in a platform'), title: 'System integration', description: 'Connectors, mounting points and communication interfaces are matched to the platform, so the pack drops in without rework.' },
+  ],
+}
+---
+<HdEngineering {...content} />

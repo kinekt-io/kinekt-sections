@@ -61,7 +61,6 @@ test('Progress Roadmap preserves rich description lists and populated media', ()
   assert.equal(result.items[0].media?.url, '/media/audit.png')
   assert.equal(result.items[0].description?.html, '<ul><li>Prepare evidence</li></ul>')
   assert.equal(result.items[0].statusLabel, 'Scheduled')
-  assert.equal(result.items[0].customTone, 'neutral')
 })
 
 test('Progress Roadmap requires a custom status label in the CMS and adapter', () => {

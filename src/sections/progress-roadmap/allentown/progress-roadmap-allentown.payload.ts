@@ -35,7 +35,7 @@ export function createProgressRoadmapAllentownBlock(options: CreateProgressRoadm
     { name: 'icon', type: 'text', validate: isSharpSolidIconNameOrEmpty, admin: { description: 'Optional Font Awesome 7 Sharp Solid or Brands icon name, used when no image is selected.' } },
     { name: 'referenceLabel', type: 'text' },
     { name: 'reference', type: 'text' },
-    ...progressStatusFields({ localized: false }),
+    ...progressStatusFields({ localized: false, includeCustomTone: false }),
     { name: 'description', type: 'richText' },
     {
       name: 'facts',
@@ -153,7 +153,7 @@ function itemToProps(value: unknown, index: number, options: PayloadAdapterOptio
     ...(icon ? { icon } : {}),
     ...(referenceLabel ? { referenceLabel } : {}),
     ...(reference ? { reference } : {}),
-    ...progressStatusToProps(item, path),
+    ...progressStatusToProps(item, path, { includeCustomTone: false }),
     ...(description ? { description } : {}),
     ...(facts ? { facts } : {}),
   }

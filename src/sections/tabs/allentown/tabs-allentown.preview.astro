@@ -20,11 +20,11 @@ const tabs = [
   { label: 'Message our team', intro: { description: 'Connect with an adviser to discuss your next project. Our team responds during weekday office hours.' }, ctaGroup: { buttons: [
     { label: 'Start a conversation', href: '/contact/', style: 'primary' as const, icon: 'comments' },
     { label: 'Schedule a call', href: '/appointments/', style: 'secondary' as const, icon: 'calendar' },
-  ] } },
+  ] }, actionNote: 'We reply during weekday office hours.', actionNoteIcon: 'clock' },
   { label: 'Contact details', intro: { accentHeading: 'Local support', heading: 'Speak with our service team', description: 'Monday to Friday, 9:00–17:00. We can help with project planning, service questions and delivery arrangements.' }, ctaGroup: { buttons: [
     { label: '+1 202-555-0147', href: 'tel:+12025550147', style: 'primary' as const, icon: 'phone' },
     { label: 'hello@example.com', href: 'mailto:hello@example.com', style: 'secondary' as const, icon: 'envelope' },
-  ] } },
+  ] }, actionNote: 'For urgent service questions, call the team directly.', actionNoteIcon: 'circle-info' },
   { label: 'Send a request', form, formPresentation: { enabled: true, label: 'Open request form', style: 'primary' as const, icon: 'paper-plane' } },
 ]
 ---

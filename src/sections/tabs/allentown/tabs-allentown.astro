@@ -4,6 +4,7 @@ import SectionIntro from '../../../primitives/section-intro/section-intro.astro'
 import KinektMedia from '../../../primitives/kinekt-media/kinekt-media.astro'
 import FormEmbed from '../../../components/form-embed/allentown/form-embed-allentown.astro'
 import CtaAction from '../../../shared/cta-action-allentown.astro'
+import { ctaIconPaths } from '../../../shared/cta-icons.js'
 import { ctaGroupActions } from '../../../shared/content.js'
 import { normalizeSectionContentWidth } from '../../../shared/section-width.js'
 import type { CtaGroup, FormModalPresentation, Media, SectionIntro as Intro, SectionTheme } from '../../../shared/content.js'
@@ -16,7 +17,7 @@ interface Props {
   media?: Media | null
   mediaAspectRatio?: 'original' | '1:1' | '16:9' | '9:16' | '5:4' | '4:5'
   tabsHeading?: string
-  tabs: { label: string; intro?: Partial<Intro>; ctaGroup?: CtaGroup; form?: string | null; formPresentation?: FormModalPresentation | null }[]
+  tabs: { label: string; intro?: Partial<Intro>; ctaGroup?: CtaGroup; actionNote?: string; actionNoteIcon?: string; form?: string | null; formPresentation?: FormModalPresentation | null }[]
   headingLevel?: 'h1' | 'h2' | 'h3'
 }
 const { id, theme = 'light', intro, media, mediaAspectRatio = 'original', tabsHeading, tabs, headingLevel = 'h2' } = Astro.props as Props
@@ -37,15 +38,18 @@ const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url 
       </div>
       {tabs.map((tab, index) => {
         const actions = ctaGroupActions(tab.ctaGroup)
+        const actionNote = typeof tab.actionNote === 'string' ? tab.actionNote.trim() : ''
+        const actionNoteIcon = ctaIconPaths(tab.actionNoteIcon)
         const hasForm = typeof tab.form === 'string' && tab.form.trim() !== ''
         return <div class="beta-tabs-allentown__panel" id={`${prefix}-panel-${index}`} role="tabpanel" aria-labelledby={`${prefix}-tab-${index}`} tabindex="0">
-          {(hasIntro(tab.intro) || actions.length > 0) && <div class="beta-tabs-allentown__panel-intro">
+          {(hasIntro(tab.intro) || actions.length > 0 || actionNote) && <div class="beta-tabs-allentown__panel-intro">
             {hasIntro(tab.intro) && <SectionIntro intro={{ ...tab.intro, heading: tab.intro?.heading ?? '' }} headingLevel={panelHeading} />}
             {actions.length > 0 && <div class="beta-tabs-allentown__actions">
               {actions.map((action, actionIndex) => (
                 <CtaAction cta={action} style={action.style ?? (actionIndex === 0 ? 'primary' : 'clear')} />
               ))}
             </div>}
+            {actionNote && <p class="beta-tabs-allentown__action-note">{actionNoteIcon && <svg aria-hidden="true" focusable="false" viewBox={actionNoteIcon.viewBox} fill="currentColor"><path d={actionNoteIcon.path} /></svg>}<span>{actionNote}</span></p>}
           </div>}
           {hasForm && <FormEmbed class="beta-tabs-allentown__form" form={tab.form} formPresentation={tab.formPresentation} />}
         </div>
@@ -191,6 +195,8 @@ const hasMedia = Boolean(media && typeof media === 'object' && typeof media.url 
     & .beta-tabs-allentown__panel-intro { display: grid; gap: var(--space-xl); text-align: center; }
     & .beta-tabs-allentown__panel-intro .section-intro__description:first-child { margin-block-start: 0; }
     & .beta-tabs-allentown__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-s); }
+    & .beta-tabs-allentown__action-note { display: flex; align-items: flex-start; justify-content: center; gap: var(--space-xs); margin: 0; color: var(--kinekt-component-muted); text-align: center; }
+    & .beta-tabs-allentown__action-note svg { flex: none; inline-size: 1em; block-size: 1em; margin-block-start: .15em; fill: currentColor; }
     & .beta-tabs-allentown__form { --kiw--form-embed-allentown-fields-gap: var(--space-xl); }
     @media (max-width: 49.999rem) {
       --kiw--tabs-allentown-tab-size: var(--text-l);

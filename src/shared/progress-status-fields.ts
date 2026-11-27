@@ -12,6 +12,7 @@ export interface ProgressStatusProps {
 
 export interface ProgressStatusFieldOptions {
   localized?: boolean
+  includeCustomTone?: boolean
 }
 
 const isProgressStatus = (value: unknown): value is ProgressStatus =>
@@ -20,10 +21,10 @@ const isProgressStatus = (value: unknown): value is ProgressStatus =>
 const isProgressCustomTone = (value: unknown): value is ProgressCustomTone =>
   typeof value === 'string' && (progressCustomTones as readonly string[]).includes(value)
 
-export function progressStatusFields({ localized = true }: ProgressStatusFieldOptions = {}): Field[] {
+export function progressStatusFields({ localized = true, includeCustomTone = true }: ProgressStatusFieldOptions = {}): Field[] {
   const localization = localized ? { localized: true } : {}
 
-  return [
+  const fields: Field[] = [
     {
       name: 'status',
       type: 'select',
@@ -52,21 +53,22 @@ export function progressStatusFields({ localized = true }: ProgressStatusFieldOp
         description: 'Optional Font Awesome 7 Sharp Solid or Brands icon name.',
       },
     },
-    {
-      name: 'customTone',
-      type: 'select',
-      ...localization,
-      defaultValue: 'neutral',
-      options: progressCustomTones.map((value) => ({ label: `${value[0].toUpperCase()}${value.slice(1)}`, value })),
-      admin: {
-        condition: (_, siblingData) => siblingData?.status === 'custom',
-        description: 'Semantic badge color for custom status.',
-      },
-    },
   ]
+  if (includeCustomTone) fields.push({
+    name: 'customTone',
+    type: 'select',
+    ...localization,
+    defaultValue: 'neutral',
+    options: progressCustomTones.map((value) => ({ label: `${value[0].toUpperCase()}${value.slice(1)}`, value })),
+    admin: {
+      condition: (_, siblingData) => siblingData?.status === 'custom',
+      description: 'Semantic badge color for custom status.',
+    },
+  })
+  return fields
 }
 
-export function progressStatusToProps(record: Record<string, unknown>, path: string): ProgressStatusProps {
+export function progressStatusToProps(record: Record<string, unknown>, path: string, { includeCustomTone = true }: Pick<ProgressStatusFieldOptions, 'includeCustomTone'> = {}): ProgressStatusProps {
   const status = isProgressStatus(record.status) ? record.status : 'todo'
   const statusLabel = optionalText(record.statusLabel, `${path}.statusLabel`)
 
@@ -74,9 +76,10 @@ export function progressStatusToProps(record: Record<string, unknown>, path: str
     if (!statusLabel) throw new Error(`${path}.statusLabel must be non-empty text for a custom status.`)
 
     const customIcon = optionalSharpSolidIcon(record.customIcon, `${path}.customIcon`)
-    const customTone = isProgressCustomTone(record.customTone) ? record.customTone : 'neutral'
-
-    return { status, statusLabel, ...(customIcon ? { customIcon } : {}), customTone }
+    const result: ProgressStatusProps = { status, statusLabel }
+    if (customIcon) result.customIcon = customIcon
+    if (includeCustomTone) result.customTone = isProgressCustomTone(record.customTone) ? record.customTone : 'neutral'
+    return result
   }
 
   return { status, ...(statusLabel ? { statusLabel } : {}) }
