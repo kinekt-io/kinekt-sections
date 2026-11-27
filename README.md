@@ -158,6 +158,8 @@ Section filters use the consumer-overridable `--kiw--sticky-offset` (default `0p
 
 On mobile, Read More hides its media, Form Section uses centered square images, and Product Options uses shrinkable 1:2 image/copy columns. HD Cells initially opens its default information panel, auto-closing after three visible seconds; manual More information opening stays open until explicitly closed. A focused information panel is never automatically hidden.
 
+Problem/Solution uses one scroll-scrubbed sticky infographic on mobile and desktop when motion is allowed; progress completes at its second internal heading and the image releases with the section. Reduced-motion and no-JavaScript views retain both readable static states. Solution List labels use literal `--space-xs` padding on both axes, zero margin and line-height1. FAQ overview actions center on desktop and align with the FAQ list's left edge on mobile. Insights bounds the sidebar's internal grid and search input, so intrinsic input widths and long facet labels cannot paint over the positive sidebar/result gap.
+
 ### Component defaults and theme roles
 
 Each section root carries `data-kinekt-section`. Its owning Astro component maps `--kiw--<section-slug>-<role>` overrides to canonical defaults in a static root rule inside its `<style is:global>` block; static mappings never use a root `style` attribute. Renderers define additional component aliases beside those styles. Use the nearest scale value instead of introducing a second spacing or typography scale.
